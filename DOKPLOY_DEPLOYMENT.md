@@ -37,6 +37,28 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
    sign-in with a Google test user. Check the `web` and `db` health states and
    verify a report upload survives a container redeploy.
 
+## Saved Google sign-in setup (2026-10-15)
+
+- Google sign-in code and Compose credential forwarding are saved in GitHub
+  `main`, starting at commit `1b66650`.
+- Keep `APP_URL=https://dualpath.bsit4bdevs.tech` and the actual
+  `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` values in this service's Dokploy
+  Environment settings. Enable **Create Environment File** and save; Compose
+  needs the generated file to interpolate the saved values on each deploy.
+- Keep `https://dualpath.bsit4bdevs.tech/auth/google/callback` in the Google
+  web client's authorized redirect URIs. The app derives its callback from
+  `APP_URL`, including the `https://` scheme.
+- Verification: public `/login` returns 200; `/auth/google` redirects to
+  `accounts.google.com` with that exact callback; Google serves its sign-in
+  page without a client or redirect-URI error. These HTTP checks do not sign
+  in to a user's Google account.
+- Credentials stay outside Git. This Laragon workspace also has a Windows
+  encrypted recovery copy at `tool/runtime/google_oauth_backup.clixml`,
+  readable only under the same Windows account on the same machine. It is
+  ignored by Git. Keep the Dokploy environment settings when redeploying;
+  recreating the service or revoking a Google secret requires restoring or
+  replacing those settings.
+
 ## Runtime configuration
 
 - The shared Dockerfile installs GD with JPEG/FreeType support before Composer
