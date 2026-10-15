@@ -15,7 +15,7 @@ The deployed design intentionally has no physical SOS button or switch. Emergenc
 
 Field nodes send a heartbeat every 10 seconds, so NODE_1 can mark them active on the monitoring page without a user opening the local dashboard. Heartbeats are scheduled before peer discovery, and field nodes learn peers from received `HELLO` packets without echoing field-to-field acknowledgments. This keeps NODE_2 through NODE_10 from flooding the shared LoRa channel when several boards start together. NODE_1 still acknowledges a field node's `HELLO`, allowing the field node to identify a direct gateway peer.
 
-No GPS module or battery ADC is required. Coordinates are fixed per sender in `web_system/config/lora_nodes.php`. Configure `node_name`, `location_label`, `latitude`, and `longitude` for NODE_1 through NODE_10. `S01` remains as a legacy entry. Laravel ignores coordinates and satellite values carried in a received radio packet.
+GPS is not required. Battery voltage sensing is optional and requires the divider described below. Coordinates are fixed per sender in `web_system/config/lora_nodes.php`. Configure `node_name`, `location_label`, `latitude`, and `longitude` for NODE_1 through NODE_10. `S01` remains as a legacy entry. Laravel ignores coordinates and satellite values carried in a received radio packet.
 
 ## Uploading the Field Nodes
 
@@ -150,6 +150,78 @@ Coding rate: 4/5
 
 Use a 3.3 V supply for the SX1278/Ra-02/XL1278 and attach the antenna before transmitting.
 
+## Battery voltage: 3.7 V lithium cell and TPS63020
+
+Measure the single-cell battery before the TPS63020, not its regulated 3.3 V
+output. The installed 10000 mAh capacity does not determine the current voltage
+or remaining charge. The software displays measured volts; it does not invent a
+remaining percentage or mAh value.
+
+For each ESP32 Dev Module, add this divider on the battery side of the regulator:
+
+```text
+Battery BAT+ --- 100k ohm R1 ---+--- GPIO34 (ADC1)
+                              |
+                            100k ohm R2
+                              |
+Battery BAT- -----------------+--- ESP32 GND
+
+Also connect a 100 nF capacitor between GPIO34 and GND.
+```
+
+Use 1% resistors. A 4.2 V fully charged cell produces about 2.1 V at GPIO34 with
+this divider. Never wire battery positive directly to GPIO34. Keep grounds
+common and verify the divider voltage with a multimeter before connecting the
+ADC input. This example is for one 3.7 V lithium cell/parallel pack only; a pack
+with cells in series requires a different divider design. GPIO34 is ADC1, so
+it can be used while Wi-Fi is running. The sampler uses calibrated
+`analogReadMilliVolts`, 16 samples, and a 10-second cache.
+
+Each uploadable sketch has `battery_config.h`, initially disabled:
+
+```cpp
+static const bool BATTERY_MONITOR_ENABLED = false;
+static const int BATTERY_ADC_PIN = 34;
+static const float BATTERY_DIVIDER_RATIO = 2.0f;
+static const float BATTERY_CALIBRATION = 1.0f;
+```
+
+After physically installing/checking the divider, change the enable flag to
+`true` in that board's `battery_config.h` and upload its matching sketch. If the
+display differs from a multimeter, set `BATTERY_CALIBRATION` to the multimeter
+battery voltage divided by the displayed battery voltage. `battery_monitor.h`
+is generated from `Arduino/Arduino/shared/`; the generator preserves existing
+per-board `battery_config.h` files. Disabled, near-zero, or saturated readings
+remain `NA`; the admin sees **No voltage reading**, never a made-up charge level.
+
+## Measured node-to-website delay
+
+The admin monitor shows **Node ↔ website delay (RTT)**, in milliseconds:
+
+- NODE_1 times an authenticated HTTPS health request plus its complete response,
+  including connection/TLS setup. The next heartbeat sends that real sample.
+- NODE_2 through NODE_10 send a staggered `PING` once per minute. NODE_1 sends it
+  to the authenticated `/api/v1/lora/probe` endpoint; only the returned website
+  `PONG` is sent back over LoRa. The originating board measures the full round
+  trip with its monotonic clock and includes it in subsequent heartbeats.
+- RTT includes LoRa airtime, relay delays, gateway work, HTTPS, and the return
+  path. It is not one-way delay, the age of the last heartbeat, or radio bitrate.
+  No clock synchronization or arbitrary division of RTT by two is used.
+- The website keeps the measurement timestamp for a repeated sample instead of
+  making it fresh on every heartbeat. Samples expire after two minutes. A failed
+  or unanswered probe does not become a zero-millisecond measurement.
+
+Upload the new gateway firmware and each matching generated field-node sketch.
+Old firmware continues to send heartbeats but cannot supply the new timing
+sample or relay `PING`/`PONG`. Upgrade intermediate relay nodes as well as the
+origin. No real SOS incident is created by timing probes. Duplicate heartbeat
+routes are suppressed at the gateway to conserve the existing API request limit.
+
+After the upload, check `/status` on a field node for `round_trip_ms`; allow the
+first beacon/probe exchange and next 10-second heartbeat. The admin monitor
+refreshes every five seconds. Firmware and physically wired measurements must
+both be present before the corresponding values can appear.
+
 ## Laravel Gateway Endpoints
 
 NODE_1 uses the shared `X-STITCH-LORA-TOKEN` header with these `/api/v1/lora` endpoints:
@@ -159,11 +231,14 @@ NODE_1 uses the shared `X-STITCH-LORA-TOKEN` header with these `/api/v1/lora` en
 | `GET` | `/health` | Confirm the official Laravel gateway route is available |
 | `POST` | `/alerts` | Receive a deduplicated SOS report |
 | `POST` | `/heartbeat` | Record NODE_1 and relayed field-node health |
+| `POST` | `/probe` | Echo a field timing probe without creating an incident or heartbeat |
 | `GET` | `/network-summary` | Get the active NODE_1–NODE_10 count and bitmask |
 | `GET` | `/acks/pending?gatewayId=NODE_1` | Poll for responder ACK packets |
 | `POST` | `/acks/{msgId}/delivered` | Confirm NODE_1 broadcast the queued ACK |
 
-The API maps node coordinates from the static registry. The field heartbeat carries peers, route, hop count, RSSI, and battery as `NA` because battery voltage is not measured. It never reports an invented battery value.
+The API maps node coordinates from the static registry. Heartbeats carry peers,
+route, hop count, RSSI/SNR, optional measured battery volts, and optional timing
+samples. Battery stays `NA` until sensing is wired and enabled.
 
 ## Laravel Environment
 

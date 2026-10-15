@@ -55,6 +55,12 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
 ## Operations
 
+- Battery/link telemetry adds nullable columns to `lora_node_states`; the web
+  startup migration applies them on redeploy. Deploy the backend before
+  uploading the matching NODE_1 and NODE_2–NODE_10 firmware. Verify the authenticated
+  `/api/v1/lora/probe` route echoes a packet without creating an incident, and
+  check `/monitoring/lora-mesh` for real voltage/round-trip samples. Battery
+  sensing stays disabled until divider wiring is installed on the hardware.
 - Admin access starts at `/admin`, which sends guests to `/admin/login` and
   signed-in accounts to the protected `/admin/dashboard`. Only admin accounts
   can access that dashboard. After pulling an update that changes routes or

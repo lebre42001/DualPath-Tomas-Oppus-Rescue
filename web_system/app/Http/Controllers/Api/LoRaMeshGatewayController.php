@@ -40,6 +40,10 @@ class LoRaMeshGatewayController extends Controller
             'hop' => ['nullable', 'integer', 'min:0', 'max:255'],
             'ttl' => ['nullable', 'integer', 'min:0', 'max:255'],
             'rssi' => ['nullable', 'integer'],
+            'snr' => ['nullable', 'numeric', 'between:-100,100'],
+            'round_trip_ms' => ['nullable', 'required_with:round_trip_sample', 'integer', 'between:0,60000'],
+            'round_trip_sample' => ['nullable', 'required_with:round_trip_ms', 'string', 'max:40', 'regex:/^[A-Za-z0-9_-]+$/'],
+            'round_trip_age_ms' => ['nullable', 'integer', 'between:0,120000'],
             'packet_type' => ['nullable', 'in:HB,SOS'],
         ]);
 
@@ -53,6 +57,14 @@ class LoRaMeshGatewayController extends Controller
             ->values()
             ->all();
 
+        $previous = LoraNodeState::query()->where('node_id', $nodeId)->first();
+        $sample = $validated['round_trip_sample'] ?? null;
+        $measuredAt = $sample === null ? null : (
+            $previous?->round_trip_sample === $sample
+                ? $previous->round_trip_measured_at
+                : now()->subMilliseconds((int) ($validated['round_trip_age_ms'] ?? 0))
+        );
+
         LoraNodeState::query()->updateOrCreate(
             ['node_id' => $nodeId],
             [
@@ -64,6 +76,10 @@ class LoRaMeshGatewayController extends Controller
                 'hop' => (int) ($validated['hop'] ?? 0),
                 'ttl' => (int) ($validated['ttl'] ?? 0),
                 'rssi' => $validated['rssi'] ?? null,
+                'snr' => $validated['snr'] ?? null,
+                'round_trip_ms' => $validated['round_trip_ms'] ?? null,
+                'round_trip_sample' => $sample,
+                'round_trip_measured_at' => $measuredAt,
                 'last_packet_type' => $validated['packet_type'] ?? 'HB',
             ]
         );
@@ -73,6 +89,24 @@ class LoRaMeshGatewayController extends Controller
             'nodeId' => $nodeId,
             'status' => 'ACTIVE',
             'serverTime' => now('UTC')->toIso8601String(),
+        ]);
+    }
+
+    public function probe(Request $request): JsonResponse
+    {
+        $this->authorizeGateway($request);
+        $validated = $request->validate([
+            'node_id' => ['required', 'string', 'max:40'],
+            'probe_id' => ['required', 'string', 'max:24', 'regex:/^[A-Za-z0-9_-]+$/'],
+        ]);
+        $nodeId = strtoupper(trim($validated['node_id']));
+        abort_unless(isset(config('lora_nodes')[$nodeId]), 422, 'Unknown registered LoRa node.');
+
+        // Only the origin's monotonic clock measures the returned round trip.
+        // A probe must not create an incident or pretend a heartbeat arrived.
+        return response()->json([
+            'ok' => true,
+            'packet' => 'PONG|'.$nodeId.'|'.$validated['probe_id'].'|'.self::NETWORK_TTL.'|'.self::GATEWAY_ID,
         ]);
     }
 

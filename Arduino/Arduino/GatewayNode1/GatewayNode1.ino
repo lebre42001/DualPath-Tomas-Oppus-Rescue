@@ -21,6 +21,7 @@
 #include <time.h>
 #include <esp_system.h>
 #include "server_root_ca.h"
+#include "battery_monitor.h"
 
 #if __has_include("arduino_secrets.h")
 #include "arduino_secrets.h"
@@ -75,6 +76,12 @@ String latestAckAt = "";
 String pendingLocalPacket = "";
 String pendingLocalMsgId = "";
 int activeNodeCount = -1;
+long websiteRoundTripMs = -1;
+unsigned long websiteRoundTripAtMs = 0;
+String websiteRoundTripSample;
+String lastProbeIds[11];
+String lastHeartbeatSequences[11];
+unsigned long lastHeartbeatForwardedAtMs[11] = {};
 
 struct PeerInfo {
   String nodeId;
@@ -278,6 +285,7 @@ bool requestApi(const String& method, const String& path, const String& body, St
   if (!isConfigured() || WiFi.status() != WL_CONNECTED) return false;
 
   HTTPClient http;
+  const unsigned long requestStartedMs = millis();
   http.setConnectTimeout(7000);
   http.setTimeout(7000);
   if (!beginHttp(http, apiUrl(path))) return false;
@@ -296,6 +304,11 @@ bool requestApi(const String& method, const String& path, const String& body, St
 
   Serial.println("[API " + method + "] " + path + " -> " + String(statusCode));
   if (statusCode >= 200 && statusCode < 300) {
+    if (path == "/health") {
+      websiteRoundTripMs = (long)(millis() - requestStartedMs);
+      websiteRoundTripAtMs = millis();
+      websiteRoundTripSample = String(esp_random(), HEX) + "-" + String(websiteRoundTripAtMs);
+    }
     lastServerSuccessMs = millis();
     gatewayStatus = "Laravel server connected";
     return true;
@@ -349,7 +362,12 @@ void sendGatewayHeartbeatIfNeeded() {
   body += "\"gateway_id\":\"NODE_1\",";
   body += "\"route\":\"NODE_1\",";
   body += "\"peers\":" + peerIdsJson() + ",";
-  body += "\"battery\":\"NA\",";
+  body += "\"battery\":\"" + measuredBatteryVoltage() + "\",";
+  if (websiteRoundTripMs >= 0 && millis() - websiteRoundTripAtMs <= 120000) {
+    body += "\"round_trip_ms\":" + String(websiteRoundTripMs) + ",";
+    body += "\"round_trip_sample\":\"" + websiteRoundTripSample + "\",";
+    body += "\"round_trip_age_ms\":" + String(millis() - websiteRoundTripAtMs) + ",";
+  }
   body += "\"hop\":0,\"ttl\":0,\"packet_type\":\"HB\"";
   body += "}";
   String response;
@@ -435,7 +453,7 @@ bool submitLocalReport() {
   body += "\"created_at\":\"" + jsonEscape(latestCreatedAt) + "\",";
   body += "\"incident_type\":\"" + jsonEscape(getField(pendingLocalPacket, 4)) + "\",";
   body += "\"description\":\"" + jsonEscape(getField(pendingLocalPacket, 5)) + "\",";
-  body += "\"battery\":\"NA\",\"hop\":0,\"ttl\":12,";
+  body += "\"battery\":\"" + jsonEscape(getField(pendingLocalPacket, 6)) + "\",\"hop\":0,\"ttl\":12,";
   body += "\"route\":\"NODE_1\",\"rssi\":0,\"snr\":0";
   body += "}";
 
@@ -484,7 +502,7 @@ void handleLocalEmergency() {
   latestAckMessage = "";
   latestAckAt = "";
   latestReportStatus = "QUEUED";
-  pendingLocalPacket = "SOS|" + latestMsgId + "|NODE_1|" + createdAt + "|" + normalizedLocalType(type) + "|" + message + "|NA|0|12|NODE_1";
+  pendingLocalPacket = "SOS|" + latestMsgId + "|NODE_1|" + createdAt + "|" + normalizedLocalType(type) + "|" + message + "|" + measuredBatteryVoltage() + "|0|12|NODE_1";
   prefs.putString("latest_msg", latestMsgId);
   prefs.putString("latest_created", latestCreatedAt);
   prefs.putString("latest_status", latestReportStatus);
@@ -508,6 +526,8 @@ void handleLocalStatus() {
   json += "\"gateway_status\":\"" + jsonEscape(gatewayStatus) + "\",";
   json += "\"wifi_connected\":" + String(WiFi.status() == WL_CONNECTED ? "true" : "false") + ",";
   json += "\"wifi_ip\":\"" + WiFi.localIP().toString() + "\",";
+  json += "\"battery\":\"" + measuredBatteryVoltage() + "\",";
+  json += "\"round_trip_ms\":" + (websiteRoundTripMs < 0 ? String("null") : String(websiteRoundTripMs)) + ",";
   json += "\"server_online\":" + String(online ? "true" : "false") + ",";
   json += "\"peer_list\":\"" + jsonEscape(peerList()) + "\",";
   json += "\"active_nodes\":" + String(activeNodeCount) + ",";
@@ -619,15 +639,55 @@ String peersAsJson(const String& peerCsv) {
   return result;
 }
 
-bool forwardHeartbeatToLaravel(const String& packet, int rssi) {
+int registeredMeshNodeNumber(const String& nodeId) {
+  if (!nodeId.startsWith("NODE_")) return -1;
+  const int number = nodeId.substring(5).toInt();
+  return number >= 1 && number <= 10 && nodeId == "NODE_" + String(number) ? number : -1;
+}
+
+bool unsignedDecimal(const String& value) {
+  if (value.length() == 0) return false;
+  for (unsigned int i = 0; i < value.length(); i++) {
+    if (value[i] < '0' || value[i] > '9') return false;
+  }
+  return true;
+}
+
+void forwardTimingProbe(const String& packet) {
+  const String nodeId = getField(packet, 1);
+  const String probeId = getField(packet, 2);
+  const int number = registeredMeshNodeNumber(nodeId);
+  if (number < 2 || probeId.length() == 0 || probeId.length() > 24 ||
+      getField(packet, 3).toInt() <= 0 || !serverRouteAvailable()) return;
+  if (lastProbeIds[number] == probeId) return;
+  lastProbeIds[number] = probeId;
+
+  const String body = "{\"node_id\":\"" + jsonEscape(nodeId) +
+    "\",\"probe_id\":\"" + jsonEscape(probeId) + "\"}";
+  String response;
+  if (!requestApi("POST", "/probe", body, response)) return;
+  const String pong = extractJsonString(response, "packet");
+  if (pong.startsWith("PONG|" + nodeId + "|" + probeId + "|")) sendLoRaPacket(pong);
+}
+
+bool forwardHeartbeatToLaravel(const String& packet, int rssi, float snr) {
   String nodeId = getField(packet, 1);
   String battery = getField(packet, 2);
   String hop = getField(packet, 3);
   String ttl = getField(packet, 4);
   String route = appendGatewayToRoute(getField(packet, 5));
   String peers = getField(packet, 6);
+  String sequence = getField(packet, 7);
+  String roundTrip = getField(packet, 8);
+  String sample = getField(packet, 9);
+  String sampleAge = getField(packet, 10);
 
-  if (nodeId.length() == 0) return false;
+  const int number = registeredMeshNodeNumber(nodeId);
+  if (number < 2) return false;
+  // Flooding can deliver the same heartbeat via multiple routes. Forward once
+  // per origin/sequence so ten boards remain within the website's API budget.
+  if (sequence.length() && lastHeartbeatSequences[number] == sequence &&
+      millis() - lastHeartbeatForwardedAtMs[number] < 20000) return true;
   String body = "{";
   body += "\"node_id\":\"" + jsonEscape(nodeId) + "\",";
   body += "\"gateway_id\":\"NODE_1\",";
@@ -637,11 +697,23 @@ bool forwardHeartbeatToLaravel(const String& packet, int rssi) {
   body += "\"hop\":" + String(hop.toInt()) + ",";
   body += "\"ttl\":" + String(ttl.toInt()) + ",";
   body += "\"rssi\":" + String(rssi) + ",";
+  body += "\"snr\":" + String(snr, 2) + ",";
+  if (unsignedDecimal(roundTrip) && roundTrip.toInt() <= 60000 && sample.length() &&
+      unsignedDecimal(sampleAge) && sampleAge.toInt() <= 120000) {
+    body += "\"round_trip_ms\":" + roundTrip + ",";
+    body += "\"round_trip_sample\":\"" + jsonEscape(sample) + "\",";
+    body += "\"round_trip_age_ms\":" + sampleAge + ",";
+  }
   body += "\"packet_type\":\"HB\"";
   body += "}";
 
   String response;
-  return requestApi("POST", "/heartbeat", body, response);
+  const bool accepted = requestApi("POST", "/heartbeat", body, response);
+  if (accepted && sequence.length()) {
+    lastHeartbeatSequences[number] = sequence;
+    lastHeartbeatForwardedAtMs[number] = millis();
+  }
+  return accepted;
 }
 
 void handleIncomingLoRa() {
@@ -667,7 +739,9 @@ void handleIncomingLoRa() {
   } else if (packet.startsWith("SOS|")) {
     forwardSosToLaravel(packet, rssi, snr);
   } else if (packet.startsWith("HB|")) {
-    forwardHeartbeatToLaravel(packet, rssi);
+    forwardHeartbeatToLaravel(packet, rssi, snr);
+  } else if (packet.startsWith("PING|")) {
+    forwardTimingProbe(packet);
   }
 }
 

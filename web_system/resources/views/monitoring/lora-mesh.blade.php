@@ -3,7 +3,7 @@
 @section('title', 'LoRa Mesh Monitor')
 @section('page_label', 'Field Network')
 @section('page_heading', 'LoRa Mesh Monitor')
-@section('page_subheading', 'Track NODE_1 gateway health, field-node heartbeats, routes, radio signal, and fixed locations.')
+@section('page_subheading', 'Track node health, battery voltage, website round-trip delay, routes, and radio signal.')
 
 @section('hero')
     <section class="hero-card lora-mesh-hero">
@@ -32,6 +32,7 @@
                 <p class="panel-kicker">Heartbeat and route telemetry</p>
                 <h2 class="panel-title">Registered field nodes</h2>
                 <p class="section-copy">A node with no update for more than 30 seconds is shown as UNREACHABLE, which means it needs connectivity inspection, not that the hardware is automatically defective.</p>
+                <p class="section-copy">Delay is a measured round trip to the website and back, including LoRa relays for field nodes. It is not one-way delivery time or upload speed. Battery voltage requires an installed voltage divider; no battery percentage is inferred.</p>
             </div>
             <label class="lora-node-search">
                 <span>Find a node</span>

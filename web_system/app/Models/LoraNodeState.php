@@ -17,6 +17,10 @@ class LoraNodeState extends Model
         'ttl',
         'rssi',
         'last_packet_type',
+        'snr',
+        'round_trip_ms',
+        'round_trip_sample',
+        'round_trip_measured_at',
     ];
 
     protected function casts(): array
@@ -24,6 +28,9 @@ class LoraNodeState extends Model
         return [
             'last_seen_at' => 'datetime',
             'known_peers' => 'array',
+            'snr' => 'float',
+            'round_trip_ms' => 'integer',
+            'round_trip_measured_at' => 'datetime',
         ];
     }
 }

@@ -1,6 +1,6 @@
 /*
   STITCH ESP32 LoRa FIELD NODE firmware for NODE_2 ... NODE_10
-  NO LED, NO SWITCH LOGIC, NO GPS, NO BATTERY ADC
+  NO LED, NO SWITCH LOGIC, NO GPS; optional battery voltage ADC
 
   Hardware:
   - ESP32
@@ -24,7 +24,8 @@
   - All nodes must use the same LoRa frequency/settings.
   - Attach the LoRa antenna before transmitting.
   - LoRa VCC is 3.3 V only.
-  - No battery voltage is measured in this version, therefore battery = NA.
+  - Battery voltage requires divider wiring and BATTERY_MONITOR_ENABLED=true.
+  - Website delay is measured as a complete LoRa + HTTPS + LoRa round trip.
 
   Required Arduino library:
   - LoRa by Sandeep Mistry
@@ -36,6 +37,7 @@
 #include <SPI.h>
 #include <LoRa.h>
 #include <esp_system.h>
+#include "battery_monitor.h"
 
 #if __has_include("field_node_secrets.h")
 #include "field_node_secrets.h"
@@ -99,6 +101,16 @@ unsigned long lastNetworkSummarySeenMs = 0;
 unsigned long lastSosAttemptMs = 0;
 
 uint32_t heartbeatSequence = 0;
+const unsigned long PROBE_INTERVAL_MS = 60000;
+const unsigned long PROBE_TIMEOUT_MS = 60000;
+unsigned long lastProbeMs = 0;
+unsigned long probeStartedMs = 0;
+unsigned long lastRoundTripAtMs = 0;
+long lastRoundTripMs = -1;
+uint32_t probeSequence = 0;
+String probeBootId;
+String pendingProbeId;
+String lastRoundTripSample;
 
 // Best known route from this node toward NODE_1/server.
 String gatewayId = "";
@@ -451,8 +463,7 @@ void handleHelloAck(String packet, int rssi) {
 // =====================================================
 // HEARTBEAT
 // Format:
-// HB|origin|battery|hop|ttl|route|peers|sequence
-// NODE_1 ignores the optional sequence field but uses peers.
+// HB|origin|battery|hop|ttl|route|peers|sequence[|rttMs|sampleId|sampleAgeMs]
 // =====================================================
 
 void sendHeartbeatIfNeeded() {
@@ -462,9 +473,14 @@ void sendHeartbeatIfNeeded() {
 
   String packet =
     "HB|" + NODE_ID +
-    "|NA|0|12|" + NODE_ID +
+    "|" + measuredBatteryVoltage() + "|0|12|" + NODE_ID +
     "|" + peerCsv(false) +
     "|" + String(heartbeatSequence);
+
+  if (lastRoundTripMs >= 0 && millis() - lastRoundTripAtMs <= 120000) {
+    packet += "|" + String(lastRoundTripMs) + "|" + lastRoundTripSample +
+      "|" + String(millis() - lastRoundTripAtMs);
+  }
 
   sendLoRaPacket(packet);
 }
@@ -494,8 +510,54 @@ void handleHeartbeat(String packet) {
     "|" + originPeers +
     "|" + sequence;
 
+  if (getField(packet, 8).length() && getField(packet, 9).length() && getField(packet, 10).length()) {
+    forwarded += "|" + getField(packet, 8) + "|" + getField(packet, 9) + "|" + getField(packet, 10);
+  }
+
   relayJitter();
   sendLoRaPacket(forwarded);
+}
+
+// =====================================================
+// End-to-end timing uses only this origin's monotonic clock. No synchronized
+// clocks, estimated one-way delay, or fabricated link speed is needed.
+// PING/PONG|origin|probeId|ttl|route
+// =====================================================
+
+void sendTimingProbeIfNeeded() {
+  if (!serverRouteAvailable() || millis() - lastProbeMs < PROBE_INTERVAL_MS) return;
+  lastProbeMs = millis();
+  pendingProbeId = probeBootId + "-" + String(++probeSequence);
+  probeStartedMs = millis();
+  if (!sendLoRaPacket("PING|" + NODE_ID + "|" + pendingProbeId + "|12|" + NODE_ID)) {
+    pendingProbeId = "";
+  }
+}
+
+void handleTimingPacket(const String& packet) {
+  const String type = getField(packet, 0);
+  const String origin = getField(packet, 1);
+  const String probeId = getField(packet, 2);
+  const int ttl = getField(packet, 3).toInt();
+  const String route = getField(packet, 4);
+  if (!origin.startsWith("NODE_") || probeId.length() == 0 || probeId.length() > 24) return;
+
+  if (origin == NODE_ID) {
+    if (type == "PONG" && probeId == pendingProbeId &&
+        millis() - probeStartedMs <= PROBE_TIMEOUT_MS) {
+      lastRoundTripMs = (long)(millis() - probeStartedMs);
+      lastRoundTripAtMs = millis();
+      lastRoundTripSample = probeId;
+      pendingProbeId = "";
+      Serial.println("[TIMING] Website round trip: " + String(lastRoundTripMs) + " ms");
+    }
+    return;
+  }
+  if (ttl <= 0 || routeHasNode(route, NODE_ID)) return;
+  if (recentlySeen(type + ":" + origin + ":" + probeId, 60000)) return;
+  relayJitter();
+  sendLoRaPacket(type + "|" + origin + "|" + probeId + "|" + String(ttl - 1) +
+    "|" + appendRoute(route, NODE_ID));
 }
 
 // =====================================================
@@ -720,6 +782,8 @@ void handleIncomingLoRa() {
     handleSos(packet);
   } else if (type == "ACK") {
     handleAck(packet);
+  } else if (type == "PING" || type == "PONG") {
+    handleTimingPacket(packet);
   }
 }
 
@@ -784,7 +848,7 @@ void handleLocalSend() {
   latestAckAt = "";
   latestStatus = serverRouteAvailable() ? "READY TO SEND" : "QUEUED - WAITING FOR ROUTE";
 
-  // IMPORTANT: battery is NA because no ADC divider is wired yet.
+  // Battery stays NA unless real divider wiring is configured and enabled.
   // The exact createdAt received from the phone is permanently embedded here.
   pendingPacket =
     "SOS|" + latestMsgId +
@@ -792,7 +856,7 @@ void handleLocalSend() {
     "|" + createdAt +
     "|" + type +
     "|" + message +
-    "|NA|0|12|" + NODE_ID;
+    "|" + measuredBatteryVoltage() + "|0|12|" + NODE_ID;
 
   pendingMsgId = latestMsgId;
   savePendingState();
@@ -816,6 +880,8 @@ void handleLocalStatus() {
   int displayActiveCount = networkSummaryFresh() ? activeNodeCount : -1;
 
   String json = "{";
+  json += "\"battery\":\"" + measuredBatteryVoltage() + "\",";
+  json += "\"round_trip_ms\":" + (lastRoundTripMs < 0 ? String("null") : String(lastRoundTripMs)) + ",";
   json += "\"node_id\":\"" + jsonEscape(NODE_ID) + "\",";
   json += "\"peer_count\":" + String(peerCount) + ",";
   json += "\"peer_list\":\"" + jsonEscape(peerList) + "\",";
@@ -891,12 +957,14 @@ void setup() {
   loadPersistentState();
 
   randomSeed(esp_random());
+  probeBootId = String(esp_random(), HEX);
 
   // Randomize initial network-control transmissions so 9 nodes do not all
   // transmit HELLO/heartbeat at the exact same millisecond after power-up.
   unsigned long now = millis();
   lastHelloMs = now - HELLO_INTERVAL_MS + random(0, HELLO_INTERVAL_MS);
   lastHeartbeatMs = now - HEARTBEAT_INTERVAL_MS + random(0, HEARTBEAT_INTERVAL_MS);
+  lastProbeMs = now - PROBE_INTERVAL_MS + NODE_NUMBER * 1200 + random(0, 1000);
 
   startLocalWiFi();
 
@@ -924,7 +992,7 @@ void setup() {
 
   Serial.println();
   Serial.println(NODE_ID + " field node ready.");
-  Serial.println("NO LED, NO switch logic, NO GPS, NO battery ADC enabled.");
+  Serial.println("Battery sensing: " + String(BATTERY_MONITOR_ENABLED ? "enabled" : "disabled (no voltage reading)"));
   Serial.println("Waiting for LoRa peers and NODE_1 server-route beacon...");
 }
 
@@ -937,6 +1005,7 @@ void loop() {
   sendHeartbeatIfNeeded();
   sendHelloIfNeeded();
   trySendPending(false);
+  sendTimingProbeIfNeeded();
 
   delay(2);
 }

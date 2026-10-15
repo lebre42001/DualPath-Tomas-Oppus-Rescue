@@ -73,3 +73,21 @@ Verify in this order:
 7. Acknowledge the report in the website and confirm the ACK returns to the originating node.
 
 `UNREACHABLE` means no heartbeat or SOS was received for more than 30 seconds. It does not by itself prove a hardware failure.
+
+## 7. Battery voltage and transmission timing
+
+The battery/RTT update needs new firmware on NODE_1 and all field nodes. Apply
+Laravel migrations during deployment and rebuild assets. Older boards remain
+compatible for heartbeats, but show no timing sample until upgraded.
+
+For a 3.7 V single-cell battery with TPS63020, sense BAT+ before the buck-boost
+through a 100k/100k voltage divider into GPIO34, with a 100 nF capacitor to common
+GND. See `Arduino/README.md` for the exact diagram and calibration steps. Keep
+`BATTERY_MONITOR_ENABLED=false` until the divider is installed and verified;
+then enable it per board and upload. The regulated 3.3 V output cannot indicate
+remaining battery charge. The website reports measured battery voltage only.
+
+The delay shown is a complete round trip to the website and back. NODE_1 uses
+its HTTPS request/response; field nodes probe through LoRa, NODE_1, HTTPS, and
+back through LoRa. It is not one-way latency or "seconds ago." Check for actual
+millisecond samples and ensure old samples become expired after two minutes.

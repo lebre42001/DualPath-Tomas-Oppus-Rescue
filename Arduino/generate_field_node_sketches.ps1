@@ -14,6 +14,20 @@ $nodeNumberPattern = 'const int NODE_NUMBER = 2;'
 $templateDirectory = Split-Path -Parent $TemplatePath
 $exampleSecretsPath = Join-Path $templateDirectory 'field_node_secrets.example.h'
 $localSecretsPath = Join-Path $templateDirectory 'field_node_secrets.h'
+$sharedDirectory = Join-Path $PSScriptRoot 'Arduino\shared'
+
+# Keep the measurement implementation identical in every uploadable sketch.
+# Preserve each board's wiring/calibration configuration on regeneration.
+$hardwareDirectories = @($templateDirectory, (Join-Path $PSScriptRoot 'Arduino\GatewayNode1'))
+$hardwareDirectories += 2..10 | ForEach-Object { Join-Path $OutputRoot "NODE_$($_)_Field_Node" }
+foreach ($hardwareDirectory in $hardwareDirectories) {
+    New-Item -ItemType Directory -Force -Path $hardwareDirectory | Out-Null
+    Copy-Item -LiteralPath (Join-Path $sharedDirectory 'battery_monitor.h') -Destination (Join-Path $hardwareDirectory 'battery_monitor.h') -Force
+    $hardwareConfig = Join-Path $hardwareDirectory 'battery_config.h'
+    if (-not (Test-Path -LiteralPath $hardwareConfig)) {
+        Copy-Item -LiteralPath (Join-Path $sharedDirectory 'battery_config.example.h') -Destination $hardwareConfig
+    }
+}
 
 if (-not $template.Contains($nodeNumberPattern)) {
     throw 'Expected NODE_NUMBER declaration was not found in the field-node template.'

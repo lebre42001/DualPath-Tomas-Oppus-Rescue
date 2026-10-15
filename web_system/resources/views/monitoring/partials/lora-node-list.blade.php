@@ -57,7 +57,9 @@
                     <div><dt>Gateway</dt><dd>{{ $node['gateway_id'] ?: ($node['is_gateway'] ? 'NODE_1 (self)' : 'Not reported') }}</dd></div>
                     <div><dt>Nearby peers</dt><dd>{{ count($node['peers']) ? implode(', ', $node['peers']) : 'Not reported' }}</dd></div>
                     <div><dt>Fixed coordinates</dt><dd>{{ $coordinates }}</dd></div>
-                    <div><dt>Battery</dt><dd>{{ $node['battery'] ?: 'Not measured' }}</dd></div>
+                    <div><dt>Battery voltage</dt><dd>{{ $node['battery'] ?: 'No voltage reading' }}@unless ($node['battery']) <span>Sensor/divider wiring and enabled firmware required.</span>@endunless</dd></div>
+                    <div><dt>Node ↔ website delay (RTT)</dt><dd>@if ($node['round_trip_ms'] !== null && $node['round_trip_fresh']){{ number_format($node['round_trip_ms']) }} ms<span>{{ $node['is_gateway'] ? 'HTTPS request + response' : 'LoRa + HTTPS request + return via LoRa' }}</span>@else{{ $node['round_trip_ms'] !== null ? 'Sample expired' : 'Awaiting timing sample' }}@endif</dd></div>
+                    <div><dt>Timing sample</dt><dd>{{ $node['round_trip_measured_at']?->diffForHumans() ?? 'Updated telemetry firmware required' }}</dd></div>
                     <div><dt>Radio signal</dt><dd>RSSI {{ $node['gateway_rssi'] ?? '—' }} dBm<span> · SNR {{ $node['gateway_snr'] ?? '—' }} dB</span></dd></div>
                 </dl>
             </article>
