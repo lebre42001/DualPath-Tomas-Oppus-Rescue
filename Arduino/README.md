@@ -72,6 +72,21 @@ NODE_1's configured Wi-Fi must have internet access. The existing laptop mobile
 hotspot can share the laptop's internet, but the local Laravel server and inbound
 TCP 8000 firewall rule are no longer needed for this hosted destination. Changing
 to an unrelated hotspot still requires its SSID/password in `arduino_secrets.h`.
+The laptop must keep Mobile Hotspot switched on; being connected to the phone's
+hotspot does not automatically enable the laptop's own hotspot. Disable
+"When no devices are connected, automatically turn off mobile hotspot" in
+Windows Mobile Hotspot settings if the gateway needs to reconnect later.
+`Wi-Fi status code: 6` with `Router unavailable` means the Wi-Fi connection has
+not succeeded, before any HTTPS/API request is made. Check that the configured
+hotspot is on and its name/password still match before changing the certificate.
+
+After uploading, the gateway's `/status` endpoint includes `server_base_url`,
+`gateway_status`, `wifi_connected`, and `wifi_ip` for diagnosing the running
+firmware. Verify `server_base_url` is `https://dualpath.bsit4bdevs.tech`.
+If the laptop's local dashboard shows NODE_1 active while the hosted dashboard
+does not, check whether the board is still running firmware with the old local
+server URL; saving a new header on the laptop does not update a running ESP32.
+
 If requests return 401/403, match the gateway token to the hosted
 `LORA_INGEST_TOKEN`; never publish that value. A 429 means the API rate limit was
 reached, while a negative status means no successful HTTP response was received.

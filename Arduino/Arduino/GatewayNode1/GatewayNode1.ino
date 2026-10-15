@@ -503,6 +503,11 @@ void handleLocalEmergency() {
 void handleLocalStatus() {
   const bool online = serverRouteAvailable();
   String json = "{";
+  json += "\"node_id\":\"NODE_1\",";
+  json += "\"server_base_url\":\"" + jsonEscape(SERVER_BASE_URL) + "\",";
+  json += "\"gateway_status\":\"" + jsonEscape(gatewayStatus) + "\",";
+  json += "\"wifi_connected\":" + String(WiFi.status() == WL_CONNECTED ? "true" : "false") + ",";
+  json += "\"wifi_ip\":\"" + WiFi.localIP().toString() + "\",";
   json += "\"server_online\":" + String(online ? "true" : "false") + ",";
   json += "\"peer_list\":\"" + jsonEscape(peerList()) + "\",";
   json += "\"active_nodes\":" + String(activeNodeCount) + ",";
