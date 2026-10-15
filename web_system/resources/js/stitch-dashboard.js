@@ -724,7 +724,7 @@ function updateLiveLists(report, action) {
                 list.prepend(card);
             }
 
-            trimList(list, Number.parseInt(list.dataset.maxItems ?? '8', 10), '[data-report-id]');
+            trimList(list, Number.parseInt(list.dataset.maxItems ?? '3', 10), '.monitoring-incident-card');
             initializeMaps();
         }
     });
@@ -823,7 +823,7 @@ function buildIncidentCard(report) {
             <h3>${escapeHtml(report.incident_type ?? 'New Incident')}</h3>
             <div class="tag-row">
                 <span class="tag ${severityTone[severityDisplay] ?? 'blue'}">${escapeHtml(severityDisplay)}</span>
-                <span class="badge neutral">${escapeHtml(aiScoreLabel)}</span>
+                ${isLoRa ? '' : `<span class="badge neutral">${escapeHtml(aiScoreLabel)}</span>`}
                 <span class="tag neutral">${escapeHtml(String(report.transmission_type ?? 'online').toUpperCase())}</span>
                 ${isHistoricalPhotoAssessment ? '<span class="badge neutral">Historical photo assessment</span>' : ''}
             </div>

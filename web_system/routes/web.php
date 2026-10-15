@@ -12,6 +12,7 @@ use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\IncidentReportController;
 use App\Http\Controllers\Web\IncidentReportExportController;
 use App\Http\Controllers\Web\MonitoringDashboardController;
+use App\Http\Controllers\Web\LoRaReportController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\SettingsController;
 use App\Support\SystemVersion;
@@ -62,6 +63,7 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
     });
 
     Route::middleware('responder')->group(function (): void {
+        Route::get('/lora-reports', [LoRaReportController::class, 'index'])->name('lora-reports.index');
         Route::get('/monitoring', MonitoringDashboardController::class)->name('monitoring');
         Route::get('/monitoring/lora-mesh', [MonitoringDashboardController::class, 'loraMesh'])->name('monitoring.lora-mesh');
         Route::get('/monitoring/lora-mesh/nodes', [MonitoringDashboardController::class, 'loraMeshNodes'])->name('monitoring.lora-mesh.nodes');

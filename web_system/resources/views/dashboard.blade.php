@@ -499,13 +499,10 @@
                         <p class="panel-kicker">Latest Incident</p>
                         <h2 class="panel-title">Live incident monitoring</h2>
                     </div>
-                    @if (method_exists($reports, 'hasPages') && $reports->hasPages())
-                        <nav class="monitoring-card-pager command-pager" aria-label="Latest incident pages">
-                            <a href="{{ $reports->previousPageUrl() ?: '#' }}" class="command-page-btn {{ $reports->onFirstPage() ? 'is-disabled' : '' }}" aria-label="Show previous latest incidents">←</a>
-                            <span class="command-page-count">Page {{ $reports->currentPage() }} / {{ $reports->lastPage() }}</span>
-                            <a href="{{ $reports->nextPageUrl() ?: '#' }}" class="command-page-btn {{ $reports->hasMorePages() ? '' : 'is-disabled' }}" aria-label="Show next latest incidents">→</a>
-                        </nav>
-                    @endif
+                    <div class="action-row">
+                        <a href="{{ route('lora-reports.index') }}" class="btn btn-secondary">All LoRa reports</a>
+                        <a href="{{ route('reports.index') }}" class="btn btn-secondary">All incident reports</a>
+                    </div>
                 </div>
 
                 <div class="monitoring-incident-grid" data-live-incident-list data-max-items="3">
@@ -545,7 +542,7 @@
                                     <h3>{{ $report->incident_type }}</h3>
                                     <div class="tag-row">
                                         <span class="tag {{ $tone($report->severity_display) }}">{{ $report->severity_display }}</span>
-                                        <span class="badge {{ $confidenceTone($report->operational_ai_confidence) }}">{{ $report->ai_score_display }}</span>
+                                        @unless ($isLoRa)<span class="badge {{ $confidenceTone($report->operational_ai_confidence) }}">{{ $report->ai_score_display }}</span>@endunless
                                         <span class="tag neutral">{{ strtoupper($report->transmission_type ?: 'online') }}</span>
                                         @if (in_array($report->operational_ai_source, ['python_model', 'image_model'], true))
                                             <span class="badge neutral">Historical photo assessment</span>
@@ -592,15 +589,7 @@
                         @endforelse
                 </div>
 
-                @if (method_exists($reports, 'hasPages') && $reports->hasPages())
-                    <div class="report-pagination compact-pagination">
-                        <span class="report-pagination-meta">Page {{ $reports->currentPage() }} of {{ $reports->lastPage() }}</span>
-                        <div class="button-row">
-                            <a href="{{ $reports->previousPageUrl() ?: '#' }}" class="btn btn-secondary {{ $reports->onFirstPage() ? 'is-disabled' : '' }}">← Previous</a>
-                            <a href="{{ $reports->nextPageUrl() ?: '#' }}" class="btn btn-secondary {{ $reports->hasMorePages() ? '' : 'is-disabled' }}">Next →</a>
-                        </div>
-                    </div>
-                @endif
+                <p class="section-copy">Showing the three latest reports. Older reports remain available in report history.</p>
             </article>
 
             <article class="panel monitoring-summary-panel">

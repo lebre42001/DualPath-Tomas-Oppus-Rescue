@@ -55,6 +55,14 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
 ## Operations
 
+- LoRa report history (2026-10-15): deploy the new `/lora-reports` controller,
+  protected route, views, navigation, and rebuilt CSS/JS with the monitoring
+  query update. Live Monitoring now selects only the latest three records;
+  older reports remain in the database and are paginated in the history page.
+  Verify node/status filters, Previous/Next and page selection, modal review,
+  acknowledgment, and validation feedback after admin login. No schema or ESP32
+  firmware change is needed. Keep the same source release on localhost and the
+  hosted domain.
 - LoRa report visibility and acknowledgment (2026-10-15): deploy the updated
   Laravel controllers, node directory, Blade views, and rebuilt assets together.
   No schema migration or ESP32 reupload is required for this change. Node cards

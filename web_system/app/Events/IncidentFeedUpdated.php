@@ -86,7 +86,7 @@ class IncidentFeedUpdated implements ShouldBroadcastNow
                 'dispatch_recommendation' => $recommendation,
                 'created_at' => optional($report->created_at)->toIso8601String(),
                 'updated_at' => optional($report->updated_at)->toIso8601String(),
-                'detail_url' => route('reports.index', [
+                'detail_url' => route($report->transmission_type === 'lora' ? 'lora-reports.index' : 'reports.index', [
                     'review' => $report->id,
                 ]).'#incident-report-'.$report->id,
                 'destroy_url' => route('reports.destroy', $report),

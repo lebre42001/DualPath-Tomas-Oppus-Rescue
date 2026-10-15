@@ -114,6 +114,7 @@ SVG,
                     <a href="{{ $monitoringUrl }}" class="{{ $isCivilian ? (request()->routeIs('dashboard') ? 'active' : '') : ((request()->routeIs('monitoring') || (request()->routeIs('dashboard') && ! $authUser?->is_admin)) ? 'active' : '') }}"><span>{{ $isCivilian ? 'Dashboard' : 'Live Monitoring' }}</span><small aria-hidden="true">LM</small></a>
                     @if ($authUser?->is_admin)
                         <a href="{{ route('monitoring.lora-mesh') }}" class="{{ request()->routeIs('monitoring.lora-mesh*') ? 'active' : '' }}"><span>LoRa Mesh</span><small aria-hidden="true">LR</small></a>
+                        <a href="{{ route('lora-reports.index') }}" class="{{ request()->routeIs('lora-reports.*') ? 'active' : '' }}"><span>LoRa Reports</span><small aria-hidden="true">LP</small></a>
                     @endif
                     @if ($isCivilian)
                         <a href="{{ $sendReportUrl }}" class="{{ request()->routeIs('reports.create') || request()->routeIs('account.verify') ? 'active' : '' }}"><span>{{ $isAccountVerified ? 'Send Report' : 'Verify Account' }}</span><small>{{ $isAccountVerified ? 'SR' : 'VA' }}</small></a>

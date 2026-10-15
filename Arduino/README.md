@@ -13,6 +13,13 @@ The active mesh uses `GatewayNode1/GatewayNode1.ino` for NODE_1 and the configur
 
 ### Finding and acknowledging a field report
 
+Live Monitoring shows only the newest three reports. Older reports stay saved
+in the database. The dedicated `https://dualpath.bsit4bdevs.tech/lora-reports`
+page lists all received LoRa reports with All/Active/Closed tabs, node and search
+filters, a page-size selector, Previous/Next links, and a page selector. Each
+row opens the full description, submission metadata, and acknowledgment form
+in the shared accessible report modal. Notification links also open that modal.
+
 Open `https://dualpath.bsit4bdevs.tech/monitoring/lora-mesh` as an admin. Each
 node card now links its latest emergency report and offers **Acknowledge** while
 that report is still `received`. **View LoRa reports** opens the complete report

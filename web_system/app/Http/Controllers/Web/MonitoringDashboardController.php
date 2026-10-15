@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Support\LoraMeshNodeDirectory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -29,19 +28,9 @@ class MonitoringDashboardController extends Controller
             ->with(['assignedResponder', 'reporter'])
             ->latest('created_at')
             ->latest('id')
-            ->take(10)
+            ->take(3)
             ->get();
-        $currentPage = max(1, (int) $request->integer('page', 1));
-        $reports = new LengthAwarePaginator(
-            $allReports->forPage($currentPage, 3)->values(),
-            $allReports->count(),
-            3,
-            $currentPage,
-            [
-                'path' => route('monitoring'),
-                'query' => $request->except('page'),
-            ]
-        );
+        $reports = $allReports;
 
         $priorityIncident = IncidentReport::query()
             ->with(['assignedResponder'])
