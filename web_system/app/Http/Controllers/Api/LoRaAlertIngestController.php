@@ -57,6 +57,7 @@ class LoRaAlertIngestController extends Controller
         $ingestKey = $ingestor->loraKey($senderId, $sequence);
 
         if ($existing = $ingestor->existing($ingestKey)) {
+            $this->retryReviewAcknowledgment($existing);
             $this->recordNodeSeen($senderId, $gatewayId, $validated, 'SOS');
 
             return response()->json([
@@ -131,6 +132,7 @@ class LoRaAlertIngestController extends Controller
         $report = $result['report'];
 
         if (! $result['created']) {
+            $this->retryReviewAcknowledgment($report);
             $this->recordNodeSeen($senderId, $gatewayId, $validated, 'SOS');
 
             return response()->json([
@@ -149,6 +151,18 @@ class LoRaAlertIngestController extends Controller
             'duplicate' => false,
             'data' => $this->reportPayload($report),
         ], 201);
+    }
+
+    private function retryReviewAcknowledgment(IncidentReport $report): void
+    {
+        // A field node retries its SOS until it receives the admin's ACK.
+        // A successful gateway broadcast alone does not confirm radio receipt.
+        IncidentReport::query()->whereKey($report->id)
+            ->where('status', '!=', 'received')
+            ->whereNotNull('lora_ack_queued_at')
+            ->whereNotNull('lora_ack_delivered_at')
+            ->update(['lora_ack_delivered_at' => null]);
+        $report->refresh();
     }
 
     private function authorizeHardwareGateway(Request $request): void

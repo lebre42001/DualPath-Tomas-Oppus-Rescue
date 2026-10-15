@@ -55,6 +55,14 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
 ## Operations
 
+- LoRa report visibility and acknowledgment (2026-10-15): deploy the updated
+  Laravel controllers, node directory, Blade views, and rebuilt assets together.
+  No schema migration or ESP32 reupload is required for this change. Node cards
+  link actual reports and allow an admin to acknowledge them; pending SOS retries
+  requeue a lost review ACK. Verify the protected mesh/report routes after admin
+  login, then manually acknowledge an existing report and check the originating
+  node dashboard. Do not use a successful gateway broadcast as proof of receipt
+  by the field node.
 - Battery/link telemetry adds nullable columns to `lora_node_states`; the web
   startup migration applies them on redeploy. Deploy the backend before
   uploading the matching NODE_1 and NODE_2–NODE_10 firmware. Verify the authenticated

@@ -146,7 +146,7 @@ class LoRaMeshGatewayTest extends TestCase
             (string) $response->json('packet')
         );
         $this->assertStringEndsWith(
-            'Your emergency report has been reviewed by the emergency team.',
+            'The emergency team is responding to your report.',
             (string) $response->json('packet')
         );
 

@@ -151,6 +151,7 @@ class LoRaMeshGatewayController extends Controller
 
         $report = IncidentReport::query()
             ->where('transmission_type', 'lora')
+            ->where('status', '!=', 'received')
             ->whereNotNull('lora_ack_queued_at')
             ->whereNull('lora_ack_delivered_at')
             ->whereNotNull('lora_sequence')
@@ -162,13 +163,18 @@ class LoRaMeshGatewayController extends Controller
         }
 
         $ackStatus = $report->status === 'rejected' ? 'REJECTED' : 'ACKNOWLEDGED';
-        $defaultMessage = $report->status === 'rejected'
-            ? 'Your report was reviewed and cancelled by the emergency team.'
-            : 'Your emergency report has been reviewed by the emergency team.';
+        $defaultMessage = match ($report->status) {
+            'rejected' => 'Your report was reviewed and cancelled by the emergency team.',
+            'acknowledged' => 'We received your emergency report and are reviewing it.',
+            'resolved' => 'Your emergency report has been marked done by the emergency team.',
+            'dispatched', 'responding' => 'The emergency team is responding to your report.',
+            default => 'Your emergency report has been reviewed by the emergency team.',
+        };
         $message = Str::of((string) ($report->response_notes ?: $defaultMessage))
             ->replace(['|', "\r", "\n"], ' ')
-            ->squish()
-            ->limit(72, '');
+            ->squish();
+        // Radio payload limits count UTF-8 bytes, including relay route growth.
+        $message = mb_strcut((string) $message, 0, 72, 'UTF-8');
         $acknowledgedAt = $report->lora_ack_queued_at->copy()->utc()->toIso8601String();
         $packet = implode('|', [
             'ACK',

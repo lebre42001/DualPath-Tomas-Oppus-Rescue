@@ -26,7 +26,9 @@ class IncidentReportFilterQuery
                         ->orWhere('incident_type', 'like', "%{$term}%")
                         ->orWhere('location_text', 'like', "%{$term}%")
                         ->orWhere('description', 'like', "%{$term}%")
-                        ->orWhere('reporter_name', 'like', "%{$term}%");
+                        ->orWhere('reporter_name', 'like', "%{$term}%")
+                        ->orWhere('lora_sender_id', 'like', "%{$term}%")
+                        ->orWhere('lora_sequence', 'like', "%{$term}%");
                 });
             })
             ->when(

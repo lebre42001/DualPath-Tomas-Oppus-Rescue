@@ -740,6 +740,9 @@
                                             @csrf
                                             <textarea name="response_notes" class="textarea" placeholder="Required message for Respond or Cancel">{{ old('response_notes', $report->response_notes) }}</textarea>
                                             <div class="action-row">
+                                                @if ($report->transmission_type === 'lora' && $report->status === 'received')
+                                                    <button type="submit" name="status" value="acknowledged" class="action-btn primary">Acknowledge</button>
+                                                @endif
                                                 <button type="submit" name="status" value="responding" class="action-btn secondary">Respond</button>
                                                 <button type="submit" name="status" value="resolved" class="action-btn primary">Set Done</button>
                                                 <button type="submit" name="status" value="rejected" class="action-btn danger">Cancel</button>

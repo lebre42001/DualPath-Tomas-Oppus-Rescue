@@ -13,6 +13,7 @@
                 <h2>Field network status</h2>
                 <p>This page refreshes node telemetry every five seconds. A node is ACTIVE when its latest heartbeat or emergency packet arrived within the last 30 seconds; after that it is UNREACHABLE until a new packet is received.</p>
                 <div class="hero-actions">
+                    <a href="{{ route('reports.index', ['transmission' => 'lora']) }}" class="btn btn-primary">View LoRa reports</a>
                     <a href="{{ route('monitoring') }}" class="btn btn-secondary">Back to Live Monitoring</a>
                     <button type="button" class="btn btn-primary" data-lora-refresh>Refresh now</button>
                 </div>

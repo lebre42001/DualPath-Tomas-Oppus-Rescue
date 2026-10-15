@@ -11,6 +11,26 @@ The active mesh uses `GatewayNode1/GatewayNode1.ino` for NODE_1 and the configur
 5. NODE_1 maps SOS and heartbeat packets to the official authenticated Laravel API. Laravel deduplicates reports, records node heartbeat/route state, and uses the static node registry for report coordinates.
 6. When a responder moves a LoRa report from `received` to another response state, Laravel queues a manual ACK. NODE_1 polls it and broadcasts it through the mesh; the originating field node clears its saved SOS only after receiving that ACK.
 
+### Finding and acknowledging a field report
+
+Open `https://dualpath.bsit4bdevs.tech/monitoring/lora-mesh` as an admin. Each
+node card now links its latest emergency report and offers **Acknowledge** while
+that report is still `received`. **View LoRa reports** opens the complete report
+list; searching the radio message ID (for example `NODE_2-1`) also finds it.
+Viewing a report does not acknowledge it. Click **Acknowledge** to send the manual
+review notification. Use Respond, Set Done, or Cancel with a response message
+for subsequent decisions.
+
+The phone must remain connected to the originating node's Wi-Fi and its local
+dashboard to see the returned message/popup. A gateway broadcast is not proof
+that the field node received the ACK. If the node retries a report that was
+already reviewed, Laravel queues the ACK again without creating a second report.
+Later status or response-message changes also queue a fresh notification. The
+existing NODE_1 and field firmware support this backend update; no reupload is
+needed. This does not add a phone push notification while disconnected from the
+node. Fixed map coordinates still require actual installation coordinates in
+`web_system/config/lora_nodes.php`.
+
 The deployed design intentionally has no physical SOS button or switch. Emergency submission is always performed from the local dashboard after the user connects to the selected ESP32 node's Wi-Fi. If the captive portal does not open automatically, the user can browse to `http://192.168.4.1` while remaining connected to the node Wi-Fi. After submission, the field-node dashboard shows that the report is under admin review. When the admin or responder reviews it, the originating node displays a persistent review-completed popup with the result, response message, and review time.
 
 Field nodes send a heartbeat every 10 seconds, so NODE_1 can mark them active on the monitoring page without a user opening the local dashboard. Heartbeats are scheduled before peer discovery, and field nodes learn peers from received `HELLO` packets without echoing field-to-field acknowledgments. This keeps NODE_2 through NODE_10 from flooding the shared LoRa channel when several boards start together. NODE_1 still acknowledges a field node's `HELLO`, allowing the field node to identify a direct gateway peer.

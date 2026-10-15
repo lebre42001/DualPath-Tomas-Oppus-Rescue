@@ -20,13 +20,16 @@ class LoraMeshNodeDirectory
 
         $latestReports = IncidentReport::query()
             ->where('transmission_type', 'lora')
-            ->whereIn('lora_sender_id', $meshNodeIds)
-            ->latest('created_at')
-            ->take(100)
+            ->whereIn('id', IncidentReport::query()
+                ->selectRaw('MAX(id)')
+                ->where('transmission_type', 'lora')
+                ->whereIn('lora_sender_id', $meshNodeIds)
+                ->groupBy('lora_sender_id'))
             ->get([
                 'id', 'lora_sender_id', 'lora_gateway_id', 'created_at',
                 'latitude', 'longitude', 'lora_gateway_rssi', 'lora_gateway_snr',
                 'lora_receiver_rssi', 'lora_receiver_snr',
+                'report_code', 'status', 'lora_sequence', 'lora_ack_queued_at', 'lora_ack_delivered_at',
             ])
             ->unique('lora_sender_id')
             ->keyBy('lora_sender_id');
@@ -60,6 +63,7 @@ class LoraMeshNodeDirectory
                     'gateway_id' => $state?->gateway_id ?? $report?->lora_gateway_id,
                     'last_seen' => $lastSeen,
                     'has_report' => $hasEverBeenSeen,
+                    'latest_report' => $report,
                     'recently_heard' => $recentlyHeard,
                     'route' => $state?->last_known_route,
                     'peers' => $state?->known_peers ?? [],

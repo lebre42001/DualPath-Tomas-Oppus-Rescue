@@ -542,11 +542,16 @@ class IncidentReportController extends Controller
             ]),
         ];
 
-        if ($incidentReport->transmission_type === 'lora'
-            && $incidentReport->status === 'received'
-            && $status !== 'received'
-            && $incidentReport->lora_ack_queued_at === null) {
-            $updates['lora_ack_queued_at'] = now();
+        if ($incidentReport->transmission_type === 'lora') {
+            if ($status === 'received') {
+                $updates['lora_ack_queued_at'] = null;
+                $updates['lora_ack_delivered_at'] = null;
+            } elseif ($status !== $incidentReport->status
+                || $effectiveNotes !== $incidentReport->response_notes
+                || $incidentReport->lora_ack_queued_at === null) {
+                $updates['lora_ack_queued_at'] = now();
+                $updates['lora_ack_delivered_at'] = null;
+            }
         }
 
         if ($request->has('response_notes')) {
