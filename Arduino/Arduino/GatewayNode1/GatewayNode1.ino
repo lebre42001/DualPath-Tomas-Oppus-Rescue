@@ -20,6 +20,7 @@
 #include <LoRa.h>
 #include <time.h>
 #include <esp_system.h>
+#include "server_root_ca.h"
 
 #if __has_include("arduino_secrets.h")
 #include "arduino_secrets.h"
@@ -253,6 +254,13 @@ bool beginHttp(HTTPClient& http, const String& url) {
       Serial.println("[HTTPS] Configure SERVER_ROOT_CA_CERT; certificate verification is required.");
       return false;
     }
+    // TLS validates certificate dates against the ESP32 clock. Keep serving
+    // the local portal and retry later while NTP synchronizes after boot.
+    if (time(nullptr) < 1700000000) {
+      gatewayStatus = "Waiting for internet time before HTTPS";
+      Serial.println("[HTTPS] Waiting for NTP time; check the hotspot's internet connection.");
+      return false;
+    }
     secureClient.setCACert(SERVER_ROOT_CA_CERT);
     return http.begin(secureClient, url);
   }
@@ -270,13 +278,20 @@ bool requestApi(const String& method, const String& path, const String& body, St
   if (!isConfigured() || WiFi.status() != WL_CONNECTED) return false;
 
   HTTPClient http;
+  http.setConnectTimeout(7000);
   http.setTimeout(7000);
   if (!beginHttp(http, apiUrl(path))) return false;
+  http.addHeader("Accept", "application/json");
   http.addHeader("Content-Type", "application/json");
   http.addHeader("X-STITCH-LORA-TOKEN", LORA_GATEWAY_TOKEN);
 
   int statusCode = method == "POST" ? http.POST(body) : http.GET();
   responseBody = http.getString();
+  if (statusCode < 0) {
+    Serial.println("[API connection] " + HTTPClient::errorToString(statusCode));
+  } else if (statusCode == 401 || statusCode == 403) {
+    Serial.println("[API auth] Match LORA_GATEWAY_TOKEN with LORA_INGEST_TOKEN on the hosted website.");
+  }
   http.end();
 
   Serial.println("[API " + method + "] " + path + " -> " + String(statusCode));
@@ -669,7 +684,8 @@ void connectRouter() {
 
   if (WiFi.status() == WL_CONNECTED) {
     Serial.println("Router connected: " + WiFi.localIP().toString());
-    configTime(0, 0, "pool.ntp.org", "time.nist.gov");
+    configTime(0, 0, "pool.ntp.org", "time.nist.gov", "time.cloudflare.com");
+    Serial.println("Laravel server: " + String(SERVER_BASE_URL));
     gatewayStatus = "Router connected; checking Laravel";
     lastServerCheckMs = millis() - SERVER_CHECK_INTERVAL_MS;
   } else {

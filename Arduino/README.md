@@ -29,9 +29,54 @@ If the shared field-node template changes, regenerate all nine sketches from the
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Arduino\generate_field_node_sketches.ps1
 ```
 
-Each node exposes a local AP named `Node 2 Emergency` through `Node 10 Emergency`. Change `LOCAL_AP_PASSWORD` in the shared template before regeneration if a different local dashboard password is required.
+Each node exposes a local AP named `Node 2 Emergency` through `Node 10 Emergency`. Change `LOCAL_AP_PASSWORD` in the ignored `FieldNode/field_node_secrets.h` before regeneration if a different local dashboard password is required.
 
 ## NODE_1 Gateway Setup
+
+### Official HTTPS website
+
+The official gateway destination is `https://dualpath.bsit4bdevs.tech`.
+The local ignored `GatewayNode1/arduino_secrets.h` is configured for this origin,
+with the existing Wi-Fi credentials and gateway token preserved. The authenticated
+health, network-summary, and pending-ACK endpoints returned HTTP 200 on
+2026-10-15 using that gateway token; the home and login pages also returned 200.
+These checks do not confirm a physical ESP32 upload or a report round trip.
+
+`server_root_ca.h` contains the public ISRG Root X1 certificate, verified against
+the domain's trusted certificate chain. Use
+`const char* SERVER_ROOT_CA_CERT = DUALPATH_ROOT_CA;` in `arduino_secrets.h`.
+NODE_1 waits for internet time from NTP before making a verified HTTPS request.
+If the hosting certificate chain changes to a different root authority, update
+the public CA header from that authority's official source and upload again.
+
+Open `Arduino/Arduino/GatewayNode1/GatewayNode1.ino` in Arduino IDE and upload
+the sketch to NODE_1. Keep `arduino_secrets.h` and `server_root_ca.h` in that same
+folder; the IDE compiles them with the sketch. Do not upload the headers as
+separate sketches. Monitor at 115200 baud for:
+
+```text
+Laravel server: https://dualpath.bsit4bdevs.tech
+[API GET] /health -> 200
+[API POST] /heartbeat -> 200
+```
+
+Then log in to `https://dualpath.bsit4bdevs.tech/monitoring/lora-mesh` as an
+admin/responder and check that NODE_1 becomes ACTIVE. NODE_2 through NODE_10
+still communicate through LoRa to NODE_1; they need no domain or Wi-Fi changes
+for this migration. Power them on and confirm their relayed heartbeats appear
+online. To validate the complete report path, submit a clearly identified test
+report from a node's local dashboard, review it on the hosted website, and
+confirm the originating node displays the responder acknowledgment.
+
+NODE_1's configured Wi-Fi must have internet access. The existing laptop mobile
+hotspot can share the laptop's internet, but the local Laravel server and inbound
+TCP 8000 firewall rule are no longer needed for this hosted destination. Changing
+to an unrelated hotspot still requires its SSID/password in `arduino_secrets.h`.
+If requests return 401/403, match the gateway token to the hosted
+`LORA_INGEST_TOKEN`; never publish that value. A 429 means the API rate limit was
+reached, while a negative status means no successful HTTP response was received.
+
+### Configuration for another installation
 
 Copy `Arduino/Arduino/GatewayNode1/arduino_secrets.example.h` to `arduino_secrets.h` in the same folder. Set the installation-specific values in the copied file before upload:
 

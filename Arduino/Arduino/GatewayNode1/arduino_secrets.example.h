@@ -3,18 +3,19 @@
 // Copy this file as arduino_secrets.h in the same folder, then replace every
 // placeholder. arduino_secrets.h is excluded by the repository .gitignore.
 
-const char* ROUTER_WIFI_SSID = "Infinix Note 40 Pro Nel";
-const char* ROUTER_WIFI_PASSWORD = "12345678";
+const char* ROUTER_WIFI_SSID = "YOUR_WIFI_NAME";
+const char* ROUTER_WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
 
 // Local Laragon example: http://192.168.1.23:8000
-// Online example: https://your-official-domain.example
-const char* SERVER_BASE_URL = "http://192.168.1.23:8000";
+// Official hosted website. Do not append /api/v1/lora; the sketch adds it.
+const char* SERVER_BASE_URL = "https://dualpath.bsit4bdevs.tech";
 
-// Must exactly match LORA_INGEST_TOKEN in web_system/.env.
+// Must exactly match LORA_INGEST_TOKEN in the hosted website's environment.
 const char* LORA_GATEWAY_TOKEN = "SET_THE_SAME_LORA_INGEST_TOKEN";
 
 // Password for the NODE_1_Gateway local captive portal (minimum 8 characters).
 const char* LOCAL_AP_PASSWORD = "CHANGE_NODE_1_AP_PASSWORD";
 
-// Leave empty for local HTTP. For HTTPS, paste the trusted root CA PEM.
-const char* SERVER_ROOT_CA_CERT = "";
+// Public trusted root from server_root_ca.h, included by GatewayNode1.ino.
+// For a local HTTP deployment only, this may be set to "".
+const char* SERVER_ROOT_CA_CERT = DUALPATH_ROOT_CA;
