@@ -17,7 +17,13 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 4. Generate a Laravel key locally from `web_system/` with
    `php artisan key:generate --show` and store the output as `APP_KEY`. Set
    `APP_URL` to the exact HTTPS origin you will publish, and `REVERB_HOST` to
-   that hostname without a scheme or path.
+   that hostname without a scheme or path. For Google sign-in on
+   `dualpath.bsit4bdevs.tech`, set `GOOGLE_CLIENT_ID` and
+   `GOOGLE_CLIENT_SECRET` from the Google OAuth web client in Dokploy. The
+   callback is built from `APP_URL`; add
+   `https://dualpath.bsit4bdevs.tech/auth/google/callback` to that web client's
+   authorized redirect URIs in Google Cloud. Local `web_system/.env` values
+   are not available inside Dokploy.
 5. Deploy. The web container waits for MariaDB, applies Laravel migrations, and
    then starts Nginx, PHP-FPM, and Reverb. First boot can take longer while the
    image is built and migrations run.
@@ -26,7 +32,9 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
    MariaDB private; it has no published port. Dokploy's domain routing should
    target the internal container port, not expose it directly.
 7. After deployment, confirm `/system/version`, `/`, `/login`, and `/register`
-   return successful responses. Check the `web` and `db` health states and
+   return successful responses. While signed out, confirm `/auth/google`
+   redirects to `accounts.google.com` with the public callback URI; complete a
+   sign-in with a Google test user. Check the `web` and `db` health states and
    verify a report upload survives a container redeploy.
 
 ## Runtime configuration

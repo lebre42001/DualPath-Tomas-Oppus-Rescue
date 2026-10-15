@@ -159,6 +159,73 @@ class AuthAndReportFlowTest extends TestCase
         Http::assertSentCount(2);
     }
 
+    public function test_google_callback_rejects_a_different_google_identity_for_an_already_linked_email(): void
+    {
+        config([
+            'services.google.client_id' => 'google-client-id',
+            'services.google.client_secret' => 'google-client-secret',
+            'services.google.redirect' => route('auth.google.callback'),
+        ]);
+
+        $user = User::factory()->create([
+            'email' => 'linked.civilian@example.com',
+            'role' => 'civilian',
+            'is_admin' => false,
+            'google_id' => 'original-google-id',
+        ]);
+
+        Http::fake([
+            'https://oauth2.googleapis.com/token' => Http::response(['access_token' => 'google-access-token']),
+            'https://www.googleapis.com/oauth2/v3/userinfo' => Http::response([
+                'sub' => 'different-google-id',
+                'email' => 'linked.civilian@example.com',
+                'email_verified' => true,
+            ]),
+        ]);
+
+        $this->withSession(['google_oauth_state' => 'valid-state'])
+            ->get(route('auth.google.callback', ['state' => 'valid-state', 'code' => 'valid-code']))
+            ->assertRedirect(route('login'))
+            ->assertSessionHasErrors('identity');
+
+        $this->assertGuest();
+        $this->assertSame('original-google-id', $user->fresh()->google_id);
+        $this->assertSame(1, User::query()->count());
+    }
+
+    public function test_google_callback_signs_in_an_existing_civilian_with_the_same_verified_email(): void
+    {
+        config([
+            'services.google.client_id' => 'google-client-id',
+            'services.google.client_secret' => 'google-client-secret',
+            'services.google.redirect' => route('auth.google.callback'),
+        ]);
+
+        $user = User::factory()->create([
+            'email' => 'existing.civilian@example.com',
+            'role' => 'civilian',
+            'is_admin' => false,
+        ]);
+
+        Http::fake([
+            'https://oauth2.googleapis.com/token' => Http::response(['access_token' => 'google-access-token']),
+            'https://www.googleapis.com/oauth2/v3/userinfo' => Http::response([
+                'sub' => 'existing-google-id',
+                'email' => 'existing.civilian@example.com',
+                'email_verified' => true,
+                'name' => 'Existing Civilian',
+            ]),
+        ]);
+
+        $this->withSession(['google_oauth_state' => 'valid-state'])
+            ->get(route('auth.google.callback', ['state' => 'valid-state', 'code' => 'valid-code']))
+            ->assertRedirect(route('reports.create'));
+
+        $this->assertAuthenticatedAs($user);
+        $this->assertSame('existing-google-id', $user->fresh()->google_id);
+        $this->assertSame(1, User::query()->count());
+    }
+
     public function test_login_form_uses_https_when_served_behind_render_proxy(): void
     {
         $this

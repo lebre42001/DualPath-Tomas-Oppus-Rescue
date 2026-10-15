@@ -98,10 +98,15 @@ class GoogleAuthController extends Controller
             return $this->loginError('Use a verified Google account email to continue.');
         }
 
-        $user = User::query()
-            ->where('google_id', $googleId)
-            ->orWhere('email', $email)
-            ->first();
+        $user = User::query()->where('google_id', $googleId)->first();
+
+        if (! $user) {
+            $user = User::query()->where('email', $email)->first();
+
+            if ($user && $user->google_id && $user->google_id !== $googleId) {
+                return $this->loginError('This email is already linked to a different Google account.');
+            }
+        }
 
         if ($user && (! $user->isCivilian() || $user->is_admin)) {
             return $this->loginError('This Google account is not authorized for civilian sender access.');
