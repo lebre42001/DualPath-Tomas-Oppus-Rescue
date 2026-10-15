@@ -1,5 +1,13 @@
 # Online Deployment Plan
 
+## Docker PHP extension fix (2026-10-15)
+
+The web Dockerfile shared by Render and Dokploy now installs GD with JPEG and
+FreeType support for PhpSpreadsheet. Composer and PHP-FPM use the same PHP 8.3
+base and extensions; the build runs `composer check-platform-reqs --no-dev`.
+Rebuild the web image to apply this change. No dependency versions or AI flags
+change. A successful public deployment still requires app-route verification.
+
 ## Local dataset cleanup (2026-10-01)
 
 Only `ai_service/datasets/emergency_text/` remains in the local dataset tree.

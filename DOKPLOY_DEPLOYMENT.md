@@ -31,6 +31,9 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
 ## Runtime configuration
 
+- The shared Dockerfile installs GD with JPEG/FreeType support before Composer
+  runs. Dependency installation and PHP-FPM use the same PHP 8.3 base and
+  extensions, and the build checks the locked packages' platform requirements.
 - The production container uses `APP_DEBUG=false`, secure HTTPS cookies, MySQL
   sessions, stderr logging, and database migrations at startup.
 - MariaDB data persists in `mariadb-data`; uploaded files persist in
