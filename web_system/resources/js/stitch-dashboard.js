@@ -636,7 +636,7 @@ function subscribeToIncidentFeed() {
 }
 
 function prependAlert(report) {
-    if ((report.severity ?? '') !== 'Fatal') {
+    if (!['Critical', 'Fatal'].includes(report.severity ?? '')) {
         return;
     }
 
@@ -738,7 +738,7 @@ function updateCounters(report, action) {
     incrementCounter('active');
     incrementCounter('today');
 
-    if (report.severity === 'Fatal') {
+    if (['Critical', 'Fatal'].includes(report.severity)) {
         incrementCounter('fatal');
     }
 }
@@ -753,10 +753,10 @@ function incrementCounter(name) {
 }
 
 function buildIncidentCard(report) {
-    const severity = report.severity ?? 'Minor';
+    const severity = report.severity ?? null;
     const aiSource = String(report.ai_source ?? '');
     const isProvisional = report.severity_is_provisional || aiSource === 'text_review';
-    const severityDisplay = isProvisional ? 'Needs review' : (report.severity_display ?? severity);
+    const severityDisplay = report.severity_display ?? (isProvisional || severity === null ? 'Needs review' : severity);
     const isTextAssessment = aiSource.startsWith('text_');
     const isHistoricalPhotoAssessment = ['python_model', 'image_model'].includes(aiSource);
     const aiScoreLabel = report.ai_score_label ?? (isTextAssessment

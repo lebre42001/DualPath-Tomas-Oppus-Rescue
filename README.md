@@ -23,7 +23,7 @@ This workspace now contains the mobile app, web system, database references, AI 
 - `ai_service/V0_3_RETRAINING_PLAN.md` contains the next retraining plan focused on motorcycles, night/rain, rural roads, and multi-vehicle incidents
 - `ai_service/V0_3_TRAINING_RUNNER_GUIDE.md` contains the step-by-step command flow for the future v0.3 training run
 - `ai_service/AI_PROMOTION_CHECKLIST.md` contains the safety checklist before any live AI model switch
-- `ai_service/active_config.txt` stores the current default AI config used by the service
+- `ai_service/active_config.txt` is retained only for archived image training scripts; the FastAPI service uses the text checkpoint selected by `AI_TEXT_MODEL_DIR`
 - `ai_service/datasets/bontoc_southern_leyte/v0_3_candidate/` contains the reviewed-pool and train/val/test staging structure for the next retraining cycle
 - `ai_service/datasets\bontoc_southern_leyte\v0_3_candidate\source_batches\wikimedia_commons_seed_batch_2026_04_04.csv` tracks the starter public seed images approved into the reviewed pool
 - `ai_service/configs/bontoc_southern_leyte_v0_3_candidate_template.yaml` is the starter config for the future v0.3 training run
@@ -452,7 +452,13 @@ pwsh -File .\tool\run_stitch.ps1 -Target android-phone-wifi -HostIp 192.168.1.5 
 
 ## Description-only severity and supporting photos
 
-- New web/API reports use only the submitted emergency description for AI severity suggestions. Photos and verification selfies remain available to responders and are never sent to the image predictor during reporting.
+- Intended workflow: description → text AI suggestion → Admin Receiver confirms or corrects → final severity. An admin can also record an assessment when text AI is unavailable. Confirmation is a human review decision, not a guarantee of 100% model accuracy.
+- An unconfirmed text AI result is advisory: `ai_suggested_severity` carries the suggestion for admin clients, while operational severity stays null and confirmed-severity counts/dispatch wait for human review. The original model result remains in the review audit after confirmation or correction.
+- Monitoring report modals, Incident Reports, and report details share a **Confirm or correct severity** form. It records Minor, Serious, Critical, or Needs review, with an internal review reason, reviewer ID, time, original AI suggestion, and description fingerprint. Saving this review keeps coordination status and the civilian response message unchanged.
+- CSV/Excel exports append the text review label, reviewer ID, time, note, description fingerprint, review method, and original AI label. An edited description or later conflicting assessment invalidates the prior text label in the export. These are review candidates; training and independent release evaluation remain separate steps.
+- New web/API reports use only the submitted emergency description for AI severity suggestions. Photos and verification selfies remain available to responders as evidence.
+- The FastAPI runtime exposes `POST /predict/text` only. Its image `/predict` endpoint and image checkpoint loading were removed. Archived ResNet18 experiments are not part of report inference or deployment dependencies.
 - Text inference is disabled until a reviewed model is ready. Disabled, unavailable, or uncertain text inference accepts the report as **Needs review**, with no fabricated confidence. Explicit responder severity remains authoritative.
+- The current text classifier predicts severity (`Minor`, `Serious`, `Critical`, or `Needs review`). Accident **type** classification would require a separately reviewed label set, dataset, and model; it is not inferred today.
 - Existing file validation and local photo checks remain; there is no remote photo relevance/severity gate. Old queued image-analysis jobs do nothing, and historical photo assessments and evidence are preserved.
 - The initial text model scope is road/vehicle accidents in English, Tagalog, Cebuano, and mixed language. Hardware LoRa priority remains a separate input without photo inference. See [the text AI workflow](ai_service/TEXT_AI_WORKFLOW.md).

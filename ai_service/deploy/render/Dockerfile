@@ -6,13 +6,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends libgomp1 libjpeg62-turbo libpng16-16 \
-    && rm -rf /var/lib/apt/lists/*
-
 COPY requirements.txt requirements-text.txt ./
 
-# Text inference is opt-in; the default image profile retains image-only dependencies.
+# Keep the free manual-only demo small; set this build arg for a reviewed text release.
 ARG INSTALL_TEXT_AI=false
 
 RUN pip install --upgrade pip \

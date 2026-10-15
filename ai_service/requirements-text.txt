@@ -1,5 +1,4 @@
-# Optional text experiments/inference. Install in an isolated environment.
-# The existing image service dependencies and active configuration stay separate.
+# Text model inference and training dependencies. Install alongside requirements.txt.
 torch>=2.6,<3.0
 transformers>=4.51,<5.0
 safetensors>=0.5,<1.0

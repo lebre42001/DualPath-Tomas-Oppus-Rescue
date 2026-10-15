@@ -8,6 +8,20 @@ __pycache__
 tests
 datasets
 artifacts/reports
-# Local text-training candidates are never implicitly shipped by COPY . .
-artifacts/checkpoints/text_*
+# Training checkpoints are never implicitly shipped by COPY . .
+artifacts/checkpoints
+# Image research code and configs are not part of the deployed text service.
+configs
+active_config.txt
+active_photo_relevance_config.txt
+src/ai_service/checkpoint_sync.py
+src/ai_service/config.py
+src/ai_service/dataset.py
+src/ai_service/defaults.py
+src/ai_service/inference.py
+src/ai_service/model.py
+src/ai_service/trainer.py
+train.py
+infer.py
+tools
 tool

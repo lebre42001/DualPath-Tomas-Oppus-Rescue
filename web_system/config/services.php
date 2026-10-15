@@ -35,25 +35,6 @@ return [
         ],
     ],
 
-    'ai_severity' => [
-        // Archived image-service settings; AiSeverityClient never runs image triage.
-        'enabled' => env('AI_SEVERITY_ENABLED', false),
-        'url' => env(
-            'AI_SEVERITY_SERVICE_URL',
-            'http://'
-            .env('AI_SEVERITY_SERVICE_HOST', '127.0.0.1')
-            .':'
-            .env('AI_SEVERITY_SERVICE_PORT', '8100')
-        ),
-        'timeout' => (int) env('AI_SEVERITY_TIMEOUT', 20),
-        'retry_attempts' => (int) env('AI_SEVERITY_RETRY_ATTEMPTS', 1),
-        'retry_delay_ms' => (int) env('AI_SEVERITY_RETRY_DELAY_MS', 1500),
-        'dispatch' => env('AI_SEVERITY_DISPATCH', 'sync'),
-        'model_name' => env('AI_SEVERITY_MODEL_NAME', 'bontoc_southern_leyte_production_candidate_external'),
-        'model_version' => env('AI_SEVERITY_MODEL_VERSION', '0.3.0'),
-        'require_civilian_photo_gate' => env('AI_SEVERITY_REQUIRE_CIVILIAN_PHOTO_GATE', false),
-    ],
-
     // Enable only after the separate text dataset/model review workflow is complete.
     'ai_text' => [
         // Fail closed: reports await responder severity unless another mode is explicitly configured.

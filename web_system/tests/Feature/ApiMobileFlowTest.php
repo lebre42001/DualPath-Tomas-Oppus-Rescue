@@ -411,7 +411,9 @@ class ApiMobileFlowTest extends TestCase
         $report = IncidentReport::query()->latest('id')->firstOrFail();
 
         $this->assertSame('Critical', $report->severity);
-        $this->assertSame('Critical', $report->severity_display);
+        $this->assertSame('Awaiting responder', $report->severity_display);
+        $this->assertSame('Critical', $report->ai_suggested_severity);
+        $this->assertNull($report->operational_severity);
         $this->assertSame('text_model', $report->ai_source);
         $this->assertSame('complete', $report->ai_status);
         $this->assertSame(90, $report->ai_confidence);

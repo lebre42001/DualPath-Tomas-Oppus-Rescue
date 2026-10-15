@@ -357,7 +357,7 @@ class IncidentReportController extends Controller
                 'id' => 'sender-location-'.$report->id,
                 'incident_type' => $report->incident_type,
                 'location_text' => $report->location_text,
-                'severity' => $report->severity,
+                'severity' => $report->operational_severity,
                 'severity_display' => $report->severity_display,
                 'latitude' => (float) $report->latitude,
                 'longitude' => (float) $report->longitude,
@@ -426,6 +426,7 @@ class IncidentReportController extends Controller
         $isSuppressedLegacySuggestion = $incidentReport->isLegacyUnreviewedTextSuggestion();
         $isTextAssessment = str_starts_with((string) $incidentReport->ai_source, 'text_');
         $isPendingAssessment = $incidentReport->severity === null
+            || $incidentReport->isAwaitingTextSeverityConfirmation()
             || in_array($incidentReport->ai_source, ['manual_only', 'text_review'], true)
             || $isSuppressedLegacySuggestion;
         $manualAiAudit = collect($incidentReport->coordination_log ?? [])
@@ -498,7 +499,7 @@ class IncidentReportController extends Controller
             'reviewed_severity' => ['nullable', Rule::prohibitedIf(
                 ! in_array($incidentReport->ai_source, ['manual_only', 'human_responder'], true)
                     && ! str_starts_with((string) $incidentReport->ai_source, 'text_')
-            ), Rule::in(['Minor', 'Serious', 'Fatal'])],
+            ), Rule::in(['Minor', 'Serious', 'Critical', 'Fatal'])],
             'response_notes' => [$requiresDecisionMessage ? 'required' : 'nullable', 'string', 'max:1000'],
         ], [
             'response_notes.required' => 'Add a message before responding to or cancelling this incident report.',
@@ -791,11 +792,7 @@ class IncidentReportController extends Controller
 
     private function operationalSeverityOrderSql(): string
     {
-        $manualOnlyPending = IncidentReport::manualOnlyMode()
-            ? " or (ai_source in ('text_model', 'text_model_experimental') and ai_review_required = 1)"
-            : '';
-
-        return "case when reported_fatality_flag = 1 then 0 when ai_source in ('manual_only', 'text_review'){$manualOnlyPending} then 4 "
+        return "case when reported_fatality_flag = 1 then 0 when severity is null or ai_source in ('manual_only', 'text_review', 'text_model', 'text_model_experimental') then 4 "
             ."when severity in ('Critical', 'Fatal') then 1 when severity = 'Serious' then 2 "
             ."when severity = 'Minor' then 3 else 4 end";
     }

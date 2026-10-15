@@ -735,6 +735,7 @@
 
                                     <div class="detail-card incident-actions">
                                         <strong>Admin decision</strong>
+                                        @include('reports.partials.severity-review-form', ['report' => $report])
                                         <p>{{ $dispatchSummary($report->severity_display) }} Respond or cancel actions require a message so the civilian sender receives a clear update.</p>
                                         <form method="POST" action="{{ route('reports.coordination', $report) }}" class="stack">
                                             @csrf

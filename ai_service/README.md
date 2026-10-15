@@ -2,9 +2,9 @@
 
 ## Service-wide inference switch
 
-The FastAPI service defaults to `AI_OPERATION_MODE=MANUAL_ONLY`. In this mode, image and text prediction routes, readiness checks, warmup, startup model preloading, and startup checkpoint synchronization are disabled. `/health` reports that inference is disabled without loading model weights; `/ready` returns 503 because AI readiness is intentionally unavailable. Deployments that keep the service running in manual-only mode should use `/health` as the liveness check. Legacy flags such as `AI_TEXT_ENABLED=true`, preload settings, or checkpoint files cannot override this mode. Enable model work only by explicitly setting `AI_OPERATION_MODE=AI_ENABLED`; text inference still additionally requires `AI_TEXT_ENABLED=true` and a valid reviewed checkpoint.
+The FastAPI service defaults to `AI_OPERATION_MODE=MANUAL_ONLY`. In this mode, text prediction and readiness are disabled. `/health` reports that inference is disabled without loading model weights; `/ready` returns 503. Deployments that keep the service running in manual-only mode should use `/health` as the liveness check. Enable model work only by explicitly setting `AI_OPERATION_MODE=AI_ENABLED`; text inference still additionally requires `AI_TEXT_ENABLED=true` and a valid reviewed checkpoint. The image prediction route and image checkpoint loader have been removed from the service.
 
-This folder contains text-classifier training/inference and archived image-model experiments for the Stitch emergency system.
+This folder contains the operational text-classifier service and archived image-model experiments for the Stitch emergency system. The runtime has no image prediction endpoint and does not load image checkpoints.
 
 **Current application workflow:** new web/API severity suggestions use the emergency description only. Photos remain supporting evidence for responders. Laravel no longer calls image severity/relevance prediction, and stale image jobs cannot update reports. Text inference remains disabled pending a reviewed model; reports are accepted as **Needs review** meanwhile. Existing model artifacts and historical assessments are preserved.
 
@@ -44,8 +44,8 @@ Edit the `working/reports.csv` master and run `python organize_text.py` to refre
 `python organize_text.py --check` verifies that they still match. No training is started.
 Three-epoch head-only and full-backbone mBERT experiments are complete; see the
 [September 19 experimental training report](artifacts/reports/text_mbert_20260919/README.md) for results and limitations.
-The existing `active_config.txt` and image model are unchanged; the image scope below
-does not describe the separate text classifier. New routes are `/health/text`,
+The legacy `active_config.txt` and image experiment files remain for research history; the image scope below
+does not describe the running service. Text routes are `/health/text`,
 `/ready/text`, and `POST /predict/text`.
 
 ## Archived image-model scope
@@ -276,19 +276,15 @@ Use these files first:
 - `local_validation/manifests/scenario_coverage_template.csv`
 - `local_validation/review/local_validation_review_template.csv`
 
-## Active Default Config
+## Archived image training default
 
-The current active default config now points to the cleaned external production-candidate model:
+The legacy `active_config.txt` pointer refers to an archived ResNet18 image experiment:
 
 ```text
 configs/bontoc_southern_leyte_production_candidate_external.yaml
 ```
 
-This affects:
-
-- the FastAPI inference service
-- `train.py` default behavior
-- `infer.py` default behavior
+This affects legacy `train.py` and `infer.py` defaults only. The FastAPI service reads `AI_TEXT_MODEL_DIR` for a reviewed text model and never reads this pointer.
 
 ## Training
 
@@ -586,10 +582,13 @@ This prints:
 uvicorn src.ai_service.api:app --reload --port 8100
 ```
 
-Endpoints:
+Current endpoints:
 
 - `GET /health`
-- `POST /predict`
+- `GET /ready` and `GET /ready/text`
+- `POST /predict/text` (description JSON only)
+
+The historical image `POST /predict` endpoint no longer exists.
 
 ## Safety Reminder
 

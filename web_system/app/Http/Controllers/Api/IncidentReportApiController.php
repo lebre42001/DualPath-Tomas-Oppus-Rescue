@@ -297,6 +297,7 @@ class IncidentReportApiController extends Controller
             'ai_model_name' => $report->operational_ai_model_name,
             'ai_model_version' => $report->operational_ai_model_version,
             'ai_review_required' => $report->operational_ai_review_required,
+            'ai_suggested_severity' => $report->ai_suggested_severity,
             'ai_probabilities' => $report->operational_ai_probabilities,
             'ai_processed_at' => $report->isOperationalSeveritySuppressed() ? null : optional($report->ai_processed_at)->toIso8601String(),
             'ai_error_message' => $report->ai_error_message,

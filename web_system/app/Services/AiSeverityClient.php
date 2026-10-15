@@ -22,16 +22,6 @@ class AiSeverityClient
         return 'disabled';
     }
 
-    public function modelName(): string
-    {
-        return (string) config('services.ai_severity.model_name', 'bontoc_southern_leyte_severity_baseline');
-    }
-
-    public function modelVersion(): string
-    {
-        return (string) config('services.ai_severity.model_version', '0.1.0');
-    }
-
     public function shouldAnalyze(IncidentReport $report): bool
     {
         return false;

@@ -8,6 +8,22 @@ base and extensions; the build runs `composer check-platform-reqs --no-dev`.
 Rebuild the web image to apply this change. No dependency versions or AI flags
 change. A successful public deployment still requires app-route verification.
 
+## Text-only AI runtime (2026-10-15)
+
+The FastAPI runtime now serves description-based severity inference only. Its
+image `/predict` route, image checkpoint synchronization, image model dependencies,
+and Render image settings are removed. Historical image research files remain in
+the repository for audit but are excluded from the deployed AI image. Photos and
+selfies remain report evidence. The free demo keeps `AI_OPERATION_MODE=MANUAL_ONLY`
+and `AI_TEXT_ENABLED=false` until a reviewed text checkpoint is approved.
+
+After deploying the matching commit to both Render services, compare the web
+`/system/version` revision with the deployed source, verify `/login`, check AI
+`/health` and `/health/text`, and confirm image `/predict` returns 404. Enable
+text inference only with a reviewed model artifact, matching `AI_TEXT_MODEL_DIR`,
+and `INSTALL_TEXT_AI=true` at build time. A 200 response on the web health route
+alone does not establish text model readiness.
+
 ## Local dataset cleanup (2026-10-01)
 
 Only `ai_service/datasets/emergency_text/` remains in the local dataset tree.
@@ -54,14 +70,13 @@ moves historical datasets under `experiments/` and `archive/initial_80/`, and us
 and their tests/docs with the next source release; do not bake local datasets,
 review worksheets or experimental checkpoints into the public demo. This update
 does not change deployment flags, the text inference contract or the photo-evidence flow.
-The AI Docker context now excludes `artifacts/checkpoints/text_*` so local training
-candidates cannot be shipped implicitly by `COPY . .`. A later reviewed release
+The AI Docker context now excludes all `artifacts/checkpoints/` and archived image
+research code, so local training candidates cannot be shipped implicitly by `COPY . .`. A later reviewed release
 must be supplied explicitly, for example in a separate `artifacts/releases/` path
 or a mounted model directory, with its matching `AI_TEXT_MODEL_DIR` setting.
 
-The checked-in blueprint specifies SQLite/local files and retains the existing AI
-service, but Laravel's `AI_SEVERITY_ENABLED` and `AI_SEVERITY_REQUIRE_CIVILIAN_PHOTO_GATE`
-are now false. Text AI remains explicitly disabled. This demo profile is not
+The checked-in blueprint specifies SQLite/local files and retains the text-only AI
+service. The image model flags and hosted image checkpoints are removed. Text AI remains explicitly disabled. This demo profile is not
 production-safe. Deploy the matching PHP/Blade/JS source and rebuilt assets together,
 clear caches, and verify an authorized isolated report flow preserves photo evidence
 while showing Needs review. This local change has not redeployed the public app;
@@ -110,7 +125,7 @@ This is the recommended layout for the current codebase because the project alre
 
 - `stitch-ai` on Render private networking
   - serves text inference through `POST /predict/text` when a reviewed model is enabled, with `/health/text` and `/ready/text`
-  - retains legacy image endpoints for archived experiments; normal reporting does not call them
+  - has no image prediction endpoint or deployed image checkpoint
   - only Laravel needs to call this service
 
 ### External managed services
@@ -212,6 +227,8 @@ Minimum required values:
 
 - `APP_URL`
 - `APP_KEY`
+- `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` (for civilian Google sign-in)
+- `GOOGLE_REDIRECT_URI` (the exact public callback URL)
 - `DB_HOST`
 - `DB_DATABASE`
 - `DB_USERNAME`
@@ -230,11 +247,15 @@ If using the default Render domain first:
 
 - `APP_URL=https://your-stitch-web-service.onrender.com`
 - `REVERB_HOST=your-stitch-web-service.onrender.com`
+- `GOOGLE_REDIRECT_URI=https://your-stitch-web-service.onrender.com/auth/google/callback`
 
 If using a custom domain:
 
 - `APP_URL=https://your-domain.com`
 - `REVERB_HOST=your-domain.com`
+- `GOOGLE_REDIRECT_URI=https://your-domain.com/auth/google/callback`
+
+Register each `GOOGLE_REDIRECT_URI` as an authorized redirect URI on the Google OAuth web client. For local testing, use `http://127.0.0.1:8000/auth/google/callback` and set the credentials in `web_system/.env`; then run `php artisan optimize:clear`. The Google sign-in button on the civilian login page needs these credentials to complete the callback. Keep the client secret out of Git.
 
 Use:
 

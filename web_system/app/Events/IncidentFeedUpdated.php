@@ -60,6 +60,7 @@ class IncidentFeedUpdated implements ShouldBroadcastNow
                 'assigned_responder_name' => $report->assignedResponder?->name,
                 'ai_summary' => $report->operational_ai_summary,
                 'ai_confidence' => $report->operational_ai_confidence,
+                'ai_suggested_severity' => $report->ai_suggested_severity,
                 'ai_source' => $report->operational_ai_source,
                 'ai_status' => $report->operational_ai_status,
                 'ai_model_name' => $report->operational_ai_model_name,
@@ -99,6 +100,10 @@ class IncidentFeedUpdated implements ShouldBroadcastNow
 
     private function messageFor(IncidentReport $report): string
     {
+        if ($this->action === 'severity_reviewed') {
+            return 'Admin severity review saved for '.$report->report_code.': '.$report->severity_display.'.';
+        }
+
         if ($report->reported_fatality_flag && $this->action === 'created') {
             return 'Possible fatality reported at '.$report->location_text.'. Critical-priority responder verification required.';
         }

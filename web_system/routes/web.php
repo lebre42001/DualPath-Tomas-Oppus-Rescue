@@ -11,6 +11,7 @@ use App\Http\Controllers\Web\CivilianAccountController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\IncidentReportController;
 use App\Http\Controllers\Web\IncidentReportExportController;
+use App\Http\Controllers\Web\IncidentSeverityReviewController;
 use App\Http\Controllers\Web\MonitoringDashboardController;
 use App\Http\Controllers\Web\LoRaReportController;
 use App\Http\Controllers\Web\ProfileController;
@@ -93,6 +94,7 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
         Route::middleware('responder')->group(function (): void {
             Route::delete('/', [IncidentReportController::class, 'destroyAll'])->name('destroy-all');
             Route::post('/{incidentReport}/coordination', [IncidentReportController::class, 'updateCoordination'])->name('coordination');
+            Route::post('/{incidentReport}/severity-review', IncidentSeverityReviewController::class)->name('severity-review');
             Route::delete('/{incidentReport}', [IncidentReportController::class, 'destroy'])->name('destroy');
             Route::get('/{incidentReport}/ai-severity', [IncidentReportController::class, 'severity'])->name('severity');
             Route::get('/{incidentReport}/transmissions', [IncidentReportController::class, 'transmissions'])->name('transmissions');

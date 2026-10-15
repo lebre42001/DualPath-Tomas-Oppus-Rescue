@@ -143,6 +143,9 @@
 @endsection
 
 @section('content')
+    <section class="panel">
+        @include('reports.partials.severity-review-form', ['report' => $report])
+    </section>
     <section class="dual-grid">
         <article class="panel">
             <div class="panel-head">

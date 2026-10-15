@@ -312,13 +312,11 @@
                 </div>
             @else
                 <div class="panel-head"><div class="panel-heading"><p class="panel-kicker">Emergency Coordination</p><h2 class="panel-title">Assign admin receiver and update status</h2></div></div>
+                @include('reports.partials.severity-review-form', ['report' => $report])
                 <form method="POST" action="{{ route('reports.coordination', $report) }}" class="stack">
                     @csrf
                     <div class="field"><label for="assigned_responder_id">Assigned admin receiver</label><select id="assigned_responder_id" name="assigned_responder_id"><option value="">Unassigned</option>@foreach ($responders as $responder)<option value="{{ $responder->id }}" @selected(old('assigned_responder_id', $report->assigned_responder_id) == $responder->id)>{{ $responder->name }} - Admin</option>@endforeach</select></div>
                     <div class="field"><label for="status">Response status</label><select id="status" name="status">@foreach (['received', 'acknowledged', 'dispatched', 'responding', 'resolved', 'rejected'] as $status)<option value="{{ $status }}" @selected(old('status', $report->status) === $status)>{{ $statusDisplayLabel($status) }}</option>@endforeach</select></div>
-                    @if ($report->ai_source === 'manual_only' || $report->ai_source === 'human_responder' || str_starts_with((string) $report->ai_source, 'text_'))
-                        <div class="field"><label for="reviewed-severity">Responder severity assessment</label><select id="reviewed-severity" name="reviewed_severity"><option value="">Keep current assessment</option>@foreach (['Minor', 'Serious', 'Fatal'] as $severity)<option value="{{ $severity }}" @selected(old('reviewed_severity', $report->severity) === $severity)>{{ $severity }}</option>@endforeach</select><p>Select a severity only after reviewing this report. Saving a selection records your assessment and adds an audit entry.</p></div>
-                    @endif
                     <div class="field"><label for="response_notes">Response notes</label><textarea id="response_notes" class="textarea" name="response_notes" placeholder="Admin actions, route notes, or follow-up details">{{ old('response_notes', $report->response_notes) }}</textarea></div>
                     <button class="btn btn-primary" type="submit">Save Coordination Update</button>
                 </form>
@@ -525,6 +523,14 @@
                             @endif
                             @if (!empty($entry['response_notes']))
                                 <p><strong>Notes:</strong> {{ $entry['response_notes'] }}</p>
+                            @endif
+                            @if (!empty($entry['review_notes']))
+                                <p><strong>Text severity review reason:</strong> {{ $entry['review_notes'] }}</p>
+                            @endif
+                            @if (!empty($entry['ai_suggestion']['label']))
+                                <p><strong>Original AI suggestion:</strong> {{ ucfirst($entry['ai_suggestion']['label']) }}
+                                    @if (!empty($entry['ai_suggestion']['model_name'])) ({{ $entry['ai_suggestion']['model_name'] }})@endif
+                                </p>
                             @endif
                         </div>
                     </div>

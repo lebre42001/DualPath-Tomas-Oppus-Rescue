@@ -35,7 +35,7 @@ class MonitoringDashboardController extends Controller
         $priorityIncident = IncidentReport::query()
             ->with(['assignedResponder'])
             ->whereIn('status', $activeStatuses)
-            ->orderByRaw("case when reported_fatality_flag = 1 then 0 when severity in ('Critical', 'Fatal') then 1 when severity = 'Serious' then 2 when severity = 'Minor' then 3 when (ai_source in ('manual_only', 'text_review') or (".(IncidentReport::manualOnlyMode() ? "ai_source in ('text_model', 'text_model_experimental') and ai_review_required = 1" : '0 = 1').")) then 4 else 5 end")
+            ->orderByRaw("case when reported_fatality_flag = 1 then 0 when severity is null or ai_source in ('manual_only', 'text_review', 'text_model', 'text_model_experimental') then 4 when severity in ('Critical', 'Fatal') then 1 when severity = 'Serious' then 2 when severity = 'Minor' then 3 else 5 end")
             ->oldest('created_at')
             ->first();
 

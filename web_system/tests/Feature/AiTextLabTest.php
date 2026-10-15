@@ -48,7 +48,7 @@ class AiTextLabTest extends TestCase
 
         auth()->logout();
         $this->post(route('admin.text-ai-test.predict'), ['description' => 'A collision happened.'])
-            ->assertRedirect(route('login'));
+            ->assertRedirect(route('admin.login'));
     }
 
     public function test_unavailable_test_service_shows_safe_error_without_persisting_input(): void

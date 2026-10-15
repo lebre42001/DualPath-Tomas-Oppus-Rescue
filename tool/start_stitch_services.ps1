@@ -284,16 +284,6 @@ $mysqlRoot = 'C:\laragon\bin\mysql\mysql-8.4.3-winx64'
 $mysqlConfig = Join-Path $mysqlRoot 'my.ini'
 $mysqlServer = Join-Path $mysqlRoot 'bin\mysqld.exe'
 
-Set-EnvDefault -Name 'AI_SEVERITY_TIMEOUT' -Value '90'
-Set-EnvDefault -Name 'AI_SEVERITY_RETRY_ATTEMPTS' -Value '2'
-Set-EnvDefault -Name 'AI_SEVERITY_RETRY_DELAY_MS' -Value '1500'
-Set-EnvDefault -Name 'AI_PRELOAD_MODELS' -Value 'true'
-Set-EnvDefault -Name 'AI_SINGLE_MODEL_CACHE' -Value 'false'
-Set-EnvDefault -Name 'AI_UNLOAD_AFTER_PREDICT' -Value 'false'
-Set-EnvDefault -Name 'AI_PHOTO_RELEVANCE_REJECT_THRESHOLD' -Value '0.95'
-Set-EnvDefault -Name 'AI_RELEVANCE_SEVERITY_OVERRIDE_ENABLED' -Value 'true'
-Set-EnvDefault -Name 'AI_RELEVANCE_SEVERITY_OVERRIDE_THRESHOLD' -Value '0.85'
-Set-EnvDefault -Name 'AI_RELEVANCE_SEVERITY_OVERRIDE_LABELS' -Value 'serious,fatal'
 
 $textAiPython = Join-Path $root 'ai_service\.venv-xlmrt-fulltrain\Scripts\python.exe'
 

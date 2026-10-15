@@ -63,6 +63,7 @@ class IncidentReportExportController extends Controller
             'incident_reports.ai_status',
             'incident_reports.created_at',
             'incident_reports.reported_fatality_flag',
+            'incident_reports.coordination_log',
         ];
         if ($includePersonalData) {
             $columns[] = 'incident_reports.reporter_name';
@@ -189,6 +190,13 @@ class IncidentReportExportController extends Controller
             'Assigned responder',
             'Transmission',
             'Description',
+            'Text review label',
+            'Text reviewer ID',
+            'Text reviewed at',
+            'Text review note',
+            'Text description SHA256',
+            'Text review method',
+            'AI suggestion label',
         ];
 
         if ($includePersonalData) {
@@ -200,6 +208,7 @@ class IncidentReportExportController extends Controller
 
     private function rowFor(IncidentReport $report, bool $includePersonalData): array
     {
+        $textReview = $report->description_severity_review;
         $values = [
             $report->report_code,
             $report->created_at?->copy()->timezone(self::REPORTING_TIMEZONE)->format('Y-m-d H:i:s'),
@@ -214,6 +223,13 @@ class IncidentReportExportController extends Controller
             $report->assignedResponder?->name,
             $report->transmission_type,
             $report->description,
+            $textReview['reviewed_label'] ?? null,
+            $textReview['actor_id'] ?? null,
+            $textReview['occurred_at'] ?? null,
+            $textReview['review_notes'] ?? null,
+            $textReview['description_sha256'] ?? null,
+            $textReview['review_method'] ?? null,
+            $textReview['ai_suggestion']['label'] ?? null,
         ];
 
         if ($includePersonalData) {
@@ -277,8 +293,15 @@ class IncidentReportExportController extends Controller
         foreach ($widths as $column => $width) {
             $sheet->getColumnDimension($column)->setWidth($width);
         }
+        $reviewWidths = [24, 18, 28, 60, 66, 24, 24];
+        foreach ($reviewWidths as $offset => $width) {
+            $column = Coordinate::stringFromColumnIndex(count($columns) - count($reviewWidths) + $offset + 1);
+            $sheet->getColumnDimension($column)->setWidth($width);
+        }
         $descriptionColumn = $includePersonalData ? 'O' : 'M';
         $sheet->getStyle("{$descriptionColumn}2:{$descriptionColumn}{$lastRow}")->getAlignment()->setWrapText(true);
+        $reviewNoteColumn = $includePersonalData ? 'S' : 'Q';
+        $sheet->getStyle("{$reviewNoteColumn}2:{$reviewNoteColumn}{$lastRow}")->getAlignment()->setWrapText(true);
 
         return response()->streamDownload(function () use ($spreadsheet): void {
             $writer = new Xlsx($spreadsheet);

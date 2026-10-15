@@ -211,12 +211,16 @@ class TextSeverityIntegrationTest extends TestCase
 
         $report = IncidentReport::query()->sole();
         $this->assertSame('Critical', $report->severity);
-        $this->assertSame('Critical', $report->severity_display);
+        $this->assertSame('Awaiting responder', $report->severity_display);
+        $this->assertSame('Critical', $report->ai_suggested_severity);
+        $this->assertNull($report->operational_severity);
         $this->assertSame('text_model', $report->ai_source);
         $this->assertTrue($report->ai_review_required);
         $this->assertSame('photo', $report->evidence_type);
         $broadcast = (new IncidentFeedUpdated($report))->broadcastWith();
-        $this->assertSame('Critical', $broadcast['report']['severity_display']);
+        $this->assertSame('Awaiting responder', $broadcast['report']['severity_display']);
+        $this->assertSame('Critical', $broadcast['report']['ai_suggested_severity']);
+        $this->assertSame('Needs responder review', $broadcast['report']['dispatch_recommendation']['priority']);
         $this->assertStringNotContainsString('Fatal', $broadcast['message']);
         Storage::assertExists($report->evidence_path);
         Http::assertSentCount(1);
@@ -237,9 +241,10 @@ class TextSeverityIntegrationTest extends TestCase
 
         $this->postJson('/api/v1/reports', $this->reportInput('A driver is unresponsive after a collision.'))
             ->assertCreated()
-            ->assertJsonPath('data.severity', 'Critical')
-            ->assertJsonPath('data.severity_display', 'Critical')
-            ->assertJsonPath('data.severity_is_provisional', false)
+            ->assertJsonPath('data.severity', null)
+            ->assertJsonPath('data.severity_display', 'Awaiting responder')
+            ->assertJsonPath('data.ai_suggested_severity', 'Critical')
+            ->assertJsonPath('data.severity_is_provisional', true)
             ->assertJsonPath('data.ai_source', 'text_model')
             ->assertJsonPath('data.ai_review_required', true)
             ->assertJsonPath('data.ai_score_label', 'Model score 90% (uncalibrated)');
@@ -450,7 +455,8 @@ class TextSeverityIntegrationTest extends TestCase
         $reports = IncidentReport::query()->get();
         $this->assertCount(2, $reports);
         $this->assertSame(['text_model', 'text_model'], $reports->pluck('ai_source')->all());
-        $this->assertSame(['Critical', 'Critical'], $reports->pluck('severity_display')->all());
+        $this->assertSame(['Awaiting responder', 'Awaiting responder'], $reports->pluck('severity_display')->all());
+        $this->assertSame(['Critical', 'Critical'], $reports->pluck('ai_suggested_severity')->all());
         $this->assertNotSame($reports[0]->evidence_path, $reports[1]->evidence_path);
         Http::assertSentCount(2);
         Http::assertNotSent(fn ($request) => $request->url() !== 'http://text-ai.test/predict/text'

@@ -85,6 +85,17 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
 ## Operations
 
+- Severity confirmation (2026-10-16): deploy `IncidentSeverityReviewController`,
+  the protected `reports.severity-review` route, shared review form, model review
+  accessors, updated report views/export controller, and rebuilt assets together.
+  Include the dashboard ordering, API projections, and incident broadcast changes;
+  unconfirmed model suggestions must remain advisory until admin confirmation.
+  No schema migration is required; review provenance is stored in the existing
+  coordination log. Verify admin confirmation/correction, Needs review, an
+  unchanged coordination status and civilian response message, and appended CSV
+  review fields on the public app. Current AI flags remain disabled pending a
+  validated text checkpoint; this UI feature does not activate inference.
+
 - LoRa report history (2026-10-15): deploy the new `/lora-reports` controller,
   protected route, views, navigation, and rebuilt CSS/JS with the monitoring
   query update. Live Monitoring now selects only the latest three records;

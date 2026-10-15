@@ -11,6 +11,7 @@ Record the following before a release decision:
 | Agreed label rubric/version | Pending |
 | Dataset version/fingerprint and actual review records | Pending |
 | Independent test source, permissions and group-overlap review | Pending |
+| Independent real-report test accuracy | At least 80%; measure only after responder labels and a frozen, incident-independent test set exist |
 | Separate calibration data/method/report | Pending |
 | Model version and checkpoint fingerprint | Pending |
 | Minimum critical recall overall and per language | Agree before final evaluation |
@@ -22,6 +23,6 @@ Record the following before a release decision:
 | Supervised trial observations and responder corrections | Pending |
 | Final reviewer decision, date and signed/traceable rationale | Pending |
 
-Blank entries are not passes. Zero underclassification when the model abstains on everything does not establish useful automatic classification. No universal accuracy target is preapproved here. Preserve the existing candidate and its poor results even when a later experiment improves.
+Blank entries are not passes. The 80% accuracy target is a requested minimum for this release, not an achieved result or a substitute for critical recall, underclassification, per-language performance, and useful coverage. Zero underclassification when the model abstains on everything does not establish useful automatic classification. Preserve the existing candidate and its poor results even when a later experiment improves.
 
 The reviewer decision must reference actual evidence. Editing model metadata alone does not establish that evidence. Keep the prior release/fallback available for rollback; verify local and online behavior separately if a later release is authorized.

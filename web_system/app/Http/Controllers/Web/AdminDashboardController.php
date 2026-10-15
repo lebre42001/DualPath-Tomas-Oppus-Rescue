@@ -43,7 +43,7 @@ class AdminDashboardController extends Controller
                             ->whereIn('status', $activeStatuses);
                     });
             })
-            ->orderByRaw("case when status = 'rejected' then 5 when reported_fatality_flag = 1 then 0 when severity in ('Critical', 'Fatal') then 1 when severity = 'Serious' then 2 when (ai_source in ('manual_only', 'text_review') or (".(IncidentReport::manualOnlyMode() ? "ai_source in ('text_model', 'text_model_experimental') and ai_review_required = 1" : '0 = 1').")) then 4 else 3 end")
+            ->orderByRaw("case when status = 'rejected' then 5 when reported_fatality_flag = 1 then 0 when severity is null or ai_source in ('manual_only', 'text_review', 'text_model', 'text_model_experimental') then 4 when severity in ('Critical', 'Fatal') then 1 when severity = 'Serious' then 2 else 3 end")
             ->latest('status_updated_at')
             ->latest('created_at')
             ->take(8)
