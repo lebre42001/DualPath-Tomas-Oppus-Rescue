@@ -30,6 +30,7 @@ This workspace now contains the mobile app, web system, database references, AI 
 - `ai_service/tools/build_v0_3_candidate_split.py` builds the v0.3 train/val/test split from approved reviewed-pool images
 - `ai_service/datasets/bontoc_southern_leyte/local_validation/LOCAL_VALIDATION_RUNNER_GUIDE.md` gives the exact command-by-command local validation evaluation flow
 - `DEPLOYMENT_RENDER_RAILWAY.md` contains the recommended online deployment plan for the current stack
+- `DOKPLOY_DEPLOYMENT.md` and `compose.dokploy.yaml` prepare the Laravel PWA and MariaDB stack for Dokploy Docker Compose hosting
 - `render.yaml` contains the Render Blueprint scaffold for online deployment
 
 ## UI Reference Folders
