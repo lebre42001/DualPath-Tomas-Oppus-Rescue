@@ -1,0 +1,26 @@
+{
+  "status": "completed_research_candidate_not_promoted",
+  "dataset_version": "civilian_multilingual_850_responder_reconciled_20261007",
+  "dataset_fingerprint": "0afc1388a2967a924633d4753ea42e44e3944ecf7e781ef29f99e183885cc06b",
+  "split_sha256": "1b146f34847c2fc100ae61a23659c1bd290999347866d7d73b72c959cd2e579c",
+  "training_command": "python train_text.py train --data datasets/emergency_text/reviewed/civilian_multilingual_850_responder_reconciled_20261007/reports.csv --output artifacts/checkpoints/text_xlmr_responder_reconciled_20261007/seed_41 --seed 41 --split-manifest datasets/emergency_text/reviewed/civilian_multilingual_850_responder_reconciled_20261007/frozen_split_manifest.json --base-model FacebookAI/xlm-roberta-base --revision 42f548f32366559214515ec137cdd16002968bf6 --epochs 8 --early-stopping-patience 2 --selection-metric balanced_safety --batch-size 1 --gradient-accumulation 16 --max-length 64 --unfreeze-backbone --gradient-checkpointing --optimizer adafactor --warmup-ratio 0.05 --learning-rate 2e-5 --threads 2 --device cuda --review-threshold 0.65",
+  "training_device": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "seed": 41,
+  "validation_selected_epoch": 2,
+  "max_epochs": 8,
+  "stopped_after_epoch": 4,
+  "evaluation": "test split evaluated once for seed 41; not used for checkpoint selection",
+  "evaluation_report": "artifacts/reports/xlmr_responder_reconciled_20261007/EXPERIMENT_EVALUATION.md",
+  "active_config_path": "active_config.txt",
+  "active_config_sha256_after_run": "5e56620321a9d19e485f54369cad2e0fa2d6cd8305b6b817f3efa9c0366b41ba",
+  "active_config_changed": false,
+  "active_model_changed": false,
+  "deployment_approved": false,
+  "limitations": [
+    "single seed only",
+    "synthetic-origin examples",
+    "prior model-development exposure to this dataset",
+    "responder reviewer identity not independently verified",
+    "review timestamp is a single batch timestamp for all rows"
+  ]
+}

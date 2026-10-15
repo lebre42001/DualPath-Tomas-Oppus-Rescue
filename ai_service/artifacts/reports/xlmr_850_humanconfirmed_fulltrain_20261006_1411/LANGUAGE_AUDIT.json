@@ -1,0 +1,118 @@
+{
+  "artifact": "AI-only language quality screen for the existing 850 synthetic emergency-description drafts",
+  "created_on": "2026-10-06",
+  "status": "AI_ONLY_NOT_FLUENT_HUMAN_VERIFICATION_NOT_SEVERITY_CONFIRMATION",
+  "scope": {
+    "rows": 850,
+    "by_language": {
+      "English": 250,
+      "Tagalog": 240,
+      "Cebuano/Bisaya": 240,
+      "Mixed": 120
+    },
+    "by_current_label": {
+      "minor": 213,
+      "serious": 214,
+      "critical": 211,
+      "needs_review": 212
+    }
+  },
+  "source_intake_files_sha256": {
+    "LANGUAGE_REVIEW_ENGLISH.csv": "65ae70fb092a443871ea600fb8c845b61afbeaf8c37f1eeec2bd6a1dbbc2d540",
+    "LANGUAGE_REVIEW_TAGALOG.csv": "b8d821ec3b91dd7cb63a145788920baf6bad7423a96475f0e590c37aa9ff888e",
+    "LANGUAGE_REVIEW_CEBUANO.csv": "493643ed10d70a93ac1bf90fb4312c96362b359c174f7e2d0d294e9a65e4b53c",
+    "LANGUAGE_REVIEW_MIXED.csv": "f35c671aba1e1209fe1423e69fbe5a31c7612ff655e2f52440cba9bc519c4fc9"
+  },
+  "source_rows_preserved": true,
+  "current_labels_preserved": true,
+  "source_text_modified": false,
+  "ai_language_quality_findings": {
+    "assessment_method": "Per-row conservative AI screening with transparent lexical cues: apparent readability, whether context is sparse, possible code-switch uncertainty, and explicit wording that might influence a reader?s severity interpretation. Short fragments are flagged as context-limited, not automatically incorrect. Mixed-language candidate tags are copied from the existing lexical heuristic summary only.",
+    "naturalness_screen_counts": {
+      "English|readable_apparent_unverified": 235,
+      "English|telegraphic_or_sparse": 15,
+      "Tagalog|telegraphic_or_sparse": 13,
+      "Tagalog|readable_apparent_unverified": 227,
+      "Cebuano/Bisaya|telegraphic_or_sparse": 24,
+      "Cebuano/Bisaya|readable_apparent_unverified": 216,
+      "Mixed|readable_apparent_unverified": 118,
+      "Mixed|telegraphic_or_sparse": 2
+    },
+    "meaning_clarity_screen_counts": {
+      "English|appears_interpretable_unverified": 235,
+      "English|context_limited": 15,
+      "Tagalog|context_limited": 13,
+      "Tagalog|appears_interpretable_unverified": 227,
+      "Cebuano/Bisaya|context_limited": 24,
+      "Cebuano/Bisaya|appears_interpretable_unverified": 216,
+      "Mixed|appears_interpretable_unverified": 118,
+      "Mixed|context_limited": 2
+    },
+    "short_text_rows_1_to_3_words_by_language": {
+      "English": 15,
+      "Tagalog": 13,
+      "Cebuano/Bisaya": 24,
+      "Mixed": 2
+    },
+    "mixed_language_heuristic_candidate_counts": {
+      "tri-language": 54,
+      "Cebuano-Tagalog": 32,
+      "Tagalog-English": 11,
+      "Cebuano-English": 14,
+      "unclear_requires_human_language_review": 9
+    },
+    "wording_cue_screen_row_counts_nonexclusive": {
+      "low_acuity_or_no_injury": 134,
+      "injury_or_functional_impairment": 271,
+      "critical_or_high_acuity": 126,
+      "uncertainty_or_missing_information": 26
+    },
+    "corrected_text_suggestions_emitted": 0,
+    "correction_policy": "No suggested rewrite was emitted because these synthetic drafts require fluent human review and the AI-only screen cannot safely establish idiomatic Tagalog, Cebuano/Bisaya, or mixed code-switching. Original text is preserved in every row; reviewers may enter corrections separately.",
+    "wording_cue_screen_rows_by_current_label_nonexclusive": {
+      "critical": {
+        "critical_or_high_acuity": 90,
+        "injury_or_functional_impairment": 71,
+        "low_acuity_or_no_injury": 0,
+        "uncertainty_or_missing_information": 1
+      },
+      "minor": {
+        "critical_or_high_acuity": 1,
+        "injury_or_functional_impairment": 55,
+        "low_acuity_or_no_injury": 108,
+        "uncertainty_or_missing_information": 0
+      },
+      "needs_review": {
+        "critical_or_high_acuity": 27,
+        "injury_or_functional_impairment": 40,
+        "low_acuity_or_no_injury": 0,
+        "uncertainty_or_missing_information": 25
+      },
+      "serious": {
+        "critical_or_high_acuity": 8,
+        "injury_or_functional_impairment": 105,
+        "low_acuity_or_no_injury": 26,
+        "uncertainty_or_missing_information": 0
+      }
+    },
+    "interpretation": "Cue flags identify visible lexical wording that could anchor a reader. They are language/wording observations only; no label correctness or severity confirmation is implied."
+  },
+  "limitations": [
+    "This is AI-only screening, not a fluent-human review, translation certification, language-ID verification, or responder approval.",
+    "Do not treat naturalness or clarity categories as ground truth; Cebuano/Bisaya, Tagalog, and mixed-language cases particularly require fluent reviewers.",
+    "Lexical wording cues are not severity labels and do not confirm whether the existing current_label is correct.",
+    "No labels were changed, no training dataset/model was modified, and no training or deployment was performed.",
+    "All 850 source rows are synthetic drafts, not observed civilian reports."
+  ],
+  "validation": {
+    "all_850_case_ids_unique": true,
+    "intake_row_counts_match_expected": true,
+    "text_label_family_id_preserved": true,
+    "all_rows_marked_ai_only": true,
+    "all_rows_require_human_fluency_review": true,
+    "all_rows_include_scenario_realism_scope_limit": true
+  },
+  "output_csv": "LANGUAGE_AUDIT.csv",
+  "output_csv_sha256": "94ea246e6eeead93a1e5a3f9e76bf7ddd5c6df72102cec9d6f917e37530302cb",
+  "audit_rows": 850
+}

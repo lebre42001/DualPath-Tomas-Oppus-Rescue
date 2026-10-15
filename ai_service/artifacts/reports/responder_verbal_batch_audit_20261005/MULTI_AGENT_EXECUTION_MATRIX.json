@@ -1,0 +1,87 @@
+{
+  "status": "BLOCKED_PENDING_REQUIRED_EVIDENCE",
+  "run_directory": "ai_service\\artifacts\\reports\\responder_verbal_batch_audit_20261005",
+  "agents": [
+    {
+      "agent": "verbal_batch_audit",
+      "workstreams": [
+        "A"
+      ],
+      "status": "COMPLETE_WITH_BLOCKER"
+    },
+    {
+      "agent": "dataset_privacy_inventory",
+      "workstreams": [
+        "B",
+        "C"
+      ],
+      "status": "COMPLETE_WITH_LIMITATIONS"
+    },
+    {
+      "agent": "exposure_split_audit",
+      "workstreams": [
+        "D",
+        "E"
+      ],
+      "status": "COMPLETE_WITH_BLOCKER"
+    },
+    {
+      "agent": "hardware_cuda_audit",
+      "workstreams": [
+        "G",
+        "H"
+      ],
+      "status": "COMPLETE_FOR_PRIOR_DATASET"
+    },
+    {
+      "agent": "checkpoint_pipeline_audit",
+      "workstreams": [
+        "I",
+        "N"
+      ],
+      "status": "COMPLETE"
+    },
+    {
+      "agent": "phase1_independent_redteam",
+      "workstreams": [
+        "P"
+      ],
+      "status": "COMPLETE_PHASE1_FAIL"
+    }
+  ],
+  "workstreams": {
+    "A": "PARTIAL exact verbal batch and responder identity not supported",
+    "B": "PARTIAL dataset/schema inventory complete; no human-confirmed copy may be made yet",
+    "C": "PARTIAL limited automated pattern screen only; manual privacy review not complete",
+    "D": "PARTIAL prior exact exposure verified; semantic ancestry remains uncertain",
+    "E": "PARTIAL prior split internally disjoint by recorded hashes; no fresh split approved",
+    "F": "BLOCKED by unresolved scope/lineage; do not freeze partitions",
+    "G": "COMPLETE for current RTX3050/CUDA setup",
+    "H": "PARTIAL token/memory evidence applies to prior 400-row dataset; candidate batch tokenizer stats not recalculated",
+    "I": "COMPLETE prior model/pipeline verified; new task training config not frozen pending data/split",
+    "J": "BLOCKED for this new human-confirmed run; prior 2026-10-05 provisional run is complete and separate",
+    "K": "NOT_STARTED new human-confirmed model validation",
+    "L": "BLOCKED no fresh, mixed urgent or completed challenge holdout",
+    "M": "BLOCKED no eligible independent calibration partition",
+    "N": "PARTIAL comparison only on same synthetic development split; no eligible fresh comparison",
+    "O": "PARTIAL prior sealed package verifies; no new task package/protected-binary full audit",
+    "P": "COMPLETE Phase-1 independent QA returned FAIL because exact reviewed batch cannot be mapped; whole-task QA not yet possible"
+  },
+  "current_prior_checkpoint": "ai_service/artifacts/checkpoints/text_xlmr_fulltrain_local_20261005_1724/trial_lr_2e-5_seed42",
+  "prior_checkpoint_active": false,
+  "new_training_started_for_this_master_task": false,
+  "deployment_performed": false,
+  "recorded_at_local": "2026-10-05T19:30:36.317770+08:00",
+  "agents_assigned": 6,
+  "agents_completed": 6,
+  "agents_partial": 0,
+  "agents_blocked": 0,
+  "agents_failed": 0,
+  "phase1_independent_qa": "FAIL",
+  "conflicts_found": 1,
+  "conflicts_resolved": 1,
+  "unresolved_conflicts": 0,
+  "conflict_note": "Historical handoff opening says prior training did not occur; later dated append documents the Oct 5 local full-backbone run. Reconciled as chronology; the new human-confirmed run is still not started.",
+  "new_training_started_for_master_task": false,
+  "updated_at_local": "2026-10-05T19:33:36.257984+08:00"
+}

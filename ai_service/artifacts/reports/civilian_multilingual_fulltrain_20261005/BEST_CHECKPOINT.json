@@ -1,0 +1,15 @@
+{
+  "selection_rule_id": "balanced_safety_v1_pretest_frozen",
+  "checkpoint": "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\artifacts\\checkpoints\\text_xlmr_civilian_multilingual_20261005\\trial_lr_2e-5_seed42",
+  "model_version": "text-20261005T135449737752Z",
+  "seed": 42,
+  "learning_rate": 2e-05,
+  "best_epoch": 6,
+  "selection_used_validation_only": true,
+  "selection_key": [
+    "undertriage_count=3",
+    "validation_macro_f1=0.9191785389"
+  ],
+  "test_calibration_challenge_used_for_selection": false,
+  "active_checkpoint_changed": false
+}

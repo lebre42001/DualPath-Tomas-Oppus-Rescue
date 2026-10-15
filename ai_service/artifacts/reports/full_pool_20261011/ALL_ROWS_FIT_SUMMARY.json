@@ -1,0 +1,95 @@
+{
+  "experiment_id": "emergency-text-full-pool-20261011",
+  "completed_at_utc": "2026-10-11T08:13:45.882094+00:00",
+  "status": "full_dataset_fit_completed_no_evaluation",
+  "model_version": "text-20261011T073103516899Z",
+  "checkpoint_path": "artifacts/checkpoints/full_pool_20261011/xlmr_all_rows_final_fit",
+  "dataset_rows_used": 1366,
+  "groups": 1021,
+  "dataset_fingerprint": "970c675133aecbbe479d1ee129c517a94af35ede3b015cab962dc4eb473f0ea4",
+  "review_status_distribution": {
+    "draft": 516,
+    "approved": 850
+  },
+  "all_data_reviewed": false,
+  "allow_draft": true,
+  "epochs_completed": 8,
+  "best_epoch": 8,
+  "training_seconds": 2481.35,
+  "optimizer_step_accounting": {
+    "attempted": 688,
+    "successful": 683,
+    "skipped_amp": 5,
+    "scheduler_steps": 683,
+    "first_successful_gradient_evidence": {
+      "total_grad_parameter_count": 201,
+      "backbone_grad_parameter_count": 197,
+      "global_gradient_norm_before_clip": 4.3107428550720215,
+      "gradient_norm_finite_and_nonzero": true
+    },
+    "scheduler_policy": "advance only when GradScaler scale does not decrease after optimizer step"
+  },
+  "truncated_rows": 82,
+  "max_length_tokens": 64,
+  "last_epoch_weighted_training_objective": 0.04606475675618976,
+  "evaluation_performed": false,
+  "approved_for_deployment": false,
+  "active_model_changed": false,
+  "prior_split_run_diagnostic": {
+    "macro_f1": 0.9445220681621106,
+    "critical_recall": 0.8947368421052632,
+    "raw_high_risk_undertriage_count": 2,
+    "thresholded_high_risk_undertriage_count": 2,
+    "coverage": 0.69,
+    "note": "This was a prior split-run checkpoint on historically exposed, mostly synthetic-origin data. It is not an evaluation of this all-rows checkpoint."
+  },
+  "limitations": [
+    "516 rows have draft labels and were included only because explicitly requested for this offline full fit.",
+    "This final fit used every row, so it has no held-out validation or test score.",
+    "82 long descriptions were truncated to 64 tokens.",
+    "Prior split-run diagnostic missed two serious/critical cases.",
+    "The provisional threshold is uncalibrated; model remains experimental and inactive."
+  ],
+  "dataset_sources": [
+    {
+      "source_id": "responder850",
+      "relative_path": "datasets/emergency_text/reviewed/civilian_multilingual_850_responder_reconciled_20261007/reports.csv",
+      "source_sha256": "add4013624c426496d2ba17fd203b76fe1a1d9aeff4852f21e0030bd27da2f33",
+      "source_rows": 850,
+      "new_unique_rows": 850,
+      "review_status_counts": {
+        "approved": 850
+      }
+    },
+    {
+      "source_id": "working400",
+      "relative_path": "datasets/emergency_text/working/reports.csv",
+      "source_sha256": "5e2a4f508a6de869ad0eee1c6c7385b03c2df542eadbd7f79a315b0243f9db1e",
+      "source_rows": 400,
+      "new_unique_rows": 400,
+      "review_status_counts": {
+        "draft": 400
+      }
+    },
+    {
+      "source_id": "initial80",
+      "relative_path": "datasets/emergency_text/archive/initial_80/draft_reports.csv",
+      "source_sha256": "7c3ce51ad2e14be1ad6c23ab49e114b9259922dbccd2c10181c6dac2e2b1583b",
+      "source_rows": 80,
+      "new_unique_rows": 80,
+      "review_status_counts": {
+        "draft": 80
+      }
+    },
+    {
+      "source_id": "southern_leyte36",
+      "relative_path": "datasets/emergency_text/experiments/southern_leyte_bisaya_dialect_20261008/accident_descriptions_ai_draft.csv",
+      "source_sha256": "71c1443b9b3547f796020f11bba551c8a7746c7bc53ec6a9009b983990f588f6",
+      "source_rows": 36,
+      "new_unique_rows": 36,
+      "review_status_counts": {
+        "draft": 36
+      }
+    }
+  ]
+}

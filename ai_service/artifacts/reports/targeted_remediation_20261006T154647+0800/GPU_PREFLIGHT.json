@@ -1,0 +1,26 @@
+{
+  "started_local": "2026-10-06T16:01:23.369201+08:00",
+  "base_model": "FacebookAI/xlm-roberta-base",
+  "revision": "42f548f32366559214515ec137cdd16002968bf6",
+  "status": "PASS",
+  "train_case_id": "CEB-CRITICAL-002",
+  "train_label": "critical",
+  "total_parameters": 278046724,
+  "trainable_parameters": 278046724,
+  "frozen_parameters": 0,
+  "backbone_gradient_parameter_count": 197,
+  "all_gradient_parameter_count": 201,
+  "global_gradient_norm_before_clip": 6.55019474029541,
+  "optimizer_step": {
+    "optimizer_step_skipped": false,
+    "scale_before": 65536.0,
+    "scale_after": 65536.0,
+    "scheduler_advanced": true
+  },
+  "sampled_encoder_weight_changed": true,
+  "learning_rate_after_step": 2.8571428571428573e-06,
+  "peak_cuda_allocated_bytes": 3780035584,
+  "peak_cuda_reserved_bytes": 3879731200,
+  "duration_seconds": 9.111,
+  "finished_local": "2026-10-06T16:01:32.498739+08:00"
+}

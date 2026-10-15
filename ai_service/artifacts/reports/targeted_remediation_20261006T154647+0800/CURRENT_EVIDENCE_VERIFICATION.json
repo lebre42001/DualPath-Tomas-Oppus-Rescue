@@ -1,0 +1,16 @@
+{
+  "verified_at_local": "2026-10-06T16:56:26.161392+08:00",
+  "hashes": {
+    "ai_service\\active_config.txt": "5e56620321a9d19e485f54369cad2e0fa2d6cd8305b6b817f3efa9c0366b41ba",
+    "ai_service\\artifacts\\reports\\xlmr_850_humanconfirmed_fulltrain_20261006_1411\\model_data\\model_development.csv": "79ab94ad4877159dc1a58bb621b5c743ab5cd7b832e7fed92aa23148591e6342",
+    "ai_service\\artifacts\\reports\\xlmr_850_humanconfirmed_fulltrain_20261006_1411\\training_split_manifest.json": "8272432855d09f4945d897be3f925535aa0e5c3ce30be6c6e8d1f5f980f37f48",
+    "ai_service\\artifacts\\checkpoints\\text_xlmr_targeted_20261006T154647+0800\\seed42\\model.safetensors": "ce7b62bbe3d4f50d8952f8508b67a6b5adba0a04d5fc0175fc3187639adbbad9",
+    "ai_service\\artifacts\\checkpoints\\text_xlmr_850_humanconfirmed_fulltrain_20261006_1411\\model.safetensors": "053a2851d3e1a9fb342825bc86a786a49baad7e06f51c6a8442a655f97fe6881"
+  },
+  "active_selector_value": "configs/bontoc_southern_leyte_production_candidate_external.yaml",
+  "active_selector_changed": false,
+  "prior_rejected_checkpoint_unchanged": true,
+  "git_worktree": "unavailable; repository root has no Git metadata",
+  "training_gpu_process_running_at_completion": false,
+  "production_deployment": false
+}

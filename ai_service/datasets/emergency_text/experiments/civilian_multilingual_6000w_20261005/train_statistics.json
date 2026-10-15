@@ -1,0 +1,21 @@
+{
+  "rows": 516,
+  "groups": 500,
+  "by_label": {
+    "critical": 127,
+    "minor": 132,
+    "needs_review": 127,
+    "serious": 130
+  },
+  "by_language": {
+    "ceb": 144,
+    "en": 153,
+    "mixed": 73,
+    "tl": 146
+  },
+  "by_review_status": {
+    "draft": 516
+  },
+  "eligible_approved_rows": 0,
+  "dataset_fingerprint": "820fd805d02b7c23f8fa52b1b8d9e0df83a32572a0143f9dace1ed405d5d4c8b"
+}

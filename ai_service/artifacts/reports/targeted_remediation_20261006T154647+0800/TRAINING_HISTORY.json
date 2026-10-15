@@ -1,0 +1,344 @@
+{
+  "checkpoint": "ai_service\\artifacts\\checkpoints\\text_xlmr_targeted_20261006T154647+0800\\seed42",
+  "history": {
+    "epochs": [
+      {
+        "epoch": 1,
+        "weighted_training_objective": 1.38905141181051,
+        "optimizer_steps_attempted": 33,
+        "optimizer_steps_succeeded": 33,
+        "optimizer_steps_skipped_amp": 0,
+        "validation_macro_f1": 0.3393158431445258,
+        "validation_critical_recall": 0.06451612903225806,
+        "validation_critical_precision": 0.5,
+        "validation_serious_recall": 0.625,
+        "validation_raw_high_risk_undertriage_count": 41,
+        "learning_rate_after_epoch": 1.8480000000000003e-05
+      },
+      {
+        "epoch": 2,
+        "weighted_training_objective": 1.2980602892128736,
+        "optimizer_steps_attempted": 33,
+        "optimizer_steps_succeeded": 30,
+        "optimizer_steps_skipped_amp": 3,
+        "validation_macro_f1": 0.3992307692307693,
+        "validation_critical_recall": 0.0,
+        "validation_critical_precision": 0.0,
+        "validation_serious_recall": 0.25,
+        "validation_raw_high_risk_undertriage_count": 55,
+        "learning_rate_after_epoch": 1.6080000000000002e-05
+      },
+      {
+        "epoch": 3,
+        "weighted_training_objective": 1.0342346419747732,
+        "optimizer_steps_attempted": 33,
+        "optimizer_steps_succeeded": 33,
+        "optimizer_steps_skipped_amp": 0,
+        "validation_macro_f1": 0.6221510851226774,
+        "validation_critical_recall": 0.22580645161290322,
+        "validation_critical_precision": 0.7777777777777778,
+        "validation_serious_recall": 0.90625,
+        "validation_raw_high_risk_undertriage_count": 23,
+        "learning_rate_after_epoch": 1.3440000000000002e-05
+      },
+      {
+        "epoch": 4,
+        "weighted_training_objective": 0.7634157927831747,
+        "optimizer_steps_attempted": 33,
+        "optimizer_steps_succeeded": 33,
+        "optimizer_steps_skipped_amp": 0,
+        "validation_macro_f1": 0.8167082917082916,
+        "validation_critical_recall": 0.7741935483870968,
+        "validation_critical_precision": 0.6857142857142857,
+        "validation_serious_recall": 0.875,
+        "validation_raw_high_risk_undertriage_count": 5,
+        "learning_rate_after_epoch": 1.0800000000000002e-05
+      },
+      {
+        "epoch": 5,
+        "weighted_training_objective": 0.5425654759049782,
+        "optimizer_steps_attempted": 33,
+        "optimizer_steps_succeeded": 32,
+        "optimizer_steps_skipped_amp": 1,
+        "validation_macro_f1": 0.864855859771114,
+        "validation_critical_recall": 0.8709677419354839,
+        "validation_critical_precision": 0.7941176470588235,
+        "validation_serious_recall": 0.78125,
+        "validation_raw_high_risk_undertriage_count": 5,
+        "learning_rate_after_epoch": 8.24e-06
+      },
+      {
+        "epoch": 6,
+        "weighted_training_objective": 0.375265704465826,
+        "optimizer_steps_attempted": 33,
+        "optimizer_steps_succeeded": 33,
+        "optimizer_steps_skipped_amp": 0,
+        "validation_macro_f1": 0.9047407939655364,
+        "validation_critical_recall": 0.8387096774193549,
+        "validation_critical_precision": 0.9629629629629629,
+        "validation_serious_recall": 0.96875,
+        "validation_raw_high_risk_undertriage_count": 4,
+        "learning_rate_after_epoch": 5.600000000000001e-06
+      },
+      {
+        "epoch": 7,
+        "weighted_training_objective": 0.26767791191230234,
+        "optimizer_steps_attempted": 33,
+        "optimizer_steps_succeeded": 33,
+        "optimizer_steps_skipped_amp": 0,
+        "validation_macro_f1": 0.9042089325457969,
+        "validation_critical_recall": 0.8387096774193549,
+        "validation_critical_precision": 0.9285714285714286,
+        "validation_serious_recall": 0.9375,
+        "validation_raw_high_risk_undertriage_count": 4,
+        "learning_rate_after_epoch": 2.96e-06
+      },
+      {
+        "epoch": 8,
+        "weighted_training_objective": 0.2288645155621838,
+        "optimizer_steps_attempted": 33,
+        "optimizer_steps_succeeded": 33,
+        "optimizer_steps_skipped_amp": 0,
+        "validation_macro_f1": 0.9042089325457969,
+        "validation_critical_recall": 0.8387096774193549,
+        "validation_critical_precision": 0.9285714285714286,
+        "validation_serious_recall": 0.9375,
+        "validation_raw_high_risk_undertriage_count": 4,
+        "learning_rate_after_epoch": 3.2e-07
+      }
+    ],
+    "selection_metric": "balanced_safety"
+  },
+  "summary": {
+    "schema_version": 1,
+    "version": "text-20261006T080310214858Z",
+    "model_type": "transformers",
+    "base_model": "FacebookAI/xlm-roberta-base",
+    "labels": [
+      "minor",
+      "serious",
+      "critical",
+      "needs_review"
+    ],
+    "languages": [
+      "en",
+      "tl",
+      "ceb",
+      "mixed"
+    ],
+    "scope": "road_vehicle_accidents",
+    "domain": "road_vehicle_accidents",
+    "observed_languages": [
+      "ceb",
+      "en",
+      "mixed",
+      "tl"
+    ],
+    "language_support_status": "requires_separate_language_evaluation",
+    "max_length": 64,
+    "review_threshold": 0.65,
+    "review_threshold_status": "provisional",
+    "confidence_calibrated": false,
+    "approved_for_deployment": false,
+    "deployment_status": "experimental",
+    "all_data_reviewed": true,
+    "allow_draft": false,
+    "dataset_fingerprint": "8fe3c2fb7d79ba50175ab67026ffedac9b0b015913ba6c6b4deb9f91c152d282",
+    "dataset_summary": {
+      "rows": 724,
+      "groups": 694,
+      "by_label": {
+        "critical": 179,
+        "minor": 182,
+        "needs_review": 180,
+        "serious": 183
+      },
+      "by_language": {
+        "ceb": 204,
+        "en": 214,
+        "mixed": 101,
+        "tl": 205
+      },
+      "by_review_status": {
+        "approved": 724
+      },
+      "eligible_approved_rows": 724,
+      "dataset_fingerprint": "8fe3c2fb7d79ba50175ab67026ffedac9b0b015913ba6c6b4deb9f91c152d282"
+    },
+    "seed": 42,
+    "validation_fraction": 0.15,
+    "test_fraction": 0.15,
+    "test_evaluated_during_training": false,
+    "split_source": "frozen_manifest",
+    "software_versions": {
+      "torch": "2.12.1+cu130",
+      "transformers": "4.57.6",
+      "scikit-learn": "1.9.1"
+    },
+    "limitations": [
+      "No deployment approval is granted by training or metrics",
+      "Confidence and review threshold are not calibrated",
+      "Group IDs require human identification of translations and paraphrases",
+      "Language balance is reported, not guaranteed",
+      "Small or synthetic datasets do not establish clinical or operational safety"
+    ],
+    "backbone_frozen": false,
+    "learning_rate": 2e-05,
+    "epochs": 8,
+    "batch_size": 1,
+    "gradient_accumulation": 16,
+    "device": "cuda",
+    "base_model_revision": "42f548f32366559214515ec137cdd16002968bf6",
+    "requested_revision": "42f548f32366559214515ec137cdd16002968bf6",
+    "optimizer": "adafactor",
+    "weight_decay": 0.0,
+    "gradient_checkpointing": true,
+    "precision": "cuda_fp16_autocast",
+    "scheduler": "linear_warmup_decay",
+    "warmup_ratio": 0.05,
+    "warmup_steps": 14,
+    "planned_optimizer_steps": 264,
+    "total_parameters": 278046724,
+    "trainable_parameters": 278046724,
+    "loss_normalization": "weighted_sum_over_accumulation_window_weight_sum",
+    "class_weights": {
+      "minor": 0.9961240291595459,
+      "serious": 0.9884615540504456,
+      "critical": 1.00390625,
+      "needs_review": 1.0118110179901123
+    },
+    "selection_metric": "balanced_safety",
+    "early_stopping_patience": 2,
+    "truncated_rows_by_split": {
+      "train": 0,
+      "validation": 0,
+      "test": 0
+    },
+    "best_epoch": 6,
+    "optimizer_step_accounting": {
+      "attempted": 264,
+      "successful": 260,
+      "skipped_amp": 4,
+      "scheduler_steps": 260,
+      "first_successful_gradient_evidence": {
+        "total_grad_parameter_count": 201,
+        "backbone_grad_parameter_count": 197,
+        "global_gradient_norm_before_clip": 6.054121494293213,
+        "gradient_norm_finite_and_nonzero": true
+      },
+      "scheduler_policy": "advance only when GradScaler scale does not decrease after optimizer step"
+    },
+    "parameter_group_updates": {
+      "classifier": {
+        "initial_sha256": "4eabfba18cf339c0e005d84ba8f66343af329e3a29b71daee395793e2d052ba6",
+        "selected_sha256": "bac158162ac59d59c86c44fbe3e0b5401670c0d8b4f87111e86ca112863669ff",
+        "changed": true,
+        "parameters": 4,
+        "numel": 593668
+      },
+      "roberta.embeddings": {
+        "initial_sha256": "349ea7d144bd4150130e520d7be4044f0d4a1a0866e8631554cc45304719ba7a",
+        "selected_sha256": "65f56684508ce491a6db1e587c313ec154236450dc2f41d296c2d2eae5efb39d",
+        "changed": true,
+        "parameters": 5,
+        "numel": 192398592
+      },
+      "roberta.encoder.layer.0": {
+        "initial_sha256": "1c8100d20f70f3e711c96d508926a53b2a2da5fc6572ad3155d39dd2339816ca",
+        "selected_sha256": "da289e934c3a1f8a7ed8bafd74d3756d2b2ab6884b5ed316c5628e57416883b5",
+        "changed": true,
+        "parameters": 16,
+        "numel": 7087872
+      },
+      "roberta.encoder.layer.1": {
+        "initial_sha256": "acbf5d7a761537d57068212ba575e09e59aaf210f0bb2d7533ca65d6988c94f5",
+        "selected_sha256": "08a9fb2e0a7bc942d98dc91b0fd1798315b70b505f4bfe3f8e80b05e9936fa9b",
+        "changed": true,
+        "parameters": 16,
+        "numel": 7087872
+      },
+      "roberta.encoder.layer.10": {
+        "initial_sha256": "935a7436d638cf2c109bb7890256d772e062f22b6d3a80e4230e319cce5cedf6",
+        "selected_sha256": "d29e23ce8c5423494e7f20fdba79356ff21c544008709f968e2a3898b38d622e",
+        "changed": true,
+        "parameters": 16,
+        "numel": 7087872
+      },
+      "roberta.encoder.layer.11": {
+        "initial_sha256": "7b83749edfed27277a3ce248dcddb99d106f71c9601a78cff77b8d7814fefb19",
+        "selected_sha256": "8044b0f3690df66ba88ba3c15d645cfefe65fd8154413ac73f17c943a09412eb",
+        "changed": true,
+        "parameters": 16,
+        "numel": 7087872
+      },
+      "roberta.encoder.layer.2": {
+        "initial_sha256": "3cb0a33f9a48c3008cb51c29b373022a9a5545195b422967aa7892d8cf9af315",
+        "selected_sha256": "301525520be4352ddd153afe3485d39f8c9dd91228a0a9df299b06c3c8bb0f88",
+        "changed": true,
+        "parameters": 16,
+        "numel": 7087872
+      },
+      "roberta.encoder.layer.3": {
+        "initial_sha256": "68ae635c03b70ca300338b68296984fddf735438c6286be6bdb49f3a21532504",
+        "selected_sha256": "c4857caa8f8bbee831a358042da1a442fafdf276be32e0101d97d945f58d2497",
+        "changed": true,
+        "parameters": 16,
+        "numel": 7087872
+      },
+      "roberta.encoder.layer.4": {
+        "initial_sha256": "f4ffb7c4990274e5712db011c47c90057373c512c64ea2b571e9911228e5dd00",
+        "selected_sha256": "65906309912428ae332f245ce8a560dda8e342916fed61b36702e1c6961fef23",
+        "changed": true,
+        "parameters": 16,
+        "numel": 7087872
+      },
+      "roberta.encoder.layer.5": {
+        "initial_sha256": "943237b836c257bf9ef803d84518fdc413f435f019a927092e6244ddcec43e72",
+        "selected_sha256": "652dbff7cc64c08073941b8137769f71be08a9947b12ec4ba8edaf24d96d188a",
+        "changed": true,
+        "parameters": 16,
+        "numel": 7087872
+      },
+      "roberta.encoder.layer.6": {
+        "initial_sha256": "375a7a646f8450e1526547ecac8bdbab1f9d92a485053607cde9bbf5b02d05c6",
+        "selected_sha256": "41ba8213d74e3f17a3368fb987f75398932d939068a7e109ab63e14ef89b0b0b",
+        "changed": true,
+        "parameters": 16,
+        "numel": 7087872
+      },
+      "roberta.encoder.layer.7": {
+        "initial_sha256": "df786cd52f90ca5f67a589061e13808b397606f3735553d9276237abb4cf442a",
+        "selected_sha256": "20bda4ef178eaefe9f57574e10ee34b78f9f946679d321f166c730548e53a2dc",
+        "changed": true,
+        "parameters": 16,
+        "numel": 7087872
+      },
+      "roberta.encoder.layer.8": {
+        "initial_sha256": "80bdbd277c3579f2075ce8cc4701b86c97a4559c0f7309c7af37ad9aef6c9284",
+        "selected_sha256": "886f822d8ee0715c074936426b0b636e09ee8911ef5b580273861757bd8e4d03",
+        "changed": true,
+        "parameters": 16,
+        "numel": 7087872
+      },
+      "roberta.encoder.layer.9": {
+        "initial_sha256": "c959080daf68324a7fe04ecb4699a3205778083473c6f7ce4eb9d0be9eb2b474",
+        "selected_sha256": "0f9428d0bb824dbfe12240b42cdd561669f4e3ab13aecbb1a75c34f24c25f361",
+        "changed": true,
+        "parameters": 16,
+        "numel": 7087872
+      }
+    },
+    "parameter_update_verification": {
+      "changed_groups": 14,
+      "total_trainable_groups": 14,
+      "all_encoder_groups_changed": true,
+      "all_parameters_trainable": true
+    },
+    "epochs_completed": 8,
+    "training_and_selection_seconds": 984.07,
+    "peak_cuda_memory_allocated_bytes": 3781308928,
+    "peak_cuda_memory_reserved_bytes": 4009754624
+  },
+  "observed_wall_time_seconds": 984.07,
+  "elapsed_time_source": "training logs/metadata only; do not infer from file timestamps"
+}

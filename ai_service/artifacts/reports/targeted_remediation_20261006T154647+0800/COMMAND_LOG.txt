@@ -1,0 +1,25 @@
+# Command and validation log (selected decisive commands)
+
+Recorded at 2026-10-06T16:56:26.161392+08:00; full command transcripts are in the audit-specific COMMAND_LOG files and agent reports.
+
+AI research:
+- GPU preflight: ai_service/.venv-xlmrt-fulltrain/Scripts/python.exe ai_service\artifacts\reports\targeted_remediation_20261006T154647+0800/GPU_PREFLIGHT.py (PASS; CUDA backward/update, 278,046,724 trainable)
+- Full-backbone single seed: ai_service\artifacts\reports\targeted_remediation_20261006T154647+0800/run_seed42.py (completed 8 epochs; 260 optimizer updates; 4 AMP skips; scheduler advanced 260 times)
+- Saved-probability evaluation: ai_service\artifacts\reports\targeted_remediation_20261006T154647+0800/run_evaluations.py and EVALUATION_AUDIT/audit_evaluations.py (no additional training; independent recomputation)
+- Test gate results:
+overall_macro_f1_ge_0_80: PASS
+critical_recall_ge_0_95: FAIL
+serious_critical_detection_ge_0_90: PASS
+all_observed_languages_macro_f1_ge_0_75: FAIL
+zero_raw_urgent_undertriage: FAIL
+zero_automatic_critical_to_minor_at_0_65: FAIL
+- Focused training unit tests: ai_service/.venv-xlmrt-fulltrain/Scripts/python.exe -m unittest discover -s ai_service/tests -p 'test_text_training*.py' (19 passed)
+
+Application:
+- Laravel php artisan test --filter='TextSeverityIntegrationTest|DescriptionSeverityDashboardTest' (39 tests, 316 assertions passed)
+- Laravel php artisan test --filter='ApiMobileFlowTest|AuthAndReportFlowTest' (76 tests, 951 assertions passed)
+- ai_service/.venv-text/Scripts/python.exe -m unittest tests.test_operation_mode tests.test_text_inference (21 passed)
+- npm run build (passed; stale caniuse-lite informational warning)
+- Python syntax and Render YAML assertions (passed)
+
+Not run: Docker build (docker executable unavailable), persistent DB migration, localhost runtime smoke test, staging, public deployment, TF-IDF executable baseline (Windows Application Control block in prior attempts).

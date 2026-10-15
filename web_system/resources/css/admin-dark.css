@@ -1,0 +1,127 @@
+/* Keep text colors separate from filled action colors. Native dark controls use
+   the resolved color-scheme set before paint by theme-preference.blade.php. */
+html[data-theme="dark"] body.admin-portal {
+    --accent-text: #ff9a9e;
+    background: var(--bg);
+    color: var(--ink);
+}
+
+html[data-theme="dark"] body.admin-portal .topbar,
+html[data-theme="dark"] body.admin-portal .panel,
+html[data-theme="dark"] body.admin-portal .hero-card,
+html[data-theme="dark"] body.admin-portal .system-card,
+html[data-theme="dark"] body.admin-portal .metric-card,
+html[data-theme="dark"] body.admin-portal .civilian-account-row {
+    background: var(--surface) !important;
+    color: var(--ink);
+}
+
+html[data-theme="dark"] body.admin-portal .topbar-label,
+html[data-theme="dark"] body.admin-portal .eyebrow,
+html[data-theme="dark"] body.admin-portal .pill-btn strong,
+html[data-theme="dark"] body.admin-portal .sidebar-nav a.active small {
+    color: var(--accent-text);
+}
+html[data-theme="dark"] body.admin-portal .sidebar-nav a.active small,
+html[data-theme="dark"] body.admin-portal .form-step-label {
+    color: var(--accent-text);
+    background: var(--danger-soft);
+}
+html[data-theme="dark"] body.admin-portal .sidebar-nav a.active {
+    border-color: var(--accent-text) !important;
+}
+
+html[data-theme="dark"] body.admin-portal .command-stat.urgent,
+html[data-theme="dark"] body.admin-portal .monitoring-incident-card.process-pending,
+html[data-theme="dark"] body.admin-portal .latest-incident-row.process-pending {
+    background: var(--amber-soft) !important;
+}
+html[data-theme="dark"] body.admin-portal .command-stat.danger {
+    background: var(--danger-soft) !important;
+}
+
+html[data-theme="dark"] body.admin-portal .command-audit-table td,
+html[data-theme="dark"] body.admin-portal .command-audit-row:hover td,
+html[data-theme="dark"] body.admin-portal .command-audit-row:focus-visible td {
+    background: var(--surface-alt);
+    color: var(--ink);
+    border-color: var(--line);
+}
+html[data-theme="dark"] body.admin-portal .command-audit-assignee {
+    background: var(--blue-soft);
+    color: var(--blue);
+}
+
+html[data-theme="dark"] body.admin-portal .action-btn.secondary,
+html[data-theme="dark"] body.admin-portal .action-btn.danger,
+html[data-theme="dark"] body.admin-portal .view-switch,
+html[data-theme="dark"] body.admin-portal .view-switch button {
+    background: var(--surface-alt);
+    border-color: var(--line-strong);
+    color: var(--ink);
+}
+html[data-theme="dark"] body.admin-portal .action-btn.secondary { color: var(--blue); }
+html[data-theme="dark"] body.admin-portal .action-btn.danger { color: var(--danger); }
+html[data-theme="dark"] body.admin-portal .view-switch button.is-active,
+html[data-theme="dark"] body.admin-portal .incident-feed-row[open] .incident-feed-review-button {
+    color: var(--ink);
+    background: var(--blue-soft);
+    border-color: var(--blue);
+}
+
+html[data-theme="dark"] body.admin-portal .btn-primary,
+html[data-theme="dark"] body.admin-portal .action-btn.primary {
+    background: var(--accent);
+    color: #fff;
+}
+html[data-theme="dark"] body.admin-portal .btn-primary:hover,
+html[data-theme="dark"] body.admin-portal .action-btn.primary:hover {
+    background: var(--accent-strong);
+}
+html[data-theme="dark"] body.admin-portal .is-disabled { opacity: .75; }
+
+html[data-theme="dark"] body.admin-portal input::placeholder,
+html[data-theme="dark"] body.admin-portal textarea::placeholder {
+    color: var(--muted);
+    opacity: 1;
+}
+html[data-theme="dark"] body.admin-portal select option {
+    color: var(--ink);
+    background: var(--surface-alt);
+}
+html[data-theme="dark"] body.admin-portal input[type="file"]::file-selector-button {
+    color: var(--ink);
+    background: var(--surface-alt);
+    border: 1px solid var(--line-strong);
+}
+html[data-theme="dark"] body.admin-portal .switch-track {
+    background: #516a7f;
+    border: 1px solid #8cabbf;
+}
+html[data-theme="dark"] body.admin-portal .switch input:checked + .switch-track {
+    background: var(--accent);
+    border-color: var(--accent-text);
+}
+html[data-theme="dark"] body.admin-portal .setting-card[aria-pressed="true"] {
+    border-color: var(--blue) !important;
+    box-shadow: inset 0 0 0 1px var(--blue) !important;
+}
+
+/* Leaflet's map imagery remains unchanged; its controls get paired colors. */
+html[data-theme="dark"] body.admin-portal .leaflet-bar a,
+html[data-theme="dark"] body.admin-portal .leaflet-popup-content-wrapper,
+html[data-theme="dark"] body.admin-portal .leaflet-popup-tip,
+html[data-theme="dark"] body.admin-portal .leaflet-control-attribution,
+html[data-theme="dark"] body.admin-portal .leaflet-tooltip {
+    color: var(--ink);
+    background: var(--surface);
+    border-color: var(--line-strong);
+}
+html[data-theme="dark"] body.admin-portal .leaflet-container a,
+html[data-theme="dark"] body.admin-portal .leaflet-container a.leaflet-popup-close-button {
+    color: var(--blue);
+}
+html[data-theme="dark"] body.admin-portal .leaflet-tooltip-top::before { border-top-color: var(--surface); }
+html[data-theme="dark"] body.admin-portal .leaflet-tooltip-bottom::before { border-bottom-color: var(--surface); }
+html[data-theme="dark"] body.admin-portal .leaflet-tooltip-left::before { border-left-color: var(--surface); }
+html[data-theme="dark"] body.admin-portal .leaflet-tooltip-right::before { border-right-color: var(--surface); }

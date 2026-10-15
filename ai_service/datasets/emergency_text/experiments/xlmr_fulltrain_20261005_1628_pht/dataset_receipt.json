@@ -1,0 +1,19 @@
+{
+  "dataset_version": "xlmr_fulltrain_20261005_1628_pht",
+  "status": "snapshot_used_for_completed_provisional_research_training",
+  "created_on": "2026-10-05",
+  "rows": 400,
+  "groups": 99,
+  "dataset_sha256": "5e2a4f508a6de869ad0eee1c6c7385b03c2df542eadbd7f79a315b0243f9db1e",
+  "split_manifest_sha256": "f05cabdafff2c6ca00d69ffa14f89315cec8e330d8dbd7be2bc50c2698dc4112",
+  "statistics_sha256": "70ddb0d4786a32cd1d72a3891d3067d1e0a22a35a878f8806ebc8037a00f1c8f",
+  "family_manifest_sha256": "0f527f42c35957def0d153d28a5dc3c6ef44834525010961a663397feb9197f5",
+  "provenance_sha256": "6cadb665413bb04f7b8e08734428e8ca9cf53f2292bfb7f2047c6024b1741035",
+  "training_eligible_for_provisional_research_only": true,
+  "independent_final_test_available": false,
+  "active_model_changed": false,
+  "deployment_performed": false,
+  "training_run": "ai_service/artifacts/checkpoints/text_xlmr_fulltrain_local_20261005_1724",
+  "training_completed": true,
+  "updated_at": "2026-10-05T17:52:38.661115+08:00"
+}

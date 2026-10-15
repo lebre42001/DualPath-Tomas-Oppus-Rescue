@@ -1,0 +1,359 @@
+{
+  "status": "synthetic_draft_experiment_only",
+  "rows": 850,
+  "words_total_all_languages": 9520,
+  "primary_language_words": 7795,
+  "targets_words_each_primary_language": 2000,
+  "primary_language_statistics": {
+    "en": {
+      "rows": 250,
+      "words": 2543,
+      "label_rows": {
+        "minor": 63,
+        "serious": 64,
+        "critical": 61,
+        "needs_review": 62
+      },
+      "label_words": {
+        "minor": 621,
+        "serious": 662,
+        "critical": 683,
+        "needs_review": 577
+      },
+      "length_buckets": {
+        "4-8": 104,
+        "1-3": 15,
+        "9-15": 96,
+        "16+": 35
+      },
+      "sha256": "18abd1e5ce6b9064b249079e4e3647f5066a9b48b15280921b1000f614adaef0"
+    },
+    "tl": {
+      "rows": 240,
+      "words": 2633,
+      "label_rows": {
+        "minor": 60,
+        "serious": 60,
+        "critical": 60,
+        "needs_review": 60
+      },
+      "label_words": {
+        "minor": 561,
+        "serious": 706,
+        "critical": 742,
+        "needs_review": 624
+      },
+      "length_buckets": {
+        "1-3": 13,
+        "4-8": 82,
+        "16+": 45,
+        "9-15": 100
+      },
+      "sha256": "2c0742589afa3bc7fb47e6465555f17f7ad54400ab854f0b1114f92ea36ef17e"
+    },
+    "ceb": {
+      "rows": 240,
+      "words": 2619,
+      "label_rows": {
+        "minor": 60,
+        "serious": 60,
+        "critical": 60,
+        "needs_review": 60
+      },
+      "label_words": {
+        "minor": 689,
+        "serious": 697,
+        "critical": 699,
+        "needs_review": 534
+      },
+      "length_buckets": {
+        "1-3": 24,
+        "4-8": 50,
+        "9-15": 128,
+        "16+": 38
+      },
+      "sha256": "bc2e0851bc4a73ad7ce6e1ef15e5179e11bb7e95c817679d210bdc3fba3b7f96"
+    }
+  },
+  "mixed_language_statistics": {
+    "rows": 120,
+    "words": 1725,
+    "label_rows": {
+      "minor": 30,
+      "serious": 30,
+      "critical": 30,
+      "needs_review": 30
+    },
+    "label_words": {
+      "minor": 472,
+      "serious": 417,
+      "critical": 444,
+      "needs_review": 392
+    },
+    "length_buckets": {
+      "16+": 58,
+      "9-15": 49,
+      "4-8": 11,
+      "1-3": 2
+    },
+    "sha256": "f4cb740f2cb06b040e22e60d33f9f99f5b6cce02fac0bb3ed59d9735d15ef709"
+  },
+  "dataset_statistics": {
+    "rows": 850,
+    "words": 9520,
+    "languages": {
+      "en": {
+        "rows": 250,
+        "words": 2543,
+        "by_label": {
+          "minor": {
+            "rows": 63,
+            "words": 621
+          },
+          "serious": {
+            "rows": 64,
+            "words": 662
+          },
+          "critical": {
+            "rows": 61,
+            "words": 683
+          },
+          "needs_review": {
+            "rows": 62,
+            "words": 577
+          }
+        },
+        "by_length": {
+          "4-8": 104,
+          "1-3": 15,
+          "9-15": 96,
+          "16+": 35
+        }
+      },
+      "tl": {
+        "rows": 240,
+        "words": 2633,
+        "by_label": {
+          "minor": {
+            "rows": 60,
+            "words": 561
+          },
+          "serious": {
+            "rows": 60,
+            "words": 706
+          },
+          "critical": {
+            "rows": 60,
+            "words": 742
+          },
+          "needs_review": {
+            "rows": 60,
+            "words": 624
+          }
+        },
+        "by_length": {
+          "1-3": 13,
+          "4-8": 82,
+          "16+": 45,
+          "9-15": 100
+        }
+      },
+      "ceb": {
+        "rows": 240,
+        "words": 2619,
+        "by_label": {
+          "minor": {
+            "rows": 60,
+            "words": 689
+          },
+          "serious": {
+            "rows": 60,
+            "words": 697
+          },
+          "critical": {
+            "rows": 60,
+            "words": 699
+          },
+          "needs_review": {
+            "rows": 60,
+            "words": 534
+          }
+        },
+        "by_length": {
+          "1-3": 24,
+          "4-8": 50,
+          "9-15": 128,
+          "16+": 38
+        }
+      },
+      "mixed": {
+        "rows": 120,
+        "words": 1725,
+        "by_label": {
+          "minor": {
+            "rows": 30,
+            "words": 472
+          },
+          "serious": {
+            "rows": 30,
+            "words": 417
+          },
+          "critical": {
+            "rows": 30,
+            "words": 444
+          },
+          "needs_review": {
+            "rows": 30,
+            "words": 392
+          }
+        },
+        "by_length": {
+          "16+": 58,
+          "9-15": 49,
+          "4-8": 11,
+          "1-3": 2
+        }
+      }
+    },
+    "labels": {
+      "minor": {
+        "rows": 213,
+        "words": 2343,
+        "by_language": {
+          "en": 63,
+          "tl": 60,
+          "ceb": 60,
+          "mixed": 30
+        },
+        "by_length": {
+          "4-8": 76,
+          "16+": 46,
+          "9-15": 84,
+          "1-3": 7
+        }
+      },
+      "serious": {
+        "rows": 214,
+        "words": 2482,
+        "by_language": {
+          "en": 64,
+          "tl": 60,
+          "ceb": 60,
+          "mixed": 30
+        },
+        "by_length": {
+          "1-3": 8,
+          "4-8": 68,
+          "9-15": 92,
+          "16+": 46
+        }
+      },
+      "critical": {
+        "rows": 211,
+        "words": 2568,
+        "by_language": {
+          "en": 61,
+          "tl": 60,
+          "ceb": 60,
+          "mixed": 30
+        },
+        "by_length": {
+          "9-15": 104,
+          "1-3": 5,
+          "4-8": 52,
+          "16+": 50
+        }
+      },
+      "needs_review": {
+        "rows": 212,
+        "words": 2127,
+        "by_language": {
+          "en": 62,
+          "tl": 60,
+          "ceb": 60,
+          "mixed": 30
+        },
+        "by_length": {
+          "1-3": 34,
+          "9-15": 93,
+          "4-8": 51,
+          "16+": 34
+        }
+      }
+    },
+    "length_buckets": {
+      "4-8": {
+        "rows": 247,
+        "by_language": {
+          "en": 104,
+          "tl": 82,
+          "ceb": 50,
+          "mixed": 11
+        },
+        "by_label": {
+          "minor": 76,
+          "serious": 68,
+          "critical": 52,
+          "needs_review": 51
+        }
+      },
+      "1-3": {
+        "rows": 54,
+        "by_language": {
+          "en": 15,
+          "tl": 13,
+          "ceb": 24,
+          "mixed": 2
+        },
+        "by_label": {
+          "serious": 8,
+          "needs_review": 34,
+          "critical": 5,
+          "minor": 7
+        }
+      },
+      "9-15": {
+        "rows": 373,
+        "by_language": {
+          "en": 96,
+          "tl": 100,
+          "ceb": 128,
+          "mixed": 49
+        },
+        "by_label": {
+          "critical": 104,
+          "needs_review": 93,
+          "serious": 92,
+          "minor": 84
+        }
+      },
+      "16+": {
+        "rows": 176,
+        "by_language": {
+          "en": 35,
+          "tl": 45,
+          "ceb": 38,
+          "mixed": 58
+        },
+        "by_label": {
+          "minor": 46,
+          "serious": 46,
+          "critical": 50,
+          "needs_review": 34
+        }
+      }
+    },
+    "review_status": {
+      "draft": 850
+    },
+    "generation_source": {
+      "synthetic_ai_generated": 850
+    },
+    "scenario_family_count": 833,
+    "annotation_group_count": 833
+  },
+  "all_rows_draft": true,
+  "all_synthetic_ai_generated": true,
+  "human_confirmed_rows": 0,
+  "notes": "Primary language word totals exceed the approximate 2,000-word target by about 27?32%; retained 240?250 rows per language, balanced labels, and natural context. Mixed words are separate and do not count toward the 6,000 primary target."
+}

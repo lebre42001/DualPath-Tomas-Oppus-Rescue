@@ -1,0 +1,569 @@
+{
+  "selection_rule_id": "balanced_safety_v1_pretest_frozen",
+  "trials": {
+    "1e-5": {
+      "metadata": {
+        "schema_version": 1,
+        "version": "text-20261005T133838960825Z",
+        "model_type": "transformers",
+        "base_model": "FacebookAI/xlm-roberta-base",
+        "labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ],
+        "languages": [
+          "en",
+          "tl",
+          "ceb",
+          "mixed"
+        ],
+        "scope": "road_vehicle_accidents",
+        "domain": "road_vehicle_accidents",
+        "observed_languages": [
+          "ceb",
+          "en",
+          "mixed",
+          "tl"
+        ],
+        "language_support_status": "requires_separate_language_evaluation",
+        "max_length": 64,
+        "review_threshold": 0.65,
+        "review_threshold_status": "provisional",
+        "confidence_calibrated": false,
+        "approved_for_deployment": false,
+        "deployment_status": "experimental",
+        "all_data_reviewed": false,
+        "allow_draft": true,
+        "dataset_fingerprint": "042be00afde69d01e269a58cde05d4b5b9a792524658cade09fa0c8e33c08973",
+        "dataset_summary": {
+          "rows": 724,
+          "groups": 707,
+          "by_label": {
+            "critical": 179,
+            "minor": 182,
+            "needs_review": 180,
+            "serious": 183
+          },
+          "by_language": {
+            "ceb": 204,
+            "en": 214,
+            "mixed": 101,
+            "tl": 205
+          },
+          "by_review_status": {
+            "draft": 724
+          },
+          "eligible_approved_rows": 0,
+          "dataset_fingerprint": "042be00afde69d01e269a58cde05d4b5b9a792524658cade09fa0c8e33c08973"
+        },
+        "seed": 42,
+        "validation_fraction": 0.15,
+        "test_fraction": 0.15,
+        "test_evaluated_during_training": false,
+        "split_source": "frozen_manifest",
+        "software_versions": {
+          "torch": "2.12.1+cu130",
+          "transformers": "4.57.6",
+          "scikit-learn": "1.9.1"
+        },
+        "limitations": [
+          "No deployment approval is granted by training or metrics",
+          "Confidence and review threshold are not calibrated",
+          "Group IDs require human identification of translations and paraphrases",
+          "Language balance is reported, not guaranteed",
+          "Small or synthetic datasets do not establish clinical or operational safety"
+        ],
+        "backbone_frozen": false,
+        "learning_rate": 1e-05,
+        "epochs": 8,
+        "batch_size": 1,
+        "gradient_accumulation": 16,
+        "device": "cuda",
+        "base_model_revision": "42f548f32366559214515ec137cdd16002968bf6",
+        "requested_revision": "42f548f32366559214515ec137cdd16002968bf6",
+        "optimizer": "adafactor",
+        "weight_decay": 0.0,
+        "gradient_checkpointing": true,
+        "precision": "cuda_fp16_autocast",
+        "scheduler": "linear_warmup_decay",
+        "warmup_ratio": 0.05,
+        "warmup_steps": 14,
+        "planned_optimizer_steps": 264,
+        "total_parameters": 278046724,
+        "trainable_parameters": 278046724,
+        "loss_normalization": "weighted_sum_over_accumulation_window_weight_sum",
+        "class_weights": {
+          "minor": 0.9772727489471436,
+          "serious": 0.9923076629638672,
+          "critical": 1.0157480239868164,
+          "needs_review": 1.0157480239868164
+        },
+        "selection_metric": "balanced_safety",
+        "early_stopping_patience": 2,
+        "truncated_rows_by_split": {
+          "train": 0,
+          "validation": 0,
+          "test": 0
+        },
+        "best_epoch": 8,
+        "epochs_completed": 8,
+        "training_and_selection_seconds": 1684.13,
+        "peak_cuda_memory_allocated_bytes": 3781308416,
+        "peak_cuda_memory_reserved_bytes": 4009754624
+      },
+      "history": {
+        "epochs": [
+          {
+            "epoch": 1,
+            "train_loss": 1.3967765633454154,
+            "validation_macro_f1": 0.09740259740259741,
+            "validation_critical_recall": 0.0,
+            "validation_critical_precision": 0.0,
+            "validation_serious_recall": 0.0,
+            "validation_raw_high_risk_undertriage_count": 63,
+            "learning_rate_after_epoch": 9.240000000000001e-06
+          },
+          {
+            "epoch": 2,
+            "train_loss": 1.3612349518616007,
+            "validation_macro_f1": 0.2970691760838126,
+            "validation_critical_recall": 0.03225806451612903,
+            "validation_critical_precision": 0.5,
+            "validation_serious_recall": 0.0625,
+            "validation_raw_high_risk_undertriage_count": 58,
+            "learning_rate_after_epoch": 7.92e-06
+          },
+          {
+            "epoch": 3,
+            "train_loss": 1.3013952574476146,
+            "validation_macro_f1": 0.49082716418435357,
+            "validation_critical_recall": 0.967741935483871,
+            "validation_critical_precision": 0.43478260869565216,
+            "validation_serious_recall": 0.15625,
+            "validation_raw_high_risk_undertriage_count": 15,
+            "learning_rate_after_epoch": 6.600000000000001e-06
+          },
+          {
+            "epoch": 4,
+            "train_loss": 1.1519670714104844,
+            "validation_macro_f1": 0.7055570371532408,
+            "validation_critical_recall": 0.6451612903225806,
+            "validation_critical_precision": 0.8333333333333334,
+            "validation_serious_recall": 0.875,
+            "validation_raw_high_risk_undertriage_count": 11,
+            "learning_rate_after_epoch": 5.28e-06
+          },
+          {
+            "epoch": 5,
+            "train_loss": 1.0400397342126573,
+            "validation_macro_f1": 0.723560446906035,
+            "validation_critical_recall": 0.6451612903225806,
+            "validation_critical_precision": 0.8,
+            "validation_serious_recall": 0.9375,
+            "validation_raw_high_risk_undertriage_count": 8,
+            "learning_rate_after_epoch": 3.96e-06
+          },
+          {
+            "epoch": 6,
+            "train_loss": 0.9326638545745387,
+            "validation_macro_f1": 0.7558527542372881,
+            "validation_critical_recall": 0.7419354838709677,
+            "validation_critical_precision": 0.8214285714285714,
+            "validation_serious_recall": 0.9375,
+            "validation_raw_high_risk_undertriage_count": 6,
+            "learning_rate_after_epoch": 2.64e-06
+          },
+          {
+            "epoch": 7,
+            "train_loss": 0.8526227659317781,
+            "validation_macro_f1": 0.7577420112781955,
+            "validation_critical_recall": 0.8064516129032258,
+            "validation_critical_precision": 0.78125,
+            "validation_serious_recall": 0.96875,
+            "validation_raw_high_risk_undertriage_count": 3,
+            "learning_rate_after_epoch": 1.32e-06
+          },
+          {
+            "epoch": 8,
+            "train_loss": 0.7974540966658566,
+            "validation_macro_f1": 0.7883456322026527,
+            "validation_critical_recall": 0.8064516129032258,
+            "validation_critical_precision": 0.78125,
+            "validation_serious_recall": 0.96875,
+            "validation_raw_high_risk_undertriage_count": 3,
+            "learning_rate_after_epoch": 0.0
+          }
+        ],
+        "selection_metric": "balanced_safety"
+      }
+    },
+    "2e-5": {
+      "metadata": {
+        "schema_version": 1,
+        "version": "text-20261005T135449737752Z",
+        "model_type": "transformers",
+        "base_model": "FacebookAI/xlm-roberta-base",
+        "labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ],
+        "languages": [
+          "en",
+          "tl",
+          "ceb",
+          "mixed"
+        ],
+        "scope": "road_vehicle_accidents",
+        "domain": "road_vehicle_accidents",
+        "observed_languages": [
+          "ceb",
+          "en",
+          "mixed",
+          "tl"
+        ],
+        "language_support_status": "requires_separate_language_evaluation",
+        "max_length": 64,
+        "review_threshold": 0.65,
+        "review_threshold_status": "provisional",
+        "confidence_calibrated": false,
+        "approved_for_deployment": false,
+        "deployment_status": "experimental",
+        "all_data_reviewed": false,
+        "allow_draft": true,
+        "dataset_fingerprint": "042be00afde69d01e269a58cde05d4b5b9a792524658cade09fa0c8e33c08973",
+        "dataset_summary": {
+          "rows": 724,
+          "groups": 707,
+          "by_label": {
+            "critical": 179,
+            "minor": 182,
+            "needs_review": 180,
+            "serious": 183
+          },
+          "by_language": {
+            "ceb": 204,
+            "en": 214,
+            "mixed": 101,
+            "tl": 205
+          },
+          "by_review_status": {
+            "draft": 724
+          },
+          "eligible_approved_rows": 0,
+          "dataset_fingerprint": "042be00afde69d01e269a58cde05d4b5b9a792524658cade09fa0c8e33c08973"
+        },
+        "seed": 42,
+        "validation_fraction": 0.15,
+        "test_fraction": 0.15,
+        "test_evaluated_during_training": false,
+        "split_source": "frozen_manifest",
+        "software_versions": {
+          "torch": "2.12.1+cu130",
+          "transformers": "4.57.6",
+          "scikit-learn": "1.9.1"
+        },
+        "limitations": [
+          "No deployment approval is granted by training or metrics",
+          "Confidence and review threshold are not calibrated",
+          "Group IDs require human identification of translations and paraphrases",
+          "Language balance is reported, not guaranteed",
+          "Small or synthetic datasets do not establish clinical or operational safety"
+        ],
+        "backbone_frozen": false,
+        "learning_rate": 2e-05,
+        "epochs": 8,
+        "batch_size": 1,
+        "gradient_accumulation": 16,
+        "device": "cuda",
+        "base_model_revision": "42f548f32366559214515ec137cdd16002968bf6",
+        "requested_revision": "42f548f32366559214515ec137cdd16002968bf6",
+        "optimizer": "adafactor",
+        "weight_decay": 0.0,
+        "gradient_checkpointing": true,
+        "precision": "cuda_fp16_autocast",
+        "scheduler": "linear_warmup_decay",
+        "warmup_ratio": 0.05,
+        "warmup_steps": 14,
+        "planned_optimizer_steps": 264,
+        "total_parameters": 278046724,
+        "trainable_parameters": 278046724,
+        "loss_normalization": "weighted_sum_over_accumulation_window_weight_sum",
+        "class_weights": {
+          "minor": 0.9772727489471436,
+          "serious": 0.9923076629638672,
+          "critical": 1.0157480239868164,
+          "needs_review": 1.0157480239868164
+        },
+        "selection_metric": "balanced_safety",
+        "early_stopping_patience": 2,
+        "truncated_rows_by_split": {
+          "train": 0,
+          "validation": 0,
+          "test": 0
+        },
+        "best_epoch": 6,
+        "epochs_completed": 8,
+        "training_and_selection_seconds": 948.16,
+        "peak_cuda_memory_allocated_bytes": 3781308416,
+        "peak_cuda_memory_reserved_bytes": 4009754624
+      },
+      "history": {
+        "epochs": [
+          {
+            "epoch": 1,
+            "train_loss": 1.394290375132812,
+            "validation_macro_f1": 0.1396551724137931,
+            "validation_critical_recall": 0.0,
+            "validation_critical_precision": 0.0,
+            "validation_serious_recall": 0.0,
+            "validation_raw_high_risk_undertriage_count": 62,
+            "learning_rate_after_epoch": 1.8480000000000003e-05
+          },
+          {
+            "epoch": 2,
+            "train_loss": 1.28788307391755,
+            "validation_macro_f1": 0.47166592328278323,
+            "validation_critical_recall": 0.16129032258064516,
+            "validation_critical_precision": 0.7142857142857143,
+            "validation_serious_recall": 0.84375,
+            "validation_raw_high_risk_undertriage_count": 28,
+            "learning_rate_after_epoch": 1.584e-05
+          },
+          {
+            "epoch": 3,
+            "train_loss": 1.043793174658848,
+            "validation_macro_f1": 0.7080014590508994,
+            "validation_critical_recall": 0.8064516129032258,
+            "validation_critical_precision": 0.6944444444444444,
+            "validation_serious_recall": 0.9375,
+            "validation_raw_high_risk_undertriage_count": 4,
+            "learning_rate_after_epoch": 1.3200000000000002e-05
+          },
+          {
+            "epoch": 4,
+            "train_loss": 0.7785697693337829,
+            "validation_macro_f1": 0.7277676950998185,
+            "validation_critical_recall": 0.8064516129032258,
+            "validation_critical_precision": 0.8620689655172413,
+            "validation_serious_recall": 1.0,
+            "validation_raw_high_risk_undertriage_count": 4,
+            "learning_rate_after_epoch": 1.056e-05
+          },
+          {
+            "epoch": 5,
+            "train_loss": 0.5987597837929713,
+            "validation_macro_f1": 0.8540962348496082,
+            "validation_critical_recall": 0.8064516129032258,
+            "validation_critical_precision": 0.9259259259259259,
+            "validation_serious_recall": 0.71875,
+            "validation_raw_high_risk_undertriage_count": 11,
+            "learning_rate_after_epoch": 7.92e-06
+          },
+          {
+            "epoch": 6,
+            "train_loss": 0.4686504219494766,
+            "validation_macro_f1": 0.9191785389018996,
+            "validation_critical_recall": 0.8709677419354839,
+            "validation_critical_precision": 0.9,
+            "validation_serious_recall": 0.9375,
+            "validation_raw_high_risk_undertriage_count": 3,
+            "learning_rate_after_epoch": 5.28e-06
+          },
+          {
+            "epoch": 7,
+            "train_loss": 0.3528307618313526,
+            "validation_macro_f1": 0.9190097259062776,
+            "validation_critical_recall": 0.8387096774193549,
+            "validation_critical_precision": 0.9629629629629629,
+            "validation_serious_recall": 0.9375,
+            "validation_raw_high_risk_undertriage_count": 4,
+            "learning_rate_after_epoch": 2.64e-06
+          },
+          {
+            "epoch": 8,
+            "train_loss": 0.2721593532623886,
+            "validation_macro_f1": 0.9190419268800416,
+            "validation_critical_recall": 0.8709677419354839,
+            "validation_critical_precision": 0.9310344827586207,
+            "validation_serious_recall": 0.90625,
+            "validation_raw_high_risk_undertriage_count": 4,
+            "learning_rate_after_epoch": 0.0
+          }
+        ],
+        "selection_metric": "balanced_safety"
+      }
+    },
+    "3e-5": {
+      "metadata": {
+        "schema_version": 1,
+        "version": "text-20261005T141055465290Z",
+        "model_type": "transformers",
+        "base_model": "FacebookAI/xlm-roberta-base",
+        "labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ],
+        "languages": [
+          "en",
+          "tl",
+          "ceb",
+          "mixed"
+        ],
+        "scope": "road_vehicle_accidents",
+        "domain": "road_vehicle_accidents",
+        "observed_languages": [
+          "ceb",
+          "en",
+          "mixed",
+          "tl"
+        ],
+        "language_support_status": "requires_separate_language_evaluation",
+        "max_length": 64,
+        "review_threshold": 0.65,
+        "review_threshold_status": "provisional",
+        "confidence_calibrated": false,
+        "approved_for_deployment": false,
+        "deployment_status": "experimental",
+        "all_data_reviewed": false,
+        "allow_draft": true,
+        "dataset_fingerprint": "042be00afde69d01e269a58cde05d4b5b9a792524658cade09fa0c8e33c08973",
+        "dataset_summary": {
+          "rows": 724,
+          "groups": 707,
+          "by_label": {
+            "critical": 179,
+            "minor": 182,
+            "needs_review": 180,
+            "serious": 183
+          },
+          "by_language": {
+            "ceb": 204,
+            "en": 214,
+            "mixed": 101,
+            "tl": 205
+          },
+          "by_review_status": {
+            "draft": 724
+          },
+          "eligible_approved_rows": 0,
+          "dataset_fingerprint": "042be00afde69d01e269a58cde05d4b5b9a792524658cade09fa0c8e33c08973"
+        },
+        "seed": 42,
+        "validation_fraction": 0.15,
+        "test_fraction": 0.15,
+        "test_evaluated_during_training": false,
+        "split_source": "frozen_manifest",
+        "software_versions": {
+          "torch": "2.12.1+cu130",
+          "transformers": "4.57.6",
+          "scikit-learn": "1.9.1"
+        },
+        "limitations": [
+          "No deployment approval is granted by training or metrics",
+          "Confidence and review threshold are not calibrated",
+          "Group IDs require human identification of translations and paraphrases",
+          "Language balance is reported, not guaranteed",
+          "Small or synthetic datasets do not establish clinical or operational safety"
+        ],
+        "backbone_frozen": false,
+        "learning_rate": 3e-05,
+        "epochs": 8,
+        "batch_size": 1,
+        "gradient_accumulation": 16,
+        "device": "cuda",
+        "base_model_revision": "42f548f32366559214515ec137cdd16002968bf6",
+        "requested_revision": "42f548f32366559214515ec137cdd16002968bf6",
+        "optimizer": "adafactor",
+        "weight_decay": 0.0,
+        "gradient_checkpointing": true,
+        "precision": "cuda_fp16_autocast",
+        "scheduler": "linear_warmup_decay",
+        "warmup_ratio": 0.05,
+        "warmup_steps": 14,
+        "planned_optimizer_steps": 264,
+        "total_parameters": 278046724,
+        "trainable_parameters": 278046724,
+        "loss_normalization": "weighted_sum_over_accumulation_window_weight_sum",
+        "class_weights": {
+          "minor": 0.9772727489471436,
+          "serious": 0.9923076629638672,
+          "critical": 1.0157480239868164,
+          "needs_review": 1.0157480239868164
+        },
+        "selection_metric": "balanced_safety",
+        "early_stopping_patience": 2,
+        "truncated_rows_by_split": {
+          "train": 0,
+          "validation": 0,
+          "test": 0
+        },
+        "best_epoch": 3,
+        "epochs_completed": 5,
+        "training_and_selection_seconds": 597.48,
+        "peak_cuda_memory_allocated_bytes": 3781308416,
+        "peak_cuda_memory_reserved_bytes": 4009754624
+      },
+      "history": {
+        "epochs": [
+          {
+            "epoch": 1,
+            "train_loss": 1.399081242491963,
+            "validation_macro_f1": 0.44679487179487176,
+            "validation_critical_recall": 0.967741935483871,
+            "validation_critical_precision": 0.410958904109589,
+            "validation_serious_recall": 0.5625,
+            "validation_raw_high_risk_undertriage_count": 5,
+            "learning_rate_after_epoch": 2.7720000000000002e-05
+          },
+          {
+            "epoch": 2,
+            "train_loss": 1.2109336307498246,
+            "validation_macro_f1": 0.6903642417515892,
+            "validation_critical_recall": 0.6129032258064516,
+            "validation_critical_precision": 0.7916666666666666,
+            "validation_serious_recall": 0.9375,
+            "validation_raw_high_risk_undertriage_count": 13,
+            "learning_rate_after_epoch": 2.3760000000000003e-05
+          },
+          {
+            "epoch": 3,
+            "train_loss": 0.8504608392742058,
+            "validation_macro_f1": 0.7919562439321098,
+            "validation_critical_recall": 0.8387096774193549,
+            "validation_critical_precision": 0.8125,
+            "validation_serious_recall": 0.96875,
+            "validation_raw_high_risk_undertriage_count": 5,
+            "learning_rate_after_epoch": 1.98e-05
+          },
+          {
+            "epoch": 4,
+            "train_loss": 0.5214662476555573,
+            "validation_macro_f1": 0.8535922209835253,
+            "validation_critical_recall": 0.9354838709677419,
+            "validation_critical_precision": 0.8529411764705882,
+            "validation_serious_recall": 0.8125,
+            "validation_raw_high_risk_undertriage_count": 7,
+            "learning_rate_after_epoch": 1.584e-05
+          },
+          {
+            "epoch": 5,
+            "train_loss": 0.37086070537336735,
+            "validation_macro_f1": 0.8545965608465609,
+            "validation_critical_recall": 0.8709677419354839,
+            "validation_critical_precision": 0.9310344827586207,
+            "validation_serious_recall": 0.6875,
+            "validation_raw_high_risk_undertriage_count": 10,
+            "learning_rate_after_epoch": 1.1880000000000001e-05
+          }
+        ],
+        "selection_metric": "balanced_safety"
+      }
+    }
+  }
+}

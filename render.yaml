@@ -1,0 +1,168 @@
+services:
+  - type: web
+    name: stitch-web-demo
+    runtime: docker
+    dockerfilePath: ./web_system/deploy/render/Dockerfile
+    dockerContext: ./web_system
+    region: singapore
+    plan: free
+    autoDeployTrigger: commit
+    healthCheckPath: /system/version
+    envVars:
+      - key: APP_NAME
+        value: Stitch Rescue Web
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_URL
+        sync: false
+      - key: APP_KEY
+        sync: false
+      - key: LOG_CHANNEL
+        value: stack
+      - key: LOG_LEVEL
+        value: info
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: ""
+      - key: DB_DATABASE
+        value: /var/www/html/database/database.sqlite
+      - key: DB_USERNAME
+        value: ""
+      - key: DB_PASSWORD
+        value: ""
+      - key: SESSION_DRIVER
+        value: file
+      - key: SESSION_SECURE_COOKIE
+        value: "true"
+      - key: CACHE_STORE
+        value: file
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: FILESYSTEM_DISK
+        value: local
+      - key: RUN_DEMO_SEEDERS
+        value: "true"
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_DEFAULT_REGION
+        sync: false
+      - key: AWS_BUCKET
+        sync: false
+      - key: AWS_ENDPOINT
+        sync: false
+      - key: AWS_URL
+        sync: false
+      - key: AWS_USE_PATH_STYLE_ENDPOINT
+        value: "false"
+      - key: AI_SEVERITY_ENABLED
+        value: "false"
+      - key: AI_TEXT_ENABLED
+        value: "false"
+      - key: AI_TEXT_MODE
+        value: MANUAL_ONLY
+      - key: AI_SEVERITY_SERVICE_URL
+        value: https://stitch-ai-demo.onrender.com
+      - key: AI_SEVERITY_TIMEOUT
+        value: "60"
+      - key: AI_SEVERITY_RETRY_ATTEMPTS
+        value: "2"
+      - key: AI_SEVERITY_RETRY_DELAY_MS
+        value: "1500"
+      - key: AI_SEVERITY_DISPATCH
+        value: sync
+      - key: AI_SEVERITY_MODEL_NAME
+        value: bontoc_southern_leyte_production_candidate_external
+      - key: AI_SEVERITY_MODEL_VERSION
+        value: "0.2.0"
+      - key: AI_SEVERITY_REQUIRE_CIVILIAN_PHOTO_GATE
+        value: "false"
+      - key: LORA_INGEST_TOKEN
+        sync: false
+      - key: BROADCAST_CONNECTION
+        value: reverb
+      - key: REVERB_APP_ID
+        value: stitch-reverb-app
+      - key: REVERB_APP_KEY
+        sync: false
+      - key: REVERB_APP_SECRET
+        sync: false
+      - key: REVERB_HOST
+        sync: false
+      - key: REVERB_PORT
+        value: "443"
+      - key: REVERB_SCHEME
+        value: https
+      - key: REVERB_SERVER_HOST
+        value: 127.0.0.1
+      - key: REVERB_SERVER_PORT
+        value: "8080"
+      - key: ROUTING_SERVICE_ENABLED
+        value: "true"
+      - key: ROUTING_SERVICE_URL
+        value: https://router.project-osrm.org
+      - key: ROUTING_SERVICE_PROFILE
+        value: driving
+      - key: ROUTING_SERVICE_TIMEOUT
+        value: "8"
+      - key: ROUTING_SERVICE_CACHE_TTL_MINUTES
+        value: "10"
+      - key: ROUTING_SERVICE_PROVIDER
+        value: OSRM Public Routing
+
+  - type: web
+    name: stitch-ai-demo
+    runtime: docker
+    dockerfilePath: ./ai_service/deploy/render/Dockerfile
+    dockerContext: ./ai_service
+    region: singapore
+    plan: free
+    autoDeployTrigger: commit
+    healthCheckPath: /health
+    envVars:
+      - key: AI_SERVICE_HOST
+        value: 0.0.0.0
+      - key: AI_OPERATION_MODE
+        value: MANUAL_ONLY
+      - key: AI_TEXT_ENABLED
+        value: "false"
+      - key: AI_TEXT_ALLOW_EXPERIMENTAL
+        value: "false"
+      - key: AI_SERVICE_CONFIG
+        value: configs/bontoc_southern_leyte_production_candidate_external.yaml
+      - key: AI_PHOTO_RELEVANCE_CONFIG
+        value: configs/bontoc_southern_leyte_photo_relevance.yaml
+      - key: AI_CHECKPOINT_SYNC_ENABLED
+        value: "false"
+      - key: AI_CHECKPOINT_SYNC_REQUIRED
+        value: "false"
+      - key: AI_CHECKPOINT_FORCE_DOWNLOAD
+        value: "false"
+      - key: AI_CHECKPOINT_DOWNLOAD_TIMEOUT
+        value: "120"
+      - key: AI_PRELOAD_MODELS
+        value: "false"
+      - key: AI_PRELOAD_MODELS_REQUIRED
+        value: "false"
+      - key: AI_SINGLE_MODEL_CACHE
+        value: "true"
+      - key: AI_UNLOAD_AFTER_PREDICT
+        value: "true"
+      - key: AI_RELEVANCE_SEVERITY_OVERRIDE_ENABLED
+        value: "false"
+      - key: AI_RELEVANCE_SEVERITY_OVERRIDE_THRESHOLD
+        value: "0.70"
+      - key: AI_SEVERITY_CHECKPOINT_URL
+        sync: false
+      - key: AI_SEVERITY_CHECKPOINT_SHA256
+        sync: false
+      - key: AI_PHOTO_RELEVANCE_CHECKPOINT_URL
+        sync: false
+      - key: AI_PHOTO_RELEVANCE_CHECKPOINT_SHA256
+        sync: false

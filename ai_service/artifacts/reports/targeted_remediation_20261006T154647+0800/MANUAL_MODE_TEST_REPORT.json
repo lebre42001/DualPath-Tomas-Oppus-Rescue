@@ -1,0 +1,53 @@
+{
+  "status": "CODE_TESTS_PASS_WITH_LIMITATIONS",
+  "laravel_focused": {
+    "tests": 39,
+    "assertions": 316,
+    "result": "PASS",
+    "filter": "TextSeverityIntegrationTest|DescriptionSeverityDashboardTest"
+  },
+  "laravel_mobile_auth_reports": {
+    "tests": 76,
+    "assertions": 951,
+    "result": "PASS",
+    "filter": "ApiMobileFlowTest|AuthAndReportFlowTest"
+  },
+  "ai_service_tests": {
+    "tests": 21,
+    "result": "PASS",
+    "scope": "MANUAL_ONLY operation mode and text inference"
+  },
+  "frontend_build": {
+    "command": "npm run build",
+    "result": "PASS",
+    "note": "stale caniuse-lite informational warning"
+  },
+  "python_syntax": "PASS",
+  "render_yaml_assertions": "PASS",
+  "not_executed": [
+    "persistent database migration",
+    "localhost runtime smoke test",
+    "Docker build",
+    "isolated staging",
+    "public deployment"
+  ],
+  "reasons": [
+    "Docker executable unavailable; no isolated staging database/target configured; localhost MySQL/Web/AI/Reverb ports 3306/8000/8100/8080 were not listening; production deployment explicitly unauthorized."
+  ],
+  "ai_status": "MANUAL_ONLY; text and image inference blocked at FastAPI as well as Laravel integration unless explicitly opted in outside this release.",
+  "source_release_bundle": {
+    "package": "ai_service\\artifacts\\packages\\manual_only_release_source_20261006T154647+0800.zip",
+    "classification": "SOURCE_ONLY_NOT_BUILT_NOT_STAGED_NOT_DEPLOYED",
+    "sha256": "490d56994a362370f88aa6e8f69303cc91958f47716ac89ea75a8edd70e4a0c5",
+    "size_bytes": 3000296,
+    "internal_manifest": "MANUAL_ONLY_RELEASE_MANIFEST.json",
+    "zip_read_test": "PASS",
+    "manifest_file_count": 283,
+    "secret_and_private_data_exclusion_check": "PASS",
+    "docker_build": "NOT_RUN; docker executable unavailable",
+    "staging": "NOT_RUN; isolated target not configured",
+    "created_at_local": "2026-10-06T16:55:50.808050+08:00"
+  },
+  "build_verified": false,
+  "staging_verified": false
+}

@@ -1,0 +1,19 @@
+{
+  "source": "ai_service\\artifacts\\reports\\xlmr_850_humanconfirmed_fulltrain_20261006_1411\\model_data\\model_development.csv",
+  "source_sha256": "79ab94ad4877159dc1a58bb621b5c743ab5cd7b832e7fed92aa23148591e6342",
+  "rows": 724,
+  "dataset_fingerprint": "8fe3c2fb7d79ba50175ab67026ffedac9b0b015913ba6c6b4deb9f91c152d282",
+  "split_manifest": "ai_service\\artifacts\\reports\\xlmr_850_humanconfirmed_fulltrain_20261006_1411\\training_split_manifest.json",
+  "split_manifest_sha256": "8272432855d09f4945d897be3f925535aa0e5c3ce30be6c6e8d1f5f980f37f48",
+  "partition_membership": {
+    "train": 514,
+    "validation": 126,
+    "calibration": 83,
+    "exposed_test": 84,
+    "exposed_challenge": 43
+  },
+  "label_or_data_change": false,
+  "training_data_intervention": "None; justified code-path optimizer/scheduler accounting intervention only.",
+  "provenance": "source rows retain prior project-owner-attested verbal batch status; all synthetic-origin; no row-wise independent responder evidence supplied.",
+  "historical_exposure": "All rows have prior project model-development exposure; held-out names are regression diagnostics only."
+}

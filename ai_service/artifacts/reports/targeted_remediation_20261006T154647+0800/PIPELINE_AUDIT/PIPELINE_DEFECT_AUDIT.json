@@ -1,0 +1,108 @@
+{
+  "workstream": "Track A pipeline defect audit",
+  "status": "complete_read_only",
+  "scope": "Training, evaluation, and inference source audit; recomputation from already saved predictions/metrics and training receipt/history. No GPU, model inference, active selector/config/data/code changes, or retraining.",
+  "inputs": {
+    "training_code": "ai_service/src/ai_service/text_training.py",
+    "inference_code": "ai_service/src/ai_service/text_inference.py",
+    "source_dataset": "ai_service/datasets/emergency_text/experiments/civilian_multilingual_6000w_20261005/reports.csv",
+    "run_config": "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/TRAINING_CONFIG.json",
+    "training_history": "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/TRAINING_HISTORY.json",
+    "train_log": "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/TRAINING_COMMAND_LOG.txt",
+    "test_analysis": "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/DETAILED_TEST_ANALYSIS.json",
+    "test_predictions": "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/FRESH_TEST_PREDICTIONS.csv"
+  },
+  "findings": [
+    {
+      "area": "label order / mapping",
+      "status": "no_defect_found",
+      "evidence": "text_training.LABELS is (minor, serious, critical, needs_review); training sets id2label/label2id from this same order, target indices and class_weights use LABELS, evaluation validates metadata order, and text_inference.TEXT_LABELS matches. Runtime loading checks metadata and model.config.id2label plus num_labels.",
+      "references": ["ai_service/src/ai_service/text_training.py:21", "ai_service/src/ai_service/text_training.py:383-384", "ai_service/src/ai_service/text_training.py:419-429", "ai_service/src/ai_service/text_training.py:530-541", "ai_service/src/ai_service/text_inference.py:11", "ai_service/src/ai_service/text_inference.py:36-40", "ai_service/src/ai_service/text_inference.py:109-115"]
+    },
+    {
+      "area": "preprocessing, negation, Unicode",
+      "status": "no_destructive_text_transform_found",
+      "evidence": "CSV is decoded as utf-8-sig and whitespace is stripped at field edges. normalized_text applies NFKC/casefold/whitespace normalization only for duplicate/leakage hashes, not training text. The tokenizer receives the original row text. No negation removal or language rewrite found in this path. This is a code-path finding, not proof every input variant was tested.",
+      "references": ["ai_service/src/ai_service/text_training.py:28-30", "ai_service/src/ai_service/text_training.py:41-57", "ai_service/src/ai_service/text_training.py:452-460"]
+    },
+    {
+      "area": "tokenizer / padding / truncation",
+      "status": "consistent_with_documented_safe_truncation",
+      "evidence": "Tokenizer and model are both loaded from FacebookAI/xlm-roberta-base at pinned revision 42f548f32366559214515ec137cdd16002968bf6; tokenizer is saved with selected checkpoint and runtime/evaluation load local checkpoint files. Training dynamically pads within each batch and truncates to recorded max_length=64. Validation/test predictor pre-counts tokens and returns None rather than silently truncating over-limit inputs; API rejects over-limit descriptions to needs_review. Existing run reports zero truncated rows in all three recorded splits. Runtime and training use the same checkpoint tokenizer identity, subject to saved tokenizer artifacts being intact.",
+      "references": ["ai_service/src/ai_service/text_training.py:383-386", "ai_service/src/ai_service/text_training.py:431-435", "ai_service/src/ai_service/text_training.py:452", "ai_service/src/ai_service/text_training.py:488-489", "ai_service/src/ai_service/text_training.py:346-360", "ai_service/src/ai_service/text_inference.py:109-118", "ai_service/src/ai_service/text_inference.py:128-136"],
+      "evidence_limits": "The prior 8 tokenizer probes are small. No exhaustive multilingual tokenizer differential test was run in this read-only audit."
+    },
+    {
+      "area": "class-weight order and loss",
+      "status": "order_correct_weights_nearly_uniform",
+      "evidence": "Training counts labels on train only, computes inverse-frequency weights in LABELS order, uses the same label-to-index expression for targets, and computes weighted cross-entropy in fp32. Saved weights are minor .9961, serious .9885, critical 1.0039, needs_review 1.0118, so class imbalance is not evidenced as the cause of poor critical recall.",
+      "references": ["ai_service/src/ai_service/text_training.py:419-429", "ai_service/src/ai_service/text_training.py:257-267"],
+      "note": "The train_loss history is a per-microbatch unweighted CE diagnostic under batch_size=1: line 464 rescales each microbatch by its own class weight. It is not the same scalar as the accumulated weighted objective. This affects interpretation of logged train loss, not the backward loss/update."
+    },
+    {
+      "area": "gradient accumulation / final partial window",
+      "status": "implemented_correctly_for_observed_configuration",
+      "evidence": "The run has 514 single-item microbatches per epoch and accumulation=16: 32 full windows plus one final window of 2. window_size and sum of class weights are computed for the actual final partial window; step condition handles end-of-loader, so no final gradients are dropped. Config reports 33 optimizer steps/epoch and 264 planned over 8 epochs.",
+      "references": ["ai_service/src/ai_service/text_training.py:411-418", "ai_service/src/ai_service/text_training.py:451-472"],
+      "caveat": "There is no run-time optimizer-step counter in the existing log; 264 is recomputed from code/config, not independently observed from emitted step events."
+    },
+    {
+      "area": "FP16 scaler / non-finite handling",
+      "status": "actionable_pipeline_defect_risk_not_proven_to_have_triggered",
+      "evidence": "Non-finite scalar loss raises. GradScaler unscales before clipping and will skip optimizer.step if it recorded inf/nan gradients. However, the code calls scheduler.step unconditionally after scaler.step, and does not compare scaler scale / expose skipped-step counts / fail on non-finite gradient norm. If overflow occurs, scheduler progress can advance despite skipped parameter updates. The existing log has no scaler/overflow telemetry, so occurrence in the completed run cannot be asserted.",
+      "references": ["ai_service/src/ai_service/text_training.py:422", "ai_service/src/ai_service/text_training.py:459-472"],
+      "recommendation": "For the next intervention, record scaler scale, pre-clip grad norm, skipped optimizer steps, and actual optimizer step count; step the LR scheduler only when GradScaler performs an optimizer update, and fail/abort cleanly for persistent non-finite gradients. Add CPU/mock tests for skipped-step scheduler behavior; do not change the active model."
+    },
+    {
+      "area": "train/eval modes and checkpoint selection/loading",
+      "status": "no_defect_found",
+      "evidence": "Each epoch calls model.train(); validation predictor calls model.eval() and inference_mode; next epoch returns to train mode. At selected epoch the model and tokenizer save locally, old model/optimizer are released, and selected artifact is reloaded before report predictions. Selection is validation-only, with key (-raw urgent undertriage count, macro-F1, min critical/serious recall, critical precision). Fresh test is not consulted in selection code.",
+      "references": ["ai_service/src/ai_service/text_training.py:437-475", "ai_service/src/ai_service/text_training.py:484-507", "ai_service/src/ai_service/text_training.py:243-254"]
+    },
+    {
+      "area": "backbone gradients / updates",
+      "status": "trainability_configured_but_update_evidence_incomplete",
+      "evidence": "The run recorded 278,046,724/278,046,724 trainable parameters; unfreeze_backbone leaves parameters trainable and all trainable parameters are passed to optimizer. Backward is called on each weighted loss. Thus structural trainability is verified. The artifact does not record gradient norms or before/after hashes for backbone tensors, so actual per-layer nonzero updates cannot be independently established from this receipt/log alone.",
+      "references": ["ai_service/src/ai_service/text_training.py:387-405", "ai_service/src/ai_service/text_training.py:425-426", "ai_service/src/ai_service/text_training.py:459-469"],
+      "recommendation": "Future experiment should record finite gradient norm and lightweight pre/post checksums or update norms for representative backbone layers and classifier head. Avoid duplicating the 1.1GB model just for this audit; add instrumentation on the new run."
+    },
+    {
+      "area": "Adafactor and scheduler",
+      "status": "explicit_lr_configuration_correct",
+      "evidence": "Adafactor is constructed with explicit lr, scale_parameter=False, relative_step=False, warmup_init=False. A separate linear warmup/decay LambdaLR with 5% warmup is attached, so implicit Adafactor relative schedule is disabled and there is no double warmup. For the observed configuration: 264 scheduled steps, 14 warmup steps. The conditional scaler overflow/scheduler defect above remains.",
+      "references": ["ai_service/src/ai_service/text_training.py:399-418", "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/TRAINING_CONFIG.json"]
+    }
+  ],
+  "recomputed_existing_run_facts": {
+    "train_rows": 514,
+    "microbatches_per_epoch_at_batch_1": 514,
+    "accumulation": 16,
+    "full_windows": 32,
+    "final_partial_window_microbatches": 2,
+    "optimizer_steps_per_epoch": 33,
+    "planned_optimizer_steps_8_epochs": 264,
+    "selected_epoch": 6,
+    "critical_test_recall": "11/20 = 0.55",
+    "critical_to_minor": 5,
+    "critical_to_serious": 4,
+    "raw_urgent_undertriage": "9/41",
+    "class_weight_order": ["minor", "serious", "critical", "needs_review"],
+    "class_weights": {"minor": 0.9961240291595459, "serious": 0.9884615540504456, "critical": 1.00390625, "needs_review": 1.0118110179901123}
+  },
+  "evidence_based_next_intervention": {
+    "must_not_be": "A blind repeat with more epochs, the same config/split, or changes justified only by class imbalance; there are zero train truncations and class weights are almost uniform.",
+    "primary_data_intervention": "Prepare targeted blinded responder reconciliation for the 81 AI-disagree/uncertain cases and all 9 current Critical undertriage examples (union by case_id with older six-case list). Preserve attested labels and record any actual responder decision separately; no AI rewrite/label inherits batch attestation. Train only on explicit human-confirmed corrections or approved original rows; keep exposed test/challenge out of training and selection.",
+    "pipeline_intervention": "Before the next bounded full-backbone experiment, implement and unit-test AMP skipped-step handling/telemetry and gradient/update diagnostics in text_training.py. This is a real code-level safety/observability improvement, but it is not claimed to explain the observed nine errors absent overflow evidence.",
+    "model_intervention_after_targeted_human_review": "If a bounded research run is still authorized before new real-world data exists, pre-register one-factor comparisons on the development partition only (e.g. current balanced CE versus an explicitly declared critical-cost variant), with fixed seeds, frozen split, and validation selection; use no fresh-test feedback. Report the precision/recall tradeoff and retain the exposed test label. Select the exact cost factor from a protocol or responder-defined loss, not an ad hoc value. Run only one GPU-heavy job at a time.",
+    "expected_risks": ["Small synthetic data and historic corpus exposure remain; no research rerun can create genuinely unseen evidence.", "Critical up-weighting may improve recall but increase false-critical/over-triage and requires validation-based comparison.", "Adjudication may change labels or expose rubric ambiguity; any correction needs exact case ID, reviewer, rationale, and timestamp provenance.", "AMP instrumentation may reveal no skipped updates; it improves auditability without guaranteeing better severity performance."],
+    "release_boundary": "No recommendation here promotes/activates the rejected checkpoint or changes API, active selector, dataset, or deployment behavior."
+  },
+  "commands_run": [
+    "rg -n label/tokenizer/optimizer/scaler/train-eval patterns in ai_service training/inference source",
+    "PowerShell read-only line inspections of ai_service/src/ai_service/text_training.py and text_inference.py",
+    "Read-only inspection of TRAINING_CONFIG.json, TRAINING_HISTORY.json, TRAINING_COMMAND_LOG.txt, DETAILED_TEST_ANALYSIS.json, and FRESH_TEST_PREDICTIONS.csv"
+  ],
+  "gpu_or_inference_used": false,
+  "files_changed_outside_assigned_report_directory": false,
+  "unresolved": ["No evidence in logs determines whether GradScaler skipped any update during the finished run.", "No before/after per-layer tensor-update records exist to independently confirm nonzero changes in every backbone layer.", "Source text path was inspected; no exhaustive Unicode/negation fuzz suite was run in this assigned read-only audit."]
+}

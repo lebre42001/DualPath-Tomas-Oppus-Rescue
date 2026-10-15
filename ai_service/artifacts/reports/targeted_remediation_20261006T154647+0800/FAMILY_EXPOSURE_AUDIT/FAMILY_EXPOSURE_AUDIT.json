@@ -1,0 +1,402 @@
+{
+  "audit_id": "targeted-family-exposure-audit-20261006T154647+0800-v1",
+  "generated_at_utc": "2026-10-06T08:05:07.868569+00:00",
+  "scope": "Read-only verification of declared/effective family counts, 41 recorded candidate pair recommendations, historical and current split containment, historical CSV readability and inventory count discrepancy.",
+  "commands_and_methods": {
+    "python": "C:\\laragon\\bin\\python\\python-3.13\\python.exe FAMILY_EXPOSURE_AUDIT/audit_family_exposure.py",
+    "source_code_inventory": "ai_service/tools/build_civilian_multilingual_experiment.py: prior_text_inventory; exact traversal rglob(\"*.csv\"), skip only staging path and civilian_multilingual_6000w_20261005 output path; UTF-8-sig DictReader; count every nonblank text row, normalized punctuation-stripped exact text keys deduplicated only in lookup map.",
+    "reconciliation": "Read-only CSV/JSON parsing; source case_id/scenario_family_id mapping; union-find merges only the 19 SAME_SCENARIO_FAMILY suggestions; pair/split crosswalk written as CSV.",
+    "access": "For 60 historically recorded restricted CSV paths, check stat/hash/open/read metadata; run read-only icacls on one representative CSV per tree; no Get-Acl, elevation, ACL change, ownership change, or extraction. Prior permission errors recorded separately from current probe.",
+    "archive": "Enumerate zip/tar/tgz under ai_service and inspect member names only for by_severity/examples.csv paths; no extraction or archive member reads."
+  },
+  "source_inputs": {
+    "reports_csv": {
+      "path": "ai_service/datasets/emergency_text/experiments/civilian_multilingual_6000w_20261005/reports.csv",
+      "sha256": "fd0fb65ccb718a1dee93fd315aa3a0e12cb5a8c2123bc08c8466e51c75fc7645",
+      "rows": 850
+    },
+    "provenance_csv": {
+      "path": "ai_service/datasets/emergency_text/experiments/civilian_multilingual_6000w_20261005/provenance.csv",
+      "sha256": "fb8c89f5a72859f0070305ba046d6295e86f985514935a7c51a912e9f3ecf3df",
+      "rows": 850
+    },
+    "family_manifest": {
+      "path": "ai_service/datasets/emergency_text/experiments/civilian_multilingual_6000w_20261005/family_manifest.json",
+      "sha256": "547a5257616eb5f3b25e39bce5d79f37fdebf955aa8fbc315e9acb812271e7c2",
+      "declared_families_in_manifest": 833
+    },
+    "reconciliation_report": {
+      "path": "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/FAMILY_RECONCILIATION_REPORT.json",
+      "sha256": "801b9986bb28fece08afda782c06cda964899a4eb21f57ebf0e06a222de851dc"
+    },
+    "effective_family_manifest": {
+      "path": "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/FINAL_FAMILY_MANIFEST.json",
+      "sha256": "b089b92eead3876708276b3853ef42e3cd3a86fff970e1274e94a011a6f84759"
+    },
+    "historical_split": {
+      "path": "ai_service/datasets/emergency_text/experiments/civilian_multilingual_6000w_20261005/split_manifest.json",
+      "sha256": "f044ffde977e0d8b9e5b762743e37ad81f97cce2b272f4a41f7c923b86a33930"
+    },
+    "current_split": {
+      "path": "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/SPLIT_MANIFEST.json",
+      "sha256": "379aa746d819c63c57499f8537fc794ab69cc6b154cbe12327e7f914f34efe67"
+    },
+    "historical_access_report": {
+      "path": "ai_service/artifacts/reports/reviewed_xlmr_next_stage_20261006/PRIOR_SOURCE_ACCESS_AUDIT.json",
+      "sha256": "4d17790be36fec4ae69ffebb041d81f95c0b8242c85513b0503950545bf27090"
+    },
+    "historical_duplicate_count_report": {
+      "path": "ai_service/artifacts/reports/civilian_multilingual_fulltrain_20261005/DUPLICATE_AUDIT.json",
+      "sha256": "00b54260f6ca67feadc0bc7d6b27f0dd975a9b6905d25d9ec7806653e0da714a"
+    },
+    "historical_2708_count_report": {
+      "path": "ai_service/artifacts/reports/civilian_multilingual_fulltrain_20261005/LEAKAGE_AUDIT.json",
+      "sha256": "d1a2d316e00c4ae9e819b9aef0e345c98fa70442884dd50d44c42db748c18bd3"
+    },
+    "builder_source_code": {
+      "path": "ai_service/tools/build_civilian_multilingual_experiment.py",
+      "sha256": "8f13a4ffeae71902b31de60267351590fbc102cfce94e0ec27aedd157d64b840"
+    }
+  },
+  "family_verification": {
+    "source_report_rows": 850,
+    "unique_case_ids": 850,
+    "provenance_rows": 850,
+    "unique_provenance_case_ids": 850,
+    "report_and_provenance_id_sets_equal": true,
+    "declared_family_ids": 833,
+    "manifest_declared_family_ids": 833,
+    "source_family_manifest_memberships_match_reports": true,
+    "family_manifest_memberships_match_reports": true,
+    "reports_provenance_content_alignment": {
+      "language": 850,
+      "text": 850,
+      "label": 850
+    },
+    "reports_group_id_matches_provenance_family_id": 850,
+    "split_manifest_component_count": 820,
+    "reconstructed_current_effective_groups": {
+      "effective_component_count": 820,
+      "cross_partition_component_count": 0,
+      "cross_partition_components": [],
+      "assignment_case_count": 850
+    },
+    "reconstructed_historical_effective_groups": {
+      "effective_component_count": 820,
+      "cross_partition_component_count": 3,
+      "cross_partition_components": [
+        {
+          "component": "TL-047",
+          "partition_names": [
+            "train",
+            "validation"
+          ],
+          "case_ids": [
+            "TL-010",
+            "TL-040",
+            "TL-047",
+            "TL-056"
+          ]
+        },
+        {
+          "component": "TL-154",
+          "partition_names": [
+            "fresh_test",
+            "train"
+          ],
+          "case_ids": [
+            "TL-154",
+            "TL-163",
+            "TL-179"
+          ]
+        },
+        {
+          "component": "CEB-MINOR-002",
+          "partition_names": [
+            "fresh_test",
+            "train"
+          ],
+          "case_ids": [
+            "CEB-MINOR-002",
+            "CEB-MINOR-021"
+          ]
+        }
+      ],
+      "assignment_case_count": 850
+    },
+    "reconciliation_candidate_pairs": 41,
+    "pair_recommendations": {
+      "SAME_SCENARIO_FAMILY": 19,
+      "RELATED_BUT_DISTINCT": 22
+    },
+    "current_split": {
+      "partitioned_case_ids": 850,
+      "declared_family_count": 833,
+      "declared_families_crossing_partitions": 0,
+      "declared_family_crossing_examples": [],
+      "same_scenario_pairs": 19,
+      "effective_family_components_after_same_edges": 820,
+      "effective_components_crossing_partitions": 0,
+      "crossing_component_examples": [],
+      "all_41_candidate_pairs_cross_partition": 10,
+      "same_scenario_pairs_cross_partition": 0,
+      "related_but_distinct_pairs_cross_partition": 10
+    },
+    "historical_split": {
+      "partitioned_case_ids": 850,
+      "declared_family_count": 833,
+      "declared_families_crossing_partitions": 0,
+      "declared_family_crossing_examples": [],
+      "same_scenario_pairs": 19,
+      "effective_family_components_after_same_edges": 820,
+      "effective_components_crossing_partitions": 3,
+      "crossing_component_examples": [
+        {
+          "effective_component": "TL-FAM-047",
+          "partition_names": [
+            "train",
+            "validation"
+          ],
+          "case_count": 4
+        },
+        {
+          "effective_component": "TL-FAM-154",
+          "partition_names": [
+            "fresh_test",
+            "train"
+          ],
+          "case_count": 3
+        },
+        {
+          "effective_component": "CEB-FAM-MINOR-002",
+          "partition_names": [
+            "fresh_test",
+            "train"
+          ],
+          "case_count": 2
+        }
+      ],
+      "all_41_candidate_pairs_cross_partition": 15,
+      "same_scenario_pairs_cross_partition": 5,
+      "related_but_distinct_pairs_cross_partition": 10
+    },
+    "frozen_split_manifest_summary": {
+      "component_count": 820,
+      "component_count_merged_from_recommendations": 19,
+      "components_crossing_old_partitions": 3,
+      "rows_moved_from_old_assignment": 4,
+      "source_dataset_unchanged": true,
+      "reconstructed_effective_group_count_matches_manifest": true
+    },
+    "edge_semantics": "Current source scenario_family_id and source case_ids are unchanged. Effective components are computed only by unioning candidate family IDs in the 19 SAME_SCENARIO_FAMILY recommendations. These are machine-aided split recommendations, not human-confirmed incident identity."
+  },
+  "historical_prior_exposure": {
+    "old_assignment_integrity": {
+      "partition_counts": {
+        "train": 516,
+        "validation": 124,
+        "calibration": 83,
+        "fresh_test": 84,
+        "challenge": 43
+      },
+      "partition_entry_count": 850,
+      "unique_assigned_ids": 850,
+      "duplicate_assigned_ids": [],
+      "missing_source_ids": [],
+      "unknown_assigned_ids": [],
+      "pass": true
+    },
+    "current_assignment_integrity": {
+      "partition_counts": {
+        "train": 514,
+        "validation": 126,
+        "calibration": 83,
+        "fresh_test": 84,
+        "challenge": 43
+      },
+      "partition_entry_count": 850,
+      "unique_assigned_ids": 850,
+      "duplicate_assigned_ids": [],
+      "missing_source_ids": [],
+      "unknown_assigned_ids": [],
+      "pass": true
+    },
+    "source_case_ids_with_prior_partition": 850,
+    "source_case_ids_with_current_partition": 850,
+    "same_case_corpus_prior_exposure": true,
+    "interpretation": "All rows in this 850-case candidate corpus had an assignment in the 2026-10-05 historical split (including its old fresh_test/challenge); therefore the new split is not historical unseen evidence. This says nothing definitive about inaccessible legacy CSV content."
+  },
+  "readable_inventory_reproduction": {
+    "scope": "Current exact reproduction of the original builder’s scan rule, not a claim that this current tree equals the 2026-10-05 tree state.",
+    "current_csv_paths_considered": 76,
+    "current_readable_csv_paths": 16,
+    "current_readable_csv_with_text_column": 12,
+    "current_nonblank_text_records_exact_builder_count": 4974,
+    "current_punctuation_normalized_unique_keys": 1410,
+    "current_readable_file_identity_counts": {
+      "readable_csv_paths": 16,
+      "unique_sha256_file_identities": 14,
+      "parsed_data_rows_across_paths": 6724,
+      "parsed_data_rows_across_unique_file_identities": 6244,
+      "nonblank_text_records_across_paths": 4974
+    },
+    "sha256_duplicate_file_groups": 2,
+    "duplicate_file_groups": [
+      {
+        "sha256": "7c3ce51ad2e14be1ad6c23ab49e114b9259922dbccd2c10181c6dac2e2b1583b",
+        "paths": [
+          "ai_service/datasets/emergency_text/archive/initial_80/draft_reports.csv",
+          "ai_service/datasets/emergency_text/archive/initial_80/reviewed_reports.csv"
+        ],
+        "path_count": 2
+      },
+      {
+        "sha256": "5e2a4f508a6de869ad0eee1c6c7385b03c2df542eadbd7f79a315b0243f9db1e",
+        "paths": [
+          "ai_service/datasets/emergency_text/experiments/xlmr_fulltrain_20261005_1628_pht/reports.csv",
+          "ai_service/datasets/emergency_text/working/reports.csv"
+        ],
+        "path_count": 2
+      }
+    ],
+    "historical_recorded_1732": 1732,
+    "historical_recorded_2708": 2708,
+    "historical_2708_files_recorded": 17,
+    "same_path_hash_row_crosswalk_available_for_historical_2708": false,
+    "reconciliation_result": "UNRESOLVED: surviving artifacts record 1,732 from the builder’s current-tree readable nonblank-text-row scan and 2,708 across 17 files from an independent red-team scan, but do not preserve a common per-path inventory/hash/row manifest for the 2,708 population. The builder scan rule counts repeated nonblank text rows while its lookup map deduplicates keys; the 2,708 methodology/path list is not retained, so mathematical equivalence cannot be established."
+  },
+  "restricted_csv_access": {
+    "prior_recorded_restricted_path_count": 60,
+    "unique_restricted_paths": 60,
+    "current_probes": {
+      "stat_ok": 60,
+      "read_ok": 0,
+      "stat_error": 0,
+      "read_errors": {
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\critical\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\minor\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\needs_review\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\serious\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\serious\\\\bisaya\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\serious\\\\english\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\serious\\\\mixed\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\serious\\\\tagalog\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\needs_review\\\\bisaya\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\needs_review\\\\english\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\needs_review\\\\mixed\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\needs_review\\\\tagalog\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\minor\\\\bisaya\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\minor\\\\english\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\minor\\\\mixed\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\minor\\\\tagalog\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\critical\\\\bisaya\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\critical\\\\english\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\critical\\\\mixed\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\working\\\\by_severity\\\\critical\\\\tagalog\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\critical\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\minor\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\needs_review\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\serious\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\serious\\\\bisaya\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\serious\\\\english\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\serious\\\\mixed\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\serious\\\\tagalog\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\needs_review\\\\bisaya\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\needs_review\\\\english\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\needs_review\\\\mixed\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\needs_review\\\\tagalog\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\minor\\\\bisaya\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\minor\\\\english\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\minor\\\\mixed\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\minor\\\\tagalog\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\critical\\\\bisaya\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\critical\\\\english\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\critical\\\\mixed\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\experiments\\\\synthetic_9000words_20260920\\\\by_severity\\\\critical\\\\tagalog\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\critical\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\minor\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\needs_review\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\serious\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\serious\\\\bisaya\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\serious\\\\english\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\serious\\\\mixed\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\serious\\\\tagalog\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\needs_review\\\\bisaya\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\needs_review\\\\english\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\needs_review\\\\mixed\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\needs_review\\\\tagalog\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\minor\\\\bisaya\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\minor\\\\english\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\minor\\\\mixed\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\minor\\\\tagalog\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\critical\\\\bisaya\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\critical\\\\english\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\critical\\\\mixed\\\\examples.csv'": 1,
+        "PermissionError: [Errno 13] Permission denied: 'C:\\\\laragon\\\\www\\\\CAPSTONE-EMERGENCY-SYSTEM-main\\\\ai_service\\\\datasets\\\\emergency_text\\\\archive\\\\initial_80\\\\by_severity\\\\critical\\\\tagalog\\\\examples.csv'": 1
+      }
+    },
+    "by_tree": {
+      "ai_service\\datasets\\emergency_text\\working\\by_severity": 20,
+      "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920": 20,
+      "ai_service\\datasets\\emergency_text\\archive\\initial_80": 20
+    },
+    "representative_read_only_icacls_probes": {
+      "working/by_severity/critical/examples.csv": "exit 5, Access is denied; no ACL entry returned",
+      "experiments/synthetic_9000words_20260920/by_severity/critical/examples.csv": "exit 5, Access is denied; no ACL entry returned",
+      "archive/initial_80/by_severity/critical/examples.csv": "exit 5, Access is denied; no ACL entry returned"
+    },
+    "source_list": "Prior audit path list; all 60 are included row-by-row in RECORDED_60_FILE_ACCESS_PROBES.csv.",
+    "no_acl_or_privilege_action": true
+  },
+  "archives": {
+    "read_only_container_count": 5,
+    "containers": [
+      {
+        "path": "ai_service/.venv-xlmrt-fulltrain/Lib/site-packages/pkg_resources/tests/data/my-test-package-zip/my-test-package.zip",
+        "size_bytes": 1809,
+        "members_matching_restricted_csv": [],
+        "container_type": "zip"
+      },
+      {
+        "path": "ai_service/artifacts/checkpoints/text_xlmr_fulltrain_local_20261005_1724/text_xlmr_fulltrain_local_20261005_1724_provisional_sealed.zip",
+        "size_bytes": 1129471735,
+        "members_matching_restricted_csv": [],
+        "container_type": "zip"
+      },
+      {
+        "path": "ai_service/artifacts/colab_packages/emergency_text_xlmr_provisional_20261004/emergency_text_xlmr_provisional_20261004.zip",
+        "size_bytes": 71428,
+        "members_matching_restricted_csv": [],
+        "container_type": "zip"
+      },
+      {
+        "path": "ai_service/artifacts/packages/civilian_multilingual_6000w_20261005_xlmr_research.zip",
+        "size_bytes": 1131112346,
+        "members_matching_restricted_csv": [],
+        "container_type": "zip"
+      },
+      {
+        "path": "ai_service/artifacts/packages/text_xlmr_850_humanconfirmed_fulltrain_20261006_sealed.zip",
+        "size_bytes": 1137206221,
+        "members_matching_restricted_csv": [],
+        "container_type": "zip"
+      }
+    ],
+    "restricted_csv_member_count": 0,
+    "unsupported_archive_search": {
+      "extensions": [
+        ".7z",
+        ".rar"
+      ],
+      "result": "No archive paths found under ai_service by rg --files; not present in archive scanner."
+    }
+  },
+  "limitations": [
+    "No readable contents, hashes, or parsed row counts can be supplied for any restricted CSV that remains unreadable; path/stat metadata is not evidence of content overlap.",
+    "The accessible 1,732 vs 2,708 historical scan populations cannot be reconciled without the independent 2,708 per-file inventory, exact scan code/config, and contemporaneous tree snapshot.",
+    "Current re-scan sees a later repository state than the original 2026-10-05 scan and includes subsequently created reviewed/research CSVs; it is labeled current reproducibility only.",
+    "The old 850-row corpus itself was assigned among old partitions, and future-looking evaluations on its old heldouts count as project historical exposure.",
+    "No real-world incident identities can be inferred from lexical family links.",
+    "No file under source trees was changed; no ACLs, owners, or permissions were changed; no model/training was run."
+  ]
+}

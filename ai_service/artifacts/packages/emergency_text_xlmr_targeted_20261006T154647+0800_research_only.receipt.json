@@ -1,0 +1,11 @@
+{
+  "package": "ai_service\\artifacts\\packages\\emergency_text_xlmr_targeted_20261006T154647+0800_research_only.zip",
+  "classification": "RESEARCH_ONLY_NOT_DEPLOYABLE",
+  "sha256": "d942c568f932784ca26822002d60e05028f17031a301e7ac82a5046186925e77",
+  "size_bytes": 1131387795,
+  "internal_manifest": "RESEARCH_PACKAGE_MANIFEST.json",
+  "zip_read_test": "PASS",
+  "manifest_file_count": 82,
+  "model_weights_sha256": "ce7b62bbe3d4f50d8952f8508b67a6b5adba0a04d5fc0175fc3187639adbbad9",
+  "created_at_local": "2026-10-06T17:00:18.055377+08:00"
+}

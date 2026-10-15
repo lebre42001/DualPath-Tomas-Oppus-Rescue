@@ -1,0 +1,10 @@
+﻿case_id,human_attested_label,raw_prediction,max_raw_softmax_uncalibrated,routing_result,routed_label,in_81_row_audit,latest_nine_undertriage,older_six_regression_list,classification,proposed_action_for_human_confirmation
+CEB-CRITICAL-001,critical,minor,0.90784556,automatic,minor,True,True,True,semantic ambiguity;model disagreement,KEEP_LABEL
+CEB-CRITICAL-003,critical,minor,0.47410274,human_review,needs_review,True,True,True,model disagreement,KEEP_LABEL
+CEB-CRITICAL-010,critical,serious,0.86493975,automatic,serious,True,True,False,semantic ambiguity;model disagreement;unresolved,UNRESOLVED
+CEB-CRITICAL-024,critical,serious,0.81452292,automatic,serious,True,True,True,model disagreement,KEEP_LABEL
+EN-143,critical,minor,0.51788449,human_review,needs_review,True,True,False,possible label conflict;semantic ambiguity;model disagreement;unresolved,UNRESOLVED
+EN-235,critical,serious,0.72070825,automatic,serious,False,True,False,model disagreement;possible label conflict,KEEP_LABEL
+MX-CRITICAL-002,critical,minor,0.3711462,human_review,needs_review,True,True,True,semantic ambiguity;model disagreement,KEEP_LABEL
+MX-CRITICAL-013,critical,serious,0.88287604,automatic,serious,True,True,True,semantic ambiguity;model disagreement,KEEP_LABEL
+TL-126,critical,minor,0.8614108,automatic,minor,True,True,True,possible label conflict;semantic ambiguity;model disagreement;unresolved,UNRESOLVED

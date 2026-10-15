@@ -1,0 +1,2359 @@
+{
+  "split": "test",
+  "model_version": "text-20261011T063848490004Z",
+  "labels": [
+    "minor",
+    "serious",
+    "critical",
+    "needs_review"
+  ],
+  "dataset_fingerprint": "8bb0386692128356aef79b4cf0356e58607231956d7952b2613b131fff9f4e10",
+  "all_data_reviewed": false,
+  "rows": [
+    {
+      "case_id": "INITIAL80-CEB003",
+      "group_id": "initial80:shared_minor_mirror_03",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.9972585439682007,
+        0.0009407856268808246,
+        0.000898477272130549,
+        0.0009021481964737177
+      ]
+    },
+    {
+      "case_id": "INITIAL80-CEB016",
+      "group_id": "initial80:shared_review_01",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.0010025673545897007,
+        0.0006925282650627196,
+        0.0009885999606922269,
+        0.997316300868988
+      ]
+    },
+    {
+      "case_id": "INITIAL80-EN002",
+      "group_id": "initial80:en_minor_02",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9968054294586182,
+        0.001445222762413323,
+        0.0011285372311249375,
+        0.0006208076956681907
+      ]
+    },
+    {
+      "case_id": "INITIAL80-EN004",
+      "group_id": "initial80:shared_minor_mirror_03",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9972129464149475,
+        0.0006774793146178126,
+        0.0011611452791839838,
+        0.0009484572219662368
+      ]
+    },
+    {
+      "case_id": "INITIAL80-EN008",
+      "group_id": "initial80:en_serious_03",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.0010886420495808125,
+        0.15646256506443024,
+        0.8405730724334717,
+        0.0018757667858153582
+      ]
+    },
+    {
+      "case_id": "INITIAL80-EN016",
+      "group_id": "initial80:shared_review_01",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.0010399619350209832,
+        0.000761763658374548,
+        0.0009756053332239389,
+        0.9972226619720459
+      ]
+    },
+    {
+      "case_id": "INITIAL80-EN019",
+      "group_id": "initial80:shared_review_conflict_03",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.0014198231510818005,
+        0.00141219946090132,
+        0.1462690830230713,
+        0.8508989214897156
+      ]
+    },
+    {
+      "case_id": "INITIAL80-MIX002",
+      "group_id": "initial80:mixed_minor_02",
+      "language": "mixed",
+      "label": "minor",
+      "probabilities": [
+        0.9972739815711975,
+        0.0011011977912858129,
+        0.0009070099913515151,
+        0.0007178424275480211
+      ]
+    },
+    {
+      "case_id": "INITIAL80-MIX003",
+      "group_id": "initial80:mixed_minor_03",
+      "language": "mixed",
+      "label": "minor",
+      "probabilities": [
+        0.9973366856575012,
+        0.0009186910465359688,
+        0.0009081611060537398,
+        0.0008364046807400882
+      ]
+    },
+    {
+      "case_id": "INITIAL80-MIX010",
+      "group_id": "initial80:mixed_serious_05",
+      "language": "mixed",
+      "label": "serious",
+      "probabilities": [
+        0.0011568026384338737,
+        0.9955534338951111,
+        0.002250744728371501,
+        0.0010390523821115494
+      ]
+    },
+    {
+      "case_id": "INITIAL80-MIX015",
+      "group_id": "initial80:mixed_critical_05",
+      "language": "mixed",
+      "label": "critical",
+      "probabilities": [
+        0.0009324706043116748,
+        0.0027103761676698923,
+        0.9942540526390076,
+        0.0021030951756983995
+      ]
+    },
+    {
+      "case_id": "INITIAL80-MIX016",
+      "group_id": "initial80:shared_review_01",
+      "language": "mixed",
+      "label": "needs_review",
+      "probabilities": [
+        0.0008593189413659275,
+        0.0007334591937251389,
+        0.001045880257152021,
+        0.9973613619804382
+      ]
+    },
+    {
+      "case_id": "INITIAL80-MIX019",
+      "group_id": "initial80:shared_review_conflict_03",
+      "language": "mixed",
+      "label": "needs_review",
+      "probabilities": [
+        0.0008956848178058863,
+        0.0006981244659982622,
+        0.0010629675816744566,
+        0.9973432421684265
+      ]
+    },
+    {
+      "case_id": "INITIAL80-TL003",
+      "group_id": "initial80:tl_minor_03",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.9973715543746948,
+        0.0008822235395200551,
+        0.0009297751821577549,
+        0.0008164873579517007
+      ]
+    },
+    {
+      "case_id": "INITIAL80-TL016",
+      "group_id": "initial80:shared_review_01",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.0009407812613062561,
+        0.0007227449677884579,
+        0.001041201874613762,
+        0.9972953200340271
+      ]
+    },
+    {
+      "case_id": "INITIAL80-TL019",
+      "group_id": "initial80:shared_review_conflict_03",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.0009423275478184223,
+        0.0007497637416236103,
+        0.0012649078853428364,
+        0.9970429539680481
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-CRITICAL-005",
+      "group_id": "responder850:SPLIT-a766fbec9444c944",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": [
+        0.0008611886878497899,
+        0.0013819190207868814,
+        0.996505856513977,
+        0.0012510090600699186
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-CRITICAL-006",
+      "group_id": "responder850:SPLIT-58890a9e0589aa33",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": [
+        0.000792370701674372,
+        0.0013625018764287233,
+        0.9966418743133545,
+        0.0012032438535243273
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-CRITICAL-007",
+      "group_id": "responder850:SPLIT-4f153a455d47d723",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": [
+        0.0012679334031417966,
+        0.002637293189764023,
+        0.9944131970405579,
+        0.001681551686488092
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-CRITICAL-034",
+      "group_id": "responder850:SPLIT-2833f9f5a8549d30",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": [
+        0.0008655372075736523,
+        0.0018864000448957086,
+        0.9961750507354736,
+        0.001072916085831821
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-CRITICAL-036",
+      "group_id": "responder850:SPLIT-8c6f94b259a12ed5",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": [
+        0.0012100425083190203,
+        0.0020456677302718163,
+        0.9955304265022278,
+        0.0012138554593548179
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-CRITICAL-039",
+      "group_id": "responder850:SPLIT-c77e2d91e101cf37",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": [
+        0.006249258294701576,
+        0.0016715581296011806,
+        0.9871627688407898,
+        0.004916413687169552
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-CRITICAL-052",
+      "group_id": "responder850:SPLIT-c3a154ec32182b95",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": [
+        0.0008546988246962428,
+        0.001547472202219069,
+        0.9964022636413574,
+        0.0011955633526667953
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-MINOR-005",
+      "group_id": "responder850:SPLIT-2d74b2ae0dc7f463",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.9965440630912781,
+        0.00146925775334239,
+        0.0010355680715292692,
+        0.000951143738348037
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-MINOR-006",
+      "group_id": "responder850:SPLIT-5cbc3ccf5750b0a0",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.9971152544021606,
+        0.0010232093045488,
+        0.0008580517605878413,
+        0.0010033876169472933
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-MINOR-011",
+      "group_id": "responder850:SPLIT-bab5e2856c7ebcfa",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.3350219130516052,
+        0.6609963178634644,
+        0.002585266949608922,
+        0.001396520878188312
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-MINOR-022",
+      "group_id": "responder850:SPLIT-32fa3a52138d0693",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.9965086579322815,
+        0.0014832529705017805,
+        0.001296021044254303,
+        0.0007120153168216348
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-MINOR-029",
+      "group_id": "responder850:SPLIT-ef5a7984d1d488b1",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.9970536231994629,
+        0.0011512436904013157,
+        0.0008530931663699448,
+        0.0009420716669410467
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-MINOR-053",
+      "group_id": "responder850:SPLIT-625a697a39cfe922",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.9911143779754639,
+        0.007043603342026472,
+        0.0011061250697821379,
+        0.0007358283619396389
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-MINOR-057",
+      "group_id": "responder850:SPLIT-c447d999f209f49f",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.9961450099945068,
+        0.00192946195602417,
+        0.0010025963420048356,
+        0.000922899809665978
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-MINOR-058",
+      "group_id": "responder850:SPLIT-9d9f6e3d43297619",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.9087568521499634,
+        0.0030847000889480114,
+        0.08709359914064407,
+        0.0010648051975294948
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-MINOR-059",
+      "group_id": "responder850:SPLIT-0dae5c257bd4fd78",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.9973324537277222,
+        0.0009669569553807378,
+        0.000923842191696167,
+        0.00077686837175861
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-NEEDS_REVIEW-010",
+      "group_id": "responder850:SPLIT-1f1c4e6749dd4859",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.0018430397612974048,
+        0.001243304111994803,
+        0.0012639681808650494,
+        0.9956497550010681
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-NEEDS_REVIEW-021",
+      "group_id": "responder850:SPLIT-6fd5faf69ee503ad",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.0010203460697084665,
+        0.0006745709688402712,
+        0.0010251929052174091,
+        0.9972798824310303
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-NEEDS_REVIEW-025",
+      "group_id": "responder850:SPLIT-fb66118d4142c050",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.0009282602113671601,
+        0.0008116583921946585,
+        0.0015294335316866636,
+        0.9967306852340698
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-NEEDS_REVIEW-034",
+      "group_id": "responder850:SPLIT-ae2172be9575be0e",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.001040441682562232,
+        0.0006345557630993426,
+        0.0010310392826795578,
+        0.997294008731842
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-NEEDS_REVIEW-037",
+      "group_id": "responder850:SPLIT-16b911659be9e797",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.0010269653284922242,
+        0.0006316308863461018,
+        0.001036289264447987,
+        0.9973050355911255
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-NEEDS_REVIEW-051",
+      "group_id": "responder850:SPLIT-8ac7aad7ccefd1e1",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.001045729499310255,
+        0.0006951102986931801,
+        0.0015150017570704222,
+        0.9967441558837891
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-NEEDS_REVIEW-055",
+      "group_id": "responder850:SPLIT-a507ef470cf19249",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.0008291308186016977,
+        0.0006063921609893441,
+        0.001464031171053648,
+        0.9971004128456116
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-SERIOUS-001",
+      "group_id": "responder850:SPLIT-bf3ffcdb54b8ef2b",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.0045098550617694855,
+        0.9939524531364441,
+        0.0009456383995711803,
+        0.0005921295378357172
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-SERIOUS-002",
+      "group_id": "responder850:SPLIT-ee5044f5aeb77edb",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.014711220748722553,
+        0.98347407579422,
+        0.0012336756335571408,
+        0.0005810467409901321
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-SERIOUS-009",
+      "group_id": "responder850:SPLIT-4dc11b15e00934c0",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.004822408314794302,
+        0.9937126040458679,
+        0.0010234530782327056,
+        0.00044144410640001297
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-SERIOUS-016",
+      "group_id": "responder850:SPLIT-e162fbedc2c81dd3",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.0009476273553445935,
+        0.9975449442863464,
+        0.0009096514550037682,
+        0.0005977904656901956
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-SERIOUS-021",
+      "group_id": "responder850:SPLIT-d193939ff7df7e27",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.0018682765075936913,
+        0.9968376159667969,
+        0.0007376183639280498,
+        0.000556476938072592
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-SERIOUS-026",
+      "group_id": "responder850:SPLIT-28a0ccc4a0f21d24",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.002831099322065711,
+        0.9945940375328064,
+        0.001832545967772603,
+        0.0007423860370181501
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-SERIOUS-052",
+      "group_id": "responder850:SPLIT-8a6922acf407992c",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.0013854681747034192,
+        0.9950549602508545,
+        0.0023706150241196156,
+        0.0011889208108186722
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-SERIOUS-056",
+      "group_id": "responder850:SPLIT-b75d0aad454bd557",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.0012498631840571761,
+        0.9972456693649292,
+        0.0010585421696305275,
+        0.00044590182369574904
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-SERIOUS-059",
+      "group_id": "responder850:SPLIT-d04feb647cd2d75b",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.002462577074766159,
+        0.060599830001592636,
+        0.9360175728797913,
+        0.0009199881460517645
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-CEB-SERIOUS-060",
+      "group_id": "responder850:SPLIT-9fc626211fca6587",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.0010875429725274444,
+        0.9974371194839478,
+        0.0010208880994468927,
+        0.00045443669660016894
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-007",
+      "group_id": "responder850:SPLIT-9b5cc05fe662d6ce",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.0009056292474269867,
+        0.006551534403115511,
+        0.988308310508728,
+        0.004234501160681248
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-012",
+      "group_id": "responder850:SPLIT-f15faf14cbbefde4",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.0009527861839160323,
+        0.0007867164677008986,
+        0.0018963782349601388,
+        0.9963640570640564
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-013",
+      "group_id": "responder850:SPLIT-7368ff29f5bdc26d",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9955434203147888,
+        0.0009897096315398812,
+        0.00113465148024261,
+        0.002332247095182538
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-015",
+      "group_id": "responder850:SPLIT-c6a4a1c8d3cb11f1",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.0008399549988098443,
+        0.0006326104048639536,
+        0.0016874809516593814,
+        0.9968398809432983
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-019",
+      "group_id": "responder850:SPLIT-95da14f2eb8f6294",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.93940669298172,
+        0.0018193756695836782,
+        0.05636415630578995,
+        0.002409799722954631
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-030",
+      "group_id": "responder850:SPLIT-3006ab912380767f",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.0015118767041713,
+        0.9962151646614075,
+        0.0012626764364540577,
+        0.0010102711385115981
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-035",
+      "group_id": "responder850:SPLIT-3249988ec4ffa412",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.000987599603831768,
+        0.0013713327934965491,
+        0.9963009357452393,
+        0.001340206479653716
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-045",
+      "group_id": "responder850:SPLIT-ace16904118d9a4c",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9962045550346375,
+        0.0013753293314948678,
+        0.0013408163795247674,
+        0.0010793240508064628
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-056",
+      "group_id": "responder850:SPLIT-2ef7d818bc55beff",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.0016190047608688474,
+        0.001192461117170751,
+        0.011247685179114342,
+        0.9859407544136047
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-064",
+      "group_id": "responder850:SPLIT-cf85de2a9f01210c",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.0008220446761697531,
+        0.0008718928438611329,
+        0.021591195836663246,
+        0.9767149090766907
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-065",
+      "group_id": "responder850:SPLIT-53b2f6c1412e4c5d",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.997061550617218,
+        0.001029800157994032,
+        0.0011626614723354578,
+        0.0007459520711563528
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-072",
+      "group_id": "responder850:SPLIT-e31b9b53a2051b97",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.0014879672089591622,
+        0.002306206850335002,
+        0.3514229953289032,
+        0.6447827816009521
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-080",
+      "group_id": "responder850:SPLIT-35c389925f27b2d3",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.0047714319080114365,
+        0.003576825372874737,
+        0.35712260007858276,
+        0.634529173374176
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-082",
+      "group_id": "responder850:SPLIT-099875668d0022ca",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.0010164390550926328,
+        0.9974441528320312,
+        0.0009477123385295272,
+        0.0005916785448789597
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-089",
+      "group_id": "responder850:SPLIT-5814e65d114f958b",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9971823692321777,
+        0.0012459543067961931,
+        0.000751783256419003,
+        0.0008198980358429253
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-106",
+      "group_id": "responder850:SPLIT-a475aea80cda2e1c",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.000943089893553406,
+        0.9968308806419373,
+        0.0012219076743349433,
+        0.0010041623609140515
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-117",
+      "group_id": "responder850:SPLIT-2a1c7d672dba927f",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9963488578796387,
+        0.0009195898310281336,
+        0.0019433270208537579,
+        0.0007881899364292622
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-126",
+      "group_id": "responder850:SPLIT-992d844ad8109069",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.0007964154938235879,
+        0.9974871873855591,
+        0.001116606523282826,
+        0.0005997527041472495
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-128",
+      "group_id": "responder850:SPLIT-161da94c360c398b",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.0007569624576717615,
+        0.0005574963870458305,
+        0.005822602193802595,
+        0.9928629994392395
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-129",
+      "group_id": "responder850:SPLIT-100c314e5bdf9bb8",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9968217611312866,
+        0.0011037971125915647,
+        0.0011161973234266043,
+        0.0009582446073181927
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-139",
+      "group_id": "responder850:SPLIT-8812fef2f7b14a77",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.0014771732967346907,
+        0.0013785607879981399,
+        0.9089889526367188,
+        0.0881553441286087
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-142",
+      "group_id": "responder850:SPLIT-3289ebb969315188",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.0007726253825239837,
+        0.9973844885826111,
+        0.0012247329577803612,
+        0.0006182031356729567
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-151",
+      "group_id": "responder850:SPLIT-15872ca73a7fc655",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.000835668935906142,
+        0.10026134550571442,
+        0.8973349332809448,
+        0.0015680460492148995
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-153",
+      "group_id": "responder850:SPLIT-491356adfc1aa514",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9970002770423889,
+        0.001135179540142417,
+        0.0010825158096849918,
+        0.000782051938585937
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-155",
+      "group_id": "responder850:SPLIT-3e67c0621e699e72",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.0006393814110197127,
+        0.0011740336194634438,
+        0.9953670501708984,
+        0.0028196468483656645
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-186",
+      "group_id": "responder850:SPLIT-f944bd031d59f8a6",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.0008695422438904643,
+        0.9974510073661804,
+        0.0010725161992013454,
+        0.0006069349474273622
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-187",
+      "group_id": "responder850:SPLIT-82638d5b258060cb",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.0010884144576266408,
+        0.001001905300654471,
+        0.995613694190979,
+        0.00229592714458704
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-190",
+      "group_id": "responder850:SPLIT-f6e23c123f3e0e6f",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.0010191587498411536,
+        0.996812641620636,
+        0.0013705749297514558,
+        0.0007976325578056276
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-192",
+      "group_id": "responder850:SPLIT-484bc43e44597126",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.0005947739700786769,
+        0.0009774910286068916,
+        0.0018627120880410075,
+        0.996565043926239
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-212",
+      "group_id": "responder850:SPLIT-9ff0c9a8a600917f",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.0009984802454710007,
+        0.0007533381576649845,
+        0.0013867623638361692,
+        0.996861457824707
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-217",
+      "group_id": "responder850:SPLIT-53c3ff01b34ad49c",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.000699713418725878,
+        0.9971666932106018,
+        0.0014927389565855265,
+        0.0006408044719137251
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-228",
+      "group_id": "responder850:SPLIT-e8ed6804073cee90",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.0010311553487554193,
+        0.0007166307768784463,
+        0.001300459261983633,
+        0.996951699256897
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-229",
+      "group_id": "responder850:SPLIT-b92f96b8f7ca50df",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9965760111808777,
+        0.0007936576730571687,
+        0.0015159521717578173,
+        0.0011143620358780026
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-230",
+      "group_id": "responder850:SPLIT-7ce2fb4727951384",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.0007335224072448909,
+        0.9973255395889282,
+        0.0012287950376048684,
+        0.000712153734639287
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-EN-234",
+      "group_id": "responder850:SPLIT-ddf0f65eca967a86",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.0009773620404303074,
+        0.9966521859169006,
+        0.0017621348379179835,
+        0.0006082800682634115
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-CRITICAL-010",
+      "group_id": "responder850:SPLIT-c5dc7e06e408d4a8",
+      "language": "mixed",
+      "label": "critical",
+      "probabilities": [
+        0.0037973469588905573,
+        0.0033993881661444902,
+        0.9900683760643005,
+        0.002734862035140395
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-CRITICAL-017",
+      "group_id": "responder850:SPLIT-d9e29da07ad94964",
+      "language": "mixed",
+      "label": "critical",
+      "probabilities": [
+        0.0011604981264099479,
+        0.0018168380483984947,
+        0.9955589771270752,
+        0.00146374327596277
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-CRITICAL-018",
+      "group_id": "responder850:SPLIT-7e5a1c0f7c08e020",
+      "language": "mixed",
+      "label": "critical",
+      "probabilities": [
+        0.0010746202897280455,
+        0.002767292084172368,
+        0.9951574206352234,
+        0.0010006575612351298
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-CRITICAL-021",
+      "group_id": "responder850:SPLIT-d7901e9ffd6c9221",
+      "language": "mixed",
+      "label": "critical",
+      "probabilities": [
+        0.001890844781883061,
+        0.0022232974879443645,
+        0.9938490986824036,
+        0.0020367938559502363
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-CRITICAL-026",
+      "group_id": "responder850:SPLIT-77bedb7e6e034e77",
+      "language": "mixed",
+      "label": "critical",
+      "probabilities": [
+        0.0017962031997740269,
+        0.0021861365530639887,
+        0.32125356793403625,
+        0.674764096736908
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-CRITICAL-029",
+      "group_id": "responder850:SPLIT-34fa91fdce9727fe",
+      "language": "mixed",
+      "label": "critical",
+      "probabilities": [
+        0.0009141642949543893,
+        0.0012934040278196335,
+        0.9964392781257629,
+        0.001353158731944859
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-MINOR-001",
+      "group_id": "responder850:SPLIT-7291653fd9240ff6",
+      "language": "mixed",
+      "label": "minor",
+      "probabilities": [
+        0.9972290396690369,
+        0.0012361959088593721,
+        0.0008356789476238191,
+        0.000699083786457777
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-MINOR-006",
+      "group_id": "responder850:SPLIT-c03bbf4f48f32519",
+      "language": "mixed",
+      "label": "minor",
+      "probabilities": [
+        0.5923133492469788,
+        0.4032309949398041,
+        0.003429884323850274,
+        0.0010257130488753319
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-MINOR-023",
+      "group_id": "responder850:SPLIT-e45578a163d1dc7f",
+      "language": "mixed",
+      "label": "minor",
+      "probabilities": [
+        0.9959436058998108,
+        0.0015867825131863356,
+        0.0012731164461001754,
+        0.0011965103913098574
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-NEEDS_REVIEW-003",
+      "group_id": "responder850:SPLIT-000258c1e32520e8",
+      "language": "mixed",
+      "label": "needs_review",
+      "probabilities": [
+        0.001599651062861085,
+        0.0011781466891989112,
+        0.0012063807807862759,
+        0.996015727519989
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-NEEDS_REVIEW-004",
+      "group_id": "responder850:SPLIT-6ad3f9eedd06054a",
+      "language": "mixed",
+      "label": "needs_review",
+      "probabilities": [
+        0.0010571442544460297,
+        0.0006591483834199607,
+        0.0010500624775886536,
+        0.9972335696220398
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-NEEDS_REVIEW-007",
+      "group_id": "responder850:SPLIT-677dc1fea1aa3b2a",
+      "language": "mixed",
+      "label": "needs_review",
+      "probabilities": [
+        0.0010328592034056783,
+        0.0006456651026383042,
+        0.0010267358738929033,
+        0.9972947239875793
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-NEEDS_REVIEW-010",
+      "group_id": "responder850:SPLIT-d3843cac9394634a",
+      "language": "mixed",
+      "label": "needs_review",
+      "probabilities": [
+        0.0010034909937530756,
+        0.0007020820048637688,
+        0.0010477987816557288,
+        0.9972466230392456
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-NEEDS_REVIEW-021",
+      "group_id": "responder850:SPLIT-7c856eacaf546301",
+      "language": "mixed",
+      "label": "needs_review",
+      "probabilities": [
+        0.0010707367910072207,
+        0.0006986874504946172,
+        0.0009755960199981928,
+        0.9972550272941589
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-SERIOUS-003",
+      "group_id": "responder850:SPLIT-5e84a93ecf02de4e",
+      "language": "mixed",
+      "label": "serious",
+      "probabilities": [
+        0.0009254706674255431,
+        0.9972342848777771,
+        0.0012095874408259988,
+        0.0006306835566647351
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-SERIOUS-018",
+      "group_id": "responder850:SPLIT-46da39400eaf4c65",
+      "language": "mixed",
+      "label": "serious",
+      "probabilities": [
+        0.00194559246301651,
+        0.9944034814834595,
+        0.0028071128763258457,
+        0.0008437448996119201
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-SERIOUS-021",
+      "group_id": "responder850:SPLIT-5f0acb11c427bedf",
+      "language": "mixed",
+      "label": "serious",
+      "probabilities": [
+        0.0011087799211964011,
+        0.9973239898681641,
+        0.0011351831490173936,
+        0.00043210035073570907
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-MX-SERIOUS-024",
+      "group_id": "responder850:SPLIT-3eae8c6d97b0cfb1",
+      "language": "mixed",
+      "label": "serious",
+      "probabilities": [
+        0.0011224296176806092,
+        0.9958221912384033,
+        0.002167449099943042,
+        0.0008879387169145048
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-004",
+      "group_id": "responder850:SPLIT-d53e5be152191dee",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.8702855110168457,
+        0.0040581985376775265,
+        0.0018145062495023012,
+        0.12384181469678879
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-015",
+      "group_id": "responder850:SPLIT-5764c0cbd934e6f0",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.9971358776092529,
+        0.001140151871368289,
+        0.0008635192061774433,
+        0.000860395492054522
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-018",
+      "group_id": "responder850:SPLIT-5764c0cbd934e6f0",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.997088611125946,
+        0.0011186758056282997,
+        0.0009130952530540526,
+        0.0008795835892669857
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-031",
+      "group_id": "responder850:SPLIT-5764c0cbd934e6f0",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.9971129894256592,
+        0.0012082933681085706,
+        0.0009599553886801004,
+        0.000718769384548068
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-033",
+      "group_id": "responder850:SPLIT-65694b9e0771c91a",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.9930568933486938,
+        0.004475411027669907,
+        0.0013369949301704764,
+        0.0011306264204904437
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-041",
+      "group_id": "responder850:SPLIT-953615eea2d0a5bf",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.9971086382865906,
+        0.0010733414674177766,
+        0.0010799826122820377,
+        0.0007380021852441132
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-048",
+      "group_id": "responder850:SPLIT-fe50f320e7dbf2cc",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.9966392517089844,
+        0.0019724960438907146,
+        0.000808919663541019,
+        0.000579246727284044
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-052",
+      "group_id": "responder850:SPLIT-b9454ae51a89c580",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.9972719550132751,
+        0.0012547816149890423,
+        0.0008567420882172883,
+        0.0006164626684039831
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-066",
+      "group_id": "responder850:SPLIT-e10505f22f3203b0",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.0007259632693603635,
+        0.0014025734271854162,
+        0.9965289235115051,
+        0.0013425647048279643
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-067",
+      "group_id": "responder850:SPLIT-91cf2fb6b3a68b30",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.0013568432768806815,
+        0.9972791075706482,
+        0.0008738773176446557,
+        0.0004901664215140045
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-069",
+      "group_id": "responder850:SPLIT-29b5d2f64f3a847a",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.03151967003941536,
+        0.9641823172569275,
+        0.0037861354649066925,
+        0.0005118294502608478
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-072",
+      "group_id": "responder850:SPLIT-a89748a30901830f",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.0008986206958070397,
+        0.9970130920410156,
+        0.0014418595237657428,
+        0.0006464243051595986
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-074",
+      "group_id": "responder850:SPLIT-fc259b4671bd0576",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.0009814664954319596,
+        0.9967003464698792,
+        0.0018266941187903285,
+        0.0004914209130220115
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-079",
+      "group_id": "responder850:SPLIT-a54743ca50d66204",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.001234081806614995,
+        0.9971588850021362,
+        0.0010669352486729622,
+        0.000540147302672267
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-082",
+      "group_id": "responder850:SPLIT-64615daa31406c4d",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.0012929035583510995,
+        0.9969503283500671,
+        0.0010913275182247162,
+        0.0006653630989603698
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-088",
+      "group_id": "responder850:SPLIT-cb354dab97ee21b1",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.0007829312817193568,
+        0.9972526431083679,
+        0.0015236464096233249,
+        0.0004407921514939517
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-097",
+      "group_id": "responder850:SPLIT-6fce09d82aa1f445",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.0009717606590129435,
+        0.9974762797355652,
+        0.0010003841016441584,
+        0.0005516051314771175
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-106",
+      "group_id": "responder850:SPLIT-fc259b4671bd0576",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.0015857797116041183,
+        0.9677928686141968,
+        0.030130935832858086,
+        0.0004904930246993899
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-126",
+      "group_id": "responder850:SPLIT-90e2363490fc3532",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.988191545009613,
+        0.001109881792217493,
+        0.009148940443992615,
+        0.001549565582536161
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-133",
+      "group_id": "responder850:SPLIT-ea7ec53c71e0b7de",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.0006262881797738373,
+        0.0043593766167759895,
+        0.9940440058708191,
+        0.0009704063995741308
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-141",
+      "group_id": "responder850:SPLIT-33a220d9260715a9",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.00084458920173347,
+        0.0019732879009097815,
+        0.9962942004203796,
+        0.0008879424422048032
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-154",
+      "group_id": "responder850:SPLIT-42bc4dcee0d408a8",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.0009112253901548684,
+        0.0012699973303824663,
+        0.9965182542800903,
+        0.0013005273649469018
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-159",
+      "group_id": "responder850:SPLIT-6c9447e7b0ed67d5",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.0014157159021124244,
+        0.001971930032595992,
+        0.995383083820343,
+        0.0012292671017348766
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-160",
+      "group_id": "responder850:SPLIT-3b4cfe6b1e6955c4",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.001769641530700028,
+        0.0017450476298108697,
+        0.9941630959510803,
+        0.0023221911396831274
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-162",
+      "group_id": "responder850:SPLIT-6d10082de723630a",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.0015164718497544527,
+        0.0016440155450254679,
+        0.9950394034385681,
+        0.0018000667914748192
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-163",
+      "group_id": "responder850:SPLIT-42bc4dcee0d408a8",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.0009889105567708611,
+        0.0012778806267306209,
+        0.9958415627479553,
+        0.0018916394328698516
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-168",
+      "group_id": "responder850:SPLIT-135e3e94329c541b",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.000719053961802274,
+        0.0016563036479055882,
+        0.996359646320343,
+        0.0012649206910282373
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-169",
+      "group_id": "responder850:SPLIT-5b1eb31c9f090d34",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.0011469310848042369,
+        0.001782598439604044,
+        0.9945015907287598,
+        0.0025689450558274984
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-170",
+      "group_id": "responder850:SPLIT-06cfe9c062fb56c4",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.0018212036229670048,
+        0.0023422492668032646,
+        0.9940187931060791,
+        0.0018178025493398309
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-175",
+      "group_id": "responder850:SPLIT-f3be6c46d61a8369",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.0010614533675834537,
+        0.002023461041972041,
+        0.9955170750617981,
+        0.0013980853836983442
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-177",
+      "group_id": "responder850:SPLIT-a0000f52e9410049",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.0010831007966771722,
+        0.0015439045382663608,
+        0.9956715106964111,
+        0.0017015364719554782
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-184",
+      "group_id": "responder850:SPLIT-88c6709693ff5e82",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.9960235357284546,
+        0.0018114265985786915,
+        0.0009326302097178996,
+        0.0012322947150096297
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-188",
+      "group_id": "responder850:SPLIT-8ad271f52837be16",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.001873343251645565,
+        0.002312762662768364,
+        0.14203207194805145,
+        0.8537818193435669
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-198",
+      "group_id": "responder850:SPLIT-352aab08784037f4",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.0011094793444499373,
+        0.0010469630360603333,
+        0.0013672654749825597,
+        0.9964762330055237
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-202",
+      "group_id": "responder850:SPLIT-14660296b677a77e",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.0008864942356012762,
+        0.0006278222426772118,
+        0.0011804556706920266,
+        0.997305154800415
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-211",
+      "group_id": "responder850:SPLIT-b9bcc0620130e76f",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.0008882948895916343,
+        0.0006561945774592459,
+        0.0011425740085542202,
+        0.9973129630088806
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-220",
+      "group_id": "responder850:SPLIT-c42ebceceb492604",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.0008875778294168413,
+        0.0009615817689336836,
+        0.0019859576132148504,
+        0.9961649179458618
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-226",
+      "group_id": "responder850:SPLIT-1204cd4888eca6b7",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.0008318184991367161,
+        0.0007916187751106918,
+        0.001128213363699615,
+        0.9972483515739441
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-229",
+      "group_id": "responder850:SPLIT-3645de96f63da61c",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.0010174012277275324,
+        0.0007363776676356792,
+        0.0012451576767489314,
+        0.9970009922981262
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-231",
+      "group_id": "responder850:SPLIT-dc4ddaeffdf79bd7",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.0009016030817292631,
+        0.0013120737858116627,
+        0.0015242655063048005,
+        0.9962620139122009
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-237",
+      "group_id": "responder850:SPLIT-b9357ffa32e184c2",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.0010326638584956527,
+        0.0009946610080078244,
+        0.018057527020573616,
+        0.979915201663971
+      ]
+    },
+    {
+      "case_id": "RESPONDER850-TL-240",
+      "group_id": "responder850:SPLIT-fb223d3808736a71",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.001008643303066492,
+        0.0006872861413285136,
+        0.0011706957593560219,
+        0.9971333742141724
+      ]
+    },
+    {
+      "case_id": "SOUTHERN_LEYTE36-SLB-DRAFT-002",
+      "group_id": "southern_leyte36:SLB-FAM-002",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": null
+    },
+    {
+      "case_id": "SOUTHERN_LEYTE36-SLB-DRAFT-017",
+      "group_id": "southern_leyte36:SLB-FAM-017",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": null
+    },
+    {
+      "case_id": "SOUTHERN_LEYTE36-SLB-DRAFT-024",
+      "group_id": "southern_leyte36:SLB-FAM-024",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": null
+    },
+    {
+      "case_id": "SOUTHERN_LEYTE36-SLB-DRAFT-030",
+      "group_id": "southern_leyte36:SLB-FAM-030",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": null
+    },
+    {
+      "case_id": "WORKING400-SYN_A_CRITICAL_08_CEB",
+      "group_id": "working400:synthetic_a_critical_08",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": null
+    },
+    {
+      "case_id": "WORKING400-SYN_A_CRITICAL_08_EN",
+      "group_id": "working400:synthetic_a_critical_08",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.0009314820636063814,
+        0.0020165895111858845,
+        0.9958244562149048,
+        0.0012274680193513632
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_CRITICAL_08_MIXED",
+      "group_id": "working400:synthetic_a_critical_08",
+      "language": "mixed",
+      "label": "critical",
+      "probabilities": [
+        0.0010391660034656525,
+        0.0027020082343369722,
+        0.99510657787323,
+        0.0011523232096806169
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_CRITICAL_08_TL",
+      "group_id": "working400:synthetic_a_critical_08",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.0007179926033131778,
+        0.0014347073156386614,
+        0.9960648417472839,
+        0.0017824094975367188
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_MINOR_05_CEB",
+      "group_id": "working400:synthetic_a_minor_05",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.997323751449585,
+        0.000809397257398814,
+        0.0010696732206270099,
+        0.0007972037419676781
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_MINOR_05_EN",
+      "group_id": "working400:synthetic_a_minor_05",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9972630739212036,
+        0.0008981000864878297,
+        0.0009523952612653375,
+        0.0008864433038979769
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_MINOR_05_MIXED",
+      "group_id": "working400:synthetic_a_minor_05",
+      "language": "mixed",
+      "label": "minor",
+      "probabilities": [
+        0.9972741007804871,
+        0.0008575441897846758,
+        0.0010012349812313914,
+        0.0008671460673213005
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_MINOR_05_TL",
+      "group_id": "working400:synthetic_a_minor_05",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.9969689249992371,
+        0.0009336649673059583,
+        0.0011081509292125702,
+        0.0009893164969980717
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_MINOR_10_CEB",
+      "group_id": "working400:synthetic_a_minor_10",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": null
+    },
+    {
+      "case_id": "WORKING400-SYN_A_MINOR_10_EN",
+      "group_id": "working400:synthetic_a_minor_10",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9972013235092163,
+        0.0009653253364376724,
+        0.0009563463390804827,
+        0.0008769531850703061
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_MINOR_10_MIXED",
+      "group_id": "working400:synthetic_a_minor_10",
+      "language": "mixed",
+      "label": "minor",
+      "probabilities": [
+        0.9969995617866516,
+        0.0009550460381433368,
+        0.0011065877042710781,
+        0.000938689976464957
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_MINOR_10_TL",
+      "group_id": "working400:synthetic_a_minor_10",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.9973178505897522,
+        0.0010626126313582063,
+        0.0009046313934959471,
+        0.0007149566663429141
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_NEEDS_REVIEW_07_CEB",
+      "group_id": "working400:synthetic_a_needs_review_07",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": null
+    },
+    {
+      "case_id": "WORKING400-SYN_A_NEEDS_REVIEW_07_EN",
+      "group_id": "working400:synthetic_a_needs_review_07",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.0008093690848909318,
+        0.0006648110575042665,
+        0.0012325573479756713,
+        0.9972932934761047
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_NEEDS_REVIEW_07_MIXED",
+      "group_id": "working400:synthetic_a_needs_review_07",
+      "language": "mixed",
+      "label": "needs_review",
+      "probabilities": [
+        0.0009262958774343133,
+        0.0007439384353347123,
+        0.0010650466429069638,
+        0.9972647428512573
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_NEEDS_REVIEW_07_TL",
+      "group_id": "working400:synthetic_a_needs_review_07",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.0006804958684369922,
+        0.0005690917605534196,
+        0.002360149985179305,
+        0.9963902831077576
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_SERIOUS_04_CEB",
+      "group_id": "working400:synthetic_a_serious_04",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.0013829312520101666,
+        0.9969496130943298,
+        0.001092910417355597,
+        0.0005746751558035612
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_SERIOUS_04_EN",
+      "group_id": "working400:synthetic_a_serious_04",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.000763924210332334,
+        0.9972994923591614,
+        0.0014919526875019073,
+        0.00044461776269599795
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_SERIOUS_04_MIXED",
+      "group_id": "working400:synthetic_a_serious_04",
+      "language": "mixed",
+      "label": "serious",
+      "probabilities": [
+        0.0015805225120857358,
+        0.9961383938789368,
+        0.0013927306281402707,
+        0.0008883785922080278
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_SERIOUS_04_TL",
+      "group_id": "working400:synthetic_a_serious_04",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.00143090367782861,
+        0.9962246417999268,
+        0.0016192805487662554,
+        0.0007251891656778753
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_SERIOUS_08_CEB",
+      "group_id": "working400:synthetic_a_serious_08",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.0015932131791487336,
+        0.996056079864502,
+        0.0014980481937527657,
+        0.0008526705205440521
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_SERIOUS_08_EN",
+      "group_id": "working400:synthetic_a_serious_08",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.001127116964198649,
+        0.9971543550491333,
+        0.001288295490667224,
+        0.0004302069137338549
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_SERIOUS_08_MIXED",
+      "group_id": "working400:synthetic_a_serious_08",
+      "language": "mixed",
+      "label": "serious",
+      "probabilities": [
+        0.0014728809474036098,
+        0.9962078332901001,
+        0.0016435650177299976,
+        0.0006757732480764389
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_SERIOUS_08_TL",
+      "group_id": "working400:synthetic_a_serious_08",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.0016420516185462475,
+        0.9961594343185425,
+        0.0014682698529213667,
+        0.0007302027079276741
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_SERIOUS_09_CEB",
+      "group_id": "working400:synthetic_a_serious_09",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": null
+    },
+    {
+      "case_id": "WORKING400-SYN_A_SERIOUS_09_EN",
+      "group_id": "working400:synthetic_a_serious_09",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.0006651820731349289,
+        0.9971139430999756,
+        0.0017290200339630246,
+        0.0004918495542369783
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_SERIOUS_09_MIXED",
+      "group_id": "working400:synthetic_a_serious_09",
+      "language": "mixed",
+      "label": "serious",
+      "probabilities": [
+        0.0006142741185612977,
+        0.9966722726821899,
+        0.0022348244674503803,
+        0.0004785575729329139
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_A_SERIOUS_09_TL",
+      "group_id": "working400:synthetic_a_serious_09",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.0010224676225334406,
+        0.996683657169342,
+        0.001572693814523518,
+        0.0007212309865280986
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_MINORC_07_CEB",
+      "group_id": "working400:synthetic_family_reverse_empty_tricycle",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": null
+    },
+    {
+      "case_id": "WORKING400-SYN_MINORC_07_EN",
+      "group_id": "working400:synthetic_family_reverse_empty_tricycle",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9951748251914978,
+        0.0008316657622344792,
+        0.0031910238321870565,
+        0.0008025401039049029
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_MINORC_07_TL",
+      "group_id": "working400:synthetic_family_reverse_empty_tricycle",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.997361958026886,
+        0.00088494986994192,
+        0.0010585631243884563,
+        0.0006946118082851171
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_NEEDS_REVIEWC_07_CEB",
+      "group_id": "working400:synthetic_needs_reviewc_07",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": null
+    },
+    {
+      "case_id": "WORKING400-SYN_NEEDS_REVIEWC_07_EN",
+      "group_id": "working400:synthetic_needs_reviewc_07",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.000773306586779654,
+        0.0006476799608208239,
+        0.001346078235656023,
+        0.997232973575592
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_NEEDS_REVIEWC_07_TL",
+      "group_id": "working400:synthetic_needs_reviewc_07",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.0006693691830150783,
+        0.000638212077319622,
+        0.0020092062186449766,
+        0.9966831803321838
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_NEEDS_REVIEWC_10_CEB",
+      "group_id": "working400:synthetic_needs_reviewc_10",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": null
+    },
+    {
+      "case_id": "WORKING400-SYN_NEEDS_REVIEWC_10_EN",
+      "group_id": "working400:synthetic_needs_reviewc_10",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.000961214944254607,
+        0.0007028995896689594,
+        0.0010431635892018676,
+        0.997292697429657
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_NEEDS_REVIEWC_10_TL",
+      "group_id": "working400:synthetic_needs_reviewc_10",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.0008684942149557173,
+        0.0006576653104275465,
+        0.0014257497387006879,
+        0.9970481991767883
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_ROAD_B_MINOR_01_CEB",
+      "group_id": "working400:synthetic_family_reverse_empty_tricycle",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.9973081350326538,
+        0.000827487267088145,
+        0.0009571212576702237,
+        0.0009072521352209151
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_ROAD_B_MINOR_01_EN",
+      "group_id": "working400:synthetic_family_reverse_empty_tricycle",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9972286820411682,
+        0.000774731335695833,
+        0.0011137336259707808,
+        0.0008827400743030012
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_ROAD_B_MINOR_01_TL",
+      "group_id": "working400:synthetic_family_reverse_empty_tricycle",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.9973312616348267,
+        0.0009273666655644774,
+        0.0009348660823889077,
+        0.0008065776783041656
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_ROAD_B_MINOR_06_CEB",
+      "group_id": "working400:synthetic_family_reverse_empty_tricycle",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.9973891377449036,
+        0.0008933361386880279,
+        0.0009373786160722375,
+        0.0007802033796906471
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_ROAD_B_MINOR_06_EN",
+      "group_id": "working400:synthetic_family_reverse_empty_tricycle",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9970694184303284,
+        0.0009986056247726083,
+        0.001007414422929287,
+        0.0009245775290764868
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_ROAD_B_MINOR_06_TL",
+      "group_id": "working400:synthetic_family_reverse_empty_tricycle",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.9969140291213989,
+        0.0011024554260075092,
+        0.0010454056318849325,
+        0.0009380108094774187
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_ROAD_B_MINOR_09_CEB",
+      "group_id": "working400:synthetic_road_b_minor_09",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.9973234534263611,
+        0.0008125927997753024,
+        0.0009943977929651737,
+        0.0008696055156178772
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_ROAD_B_MINOR_09_EN",
+      "group_id": "working400:synthetic_road_b_minor_09",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9965885877609253,
+        0.0014406603295356035,
+        0.0014536975650116801,
+        0.0005170413060113788
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_ROAD_B_MINOR_09_TL",
+      "group_id": "working400:synthetic_road_b_minor_09",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.9973363280296326,
+        0.0010057002073153853,
+        0.0009331401088275015,
+        0.0007248206529766321
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_ROAD_B_REVIEW_07_CEB",
+      "group_id": "working400:synthetic_road_b_review_07",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.0011581659782677889,
+        0.0006675537442788482,
+        0.0009385126759298146,
+        0.9972358345985413
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_ROAD_B_REVIEW_07_EN",
+      "group_id": "working400:synthetic_road_b_review_07",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.0010591760510578752,
+        0.0006730154273100197,
+        0.0010524323442950845,
+        0.9972153902053833
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_ROAD_B_REVIEW_07_TL",
+      "group_id": "working400:synthetic_road_b_review_07",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.0009201365173794329,
+        0.0005834548501297832,
+        0.0013863930944353342,
+        0.9971099495887756
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_ROAD_B_SERIOUS_08_CEB",
+      "group_id": "working400:synthetic_road_b_serious_08",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.0020379777997732162,
+        0.9967601895332336,
+        0.0007551158778369427,
+        0.0004467215621843934
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_ROAD_B_SERIOUS_08_EN",
+      "group_id": "working400:synthetic_road_b_serious_08",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.001151837408542633,
+        0.9970917701721191,
+        0.0013194606872275472,
+        0.00043693784391507506
+      ]
+    },
+    {
+      "case_id": "WORKING400-SYN_ROAD_B_SERIOUS_08_TL",
+      "group_id": "working400:synthetic_road_b_serious_08",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.001474655931815505,
+        0.9968386888504028,
+        0.0010849632089957595,
+        0.0006016065017320216
+      ]
+    }
+  ]
+}

@@ -1,0 +1,273 @@
+{
+  "audit_id": "xlmr-850-owner-attested-ai-audit-20261006",
+  "created_at_local": "2026-10-06T14:25:18.777985+08:00",
+  "source_rows": 850,
+  "attestation": {
+    "batch_id": "OWNER-ATTESTED-850-FD0FB65CCB718A1D",
+    "status": "project_owner_attested_not_independently_corroborated",
+    "covered_rows": 850,
+    "recording_basis": "Explicit project-owner statement supplied in the current task. No audio, transcript, dated signed respondent form, or independent responder identity verification was supplied.",
+    "review_claim": "owner reports human responder(s) accepted complete batch as-is; no direct responder identity/audio/transcript, date/time, or row-specific rationale independently verified"
+  },
+  "input_integrity": {
+    "source_reports_sha256": "fd0fb65ccb718a1dee93fd315aa3a0e12cb5a8c2123bc08c8466e51c75fc7645",
+    "owner_attested_reports_sha256": "405dee8f46be0021aa590e72989dbb64a7b4d3a8b53457eb80b00c58a17f6443",
+    "source_provenance_sha256": "fb8c89f5a72859f0070305ba046d6295e86f985514935a7c51a912e9f3ecf3df",
+    "attestation_sha256": "fedf37c5dd7f6c8840a5a08fa151ae321697476050e13aa3a0f93ef8f354648b",
+    "labels_unchanged_in_owner_dataset_vs_source": true,
+    "case_id_coverage_equal": true,
+    "model_output_rows": 850,
+    "unscored_model_rows": 0
+  },
+  "model": {
+    "checkpoint": "ai_service\\artifacts\\checkpoints\\text_xlmr_civilian_multilingual_20261005\\trial_lr_2e-5_seed42",
+    "metadata_version": "text-20261005T135449737752Z",
+    "checkpoint_model_sha256": "13ad4e9ec1c45c817fd33082072bf430aabe3afa4571e8b88ed5d0e333269fa2",
+    "base_model": "FacebookAI/xlm-roberta-base",
+    "device": "cuda",
+    "max_length": 64,
+    "inference_batch_size": 8,
+    "confidence": "raw max softmax, not calibrated; no safety threshold validation",
+    "training_or_deployment_changed": false
+  },
+  "exposure_counts": {
+    "train_in_sample": 516,
+    "fresh_test": 84,
+    "calibration_reserved": 83,
+    "validation_used_for_selection": 124,
+    "challenge": 43
+  },
+  "partition_overlap_row_count": 0,
+  "diagnostic_metrics_by_exposure": {
+    "train_in_sample": {
+      "rows": 516,
+      "raw_agreement_count": 495,
+      "raw_agreement_rate": 0.9593023255813954,
+      "serious_critical_attested_support": 257,
+      "raw_severity_downrank_count": 5,
+      "raw_severity_downrank_case_ids": [
+        "TL-124",
+        "TL-125",
+        "CEB-CRITICAL-002",
+        "CEB-CRITICAL-004",
+        "CEB-CRITICAL-054"
+      ],
+      "critical_to_minor_count": 3,
+      "critical_to_serious_count": 2,
+      "warning": "diagnostic only against owner-attested synthetic labels; validation selected model; train is in-sample; not prospective validation"
+    },
+    "validation_used_for_selection": {
+      "rows": 124,
+      "raw_agreement_count": 114,
+      "raw_agreement_rate": 0.9193548387096774,
+      "serious_critical_attested_support": 63,
+      "raw_severity_downrank_count": 3,
+      "raw_severity_downrank_case_ids": [
+        "EN-086",
+        "EN-115",
+        "CEB-SERIOUS-040"
+      ],
+      "critical_to_minor_count": 0,
+      "critical_to_serious_count": 1,
+      "warning": "diagnostic only against owner-attested synthetic labels; validation selected model; train is in-sample; not prospective validation"
+    },
+    "calibration_reserved": {
+      "rows": 83,
+      "raw_agreement_count": 76,
+      "raw_agreement_rate": 0.9156626506024096,
+      "serious_critical_attested_support": 42,
+      "raw_severity_downrank_count": 3,
+      "raw_severity_downrank_case_ids": [
+        "EN-062",
+        "EN-151",
+        "CEB-SERIOUS-019"
+      ],
+      "critical_to_minor_count": 0,
+      "critical_to_serious_count": 1,
+      "warning": "diagnostic only against owner-attested synthetic labels; validation selected model; train is in-sample; not prospective validation"
+    },
+    "fresh_test": {
+      "rows": 84,
+      "raw_agreement_count": 74,
+      "raw_agreement_rate": 0.8809523809523809,
+      "serious_critical_attested_support": 42,
+      "raw_severity_downrank_count": 6,
+      "raw_severity_downrank_case_ids": [
+        "TL-126",
+        "CEB-CRITICAL-001",
+        "CEB-CRITICAL-003",
+        "CEB-CRITICAL-024",
+        "MX-CRITICAL-002",
+        "MX-CRITICAL-013"
+      ],
+      "critical_to_minor_count": 4,
+      "critical_to_serious_count": 2,
+      "warning": "diagnostic only against owner-attested synthetic labels; validation selected model; train is in-sample; not prospective validation"
+    },
+    "challenge": {
+      "rows": 43,
+      "raw_agreement_count": 42,
+      "raw_agreement_rate": 0.9767441860465116,
+      "serious_critical_attested_support": 21,
+      "raw_severity_downrank_count": 0,
+      "raw_severity_downrank_case_ids": [],
+      "critical_to_minor_count": 0,
+      "critical_to_serious_count": 0,
+      "warning": "diagnostic only against owner-attested synthetic labels; validation selected model; train is in-sample; not prospective validation"
+    }
+  },
+  "ai_diagnostic_only_against_owner_attested_labels": {
+    "overall_raw_agreement": 0.9423529411764706,
+    "raw_accuracy": 0.9423529411764706,
+    "raw_macro_f1": 0.9423663636891111,
+    "confusion_rows_attested_columns_raw_prediction": {
+      "minor": {
+        "minor": 199,
+        "serious": 10,
+        "critical": 4,
+        "needs_review": 0
+      },
+      "serious": {
+        "minor": 4,
+        "serious": 205,
+        "critical": 3,
+        "needs_review": 2
+      },
+      "critical": {
+        "minor": 7,
+        "serious": 6,
+        "critical": 194,
+        "needs_review": 4
+      },
+      "needs_review": {
+        "minor": 3,
+        "serious": 1,
+        "critical": 5,
+        "needs_review": 203
+      }
+    },
+    "per_label": {
+      "minor": {
+        "support": 213,
+        "precision": 0.9342723004694836,
+        "recall": 0.9342723004694836,
+        "f1": 0.9342723004694836
+      },
+      "serious": {
+        "support": 214,
+        "precision": 0.9234234234234234,
+        "recall": 0.9579439252336449,
+        "f1": 0.9403669724770642
+      },
+      "critical": {
+        "support": 211,
+        "precision": 0.941747572815534,
+        "recall": 0.919431279620853,
+        "f1": 0.9304556354916067
+      },
+      "needs_review": {
+        "support": 212,
+        "precision": 0.9712918660287081,
+        "recall": 0.9575471698113207,
+        "f1": 0.9643705463182898
+      }
+    },
+    "urgent_serious_critical_raw_downrank_count": 17,
+    "urgent_support": 425,
+    "urgent_raw_downrank_rate": 0.04,
+    "metrics_caution": "Whole 850 is not a held-out evaluation: 516 train rows are directly in-sample, 124 validation rows were used for selection, and 210 rows belong to other splits; the same synthetic batch and reported labels are owner-attested, not independently verified real-world outcomes."
+  },
+  "review_triage_decisions": {
+    "FLAG_FOR_FUTURE_HUMAN_RECHECK": 230,
+    "agree_AGREE": 769,
+    "raw_minor": 213,
+    "raw_serious": 222,
+    "SEMANTIC_AMBIGUITY": 381,
+    "raw_critical": 206,
+    "raw_needs_review": 209,
+    "agree_UNCERTAIN": 43,
+    "agree_DISAGREE": 38,
+    "GOOD": 239
+  },
+  "by_language": {
+    "en": {
+      "FLAG_FOR_FUTURE_HUMAN_RECHECK": 86,
+      "SEMANTIC_AMBIGUITY": 89,
+      "GOOD": 75
+    },
+    "tl": {
+      "FLAG_FOR_FUTURE_HUMAN_RECHECK": 72,
+      "SEMANTIC_AMBIGUITY": 92,
+      "GOOD": 76
+    },
+    "ceb": {
+      "SEMANTIC_AMBIGUITY": 80,
+      "FLAG_FOR_FUTURE_HUMAN_RECHECK": 72,
+      "GOOD": 88
+    },
+    "mixed": {
+      "SEMANTIC_AMBIGUITY": 120
+    }
+  },
+  "by_attested_label": {
+    "minor": {
+      "FLAG_FOR_FUTURE_HUMAN_RECHECK": 69,
+      "SEMANTIC_AMBIGUITY": 89,
+      "GOOD": 55
+    },
+    "serious": {
+      "FLAG_FOR_FUTURE_HUMAN_RECHECK": 71,
+      "GOOD": 90,
+      "SEMANTIC_AMBIGUITY": 53
+    },
+    "critical": {
+      "SEMANTIC_AMBIGUITY": 102,
+      "FLAG_FOR_FUTURE_HUMAN_RECHECK": 47,
+      "GOOD": 62
+    },
+    "needs_review": {
+      "SEMANTIC_AMBIGUITY": 137,
+      "FLAG_FOR_FUTURE_HUMAN_RECHECK": 43,
+      "GOOD": 32
+    }
+  },
+  "short_panic": {
+    "rows_at_most_8_words": 301,
+    "agreement_not_agree_count": 37,
+    "word_buckets": {
+      "4-8": 247,
+      "1-3": 54
+    },
+    "note": "Short/panic flag is only lexical length and cue based; it is not a severity label."
+  },
+  "known_six_cases": {
+    "case_ids": [
+      "CEB-CRITICAL-001",
+      "CEB-CRITICAL-003",
+      "CEB-CRITICAL-024",
+      "MX-CRITICAL-002",
+      "MX-CRITICAL-013",
+      "TL-126"
+    ],
+    "reproduced_count": 6,
+    "interpretation": "Previously observed fresh-test model disagreements reproduced at essentially identical probabilities; labels remain as owner-attested and unchanged."
+  },
+  "limits": [
+    "Attestation is project-owner-reported verbal responder batch approval, not directly corroborated.",
+    "All source descriptions are synthetic-origin, not real incident reports.",
+    "Heuristic flags cannot safely adjudicate Tagalog/Cebuano/code-switched semantics or clinical urgency.",
+    "Raw softmax confidence is uncalibrated; the stored threshold 0.65 is provisional.",
+    "Whole-dataset agreement is descriptive only, not validation or acceptance evidence.",
+    "The legacy annotation_guide.md is explicitly provisional and states no injury statement is not evidence of no injury.",
+    "No training, splitting, active model mutation, deployment, or source label edits were performed."
+  ],
+  "files": [
+    "RESPONDER_STYLE_AI_AUDIT_850.csv",
+    "SHORT_PANIC_AI_REVIEW_301.csv",
+    "SIX_HIGH_RISK_CASES_DEEP_REVIEW.json",
+    "MODEL_PREDICTIONS_850.json",
+    "run_inference.py",
+    "SUMMARY.json",
+    "METHOD.md"
+  ]
+}

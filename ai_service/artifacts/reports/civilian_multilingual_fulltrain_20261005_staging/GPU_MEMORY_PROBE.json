@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "probe_type": "one full-backbone CUDA training step with FP16, GradScaler, Adafactor and gradient checkpointing; batch=1, max_length=64",
+  "model_memory_source": "existing local XLM-R checkpoint loaded solely as same-architecture memory proxy; not used as training initialization",
+  "base_architecture_parameters": 278046724,
+  "trainable_parameters": 278046724,
+  "probe_case_id": "TL-087",
+  "probe_token_count": 54,
+  "peak_allocated_bytes": 2244672000,
+  "peak_reserved_bytes": 2359296000,
+  "gpu_total_bytes": 4294443008,
+  "selected_training_max_length": 64,
+  "note": "Measured lower memory than previous run?s peak at length 72. GPU headroom can vary as other processes start; monitor each trial and do not describe the probe as a full training run."
+}

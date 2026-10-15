@@ -1,0 +1,155 @@
+﻿{
+    "audit_id":  "training-pipeline-audit-20261006",
+    "scope":  "Read-only independent review of the training implementation, recorded experiment configuration, pinned XLM-R checkpoint metadata, and split/evaluation handling.",
+    "status":  "PASS_WITH_LIMITATIONS",
+    "evidence_files":  [
+                           "ai_service/src/ai_service/text_training.py",
+                           "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/SYSTEM_ENVIRONMENT.json",
+                           "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/TRAINING_COMMAND_LOG.txt",
+                           "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/CHECKPOINT_SELECTION_RULE.json",
+                           "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/training_split_manifest.json",
+                           "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/SPLIT_MANIFEST.json",
+                           "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/TOKENIZER_WARNING_AUDIT.json",
+                           "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/TOKEN_LENGTH_ANALYSIS.json",
+                           "ai_service/artifacts/checkpoints/text_xlmr_civilian_multilingual_20261005/trial_lr_2e-5_seed42/config.json",
+                           "ai_service/artifacts/checkpoints/text_xlmr_civilian_multilingual_20261005/trial_lr_2e-5_seed42/metadata.json",
+                           "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/TRAINING_CONFIG.json",
+                           "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/TRAINING_HISTORY.json",
+                           "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/fresh_test_evaluation/evaluation_metrics.json",
+                           "ai_service/artifacts/checkpoints/text_xlmr_850_humanconfirmed_fulltrain_20261006_1411/metadata.json",
+                           "ai_service/artifacts/checkpoints/text_xlmr_850_humanconfirmed_fulltrain_20261006_1411/training_history.json",
+                           "ai_service/artifacts/checkpoints/text_xlmr_850_humanconfirmed_fulltrain_20261006_1411/model.safetensors"
+                       ],
+    "code_facts":  {
+                       "architecture":  "XLMRobertaForSequenceClassification, 12 transformer layers, hidden size 768, vocabulary size 250002; four-class head.",
+                       "model_id":  "FacebookAI/xlm-roberta-base",
+                       "pinned_revision":  "42f548f32366559214515ec137cdd16002968bf6",
+                       "label_order_and_ids":  {
+                                                   "0":  "minor",
+                                                   "1":  "serious",
+                                                   "2":  "critical",
+                                                   "3":  "needs_review"
+                                               },
+                       "label_mapping_source":  "text_training.py constructs id2label from LABELS=(minor, serious, critical, needs_review), and label2id from the same tuple.",
+                       "full_backbone":  "--unfreeze-backbone leaves the model backbone trainable; the saved run metadata records backbone_frozen=false.",
+                       "optimizer_options":  "Code supports AdamW and Transformers Adafactor; optimizer choice is CLI-configurable.",
+                       "precision":  "CUDA training uses torch.autocast with GradScaler enabled; recorded metadata calls this cuda_fp16_autocast. CPU path is fp32.",
+                       "gradient_accumulation":  "Code accumulates microbatch gradients for the requested number of batches and normalizes weighted loss over the entire accumulation window, including a partial final window.",
+                       "gradient_checkpointing":  "CLI option enables model.gradient_checkpointing_enable(use_reentrant=false) and disables use_cache when available.",
+                       "checkpoint_selection":  "selection_key(\u0027balanced_safety\u0027) returns lexicographic tuple (-raw_high_risk_undertriage_count, raw macro_f1, min(critical recall, serious recall), critical precision). The raw high-risk undertriage count is based on argmax labels for serious/critical actual rows; needs_review is not ranked as a lower-severity class.",
+                       "early_stopping":  "Patience counts consecutive epochs whose validation tuple does not strictly improve. Best checkpoint is saved from validation only.",
+                       "test_evaluation_separation":  "run_train evaluates validation each epoch. Unless --evaluate-test is supplied it does not calculate test predictions/metrics. run_evaluate(test) requires the unchanged dataset fingerprint and saved test IDs; external evaluation rejects overlap with train/validation groups and normalized text.",
+                       "deployment_guard":  "Training/evaluation metadata always records approved_for_deployment=false; this code has no command that activates a model."
+                   },
+    "recorded_run_configuration":  {
+                                       "device":  "cuda",
+                                       "gpu":  "NVIDIA GeForce RTX 3050 Laptop GPU (4 GiB)",
+                                       "epochs_requested":  8,
+                                       "batch_size":  1,
+                                       "gradient_accumulation":  16,
+                                       "effective_batch_size":  16,
+                                       "learning_rate":  0.00002,
+                                       "optimizer":  "Adafactor",
+                                       "weight_decay":  0.0,
+                                       "precision":  "cuda_fp16_autocast with GradScaler",
+                                       "gradient_checkpointing":  true,
+                                       "max_length":  64,
+                                       "warmup_ratio":  0.05,
+                                       "planned_optimizer_steps":  264,
+                                       "warmup_steps":  14,
+                                       "selection_metric":  "balanced_safety",
+                                       "early_stopping_patience":  2,
+                                       "train_rows":  514,
+                                       "validation_rows":  126,
+                                       "fresh_test_rows":  84,
+                                       "calibration_rows_excluded_from_training":  83,
+                                       "challenge_rows_excluded_from_training":  43,
+                                       "truncated_rows_reported":  {
+                                                                       "train":  0,
+                                                                       "validation":  0,
+                                                                       "test":  0
+                                                                   },
+                                       "parameter_count":  {
+                                                               "total":  278046724,
+                                                               "trainable":  278046724,
+                                                               "trainable_fraction":  1.0
+                                                           },
+                                       "selected_checkpoint":  "ai_service/artifacts/checkpoints/text_xlmr_850_humanconfirmed_fulltrain_20261006_1411",
+                                       "selected_epoch":  6,
+                                       "epochs_completed":  8,
+                                       "training_and_selection_seconds":  963.81,
+                                       "peak_cuda_memory_allocated_bytes":  3781308416,
+                                       "peak_cuda_memory_reserved_bytes":  4009754624,
+                                       "checkpoint_model_safetensors_sha256":  "053A2851D3E1A9FB342825BC86A786A49BAAD7E06F51C6A8442A655F97FE6881",
+                                       "configuration_source":  "Current run configuration is confirmed by the current checkpoint metadata.json, report TRAINING_CONFIG.json, training history, and command log. Previous 724-row draft-checkpoint metadata is not evidence for this run."
+                                   },
+    "tokenizer_and_length":  {
+                                 "recorded_class":  "XLMRobertaTokenizerFast",
+                                 "recorded_revision":  "42f548f32366559214515ec137cdd16002968bf6",
+                                 "direct_probe_count":  8,
+                                 "token_id_mismatches":  0,
+                                 "warning_finding":  "Known Transformers 4.57.6 tokenizer-class heuristic warning was assessed as a false positive for the local XLM-R detector by the recorded probe; no unrelated Mistral fix was applied.",
+                                 "observed_source_rows":  850,
+                                 "subword_token_length_percentiles":  {
+                                                                          "p50":  20,
+                                                                          "p90":  31,
+                                                                          "p95":  34,
+                                                                          "p99":  39,
+                                                                          "max":  55
+                                                                      },
+                                 "max_length":  64,
+                                 "rows_truncated_at_64":  0
+                             },
+    "split_and_evaluation_findings":  {
+                                          "outer_partitions":  [
+                                                                   "train",
+                                                                   "validation",
+                                                                   "calibration",
+                                                                   "fresh_test",
+                                                                   "challenge"
+                                                               ],
+                                          "model_api_split":  "The training script consumes a compatible three-key manifest (train, validation, test); its test IDs are the separate fresh_test partition. Calibration and challenge are stored separately and are not in model_development.csv.",
+                                          "leakage_controls":  "The split preparation unions source group, scenario family, annotation group, parent-child links, normalized-text duplicates, and 19 AI-recommended same-scenario-family edges as indivisible components. It checks group/text disjointness between partitions and full ID coverage.",
+                                          "prior_exposure_limitation":  "The split manifest explicitly states that all 850 rows were previously consumed across model-development workflows. Thus the new fresh_test is held out from this run\u0027s fitting and checkpoint selection, but is not an independently collected or historically unseen test set.",
+                                          "post_training_evaluation":  {
+                                                                           "status":  "completed_after_training",
+                                                                           "split":  "fresh_test",
+                                                                           "rows":  84,
+                                                                           "metrics_file":  "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/fresh_test_evaluation/evaluation_metrics.json",
+                                                                           "raw_macro_f1":  0.8455574644288798,
+                                                                           "critical_recall":  0.55,
+                                                                           "raw_high_risk_undertriage_count":  9,
+                                                                           "review_routed_high_risk_undertriage_count":  6,
+                                                                           "test_evaluated_during_training":  false,
+                                                                           "selection_source":  "validation only",
+                                                                           "calibration_and_challenge_evaluated_separately_after_fit":  true
+                                                                       },
+                                          "current_training_vs_test":  "Training completed 8 epochs and selected the best validation checkpoint from epoch 6. Metadata records test_evaluated_during_training=false; training calculated only a length/truncation check and row count for fresh_test, not test predictions or metrics. The selected checkpoint was then evaluated on the frozen fresh_test partition (84 rows) after fitting and selection. Calibration (83 rows) and challenge (43 rows) have separate post-fit evaluation artifacts and were not used for fitting or epoch selection. Historical prior exposure remains as stated in the split manifest."
+                                      },
+    "suggestions_not_code_facts":  [
+                                       "Treat this as a provisional, synthetic-data experiment even though the owner-attested batch is recorded as reviewed; the attestation is not direct independent responder evidence.",
+                                       "Report both raw argmax metrics and review-routed metrics. The balanced_safety selector intentionally ranks raw undertriage first and does not optimize calibration, coverage, or routed risk.",
+                                       "Keep the validation support sizes and previous-data-exposure limitation adjacent to every fresh-test result. Do not interpret thresholds as clinical or operational standards.",
+                                       "Do not promote or deploy based solely on full-backbone training or aggregate metrics; the prior run had poor critical recall and high-risk undertriage, so require the current run\u0027s frozen held-out evaluation and human decision."
+                                   ],
+    "limitations":  [
+                        "The training corpus remains synthetic in origin. The approval record is project-owner-attested and is not independently corroborated direct responder testimony.",
+                        "The family reconciliation recommendations incorporated into conservative split grouping were AI-generated and are not direct human semantic adjudications.",
+                        "All rows were previously consumed across earlier model-development workflows, so this run fresh_test is held out from this run fit and selection but is not historically unseen or independently collected.",
+                        "The 84-row fresh_test is small; especially language-specific and critical-class estimates have low support and should be treated as uncertain."
+                    ],
+    "run_completion":  {
+                           "status":  "completed",
+                           "best_epoch":  6,
+                           "epochs_completed":  8,
+                           "duration_seconds":  963.81,
+                           "peak_cuda_memory_allocated_bytes":  3781308416,
+                           "peak_cuda_memory_reserved_bytes":  4009754624,
+                           "checkpoint_path":  "ai_service/artifacts/checkpoints/text_xlmr_850_humanconfirmed_fulltrain_20261006_1411",
+                           "checkpoint_model_safetensors_sha256":  "053A2851D3E1A9FB342825BC86A786A49BAAD7E06F51C6A8442A655F97FE6881",
+                           "active_model_changed":  false,
+                           "approved_for_deployment":  false,
+                           "fresh_test_metrics_recorded_after_training":  true
+                       },
+    "audit_updated_at":  "2026-10-06"
+}

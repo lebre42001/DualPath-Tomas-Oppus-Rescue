@@ -1,0 +1,67 @@
+{
+  "dataset_fingerprint": "f34f78c7095ab7207602fb338ae1ef925b610febb3d3eeddabc3066c4889ca59",
+  "words": {
+    "en": 3000,
+    "tl": 3000,
+    "ceb": 3000
+  },
+  "rows": 292,
+  "groups": 93,
+  "max_tokens": 76,
+  "splits": {
+    "train": {
+      "rows": 233,
+      "groups": 71,
+      "languages": {
+        "ceb": 77,
+        "en": 79,
+        "tl": 77
+      },
+      "labels": {
+        "critical": 64,
+        "minor": 57,
+        "needs_review": 56,
+        "serious": 56
+      }
+    },
+    "validation": {
+      "rows": 32,
+      "groups": 11,
+      "languages": {
+        "en": 11,
+        "ceb": 10,
+        "tl": 11
+      },
+      "labels": {
+        "critical": 6,
+        "minor": 9,
+        "serious": 9,
+        "needs_review": 8
+      }
+    },
+    "test": {
+      "rows": 27,
+      "groups": 11,
+      "languages": {
+        "ceb": 9,
+        "en": 9,
+        "tl": 9
+      },
+      "labels": {
+        "minor": 8,
+        "needs_review": 8,
+        "serious": 6,
+        "critical": 5
+      }
+    }
+  },
+  "validation": "47 relevant tests passed; 1 optional tiny-model smoke skipped. Real full model run follows.",
+  "group_overlap_count": 0,
+  "protected_file_hashes": {
+    "ai_service\\active_config.txt": "5e56620321a9d19e485f54369cad2e0fa2d6cd8305b6b817f3efa9c0366b41ba",
+    "ai_service\\datasets\\emergency_text\\draft_reports.csv": "7c3ce51ad2e14be1ad6c23ab49e114b9259922dbccd2c10181c6dac2e2b1583b",
+    "ai_service\\datasets\\emergency_text\\reviewed_reports.csv": "7c3ce51ad2e14be1ad6c23ab49e114b9259922dbccd2c10181c6dac2e2b1583b",
+    "web_system\\.env": "c09826d078705a12b9e79d188e02de2641c4aac8fad0a9459145bdcb889c6700",
+    "render.yaml": "c4e8817ce9b715ef45149ff1c6e214d1a49882e0cbe439cd2956a6d82bf7115e"
+  }
+}

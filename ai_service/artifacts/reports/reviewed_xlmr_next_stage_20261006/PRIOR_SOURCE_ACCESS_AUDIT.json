@@ -1,0 +1,294 @@
+{
+  "audit_id": "prior-source-access-audit-20261006",
+  "status": "PARTIAL_ACCESS_DENIED_CAUSE_UNRESOLVED",
+  "scope": "Read-only audit of prior-source CSV access failures from the 2026-10-05 experiment report.",
+  "verified": {
+    "source_audit": "ai_service/artifacts/reports/civilian_multilingual_fulltrain_20261005/DUPLICATE_AUDIT.json",
+    "recorded_inaccessible_csv_count": 60,
+    "recorded_error_types": [
+      "PermissionError"
+    ],
+    "recorded_failures_by_area": {
+      "ai_service/datasets/emergency_text/working/by_severity": 20,
+      "ai_service/datasets/emergency_text/experiments/synthetic_9000words_20260920/by_severity": 20,
+      "ai_service/datasets/emergency_text/archive/initial_80/by_severity": 20
+    },
+    "paths": [
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\critical\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\minor\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\needs_review\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\serious\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\serious\\bisaya\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\serious\\english\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\serious\\mixed\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\serious\\tagalog\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\needs_review\\bisaya\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\needs_review\\english\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\needs_review\\mixed\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\needs_review\\tagalog\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\minor\\bisaya\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\minor\\english\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\minor\\mixed\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\minor\\tagalog\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\critical\\bisaya\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\critical\\english\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\critical\\mixed\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\working\\by_severity\\critical\\tagalog\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\critical\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\minor\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\needs_review\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\serious\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\serious\\bisaya\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\serious\\english\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\serious\\mixed\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\serious\\tagalog\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\needs_review\\bisaya\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\needs_review\\english\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\needs_review\\mixed\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\needs_review\\tagalog\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\minor\\bisaya\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\minor\\english\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\minor\\mixed\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\minor\\tagalog\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\critical\\bisaya\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\critical\\english\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\critical\\mixed\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\critical\\tagalog\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\critical\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\minor\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\needs_review\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\serious\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\serious\\bisaya\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\serious\\english\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\serious\\mixed\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\serious\\tagalog\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\needs_review\\bisaya\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\needs_review\\english\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\needs_review\\mixed\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\needs_review\\tagalog\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\minor\\bisaya\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\minor\\english\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\minor\\mixed\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\minor\\tagalog\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\critical\\bisaya\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\critical\\english\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\critical\\mixed\\examples.csv",
+        "error": "PermissionError"
+      },
+      {
+        "path": "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\critical\\tagalog\\examples.csv",
+        "error": "PermissionError"
+      }
+    ],
+    "other_scan_evidence": {
+      "duplicate_audit_readable_rows": 1732,
+      "accessible_exact_overlap_count": 0,
+      "status": "partial_inaccessible_files",
+      "separate_leakage_audit": "ai_service/artifacts/reports/civilian_multilingual_fulltrain_20261005/LEAKAGE_AUDIT.json",
+      "separate_scan_readable_files": 17,
+      "separate_scan_readable_rows": 2708,
+      "separate_scan_inaccessible_csvs": 60,
+      "count_conflict": "The two scan methods report 1,732 vs 2,708 readable rows; populations and definitions are unreconciled."
+    },
+    "auditor_observations": [
+      "Repository search output showed Access is denied for manifest.json encountered under all three by_severity trees.",
+      "Read-only Get-Acl on one recorded examples.csv and its manifest.json returned System.UnauthorizedAccessException: Attempted to perform an unauthorized operation.",
+      "No elevation, ACL change, ownership change, or permission-bypass attempt was made."
+    ]
+  },
+  "interpretation": {
+    "supported_conclusion": "Failures are systematic by tree: 20 recorded CSV paths in each of three parallel by_severity trees, consistent with OS-level access-control denial rather than scattered individual missing files.",
+    "not_proven": [
+      "The precise Windows ACL rule or whether it is explicit/inherited; Get-Acl itself was denied on representative files.",
+      "Whether the underlying mechanism is an explicit deny ACE, inherited restriction, ownership boundary, endpoint security product, or another access-control mechanism.",
+      "Whether these trees are byte-identical copies, semantic duplicates, or contain unique rows; path similarity alone cannot establish this.",
+      "Whether inaccessible contents overlap with the candidate corpus."
+    ],
+    "consequence": "Overlap coverage is incomplete. Zero overlap applies only to accessible text columns and cannot be generalized to the 60 inaccessible CSVs."
+  },
+  "owner_follow_up": [
+    "Repository/data owner should inspect these directories and security policy in an already-authorized environment.",
+    "If authorized, create read-only hashes and row inventories for all restricted CSVs and compare them with canonical masters/candidate data.",
+    "Record principal and coverage; do not treat mirror exports as duplicates until hashes or row comparison confirm it."
+  ],
+  "limitations": [
+    "Source data, datasets, models, configs, and ACLs were not modified.",
+    "No permission escalation or ACL repair was attempted.",
+    "Full 60-path list is inherited from the earlier audit; only representative ACL metadata calls were made in this audit."
+  ]
+}

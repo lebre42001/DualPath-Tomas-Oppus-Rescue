@@ -1,0 +1,4 @@
+.reported-fatality-alert{margin:0 0 1rem;padding:1rem 1.15rem;border:1px solid #cf2734;border-left-width:6px;border-radius:14px;background:#fff0f1;color:#72121b}
+.reported-fatality-alert strong{display:block;font-size:1.05rem}
+.reported-fatality-alert p{margin:.4rem 0 0;line-height:1.55}
+html[data-theme="dark"] .reported-fatality-alert{background:#351b20;color:#ffe2e4;border-color:#e45a67}

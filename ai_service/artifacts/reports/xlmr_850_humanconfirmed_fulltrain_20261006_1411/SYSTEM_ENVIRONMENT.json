@@ -1,0 +1,32 @@
+{
+  "captured_at": "2026-10-06T06:34:32.583761+00:00",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.0",
+  "torch": "2.12.1+cu130",
+  "transformers": "4.57.6",
+  "scikit_learn": "1.9.1",
+  "safetensors": "0.8.0",
+  "cuda_available": true,
+  "cuda_version": "13.0",
+  "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "gpu_memory_total_bytes": 4294443008,
+  "training_settings": {
+    "device": "cuda",
+    "batch_size": 1,
+    "gradient_accumulation": 16,
+    "effective_batch_size": 16,
+    "precision": "cuda_fp16_autocast",
+    "gradient_checkpointing": true,
+    "optimizer": "Adafactor",
+    "learning_rate": 2e-05,
+    "max_length": 64
+  },
+  "dataset": "ai_service\\datasets\\emergency_text\\reviewed\\civilian_multilingual_850_humanconfirmed_20261006T141537+0800",
+  "dataset_reports_sha256": "405dee8f46be0021aa590e72989dbb64a7b4d3a8b53457eb80b00c58a17f6443",
+  "training_data_sha256": "79ab94ad4877159dc1a58bb621b5c743ab5cd7b832e7fed92aa23148591e6342",
+  "training_rows": 514,
+  "validation_rows": 126,
+  "fresh_test_rows": 84,
+  "calibration_rows": 83,
+  "challenge_rows": 43
+}

@@ -1,0 +1,322 @@
+[
+  {
+    "id": "minorc_01",
+    "label": "minor",
+    "en": "An empty van parked beside the bakery has a scratched mirror after a delivery vehicle brushed it slowly. Both drivers are unhurt, nobody else was struck, and there is no ongoing danger.",
+    "tl": "Nagasgas ang salamin ng bakanteng van sa tabi ng panaderya matapos itong masagi nang dahan-dahan ng sasakyang pangdeliver. Parehong walang nasaktan ang mga drayber, walang ibang natamaan, at wala nang panganib sa lugar.",
+    "ceb": "Nagaras ang samin sa walay sulod nga van tupad sa panaderya human hinay nga nasangit sa delivery nga sakyanan. Walay samad ang duha ka drayber, walay laing naigo, ug wala nay peligro didto.",
+    "rationale": "Draft minor: limited mirror damage, explicit absence of injuries, and no ongoing hazard; no inference from vehicle type."
+  },
+  {
+    "id": "minorc_02",
+    "label": "minor",
+    "en": "Two unattended motorcycles tipped together while parked outside the repair shop, leaving bent mirrors. Nobody was riding or standing beside them, no person was injured, and both are secured without leaks or obstruction.",
+    "tl": "Natumba sa isa't isa ang dalawang bakanteng motor na nakaparada sa talyer at nabaluktot ang mga salamin. Walang sakay o taong katabi, walang nasaktan, at naitayo na silang walang tagas o nakaharang.",
+    "ceb": "Natumba ngadto sa usag usa ang duha ka walay sakay nga motor sa talyer ug nabawog ang mga samin. Walay tawo sa tupad, walay nasamdan, ug natukod na sila nga walay tagas o babag.",
+    "rationale": "Draft minor: stationary vehicle property damage only, with people explicitly unaffected and the scene secured."
+  },
+  {
+    "id": "minorc_03",
+    "label": "minor",
+    "en": "Our unoccupied pickup rolled a short distance inside the driveway and touched the low curb, scratching its bumper. No pedestrian or passenger was involved, nobody is injured, and the wheels are now blocked safely.",
+    "tl": "Umusad nang kaunti ang bakante naming pickup sa loob ng driveway at sumayad sa mababang gutter, nagasgas lang ang bumper. Walang taong nadamay o nasaktan, at may kalso na ang mga gulong nito.",
+    "ceb": "Miuswag og gamay ang among walay sakay nga pickup sulod sa agianan ug misangit sa ubos nga gutter, garas ra sa bumper. Walay nadamay o nasamdan, ug nakalso na ang mga ligid niini.",
+    "rationale": "Draft minor: short unattended movement with a scratch, no affected person, and explicit prevention of further movement."
+  },
+  {
+    "id": "minorc_04",
+    "label": "minor",
+    "en": "A small branch fell onto the roof of an empty car parked near the market, leaving a shallow dent. Nobody was beneath it, nobody was injured, and the branch has been removed without remaining hazards.",
+    "tl": "Nalaglag ang maliit na sanga sa bubong ng bakanteng kotse malapit sa palengke at nag-iwan ng mababaw na yupi. Walang tao sa ilalim, walang nasaktan, at naalis na ang sanga nang wala nang panganib.",
+    "ceb": "Nahulog ang gamay nga sanga sa atop sa walay sulod nga awto duol sa merkado ug adunay mabaw nga lumping. Walay tawo ilalom, walay nasamdan, ug gikuha na ang sanga nga wala nay peligro.",
+    "rationale": "Draft minor: small property damage is described, injury is explicitly denied, and the obstruction has been removed."
+  },
+  {
+    "id": "minorc_05",
+    "label": "minor",
+    "en": "An empty trailer moving slowly in the parking area touched a parked sedan and cracked its wheel cover. The sedan had nobody inside, everyone nearby is unhurt, and both vehicles are stationary with no hazards.",
+    "tl": "Sumagi ang mabagal na bakanteng trailer sa nakaparadang sedan at nabasag ang takip ng gulong nito. Walang laman ang sedan, walang nasaktan sa mga naroon, at nakahinto na ang parehong sasakyan nang walang panganib.",
+    "ceb": "Nasangit ang hinay nga walay karga nga trailer sa nakaparadang sedan ug nabuak ang tabon sa ligid niini. Walay tawo sulod, walay nasamdan sa duol, ug nakahunong na ang duha nga walay peligro.",
+    "rationale": "Draft minor: wheel-cover damage without injured occupants or bystanders and no ongoing danger."
+  },
+  {
+    "id": "minorc_06",
+    "label": "minor",
+    "en": "The lowered parking barrier touched an unattended motorcycle and broke its rear indicator while its owner was away. Nobody was struck or injured, the barrier is secured, and the motorcycle has no leaking fuel.",
+    "tl": "Tinamaan ng ibinabang harang sa paradahan ang bakanteng motor at nabasag ang ilaw sa likod habang wala ang may-ari. Walang taong natamaan o nasaktan, ligtas nang nakapirmi ang harang, at walang tumatagas na gasolina.",
+    "ceb": "Naigo sa gipaubos nga harang sa parkingan ang walay sakay nga motor ug nabuak ang suga sa likod samtang wala ang tag-iya. Walay naigo o nasamdan nga tawo, nakapirmi na ang harang, ug walay tagas.",
+    "rationale": "Draft minor: broken vehicle light only, no person affected, and the barrier and fuel condition present no stated active threat."
+  },
+  {
+    "id": "minorc_07",
+    "label": "minor",
+    "en": "A reversing car lightly scraped the mudguard of an empty tricycle outside the terminal. Its driver stopped immediately and is unhurt; nobody else was injured, and the vehicles are safely parked without blocking traffic.",
+    "tl": "Bahagyang nagasgas ng umaatras na kotse ang tapalodo ng bakanteng traysikel sa terminal. Huminto agad ang drayber at hindi nasaktan; walang ibang nasugatan, at ligtas na silang nakaparada nang hindi nakaharang sa trapiko.",
+    "ceb": "Gamay ra ang garas sa tapalodo sa walay sakay nga traysikol sa terminal human nasangit sa nag-atras nga awto. Mihunong dayon ang drayber, walay nasamdan bisan kinsa, ug luwas silang nakaparada nga walay gibabagan.",
+    "rationale": "Draft minor: low impact with limited damage, explicit no injuries, and a secured scene."
+  },
+  {
+    "id": "minorc_08",
+    "label": "minor",
+    "en": "A loose gate swung into the side of an empty parked jeep and left a small paint scratch. Nobody was beside the jeep or injured, and the gate is now tied securely with no remaining danger.",
+    "tl": "Sumayad ang gumalaw na tarangkahan sa gilid ng bakanteng jeep at nag-iwan ng maliit na gasgas sa pintura. Walang taong katabi o nasaktan, at nakatali na nang maayos ang tarangkahan kaya wala nang panganib.",
+    "ceb": "Misangit ang nilihok nga ganghaan sa kilid sa walay sakay nga jeep ug nagaras og gamay ang pintura. Walay tawo sa tupad o nasamdan, ug gihigot na og tarong ang ganghaan nga wala nay peligro.",
+    "rationale": "Draft minor: paint damage, no affected person, and the moving gate has been secured."
+  },
+  {
+    "id": "minorc_09",
+    "label": "minor",
+    "en": "A bicycle without a rider fell from its stand against an empty parked taxi, scratching the door. Nobody was hit or hurt, the bicycle is moved aside, and the roadside remains clear and safe.",
+    "tl": "Natumba mula sa patungan ang bisikletang walang sakay at nagasgas ang pinto ng bakanteng taxi. Walang taong natamaan o nasaktan, naitabi na ang bisikleta, at maluwag at ligtas pa rin ang gilid ng kalsada.",
+    "ceb": "Natumba gikan sa tukod ang bisikletang walay sakay ug nagaras ang pultahan sa walay sulod nga taxi. Walay tawo nga naigo o nasamdan, gitabi na ang bisikleta, ug hawan ug luwas ang daplin sa dalan.",
+    "rationale": "Draft minor: a stationary vehicle is scratched, no injury is reported explicitly, and access remains unobstructed."
+  },
+  {
+    "id": "minorc_10",
+    "label": "minor",
+    "en": "An empty parked minibus was nudged by a slowly moving car outside the warehouse, denting a license plate. Both drivers report no injury, nobody else was hit, and there is no spill or ongoing hazard.",
+    "tl": "Nasagi ng mabagal na kotse ang bakanteng minibus sa labas ng bodega at nayupi ang plaka. Parehong nagsabing walang nasaktan ang mga drayber, walang ibang taong natamaan, at walang tagas o patuloy na panganib.",
+    "ceb": "Nasangit ang hinay nga awto sa walay sakay nga minibus gawas sa bodega ug nalumping ang plaka. Parehong walay nasamdan ang mga drayber, walay laing tawo nga naigo, ug walay tagas o nagpadayong peligro.",
+    "rationale": "Draft minor: limited plate damage, explicitly uninjured people, and no active hazard."
+  },
+  {
+    "id": "seriousc_01",
+    "label": "serious",
+    "en": "A belted adult passenger has shoulder pain after the car slowly bumped a curb while parking. She is awake, answers clearly, and breathes normally; she reports no head injury and is asking for assistance.",
+    "tl": "Masakit ang balikat ng nakaseatbelt na pasaherong nasa hustong gulang matapos marahang sumagi sa gutter ang kotse habang pumaparada. Gising siya, malinaw sumagot at normal huminga; wala raw tama sa ulo at humihingi ng tulong.",
+    "ceb": "Nagsakit ang abaga sa hamtong nga pasaherong nakaseatbelt human hinay nga misangit sa gutter ang awto samtang nagparking. Mata siya, klarong motubag ug normal moginhawa; wala siyay tama sa ulo ug nangayo og tabang.",
+    "rationale": "Draft serious: current shoulder pain after limited impact, with consciousness and normal breathing explicitly preserved."
+  },
+  {
+    "id": "seriousc_02",
+    "label": "serious",
+    "en": "The belted van driver cut his thumb on a broken interior fitting during a slow sideswipe. The bleeding has stopped with a cloth; he remains awake, talks normally, and breathes comfortably while requesting help.",
+    "tl": "Nasugatan sa hinlalaki ang nakaseatbelt na drayber ng van sa basag na piyesa sa loob matapos ang mabagal na pagsagi. Tumigil na ang dugo gamit ang tela; gising siya, normal magsalita at huminga, at humihingi ng tulong.",
+    "ceb": "Nasamad ang kumagko sa nakaseatbelt nga drayber sa van sa nabuak nga piyesa sa sulod human sa hinay nga pagsangit. Nihunong na ang dugo gamit ang panapton; mata siya, normal mosulti ug moginhawa, ug nangayo og tabang.",
+    "rationale": "Draft serious: a described thumb wound with bleeding controlled, while alertness and breathing remain normal."
+  },
+  {
+    "id": "seriousc_03",
+    "label": "serious",
+    "en": "An adult front passenger wearing a seatbelt has a swollen wrist after their car slowly touched a parking post. He is awake and breathing normally, with no bleeding, and requests help because the wrist hurts.",
+    "tl": "Namamaga ang pulsuhan ng nakaseatbelt na pasaherong nasa hustong gulang sa harap matapos marahang sumagi sa poste ang kotse habang pumaparada. Gising siya at normal huminga, walang pagdurugo, at humihingi ng tulong dahil masakit ito.",
+    "ceb": "Naghubag ang pulso sa hamtong nga pasaherong nakaseatbelt sa atubangan human hinay nga misangit ang awto sa poste sa parkingan. Mata siya ug normal moginhawa, walay pagdugo, ug nangayo og tabang kay nagsakit kini.",
+    "rationale": "Draft serious: painful wrist swelling is present, without stated immediate grave signs or a high-risk mechanism."
+  },
+  {
+    "id": "seriousc_04",
+    "label": "serious",
+    "en": "Our belted rear passenger struck his knee against the seat during a low speed bump between cars. His knee hurts and is swelling, but he is awake, speaking clearly, and breathing normally without other complaints.",
+    "tl": "Tumama ang tuhod ng nakaseatbelt naming pasahero sa likod sa upuan nang marahang magdikit ang dalawang kotse. Masakit at namamaga ang tuhod, pero gising siya, malinaw magsalita, at normal huminga nang walang ibang reklamo.",
+    "ceb": "Naigo ang tuhod sa among nakaseatbelt nga pasahero sa luyo sa lingkoranan sa hinay nga pagbangga sa duha ka awto. Nagsakit ug naghubag ang tuhod, pero mata siya, klarong mosulti, ug normal moginhawa nga walay laing reklamo.",
+    "rationale": "Draft serious: knee pain and swelling after a limited collision, with normal breathing and responsiveness stated."
+  },
+  {
+    "id": "seriousc_05",
+    "label": "serious",
+    "en": "A restrained driver reports elbow pain and swelling after slowly reversing into a gate. She stayed inside the upright car, remains awake, and breathes normally; no heavy bleeding is present, but she needs assessment.",
+    "tl": "Masakit at namamaga ang siko ng nakaseatbelt na drayber matapos marahang umatras sa tarangkahan. Nasa loob siya ng nakatayong kotse, gising at normal huminga; walang malakas na pagdurugo, pero kailangan niyang matingnan ang siko.",
+    "ceb": "Nagsakit ug naghubag ang siko sa nakaseatbelt nga drayber human hinay nga miatras ngadto sa ganghaan. Naa siya sa awtong wala matumba, mata ug normal moginhawa; walay kusog nga pagdugo, pero nagkinahanglan siya og pagsusi.",
+    "rationale": "Draft serious: an injured elbow is described, with restrained low-speed impact and no immediate life-threatening sign."
+  },
+  {
+    "id": "seriousc_06",
+    "label": "serious",
+    "en": "A belted adult passenger developed a nosebleed after a car lightly bumped theirs from behind in the queue. The bleeding has stopped; he is awake, breathing normally, and talking clearly while waiting for assistance.",
+    "tl": "Dinugo ang ilong ng nakaseatbelt na pasaherong nasa hustong gulang matapos bahagyang mabangga sa likod ang kotse habang nakapila. Huminto na ang dugo; gising siya, normal huminga, at malinaw magsalita habang naghihintay ng tulong.",
+    "ceb": "Gidugo ang ilong sa hamtong nga pasaherong nakaseatbelt human hinay nga nabanggaan sa luyo ang ilang awto samtang naglinya. Mihunong na ang dugo; mata siya, normal moginhawa, ug klarong mosulti samtang naghulat og tabang.",
+    "rationale": "Draft serious: a reported injury requiring assessment, with bleeding stopped and normal responsiveness and breathing."
+  },
+  {
+    "id": "seriousc_07",
+    "label": "serious",
+    "en": "My belted adult sister twisted her ankle against the footwell when our car slowly struck a divider. She is awake, breathing normally, and reports only ankle pain with swelling; we are requesting medical assessment.",
+    "tl": "Napilipit ang bukongbukong ng nakaseatbelt kong kapatid na nasa hustong gulang nang marahang tumama ang kotse sa divider. Gising siya, normal huminga, at masakit at namamaga lang ang bukongbukong; humihingi kami ng pagsusuri.",
+    "ceb": "Naliso ang buolbuol sa akong hamtong nga igsoong nakaseatbelt sa dapit sa tiilan sa hinay nga pagbangga sa divider. Mata siya, normal moginhawa, ug buolbuol ra ang nagsakit ug naghubag; nangayo mi og pagsusi.",
+    "rationale": "Draft serious: ankle pain and swelling after limited impact, without reported grave danger."
+  },
+  {
+    "id": "seriousc_08",
+    "label": "serious",
+    "en": "During a slow collision outside the garage, a belted passenger cut a finger on the dashboard edge. Pressure stopped the bleeding; the adult remains awake and breathes normally, but the wound is painful.",
+    "tl": "Nasugatan ang daliri ng nakaseatbelt na pasahero sa gilid ng dashboard sa mabagal na banggaan sa labas ng garahe. Huminto sa pagdiin ang dugo; gising at normal huminga ang taong nasa hustong gulang, pero masakit ang sugat.",
+    "ceb": "Nasamad ang tudlo sa nakaseatbelt nga pasahero sa ngilit sa dashboard sa hinay nga bangga gawas sa garahe. Mihunong sa pagduot ang dugo; mata ug normal moginhawa ang hamtong nga tawo, pero nagsakit ang samad.",
+    "rationale": "Draft serious: a painful finger wound with controlled bleeding; normal breathing and alertness are explicit."
+  },
+  {
+    "id": "seriousc_09",
+    "label": "serious",
+    "en": "The adult taxi passenger was belted when another car slowly scraped the door in the loading area. Her upper arm is bruised and painful; she remains awake, breathes normally, and reports no other injury.",
+    "tl": "Nakaseatbelt ang pasahero ng taxi na nasa hustong gulang nang marahang masagi ng kotse ang pinto sa sakayan. May pasa at sakit sa itaas na braso; gising siya, normal huminga, at wala raw ibang sugat.",
+    "ceb": "Nakaseatbelt ang hamtong nga pasahero sa taxi sa hinay nga pagsangit sa laing awto sa pultahan didto sa sakayan. Adunay bun-og ug sakit sa taas nga bukton; mata siya, normal moginhawa, ug walay laing samad.",
+    "rationale": "Draft serious: painful bruising after an accident, without loss of responsiveness or abnormal breathing."
+  },
+  {
+    "id": "seriousc_10",
+    "label": "serious",
+    "en": "A belted delivery driver reports a painful swollen hand after his van slowly contacted a roadside bollard. He is awake, speaking normally, and breathing comfortably; there is no bleeding, but moving his hand hurts.",
+    "tl": "Masakit at namamaga ang kamay ng nakaseatbelt na drayber matapos marahang tumama ang delivery van sa maliit na poste sa tabi. Gising siya, normal magsalita at huminga; walang pagdurugo, pero masakit kapag ginagalaw ang kamay.",
+    "ceb": "Nagsakit ug naghubag ang kamot sa nakaseatbelt nga drayber human hinay nga misangit ang delivery van sa gamay nga poste sa daplin. Mata siya, normal mosulti ug moginhawa; walay pagdugo, pero sakit lihokon ang kamot.",
+    "rationale": "Draft serious: painful swollen hand is a stated injury, while consciousness and breathing remain normal."
+  },
+  {
+    "id": "criticalc_01",
+    "label": "critical",
+    "en": "After the car collision, the driver answered us at first but is now unresponsive when we speak and touch his shoulder. The passenger beside him is awake; I am describing two different people.",
+    "tl": "Sumagot pa ang drayber noong una matapos ang banggaan, pero ngayon hindi na tumutugon sa pagtawag at paghawak sa balikat niya. Gising ang katabing pasahero; dalawang magkaibang tao ang inilalarawan ko rito ngayon.",
+    "ceb": "Mitubag pa ang drayber sa sinugdan human sa bangga, apan karon dili na motubag sa pagtawag ug paghikap sa iyang abaga. Mata ang pasahero tupad niya; duha ka lahi nga tawo akong gihulagway karon.",
+    "rationale": "Draft critical: current unresponsiveness is explicit and the awake passenger does not negate the driver's condition."
+  },
+  {
+    "id": "criticalc_02",
+    "label": "critical",
+    "en": "The crashed van is burning now and one passenger cannot get out because the door is jammed. Smoke is entering where she is trapped; the driver is outside talking, but she remains inside.",
+    "tl": "Nasusunog ngayon ang nabanggang van at hindi makalabas ang isang pasahero dahil naipit ang pinto. Pumapasok ang usok sa kinaroroonan niya; nasa labas at nakakapagsalita ang drayber, pero nasa loob pa rin siya.",
+    "ceb": "Nasunog karon ang nabanggang van ug dili makagawas ang usa ka pasahero kay nasangit ang pultahan. Misulod ang aso sa iyang nahimutangan; naa sa gawas ug makasulti ang drayber, pero naa gihapon siya sa sulod.",
+    "rationale": "Draft critical: a currently trapped passenger faces active fire and smoke despite another occupant being outside."
+  },
+  {
+    "id": "criticalc_03",
+    "label": "critical",
+    "en": "One motorcycle rider is bleeding very heavily from his thigh after the collision, and blood keeps flowing despite a cloth being pressed there. The other rider has scratches and is awake; these are separate injuries.",
+    "tl": "Napakalakas ng pagdurugo sa hita ng isang nakamotor matapos ang banggaan, at tuloy ang agos kahit dinidiinan ng tela. Gasgas lang ang isa pang nakamotor at gising siya; magkaibang tao ang may mga sugat na ito.",
+    "ceb": "Kusog kaayo ang pagdugo sa paa sa usa ka nagmotor human sa bangga, ug padayon ang agas bisan giduotan og panapton. Garas ra ang laing nagmotor ug mata siya; lahi nga tawo kining mga samaran.",
+    "rationale": "Draft critical: ongoing very heavy bleeding is directly reported and is not cancelled by the other rider's lesser injury."
+  },
+  {
+    "id": "criticalc_04",
+    "label": "critical",
+    "en": "Two pickups collided near the bridge. The driver of the white pickup is not breathing now, while his front passenger is awake and calling for help; I am beside them and reporting their different conditions.",
+    "tl": "Nagbanggaan ang dalawang pickup malapit sa tulay. Hindi humihinga ngayon ang drayber ng puting pickup, habang gising at humihingi ng tulong ang pasahero sa harap; nasa tabi nila ako at magkaiba ang kalagayan nila.",
+    "ceb": "Nagbangga ang duha ka pickup duol sa taytayan. Dili moginhawa karon ang drayber sa puti nga pickup, samtang mata ug nangayog tabang ang pasahero sa atubangan; naa ko tupad nila ug lahi ilang kahimtang.",
+    "rationale": "Draft critical: absent breathing is explicitly reported for the driver, distinct from the conscious passenger."
+  },
+  {
+    "id": "criticalc_05",
+    "label": "critical",
+    "en": "The bus hit the roadside barrier and an adult passenger is now struggling to breathe, gasping and unable to speak. Other passengers are talking, but this person's breathing problem is happening right in front of me.",
+    "tl": "Tumama ang bus sa harang sa kalsada at isang pasaherong nasa hustong gulang ang hirap huminga ngayon, naghahabol ng hininga at hindi makapagsalita. Nag-uusap ang iba, pero nakikita ko mismo ang hirap niyang paghinga.",
+    "ceb": "Naigo sa bus ang harang sa dalan ug usa ka hamtong nga pasahero ang lisod moginhawa karon, naghangos ug dili makasulti. Nag-istorya ang uban, pero naa gyud sa akong atubangan ang iyang kalisod sa pagginhawa.",
+    "rationale": "Draft critical: severe ongoing breathing difficulty is explicit for one person; other passengers' speech is irrelevant to that danger."
+  },
+  {
+    "id": "criticalc_06",
+    "label": "critical",
+    "en": "A tricycle overturned after hitting a car and its driver is pinned inside beside flames underneath the vehicle. He is calling out but cannot move away; the fire is still burning as I report this.",
+    "tl": "Tumaob ang traysikel matapos tumama sa kotse at naipit ang drayber sa loob katabi ng apoy sa ilalim. Tumatawag siya pero hindi makalayo; patuloy pa rin ang apoy habang inirereport ko ang nangyayari rito.",
+    "ceb": "Natumba ang traysikol human maigo ang awto ug naipit ang drayber sa sulod tupad sa kalayo ilalom. Nagtawag siya apan dili makapalayo; padayon pa ang kalayo samtang akong gireport ang nahitabo dinhi karon.",
+    "rationale": "Draft critical: entrapment occurs alongside an active fire threat; calling out does not remove the immediate danger."
+  },
+  {
+    "id": "criticalc_07",
+    "label": "critical",
+    "en": "A car slid into the canal and water is rising inside around a trapped rear passenger. His mouth is now underwater and he cannot get out; the driver escaped, but the passenger remains trapped.",
+    "tl": "Dumulas ang kotse papunta sa kanal at tumataas ang tubig sa loob kung saan naipit ang pasahero sa likod. Lubog na ang bibig niya at hindi makalabas; nakalabas ang drayber pero naipit pa rin siya.",
+    "ceb": "Nadulas ang awto ngadto sa kanal ug misaka ang tubig sulod palibot sa naipit nga pasahero sa luyo. Nalubog na ang iyang baba ug dili makagawas; nakagawas ang drayber apan naipit pa gihapon ang pasahero.",
+    "rationale": "Draft critical: a trapped person's mouth is currently submerged; the escaped driver's status does not resolve that immediate danger."
+  },
+  {
+    "id": "criticalc_08",
+    "label": "critical",
+    "en": "The pedestrian hit by the car was talking a minute ago, but now she does not respond to voices or touch. I stayed beside her throughout; this is her current condition, not an older message.",
+    "tl": "Nagsasalita pa isang minuto kanina ang taong nabangga ng kotse, pero ngayon hindi na siya tumutugon sa boses o paghawak. Nasa tabi niya ako buong oras; ito ang kalagayan niya ngayon, hindi lumang mensahe.",
+    "ceb": "Nagsulti pa usa ka minuto ang milabay ang tawo nga nabanggaan sa awto, pero karon dili na motubag sa tingog o paghikap. Naa ko tupad niya kanunay; kini iyang kahimtang karon, dili daang mensahe.",
+    "rationale": "Draft critical: the reporter clearly distinguishes earlier responsiveness from present unresponsiveness."
+  },
+  {
+    "id": "criticalc_09",
+    "label": "critical",
+    "en": "Following the collision, the mother is awake and speaking beside the car, but her child passenger is unconscious and not responding now. Both were in that vehicle; the mother's condition does not describe the child.",
+    "tl": "Matapos ang banggaan, gising at nagsasalita ang ina sa tabi ng kotse, pero walang malay at hindi tumutugon ngayon ang anak niyang pasahero. Pareho silang sakay; hindi kalagayan ng bata ang inilalarawan tungkol sa ina.",
+    "ceb": "Human sa bangga, mata ug nagsulti ang inahan tupad sa awto, pero walay panimuot ug dili motubag karon ang iyang anak nga pasahero. Pareho silang sakay; dili kahimtang sa bata ang gisulti bahin sa inahan.",
+    "rationale": "Draft critical: a child's current unresponsiveness is explicit and separate from the mother's awake state."
+  },
+  {
+    "id": "criticalc_10",
+    "label": "critical",
+    "en": "The overturned car's driver is not breathing and does not respond while still inside. A rear passenger is already outside and awake; I can see both people, and the driver's condition is unchanged right now.",
+    "tl": "Hindi humihinga at hindi tumutugon ang drayber ng tumaob na kotse habang nasa loob pa. Nasa labas na at gising ang pasahero sa likod; nakikita ko silang dalawa, at ganito pa rin ang drayber ngayon.",
+    "ceb": "Dili moginhawa ug dili motubag ang drayber sa natumbang awto samtang naa pa sa sulod. Naa na sa gawas ug mata ang pasahero sa luyo; nakita nako silang duha, ug ingon gihapon ang drayber karon.",
+    "rationale": "Draft critical: currently absent breathing and unresponsiveness, rather than overturning alone, establish the proposed urgency."
+  },
+  {
+    "id": "needs_reviewc_01",
+    "label": "needs_review",
+    "en": "A caller said the driver was answering after the crash, but my sister forwarded a message saying he was unresponsive. Neither of them is beside him now, and I cannot tell which update is newer.",
+    "tl": "Sabi ng tumawag, sumasagot ang drayber matapos mabangga, pero ipinasa ng kapatid ko ang mensaheng hindi siya tumutugon. Wala sa kanilang katabi niya ngayon, at hindi ko matukoy kung aling balita ang mas bago.",
+    "ceb": "Miingon ang nanawag nga motubag ang drayber human sa bangga, pero gipasa sa akong igsoon ang mensahe nga dili siya motubag. Walay usa kanila nga tupad niya karon, ug wala ko kahibalo unsay mas bag-o.",
+    "rationale": "Draft needs_review: conflicting reports about one driver have unresolved timing and no current direct observer."
+  },
+  {
+    "id": "needs_reviewc_02",
+    "label": "needs_review",
+    "en": "The message describes a motorcycle collision yesterday, followed by another line saying help is needed now. I do not know whether the rider is still there, already treated, or experiencing any current symptoms.",
+    "tl": "Tungkol sa banggaan ng motor kahapon ang mensahe, pero may kasunod na linyang kailangan ng tulong ngayon. Hindi ko alam kung naroon pa ang rider, nagamot na, o may nararamdaman pa siyang sintomas ngayon.",
+    "ceb": "Bahin sa bangga sa motor kagahapon ang mensahe, apan adunay sunod nga linya nga kinahanglan og tabang karon. Wala ko kahibalo kung naa pa ang rider, natambalan na, o adunay gibati nga mga sintomas karon.",
+    "rationale": "Draft needs_review: the message does not establish whether yesterday's event involves a current unresolved emergency."
+  },
+  {
+    "id": "needs_reviewc_03",
+    "label": "needs_review",
+    "en": "One voice message says nobody was hurt in the van collision, while another says two people were injured. The senders mention different landmarks, and I cannot confirm whether they are describing the same incident.",
+    "tl": "Sabi sa isang voice message walang nasaktan sa banggaan ng van, pero sabi sa isa pa may dalawang nasugatan. Magkaibang palatandaan ang binanggit ng nagpadala, at hindi ko makumpirmang iisang insidente ang tinutukoy nila.",
+    "ceb": "Sa usa ka voice message walay nasamdan sa bangga sa van, pero sa lain adunay duha ka samaran. Lahi ang timailhan nga lugar nga gihisgotan sa nagpadala, ug dili nako makumpirmang pareho ang ilang insidente.",
+    "rationale": "Draft needs_review: injury reports conflict and may refer to different incidents; neither current scene nor affected people are established."
+  },
+  {
+    "id": "needs_reviewc_04",
+    "label": "needs_review",
+    "en": "Someone sent me a screenshot saying a driver was trapped after a collision, but it has no date. The sender cannot confirm whether that driver has been freed or whether any danger remains now.",
+    "tl": "May nagpadala ng screenshot na naipit daw ang drayber matapos ang banggaan, pero walang petsa ang mensahe. Hindi makumpirma ng nagpadala kung nakalabas na ang drayber o kung may panganib pang natitira sa ngayon.",
+    "ceb": "Adunay mipadala og screenshot nga naipit kuno ang drayber human sa bangga, apan walay petsa ang mensahe. Dili makumpirma sa nagpadala kung nakagawas na ang drayber o kung adunay nahibiling peligro sa lugar karon.",
+    "rationale": "Draft needs_review: an undated secondhand entrapment report provides no supported current condition or active threat."
+  },
+  {
+    "id": "needs_reviewc_05",
+    "label": "needs_review",
+    "en": "The call about the car accident kept breaking up: I heard both 'not breathing' and 'did not stop breathing' about the driver. I cannot reach the caller again or establish what is happening now.",
+    "tl": "Putol-putol ang tawag tungkol sa aksidente ng kotse: narinig ko kapwa ang hindi humihinga at hindi tumigil huminga tungkol sa drayber. Hindi ko na matawagan muli ang nagreport o matiyak ang kalagayan niya ngayon.",
+    "ceb": "Putol-putol ang tawag bahin sa aksidente sa awto: nadungog nako ang dili moginhawa ug wala mihunong pagginhawa bahin sa drayber. Dili na nako makontak ang nanawag o matino kung unsay iyang kahimtang sa pagkakaron.",
+    "rationale": "Draft needs_review: a broken call leaves contradictory negation about breathing unresolved; the concerning phrase must still reach a responder."
+  },
+  {
+    "id": "needs_reviewc_06",
+    "label": "needs_review",
+    "en": "My cousin's messages about the tricycle crash mention a small scratch, then heavy bleeding, without naming the injured person or time. I am away from the scene and cannot clarify whose condition is current.",
+    "tl": "May maliit na gasgas sa unang mensahe ng pinsan ko tungkol sa banggaan ng traysikel, tapos malakas na pagdurugo, pero walang pangalan o oras. Wala ako roon at hindi matiyak kung kaninong kalagayan ang kasalukuyan.",
+    "ceb": "Gamay nga garas ang unang mensahe sa akong ig-agaw bahin sa bangga sa traysikol, dayon kusog nga pagdugo, apan walay ngalan o oras. Wala ko didto ug dili matino kang kinsang kahimtang ang kasamtangan.",
+    "rationale": "Draft needs_review: incomplete attribution and timing prevent a supported current assessment; the reported bleeding must not be discarded."
+  },
+  {
+    "id": "needs_reviewc_07",
+    "label": "needs_review",
+    "en": "A morning update said the passenger was trapped in a car beside the ditch; a later forwarded message says 'already out' without identifying anyone. I cannot confirm the passenger's present location, injuries, or condition.",
+    "tl": "Sabi sa balita kaninang umaga, naipit ang pasahero sa kotse sa tabi ng kanal; may sumunod na mensaheng nakalabas na pero walang tinukoy. Hindi ko makumpirma ang kinaroroonan, sugat, o kalagayan ng pasahero ngayon.",
+    "ceb": "Sa balita ganihang buntag, naipit ang pasahero sa awto daplin sa kanal; sa sunod nga gipasa nga mensahe nakagawas na apan walay gitumong. Dili nako makumpirma ang nahimutangan, samad, o kahimtang sa pasahero karon.",
+    "rationale": "Draft needs_review: the possible rescue update lacks a subject, leaving the named passenger's current status unknown."
+  },
+  {
+    "id": "needs_reviewc_08",
+    "label": "needs_review",
+    "en": "An old accident post saying the driver died was shared again today, but nobody can confirm when the collision happened. I have no information about other occupants, present injuries, or hazards still at the scene.",
+    "tl": "Ibinahagi ulit ngayong araw ang lumang post na namatay daw ang drayber, pero walang makakumpirma kung kailan ang banggaan. Wala akong impormasyon tungkol sa ibang sakay, kasalukuyang sugat, o panganib na natitira sa lugar.",
+    "ceb": "Gipaambit pag-usab karon ang daang post nga namatay kuno ang drayber, pero walay makakumpirma kanus-a ang bangga. Wala koy impormasyon bahin sa ubang sakay, kasamtangang mga samad, o peligro nga nahibilin sa maong lugar.",
+    "rationale": "Draft needs_review: an unverified fatality claim has unclear timing and provides no current scene or other-victim assessment."
+  },
+  {
+    "id": "needs_reviewc_09",
+    "label": "needs_review",
+    "en": "Before the phone disconnected, the caller said the jeep driver had been awake, then started describing a change without finishing. The accident location is known, but we have no completed update on the driver's current condition.",
+    "tl": "Bago maputol ang tawag, sinabi ng nagreport na gising ang drayber ng jeep, saka nagsimulang magkuwento ng pagbabago pero hindi natapos. Alam ang lugar ng aksidente, ngunit walang kumpletong balita sa kalagayan ng drayber ngayon.",
+    "ceb": "Sa wala pa maputol ang tawag, miingon ang nagreport nga mata ang drayber sa jeep, dayon naghisgot og kausaban apan wala nahuman. Nahibaloan ang lugar sa aksidente, pero walay kompletong balita sa kahimtang sa drayber karon.",
+    "rationale": "Draft needs_review: earlier consciousness cannot establish current condition after an incomplete change report."
+  },
+  {
+    "id": "needs_reviewc_10",
+    "label": "needs_review",
+    "en": "The forwarded collision report begins by calling it a practice exercise, but a later reply says a real passenger needs help. Neither sender answers now, so I cannot establish whether an actual accident is ongoing.",
+    "tl": "Pagsasanay daw ang banggaan sa simula ng ipinasa na report, pero sabi sa kasunod totoong pasahero ang nangangailangan ng tulong. Parehong hindi sumasagot ang nagpadala ngayon, kaya hindi ko matiyak kung may aktuwal na aksidente.",
+    "ceb": "Pagbansay kuno ang bangga sa gipasa nga report, apan ang sunod nga tubag nag-ingong tinuod nga pasahero ang nanginahanglan og tabang. Dili motubag ang duha ka nagpadala karon, busa dili matino kung adunay aktuwal nga aksidente.",
+    "rationale": "Draft needs_review: incompatible exercise and real-emergency framing leaves whether a current accident exists unresolved."
+  }
+]

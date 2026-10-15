@@ -1,0 +1,20 @@
+{
+  "status": "FAIL",
+  "scope": "phase_1_evidence_integrity_only; not final experiment QA",
+  "checked": {
+    "responder_not_impersonated": true,
+    "exact_batch_identified": false,
+    "batch_sha_and_case_ids_linked_to_verbal_confirmation": false,
+    "owner_bulk_workbooks_mistaken_for_review": false,
+    "historical_test_mislabeled_fresh": false,
+    "prior_exposure_count_precise": true,
+    "prior_model_active_or_deployed": false
+  },
+  "human_confirmed_rows": 0,
+  "findings": [
+    "The supplied task reports a verbal batch review but does not identify exact source/hash/IDs, responder identity, or rubric/labels seen.",
+    "Short_panic candidate manifest has 80 draft proposals, zero approvals; review A/B source workbooks are not ready and updated Downloads are project-owner bulk entries, not responder submissions.",
+    "Prior model and metrics are provisional synthetic evidence; active model remained unchanged and deployment did not occur."
+  ],
+  "blocking_evidence": "Owner/project coordinator must confirm the exact reviewed batch (source version/hash and IDs), which recorded responder supplied the verbal judgment, whether labels were accepted unchanged, and rubric/label version."
+}

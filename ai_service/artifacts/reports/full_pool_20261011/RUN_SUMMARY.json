@@ -1,0 +1,126 @@
+{
+  "experiment_id": "emergency-text-full-pool-20261011",
+  "completed_at_utc": "2026-10-11T07:09:16.949464+00:00",
+  "dataset": {
+    "rows": 1366,
+    "groups": 1021,
+    "by_label": {
+      "minor": 342,
+      "serious": 343,
+      "critical": 340,
+      "needs_review": 341
+    },
+    "by_language": {
+      "ceb": 416,
+      "en": 390,
+      "mixed": 180,
+      "tl": 380
+    },
+    "by_review_status": {
+      "draft": 516,
+      "approved": 850
+    },
+    "eligible_approved_rows": 850,
+    "dataset_fingerprint": "970c675133aecbbe479d1ee129c517a94af35ede3b015cab962dc4eb473f0ea4"
+  },
+  "dataset_path": "datasets/emergency_text/experiments/full_pool_20261011/reports.csv",
+  "dataset_sha256": "5899ebdb2c5970007f8e11975b439589f8102eaa20270c3bd5e46a7e1f1c8ba5",
+  "dataset_all_rows_human_reviewed": false,
+  "draft_rows": 516,
+  "checkpoint_path": "artifacts/checkpoints/full_pool_20261011/xlmr_seed_42",
+  "model_version": "text-20261011T063848490004Z",
+  "base_model": "FacebookAI/xlm-roberta-base",
+  "base_model_revision": "42f548f32366559214515ec137cdd16002968bf6",
+  "seed": 42,
+  "best_epoch": 8,
+  "selection_metric": "balanced_safety",
+  "training_seconds": 1769.52,
+  "validation": {
+    "split": "validation",
+    "total_rows": 212,
+    "scored_rows": 196,
+    "unscored_rows": 16,
+    "accuracy_scored": 0.9183673469387755,
+    "macro_f1": 0.9184021465656405,
+    "critical_recall": 0.8928571428571429,
+    "serious_recall": 0.9347826086956522,
+    "serious_or_critical_detection_recall": 0.9509803921568627,
+    "raw_high_risk_undertriage_count": 2,
+    "thresholded_high_risk_undertriage_count": 0,
+    "coverage_at_threshold": 0.6415094339622641,
+    "per_language": {
+      "en": {
+        "scored_rows": 63,
+        "macro_f1": 0.9002482356140892,
+        "critical_recall": 0.85
+      },
+      "tl": {
+        "scored_rows": 53,
+        "macro_f1": 0.9441585865115277,
+        "critical_recall": 0.9230769230769231
+      },
+      "ceb": {
+        "scored_rows": 55,
+        "macro_f1": 0.9031681334312913,
+        "critical_recall": 0.9444444444444444
+      },
+      "mixed": {
+        "scored_rows": 25,
+        "macro_f1": 0.9106060606060606,
+        "critical_recall": 0.8
+      }
+    }
+  },
+  "test_diagnostic": {
+    "split": "test",
+    "total_rows": 200,
+    "scored_rows": 189,
+    "unscored_rows": 11,
+    "accuracy_scored": 0.9470899470899471,
+    "macro_f1": 0.9445220681621106,
+    "critical_recall": 0.8947368421052632,
+    "serious_recall": 0.9387755102040817,
+    "serious_or_critical_detection_recall": 0.9540229885057471,
+    "raw_high_risk_undertriage_count": 2,
+    "thresholded_high_risk_undertriage_count": 2,
+    "coverage_at_threshold": 0.69,
+    "per_language": {
+      "en": {
+        "scored_rows": 55,
+        "macro_f1": 0.9152548116020602,
+        "critical_recall": 0.7777777777777778
+      },
+      "tl": {
+        "scored_rows": 60,
+        "macro_f1": 0.9496828403078403,
+        "critical_recall": 0.9285714285714286
+      },
+      "ceb": {
+        "scored_rows": 43,
+        "macro_f1": 0.9548433048433049,
+        "critical_recall": 1.0
+      },
+      "mixed": {
+        "scored_rows": 31,
+        "macro_f1": 0.9686274509803922,
+        "critical_recall": 0.875
+      }
+    }
+  },
+  "acceptance_gates": {
+    "test_critical_recall_at_least_0_95": false,
+    "test_raw_high_risk_undertriage_zero": false,
+    "test_thresholded_high_risk_undertriage_zero": false,
+    "all_training_rows_human_reviewed": false
+  },
+  "approved_for_deployment": false,
+  "active_model_changed": false,
+  "limitations": [
+    "516/1366 rows retain draft labels; their test labels are not gold human annotations.",
+    "Sources have historical development exposure; the current frozen test is held out from this run only and is not an independent real-world test.",
+    "The model was selected after repeated validation checks; validation results are optimistic.",
+    "No real-world prospective responder-reviewed evaluation was performed.",
+    "The provisional 0.65 confidence threshold is not calibrated.",
+    "This is an offline research candidate, not a live emergency severity authority."
+  ]
+}

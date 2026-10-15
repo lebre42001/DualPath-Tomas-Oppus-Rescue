@@ -1,0 +1,114 @@
+{
+  "en": {
+    "rows": 250,
+    "words": 2543,
+    "by_label": {
+      "minor": {
+        "rows": 63,
+        "words": 621
+      },
+      "serious": {
+        "rows": 64,
+        "words": 662
+      },
+      "critical": {
+        "rows": 61,
+        "words": 683
+      },
+      "needs_review": {
+        "rows": 62,
+        "words": 577
+      }
+    },
+    "by_length": {
+      "4-8": 104,
+      "1-3": 15,
+      "9-15": 96,
+      "16+": 35
+    }
+  },
+  "tl": {
+    "rows": 240,
+    "words": 2633,
+    "by_label": {
+      "minor": {
+        "rows": 60,
+        "words": 561
+      },
+      "serious": {
+        "rows": 60,
+        "words": 706
+      },
+      "critical": {
+        "rows": 60,
+        "words": 742
+      },
+      "needs_review": {
+        "rows": 60,
+        "words": 624
+      }
+    },
+    "by_length": {
+      "1-3": 13,
+      "4-8": 82,
+      "16+": 45,
+      "9-15": 100
+    }
+  },
+  "ceb": {
+    "rows": 240,
+    "words": 2619,
+    "by_label": {
+      "minor": {
+        "rows": 60,
+        "words": 689
+      },
+      "serious": {
+        "rows": 60,
+        "words": 697
+      },
+      "critical": {
+        "rows": 60,
+        "words": 699
+      },
+      "needs_review": {
+        "rows": 60,
+        "words": 534
+      }
+    },
+    "by_length": {
+      "1-3": 24,
+      "4-8": 50,
+      "9-15": 128,
+      "16+": 38
+    }
+  },
+  "mixed": {
+    "rows": 120,
+    "words": 1725,
+    "by_label": {
+      "minor": {
+        "rows": 30,
+        "words": 472
+      },
+      "serious": {
+        "rows": 30,
+        "words": 417
+      },
+      "critical": {
+        "rows": 30,
+        "words": 444
+      },
+      "needs_review": {
+        "rows": 30,
+        "words": 392
+      }
+    },
+    "by_length": {
+      "16+": 58,
+      "9-15": 49,
+      "4-8": 11,
+      "1-3": 2
+    }
+  }
+}

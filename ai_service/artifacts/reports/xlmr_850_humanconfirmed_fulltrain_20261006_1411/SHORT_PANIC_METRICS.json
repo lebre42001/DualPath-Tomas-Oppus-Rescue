@@ -1,0 +1,292 @@
+{
+  "scope": "new-run fresh_test subset, exact predictions; full corpus 1-15 word count=674",
+  "full_corpus_short_rows": 674,
+  "test_rows": 84,
+  "by_length_bucket": {
+    "1-3": {
+      "rows": 7,
+      "families": 7,
+      "metrics": {
+        "rows": 7,
+        "accuracy": 0.8571428571428571,
+        "macro_f1": 0.6666666666666666,
+        "per_class": {
+          "minor": {
+            "support": 0,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0
+          },
+          "serious": {
+            "support": 2,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "critical": {
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "needs_review": {
+            "support": 3,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "confusion_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ],
+        "confusion_rows_actual_columns_predicted": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            3
+          ]
+        ]
+      },
+      "serious_recall": 1.0,
+      "critical_recall": 0.5,
+      "serious_critical_support": 4,
+      "raw_undertriage_count": 1
+    },
+    "4-8": {
+      "rows": 29,
+      "families": 28,
+      "metrics": {
+        "rows": 29,
+        "accuracy": 0.896551724137931,
+        "macro_f1": 0.8901686548745372,
+        "per_class": {
+          "minor": {
+            "support": 8,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353
+          },
+          "serious": {
+            "support": 8,
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1": 0.9411764705882353
+          },
+          "critical": {
+            "support": 7,
+            "precision": 0.8333333333333334,
+            "recall": 0.7142857142857143,
+            "f1": 0.7692307692307692
+          },
+          "needs_review": {
+            "support": 6,
+            "precision": 1.0,
+            "recall": 0.8333333333333334,
+            "f1": 0.9090909090909091
+          }
+        },
+        "confusion_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ],
+        "confusion_rows_actual_columns_predicted": [
+          [
+            8,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            8,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            5,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            5
+          ]
+        ]
+      },
+      "serious_recall": 1.0,
+      "critical_recall": 0.7142857142857143,
+      "serious_critical_support": 15,
+      "raw_undertriage_count": 2
+    },
+    "9-15": {
+      "rows": 33,
+      "families": 32,
+      "metrics": {
+        "rows": 33,
+        "accuracy": 0.8181818181818182,
+        "macro_f1": 0.807347554406378,
+        "per_class": {
+          "minor": {
+            "support": 10,
+            "precision": 0.8181818181818182,
+            "recall": 0.9,
+            "f1": 0.8571428571428572
+          },
+          "serious": {
+            "support": 7,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.8235294117647058
+          },
+          "critical": {
+            "support": 8,
+            "precision": 0.8,
+            "recall": 0.5,
+            "f1": 0.6153846153846154
+          },
+          "needs_review": {
+            "support": 8,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333
+          }
+        },
+        "confusion_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ],
+        "confusion_rows_actual_columns_predicted": [
+          [
+            9,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            7,
+            0,
+            0
+          ],
+          [
+            2,
+            2,
+            4,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            7
+          ]
+        ]
+      },
+      "serious_recall": 1.0,
+      "critical_recall": 0.5,
+      "serious_critical_support": 15,
+      "raw_undertriage_count": 4
+    },
+    "16+": {
+      "rows": 15,
+      "families": 15,
+      "metrics": {
+        "rows": 15,
+        "accuracy": 0.8666666666666667,
+        "macro_f1": 0.8115079365079365,
+        "per_class": {
+          "minor": {
+            "support": 3,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571428571428571
+          },
+          "serious": {
+            "support": 4,
+            "precision": 0.8,
+            "recall": 1.0,
+            "f1": 0.888888888888889
+          },
+          "critical": {
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "needs_review": {
+            "support": 5,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "confusion_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ],
+        "confusion_rows_actual_columns_predicted": [
+          [
+            3,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            4,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            5
+          ]
+        ]
+      },
+      "serious_recall": 1.0,
+      "critical_recall": 0.3333333333333333,
+      "serious_critical_support": 7,
+      "raw_undertriage_count": 2
+    }
+  },
+  "not_real_world_validation": true
+}

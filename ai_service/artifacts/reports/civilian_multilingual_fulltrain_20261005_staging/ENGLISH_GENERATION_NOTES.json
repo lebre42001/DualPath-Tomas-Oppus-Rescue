@@ -1,0 +1,126 @@
+{
+  "artifact": "english_draft.csv",
+  "created_at": "2026-10-05",
+  "status": "synthetic_draft_only_not_human_reviewed_not_training_approved",
+  "rows": 250,
+  "sha256": "18abd1e5ce6b9064b249079e4e3647f5066a9b48b15280921b1000f614adaef0",
+  "languages": {
+    "en": 250
+  },
+  "proposed_label_counts": {
+    "minor": 63,
+    "serious": 64,
+    "critical": 61,
+    "needs_review": 62
+  },
+  "length_bucket_counts": {
+    "4-8": 104,
+    "1-3": 15,
+    "9-15": 96,
+    "16+": 35
+  },
+  "length_bucket_definition": "Whitespace word count: 1-3, 4-8, 9-15, 16+.",
+  "whitespace_word_count_total": 2543,
+  "whitespace_words_by_proposed_label": {
+    "minor": 621,
+    "serious": 662,
+    "critical": 683,
+    "needs_review": 577
+  },
+  "length_buckets_by_proposed_label": {
+    "minor": {
+      "4-8": 31,
+      "16+": 7,
+      "9-15": 25
+    },
+    "serious": {
+      "1-3": 5,
+      "4-8": 26,
+      "9-15": 24,
+      "16+": 9
+    },
+    "critical": {
+      "9-15": 25,
+      "1-3": 3,
+      "4-8": 20,
+      "16+": 13
+    },
+    "needs_review": {
+      "1-3": 7,
+      "9-15": 22,
+      "4-8": 27,
+      "16+": 6
+    }
+  },
+  "scenario_family_count": 249,
+  "annotation_group_count": 249,
+  "unique_normalized_texts": 250,
+  "rubric_version_reference": "TEXT-RUBRIC-0.2-B; that rubric states formal accountable approval is pending.",
+  "source": "AI-authored synthetic English road/vehicle emergency-description drafts written for this staging batch.",
+  "limitations": [
+    "All rows are synthetic proposed-label examples, not real incidents or responder-confirmed ground truth.",
+    "No row has been independently reviewed, adjudicated, or approved for model training.",
+    "Proposed labels are draft labels only and may require correction under the working rubric.",
+    "This batch is English-only and does not establish multilingual performance or fairness.",
+    "No training, evaluation, calibration, active-model update, or deployment was performed.",
+    "Family/group IDs link EN-011 and EN-051 as one synthetic scenario family; all other rows have staging-specific IDs, which do not prove real-world scenario independence."
+  ],
+  "validation_checks": {
+    "exact_schema_columns": [
+      "case_id",
+      "scenario_family_id",
+      "annotation_group_id",
+      "language",
+      "text",
+      "word_count",
+      "length_bucket",
+      "label",
+      "rubric_version",
+      "generation_source",
+      "review_status",
+      "created_at",
+      "parent_case_id",
+      "relationship_type",
+      "normalized_text_hash"
+    ],
+    "unique_case_ids": true,
+    "unique_normalized_text_hashes": true,
+    "all_rows_language_en": true,
+    "word_count_matches_whitespace_tokens": true,
+    "status_all_draft": true,
+    "source_all_synthetic_ai_generated": true,
+    "no_parent_derivatives": true,
+    "family_and_group_linked_paraphrases_consistent": true,
+    "all_rows_have_scenario_family_id": true,
+    "all_rows_have_annotation_group_id": true,
+    "EN051_parent_link_valid": true
+  },
+  "targeted_content_qa_revisions": {
+    "case_ids": [
+      "EN-011",
+      "EN-018",
+      "EN-022",
+      "EN-027",
+      "EN-035",
+      "EN-038",
+      "EN-039",
+      "EN-051",
+      "EN-083",
+      "EN-095",
+      "EN-147",
+      "EN-179",
+      "EN-219",
+      "EN-243"
+    ],
+    "changed_text_rows": 14,
+    "labels_changed": 0,
+    "review_status_changed": 0,
+    "linked_same_scenario_near_paraphrase_pairs": [
+      [
+        "EN-011",
+        "EN-051"
+      ]
+    ],
+    "note": "Context/person and injury support were made explicit for identified content-QA cases; EN-011 is the original draft and EN-051 is a same-scenario variant linked to EN-011. All proposed labels remain synthetic draft labels requiring human review."
+  }
+}

@@ -1,0 +1,10 @@
+/* Authenticated workspace only: civilian base, then scoped admin components. */
+@import './operations-base.css';
+@import './admin-shell.css';
+@import './admin-pages.css';
+@import './admin-reports.css';
+@import './admin-dark.css';
+@import './responsive-overrides.css';
+@import './ai-text-lab.css';
+@import './reported-fatality.css';
+@import './lora-mesh.css';

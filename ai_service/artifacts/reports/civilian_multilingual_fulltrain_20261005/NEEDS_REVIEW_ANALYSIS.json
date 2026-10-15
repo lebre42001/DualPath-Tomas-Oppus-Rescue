@@ -1,0 +1,15 @@
+{
+  "semantics": "abstention/uncertainty state, not a medical severity",
+  "fresh_test": {
+    "support": 22,
+    "raw_precision": 1.0,
+    "raw_recall": 0.9545454545454546,
+    "routed_precision": 0.7777777777777778,
+    "routed_recall": 0.9545454545454546,
+    "clear_cases_routed_to_review": 6,
+    "clear_case_false_review_rate": 0.0967741935483871,
+    "high_risk_raw_assigned_minor": 4,
+    "high_risk_review_routing": 0.11904761904761904
+  },
+  "qualification": "Synthetic-only; confidence threshold 0.65 is provisional and not calibrated for deployment."
+}

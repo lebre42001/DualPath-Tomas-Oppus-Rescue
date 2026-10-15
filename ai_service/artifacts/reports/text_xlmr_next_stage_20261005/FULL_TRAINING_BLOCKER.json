@@ -1,0 +1,27 @@
+﻿{
+    "experiment_requested":  "new full-backbone XLM-R offline research run",
+    "status":  "blocked_before_training",
+    "hard_blockers":  [
+                          {
+                              "item":  "local_pytorch_cuda",
+                              "evidence":  "torch 2.11.0+cpu; torch.cuda.is_available() is false; torch.version.cuda is null"
+                          },
+                          {
+                              "item":  "available_memory",
+                              "evidence":  "Windows 11 host; 7,380 MiB total physical RAM; free RAM observed around 802 MiB during initial audit and 991 MiB in follow-up; GeForce RTX 3050 Laptop GPU has 4,096 MiB VRAM (3,962 MiB reported free during check)"
+                          },
+                          {
+                              "item":  "remote_gpu_execution_access",
+                              "evidence":  "No accessible authenticated Colab runtime was available to the local agent; the previous user-run Colab experiment is not an execution session for a new run"
+                          }
+                      ],
+    "training_started":  false,
+    "new_checkpoint_created":  false,
+    "new_dataset_version_created":  true,
+    "new_dataset_version":  "ai_service/datasets/emergency_text/experiments/xlmr_fulltrain_20261005_1628_pht",
+    "new_dataset_version_status":  "byte_preserving_provisional_development_snapshot_not_release_ready",
+    "new_model_metrics_available":  false,
+    "active_checkpoint_changed":  false,
+    "deployment_performed":  false,
+    "requires_operator_action":  "Provide a verified GPU runtime or machine with adequate memory, then re-run the frozen experiment protocol"
+}

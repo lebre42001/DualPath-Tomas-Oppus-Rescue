@@ -1,0 +1,55 @@
+{
+  "dataset_version": "xlmr_fulltrain_20261005_1628_pht",
+  "status": "versioned_provisional_development_snapshot_not_release_ready",
+  "created_from": "ai_service/datasets/emergency_text/working/reports.csv",
+  "source_file_sha256": "5e2a4f508a6de869ad0eee1c6c7385b03c2df542eadbd7f79a315b0243f9db1e",
+  "copied_file_sha256": "5e2a4f508a6de869ad0eee1c6c7385b03c2df542eadbd7f79a315b0243f9db1e",
+  "source_provenance": {
+    "rows": 400,
+    "groups": 99,
+    "by_label": {
+      "critical": 100,
+      "minor": 100,
+      "needs_review": 100,
+      "serious": 100
+    },
+    "by_language": {
+      "ceb": 120,
+      "en": 120,
+      "mixed": 40,
+      "tl": 120
+    },
+    "by_review_status": {
+      "draft": 400
+    },
+    "eligible_approved_rows": 0,
+    "dataset_fingerprint": "535d54dab55097cb7803a05e7ce39ec9242acd926b42fe74cb3488f7834107df",
+    "inherited_rows": 292,
+    "added_seed_translations": 68,
+    "added_mixed_variants": 40,
+    "source_type": "synthetic draft",
+    "sources": {
+      "datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\reports.csv": "dad9661dbf68503077616d0d6c75d270c64ba324822f68af772dd01e533f1c18",
+      "datasets\\emergency_text\\generation\\road_scenarios_a.json": "2281d1e9ce2cc0bd3da3a0335195179535ae8fbdada81ee18c66bf7e52d6e371",
+      "datasets\\emergency_text\\generation\\road_scenarios_b.json": "6a1c361c656d54d9006dbc3a2b53c4e48386036deaffcbd01ed188069535adc3",
+      "datasets\\emergency_text\\generation\\road_scenarios_c.json": "c85d2bb003a233d6f81c8a5b32e3da6b16a89d31631ba2b2abb3d7a68548778d",
+      "datasets\\emergency_text\\generation\\scenario_groups.json": "16296974af37aeeffcc7985e1e5bbccfab1a3f231b79efa334bad548dd7c3dc8",
+      "datasets\\emergency_text\\generation\\mixed_review_examples.json": "b4fe6093c7c98217ead02c4a2adcd653315a9408578b39b7cc9eac0385c43712"
+    },
+    "release_holdout": "Not fresh: related scenarios were used in earlier experiments",
+    "reviewed_target": 1200,
+    "target_is_planning_only": true,
+    "newly_authored_incidents": 0,
+    "additional_preexisting_seed_families": 6
+  },
+  "split_source": "sealed prior Colab bundle data/frozen_split_manifest.json",
+  "split_sha256": "f05cabdafff2c6ca00d69ffa14f89315cec8e330d8dbd7be2bc50c2698dc4112",
+  "limitations": [
+    "All 400 rows remain synthetic draft labels; 0 approved human-reviewed rows.",
+    "This version adds no examples and changes no text, labels, IDs, or split assignments.",
+    "The recorded 42-row historical test is not a fresh independent holdout across experiments.",
+    "All source texts are 22-39 words; short/panic coverage is absent.",
+    "Mixed-language test support has 0 Serious and 0 Critical rows.",
+    "Source group_id mapping does not prove semantic or template ancestry."
+  ]
+}

@@ -1,0 +1,251 @@
+﻿{
+    "schema_version":  1,
+    "moved_files":  [
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\generation_manifest.json",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\generation_manifest.json",
+                            "sha256":  "bbfad92b1bbbd8e8a35ab3f3c0ac7eb30276d5ccd88acead2ce9d09783490d93"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\README.md",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\README.md",
+                            "sha256":  "5659937f5dcf3f9b68ef72ab79890e54e7d7d2afde6db610d8f896b831d21226"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\reports.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\reports.csv",
+                            "sha256":  "dad9661dbf68503077616d0d6c75d270c64ba324822f68af772dd01e533f1c18"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\manifest.json",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\manifest.json",
+                            "sha256":  "4e2837c6907a9dd572cd2cb620a9ded78ebd5ac16930cc8aa96fd945900d6be9"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\README.md",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\README.md",
+                            "sha256":  "5f9e22365cd67b88e6ec24f692f20d263ad35fefacaea68e359545a3068bee1e"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\critical\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\critical\\examples.csv",
+                            "sha256":  "dc88ac4cafe3dfe00910da08b3dc5a394f36ff84d4eced023befcf9fea62efa3"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\critical\\bisaya\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\critical\\bisaya\\examples.csv",
+                            "sha256":  "ba61ebbd5ade21361daed0bcf729e27b234a2343b10c7ff36362e798bf7c293c"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\critical\\english\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\critical\\english\\examples.csv",
+                            "sha256":  "27c43b2c9908f0d186b4f19bdfdf7cedd5351770fb23f1b600b8535e3959a8fb"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\critical\\mixed\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\critical\\mixed\\examples.csv",
+                            "sha256":  "1a6ce2f42d9660581b98dfe086b78ccff75ac4040fed68d23c3c9797cdfac634"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\critical\\tagalog\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\critical\\tagalog\\examples.csv",
+                            "sha256":  "4f37d9a040922a5db1c84f42e56b13911f9fee65141617e91f01592fd6b175ab"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\minor\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\minor\\examples.csv",
+                            "sha256":  "95af4dbdd5aa367213bf34b13310ca3450b58e73afe1f2f8c3128843b204d986"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\minor\\bisaya\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\minor\\bisaya\\examples.csv",
+                            "sha256":  "27a470675cdd4182b8019c10a67a40f0a093832bf6366f054620a09dd16a64fc"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\minor\\english\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\minor\\english\\examples.csv",
+                            "sha256":  "f4215549d6e5d18e3fe38a71c11d22b785ede607add3cebe8bba15f6a96e1787"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\minor\\mixed\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\minor\\mixed\\examples.csv",
+                            "sha256":  "1a6ce2f42d9660581b98dfe086b78ccff75ac4040fed68d23c3c9797cdfac634"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\minor\\tagalog\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\minor\\tagalog\\examples.csv",
+                            "sha256":  "5354abaa7a82ac3ac32246e48a0a9fc2b8e7722d8403941170f451b5754b33c0"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\needs_review\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\needs_review\\examples.csv",
+                            "sha256":  "663ae1370be2b53955ec05c527bea257c9a5264b85c606c46758b9e1818aa918"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\needs_review\\bisaya\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\needs_review\\bisaya\\examples.csv",
+                            "sha256":  "4510868d846184b4c3a912f596f2625c8cb9432dfc0dc35da518687edeb0d997"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\needs_review\\english\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\needs_review\\english\\examples.csv",
+                            "sha256":  "18b7b7d4ffc654cdfecb47687f526e5c47a94acf6fbcbb4d438318bc4aa41581"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\needs_review\\mixed\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\needs_review\\mixed\\examples.csv",
+                            "sha256":  "1a6ce2f42d9660581b98dfe086b78ccff75ac4040fed68d23c3c9797cdfac634"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\needs_review\\tagalog\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\needs_review\\tagalog\\examples.csv",
+                            "sha256":  "2cb3c133879f9055a678aec6cb93ee28391a1980e9783e25acdbb3f8f5f09d7b"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\serious\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\serious\\examples.csv",
+                            "sha256":  "c13e719964e9ee0c2beb8e09adc2e144bf6168e1a5939d90ac616f59fc685595"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\serious\\bisaya\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\serious\\bisaya\\examples.csv",
+                            "sha256":  "e8790806d339edc4cd3483f57c9f6d59be9834472dcf58802d5d8836db65620f"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\serious\\english\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\serious\\english\\examples.csv",
+                            "sha256":  "beaa8c9e123729eca4b1b142bc33d5e9283137ac527f3d44cdfb36815de91ea1"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\serious\\mixed\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\serious\\mixed\\examples.csv",
+                            "sha256":  "1a6ce2f42d9660581b98dfe086b78ccff75ac4040fed68d23c3c9797cdfac634"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\synthetic_9000words_20260920\\by_severity\\serious\\tagalog\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\experiments\\synthetic_9000words_20260920\\by_severity\\serious\\tagalog\\examples.csv",
+                            "sha256":  "4c0da833164689c9badc8fd941db35d3a596fb7de1c7512b2cf093ba8aab3c64"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\manifest.json",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\manifest.json",
+                            "sha256":  "c7bdd490cdc40f3ffd274e17286a43a1a9fca8b7b9e8b1df65bb055a8f62bf0f"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\README.md",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\README.md",
+                            "sha256":  "99838fb1558316c06ba372cc5bd60657632f686066986518e8bbc18d67d23334"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\critical\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\critical\\examples.csv",
+                            "sha256":  "97036e8748d5da158f483952023577f4cdfd58322c8d5a9759c0918c6ae93f5f"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\critical\\bisaya\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\critical\\bisaya\\examples.csv",
+                            "sha256":  "f46353afa5b21e4125f4aad4b69ba3034f5a57b7793e3e1bb5e12f507627bd1f"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\critical\\english\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\critical\\english\\examples.csv",
+                            "sha256":  "a6b1bb7ee2ab3493a661c9af7371ddbf52f54c51c5354d35e60ecdd627422974"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\critical\\mixed\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\critical\\mixed\\examples.csv",
+                            "sha256":  "320e7f2ceea0935d2ced61cfc1019c8a634dcc2247296cf9a16ea6fd05bbe576"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\critical\\tagalog\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\critical\\tagalog\\examples.csv",
+                            "sha256":  "9514a7f262a4b7462d78e101c2dca5db3b3d2aa10c24a958edacb447041483dd"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\minor\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\minor\\examples.csv",
+                            "sha256":  "6fcef26f94cd51eaf3059c8e1e0becba08268d16505bd6c3b1f72e5512a08e79"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\minor\\bisaya\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\minor\\bisaya\\examples.csv",
+                            "sha256":  "383bbe7846cb81cba5c75fe1b7e15e909d9c8624461f5a215cb4b4e9df66d884"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\minor\\english\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\minor\\english\\examples.csv",
+                            "sha256":  "e8f44419522bea4592154c23918def3145c48343df381c6631842a1cdd9dcbb8"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\minor\\mixed\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\minor\\mixed\\examples.csv",
+                            "sha256":  "fbd58946a90cd661d59f4f420d4d6e83f2dc5ad1818736f9e0fe61f6738879f5"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\minor\\tagalog\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\minor\\tagalog\\examples.csv",
+                            "sha256":  "05cfb4c686b22a7025be839772dc4a845f993a0cf28da4461060f9559ec50d5e"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\needs_review\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\needs_review\\examples.csv",
+                            "sha256":  "7f314a10834a05c7260f8e0711380762b29360ff5a95f991de03a9751c494ed5"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\needs_review\\bisaya\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\needs_review\\bisaya\\examples.csv",
+                            "sha256":  "9a1f9c5f5c37b14061cbf8d4fcab770f6a5a16bd1cf01a99c18890d124b7702a"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\needs_review\\english\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\needs_review\\english\\examples.csv",
+                            "sha256":  "8ebfa8951c3ce01d5108a3f1e31da6a0423758b2ea265f26805ca30eeed305ac"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\needs_review\\mixed\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\needs_review\\mixed\\examples.csv",
+                            "sha256":  "1fc27c284f12867af8ffc28a8dbd4ec29d6351dbc7e2b1268fa02598e2cad632"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\needs_review\\tagalog\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\needs_review\\tagalog\\examples.csv",
+                            "sha256":  "5cd14cdc1cb70a8d4110b070ec8b8e0aa4f07e678990e4de4f07266c2bd81d54"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\serious\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\serious\\examples.csv",
+                            "sha256":  "95ce0d4cce8ff6d13dbd4c2faabaff98b38475992264ee8af64520c056b06004"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\serious\\bisaya\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\serious\\bisaya\\examples.csv",
+                            "sha256":  "0bfb535474d58c122fdf0509eb3d24077a789bbf5a43b64aa9a3ddfd09073d99"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\serious\\english\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\serious\\english\\examples.csv",
+                            "sha256":  "0425b9a7b3aa312906d84e25ab14538a9e2bf8764dee37599d02480be89bbfcd"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\serious\\mixed\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\serious\\mixed\\examples.csv",
+                            "sha256":  "fd48a3ff59f21ece11b8bf5e6b4a24887e3a9535adb253134af068aaac4b7d53"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\by_severity\\serious\\tagalog\\examples.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\by_severity\\serious\\tagalog\\examples.csv",
+                            "sha256":  "2e68315b83d28deec0e576bdfa2334b4b5ae5dbd75d4e197c7f9ce0c0f2d698f"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\draft_reports.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\draft_reports.csv",
+                            "sha256":  "7c3ce51ad2e14be1ad6c23ab49e114b9259922dbccd2c10181c6dac2e2b1583b"
+                        },
+                        {
+                            "old":  "ai_service\\datasets\\emergency_text\\reviewed_reports.csv",
+                            "new":  "ai_service\\datasets\\emergency_text\\archive\\initial_80\\reviewed_reports.csv",
+                            "sha256":  "7c3ce51ad2e14be1ad6c23ab49e114b9259922dbccd2c10181c6dac2e2b1583b"
+                        }
+                    ],
+    "all_moved_bytes_verified":  true
+}

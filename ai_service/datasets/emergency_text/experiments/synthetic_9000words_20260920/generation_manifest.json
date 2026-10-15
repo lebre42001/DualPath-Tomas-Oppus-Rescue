@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-20T04:03:32.336624+00:00",
+  "source_type": "AI-generated synthetic fictional descriptions",
+  "word_count_rule": "Whitespace-separated tokens in the text column only; metadata, headings and duplicate folder copies excluded",
+  "requested_words_per_language": 3000,
+  "total_description_words": 9000,
+  "rows": 292,
+  "groups": 93,
+  "available_seed_groups": 120,
+  "by_language": {
+    "en": {
+      "words": 3000,
+      "descriptions": 99,
+      "by_label": {
+        "minor": {
+          "words": 750,
+          "descriptions": 25
+        },
+        "serious": {
+          "words": 750,
+          "descriptions": 25
+        },
+        "critical": {
+          "words": 750,
+          "descriptions": 25
+        },
+        "needs_review": {
+          "words": 750,
+          "descriptions": 24
+        }
+      }
+    },
+    "tl": {
+      "words": 3000,
+      "descriptions": 97,
+      "by_label": {
+        "minor": {
+          "words": 750,
+          "descriptions": 25
+        },
+        "serious": {
+          "words": 750,
+          "descriptions": 23
+        },
+        "critical": {
+          "words": 750,
+          "descriptions": 25
+        },
+        "needs_review": {
+          "words": 750,
+          "descriptions": 24
+        }
+      }
+    },
+    "ceb": {
+      "words": 3000,
+      "descriptions": 96,
+      "by_label": {
+        "minor": {
+          "words": 750,
+          "descriptions": 24
+        },
+        "serious": {
+          "words": 750,
+          "descriptions": 23
+        },
+        "critical": {
+          "words": 750,
+          "descriptions": 25
+        },
+        "needs_review": {
+          "words": 750,
+          "descriptions": 24
+        }
+      }
+    }
+  },
+  "by_label": {
+    "critical": 75,
+    "minor": 74,
+    "needs_review": 72,
+    "serious": 71
+  },
+  "selection": "Deterministic whole-description knapsack per label/language; no truncation, padding or target-label text",
+  "seed": 20260920,
+  "sources": [
+    {
+      "name": "road_scenarios_a.json",
+      "sha256": "2281d1e9ce2cc0bd3da3a0335195179535ae8fbdada81ee18c66bf7e52d6e371"
+    },
+    {
+      "name": "road_scenarios_b.json",
+      "sha256": "6a1c361c656d54d9006dbc3a2b53c4e48386036deaffcbd01ed188069535adc3"
+    },
+    {
+      "name": "road_scenarios_c.json",
+      "sha256": "c85d2bb003a233d6f81c8a5b32e3da6b16a89d31631ba2b2abb3d7a68548778d"
+    }
+  ],
+  "semantic_group_map": {
+    "name": "scenario_groups.json",
+    "sha256": "16296974af37aeeffcc7985e1e5bbccfab1a3f231b79efa334bad548dd7c3dc8",
+    "merged_seed_scenarios": 35
+  },
+  "dataset_fingerprint": "f34f78c7095ab7207602fb338ae1ef925b610febb3d3eeddabc3066c4889ca59",
+  "approved_rows": 0,
+  "approved_for_deployment": false,
+  "limitations": [
+    "No responder or native-speaker approval is implied by generated labels.",
+    "Balanced synthetic words do not represent real incident frequency or prove clinical accuracy.",
+    "Translations/paraphrases must stay grouped across train/validation/test; assess semantic overlap separately.",
+    "Scope is road/vehicle accidents. Needs review is an abstention label, not low urgency.",
+    "Some seed translations may be excluded by the exact word budget; included translations retain the same group ID."
+  ]
+}

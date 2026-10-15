@@ -1,0 +1,51 @@
+{
+  "base_model": "FacebookAI/xlm-roberta-base",
+  "revision": "42f548f32366559214515ec137cdd16002968bf6",
+  "device": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "device_capability": [
+    8,
+    6
+  ],
+  "total_vram_bytes": 4294443008,
+  "batch_size": 1,
+  "max_length": 96,
+  "precision": "fp16_autocast",
+  "gradient_checkpointing": true,
+  "full_backbone_trainable": true,
+  "results": [
+    {
+      "optimizer": "adamw",
+      "status": "one_full_backbone_update_passed",
+      "total_parameters": 278046724,
+      "trainable_parameters": 278046724,
+      "frozen_parameters": 0,
+      "trainable_percentage": 100.0,
+      "input_shape": [
+        1,
+        96
+      ],
+      "actual_text_tokens": 72,
+      "loss_finite": true,
+      "peak_allocated_bytes": 6005686784,
+      "peak_reserved_bytes": 6209667072,
+      "elapsed_seconds": 12.2
+    },
+    {
+      "optimizer": "adafactor",
+      "status": "one_full_backbone_update_passed",
+      "total_parameters": 278046724,
+      "trainable_parameters": 278046724,
+      "frozen_parameters": 0,
+      "trainable_percentage": 100.0,
+      "input_shape": [
+        1,
+        96
+      ],
+      "actual_text_tokens": 72,
+      "loss_finite": true,
+      "peak_allocated_bytes": 3783180288,
+      "peak_reserved_bytes": 3915382784,
+      "elapsed_seconds": 6.59
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "common_test": "same 84-row synthetic fresh_test.csv; same comparison protocol; these historical model weights were trained elsewhere",
+  "new_xlmr": {
+    "macro_f1": 0.8780521803777618,
+    "critical_recall": 0.7142857142857143,
+    "serious_recall": 0.9523809523809523,
+    "raw_high_risk_undertriage": 6
+  },
+  "previous_xlmr": {
+    "macro_f1": 0.4905898114772401,
+    "critical_recall": 0.8571428571428571,
+    "serious_recall": 0.2857142857142857,
+    "raw_high_risk_undertriage": 0,
+    "checkpoint": "text_xlmr_fulltrain_local_20261005_1724/trial_lr_2e-5_seed42"
+  },
+  "tfidf": {
+    "macro_f1": 0.6900986440460125,
+    "critical_recall": 0.8571428571428571,
+    "serious_recall": 0.5714285714285714,
+    "raw_high_risk_undertriage": 3,
+    "checkpoint": "text_draft_baseline"
+  },
+  "qualification": "Synthetic held-out comparison only. New XLM-R raises Serious recall and macro-F1, but has lower Critical recall and more raw high-risk under-triage than these comparators."
+}

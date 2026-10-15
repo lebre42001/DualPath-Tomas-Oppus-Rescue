@@ -1,0 +1,29 @@
+{
+  "model": "FacebookAI/xlm-roberta-base",
+  "revision": "42f548f32366559214515ec137cdd16002968bf6",
+  "model_type": "transformers",
+  "labels": [
+    "minor",
+    "serious",
+    "critical",
+    "needs_review"
+  ],
+  "tokenizer_max_length": 64,
+  "total_parameters": 278046724,
+  "trainable_parameters": 278046724,
+  "frozen_parameters": 0,
+  "trainable_percentage": 100.0,
+  "optimizer": "adafactor",
+  "learning_rate": 2e-05,
+  "batch_size": 1,
+  "gradient_accumulation": 16,
+  "precision": "cuda_fp16_autocast",
+  "gradient_checkpointing": true,
+  "device": "cuda",
+  "training_and_selection_seconds": 948.16,
+  "best_epoch": 6,
+  "all_rows_draft_allow_draft_used": true,
+  "tokenizer_warning": "Transformers emitted an incorrect-regex warning that references Mistral while loading the XLM-R tokenizer; the saved tokenizer class/config remains XLM-R, but this warning needs independent resolution before any controlled use.",
+  "active_model_changed": false,
+  "deployment_performed": false
+}

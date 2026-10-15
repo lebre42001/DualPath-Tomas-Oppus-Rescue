@@ -1,0 +1,13 @@
+{
+  "tokenizer": "XLMRobertaTokenizerFast from pinned FacebookAI/xlm-roberta-base revision 42f548f32366559214515ec137cdd16002968bf6",
+  "rows": 850,
+  "p50_subword_tokens": 20,
+  "p90_subword_tokens": 31,
+  "p95_subword_tokens": 34,
+  "p99_subword_tokens": 39,
+  "maximum_subword_tokens": 55,
+  "max_length_selected": 64,
+  "rows_truncated_at_64": 0,
+  "recomputed": false,
+  "source": "previous direct tokenizer analysis for this exact source dataset; frozen 64-token choice revalidated by training pipeline truncation report"
+}

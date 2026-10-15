@@ -1,0 +1,16 @@
+{
+  "os": "Windows 11",
+  "python": "3.13.0",
+  "torch": "2.12.1+cu130",
+  "transformers": "4.57.6",
+  "cuda_runtime": "13.0",
+  "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "gpu_vram_bytes": 4294443008,
+  "base_model": "FacebookAI/xlm-roberta-base",
+  "revision": "42f548f32366559214515ec137cdd16002968bf6",
+  "active_config_sha256_before_training": "5e56620321a9d19e485f54369cad2e0fa2d6cd8305b6b817f3efa9c0366b41ba",
+  "active_model_changed": false,
+  "deployment_performed": false,
+  "active_config_sha256_after_training": "5e56620321a9d19e485f54369cad2e0fa2d6cd8305b6b817f3efa9c0366b41ba",
+  "active_config_unchanged": true
+}

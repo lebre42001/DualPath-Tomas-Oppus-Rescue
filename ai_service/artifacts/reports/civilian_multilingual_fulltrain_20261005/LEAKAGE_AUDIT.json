@@ -1,0 +1,19 @@
+{
+  "status": "pass_with_limitations",
+  "method": "five-way disjoint by declared scenario_family_id and normalized exact text, with frozen hashes",
+  "partition_rows": {
+    "train": 516,
+    "validation": 124,
+    "calibration": 83,
+    "fresh_test": 84,
+    "challenge": 43
+  },
+  "cross_partition_family_overlap": 0,
+  "cross_partition_normalized_text_overlap": 0,
+  "preexisting_sources_checked_rows": 2708,
+  "preexisting_sources_checked_files": 17,
+  "preexisting_exact_overlap_count_accessible": 0,
+  "preexisting_same_language_jaccard_ge_0_72_count_accessible": 0,
+  "preexisting_csv_files_inaccessible": 60,
+  "qualification": "Within-experiment leakage check passes. Exact/similarity prior-source checks are incomplete for inaccessible CSV files. The held-out sets remain AI-generated drafts, not independent real-world test data."
+}

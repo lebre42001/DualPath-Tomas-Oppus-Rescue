@@ -1,0 +1,25 @@
+﻿{
+    "checked_at":  "2026-09-20T05:24:53.0586128Z",
+    "services":  [
+                     {
+                         "url":  "http://127.0.0.1:8000/admin/login",
+                         "status":  200,
+                         "text_health":  null
+                     },
+                     {
+                         "url":  "http://127.0.0.1:8000/login",
+                         "status":  200,
+                         "text_health":  null
+                     },
+                     {
+                         "url":  "http://127.0.0.1:8100/health/text",
+                         "status":  200,
+                         "text_health":  {
+                                             "enabled":  false,
+                                             "status":  "disabled",
+                                             "model_loaded":  false
+                                         }
+                     }
+                 ],
+    "public_deployment_performed":  false
+}

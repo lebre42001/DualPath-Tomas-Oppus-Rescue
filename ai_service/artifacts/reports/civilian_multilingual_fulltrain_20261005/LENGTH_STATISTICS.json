@@ -1,0 +1,62 @@
+{
+  "4-8": {
+    "rows": 247,
+    "by_language": {
+      "en": 104,
+      "tl": 82,
+      "ceb": 50,
+      "mixed": 11
+    },
+    "by_label": {
+      "minor": 76,
+      "serious": 68,
+      "critical": 52,
+      "needs_review": 51
+    }
+  },
+  "1-3": {
+    "rows": 54,
+    "by_language": {
+      "en": 15,
+      "tl": 13,
+      "ceb": 24,
+      "mixed": 2
+    },
+    "by_label": {
+      "serious": 8,
+      "needs_review": 34,
+      "critical": 5,
+      "minor": 7
+    }
+  },
+  "9-15": {
+    "rows": 373,
+    "by_language": {
+      "en": 96,
+      "tl": 100,
+      "ceb": 128,
+      "mixed": 49
+    },
+    "by_label": {
+      "critical": 104,
+      "needs_review": 93,
+      "serious": 92,
+      "minor": 84
+    }
+  },
+  "16+": {
+    "rows": 176,
+    "by_language": {
+      "en": 35,
+      "tl": 45,
+      "ceb": 38,
+      "mixed": 58
+    },
+    "by_label": {
+      "minor": 46,
+      "serious": 46,
+      "critical": 50,
+      "needs_review": 34
+    }
+  }
+}

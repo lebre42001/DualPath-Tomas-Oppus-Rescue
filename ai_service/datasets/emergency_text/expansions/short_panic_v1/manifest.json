@@ -1,0 +1,74 @@
+{
+  "pack_id": "short_panic_v1",
+  "schema": "short_panic_preview_v1",
+  "created_date": "2026-10-01",
+  "status": "draft_preview_only",
+  "review_status": "pending",
+  "training_eligible": false,
+  "approved_rows": 0,
+  "origin": "AI-authored fictional draft reports; not collected civilian messages",
+  "candidate_source": "candidates.csv",
+  "candidate_rows": 80,
+  "by_proposed_label": {
+    "minor": 20,
+    "serious": 20,
+    "critical": 20,
+    "needs_review": 20
+  },
+  "by_language": {
+    "en": 20,
+    "tl": 20,
+    "ceb": 20,
+    "mixed": 20
+  },
+  "by_word_range": {
+    "4-8": 48,
+    "9-15": 12,
+    "1-3": 20
+  },
+  "label_language_cells": {
+    "minor": {
+      "en": 5,
+      "tl": 5,
+      "ceb": 5,
+      "mixed": 5
+    },
+    "serious": {
+      "en": 5,
+      "tl": 5,
+      "ceb": 5,
+      "mixed": 5
+    },
+    "critical": {
+      "en": 5,
+      "tl": 5,
+      "ceb": 5,
+      "mixed": 5
+    },
+    "needs_review": {
+      "en": 5,
+      "tl": 5,
+      "ceb": 5,
+      "mixed": 5
+    }
+  },
+  "contrastive_sets": 26,
+  "illustrative_probes_are_additional_candidate_rows": false,
+  "proposed_family_count": 18,
+  "family_ancestry_status": "pending",
+  "source_dataset": "ai_service/datasets/emergency_text/working/reports.csv",
+  "source_sha256": "5e2a4f508a6de869ad0eee1c6c7385b03c2df542eadbd7f79a315b0243f9db1e",
+  "protected_existing_files_unchanged": 398,
+  "files_sha256": {
+    "candidates.csv": "4e5a2bab3f175f9ac62d4c3b4f02a1cce451d97e79c836ee88e491e593b17b55",
+    "contrastive_sets.json": "862005e5dee76b97ee08d0772db65306166254a84441bc843de2a0a443b101ba",
+    "coverage_audit.csv": "edd48b3696c73dc6fdeea67b6d515708f9e13736073b13d0f0cb5077cb3d304b",
+    "current_length_audit.json": "a99c64c98ef6c3e565a11ad1f2c6b726aed047478a70704f3c261c0b4f0365dd",
+    "family_design.json": "dbf6b0a5abbc3fa5cf88497815dd8bfc814e703812fed131f4f4d7265ed3e192",
+    "FULL_REPORT_COPY_PASTE.txt": "52042cb6eb77c71008e8d2ea89753ac848082df63351387cb7cd4072999afc11",
+    "protected_files_before.json": "e7bfce504304450a2dfdea01baca429e61d3863c55e30ae242c2c5555719c6b6",
+    "START_HERE.txt": "e1b15babd4f3aee428181960e8d1199e78dbfa53377f5e859956bccb1e00c662",
+    "verification.json": "10634803d14a5604c50137dcbe761d770ff9a4614079307bc238ada57b5cf156"
+  },
+  "hash_note": "Manifest lists all other files; it does not recursively hash itself."
+}

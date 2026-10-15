@@ -1,0 +1,33 @@
+{
+  "status": "review_package_prepared_pending_human_review",
+  "source_evaluation": "seed_41 frozen test split",
+  "undertriage_rows": 3,
+  "reviewer_initial_fields": [
+    "case_alias",
+    "language",
+    "description",
+    "reviewer_id",
+    "proposed_final_label",
+    "decisive_evidence",
+    "ambiguity_or_uncertainty",
+    "language_concern",
+    "policy_issue",
+    "immediate_human_attention",
+    "review_status",
+    "reviewed_at",
+    "rubric_version"
+  ],
+  "blinded_reviewers_must_not_receive": [
+    "case_id",
+    "actual_label",
+    "model_prediction",
+    "confidence",
+    "scenario_family_id",
+    "split_group_id"
+  ],
+  "no_examples_generated": true,
+  "no_labels_changed": true,
+  "training_performed": false,
+  "active_model_changed": false,
+  "deployment_approved": false
+}

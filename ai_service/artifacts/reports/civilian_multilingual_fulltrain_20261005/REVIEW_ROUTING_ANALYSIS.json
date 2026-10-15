@@ -1,0 +1,59 @@
+{
+  "fresh_test_threshold": 0.65,
+  "fresh_test_coverage": 0.6785714285714286,
+  "fresh_test_review_routing_percent": 0.3214285714285714,
+  "fresh_test_accepted_accuracy": 0.8596491228070176,
+  "fresh_test_routed_undertriage": 4,
+  "calibration_threshold_sweep": [
+    {
+      "threshold": 0.5,
+      "coverage": 0.7469879518072289,
+      "review_routing_percent": 0.2530120481927711,
+      "critical_routed_to_review": 0,
+      "serious_routed_to_review": 0,
+      "routed_high_risk_undertriage": 3
+    },
+    {
+      "threshold": 0.6,
+      "coverage": 0.6867469879518072,
+      "review_routing_percent": 0.3132530120481928,
+      "critical_routed_to_review": 2,
+      "serious_routed_to_review": 0,
+      "routed_high_risk_undertriage": 2
+    },
+    {
+      "threshold": 0.65,
+      "coverage": 0.6746987951807228,
+      "review_routing_percent": 0.32530120481927716,
+      "critical_routed_to_review": 2,
+      "serious_routed_to_review": 0,
+      "routed_high_risk_undertriage": 2
+    },
+    {
+      "threshold": 0.7,
+      "coverage": 0.6506024096385542,
+      "review_routing_percent": 0.3493975903614458,
+      "critical_routed_to_review": 2,
+      "serious_routed_to_review": 1,
+      "routed_high_risk_undertriage": 1
+    },
+    {
+      "threshold": 0.8,
+      "coverage": 0.5662650602409639,
+      "review_routing_percent": 0.4337349397590361,
+      "critical_routed_to_review": 5,
+      "serious_routed_to_review": 1,
+      "routed_high_risk_undertriage": 1
+    },
+    {
+      "threshold": 0.9,
+      "coverage": 0.5060240963855421,
+      "review_routing_percent": 0.49397590361445787,
+      "critical_routed_to_review": 5,
+      "serious_routed_to_review": 3,
+      "routed_high_risk_undertriage": 1
+    }
+  ],
+  "selected_production_threshold": null,
+  "notice": "Calibration sweep only uses calibration.csv; threshold is not approved for live use."
+}

@@ -1,0 +1,23 @@
+{
+  "all_checks_passed": true,
+  "preserved_csv_files": 43,
+  "protected_files_unchanged": {
+    "ai_service\\active_config.txt": true,
+    "ai_service\\datasets\\emergency_text\\draft_reports.csv": true,
+    "ai_service\\datasets\\emergency_text\\reviewed_reports.csv": true,
+    "web_system\\.env": true,
+    "render.yaml": true
+  },
+  "original_292_rows_preserved": true,
+  "working_rows": 400,
+  "working_groups": 99,
+  "approved_rows": 0,
+  "worksheet_pending_decisions": 400,
+  "normal_training_gate_blocks": true,
+  "full_backbone_training_verified": true,
+  "epochs_completed": 3,
+  "frozen_splits_match_original": true,
+  "test_not_evaluated_during_training": true,
+  "normal_release_gate_blocks": true,
+  "approved_for_deployment": false
+}

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-container": "#ffdad6",
+              "on-primary-fixed": "#410003",
+              "on-tertiary": "#ffffff",
+              "surface-container-high": "#d9ebf5",
+              "inverse-on-surface": "#e2f3fd",
+              "surface-dim": "#cbdde7",
+              "on-surface": "#0d1e25",
+              "inverse-primary": "#ffb3ac",
+              "surface-container-lowest": "#ffffff",
+              "primary-container": "#d32f2f",
+              "on-primary": "#ffffff",
+              "on-primary-container": "#fff2f0",
+              "secondary-container": "#54a0fe",
+              "on-tertiary-container": "#e9f7ff",
+              "on-background": "#0d1e25",
+              "inverse-surface": "#23333a",
+              "on-secondary": "#ffffff",
+              "surface": "#f4faff",
+              "surface-container": "#dff1fb",
+              "tertiary-fixed-dim": "#7bd1f8",
+              "surface-tint": "#ba1a20",
+              "surface-bright": "#f4faff",
+              "on-tertiary-fixed-variant": "#004d65",
+              "secondary-fixed-dim": "#a5c8ff",
+              "primary-fixed-dim": "#ffb3ac",
+              "primary-fixed": "#ffdad6",
+              "on-surface-variant": "#5b403d",
+              "on-tertiary-fixed": "#001f2a",
+              "outline-variant": "#e4beba",
+              "on-error-container": "#93000a",
+              "tertiary-container": "#00799c",
+              "on-secondary-container": "#003567",
+              "on-error": "#ffffff",
+              "background": "#f4faff",
+              "on-primary-fixed-variant": "#930010",
+              "error": "#ba1a1a",
+              "tertiary-fixed": "#bee9ff",
+              "surface-variant": "#d4e5ef",
+              "secondary-fixed": "#d4e3ff",
+              "primary": "#af101a",
+              "on-secondary-fixed": "#001c3a",
+              "surface-container-highest": "#d4e5ef",
+              "on-secondary-fixed-variant": "#004786",
+              "tertiary": "#005f7b",
+              "secondary": "#005faf",
+              "outline": "#8f6f6c",
+              "surface-container-low": "#e7f6ff"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(244, 250, 255, 0.7);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-14 bg-[#f4faff] dark:bg-[#0d1e25]">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-[#0d1e25] dark:text-[#f4faff] hover:bg-[#e7f6ff] transition-colors p-2 rounded-full">arrow_back</button>
+<h1 class="font-['Inter'] font-bold tracking-tighter uppercase text-sm text-[#af101a] dark:text-[#af101a]">BONTOC RESCUE</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#D32F2F] dark:text-[#af101a]">emergency</span>
+<span class="material-symbols-outlined text-[#0d1e25] dark:text-[#f4faff]">signal_cellular_alt</span>
+</div>
+<div class="absolute bottom-0 left-0 bg-[#cbdde7] dark:bg-[#1a2f38] h-[2px] w-full"></div>
+</header>
+<main class="pt-20 pb-24 px-4 max-w-5xl mx-auto">
+<!-- Breadcrumb / Task Header -->
+<div class="mb-8 flex justify-between items-end">
+<div>
+<span class="font-label text-xs font-bold uppercase tracking-[0.05em] text-secondary opacity-80 mb-1 block">Incident ID: BR-9921-X</span>
+<h2 class="font-headline text-3xl font-black tracking-tight text-on-surface">Report Analysis</h2>
+</div>
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-2 px-3 py-1 bg-surface-container-high rounded-sm mb-1">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label text-[10px] font-bold uppercase tracking-[0.05em] text-on-surface">In Progress</span>
+</div>
+<span class="font-label text-[10px] font-bold uppercase tracking-[0.05em] text-outline">Updated: 14:22:05 UTC</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Left Column: Visuals & Map -->
+<div class="md:col-span-7 space-y-6">
+<!-- Media Preview -->
+<div class="relative aspect-video rounded-lg overflow-hidden bg-surface-container-highest group">
+<img alt="Emergency scene" class="w-full h-full object-cover" data-alt="dramatic wide angle shot of a vehicle collision on a mountain road at night with flashing red and blue emergency lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_GbpIAMrT7ZVVh1oRoxLOlCtBa-NEM_i85uaakHiWp3ay7b3ex3tjuMehPWE9L4ge_n5FtFiFVeA9nqUeo9nmTaoLmkF6Gri5OvadbjADvftucb4cnFee06rmoX9zomJyHcGga0AAGOgYpXuo99UvnOsjHOQUL3pZxYwRTbczrw31j4YUAVlFNUtD2ffMxwCS_EwXxgGd6wsPiXjEptUC5sSoz3VZel0TFubvQ9G1o4nw2VlJmhUA8BIN6ExhjYoDc2ksaDhXb-I9"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4 flex gap-2">
+<button class="glass-panel text-on-surface px-4 py-2 rounded-md font-label text-xs font-bold uppercase flex items-center gap-2 hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-sm">play_circle</span> View Footage
+                        </button>
+<button class="glass-panel text-on-surface px-4 py-2 rounded-md font-label text-xs font-bold uppercase flex items-center gap-2 hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-sm">photo_library</span> 12 Photos
+                        </button>
+</div>
+</div>
+<!-- Incident Description -->
+<div class="bg-surface-container-lowest p-6 rounded-lg shadow-sm">
+<h3 class="font-headline text-lg font-bold mb-4 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">description</span>
+                        Narrative Log
+                    </h3>
+<p class="text-on-surface-variant leading-relaxed font-body">
+                        High-impact vehicle collision reported involving two commercial units. On-site assessment indicates structural damage to barrier systems. Emergency responders deployed at T+4 minutes. Preliminary data suggests mechanical failure as the primary catalyst. Perimeter secured.
+                    </p>
+<div class="mt-6 pt-6 border-t border-outline-variant/15 grid grid-cols-2 gap-4">
+<div>
+<span class="font-label text-[10px] font-bold uppercase tracking-[0.05em] text-outline block mb-1">Severity Assessment</span>
+<div class="flex items-center gap-2 text-primary font-bold">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">skull</span>
+<span class="uppercase tracking-wider">Fatal</span>
+</div>
+</div>
+<div>
+<span class="font-label text-[10px] font-bold uppercase tracking-[0.05em] text-outline block mb-1">Impact Radius</span>
+<div class="text-on-surface font-bold">
+<span class="uppercase tracking-wider">45 Meters</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Technical Data & Map -->
+<div class="md:col-span-5 space-y-6">
+<!-- Connectivity Block -->
+<div class="bg-surface-container-low p-5 rounded-lg border-l-4 border-secondary">
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-label text-[10px] font-bold uppercase tracking-[0.1em] text-secondary">Transmission Node</h3>
+<span class="font-label text-[10px] font-bold uppercase bg-secondary text-on-secondary px-2 py-0.5 rounded-sm">LoRa Active</span>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between">
+<span class="text-sm text-on-surface-variant">Protocol</span>
+<span class="text-sm font-mono font-bold">SF12 / 125kHz</span>
+</div>
+<div class="flex justify-between">
+<span class="text-sm text-on-surface-variant">RSSI</span>
+<span class="text-sm font-mono font-bold">-104 dBm</span>
+</div>
+<div class="flex justify-between">
+<span class="text-sm text-on-surface-variant">Packet Integrity</span>
+<span class="text-sm font-mono font-bold text-tertiary">99.2%</span>
+</div>
+</div>
+</div>
+<!-- Mini Map -->
+<div class="bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm">
+<div class="h-48 w-full relative">
+<img alt="Location Map" class="w-full h-full object-cover grayscale opacity-80" data-alt="top-down satellite view of a mountainous winding road with dense green foliage and a red pin marking an incident point" data-location="Bontoc, Philippines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxfWobFsYNVK-hTNMydxwc50AzJQ5r-nhuMcOj5g4M_zPwV68M-wPA9FxlDS6rtraisah5SA6eEc9YWt4SdSgZdwrlP5BHbQFELRuxiANaeVma7awvSibnNeBGTzMO2lMF3cS5BP9CV1NteDB-DfB-FHfcDaM_Cas5RoNbgN5XwJOLUYVKSAUmbcmAWre3Y9pP8HFbWEzTSwQNr6gaPl5LdqZrGJNM3Xi1AoCgf5T-Mz-IBe4zuTFfcOqNhEVySulBsg3vhYrR3TFv"/>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="relative">
+<div class="absolute -inset-4 bg-primary/20 rounded-full animate-pulse"></div>
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+</div>
+</div>
+<div class="p-4 space-y-3">
+<div>
+<span class="font-label text-[10px] font-bold uppercase tracking-[0.05em] text-outline block mb-1">GPS Coordinates</span>
+<code class="text-on-surface font-mono font-bold text-sm">34.0522° N, 118.2437° W</code>
+</div>
+<div>
+<span class="font-label text-[10px] font-bold uppercase tracking-[0.05em] text-outline block mb-1">Elevation</span>
+<span class="text-on-surface font-bold text-sm uppercase">842m ASL</span>
+</div>
+</div>
+</div>
+<!-- Action Hub -->
+<div class="space-y-3">
+<button class="w-full py-4 bg-gradient-to-br from-primary to-primary-container text-white rounded-md font-bold uppercase tracking-widest text-sm flex items-center justify-center gap-3 shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined">send</span>
+                        Dispatch Reinforcements
+                    </button>
+<button class="w-full py-3 border border-outline-variant/30 text-on-surface rounded-md font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">print</span>
+                        Generate PDF Report
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-[#f4faff]/70 dark:bg-[#0d1e25]/70 backdrop-blur-xl border-t border-[#cbdde7]/20 shadow-[0_-4px_40px_0_rgba(13,30,37,0.06)]">
+<a class="flex flex-col items-center justify-center text-[#0d1e25] dark:text-[#cbdde7] opacity-60 hover:opacity-100 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.05em]">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#D32F2F] dark:bg-[#af101a] text-white rounded-[0.375rem] px-3 py-1 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.05em]">Reports</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#0d1e25] dark:text-[#cbdde7] opacity-60 hover:opacity-100 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">sensors</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.05em]">Connectivity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#0d1e25] dark:text-[#cbdde7] opacity-60 hover:opacity-100 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.05em]">Profile</span>
+</a>
+</nav>
+</body></html>

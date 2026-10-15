@@ -1,0 +1,2614 @@
+{
+  "artifact": "mixed_draft.csv",
+  "created_at": "2026-10-05",
+  "status": "synthetic_draft_only_not_human_reviewed_not_training_approved",
+  "rows": 120,
+  "sha256": "f4cb740f2cb06b040e22e60d33f9f99f5b6cce02fac0bb3ed59d9735d15ef709",
+  "language_groups": {
+    "mixed": 120
+  },
+  "proposed_label_counts": {
+    "minor": 30,
+    "serious": 30,
+    "critical": 30,
+    "needs_review": 30
+  },
+  "whitespace_word_count_total": 1725,
+  "whitespace_words_by_proposed_label": {
+    "minor": 472,
+    "serious": 417,
+    "critical": 444,
+    "needs_review": 392
+  },
+  "length_bucket_counts": {
+    "16+": 58,
+    "9-15": 49,
+    "4-8": 11,
+    "1-3": 2
+  },
+  "length_bucket_definition": "Recomputed from whitespace-delimited text tokens: 1-3, 4-8, 9-15, 16+.",
+  "length_buckets_by_proposed_label": {
+    "minor": {
+      "16+": 19,
+      "9-15": 9,
+      "4-8": 2
+    },
+    "serious": {
+      "9-15": 13,
+      "16+": 14,
+      "4-8": 3
+    },
+    "critical": {
+      "9-15": 18,
+      "16+": 11,
+      "4-8": 1
+    },
+    "needs_review": {
+      "4-8": 5,
+      "1-3": 2,
+      "9-15": 9,
+      "16+": 14
+    }
+  },
+  "code_switch_type_counts_lexical_heuristic": {
+    "tri-language": 54,
+    "Cebuano-Tagalog": 32,
+    "Tagalog-English": 11,
+    "Cebuano-English": 14,
+    "unclear_requires_human_language_review": 9
+  },
+  "code_switch_type_by_case_id": {
+    "MX-MINOR-001": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-002": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-003": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-004": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-005": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-006": {
+      "verified_type": null,
+      "candidate_type": "Tagalog-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-007": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-008": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-009": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-010": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-011": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-012": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-013": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-014": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-015": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-016": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-017": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-018": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-019": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-020": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-021": {
+      "verified_type": null,
+      "candidate_type": "unclear_requires_human_language_review",
+      "status": "uncertain_pending_fluent_review"
+    },
+    "MX-MINOR-022": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-023": {
+      "verified_type": null,
+      "candidate_type": "unclear_requires_human_language_review",
+      "status": "uncertain_pending_fluent_review"
+    },
+    "MX-MINOR-024": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-025": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-026": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-027": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-028": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-029": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-MINOR-030": {
+      "verified_type": null,
+      "candidate_type": "Tagalog-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-001": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-002": {
+      "verified_type": null,
+      "candidate_type": "Tagalog-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-003": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-004": {
+      "verified_type": null,
+      "candidate_type": "unclear_requires_human_language_review",
+      "status": "uncertain_pending_fluent_review"
+    },
+    "MX-SERIOUS-005": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-006": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-007": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-008": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-009": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-010": {
+      "verified_type": null,
+      "candidate_type": "Tagalog-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-011": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-012": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-013": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-014": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-015": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-016": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-017": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-018": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-019": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-020": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-021": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-022": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-023": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-024": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-025": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-026": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-027": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-028": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-029": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-SERIOUS-030": {
+      "verified_type": null,
+      "candidate_type": "unclear_requires_human_language_review",
+      "status": "uncertain_pending_fluent_review"
+    },
+    "MX-CRITICAL-001": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-002": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-003": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-004": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-005": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-006": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-007": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-008": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-009": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-010": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-011": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-012": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-013": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-014": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-015": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-016": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-017": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-018": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-019": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-020": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-021": {
+      "verified_type": null,
+      "candidate_type": "unclear_requires_human_language_review",
+      "status": "uncertain_pending_fluent_review"
+    },
+    "MX-CRITICAL-022": {
+      "verified_type": null,
+      "candidate_type": "Tagalog-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-023": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-024": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-025": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-026": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-027": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-028": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-029": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-CRITICAL-030": {
+      "verified_type": null,
+      "candidate_type": "Tagalog-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-001": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-002": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-003": {
+      "verified_type": null,
+      "candidate_type": "unclear_requires_human_language_review",
+      "status": "uncertain_pending_fluent_review"
+    },
+    "MX-NEEDS_REVIEW-004": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-005": {
+      "verified_type": null,
+      "candidate_type": "unclear_requires_human_language_review",
+      "status": "uncertain_pending_fluent_review"
+    },
+    "MX-NEEDS_REVIEW-006": {
+      "verified_type": null,
+      "candidate_type": "Tagalog-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-007": {
+      "verified_type": null,
+      "candidate_type": "unclear_requires_human_language_review",
+      "status": "uncertain_pending_fluent_review"
+    },
+    "MX-NEEDS_REVIEW-008": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-009": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-010": {
+      "verified_type": null,
+      "candidate_type": "Tagalog-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-011": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-012": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-013": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-014": {
+      "verified_type": null,
+      "candidate_type": "Tagalog-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-015": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-016": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-017": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-018": {
+      "verified_type": null,
+      "candidate_type": "Tagalog-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-019": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-020": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-021": {
+      "verified_type": null,
+      "candidate_type": "unclear_requires_human_language_review",
+      "status": "uncertain_pending_fluent_review"
+    },
+    "MX-NEEDS_REVIEW-022": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-023": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-024": {
+      "verified_type": null,
+      "candidate_type": "Tagalog-English",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-025": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-026": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-027": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-028": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-029": {
+      "verified_type": null,
+      "candidate_type": "tri-language",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    },
+    "MX-NEEDS_REVIEW-030": {
+      "verified_type": null,
+      "candidate_type": "Cebuano-Tagalog",
+      "status": "unverified_lexical_candidate",
+      "marker_evidence": {}
+    }
+  },
+  "code_switch_mapping_method": "Recomputed with explicit exclusive-leaning Cebuano, Tagalog, and English marker lexicons; markers and assigned type are recorded row by row in code_switch_marker_evidence_by_case_id. This is an assistive lexical audit, not a fluent-human language identification. Uncertain cases are retained as unclear_requires_human_language_review, not forced into a category.",
+  "code_switch_marker_evidence_by_case_id": {
+    "MX-MINOR-001": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "ra",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "siya"
+      ],
+      "matched_english_markers": [
+        "conscious",
+        "rider"
+      ]
+    },
+    "MX-MINOR-002": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "tuhod"
+      ],
+      "matched_tagalog_markers": [
+        "at",
+        "lang",
+        "maliit",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "awake",
+        "driver",
+        "lot",
+        "scratch"
+      ]
+    },
+    "MX-MINOR-003": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "duol",
+        "iyang",
+        "ra",
+        "samad",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "gising",
+        "siya"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-MINOR-004": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "bukton",
+        "mata",
+        "sakay",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "lang",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "small"
+      ]
+    },
+    "MX-MINOR-005": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "gamayng",
+        "garas",
+        "iyang",
+        "mihunong",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "lang"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-MINOR-006": {
+      "type": "Tagalog-English",
+      "matched_cebuano_markers": [],
+      "matched_tagalog_markers": [
+        "at",
+        "maliit"
+      ],
+      "matched_english_markers": [
+        "conscious",
+        "passenger"
+      ]
+    },
+    "MX-MINOR-007": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "ra",
+        "siya",
+        "tuhod",
+        "ug",
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "siya"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-MINOR-008": {
+      "type": "Cebuano-English",
+      "matched_cebuano_markers": [
+        "ra",
+        "ug"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": [
+        "awake",
+        "driver"
+      ]
+    },
+    "MX-MINOR-009": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "mata",
+        "ra",
+        "samad",
+        "siya",
+        "tuhod",
+        "ug",
+        "walay"
+      ],
+      "matched_tagalog_markers": [
+        "siya"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-MINOR-010": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "siya"
+      ],
+      "matched_tagalog_markers": [
+        "at",
+        "gising",
+        "habang",
+        "lang",
+        "siya",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "rider"
+      ]
+    },
+    "MX-MINOR-011": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "bukton",
+        "mata",
+        "pasahero",
+        "ug",
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "lang"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-MINOR-012": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "pasahero",
+        "ra",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "gising",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "small"
+      ]
+    },
+    "MX-MINOR-013": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "ra",
+        "samad",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "siya"
+      ],
+      "matched_english_markers": [
+        "conscious"
+      ]
+    },
+    "MX-MINOR-014": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "at",
+        "lang",
+        "maliit",
+        "nang",
+        "ng"
+      ],
+      "matched_english_markers": [
+        "awake"
+      ]
+    },
+    "MX-MINOR-015": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "gamayng",
+        "mihunong",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "gising"
+      ],
+      "matched_english_markers": [
+        "rider"
+      ]
+    },
+    "MX-MINOR-016": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "mata",
+        "pasahero",
+        "ra",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "siya",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "normal"
+      ]
+    },
+    "MX-MINOR-017": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "gamayng",
+        "paa",
+        "ra",
+        "siya",
+        "ug",
+        "walay"
+      ],
+      "matched_tagalog_markers": [
+        "siya"
+      ],
+      "matched_english_markers": [
+        "conscious"
+      ]
+    },
+    "MX-MINOR-018": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "sakay"
+      ],
+      "matched_tagalog_markers": [
+        "at",
+        "gising",
+        "kamay",
+        "lang",
+        "maliit"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-MINOR-019": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "gamayng",
+        "mata",
+        "ra",
+        "siya",
+        "tuhod",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-MINOR-020": {
+      "type": "Cebuano-English",
+      "matched_cebuano_markers": [
+        "bangga",
+        "gamayng",
+        "ra",
+        "samad",
+        "ug",
+        "wala"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": [
+        "alley",
+        "awake",
+        "driver"
+      ]
+    },
+    "MX-MINOR-021": {
+      "type": "unclear_requires_human_language_review",
+      "matched_cebuano_markers": [
+        "gikan",
+        "human",
+        "mata",
+        "pasahero",
+        "ra",
+        "ug"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": []
+    },
+    "MX-MINOR-022": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "siya",
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "at",
+        "gising",
+        "hilo",
+        "lang",
+        "maliit",
+        "nang",
+        "siya"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-MINOR-023": {
+      "type": "unclear_requires_human_language_review",
+      "matched_cebuano_markers": [
+        "bukton",
+        "drayber",
+        "mata",
+        "ra",
+        "ug"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": []
+    },
+    "MX-MINOR-024": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "gamayng",
+        "mihunong",
+        "siya",
+        "tuhod",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "ng",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "conscious"
+      ]
+    },
+    "MX-MINOR-025": {
+      "type": "Cebuano-English",
+      "matched_cebuano_markers": [
+        "gamayng",
+        "human",
+        "iyang",
+        "ra",
+        "ug"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": [
+        "awake",
+        "rider",
+        "scratch"
+      ]
+    },
+    "MX-MINOR-026": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "siya"
+      ],
+      "matched_tagalog_markers": [
+        "at",
+        "lang",
+        "maliit",
+        "nang",
+        "siya",
+        "walang",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "awake",
+        "passenger",
+        "tricycle"
+      ]
+    },
+    "MX-MINOR-027": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "siya",
+        "tuhod",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "gising",
+        "lang",
+        "siya"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-MINOR-028": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "mata",
+        "nagdugo",
+        "siya",
+        "ug",
+        "wala",
+        "walay"
+      ],
+      "matched_tagalog_markers": [
+        "lang",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "cut",
+        "driver",
+        "small"
+      ]
+    },
+    "MX-MINOR-029": {
+      "type": "Cebuano-English",
+      "matched_cebuano_markers": [
+        "ra"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": [
+        "awake",
+        "rider"
+      ]
+    },
+    "MX-MINOR-030": {
+      "type": "Tagalog-English",
+      "matched_cebuano_markers": [],
+      "matched_tagalog_markers": [
+        "gising",
+        "lang",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "rider",
+        "scratch",
+        "small"
+      ]
+    },
+    "MX-SERIOUS-001": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "dili",
+        "iyang",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "niya"
+      ],
+      "matched_english_markers": [
+        "forearm",
+        "van"
+      ]
+    },
+    "MX-SERIOUS-002": {
+      "type": "Tagalog-English",
+      "matched_cebuano_markers": [],
+      "matched_tagalog_markers": [
+        "binti",
+        "gising",
+        "niya",
+        "pero",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "rider"
+      ]
+    },
+    "MX-SERIOUS-003": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "siya"
+      ],
+      "matched_tagalog_markers": [
+        "binti",
+        "gising",
+        "hindi",
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "help"
+      ]
+    },
+    "MX-SERIOUS-004": {
+      "type": "unclear_requires_human_language_review",
+      "matched_cebuano_markers": [
+        "iyang"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": []
+    },
+    "MX-SERIOUS-005": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "dili",
+        "human"
+      ],
+      "matched_tagalog_markers": [
+        "niya",
+        "pagkatumba"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-SERIOUS-006": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "siya"
+      ],
+      "matched_tagalog_markers": [
+        "hindi",
+        "nang",
+        "siya",
+        "walang"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-SERIOUS-007": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "nagdugo",
+        "paa",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "after",
+        "conscious",
+        "crash",
+        "normal"
+      ]
+    },
+    "MX-SERIOUS-008": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "siya"
+      ],
+      "matched_tagalog_markers": [
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "conscious",
+        "passenger"
+      ]
+    },
+    "MX-SERIOUS-009": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "dili",
+        "iyang",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "conscious",
+        "handlebar",
+        "rider"
+      ]
+    },
+    "MX-SERIOUS-010": {
+      "type": "Tagalog-English",
+      "matched_cebuano_markers": [],
+      "matched_tagalog_markers": [
+        "at",
+        "binti",
+        "gising",
+        "hindi",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "rider",
+        "van"
+      ]
+    },
+    "MX-SERIOUS-011": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "bangga",
+        "dili",
+        "makagawas",
+        "pasahero",
+        "tiil",
+        "walay"
+      ],
+      "matched_tagalog_markers": [
+        "pero"
+      ],
+      "matched_english_markers": [
+        "awake",
+        "tricycle"
+      ]
+    },
+    "MX-SERIOUS-012": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "kaayo",
+        "siya"
+      ],
+      "matched_tagalog_markers": [
+        "pero",
+        "siya",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "awake",
+        "dashboard",
+        "passenger"
+      ]
+    },
+    "MX-SERIOUS-013": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "iyang",
+        "nagdugo",
+        "paa",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "awake",
+        "crash",
+        "from",
+        "normal",
+        "the"
+      ]
+    },
+    "MX-SERIOUS-014": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "siya"
+      ],
+      "matched_tagalog_markers": [
+        "hindi",
+        "niya",
+        "pero",
+        "siya",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "conscious"
+      ]
+    },
+    "MX-SERIOUS-015": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "drayber",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "gising",
+        "pero"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-SERIOUS-016": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "bukton",
+        "mata",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "siya"
+      ],
+      "matched_english_markers": [
+        "help",
+        "rider"
+      ]
+    },
+    "MX-SERIOUS-017": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "bangga",
+        "bukton",
+        "dili",
+        "human",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "niya",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "conscious"
+      ]
+    },
+    "MX-SERIOUS-018": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "pasahero"
+      ],
+      "matched_tagalog_markers": [
+        "at",
+        "gising",
+        "hindi",
+        "nang",
+        "pero",
+        "walang",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "tricycle"
+      ]
+    },
+    "MX-SERIOUS-019": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "mata",
+        "nagdugo",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "cut",
+        "deep",
+        "normal"
+      ]
+    },
+    "MX-SERIOUS-020": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "dili",
+        "siya",
+        "tiil"
+      ],
+      "matched_tagalog_markers": [
+        "binti",
+        "may",
+        "niya",
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "awake"
+      ]
+    },
+    "MX-SERIOUS-021": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "dili",
+        "iyang",
+        "makalihok",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "conscious"
+      ]
+    },
+    "MX-SERIOUS-022": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "siya",
+        "tuhod"
+      ],
+      "matched_tagalog_markers": [
+        "at",
+        "gising",
+        "hindi",
+        "siya",
+        "tumilapon"
+      ],
+      "matched_english_markers": [
+        "passenger"
+      ]
+    },
+    "MX-SERIOUS-023": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "mata",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "rider"
+      ]
+    },
+    "MX-SERIOUS-024": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "bangga",
+        "human",
+        "sakay",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "gising",
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-SERIOUS-025": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "bangga",
+        "kinahanglan",
+        "nagdugo",
+        "paa",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "siya"
+      ],
+      "matched_english_markers": [
+        "awake"
+      ]
+    },
+    "MX-SERIOUS-026": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "paa"
+      ],
+      "matched_tagalog_markers": [
+        "hindi",
+        "niya",
+        "pero",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "ankle",
+        "conscious",
+        "rider"
+      ]
+    },
+    "MX-SERIOUS-027": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "dili",
+        "iyang",
+        "makagawas",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "gising",
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-SERIOUS-028": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "naglisod",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "awake",
+        "passenger"
+      ]
+    },
+    "MX-SERIOUS-029": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "dili"
+      ],
+      "matched_tagalog_markers": [
+        "niya"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-SERIOUS-030": {
+      "type": "unclear_requires_human_language_review",
+      "matched_cebuano_markers": [],
+      "matched_tagalog_markers": [
+        "hindi",
+        "may"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-CRITICAL-001": {
+      "type": "Cebuano-English",
+      "matched_cebuano_markers": [
+        "dili",
+        "ug",
+        "walay"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": [
+        "after",
+        "crash",
+        "driver",
+        "the"
+      ]
+    },
+    "MX-CRITICAL-002": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "siya"
+      ],
+      "matched_tagalog_markers": [
+        "siya"
+      ],
+      "matched_english_markers": [
+        "unconscious"
+      ]
+    },
+    "MX-CRITICAL-003": {
+      "type": "Cebuano-English",
+      "matched_cebuano_markers": [
+        "dili",
+        "nagdugo",
+        "pasahero",
+        "ug"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": [
+        "truck"
+      ]
+    },
+    "MX-CRITICAL-004": {
+      "type": "Cebuano-English",
+      "matched_cebuano_markers": [
+        "ug"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": [
+        "truck"
+      ]
+    },
+    "MX-CRITICAL-005": {
+      "type": "Cebuano-English",
+      "matched_cebuano_markers": [
+        "bangga",
+        "nagdugo",
+        "ug"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": [
+        "bleeding",
+        "not",
+        "passenger",
+        "stop",
+        "the",
+        "will"
+      ]
+    },
+    "MX-CRITICAL-006": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "siya"
+      ],
+      "matched_tagalog_markers": [
+        "at",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "driver",
+        "hit",
+        "shallow",
+        "the",
+        "unconscious"
+      ]
+    },
+    "MX-CRITICAL-007": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "naglisod",
+        "siya"
+      ],
+      "matched_tagalog_markers": [
+        "hindi",
+        "makapagsalita",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "after",
+        "crash",
+        "rider",
+        "the"
+      ]
+    },
+    "MX-CRITICAL-008": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "dili",
+        "ug",
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "yung"
+      ],
+      "matched_english_markers": [
+        "driver",
+        "unconscious"
+      ]
+    },
+    "MX-CRITICAL-009": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "dili",
+        "iyang",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "siya"
+      ],
+      "matched_english_markers": [
+        "driver"
+      ]
+    },
+    "MX-CRITICAL-010": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "pasahero"
+      ],
+      "matched_tagalog_markers": [
+        "at",
+        "hindi",
+        "walang",
+        "yung"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-CRITICAL-011": {
+      "type": "Cebuano-English",
+      "matched_cebuano_markers": [
+        "iyang",
+        "makagawas",
+        "ug",
+        "wala"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": [
+        "rider"
+      ]
+    },
+    "MX-CRITICAL-012": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "dili",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "siya",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "driver",
+        "van"
+      ]
+    },
+    "MX-CRITICAL-013": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "dili",
+        "kaayo",
+        "nangluspad",
+        "paa",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "at",
+        "siya"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-CRITICAL-014": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "siya"
+      ],
+      "matched_tagalog_markers": [
+        "at",
+        "siya",
+        "tumilapon",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "rider",
+        "unconscious"
+      ]
+    },
+    "MX-CRITICAL-015": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "bisan",
+        "dili",
+        "siya",
+        "ug",
+        "walay"
+      ],
+      "matched_tagalog_markers": [
+        "siya"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-CRITICAL-016": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "dili",
+        "ug",
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "yung"
+      ],
+      "matched_english_markers": [
+        "passenger"
+      ]
+    },
+    "MX-CRITICAL-017": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "bangga",
+        "human",
+        "naglisod",
+        "pasahero",
+        "samtang",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "siya"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-CRITICAL-018": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "siya"
+      ],
+      "matched_tagalog_markers": [
+        "at",
+        "hindi",
+        "ng",
+        "siya",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "pedestrian",
+        "truck"
+      ]
+    },
+    "MX-CRITICAL-019": {
+      "type": "Cebuano-English",
+      "matched_cebuano_markers": [
+        "dili",
+        "human",
+        "iyang",
+        "nangluspad",
+        "samad",
+        "ug"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": [
+        "crash",
+        "driver"
+      ]
+    },
+    "MX-CRITICAL-020": {
+      "type": "Cebuano-English",
+      "matched_cebuano_markers": [
+        "iyang",
+        "sakay",
+        "ug"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": [
+        "trapped"
+      ]
+    },
+    "MX-CRITICAL-021": {
+      "type": "unclear_requires_human_language_review",
+      "matched_cebuano_markers": [
+        "pasahero",
+        "ug"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": []
+    },
+    "MX-CRITICAL-022": {
+      "type": "Tagalog-English",
+      "matched_cebuano_markers": [],
+      "matched_tagalog_markers": [
+        "at",
+        "hindi",
+        "makalabas",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "driver",
+        "unresponsive"
+      ]
+    },
+    "MX-CRITICAL-023": {
+      "type": "Cebuano-English",
+      "matched_cebuano_markers": [
+        "dili",
+        "ug",
+        "wala"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": [
+        "rider"
+      ]
+    },
+    "MX-CRITICAL-024": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "human",
+        "iyang",
+        "kaayo",
+        "nagdugo",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "yung"
+      ],
+      "matched_english_markers": [
+        "passenger",
+        "unconscious"
+      ]
+    },
+    "MX-CRITICAL-025": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "dili",
+        "iyang",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "at"
+      ],
+      "matched_english_markers": [
+        "bus",
+        "rider"
+      ]
+    },
+    "MX-CRITICAL-026": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "pasahero",
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "at",
+        "hindi",
+        "nasa",
+        "ng",
+        "yung"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-CRITICAL-027": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "bisan",
+        "dili",
+        "pasahero",
+        "siya",
+        "ug",
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "siya"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-CRITICAL-028": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "dili",
+        "siya",
+        "ug",
+        "walay"
+      ],
+      "matched_tagalog_markers": [
+        "siya",
+        "yung"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-CRITICAL-029": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "drayber",
+        "kaayo",
+        "naglisod",
+        "siya",
+        "ug"
+      ],
+      "matched_tagalog_markers": [
+        "siya"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-CRITICAL-030": {
+      "type": "Tagalog-English",
+      "matched_cebuano_markers": [],
+      "matched_tagalog_markers": [
+        "at",
+        "bumangga",
+        "hindi",
+        "nang",
+        "walang",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "passenger",
+        "van"
+      ]
+    },
+    "MX-NEEDS_REVIEW-001": {
+      "type": "Cebuano-English",
+      "matched_cebuano_markers": [
+        "wala"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": [
+        "crash"
+      ]
+    },
+    "MX-NEEDS_REVIEW-002": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "bangga"
+      ],
+      "matched_tagalog_markers": [
+        "may"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-NEEDS_REVIEW-003": {
+      "type": "unclear_requires_human_language_review",
+      "matched_cebuano_markers": [
+        "naay"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": []
+    },
+    "MX-NEEDS_REVIEW-004": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "yung"
+      ],
+      "matched_english_markers": [
+        "found",
+        "him",
+        "rider",
+        "they"
+      ]
+    },
+    "MX-NEEDS_REVIEW-005": {
+      "type": "unclear_requires_human_language_review",
+      "matched_cebuano_markers": [],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": [
+        "someone"
+      ]
+    },
+    "MX-NEEDS_REVIEW-006": {
+      "type": "Tagalog-English",
+      "matched_cebuano_markers": [],
+      "matched_tagalog_markers": [
+        "sabi"
+      ],
+      "matched_english_markers": [
+        "unresponsive"
+      ]
+    },
+    "MX-NEEDS_REVIEW-007": {
+      "type": "unclear_requires_human_language_review",
+      "matched_cebuano_markers": [],
+      "matched_tagalog_markers": [
+        "hindi"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-NEEDS_REVIEW-008": {
+      "type": "Cebuano-English",
+      "matched_cebuano_markers": [
+        "wala"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": [
+        "condition"
+      ]
+    },
+    "MX-NEEDS_REVIEW-009": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "bangga",
+        "mga",
+        "ug",
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "pero"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-NEEDS_REVIEW-010": {
+      "type": "Tagalog-English",
+      "matched_cebuano_markers": [],
+      "matched_tagalog_markers": [
+        "hindi",
+        "may",
+        "niya",
+        "pero"
+      ],
+      "matched_english_markers": [
+        "message"
+      ]
+    },
+    "MX-NEEDS_REVIEW-011": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "dili",
+        "drayber",
+        "ug",
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "pero"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-NEEDS_REVIEW-012": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "ra"
+      ],
+      "matched_tagalog_markers": [
+        "may",
+        "pero",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "not",
+        "person",
+        "rider",
+        "the"
+      ]
+    },
+    "MX-NEEDS_REVIEW-013": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "sakay",
+        "ug",
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "pero"
+      ],
+      "matched_english_markers": [
+        "people"
+      ]
+    },
+    "MX-NEEDS_REVIEW-014": {
+      "type": "Tagalog-English",
+      "matched_cebuano_markers": [],
+      "matched_tagalog_markers": [
+        "hindi",
+        "may",
+        "ng",
+        "pero",
+        "sabi"
+      ],
+      "matched_english_markers": [
+        "van"
+      ]
+    },
+    "MX-NEEDS_REVIEW-015": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "dili",
+        "siya"
+      ],
+      "matched_tagalog_markers": [
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-NEEDS_REVIEW-016": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "mga",
+        "siya",
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "may",
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "passenger",
+        "report",
+        "unconscious"
+      ]
+    },
+    "MX-NEEDS_REVIEW-017": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "dili",
+        "siya"
+      ],
+      "matched_tagalog_markers": [
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "caller",
+        "the"
+      ]
+    },
+    "MX-NEEDS_REVIEW-018": {
+      "type": "Tagalog-English",
+      "matched_cebuano_markers": [],
+      "matched_tagalog_markers": [
+        "hindi",
+        "may",
+        "niya",
+        "pero",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "rider"
+      ]
+    },
+    "MX-NEEDS_REVIEW-019": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "pasahero",
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "pero"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-NEEDS_REVIEW-020": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "pero",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "driver"
+      ]
+    },
+    "MX-NEEDS_REVIEW-021": {
+      "type": "unclear_requires_human_language_review",
+      "matched_cebuano_markers": [
+        "gikan",
+        "naay",
+        "wala"
+      ],
+      "matched_tagalog_markers": [],
+      "matched_english_markers": []
+    },
+    "MX-NEEDS_REVIEW-022": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "sakay"
+      ],
+      "matched_tagalog_markers": [
+        "hindi",
+        "may",
+        "pero",
+        "yung"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-NEEDS_REVIEW-023": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "pero"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-NEEDS_REVIEW-024": {
+      "type": "Tagalog-English",
+      "matched_cebuano_markers": [],
+      "matched_tagalog_markers": [
+        "hindi",
+        "lang",
+        "may",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "passenger"
+      ]
+    },
+    "MX-NEEDS_REVIEW-025": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "dili",
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "pero"
+      ],
+      "matched_english_markers": [
+        "rider"
+      ]
+    },
+    "MX-NEEDS_REVIEW-026": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "siya"
+      ],
+      "matched_tagalog_markers": [
+        "hindi",
+        "lang",
+        "may",
+        "ng",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "driver"
+      ]
+    },
+    "MX-NEEDS_REVIEW-027": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "dili",
+        "naay",
+        "samad"
+      ],
+      "matched_tagalog_markers": [
+        "pero"
+      ],
+      "matched_english_markers": []
+    },
+    "MX-NEEDS_REVIEW-028": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "naglisod",
+        "ra"
+      ],
+      "matched_tagalog_markers": [
+        "ng",
+        "pero",
+        "sabi",
+        "yung"
+      ],
+      "matched_english_markers": [
+        "driver"
+      ]
+    },
+    "MX-NEEDS_REVIEW-029": {
+      "type": "tri-language",
+      "matched_cebuano_markers": [
+        "pasahero",
+        "siya",
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": [
+        "report",
+        "the"
+      ]
+    },
+    "MX-NEEDS_REVIEW-030": {
+      "type": "Cebuano-Tagalog",
+      "matched_cebuano_markers": [
+        "siya",
+        "wala"
+      ],
+      "matched_tagalog_markers": [
+        "at",
+        "hindi",
+        "may",
+        "pero",
+        "siya"
+      ],
+      "matched_english_markers": []
+    }
+  },
+  "scenario_family_count": 119,
+  "annotation_group_count": 119,
+  "unique_normalized_texts": 120,
+  "rubric_version_reference": "TEXT-RUBRIC-0.2-B; all proposed labels remain drafts and require accountable human approval.",
+  "source": "AI-authored synthetic mixed Cebuano-English, Tagalog-English, Cebuano-Tagalog, and tri-language road/vehicle report drafts.",
+  "limitations": [
+    "All rows are synthetic and are not observed civilian reports or responder-confirmed ground truth.",
+    "Labels are proposed drafts; reviewers must assess exact text under TEXT-RUBRIC-0.2-B.",
+    "Code-switch classifications are lexical-heuristic indicators and require fluent Cebuano and Tagalog confirmation.",
+    "No training, evaluation, calibration, active-model update, or deployment was performed.",
+    "Scenario-family and annotation-group IDs intentionally link the documented near-paraphrase rows; those links are listed below and do not assert human approval."
+  ],
+  "columns": [
+    "case_id",
+    "scenario_family_id",
+    "annotation_group_id",
+    "language",
+    "text",
+    "word_count",
+    "length_bucket",
+    "label",
+    "rubric_version",
+    "generation_source",
+    "review_status",
+    "created_at",
+    "parent_case_id",
+    "relationship_type",
+    "normalized_text_hash"
+  ],
+  "validation_checks": {
+    "unique_case_ids": true,
+    "unique_normalized_text_hashes": true,
+    "all_rows_language_mixed": true,
+    "word_count_matches_whitespace_tokens": true,
+    "length_bucket_recomputed": true,
+    "all_rows_draft": true,
+    "all_rows_synthetic_ai_generated": true,
+    "no_parent_derivatives": true,
+    "class_label_word_leakage_absent": true,
+    "row_count_preserved": true,
+    "label_counts_preserved": true,
+    "word_count_and_bucket_recomputed_from_text": true,
+    "draft_synthetic_provenance_preserved": true,
+    "linked_near_paraphrases_recorded": true,
+    "parent_relationships_match_family_groups": true,
+    "base_rows_original_draft_parent_blank": true,
+    "variants_reference_base_case": true,
+    "no_class_label_words_in_text": true,
+    "word_counts_and_buckets_recomputed": true,
+    "all_rows_remain_draft_synthetic": true
+  },
+  "family_link_review": [
+    {
+      "scenario_family_id": "MX-FAM-SERIOUS-LEG-WOUND-AFTER-CRASH-01",
+      "annotation_group_id": "MX-GRP-SERIOUS-LEG-WOUND-AFTER-CRASH-01",
+      "base_case_id": "MX-SERIOUS-007",
+      "variant_case_ids": [
+        "MX-SERIOUS-013"
+      ],
+      "members": [
+        "MX-SERIOUS-007",
+        "MX-SERIOUS-013"
+      ],
+      "relationship_type_by_case_id": {
+        "MX-SERIOUS-007": "original_draft",
+        "MX-SERIOUS-013": "same_scenario_variant"
+      },
+      "parent_case_id_by_case_id": {
+        "MX-SERIOUS-007": "",
+        "MX-SERIOUS-013": "MX-SERIOUS-007"
+      },
+      "rationale": "Two near-paraphrases describe the same serious leg-wound-after-crash scenario; the variant inherits the base family and group."
+    }
+  ],
+  "code_switch_classification_status": "No type is verified by a fluent reviewer. Candidate type counts are weak lexical signals only; nine previously uncertain cases remain marked uncertain pending fluent review.",
+  "unverified_lexical_candidate_counts": {
+    "tri-language": 54,
+    "Cebuano-Tagalog": 32,
+    "Tagalog-English": 11,
+    "Cebuano-English": 14
+  },
+  "uncertain_language_review_case_ids": [
+    "MX-MINOR-021",
+    "MX-MINOR-023",
+    "MX-SERIOUS-004",
+    "MX-SERIOUS-030",
+    "MX-CRITICAL-021",
+    "MX-NEEDS_REVIEW-003",
+    "MX-NEEDS_REVIEW-005",
+    "MX-NEEDS_REVIEW-007",
+    "MX-NEEDS_REVIEW-021"
+  ],
+  "relationship_type_counts": {
+    "original_draft": 119,
+    "same_scenario_variant": 1
+  }
+}

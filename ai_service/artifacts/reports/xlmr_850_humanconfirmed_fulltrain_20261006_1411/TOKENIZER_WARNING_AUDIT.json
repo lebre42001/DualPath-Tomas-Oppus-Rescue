@@ -1,0 +1,9 @@
+{
+  "transformers_version": "4.57.6",
+  "warning_under_review": "checkpoint local tokenizer emitted the transformers 4.57.6 legacy tokenizer-class heuristic warning",
+  "finding": "project prior audit identifies warning as a false positive for this local XLM-R tokenizer detector; direct sample IDs matched the pinned base tokenizer exactly across multilingual/negation probes",
+  "sample_probe_count": 8,
+  "token_id_mismatches": 0,
+  "action": "no Mistral-specific tokenizer fix applied; use checkpoint tokenizer and pinned model revision; retain warning as known upstream heuristic",
+  "scope": "tokenizer compatibility only; does not assess language quality or label correctness"
+}

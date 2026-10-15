@@ -1,0 +1,15 @@
+{
+  "package_id": "text_xlmr_850_humanconfirmed_fulltrain_20261006_sealed",
+  "path": "ai_service/artifacts/packages/text_xlmr_850_humanconfirmed_fulltrain_20261006_sealed.zip",
+  "sha256": "5285b85b492e258187eae2b9aacd9397a0f43d132f509456383d585aa904ec27",
+  "size_bytes": 1137206221,
+  "zip_integrity": "PASS",
+  "zip_member_count": 102,
+  "file_count": 101,
+  "manifest_sha256": "c93d51e03019bb4d94e1ebd09c5c0707353ceab4e2b47544ecb60cc02df8266c",
+  "all_manifest_members_verified": true,
+  "active_model_changed": false,
+  "deployment_performed": false,
+  "approved_for_deployment": false,
+  "decision": "NOT_ACCEPTABLE"
+}

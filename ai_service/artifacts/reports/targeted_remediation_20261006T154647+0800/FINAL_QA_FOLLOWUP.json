@@ -1,0 +1,29 @@
+{
+  "qa_audit": "FINAL_QA_AUDIT.json",
+  "followup_at_local": "2026-10-06T17:00:05+08:00",
+  "status": "CORRECTIONS_RECORDED; EVALUATION_SUBGROUP_DISCREPANCY_REMAINS_OPEN",
+  "items": [
+    {
+      "finding": "EXPOSED_TEST saved per_language values disagree with an independent case-ID rejoin despite aggregate values matching.",
+      "action": "Preserved the evaluator output and recorded exact old/new per-language values in PER_LANGUAGE_RECONCILIATION.json. Frozen gate status uses the independent case-ID rejoin also reproduced by final QA.",
+      "status": "documented; underlying subgroup-metric generation cause remains unresolved"
+    },
+    {
+      "finding": "RELEASE_MANUAL_ONLY.md omitted changed FastAPI implementation/configuration files from its file inventory.",
+      "action": "Added operation_mode.py, api.py, text_api.py, text_inference.py, serve_api.py, test_operation_mode.py, and ai_service/README.md to the inventory, then rebuilt the source bundle and verified its CRC plus all internal hashes.",
+      "status": "corrected and included in manual_only_release_source_20261006T154647+0800.zip"
+    },
+    {
+      "finding": "Attestation is batch-level owner-attested, not row-level independently verified responder evidence.",
+      "action": "Preserved the narrow wording in PROVENANCE_RECEIPT.json and all handoff decisions; no labels were changed.",
+      "status": "accurately represented"
+    },
+    {
+      "finding": "Exposed metrics were inspected before the second calibration policy freeze.",
+      "action": "Retained the sequence limitation in EVALUATION_AUDIT and the handoff; no fresh/confirmatory claim is made.",
+      "status": "disclosed; historical exposure cannot be undone"
+    }
+  ],
+  "research_gate_decision": "2/6 pass, 4/6 fail; no eligible checkpoint",
+  "manual_only_gate": "code tests pass; no runtime, persistent database, Docker, or staging verification"
+}

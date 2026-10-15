@@ -1,0 +1,483 @@
+/* Admin report queues use document scrolling at every viewport and zoom level. */
+body.admin-portal .reports-ops-main,
+body.admin-portal .reports-content-stack {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    grid-template-rows: none;
+}
+
+body.admin-portal .report-list-panel {
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 16px;
+    min-width: 0;
+    overflow: visible;
+}
+
+body.admin-portal .report-list-panel .panel-head {
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 0;
+}
+
+body.admin-portal .report-feed-toolbar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+body.admin-portal .report-feed-toolbar .btn {
+    width: auto;
+    min-height: 44px;
+    padding: 10px 14px;
+}
+
+body.admin-portal .report-manage-menu {
+    min-width: 0;
+}
+
+body.admin-portal .report-manage-menu > summary {
+    gap: 8px;
+    list-style: none;
+    cursor: pointer;
+}
+
+body.admin-portal .report-manage-menu > summary::-webkit-details-marker {
+    display: none;
+}
+
+body.admin-portal .report-manage-menu[open] > summary {
+    border-color: var(--blue);
+}
+
+body.admin-portal .report-manage-actions {
+    padding-top: 8px;
+}
+
+body.admin-portal .report-manage-actions .btn {
+    white-space: normal;
+}
+
+body.admin-portal .report-export-menu {
+    position: relative;
+    z-index: 20;
+}
+
+body.admin-portal .report-export-menu > summary {
+    gap: 8px;
+    list-style: none;
+    cursor: pointer;
+}
+
+body.admin-portal .report-export-menu > summary::-webkit-details-marker {
+    display: none;
+}
+
+body.admin-portal .report-export-menu[open] > summary {
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--blue) 22%, transparent);
+}
+
+body.admin-portal .report-export-panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 30;
+    width: min(410px, calc(100vw - 28px));
+    max-height: min(72vh, 620px);
+    overflow: auto;
+    padding: 16px;
+    border: 1px solid var(--line, #d8e2e9);
+    border-radius: 16px;
+    background: var(--surface, #fff);
+    box-shadow: 0 18px 48px rgb(12 30 48 / 18%);
+}
+
+body.admin-portal .report-export-panel form {
+    display: grid;
+    gap: 12px;
+}
+
+body.admin-portal .report-export-panel select,
+body.admin-portal .report-export-panel input {
+    width: 100%;
+    min-width: 0;
+}
+
+body.admin-portal .report-export-help,
+body.admin-portal .report-export-timezone,
+body.admin-portal .report-export-feedback {
+    margin: 0;
+    color: var(--muted, #52677a);
+    font-size: 0.88rem;
+    line-height: 1.45;
+}
+
+body.admin-portal .report-export-sensitive-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid var(--line, #d8e2e9);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--amber, #a65e00) 7%, var(--surface, #fff));
+    cursor: pointer;
+}
+
+body.admin-portal .report-export-sensitive-option input {
+    flex: 0 0 auto;
+    width: 18px;
+    min-height: 18px;
+    margin-top: 2px;
+    accent-color: var(--primary, #af101a);
+}
+
+body.admin-portal .report-export-sensitive-option span {
+    display: grid;
+    gap: 3px;
+}
+
+body.admin-portal .report-export-sensitive-option strong {
+    color: var(--ink, #182a3a);
+    font-size: 0.9rem;
+}
+
+body.admin-portal .report-export-sensitive-option small {
+    color: var(--muted, #52677a);
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+body.admin-portal .report-export-date-fields,
+body.admin-portal .report-export-downloads {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+body.admin-portal .report-export-downloads .btn {
+    justify-content: center;
+    min-width: 0;
+    min-height: 44px;
+    padding: 9px 10px;
+    white-space: normal;
+    text-align: center;
+}
+
+body.admin-portal .report-export-panel [hidden] {
+    display: none !important;
+}
+
+body.admin-portal .report-list-panel .monitor-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    gap: 16px;
+    min-width: 0;
+    min-height: 0;
+    overflow: visible;
+}
+
+body.admin-portal .report-list-panel .incident-stack {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+    gap: 12px;
+    height: auto;
+    max-height: none;
+    min-width: 0;
+    overflow: visible;
+    padding: 0;
+    scrollbar-gutter: auto;
+}
+
+body.admin-portal .report-list-panel .incident-feed-row {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+    border-radius: 16px;
+    background: var(--surface);
+    box-shadow: none;
+}
+
+body.admin-portal .report-list-panel .incident-stack > .data-empty {
+    grid-column: 1 / -1;
+}
+
+body.admin-portal .report-list-panel .incident-feed-row.process-pending {
+    background: var(--surface);
+    border-color: rgba(209, 139, 31, .38);
+}
+
+body.admin-portal .report-list-panel .incident-feed-row-summary {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    height: auto;
+    min-height: 0;
+    min-width: 0;
+    gap: 12px;
+    padding: 16px;
+}
+
+body.admin-portal .report-list-panel .incident-feed-row-summary > * {
+    min-width: 0;
+    max-width: 100%;
+    grid-column: auto;
+    overflow-wrap: anywhere;
+}
+
+body.admin-portal .report-list-panel .incident-feed-row-type {
+    display: grid;
+    justify-content: stretch;
+    gap: 8px;
+}
+
+body.admin-portal .report-list-panel .incident-feed-row-type > strong {
+    font-size: 1.0625rem;
+    line-height: 1.35;
+}
+
+body.admin-portal .report-list-panel .incident-feed-row-type > small {
+    display: none;
+}
+
+body.admin-portal .incident-feed-card-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+body.admin-portal .report-list-panel .tag,
+body.admin-portal .report-list-panel .badge {
+    max-width: 100%;
+    padding: 5px 9px;
+    font-size: .75rem;
+    letter-spacing: .025em;
+    line-height: 1.4;
+    white-space: normal;
+}
+
+body.admin-portal .report-list-panel .incident-feed-row-location {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+}
+
+body.admin-portal .report-list-panel .incident-feed-row-location > strong,
+body.admin-portal .report-list-panel .incident-feed-row-ai > strong {
+    font-size: .875rem;
+    line-height: 1.4;
+}
+
+body.admin-portal .report-list-panel .incident-feed-row-location > small {
+    display: none;
+}
+
+body.admin-portal .report-list-panel .incident-feed-row-ai {
+    gap: 4px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface-alt);
+}
+
+body.admin-portal .report-list-panel .incident-feed-row-ai > span {
+    font-size: .6875rem;
+    letter-spacing: .065em;
+}
+
+body.admin-portal .report-list-panel .incident-feed-row-ai > small {
+    display: block;
+    margin: 0;
+    font-size: .8125rem;
+    line-height: 1.45;
+    overflow: visible;
+    -webkit-line-clamp: unset;
+}
+
+body.admin-portal .report-list-panel .incident-feed-row-main {
+    align-items: flex-start;
+    gap: 10px;
+}
+
+body.admin-portal .report-list-panel .incident-feed-row-main .civilian-account-status-dot {
+    width: 8px;
+    height: 8px;
+    margin-top: 6px;
+    box-shadow: none;
+}
+
+body.admin-portal .report-list-panel .incident-feed-row-main strong {
+    font-size: .8125rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+body.admin-portal .report-list-panel .incident-feed-row-main small {
+    margin-top: 3px;
+    font-size: .8125rem;
+    line-height: 1.45;
+}
+
+body.admin-portal .report-list-panel .incident-feed-row-map {
+    margin-top: auto;
+}
+
+body.admin-portal .report-list-panel .incident-feed-mini-map,
+body.admin-portal .report-list-panel .incident-feed-map-empty {
+    height: 100px;
+    min-height: 100px;
+    border-radius: 10px;
+}
+
+body.admin-portal .report-list-panel .incident-feed-review-button {
+    width: 100%;
+    min-height: 44px;
+    pointer-events: auto;
+}
+
+body.admin-portal .report-list-panel .report-page-toggle {
+    flex-wrap: wrap;
+    align-self: auto;
+    margin: 0;
+    padding: 12px 0 0;
+    border: 0;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+}
+
+body.admin-portal .report-list-panel .report-page-arrow {
+    width: 44px;
+    height: 44px;
+}
+
+body.admin-portal .report-list-panel .report-page-index {
+    min-height: 44px;
+    padding: 0 12px;
+}
+
+body.admin-portal .report-list-panel .report-pagination-meta {
+    font-size: .75rem;
+    letter-spacing: .025em;
+}
+
+body.admin-portal .report-filter-modal {
+    padding: 16px;
+}
+
+body.admin-portal .report-filter-modal-shell {
+    width: 100%;
+    min-width: 0;
+    max-width: 920px;
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+    min-height: 0;
+    padding: 20px;
+    border-radius: 18px;
+}
+
+body.admin-portal .report-filter-modal-body {
+    min-height: 0;
+    overflow: auto;
+    padding-right: 0;
+}
+
+body.admin-portal .report-filter-modal-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+    align-items: end;
+    gap: 16px;
+    min-width: 0;
+}
+
+body.admin-portal .report-filter-modal-grid .field,
+body.admin-portal .report-filter-modal-grid .button-row {
+    min-width: 0;
+}
+
+body.admin-portal .report-filter-modal-grid .field label {
+    font-size: .8125rem;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+body.admin-portal .report-filter-modal-grid .input,
+body.admin-portal .report-filter-modal-grid select,
+body.admin-portal .report-filter-modal-grid .btn {
+    min-height: 44px;
+    max-width: 100%;
+}
+
+body.admin-portal .report-filter-modal-actions .button-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-start;
+}
+
+body.admin-portal .report-filter-modal-actions .btn {
+    width: auto;
+}
+
+@media (min-width: 768px) {
+    body.admin-portal .report-list-panel .incident-stack {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1280px) {
+    body.admin-portal .report-list-panel .incident-stack {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    body.admin-portal .report-list-panel .panel-head {
+        align-items: stretch;
+    }
+
+    body.admin-portal .report-filter-modal-shell {
+        padding: 14px;
+    }
+
+    body.admin-portal .report-feed-toolbar,
+    body.admin-portal .report-list-panel .report-page-controls {
+        width: 100%;
+    }
+
+    body.admin-portal .report-export-menu {
+        position: static;
+    }
+
+    body.admin-portal .report-export-menu > summary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    body.admin-portal .report-export-panel {
+        position: fixed;
+        top: auto;
+        right: 8px;
+        bottom: 12px;
+        left: 8px;
+        width: auto;
+        max-height: 76dvh;
+        margin: 0 auto;
+    }
+
+    body.admin-portal .report-filter-modal-actions .btn {
+        flex: 1 1 100%;
+    }
+}

@@ -1,0 +1,42 @@
+{
+  "captured_at_local": "2026-10-05T16:40:00+08:00",
+  "os": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.0 (tags/v3.13.0:60403a5, Oct  7 2024, 09:38:07) [MSC v.1941 64 bit (AMD64)]",
+  "python_executable": "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\.venv-text\\Scripts\\python.exe",
+  "python_architecture": "64bit",
+  "pip": "pip 24.2 from C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\.venv-text\\Lib\\site-packages\\pip (python 3.13)",
+  "cpu": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+  "logical_cpus": 12,
+  "ram": {
+    "total_bytes": 7738183680,
+    "available_bytes": 1347022848,
+    "available_mib": 1284.6,
+    "memory_load_percent": 82
+  },
+  "disk_c": {
+    "total": 482343907328,
+    "used": 328382156800,
+    "free": 153961750528
+  },
+  "gpu_nvidia_smi": "Mon Oct  5 16:48:43 2026       \n+-----------------------------------------------------------------------------------------+\n| NVIDIA-SMI 591.86                 Driver Version: 591.86         CUDA Version: 13.1     |\n+-----------------------------------------+------------------------+----------------------+\n| GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n|                                         |                        |               MIG M. |\n|=========================================+========================+======================|\n|   0  NVIDIA GeForce RTX 3050 ...  WDDM  |   00000000:01:00.0 Off |                  N/A |\n| N/A   46C    P0              5W /   40W |       0MiB /   4096MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n\n+-----------------------------------------------------------------------------------------+\n| Processes:                                                                              |\n|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n|        ID   ID                                                               Usage      |\n|=========================================================================================|\n|  No running processes found                                                             |\n+-----------------------------------------------------------------------------------------+",
+  "gpu_query": "NVIDIA GeForce RTX 3050 Laptop GPU, 8.6, 4096 MiB, 3962 MiB, 591.86",
+  "cuda_driver_visible_version": "13.1 (nvidia-smi)",
+  "project_text_environment_before": {
+    "path": "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\.venv-text\\Scripts\\python.exe",
+    "torch": "2.11.0+cpu",
+    "torch_cuda": null,
+    "cuda_available": false,
+    "packages": {
+      "transformers": "4.57.6",
+      "tokenizers": "0.22.2",
+      "accelerate": null,
+      "safetensors": "0.8.0",
+      "scikit-learn": "1.9.1"
+    }
+  },
+  "new_isolated_environment": {
+    "path": "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\.venv-xlmrt-fulltrain",
+    "created": true,
+    "initially_installed_torch": false
+  }
+}

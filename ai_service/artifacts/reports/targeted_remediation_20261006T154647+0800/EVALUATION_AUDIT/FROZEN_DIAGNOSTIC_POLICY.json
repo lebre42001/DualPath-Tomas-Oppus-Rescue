@@ -1,0 +1,101 @@
+{
+  "policy_id": "calibration-only-diagnostic-temperature-20261006T154647+0800",
+  "frozen_at_utc": "2026-10-06T08:27:13.391881+00:00",
+  "temperature": 0.9650815498061598,
+  "temperature_fit": "minimum multiclass NLL by bounded scalar optimization over calibration-only log probabilities, T in [0.05,10]",
+  "threshold": 0.65,
+  "threshold_selection": "unchanged existing protocol diagnostic threshold .65; no threshold tuning/selection",
+  "intended_use": "research diagnostic comparisons only; no operational recommendation or active model metadata change",
+  "calibration_n": 83,
+  "calibration_fingerprint": "acc76790d953fc61d14f3c0a656cb539ea12119f993ab4640cf418420a1c3a15",
+  "calibration_prediction_sha256": "d1dd023b33ea93dfc0abcfaa4d0f5db4f1bc8381684bc25d8660c1ac7d0628b1",
+  "calibration_csv_sha256": "de03d3b1e6c0ce7c3b448b6c6e810d9b88c488f5307c3f1c41f004233547958b",
+  "calibration_raw_quality": {
+    "nll": 0.41618456591010533,
+    "multiclass_brier": 0.20798033158525236,
+    "ece_10_equal_width": 0.02502996124416947,
+    "bins": [
+      {
+        "interval": "[0.4,0.5)",
+        "n": 2,
+        "accuracy": 0.0,
+        "mean_confidence": 0.449565127491951
+      },
+      {
+        "interval": "[0.5,0.6)",
+        "n": 4,
+        "accuracy": 0.5,
+        "mean_confidence": 0.5590977668762207
+      },
+      {
+        "interval": "[0.6,0.7)",
+        "n": 3,
+        "accuracy": 0.6666666666666666,
+        "mean_confidence": 0.6348750193913778
+      },
+      {
+        "interval": "[0.7,0.8)",
+        "n": 10,
+        "accuracy": 0.8,
+        "mean_confidence": 0.7563965678215027
+      },
+      {
+        "interval": "[0.8,0.9)",
+        "n": 13,
+        "accuracy": 0.8461538461538461,
+        "mean_confidence": 0.866112076319181
+      },
+      {
+        "interval": "[0.9,1.0]",
+        "n": 51,
+        "accuracy": 0.9411764705882353,
+        "mean_confidence": 0.9382137410780963
+      }
+    ]
+  },
+  "calibration_temperature_scaled_quality": {
+    "nll": 0.4157282539863412,
+    "multiclass_brier": 0.20806850076418967,
+    "ece_10_equal_width": 0.054225684486227776,
+    "bins": [
+      {
+        "interval": "[0.4,0.5)",
+        "n": 2,
+        "accuracy": 0.0,
+        "mean_confidence": 0.45469074495621936
+      },
+      {
+        "interval": "[0.5,0.6)",
+        "n": 3,
+        "accuracy": 0.3333333333333333,
+        "mean_confidence": 0.5504216875724716
+      },
+      {
+        "interval": "[0.6,0.7)",
+        "n": 4,
+        "accuracy": 0.75,
+        "mean_confidence": 0.6360029335797371
+      },
+      {
+        "interval": "[0.7,0.8)",
+        "n": 8,
+        "accuracy": 0.875,
+        "mean_confidence": 0.7590277058797734
+      },
+      {
+        "interval": "[0.8,0.9)",
+        "n": 11,
+        "accuracy": 0.7272727272727273,
+        "mean_confidence": 0.853299497360172
+      },
+      {
+        "interval": "[0.9,1.0]",
+        "n": 55,
+        "accuracy": 0.9454545454545454,
+        "mean_confidence": 0.9423631969068673
+      }
+    ]
+  },
+  "exposed_test_or_challenge_read_before_freeze": true,
+  "sequencing_correction": "Coordinator inspected preliminary exposed-test metrics before calibration policy froze; initial evaluation ordering was imperfect. No training/checkpoint selection changed. Final metrics are recalculated from preserved probabilities after the calibration-only policy freeze."
+}

@@ -1,0 +1,21 @@
+{
+  "historical_restricted_csv_count": 60,
+  "existing_paths_found": 60,
+  "readable_and_hashable": 0,
+  "diagnostic": "Access denied/permission issue; no ACL/security changes performed.",
+  "historical_scan_counts": {
+    "prior_accessible_scan_a": 1732,
+    "prior_accessible_scan_b": 2708,
+    "reconciled": false
+  },
+  "current_rescan": {
+    "paths": 76,
+    "readable_paths": 16,
+    "unique_content_hashes": 14,
+    "parsed_rows_across_paths": 6724,
+    "rows_after_hash_collapse": 6244,
+    "nonblank_text_rows": 4974,
+    "punctuation_normalized_keys": 1410
+  },
+  "detailed_evidence": "FAMILY_EXPOSURE_AUDIT/FAMILY_EXPOSURE_AUDIT.json and RECORDED_60_FILE_ACCESS_PROBES.csv"
+}

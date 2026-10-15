@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#c91c21">
+    <title>Bontoc Rescue | Offline</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #eef5fb;
+            --ink: #102332;
+            --muted: #627181;
+            --line: rgba(15, 31, 47, 0.12);
+            --accent: #c91c21;
+            --panel: rgba(255, 255, 255, 0.94);
+            --shadow: 0 24px 60px rgba(12, 25, 39, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            font-family: "Trebuchet MS", "Aptos", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at top left, rgba(255, 255, 255, 0.96), transparent 28%),
+                radial-gradient(circle at 88% 12%, rgba(201, 28, 33, 0.12), transparent 24%),
+                linear-gradient(180deg, #f8fbff 0%, #edf4fb 34%, #e5edf4 100%);
+        }
+
+        .shell {
+            width: min(720px, 100%);
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            padding: 32px;
+            display: grid;
+            gap: 18px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: var(--accent);
+            box-shadow: 0 0 0 6px rgba(201, 28, 33, 0.12);
+        }
+
+        h1 {
+            margin: 0;
+            font-family: "Bahnschrift", "Trebuchet MS", sans-serif;
+            font-size: clamp(2rem, 6vw, 3.4rem);
+            line-height: 0.96;
+            letter-spacing: -0.05em;
+        }
+
+        p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: 0 18px;
+            border-radius: 999px;
+            font-weight: 800;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #c91c21, #9f1318);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: #fff;
+            color: var(--ink);
+            border: 1px solid var(--line);
+        }
+
+        .tips {
+            display: grid;
+            gap: 10px;
+            padding: 18px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid var(--line);
+        }
+
+        .tips strong {
+            font-size: 0.86rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 18px;
+            color: var(--muted);
+            line-height: 1.75;
+        }
+
+        @media (max-width: 640px) {
+            .shell {
+                padding: 24px 20px;
+                border-radius: 24px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="shell">
+        <p class="eyebrow">Bontoc Rescue Offline</p>
+        <h1>Connection is weak right now.</h1>
+        <p>The Progressive Web App is still available, but the live emergency dashboard needs internet access to refresh reports, maps, and responder updates.</p>
+        <div class="actions">
+            <a class="btn btn-primary" href="/dashboard">Try Again</a>
+            <a class="btn btn-secondary" href="/reports">Open Cached Reports</a>
+        </div>
+        <section class="tips">
+            <strong>What still helps</strong>
+            <ul>
+                <li>Re-open the app once your signal returns.</li>
+                <li>If you already installed the app, launch it from your home screen for the fastest recovery.</li>
+                <li>Use LoRa fallback and responder coordination procedures if internet is unavailable.</li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>

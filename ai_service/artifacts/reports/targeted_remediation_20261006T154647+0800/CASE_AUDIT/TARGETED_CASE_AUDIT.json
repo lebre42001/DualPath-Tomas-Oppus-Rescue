@@ -1,0 +1,730 @@
+{
+  "audit": {
+    "created_at_local": "2026-10-06T15:49:13+08:00",
+    "purpose": "Read-only priority-case failure audit; no labels changed, no training performed.",
+    "latest_nine_undertriage_case_ids": [
+      "CEB-CRITICAL-001",
+      "CEB-CRITICAL-003",
+      "CEB-CRITICAL-010",
+      "CEB-CRITICAL-024",
+      "EN-143",
+      "EN-235",
+      "MX-CRITICAL-002",
+      "MX-CRITICAL-013",
+      "TL-126"
+    ],
+    "older_six_case_ids": [
+      "CEB-CRITICAL-001",
+      "CEB-CRITICAL-003",
+      "CEB-CRITICAL-024",
+      "MX-CRITICAL-002",
+      "MX-CRITICAL-013",
+      "TL-126"
+    ],
+    "overlap_case_ids": [
+      "CEB-CRITICAL-001",
+      "CEB-CRITICAL-003",
+      "CEB-CRITICAL-024",
+      "MX-CRITICAL-002",
+      "MX-CRITICAL-013",
+      "TL-126"
+    ],
+    "union_case_ids": [
+      "CEB-CRITICAL-001",
+      "CEB-CRITICAL-003",
+      "CEB-CRITICAL-010",
+      "CEB-CRITICAL-024",
+      "EN-143",
+      "EN-235",
+      "MX-CRITICAL-002",
+      "MX-CRITICAL-013",
+      "TL-126"
+    ],
+    "counts": {
+      "latest_nine": 9,
+      "older_six": 6,
+      "overlap": 6,
+      "union": 9,
+      "present_in_81_row_audit": 8,
+      "not_present_in_81_row_audit": [
+        "EN-235"
+      ]
+    },
+    "undertriage_definition": "From exact fresh-test predictions: actual serious/critical; argmax predicted label has lower urgency rank where needs_review < minor < serious < critical. This reproduces nine cases (all actual critical). This is raw classifier undertriage, not the threshold-routed result.",
+    "routing_rule_recomputed": "If maximum raw softmax < 0.65 route to human_review/needs_review; otherwise automatic argmax. Threshold is explicitly not calibrated.",
+    "method": "Text-first notes were written as separate fields before model probabilities are presented in the per-case comparison. This is not a genuinely blinded independent human review: the agent had already inspected output containing the source predictions during setup, and is not a fluent human reviewer or accountable responder. Interpretations are provisional and should not be treated as label decisions.",
+    "rubric_review": {
+      "recorded_version": "TEXT-RUBRIC-0.2-B",
+      "accessible_reference_files": [
+        "ai_service/datasets/emergency_text/annotation_guide.md",
+        "ai_service/datasets/emergency_text/experiments/provisional_xlmr_challenge_intake_20261005/README.md"
+      ],
+      "finding": "The dataset provenance records 0.2-B. annotation_guide.md calls itself a draft and has no 0.2-B version tag. Challenge-intake README says 0.2-B Policy B formal accountable approval is pending. Exact canonical rubric text was not located. Interpretations therefore rely on the accessible provisional guide, not a verified canonical 0.2-B artifact."
+    },
+    "source_hashes_sha256": {
+      "ai_service\\artifacts\\reports\\xlmr_850_humanconfirmed_fulltrain_20261006_1411\\exact_test_predictions.json": "094c866794e2de30bfc3ffdd3e4473195866c1e327e0c74dbddcc922f95fad4d",
+      "ai_service\\artifacts\\reports\\xlmr_850_humanconfirmed_fulltrain_20261006_1411\\AI_DISAGREEMENT_REPORT.csv": "19e55c8ed4460cf1ce40ab52a019458caaa6cec610e49835f52cc230a30323c3",
+      "ai_service\\datasets\\emergency_text\\reviewed\\civilian_multilingual_850_humanconfirmed_20261006T141537+0800\\reports.csv": "405dee8f46be0021aa590e72989dbb64a7b4d3a8b53457eb80b00c58a17f6443",
+      "ai_service\\datasets\\emergency_text\\reviewed\\civilian_multilingual_850_humanconfirmed_20261006T141537+0800\\provenance.csv": "dbdfab58ab2a02a72ac705d1e687022eac68994f62131168235f35def0a61a0f",
+      "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\artifacts\\reports\\xlmr_850_humanconfirmed_fulltrain_20261006_1411\\SPLIT_MANIFEST.json": "379aa746d819c63c57499f8537fc794ab69cc6b154cbe12327e7f914f34efe67",
+      "ai_service\\artifacts\\reports\\xlmr_850_humanconfirmed_fulltrain_20261006_1411\\HIGH_RISK_SIX_AUDIT.json": "0666e8f92261f2388234dc3b0d3d7cc4a139864f5814f1a6f6ca76fccbd77316",
+      "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\datasets\\emergency_text\\annotation_guide.md": "bc11cba13b2aefa495cc932b8b18ee2251804db0ba802a17fd094b03cc85bab3",
+      "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\datasets\\emergency_text\\experiments\\provisional_xlmr_challenge_intake_20261005\\README.md": "f72a21006bba227556aa6bac71617aaf8f9200d48bfbd26222b76f1d73342a1f",
+      "ai_service/datasets/emergency_text/reviewed/civilian_multilingual_850_humanconfirmed_20261006T141537+0800/RESPONDER_BATCH_ATTESTATION.json": "fedf37c5dd7f6c8840a5a08fa151ae321697476050e13aa3a0f93ef8f354648b",
+      "ai_service/artifacts/checkpoints/text_xlmr_850_humanconfirmed_fulltrain_20261006_1411/model.safetensors": "053a2851d3e1a9fb342825bc86a786a49baad7e06f51c6a8442a655f97fe6881",
+      "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/ACCEPTANCE_GATE.json": "74695b7f8ae5baa03a447072ac20d981cab4afed5cd08ed896beb95b73146736",
+      "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/HIGH_RISK_REGRESSION_COMPARISON.json": "c97a1a6f83d1e30b701e6eb0606a4468aa4a15f482bfdf25cba5dbd69bb92237"
+    },
+    "commands": [
+      "Read-only PowerShell directory/file inspection.",
+      "C:\\laragon\\bin\\python\\python-3.13\\python.exe - (inline analysis): parsed exact_test_predictions.json, AI_DISAGREEMENT_REPORT.csv, SPLIT_MANIFEST.json, HIGH_RISK_SIX_AUDIT.json, reviewed reports.csv and provenance.csv; recomputed argmax, undertriage union, threshold routing, lineage joins, and hashes."
+    ],
+    "limitations": [
+      "All descriptions are synthetic-origin.",
+      "Batch confirmation is project-owner-attested, not independently corroborated.",
+      "No label change or human decision is asserted.",
+      "Fluent Tagalog/Cebuano validation and responder adjudication remain required.",
+      "Exact canonical TEXT-RUBRIC-0.2-B text is unavailable in accessible sources."
+    ],
+    "checks": {
+      "exact_test_prediction_rows": 84,
+      "latest_undertriage_recomputed": 9,
+      "older_six_case_ids": 6,
+      "overlap": 6,
+      "union": 9,
+      "unique_cases_present_in_exact_test": 9,
+      "ai_audit_nonagree_rows": 81,
+      "union_present_in_ai_nonagree_audit": 8,
+      "union_absent_from_81_row_audit": [
+        "EN-235"
+      ]
+    },
+    "notes_on_previous_exposure": "The supplied old-six artifact contains prior-model predictions for six overlapping IDs only. It does not provide a machine-readable historical partition manifest here; prior exposure is stated in the run report, so no historic split is inferred per case. Current run split is separately recorded as test."
+  },
+  "cases": [
+    {
+      "case_id": "CEB-CRITICAL-001",
+      "exact_text": "Pasahero, walay ginhawa.",
+      "language": "ceb",
+      "human_attested_label": "critical",
+      "attestation_scope": "project-owner-attested verbal batch; no direct responder record; synthetic-origin source",
+      "rubric_version_recorded_in_provenance": "TEXT-RUBRIC-0.2-B",
+      "rubric_source_limit": "TEXT-RUBRIC-0.2-B is named in provenance; its exact approved text was not found. Accessible annotation_guide.md is explicitly provisional and not versioned 0.2-B; accessible intake README says Policy B approval pending.",
+      "model": {
+        "prediction_split": "test",
+        "model_version": "text-20261006T062737855310Z",
+        "raw_prediction": "minor",
+        "probabilities_by_label": {
+          "minor": 0.9078455567359924,
+          "serious": 0.017959268763661385,
+          "critical": 0.061924394220113754,
+          "needs_review": 0.012270838022232056
+        },
+        "max_raw_softmax_uncalibrated": 0.9078455567359924,
+        "routing_threshold": 0.65,
+        "threshold_calibrated": false,
+        "routing_result": "automatic",
+        "routed_label": "minor",
+        "probability_order_matches_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ]
+      },
+      "original_split": "fresh_test",
+      "lineage": {
+        "group_id_from_prediction": "FS-e57689a077b39f8f",
+        "scenario_family_id": "CEB-FAM-CRITICAL-001",
+        "annotation_group_id": "CEB-GRP-CRITICAL-001",
+        "parent_case_id": "",
+        "relationship_type": "original_draft",
+        "source_text_sha256": "81490c9cb36101ade6ff4421b1c76580a40bbfbd16137a036a73f61ddf123063"
+      },
+      "latest_nine_undertriage": true,
+      "older_six_regression_list": true,
+      "in_union_of_both": true,
+      "in_81_row_disagreement_uncertainty_audit": true,
+      "ai_81_row_audit": {
+        "ai_suggested_label": "minor",
+        "ai_agreement": "DISAGREE",
+        "ai_review_decision": "FLAG_FOR_FUTURE_HUMAN_RECHECK",
+        "semantic_ambiguity": "",
+        "person_object_risks": "",
+        "negation_risk": "NEGATION_SCOPE_REQUIRES_READING",
+        "keyword_shortcut_risks": "SHORT_TEXT_PANIC_OR_UNDERSPECIFIED",
+        "concise_rationale": "raw XLM-R=minor; source attested label=critical; raw-softmax max=0.795 (uncalibrated) checkpoint exposure=fresh_test rule flags=KNOWN_FRESH_TEST_CRITICAL_UNDERRANKING,SHORT_TEXT_PANIC_OR_UNDERSPECIFIED,NEGATION_SCOPE_REQUIRES_READING,MODEL_HIGH_RISK_UNDERSCORING pattern flags are review prompts only; not severity adjudication"
+      },
+      "text_first_assessment": "A passenger is described as having no breath/breathing. If this phrase means the passenger is not breathing, it is an explicit grave danger under the accessible provisional guide.",
+      "decisive_span": "walay ginhawa",
+      "uncertainty": "Cebuano scope/idiom and whether this denotes absent breathing versus a different breathing complaint require fluent Cebuano review. Three-word message lacks timing/context.",
+      "classification": [
+        "semantic ambiguity",
+        "model disagreement"
+      ],
+      "proposed_action_for_human_confirmation": "KEEP_LABEL",
+      "action_limit": "Analytical recommendation only; no label changed and no responder decision inferred.",
+      "historical_previous_checkpoint_comparison": {
+        "human_attested_label": "critical",
+        "old_prediction": "minor",
+        "old_confidence_raw": "0.79480040",
+        "new_prediction": "minor",
+        "new_confidence_raw": 0.9078455567359924,
+        "route_at_0_65": "minor",
+        "status": "STILL_UNDERTRIAGED",
+        "interpretation": "attested synthetic label; AI comparisons are diagnostic; no label correction"
+      }
+    },
+    {
+      "case_id": "CEB-CRITICAL-003",
+      "exact_text": "Naigo sa awto ang siklista; dili siya motubag ug kusog ang dugo nga nag-agas karon.",
+      "language": "ceb",
+      "human_attested_label": "critical",
+      "attestation_scope": "project-owner-attested verbal batch; no direct responder record; synthetic-origin source",
+      "rubric_version_recorded_in_provenance": "TEXT-RUBRIC-0.2-B",
+      "rubric_source_limit": "TEXT-RUBRIC-0.2-B is named in provenance; its exact approved text was not found. Accessible annotation_guide.md is explicitly provisional and not versioned 0.2-B; accessible intake README says Policy B approval pending.",
+      "model": {
+        "prediction_split": "test",
+        "model_version": "text-20261006T062737855310Z",
+        "raw_prediction": "minor",
+        "probabilities_by_label": {
+          "minor": 0.4741027355194092,
+          "serious": 0.08978775143623352,
+          "critical": 0.42694857716560364,
+          "needs_review": 0.009160937741398811
+        },
+        "max_raw_softmax_uncalibrated": 0.4741027355194092,
+        "routing_threshold": 0.65,
+        "threshold_calibrated": false,
+        "routing_result": "human_review",
+        "routed_label": "needs_review",
+        "probability_order_matches_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ]
+      },
+      "original_split": "fresh_test",
+      "lineage": {
+        "group_id_from_prediction": "FS-c9b483986d960069",
+        "scenario_family_id": "CEB-FAM-CRITICAL-003",
+        "annotation_group_id": "CEB-GRP-CRITICAL-003",
+        "parent_case_id": "",
+        "relationship_type": "original_draft",
+        "source_text_sha256": "24304a7980e6556df4f2831a511f179c3adbd14caeab64ff129be5d21b9c65a6"
+      },
+      "latest_nine_undertriage": true,
+      "older_six_regression_list": true,
+      "in_union_of_both": true,
+      "in_81_row_disagreement_uncertainty_audit": true,
+      "ai_81_row_audit": {
+        "ai_suggested_label": "needs_review",
+        "ai_agreement": "UNCERTAIN",
+        "ai_review_decision": "FLAG_FOR_FUTURE_HUMAN_RECHECK",
+        "semantic_ambiguity": "",
+        "person_object_risks": "",
+        "negation_risk": "NEGATION_SCOPE_REQUIRES_READING",
+        "keyword_shortcut_risks": "",
+        "concise_rationale": "raw XLM-R=minor; source attested label=critical; raw-softmax max=0.586 (uncalibrated) checkpoint exposure=fresh_test rule flags=KNOWN_FRESH_TEST_CRITICAL_UNDERRANKING,NEGATION_SCOPE_REQUIRES_READING,MODEL_HIGH_RISK_UNDERSCORING,PROVISIONAL_THRESHOLD_WOULD_ROUTE_TO_REVIEW pattern flags are review prompts only; not severity adjudication"
+      },
+      "text_first_assessment": "A cyclist was hit by a car; the person is explicitly not responding and heavy bleeding is flowing now. The reported current nonresponse and ongoing heavy bleeding are grave danger cues under the accessible provisional guide.",
+      "decisive_span": "dili siya motubag; kusog ang dugo nga nag-agas karon",
+      "uncertainty": "Confirm fluent Cebuano reading, exact negation/scope, and whether clauses refer to the same cyclist.",
+      "classification": [
+        "model disagreement"
+      ],
+      "proposed_action_for_human_confirmation": "KEEP_LABEL",
+      "action_limit": "Analytical recommendation only; no label changed and no responder decision inferred.",
+      "historical_previous_checkpoint_comparison": {
+        "human_attested_label": "critical",
+        "old_prediction": "minor",
+        "old_confidence_raw": "0.58555275",
+        "new_prediction": "minor",
+        "new_confidence_raw": 0.4741027355194092,
+        "route_at_0_65": "needs_review",
+        "status": "ROUTED_TO_REVIEW",
+        "interpretation": "attested synthetic label; AI comparisons are diagnostic; no label correction"
+      }
+    },
+    {
+      "case_id": "CEB-CRITICAL-010",
+      "exact_text": "Naghuot ginhawa sa pasahero; halos dili mosaka dughan.",
+      "language": "ceb",
+      "human_attested_label": "critical",
+      "attestation_scope": "project-owner-attested verbal batch; no direct responder record; synthetic-origin source",
+      "rubric_version_recorded_in_provenance": "TEXT-RUBRIC-0.2-B",
+      "rubric_source_limit": "TEXT-RUBRIC-0.2-B is named in provenance; its exact approved text was not found. Accessible annotation_guide.md is explicitly provisional and not versioned 0.2-B; accessible intake README says Policy B approval pending.",
+      "model": {
+        "prediction_split": "test",
+        "model_version": "text-20261006T062737855310Z",
+        "raw_prediction": "serious",
+        "probabilities_by_label": {
+          "minor": 0.05823748558759689,
+          "serious": 0.8649397492408752,
+          "critical": 0.06706810742616653,
+          "needs_review": 0.009754651226103306
+        },
+        "max_raw_softmax_uncalibrated": 0.8649397492408752,
+        "routing_threshold": 0.65,
+        "threshold_calibrated": false,
+        "routing_result": "automatic",
+        "routed_label": "serious",
+        "probability_order_matches_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ]
+      },
+      "original_split": "fresh_test",
+      "lineage": {
+        "group_id_from_prediction": "FS-7a89fe572e6d101c",
+        "scenario_family_id": "CEB-FAM-CRITICAL-010",
+        "annotation_group_id": "CEB-GRP-CRITICAL-010",
+        "parent_case_id": "",
+        "relationship_type": "original_draft",
+        "source_text_sha256": "53518e0851a39b41f38e8d2fdab9af8ed272a398582a7a7c0cb5f3f91301b6c8"
+      },
+      "latest_nine_undertriage": true,
+      "older_six_regression_list": false,
+      "in_union_of_both": true,
+      "in_81_row_disagreement_uncertainty_audit": true,
+      "ai_81_row_audit": {
+        "ai_suggested_label": "needs_review",
+        "ai_agreement": "UNCERTAIN",
+        "ai_review_decision": "SEMANTIC_AMBIGUITY",
+        "semantic_ambiguity": "OCCUPANT_PRESENT_STATUS_UNSPECIFIED",
+        "person_object_risks": "OCCUPANT_PRESENT_STATUS_UNSPECIFIED",
+        "negation_risk": "NEGATION_SCOPE_REQUIRES_READING",
+        "keyword_shortcut_risks": "SHORT_TEXT_PANIC_OR_UNDERSPECIFIED",
+        "concise_rationale": "raw XLM-R=critical; source attested label=critical; raw-softmax max=0.500 (uncalibrated) checkpoint exposure=fresh_test rule flags=SHORT_TEXT_PANIC_OR_UNDERSPECIFIED,NEGATION_SCOPE_REQUIRES_READING,OCCUPANT_PRESENT_STATUS_UNSPECIFIED,PROVISIONAL_THRESHOLD_WOULD_ROUTE_TO_REVIEW pattern flags are review prompts only; not severity adjudication"
+      },
+      "text_first_assessment": "A passenger has labored breathing and the chest is barely rising. This indicates a potentially grave, active breathing problem, but the accessible guide examples do not state a precise boundary for labored/weak breathing.",
+      "decisive_span": "Naghuot ginhawa sa pasahero; halos dili mosaka dughan",
+      "uncertainty": "Fluent Cebuano reviewer and responder policy needed to distinguish serious from critical; wording does not explicitly say breathing has stopped.",
+      "classification": [
+        "semantic ambiguity",
+        "model disagreement",
+        "unresolved"
+      ],
+      "proposed_action_for_human_confirmation": "UNRESOLVED",
+      "action_limit": "Analytical recommendation only; no label changed and no responder decision inferred.",
+      "historical_previous_checkpoint_comparison": null
+    },
+    {
+      "case_id": "CEB-CRITICAL-024",
+      "exact_text": "Human sa bangga, grabe ang pagdugo sa bukton sa drayber ug dili mohunong.",
+      "language": "ceb",
+      "human_attested_label": "critical",
+      "attestation_scope": "project-owner-attested verbal batch; no direct responder record; synthetic-origin source",
+      "rubric_version_recorded_in_provenance": "TEXT-RUBRIC-0.2-B",
+      "rubric_source_limit": "TEXT-RUBRIC-0.2-B is named in provenance; its exact approved text was not found. Accessible annotation_guide.md is explicitly provisional and not versioned 0.2-B; accessible intake README says Policy B approval pending.",
+      "model": {
+        "prediction_split": "test",
+        "model_version": "text-20261006T062737855310Z",
+        "raw_prediction": "serious",
+        "probabilities_by_label": {
+          "minor": 0.1153959408402443,
+          "serious": 0.814522922039032,
+          "critical": 0.060501981526613235,
+          "needs_review": 0.009579201228916645
+        },
+        "max_raw_softmax_uncalibrated": 0.814522922039032,
+        "routing_threshold": 0.65,
+        "threshold_calibrated": false,
+        "routing_result": "automatic",
+        "routed_label": "serious",
+        "probability_order_matches_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ]
+      },
+      "original_split": "fresh_test",
+      "lineage": {
+        "group_id_from_prediction": "FS-01cda6ddbfcfe61c",
+        "scenario_family_id": "CEB-FAM-CRITICAL-024",
+        "annotation_group_id": "CEB-GRP-CRITICAL-024",
+        "parent_case_id": "",
+        "relationship_type": "original_draft",
+        "source_text_sha256": "92a4820f670779bd1e045d02a355ce364c35c6e7513caf5526690b0d281e353f"
+      },
+      "latest_nine_undertriage": true,
+      "older_six_regression_list": true,
+      "in_union_of_both": true,
+      "in_81_row_disagreement_uncertainty_audit": true,
+      "ai_81_row_audit": {
+        "ai_suggested_label": "needs_review",
+        "ai_agreement": "UNCERTAIN",
+        "ai_review_decision": "FLAG_FOR_FUTURE_HUMAN_RECHECK",
+        "semantic_ambiguity": "",
+        "person_object_risks": "",
+        "negation_risk": "NEGATION_SCOPE_REQUIRES_READING",
+        "keyword_shortcut_risks": "",
+        "concise_rationale": "raw XLM-R=serious; source attested label=critical; raw-softmax max=0.568 (uncalibrated) checkpoint exposure=fresh_test rule flags=KNOWN_FRESH_TEST_CRITICAL_UNDERRANKING,NEGATION_SCOPE_REQUIRES_READING,MODEL_HIGH_RISK_UNDERSCORING,PROVISIONAL_THRESHOLD_WOULD_ROUTE_TO_REVIEW pattern flags are review prompts only; not severity adjudication"
+      },
+      "text_first_assessment": "After a collision, the driver has severe arm bleeding that will not stop. This is consistent with the guide?s ongoing heavy-bleeding critical cue.",
+      "decisive_span": "grabe ang pagdugo sa bukton sa drayber ug dili mohunong",
+      "uncertainty": "Fluent Cebuano validation of the intensity and continuing/negated phrase is required.",
+      "classification": [
+        "model disagreement"
+      ],
+      "proposed_action_for_human_confirmation": "KEEP_LABEL",
+      "action_limit": "Analytical recommendation only; no label changed and no responder decision inferred.",
+      "historical_previous_checkpoint_comparison": {
+        "human_attested_label": "critical",
+        "old_prediction": "serious",
+        "old_confidence_raw": "0.56816733",
+        "new_prediction": "serious",
+        "new_confidence_raw": 0.814522922039032,
+        "route_at_0_65": "serious",
+        "status": "STILL_UNDERTRIAGED",
+        "interpretation": "attested synthetic label; AI comparisons are diagnostic; no label correction"
+      }
+    },
+    {
+      "case_id": "EN-143",
+      "exact_text": "Heavy chest crushing is reported after the bus rollover.",
+      "language": "en",
+      "human_attested_label": "critical",
+      "attestation_scope": "project-owner-attested verbal batch; no direct responder record; synthetic-origin source",
+      "rubric_version_recorded_in_provenance": "TEXT-RUBRIC-0.2-B",
+      "rubric_source_limit": "TEXT-RUBRIC-0.2-B is named in provenance; its exact approved text was not found. Accessible annotation_guide.md is explicitly provisional and not versioned 0.2-B; accessible intake README says Policy B approval pending.",
+      "model": {
+        "prediction_split": "test",
+        "model_version": "text-20261006T062737855310Z",
+        "raw_prediction": "minor",
+        "probabilities_by_label": {
+          "minor": 0.5178844928741455,
+          "serious": 0.05548737198114395,
+          "critical": 0.302247554063797,
+          "needs_review": 0.12438056617975235
+        },
+        "max_raw_softmax_uncalibrated": 0.5178844928741455,
+        "routing_threshold": 0.65,
+        "threshold_calibrated": false,
+        "routing_result": "human_review",
+        "routed_label": "needs_review",
+        "probability_order_matches_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ]
+      },
+      "original_split": "fresh_test",
+      "lineage": {
+        "group_id_from_prediction": "FS-406ee448ccb70b27",
+        "scenario_family_id": "ENF-143",
+        "annotation_group_id": "ENG-143",
+        "parent_case_id": "",
+        "relationship_type": "original_draft",
+        "source_text_sha256": "8289af8cbcbd003604f5a5294bf9fa5e070679b5b2ac6169e1704cc471573329"
+      },
+      "latest_nine_undertriage": true,
+      "older_six_regression_list": false,
+      "in_union_of_both": true,
+      "in_81_row_disagreement_uncertainty_audit": true,
+      "ai_81_row_audit": {
+        "ai_suggested_label": "needs_review",
+        "ai_agreement": "UNCERTAIN",
+        "ai_review_decision": "SEMANTIC_AMBIGUITY",
+        "semantic_ambiguity": "VEHICLE_OR_MECHANISM_WITHOUT_CLEAR_PERSON_STATUS;SEVERE_MECHANISM_WITHOUT_EXPLICIT_PATIENT_CONDITION",
+        "person_object_risks": "VEHICLE_OR_MECHANISM_WITHOUT_CLEAR_PERSON_STATUS",
+        "negation_risk": "",
+        "keyword_shortcut_risks": "SEVERE_MECHANISM_WITHOUT_EXPLICIT_PATIENT_CONDITION",
+        "concise_rationale": "raw XLM-R=critical; source attested label=critical; raw-softmax max=0.502 (uncalibrated) checkpoint exposure=fresh_test rule flags=VEHICLE_OR_MECHANISM_WITHOUT_CLEAR_PERSON_STATUS,SEVERE_MECHANISM_WITHOUT_EXPLICIT_PATIENT_CONDITION,PROVISIONAL_THRESHOLD_WOULD_ROUTE_TO_REVIEW pattern flags are review prompts only; not severity adjudication"
+      },
+      "text_first_assessment": "The report says ?heavy chest crushing? after a bus rollover, but does not clearly name the affected person or whether ?crushing? is chest pain, external compression, or a reported condition. The mechanism alone does not establish injury; patient status is under-specified.",
+      "decisive_span": "?Heavy chest crushing is reported?",
+      "uncertainty": "Meaning and subject are unclear; no explicit symptom attribution, consciousness, breathing, bleeding, entrapment, or current danger is given.",
+      "classification": [
+        "possible label conflict",
+        "semantic ambiguity",
+        "model disagreement",
+        "unresolved"
+      ],
+      "proposed_action_for_human_confirmation": "UNRESOLVED",
+      "action_limit": "Analytical recommendation only; no label changed and no responder decision inferred.",
+      "historical_previous_checkpoint_comparison": null
+    },
+    {
+      "case_id": "EN-235",
+      "exact_text": "A passenger is pinned beneath the dashboard after the crash and cannot be freed; heavy bleeding is continuing from the leg.",
+      "language": "en",
+      "human_attested_label": "critical",
+      "attestation_scope": "project-owner-attested verbal batch; no direct responder record; synthetic-origin source",
+      "rubric_version_recorded_in_provenance": "TEXT-RUBRIC-0.2-B",
+      "rubric_source_limit": "TEXT-RUBRIC-0.2-B is named in provenance; its exact approved text was not found. Accessible annotation_guide.md is explicitly provisional and not versioned 0.2-B; accessible intake README says Policy B approval pending.",
+      "model": {
+        "prediction_split": "test",
+        "model_version": "text-20261006T062737855310Z",
+        "raw_prediction": "serious",
+        "probabilities_by_label": {
+          "minor": 0.03812351077795029,
+          "serious": 0.7207082509994507,
+          "critical": 0.23549379408359528,
+          "needs_review": 0.005674393381923437
+        },
+        "max_raw_softmax_uncalibrated": 0.7207082509994507,
+        "routing_threshold": 0.65,
+        "threshold_calibrated": false,
+        "routing_result": "automatic",
+        "routed_label": "serious",
+        "probability_order_matches_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ]
+      },
+      "original_split": "fresh_test",
+      "lineage": {
+        "group_id_from_prediction": "FS-bf2a9aa45af6d956",
+        "scenario_family_id": "ENF-235",
+        "annotation_group_id": "ENG-235",
+        "parent_case_id": "",
+        "relationship_type": "original_draft",
+        "source_text_sha256": "de986d3892c38db6e3d46079005c2dd22451df69831aae0283408908ff41a6a8"
+      },
+      "latest_nine_undertriage": true,
+      "older_six_regression_list": false,
+      "in_union_of_both": true,
+      "in_81_row_disagreement_uncertainty_audit": false,
+      "ai_81_row_audit": null,
+      "text_first_assessment": "A passenger is pinned under the dashboard, cannot be freed, and has continuing heavy leg bleeding. The report gives both entrapment and ongoing heavy bleeding, consistent with critical cues in the accessible provisional guide.",
+      "decisive_span": "pinned beneath the dashboard ... cannot be freed; heavy bleeding is continuing",
+      "uncertainty": "The source does not clarify whether bleeding is described as very heavy; entrapment plus ongoing bleeding supports urgent/critical review, but exact policy boundary should be confirmed.",
+      "classification": [
+        "model disagreement",
+        "possible label conflict"
+      ],
+      "proposed_action_for_human_confirmation": "KEEP_LABEL",
+      "action_limit": "Analytical recommendation only; no label changed and no responder decision inferred.",
+      "historical_previous_checkpoint_comparison": null
+    },
+    {
+      "case_id": "MX-CRITICAL-002",
+      "exact_text": "Human sa kusog nga bangga, dili motubag ang driver ug shallow na ang paghinga niya ngayon.",
+      "language": "mixed",
+      "human_attested_label": "critical",
+      "attestation_scope": "project-owner-attested verbal batch; no direct responder record; synthetic-origin source",
+      "rubric_version_recorded_in_provenance": "TEXT-RUBRIC-0.2-B",
+      "rubric_source_limit": "TEXT-RUBRIC-0.2-B is named in provenance; its exact approved text was not found. Accessible annotation_guide.md is explicitly provisional and not versioned 0.2-B; accessible intake README says Policy B approval pending.",
+      "model": {
+        "prediction_split": "test",
+        "model_version": "text-20261006T062737855310Z",
+        "raw_prediction": "minor",
+        "probabilities_by_label": {
+          "minor": 0.37114620208740234,
+          "serious": 0.31275078654289246,
+          "critical": 0.30920255184173584,
+          "needs_review": 0.0069004250690341
+        },
+        "max_raw_softmax_uncalibrated": 0.37114620208740234,
+        "routing_threshold": 0.65,
+        "threshold_calibrated": false,
+        "routing_result": "human_review",
+        "routed_label": "needs_review",
+        "probability_order_matches_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ]
+      },
+      "original_split": "fresh_test",
+      "lineage": {
+        "group_id_from_prediction": "FS-eccb3710b89c4707",
+        "scenario_family_id": "MX-FAM-CRITICAL-002",
+        "annotation_group_id": "MX-GRP-CRITICAL-002",
+        "parent_case_id": "",
+        "relationship_type": "original_draft",
+        "source_text_sha256": "9be0408f744cf12fe41074b20bf4a2c67e3211cb2c23681481ffd243dca9e367"
+      },
+      "latest_nine_undertriage": true,
+      "older_six_regression_list": true,
+      "in_union_of_both": true,
+      "in_81_row_disagreement_uncertainty_audit": true,
+      "ai_81_row_audit": {
+        "ai_suggested_label": "minor",
+        "ai_agreement": "DISAGREE",
+        "ai_review_decision": "SEMANTIC_AMBIGUITY",
+        "semantic_ambiguity": "MIXED_LANGUAGE_NATURALNESS_AND_SCOPE_REVIEW",
+        "person_object_risks": "",
+        "negation_risk": "NEGATION_SCOPE_REQUIRES_READING",
+        "keyword_shortcut_risks": "",
+        "concise_rationale": "raw XLM-R=minor; source attested label=critical; raw-softmax max=0.789 (uncalibrated) checkpoint exposure=fresh_test rule flags=KNOWN_FRESH_TEST_CRITICAL_UNDERRANKING,NEGATION_SCOPE_REQUIRES_READING,MIXED_LANGUAGE_NATURALNESS_AND_SCOPE_REVIEW,MODEL_HIGH_RISK_UNDERSCORING pattern flags are review prompts only; not severity adjudication"
+      },
+      "text_first_assessment": "After a severe collision, the driver does not respond and is breathing shallowly now. This describes current altered responsiveness and abnormal breathing, supporting the attested critical urgency.",
+      "decisive_span": "dili motubag ang driver ug shallow na ang paghinga niya ngayon",
+      "uncertainty": "Mixed Cebuano/Tagalog-naturalness and exact semantics need fluent bilingual review; confirm both clauses refer to the driver.",
+      "classification": [
+        "semantic ambiguity",
+        "model disagreement"
+      ],
+      "proposed_action_for_human_confirmation": "KEEP_LABEL",
+      "action_limit": "Analytical recommendation only; no label changed and no responder decision inferred.",
+      "historical_previous_checkpoint_comparison": {
+        "human_attested_label": "critical",
+        "old_prediction": "minor",
+        "old_confidence_raw": "0.78896189",
+        "new_prediction": "minor",
+        "new_confidence_raw": 0.37114620208740234,
+        "route_at_0_65": "needs_review",
+        "status": "ROUTED_TO_REVIEW",
+        "interpretation": "attested synthetic label; AI comparisons are diagnostic; no label correction"
+      }
+    },
+    {
+      "case_id": "MX-CRITICAL-013",
+      "exact_text": "Bug-at kaayo ang pagdugo sa paa ug dili mohunong; nangluspad siya ug hinay na motubag.",
+      "language": "mixed",
+      "human_attested_label": "critical",
+      "attestation_scope": "project-owner-attested verbal batch; no direct responder record; synthetic-origin source",
+      "rubric_version_recorded_in_provenance": "TEXT-RUBRIC-0.2-B",
+      "rubric_source_limit": "TEXT-RUBRIC-0.2-B is named in provenance; its exact approved text was not found. Accessible annotation_guide.md is explicitly provisional and not versioned 0.2-B; accessible intake README says Policy B approval pending.",
+      "model": {
+        "prediction_split": "test",
+        "model_version": "text-20261006T062737855310Z",
+        "raw_prediction": "serious",
+        "probabilities_by_label": {
+          "minor": 0.07000164687633514,
+          "serious": 0.8828760385513306,
+          "critical": 0.04082974046468735,
+          "needs_review": 0.006292605772614479
+        },
+        "max_raw_softmax_uncalibrated": 0.8828760385513306,
+        "routing_threshold": 0.65,
+        "threshold_calibrated": false,
+        "routing_result": "automatic",
+        "routed_label": "serious",
+        "probability_order_matches_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ]
+      },
+      "original_split": "fresh_test",
+      "lineage": {
+        "group_id_from_prediction": "FS-5ceb5832dcc08870",
+        "scenario_family_id": "MX-FAM-CRITICAL-013",
+        "annotation_group_id": "MX-GRP-CRITICAL-013",
+        "parent_case_id": "",
+        "relationship_type": "original_draft",
+        "source_text_sha256": "218ccb64f5c5bdff51b7fab625a972e81ec3fc38ce3ea08c31834499fb212dd6"
+      },
+      "latest_nine_undertriage": true,
+      "older_six_regression_list": true,
+      "in_union_of_both": true,
+      "in_81_row_disagreement_uncertainty_audit": true,
+      "ai_81_row_audit": {
+        "ai_suggested_label": "serious",
+        "ai_agreement": "DISAGREE",
+        "ai_review_decision": "SEMANTIC_AMBIGUITY",
+        "semantic_ambiguity": "MIXED_LANGUAGE_NATURALNESS_AND_SCOPE_REVIEW",
+        "person_object_risks": "",
+        "negation_risk": "NEGATION_SCOPE_REQUIRES_READING",
+        "keyword_shortcut_risks": "",
+        "concise_rationale": "raw XLM-R=serious; source attested label=critical; raw-softmax max=0.887 (uncalibrated) checkpoint exposure=fresh_test rule flags=KNOWN_FRESH_TEST_CRITICAL_UNDERRANKING,NEGATION_SCOPE_REQUIRES_READING,MIXED_LANGUAGE_NATURALNESS_AND_SCOPE_REVIEW,MODEL_HIGH_RISK_UNDERSCORING pattern flags are review prompts only; not severity adjudication"
+      },
+      "text_first_assessment": "Very heavy leg bleeding is ongoing; the person is pale and responds slowly. These are concerning current cues; ongoing very heavy bleeding aligns with the provisional critical example.",
+      "decisive_span": "Bug-at kaayo ang pagdugo sa paa ug dili mohunong; nangluspad siya ug hinay na motubag",
+      "uncertainty": "Mixed-language phrasing and whether ?bug-at kaayo? means very heavy bleeding need fluent Cebuano/Tagalog reviewer confirmation.",
+      "classification": [
+        "semantic ambiguity",
+        "model disagreement"
+      ],
+      "proposed_action_for_human_confirmation": "KEEP_LABEL",
+      "action_limit": "Analytical recommendation only; no label changed and no responder decision inferred.",
+      "historical_previous_checkpoint_comparison": {
+        "human_attested_label": "critical",
+        "old_prediction": "serious",
+        "old_confidence_raw": "0.88702905",
+        "new_prediction": "serious",
+        "new_confidence_raw": 0.8828760385513306,
+        "route_at_0_65": "serious",
+        "status": "STILL_UNDERTRIAGED",
+        "interpretation": "attested synthetic label; AI comparisons are diagnostic; no label correction"
+      }
+    },
+    {
+      "case_id": "TL-126",
+      "exact_text": "Nalubog ang kotse, may sakay.",
+      "language": "tl",
+      "human_attested_label": "critical",
+      "attestation_scope": "project-owner-attested verbal batch; no direct responder record; synthetic-origin source",
+      "rubric_version_recorded_in_provenance": "TEXT-RUBRIC-0.2-B",
+      "rubric_source_limit": "TEXT-RUBRIC-0.2-B is named in provenance; its exact approved text was not found. Accessible annotation_guide.md is explicitly provisional and not versioned 0.2-B; accessible intake README says Policy B approval pending.",
+      "model": {
+        "prediction_split": "test",
+        "model_version": "text-20261006T062737855310Z",
+        "raw_prediction": "minor",
+        "probabilities_by_label": {
+          "minor": 0.8614107966423035,
+          "serious": 0.018856849521398544,
+          "critical": 0.11063650250434875,
+          "needs_review": 0.00909575168043375
+        },
+        "max_raw_softmax_uncalibrated": 0.8614107966423035,
+        "routing_threshold": 0.65,
+        "threshold_calibrated": false,
+        "routing_result": "automatic",
+        "routed_label": "minor",
+        "probability_order_matches_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ]
+      },
+      "original_split": "fresh_test",
+      "lineage": {
+        "group_id_from_prediction": "FS-90e2363490fc3532",
+        "scenario_family_id": "TL-FAM-126",
+        "annotation_group_id": "TL-GRP-126",
+        "parent_case_id": "",
+        "relationship_type": "original_draft",
+        "source_text_sha256": "4f21e37a36926a1c07b7e749c5a1794c0520359a8c0d396114b86f348569483b"
+      },
+      "latest_nine_undertriage": true,
+      "older_six_regression_list": true,
+      "in_union_of_both": true,
+      "in_81_row_disagreement_uncertainty_audit": true,
+      "ai_81_row_audit": {
+        "ai_suggested_label": "minor",
+        "ai_agreement": "DISAGREE",
+        "ai_review_decision": "SEMANTIC_AMBIGUITY",
+        "semantic_ambiguity": "OCCUPANT_PRESENT_STATUS_UNSPECIFIED;SEVERE_MECHANISM_WITHOUT_EXPLICIT_PATIENT_CONDITION",
+        "person_object_risks": "OCCUPANT_PRESENT_STATUS_UNSPECIFIED",
+        "negation_risk": "",
+        "keyword_shortcut_risks": "SHORT_TEXT_PANIC_OR_UNDERSPECIFIED;SEVERE_MECHANISM_WITHOUT_EXPLICIT_PATIENT_CONDITION",
+        "concise_rationale": "raw XLM-R=minor; source attested label=critical; raw-softmax max=0.735 (uncalibrated) checkpoint exposure=fresh_test rule flags=KNOWN_FRESH_TEST_CRITICAL_UNDERRANKING,SHORT_TEXT_PANIC_OR_UNDERSPECIFIED,OCCUPANT_PRESENT_STATUS_UNSPECIFIED,SEVERE_MECHANISM_WITHOUT_EXPLICIT_PATIENT_CONDITION,MODEL_HIGH_RISK_UNDERSCORING pattern flags are review prompts only; not severity adjudication"
+      },
+      "text_first_assessment": "The car is submerged and has occupants. This establishes an active hazardous setting and people in the vehicle but does not explicitly say if they are trapped, breathing, injured, responsive, or able to exit. Do not infer absence of injury or a particular patient condition; urgency is plausible but the stated condition is incomplete.",
+      "decisive_span": "Nalubog ang kotse, may sakay",
+      "uncertainty": "Tagalog fluent responder must decide whether submersion with occupants alone satisfies the rubric?s active-threat/entrapment boundary; current accessible guide does not define it precisely.",
+      "classification": [
+        "possible label conflict",
+        "semantic ambiguity",
+        "model disagreement",
+        "unresolved"
+      ],
+      "proposed_action_for_human_confirmation": "UNRESOLVED",
+      "action_limit": "Analytical recommendation only; no label changed and no responder decision inferred.",
+      "historical_previous_checkpoint_comparison": {
+        "human_attested_label": "critical",
+        "old_prediction": "minor",
+        "old_confidence_raw": "0.73481202",
+        "new_prediction": "minor",
+        "new_confidence_raw": 0.8614107966423035,
+        "route_at_0_65": "minor",
+        "status": "STILL_UNDERTRIAGED",
+        "interpretation": "attested synthetic label; AI comparisons are diagnostic; no label correction"
+      }
+    }
+  ]
+}

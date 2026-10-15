@@ -1,0 +1,2045 @@
+{
+  "data_used": "only the predeclared 83-row synthetic calibration split",
+  "n": 83,
+  "dataset_fingerprint": "acc76790d953fc61d14f3c0a656cb539ea12119f993ab4640cf418420a1c3a15",
+  "temperature_fit_method": "bounded scalar NLL minimization over log-probability temperature T in [0.05,10]",
+  "temperature": 0.9650815498061598,
+  "raw_probability_quality": {
+    "nll": 0.41618456591010533,
+    "multiclass_brier": 0.20798033158525236,
+    "ece_10_equal_width": 0.02502996124416947,
+    "bins": [
+      {
+        "interval": "[0.4,0.5)",
+        "n": 2,
+        "accuracy": 0.0,
+        "mean_confidence": 0.449565127491951
+      },
+      {
+        "interval": "[0.5,0.6)",
+        "n": 4,
+        "accuracy": 0.5,
+        "mean_confidence": 0.5590977668762207
+      },
+      {
+        "interval": "[0.6,0.7)",
+        "n": 3,
+        "accuracy": 0.6666666666666666,
+        "mean_confidence": 0.6348750193913778
+      },
+      {
+        "interval": "[0.7,0.8)",
+        "n": 10,
+        "accuracy": 0.8,
+        "mean_confidence": 0.7563965678215027
+      },
+      {
+        "interval": "[0.8,0.9)",
+        "n": 13,
+        "accuracy": 0.8461538461538461,
+        "mean_confidence": 0.866112076319181
+      },
+      {
+        "interval": "[0.9,1.0]",
+        "n": 51,
+        "accuracy": 0.9411764705882353,
+        "mean_confidence": 0.9382137410780963
+      }
+    ]
+  },
+  "temperature_scaled_diagnostic_quality": {
+    "nll": 0.4157282539863412,
+    "multiclass_brier": 0.20806850076418967,
+    "ece_10_equal_width": 0.054225684486227776,
+    "bins": [
+      {
+        "interval": "[0.4,0.5)",
+        "n": 2,
+        "accuracy": 0.0,
+        "mean_confidence": 0.45469074495621936
+      },
+      {
+        "interval": "[0.5,0.6)",
+        "n": 3,
+        "accuracy": 0.3333333333333333,
+        "mean_confidence": 0.5504216875724716
+      },
+      {
+        "interval": "[0.6,0.7)",
+        "n": 4,
+        "accuracy": 0.75,
+        "mean_confidence": 0.6360029335797371
+      },
+      {
+        "interval": "[0.7,0.8)",
+        "n": 8,
+        "accuracy": 0.875,
+        "mean_confidence": 0.7590277058797734
+      },
+      {
+        "interval": "[0.8,0.9)",
+        "n": 11,
+        "accuracy": 0.7272727272727273,
+        "mean_confidence": 0.853299497360172
+      },
+      {
+        "interval": "[0.9,1.0]",
+        "n": 55,
+        "accuracy": 0.9454545454545454,
+        "mean_confidence": 0.9423631969068673
+      }
+    ]
+  },
+  "threshold_sweep": [
+    {
+      "threshold": 0.0,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.01,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.02,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.03,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.04,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.05,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.06,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.07,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.08,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.09,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.1,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.11,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.12,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.13,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.14,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.15,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.16,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.17,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.18,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.19,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.2,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.21,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.22,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.23,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.24,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.25,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.26,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.27,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.28,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.29,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.3,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.31,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.32,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.33,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.34,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.35,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.36,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.37,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.38,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.39,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.4,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.41,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.42,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.43,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.44,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.45,
+      "raw_probabilities": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.46,
+      "raw_probabilities": {
+        "coverage": 0.7590361445783133,
+        "auto_handled_error_count": 10,
+        "auto_handled_error_rate": 0.15873015873015872,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7710843373493976,
+        "auto_handled_error_count": 11,
+        "auto_handled_error_rate": 0.171875,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.47,
+      "raw_probabilities": {
+        "coverage": 0.7590361445783133,
+        "auto_handled_error_count": 10,
+        "auto_handled_error_rate": 0.15873015873015872,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7590361445783133,
+        "auto_handled_error_count": 10,
+        "auto_handled_error_rate": 0.15873015873015872,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.48,
+      "raw_probabilities": {
+        "coverage": 0.7590361445783133,
+        "auto_handled_error_count": 10,
+        "auto_handled_error_rate": 0.15873015873015872,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7590361445783133,
+        "auto_handled_error_count": 10,
+        "auto_handled_error_rate": 0.15873015873015872,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.49,
+      "raw_probabilities": {
+        "coverage": 0.7590361445783133,
+        "auto_handled_error_count": 10,
+        "auto_handled_error_rate": 0.15873015873015872,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7590361445783133,
+        "auto_handled_error_count": 10,
+        "auto_handled_error_rate": 0.15873015873015872,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.5,
+      "raw_probabilities": {
+        "coverage": 0.7590361445783133,
+        "auto_handled_error_count": 10,
+        "auto_handled_error_rate": 0.15873015873015872,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7590361445783133,
+        "auto_handled_error_count": 10,
+        "auto_handled_error_rate": 0.15873015873015872,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.51,
+      "raw_probabilities": {
+        "coverage": 0.7469879518072289,
+        "auto_handled_error_count": 9,
+        "auto_handled_error_rate": 0.14516129032258066,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7590361445783133,
+        "auto_handled_error_count": 10,
+        "auto_handled_error_rate": 0.15873015873015872,
+        "routed_urgent_undertriage_count": 4,
+        "routed_urgent_undertriage_rate": 0.09523809523809523,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.52,
+      "raw_probabilities": {
+        "coverage": 0.7469879518072289,
+        "auto_handled_error_count": 9,
+        "auto_handled_error_rate": 0.14516129032258066,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7469879518072289,
+        "auto_handled_error_count": 9,
+        "auto_handled_error_rate": 0.14516129032258066,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.53,
+      "raw_probabilities": {
+        "coverage": 0.7469879518072289,
+        "auto_handled_error_count": 9,
+        "auto_handled_error_rate": 0.14516129032258066,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7469879518072289,
+        "auto_handled_error_count": 9,
+        "auto_handled_error_rate": 0.14516129032258066,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.54,
+      "raw_probabilities": {
+        "coverage": 0.7469879518072289,
+        "auto_handled_error_count": 9,
+        "auto_handled_error_rate": 0.14516129032258066,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7469879518072289,
+        "auto_handled_error_count": 9,
+        "auto_handled_error_rate": 0.14516129032258066,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.55,
+      "raw_probabilities": {
+        "coverage": 0.7469879518072289,
+        "auto_handled_error_count": 9,
+        "auto_handled_error_rate": 0.14516129032258066,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7469879518072289,
+        "auto_handled_error_count": 9,
+        "auto_handled_error_rate": 0.14516129032258066,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.56,
+      "raw_probabilities": {
+        "coverage": 0.7349397590361446,
+        "auto_handled_error_count": 9,
+        "auto_handled_error_rate": 0.14754098360655737,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7469879518072289,
+        "auto_handled_error_count": 9,
+        "auto_handled_error_rate": 0.14516129032258066,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.57,
+      "raw_probabilities": {
+        "coverage": 0.7228915662650602,
+        "auto_handled_error_count": 8,
+        "auto_handled_error_rate": 0.13333333333333333,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7349397590361446,
+        "auto_handled_error_count": 9,
+        "auto_handled_error_rate": 0.14754098360655737,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.58,
+      "raw_probabilities": {
+        "coverage": 0.7228915662650602,
+        "auto_handled_error_count": 8,
+        "auto_handled_error_rate": 0.13333333333333333,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7228915662650602,
+        "auto_handled_error_count": 8,
+        "auto_handled_error_rate": 0.13333333333333333,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.59,
+      "raw_probabilities": {
+        "coverage": 0.7228915662650602,
+        "auto_handled_error_count": 8,
+        "auto_handled_error_rate": 0.13333333333333333,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7228915662650602,
+        "auto_handled_error_count": 8,
+        "auto_handled_error_rate": 0.13333333333333333,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.6,
+      "raw_probabilities": {
+        "coverage": 0.7228915662650602,
+        "auto_handled_error_count": 8,
+        "auto_handled_error_rate": 0.13333333333333333,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7228915662650602,
+        "auto_handled_error_count": 8,
+        "auto_handled_error_rate": 0.13333333333333333,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.61,
+      "raw_probabilities": {
+        "coverage": 0.7108433734939759,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.11864406779661017,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7108433734939759,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.11864406779661017,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.62,
+      "raw_probabilities": {
+        "coverage": 0.6987951807228916,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1206896551724138,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.7108433734939759,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.11864406779661017,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.63,
+      "raw_probabilities": {
+        "coverage": 0.6987951807228916,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1206896551724138,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6987951807228916,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1206896551724138,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.64,
+      "raw_probabilities": {
+        "coverage": 0.6987951807228916,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1206896551724138,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6987951807228916,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1206896551724138,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.65,
+      "raw_probabilities": {
+        "coverage": 0.6987951807228916,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1206896551724138,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6987951807228916,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1206896551724138,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.66,
+      "raw_probabilities": {
+        "coverage": 0.6987951807228916,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1206896551724138,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6987951807228916,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1206896551724138,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.67,
+      "raw_probabilities": {
+        "coverage": 0.6987951807228916,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1206896551724138,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6987951807228916,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1206896551724138,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.68,
+      "raw_probabilities": {
+        "coverage": 0.6987951807228916,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1206896551724138,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6987951807228916,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1206896551724138,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.69,
+      "raw_probabilities": {
+        "coverage": 0.6867469879518072,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.12280701754385964,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6987951807228916,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1206896551724138,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.7,
+      "raw_probabilities": {
+        "coverage": 0.6867469879518072,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.12280701754385964,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6867469879518072,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.12280701754385964,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.71,
+      "raw_probabilities": {
+        "coverage": 0.6746987951807228,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.125,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6867469879518072,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.12280701754385964,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.72,
+      "raw_probabilities": {
+        "coverage": 0.6746987951807228,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.125,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6746987951807228,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.125,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.73,
+      "raw_probabilities": {
+        "coverage": 0.6626506024096386,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.12727272727272726,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6746987951807228,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.125,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.74,
+      "raw_probabilities": {
+        "coverage": 0.6626506024096386,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.12727272727272726,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6626506024096386,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.12727272727272726,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.75,
+      "raw_probabilities": {
+        "coverage": 0.6506024096385542,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.12962962962962962,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6626506024096386,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.12727272727272726,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.76,
+      "raw_probabilities": {
+        "coverage": 0.6385542168674698,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1320754716981132,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6506024096385542,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.12962962962962962,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.77,
+      "raw_probabilities": {
+        "coverage": 0.6265060240963856,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1346153846153846,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6385542168674698,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1320754716981132,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.78,
+      "raw_probabilities": {
+        "coverage": 0.6024096385542169,
+        "auto_handled_error_count": 6,
+        "auto_handled_error_rate": 0.12,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6265060240963856,
+        "auto_handled_error_count": 7,
+        "auto_handled_error_rate": 0.1346153846153846,
+        "routed_urgent_undertriage_count": 3,
+        "routed_urgent_undertriage_rate": 0.07142857142857142,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.79,
+      "raw_probabilities": {
+        "coverage": 0.5903614457831325,
+        "auto_handled_error_count": 5,
+        "auto_handled_error_rate": 0.10204081632653061,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6024096385542169,
+        "auto_handled_error_count": 6,
+        "auto_handled_error_rate": 0.12,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.8,
+      "raw_probabilities": {
+        "coverage": 0.5783132530120482,
+        "auto_handled_error_count": 5,
+        "auto_handled_error_rate": 0.10416666666666667,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.6024096385542169,
+        "auto_handled_error_count": 6,
+        "auto_handled_error_rate": 0.12,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.81,
+      "raw_probabilities": {
+        "coverage": 0.5783132530120482,
+        "auto_handled_error_count": 5,
+        "auto_handled_error_rate": 0.10416666666666667,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.5783132530120482,
+        "auto_handled_error_count": 5,
+        "auto_handled_error_rate": 0.10416666666666667,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.82,
+      "raw_probabilities": {
+        "coverage": 0.5662650602409639,
+        "auto_handled_error_count": 4,
+        "auto_handled_error_rate": 0.0851063829787234,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.5783132530120482,
+        "auto_handled_error_count": 5,
+        "auto_handled_error_rate": 0.10416666666666667,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.83,
+      "raw_probabilities": {
+        "coverage": 0.5542168674698795,
+        "auto_handled_error_count": 4,
+        "auto_handled_error_rate": 0.08695652173913043,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.5662650602409639,
+        "auto_handled_error_count": 4,
+        "auto_handled_error_rate": 0.0851063829787234,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.84,
+      "raw_probabilities": {
+        "coverage": 0.5542168674698795,
+        "auto_handled_error_count": 4,
+        "auto_handled_error_rate": 0.08695652173913043,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.5542168674698795,
+        "auto_handled_error_count": 4,
+        "auto_handled_error_rate": 0.08695652173913043,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.85,
+      "raw_probabilities": {
+        "coverage": 0.5421686746987951,
+        "auto_handled_error_count": 4,
+        "auto_handled_error_rate": 0.08888888888888889,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.5542168674698795,
+        "auto_handled_error_count": 4,
+        "auto_handled_error_rate": 0.08695652173913043,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.86,
+      "raw_probabilities": {
+        "coverage": 0.5060240963855421,
+        "auto_handled_error_count": 3,
+        "auto_handled_error_rate": 0.07142857142857142,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.5542168674698795,
+        "auto_handled_error_count": 4,
+        "auto_handled_error_rate": 0.08695652173913043,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.87,
+      "raw_probabilities": {
+        "coverage": 0.4939759036144578,
+        "auto_handled_error_count": 3,
+        "auto_handled_error_rate": 0.07317073170731707,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.5060240963855421,
+        "auto_handled_error_count": 3,
+        "auto_handled_error_rate": 0.07142857142857142,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.88,
+      "raw_probabilities": {
+        "coverage": 0.46987951807228917,
+        "auto_handled_error_count": 3,
+        "auto_handled_error_rate": 0.07692307692307693,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.4939759036144578,
+        "auto_handled_error_count": 3,
+        "auto_handled_error_rate": 0.07317073170731707,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.89,
+      "raw_probabilities": {
+        "coverage": 0.46987951807228917,
+        "auto_handled_error_count": 3,
+        "auto_handled_error_rate": 0.07692307692307693,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.46987951807228917,
+        "auto_handled_error_count": 3,
+        "auto_handled_error_rate": 0.07692307692307693,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.9,
+      "raw_probabilities": {
+        "coverage": 0.4457831325301205,
+        "auto_handled_error_count": 3,
+        "auto_handled_error_rate": 0.08108108108108109,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.46987951807228917,
+        "auto_handled_error_count": 3,
+        "auto_handled_error_rate": 0.07692307692307693,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.91,
+      "raw_probabilities": {
+        "coverage": 0.39759036144578314,
+        "auto_handled_error_count": 2,
+        "auto_handled_error_rate": 0.06060606060606061,
+        "routed_urgent_undertriage_count": 1,
+        "routed_urgent_undertriage_rate": 0.023809523809523808,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.4457831325301205,
+        "auto_handled_error_count": 3,
+        "auto_handled_error_rate": 0.08108108108108109,
+        "routed_urgent_undertriage_count": 2,
+        "routed_urgent_undertriage_rate": 0.047619047619047616,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.92,
+      "raw_probabilities": {
+        "coverage": 0.3373493975903614,
+        "auto_handled_error_count": 1,
+        "auto_handled_error_rate": 0.03571428571428571,
+        "routed_urgent_undertriage_count": 1,
+        "routed_urgent_undertriage_rate": 0.023809523809523808,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.39759036144578314,
+        "auto_handled_error_count": 2,
+        "auto_handled_error_rate": 0.06060606060606061,
+        "routed_urgent_undertriage_count": 1,
+        "routed_urgent_undertriage_rate": 0.023809523809523808,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.93,
+      "raw_probabilities": {
+        "coverage": 0.26506024096385544,
+        "auto_handled_error_count": 1,
+        "auto_handled_error_rate": 0.045454545454545456,
+        "routed_urgent_undertriage_count": 1,
+        "routed_urgent_undertriage_rate": 0.023809523809523808,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.3132530120481928,
+        "auto_handled_error_count": 1,
+        "auto_handled_error_rate": 0.038461538461538464,
+        "routed_urgent_undertriage_count": 1,
+        "routed_urgent_undertriage_rate": 0.023809523809523808,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.94,
+      "raw_probabilities": {
+        "coverage": 0.1686746987951807,
+        "auto_handled_error_count": 1,
+        "auto_handled_error_rate": 0.07142857142857142,
+        "routed_urgent_undertriage_count": 1,
+        "routed_urgent_undertriage_rate": 0.023809523809523808,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.24096385542168675,
+        "auto_handled_error_count": 1,
+        "auto_handled_error_rate": 0.05,
+        "routed_urgent_undertriage_count": 1,
+        "routed_urgent_undertriage_rate": 0.023809523809523808,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.95,
+      "raw_probabilities": {
+        "coverage": 0.060240963855421686,
+        "auto_handled_error_count": 1,
+        "auto_handled_error_rate": 0.2,
+        "routed_urgent_undertriage_count": 1,
+        "routed_urgent_undertriage_rate": 0.023809523809523808,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.12048192771084337,
+        "auto_handled_error_count": 1,
+        "auto_handled_error_rate": 0.1,
+        "routed_urgent_undertriage_count": 1,
+        "routed_urgent_undertriage_rate": 0.023809523809523808,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.96,
+      "raw_probabilities": {
+        "coverage": 0.012048192771084338,
+        "auto_handled_error_count": 0,
+        "auto_handled_error_rate": 0.0,
+        "routed_urgent_undertriage_count": 0,
+        "routed_urgent_undertriage_rate": 0.0,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.04819277108433735,
+        "auto_handled_error_count": 0,
+        "auto_handled_error_rate": 0.0,
+        "routed_urgent_undertriage_count": 0,
+        "routed_urgent_undertriage_rate": 0.0,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.97,
+      "raw_probabilities": {
+        "coverage": 0.0,
+        "auto_handled_error_count": 0,
+        "auto_handled_error_rate": null,
+        "routed_urgent_undertriage_count": 0,
+        "routed_urgent_undertriage_rate": 0.0,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.0,
+        "auto_handled_error_count": 0,
+        "auto_handled_error_rate": null,
+        "routed_urgent_undertriage_count": 0,
+        "routed_urgent_undertriage_rate": 0.0,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.98,
+      "raw_probabilities": {
+        "coverage": 0.0,
+        "auto_handled_error_count": 0,
+        "auto_handled_error_rate": null,
+        "routed_urgent_undertriage_count": 0,
+        "routed_urgent_undertriage_rate": 0.0,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.0,
+        "auto_handled_error_count": 0,
+        "auto_handled_error_rate": null,
+        "routed_urgent_undertriage_count": 0,
+        "routed_urgent_undertriage_rate": 0.0,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 0.99,
+      "raw_probabilities": {
+        "coverage": 0.0,
+        "auto_handled_error_count": 0,
+        "auto_handled_error_rate": null,
+        "routed_urgent_undertriage_count": 0,
+        "routed_urgent_undertriage_rate": 0.0,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.0,
+        "auto_handled_error_count": 0,
+        "auto_handled_error_rate": null,
+        "routed_urgent_undertriage_count": 0,
+        "routed_urgent_undertriage_rate": 0.0,
+        "critical_to_minor": 0
+      }
+    },
+    {
+      "threshold": 1.0,
+      "raw_probabilities": {
+        "coverage": 0.0,
+        "auto_handled_error_count": 0,
+        "auto_handled_error_rate": null,
+        "routed_urgent_undertriage_count": 0,
+        "routed_urgent_undertriage_rate": 0.0,
+        "critical_to_minor": 0
+      },
+      "temperature_scaled_diagnostic": {
+        "coverage": 0.0,
+        "auto_handled_error_count": 0,
+        "auto_handled_error_rate": null,
+        "routed_urgent_undertriage_count": 0,
+        "routed_urgent_undertriage_rate": 0.0,
+        "critical_to_minor": 0
+      }
+    }
+  ],
+  "frozen_research_threshold": 0.96,
+  "frozen_research_threshold_calibration_result": {
+    "coverage": 0.04819277108433735,
+    "accepted_count": 4,
+    "automatically_handled_high_risk_count": 4,
+    "automatic_high_risk_coverage": 0.09523809523809523,
+    "high_risk_human_review_count": 38,
+    "high_risk_human_review_rate": 0.9047619047619048,
+    "conditional_automatic_urgent_accuracy": 1.0,
+    "conditional_automatic_urgent_undertriage_rate": 0.0,
+    "conditional_automatic_urgent_metrics_status": "defined",
+    "routed_urgent_undertriage_count": 0,
+    "urgent_support_serious_plus_critical": 42,
+    "auto_handled_error_count": 0
+  },
+  "zero_auto_high_risk_endpoint_threshold": 0.97,
+  "zero_auto_high_risk_endpoint_calibration_result": {
+    "coverage": 0.0,
+    "accepted_count": 0,
+    "automatically_handled_high_risk_count": 0,
+    "automatic_high_risk_coverage": 0.0,
+    "high_risk_human_review_count": 42,
+    "high_risk_human_review_rate": 1.0,
+    "conditional_automatic_urgent_accuracy": null,
+    "conditional_automatic_urgent_undertriage_rate": null,
+    "conditional_automatic_urgent_metrics_status": "UNDEFINED_NO_AUTOMATIC_HIGH_RISK_CASES",
+    "routed_urgent_undertriage_count": 0,
+    "urgent_support_serious_plus_critical": 42,
+    "auto_handled_error_count": 0
+  },
+  "decision": "no operational threshold or active calibration selected; diagnostic only; synthetic low-support data cannot establish deployment confidence"
+}

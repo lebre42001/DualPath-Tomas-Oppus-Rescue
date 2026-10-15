@@ -1,0 +1,32 @@
+﻿Emergency Text AI — full-training execution log
+Date: 2026-10-05 (Asia/Manila)
+Workspace: C:\laragon\www\CAPSTONE-EMERGENCY-SYSTEM-main
+
+Execution status: BLOCKED BEFORE TRAINING. No training/evaluation command was run.
+
+Commands actually executed by the lead agent:
+1. Read supplemental prompt and repo/report/source/package receipt:
+   Get-Content -Raw 'C:\Users\Christian\.codex\attachments\44eae168-e504-4216-a57e-26b9961144af\Pasted text.txt'
+   Get-Location; Get-Content -Raw AGENTS.md; Get-Content -Raw ai_service\artifacts\reports\text_xlmr_provisional_20261005\EVALUATION.md; Get-Content -Raw ai_service\artifacts\reports\text_xlmr_provisional_20261005\VERIFICATION.json; Get-ChildItem ai_service\artifacts\reports -Force | Select-Object Name,Mode
+   Get-ChildItem ai_service\artifacts\colab_packages\emergency_text_xlmr_provisional_20261004 -Force | Select-Object Name,Length; Get-ChildItem ai_service\artifacts\reports\text_xlmr_provisional_20261005 -Recurse | Select-Object FullName,Length; Get-ChildItem ai_service\datasets\emergency_text\working -Force | Select-Object Name,Length; Get-Content -Raw ai_service\src\ai_service\text_training.py | Select-String -Pattern 'AdamW|weight_decay|warmup|scheduler|gradient_checkpoint|fp16|bf16|optimizer|parameter' -Context 1,1; Get-CimInstance Win32_OperatingSystem | Select-Object Caption,TotalVisibleMemorySize,FreePhysicalMemory; Get-CimInstance Win32_Processor | Select-Object -First 1 Name,NumberOfLogicalProcessors; nvidia-smi --query-gpu=name,memory.total,memory.free,driver_version --format=csv,noheader; ai_service\.venv-text\Scripts\python.exe -c "import torch; print({'torch':torch.__version__,'cuda_available':torch.cuda.is_available(),'torch_cuda':torch.version.cuda})"
+2. Audited provenance, package receipt, and optimizer source:
+   Get-Content ai_service\datasets\emergency_text\working\provenance.json -Raw; Get-Content ai_service\artifacts\colab_packages\emergency_text_xlmr_provisional_20261004\PACKAGE_RECEIPT.json -Raw; rg -n "AdamW|weight_decay|warmup|scheduler|gradient_checkpoint|fp16|bf16|optimizer|trainable_parameters" ai_service\src\ai_service\text_training.py
+3. Checked challenge-intake receipt and attempted repository status:
+   Get-ChildItem ai_service\datasets\emergency_text\experiments\provisional_xlmr_challenge_intake_20261005 | Select-Object Name,Length; Get-Content ai_service\datasets\emergency_text\experiments\provisional_xlmr_challenge_intake_20261005\receipt.json -Raw; git status --short
+   Note: this workspace root is not a Git repository; git status returned fatal error. No changes were reverted or cleaned.
+4. Follow-up host and report hash check:
+   Get-CimInstance Win32_OperatingSystem | Select-Object Caption,TotalVisibleMemorySize,FreePhysicalMemory | ConvertTo-Json -Compress; Get-CimInstance Win32_Processor | Select-Object -First 1 Name,NumberOfLogicalProcessors | ConvertTo-Json -Compress; Get-FileHash ai_service\artifacts\reports\NEXT_STAGE_DECISION_FOR_CHATGPT.txt -Algorithm SHA256 | Format-List; Get-Content ai_service\artifacts\reports\NEXT_STAGE_DECISION_FOR_CHATGPT.txt -Encoding utf8 | Select-Object -First 10
+
+Delegated:
+- Read-only dataset/provenance/split audit (agent 1).
+- Challenge coverage audit and creation/validation of blank 24-slot human intake (agent 2).
+- Read-only safety-routing, artifact, and hardware feasibility audit (agent 3).
+
+5. Prepared the versioned snapshot with a Python standard-library program piped from a PowerShell here-string to `ai_service\.venv-text\Scripts\python.exe -`. It copied source CSV bytes exactly, copied the frozen split JSON from the sealed input bundle, and wrote statistics, source group mapping, provenance, receipt, and README. Output: 400 rows, 99 groups, source_equals_snapshot=true.
+6. Validated snapshot consistency with a separate Python standard-library program piped to `ai_service\.venv-text\Scripts\python.exe -`. Assertions passed: exact byte copy, source/dataset hashes, 400 unique IDs covered once by 304/54/42 split, all rows draft, no rows <=15 words.
+
+Not executed:
+- No data generation or label edits; no training, checkpoint selection, test evaluation,
+  calibration, threshold tuning, XLM-R/TF-IDF comparison, checkpoint package/ZIP sealing,
+  integration, or deployment.
+- No model, active config, source dataset, existing challenge pack, or prior checkpoint changed.

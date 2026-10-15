@@ -1,0 +1,15 @@
+{
+  "status": "NO_ELIGIBLE_CHECKPOINT",
+  "diagnostic_best_checkpoint": "ai_service\\artifacts\\checkpoints\\text_xlmr_targeted_20261006T154647+0800\\seed42",
+  "seed": 42,
+  "selection_rule": "Existing balanced_safety order frozen: minimize raw Serious/Critical undertriage; then maximize fixed-four-label validation macro-F1; then maximize min(Critical recall, Serious recall); then Critical precision. Eligible only if validation meets all six existing research gates with same denominators; if none, status NO_ELIGIBLE_CHECKPOINT and retain diagnostic best by selection order only.",
+  "best_epoch": 6,
+  "validation_metrics": {
+    "macro_f1": 0.9047407939655364,
+    "critical_recall": 0.8387096774193549,
+    "serious_recall": 0.96875,
+    "raw_high_risk_undertriage_count": 4
+  },
+  "deployment_eligible": false,
+  "model_safetensors_sha256": "ce7b62bbe3d4f50d8952f8508b67a6b5adba0a04d5fc0175fc3187639adbbad9"
+}

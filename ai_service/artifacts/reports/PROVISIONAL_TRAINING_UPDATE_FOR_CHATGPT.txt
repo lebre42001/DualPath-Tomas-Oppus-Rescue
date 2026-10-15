@@ -1,0 +1,170 @@
+PROVISIONAL_TRAINING_UPDATE_FOR_CHATGPT
+Generated: 2026-10-01T20:41:35.185975+08:00
+
+1. PROJECT CONTEXT
+Primary application: web_system/. AI service: ai_service/. Task scope: road/vehicle emergency-text severity research for English, Tagalog, Cebuano/Bisaya and mixed text under Policy B / TEXT-RUBRIC-0.2-B.
+Official result description: Client-approved provisional validation against a frozen, group-aware held-out split of the current synthetic/provisional emergency-text dataset.
+Pipeline execution success is measurable. Synthetic-label performance is measurable. Human-reviewed accuracy, real-world emergency accuracy and clinical validation are not established. Deployment readiness is no.
+
+2. CLIENT AUTHORIZATION
+client_approved_research_training=true; client_approved_provisional_evaluation=true; approval_source=project_owner_reported_client_approval; approver_identity=not_provided; approval_date=2026-10-01.
+authorization_scope=offline_research_training_and_provisional_evaluation_only.
+This does not authorize production deployment, autonomous dispatch, clinical validation, confirmed human-reviewed ground truth, active checkpoint promotion, or replacement of responder judgment.
+
+3. CURRENT HUMAN-REVIEW STATUS
+Reviewer A: REV-A-002, Bimbo Trimucha, Domain / Emergency Reviewer, assigned; 0/80 row decisions completed.
+Reviewer B: REV-B-001, Bimbo Cortel, Multilingual / Context Reviewer, assigned; 0/80 row decisions completed.
+Adjudicator: unassigned. human_review_complete=false; reviewed_eligible_cases=0; reviewed_milestone_target=800.
+The original Reviewer A and Reviewer B worksheets remain unchanged and blank.
+
+4. AI-ASSISTED REVIEW ARTIFACTS
+Created ai_assisted/AI_PRE_REVIEW_DRAFT.csv with 80 AI-only draft rows: minor=21, serious=19, critical=20, needs_review=20. draft_status=ai_draft_not_human_approved.
+Created REVIEWER_A_CONFIRMATION.csv and REVIEWER_B_LANGUAGE_CONFIRMATION.csv with AI context prefilled and every human-response field blank.
+Created SIMPLE_RESPONDER_GUIDE.txt in Cebuano/Bisaya and HUMAN_CONFIRMATION_IMPORT_PLAN.txt. AI suggestions are not attributed to Bimbo Trimucha or Bimbo Cortel.
+
+5. DATASET USED
+ai_service/datasets/emergency_text/working/reports.csv only. Derived by_severity/language exports, archives and the historical 292-row experiment were not appended.
+All 400 source rows retain review_status=draft. provisional_training_labels.csv preserves source_label=training_label, human_reviewed=false and client-approved offline-research-only eligibility.
+
+6. DATASET HASH
+SHA-256: 5e2a4f508a6de869ad0eee1c6c7385b03c2df542eadbd7f79a315b0243f9db1e
+Dataset fingerprint from the training implementation: 535d54dab55097cb7803a05e7ce39ec9242acd926b42fe74cb3488f7834107df.
+
+7. ROW/GROUP COUNTS
+Rows=400; groups=99; unique normalized texts=400; labels minor=100, serious=100, critical=100, needs_review=100; languages en=120, tl=120, ceb=120, mixed=40.
+Word counts: minimum=22, maximum=39, mean=30.8675; 16-30 words=155, 31-60 words=245. Approved/human-reviewed rows=0.
+
+8. SPLIT COUNTS
+Train: 304 rows, 73 groups, labels={'critical': 84, 'minor': 76, 'needs_review': 70, 'serious': 74}, languages={'ceb': 91, 'en': 91, 'mixed': 31, 'tl': 91}.
+Validation: 54 rows, 13 groups, labels={'critical': 10, 'minor': 14, 'needs_review': 16, 'serious': 14}, languages={'ceb': 16, 'en': 16, 'mixed': 6, 'tl': 16}.
+Test: 42 rows, 13 groups, labels={'critical': 6, 'minor': 10, 'needs_review': 14, 'serious': 12}, languages={'ceb': 13, 'en': 13, 'mixed': 3, 'tl': 13}.
+Group overlap=0; exact normalized-text overlap=0. This is a synthetic/provisional experimental test split, not a fresh operational holdout.
+
+9. MODELS TRAINED
+Model A: repository safe-format character word-boundary TF-IDF (3,5), max_features=20000, balanced logistic regression, random seed 42.
+Model B: google-bert/bert-base-multilingual-cased with BertTokenizerFast and four-label classifier. CPU-only constraints required a frozen 177,853,440-parameter backbone; 3,076 classifier parameters were trainable.
+Both models used the identical frozen manifest. Neither was activated.
+
+10. EXACT COMMANDS
+Interpreter: .\ai_service\.venv-text\Scripts\python.exe
+Dataset validation: python train_text.py validate --data datasets/emergency_text/working/reports.csv
+Baseline: python train_text.py baseline --data datasets/emergency_text/working/reports.csv --output artifacts/checkpoints/<experiment>/baseline --allow-draft --seed 42 --validation-fraction 0.15 --test-fraction 0.15 --evaluate-test --review-threshold 0.65
+Transformer: python train_text.py train --data datasets/emergency_text/working/reports.csv --output artifacts/checkpoints/<experiment>/transformer --allow-draft --seed 42 --validation-fraction 0.15 --test-fraction 0.15 --split-manifest artifacts/checkpoints/<experiment>/baseline/split_manifest.json --evaluate-test --review-threshold 0.65 --base-model google-bert/bert-base-multilingual-cased --epochs 8 --early-stopping-patience 2 --selection-metric critical_recall_then_macro_f1 --batch-size 4 --gradient-accumulation 4 --max-length 128 --threads 4 --device cpu
+HF_HUB_OFFLINE=1 and TRANSFORMERS_OFFLINE=1 were set; the cached base model was used.
+Validation: python -m unittest discover -s tests -p test_*.py; python tools/validate_provisional_research_stage.py <experiment>.
+
+11. ENVIRONMENT AND HARDWARE
+Python=3.13.0 (tags/v3.13.0:60403a5, Oct  7 2024, 09:38:07) [MSC v.1941 64 bit (AMD64)]; executable=C:\laragon\www\CAPSTONE-EMERGENCY-SYSTEM-main\ai_service\.venv-text\Scripts\python.exe; platform=Windows-11-10.0.26200-SP0.
+torch=2.11.0+cpu; transformers=4.57.6; scikit-learn=1.9.1; numpy=2.4.4.
+Device=CPU; CUDA available=False; CUDA devices=0; logical CPUs=12; memory bytes=None.
+
+12. TRAINING CONFIGURATION
+Seed=42. Split target=70/15/15 with group integrity taking priority. Review threshold=0.65 provisional and uncalibrated.
+Transformer: AdamW; scheduler=none; learning_rate=0.001; class_weights={'minor': 1.0, 'serious': 1.0270270109176636, 'critical': 0.9047619104385376, 'needs_review': 1.085714340209961}; max_length=128; batch=4; accumulation=4; effective_batch=16; epochs requested=8; patience=2.
+Checkpoint selection used validation Critical recall first and macro F1 second. Test data was not used to select the checkpoint.
+
+13. TRAINING DURATION
+Baseline observed command wall time=11.0484 seconds.
+Transformer training and selection time=121.53 seconds; 3 epochs completed; best epoch=1; early stopping triggered after two non-improving epochs.
+
+14. VALIDATION METRICS
+Baseline validation raw: accuracy=0.9815; macro_precision=0.9773; macro_recall=0.9844; macro_F1=0.9800; weighted_F1=0.9816; Critical_recall=1.0000; review_routing_rate@0.65=0.9259.
+Baseline validation minor: precision=1.0000; recall=1.0000; F1=1.0000; support=14
+Baseline validation serious: precision=1.0000; recall=1.0000; F1=1.0000; support=14
+Baseline validation critical: precision=0.9091; recall=1.0000; F1=0.9524; support=10
+Baseline validation needs_review: precision=1.0000; recall=0.9375; F1=0.9677; support=16
+Transformer selected-checkpoint validation raw: accuracy=0.2037; macro_precision=0.1740; macro_recall=0.2679; macro_F1=0.1132; weighted_F1=0.0931; Critical_recall=1.0000; review_routing_rate@0.65=1.0000.
+Transformer validation minor: precision=0.0000; recall=0.0000; F1=0.0000; support=14
+Transformer validation serious: precision=0.5000; recall=0.0714; F1=0.1250; support=14
+Transformer validation critical: precision=0.1961; recall=1.0000; F1=0.3279; support=10
+Transformer validation needs_review: precision=0.0000; recall=0.0000; F1=0.0000; support=16
+
+15. TEST METRICS
+Baseline test raw: accuracy=1.0000; macro_precision=1.0000; macro_recall=1.0000; macro_F1=1.0000; weighted_F1=1.0000; Critical_recall=1.0000; review_routing_rate@0.65=0.8810.
+Baseline test minor: precision=1.0000; recall=1.0000; F1=1.0000; support=10
+Baseline test serious: precision=1.0000; recall=1.0000; F1=1.0000; support=12
+Baseline test critical: precision=1.0000; recall=1.0000; F1=1.0000; support=6
+Baseline test needs_review: precision=1.0000; recall=1.0000; F1=1.0000; support=14
+Transformer test raw: accuracy=0.1667; macro_precision=0.1625; macro_recall=0.2750; macro_F1=0.1069; weighted_F1=0.0769; Critical_recall=1.0000; review_routing_rate@0.65=1.0000.
+Transformer test minor: precision=0.5000; recall=0.1000; F1=0.1667; support=10
+Transformer test serious: precision=0.0000; recall=0.0000; F1=0.0000; support=12
+Transformer test critical: precision=0.1500; recall=1.0000; F1=0.2609; support=6
+Transformer test needs_review: precision=0.0000; recall=0.0000; F1=0.0000; support=14
+
+16. CONFUSION MATRIX
+Rows are actual synthetic/provisional labels and columns are predicted labels.
+Baseline test labels/columns = minor, serious, critical, needs_review
+actual minor       [10, 0, 0, 0]
+actual serious     [0, 12, 0, 0]
+actual critical    [0, 0, 6, 0]
+actual needs_review [0, 0, 0, 14]
+Transformer test labels/columns = minor, serious, critical, needs_review
+actual minor       [1, 0, 9, 0]
+actual serious     [0, 0, 12, 0]
+actual critical    [0, 0, 6, 0]
+actual needs_review [1, 0, 13, 0]
+
+17. CRITICAL ERROR ANALYSIS
+Test Critical support=6 for each model. Raw Critical misses=0 and raw Critical-to-Minor/Serious underclassifications=0 on the synthetic split.
+At threshold 0.65, all 6 Critical rows from each model were routed to human review. Transformer Critical recall=1.0 is misleading alone because it predicted 40/42 test rows as Critical and had Critical precision=0.15.
+On the short/panic AI-draft challenge, baseline had 0 raw Critical-to-Minor/Serious underclassifications; transformer had 2. Both routed all 20 AI-draft Critical cases to human review.
+Critical remains urgency, not confirmed fatality.
+
+18. LANGUAGE RESULTS
+Baseline raw test: ceb 13/13 accuracy=1.0000; en 13/13=1.0000; tl 13/13=1.0000; mixed 3/3=1.0000. Mixed lacks Serious/Critical support, so its macro statistics are not comparable.
+Transformer raw test: ceb accuracy=0.1538 macro_F1=0.0667; en accuracy=0.2308 macro_F1=0.1769; tl accuracy=0.1538 macro_F1=0.0667; mixed accuracy=0.0000 macro_F1=0.0000.
+Per-language results are synthetic and too small for operational conclusions.
+
+19. TEXT-LENGTH RESULTS
+Baseline raw test: 16-30 words n=23 accuracy/macro_F1=1.0000/1.0000; 31-60 words n=19 accuracy/macro_F1=1.0000/1.0000.
+Transformer raw test: 16-30 words n=23 accuracy/macro_F1=0.1304/0.0577; 31-60 words n=19 accuracy/macro_F1=0.2105/0.1750.
+The training source has no 1-15 word rows, so short-message accuracy cannot be inferred from this split.
+
+20. SHORT_PANIC_V1 CHALLENGE RESULTS
+Reference labels are AI pre-review drafts, not human ground truth. These are agreement figures, not accuracy.
+Baseline raw agreement=53/80 (0.6625); raw predictions={'critical': 31, 'minor': 19, 'needs_review': 21, 'serious': 9}; routed-to-review=0.9125 (73/80).
+Transformer raw agreement=20/80 (0.2500); raw predictions={'critical': 76, 'minor': 4}; routed-to-review=1.0000 (80/80).
+All 80 challenge texts are shorter than the 22-word minimum in training, demonstrating a material distribution shift.
+
+21. MODEL COMPARISON
+Baseline: excellent separation on the structured synthetic split, but only 11.90% test coverage at the provisional threshold and 66.25% raw agreement on the AI-draft short challenge.
+Transformer: raw test accuracy=16.67%, macro_F1=10.69%, mostly-Critical collapse, 0% threshold coverage, and 25% AI-draft challenge agreement.
+The transformer failed this provisional evaluation. The baseline is the better research diagnostic, but its perfect synthetic score must not be treated as real-world proof.
+
+22. BEST PROVISIONAL RESEARCH CANDIDATE
+TF-IDF plus balanced logistic regression is the best provisional research result: synthetic test raw accuracy=1.0000, macro_F1=1.0000, weighted_F1=1.0000 and Critical recall=1.0000. It is not a deployment candidate because labels are unreviewed, threshold coverage is low, and short/panic human-reviewed accuracy is unknown.
+
+23. EXPERIMENT DIRECTORY
+C:\laragon\www\CAPSTONE-EMERGENCY-SYSTEM-main\ai_service\artifacts\checkpoints\text_provisional_synthetic_research_20261001_202001
+release_status=experimental_not_approved; training_data_status=synthetic_provisional_unreviewed.
+
+24. ACTIVE-MODEL STATUS
+active_model=false. active_config.txt SHA-256 remained 5e56620321a9d19e485f54369cad2e0fa2d6cd8305b6b817f3efa9c0366b41ba. No checkpoint was promoted or configured for live inference.
+
+25. DEPLOYMENT STATUS
+approved_for_deployment=false; deployment_ready=false; clinical_validation_complete=false; confidence_calibrated=false; review_threshold_status=provisional; deployment_performed=false.
+Normal inference rejects the new transformer checkpoint unless an explicit experimental override is used.
+
+26. LIMITATIONS
+All 400 labels are synthetic/provisional and unreviewed. The split is synthetic and may preserve generator/template regularities. Mixed-language test support is only 3. The short challenge has no human labels. The transformer backbone was frozen due CPU-only hardware.
+The selection rule favored Critical recall and selected a collapsed epoch-1 classifier. Probabilities and threshold are uncalibrated. Results do not establish human-reviewed, real-world or clinical accuracy.
+Transformers 4.57.6 emitted a Mistral-regex compatibility warning for the cached Bert tokenizer. A read-only fix_mistral_regex=True diagnostic raised TypeError for BertPreTokenizer, so no tokenizer or core pipeline file was changed.
+
+27. EXACT NEXT RECOMMENDED STEP
+Bimbo Trimucha must complete REVIEWER_A_CONFIRMATION.csv and Bimbo Cortel must independently complete REVIEWER_B_LANGUAGE_CONFIRMATION.csv using actual identities, decisions, evidence and timezone-aware timestamps. Assign a real adjudicator; seal and hash submissions; validate and adjudicate disagreements; complete family-link review; then create a versioned human-reviewed short/panic batch.
+After enough reviewed data exists, rerun group/family-disjoint evaluation with real short/panic coverage. Do not promote either current model.
+
+28. EXACT FILES CREATED/MODIFIED
+AI-assisted files created: ai_assisted/AI_PRE_REVIEW_DRAFT.csv; ai_assisted/REVIEWER_A_CONFIRMATION.csv; ai_assisted/REVIEWER_B_LANGUAGE_CONFIRMATION.csv; ai_assisted/SIMPLE_RESPONDER_GUIDE.txt; ai_assisted/HUMAN_CONFIRMATION_IMPORT_PLAN.txt.
+Tool files created: ai_service/tools/prepare_provisional_research_stage.py; ai_service/tools/finalize_provisional_research_experiment.py; ai_service/tools/validate_provisional_research_stage.py.
+Report created: ai_service/artifacts/reports/PROVISIONAL_TRAINING_UPDATE_FOR_CHATGPT.txt.
+Review-pack files updated: FULL_UPDATE_FOR_CHATGPT.txt; manifest.json; verification.json.
+Experiment files (45 including receipt): authorization.json; baseline/baseline.json; baseline/metadata.json; baseline/split_manifest.json; baseline/test_metrics.json; baseline/test_predictions.json; baseline/validation_metrics.json; baseline/validation_predictions.json; comparison_metrics.json; config.json; confusion_matrix.json; critical_error_analysis.json; dataset_receipt.json; environment.json; experiment_receipt.json; label_mapping.json; metadata.json; per_language_metrics.json; per_length_metrics.json; pre_training_integrity_receipt.json; provisional_training_labels.csv; README_EXPERIMENT_LIMITATIONS.txt; short_panic_challenge.json; split_manifest.json; split_summary.json; test_metrics.json; test_predictions.json; training_config.json; training_history.json; transformer/config.json; transformer/metadata.json; transformer/model.safetensors; transformer/special_tokens_map.json; transformer/split_manifest.json; transformer/test_metrics.json; transformer/test_predictions.json; transformer/tokenizer.json; transformer/tokenizer_config.json; transformer/training_history.json; transformer/validation_metrics.json; transformer/validation_predictions.json; transformer/vocab.txt; validation_metrics.json; validation_predictions.json; validation_results.json.
+No source dataset, original reviewer worksheet, active config, historical checkpoint, Laravel file, database file or deployment configuration was modified.
+
+29. PROTECTED FILE STATUS
+Passed: source working CSV, short_panic candidates, both original human worksheets and active_config.txt match their pre-training SHA-256 values. All 67 historical checkpoint files match size and SHA-256. The new experiment receipt hashes 44 files; the review-pack manifest hashes 46 files in a 47-file package; final mismatch counts are zero.
+Tests: targeted suite 29 passed/1 skipped (30 total); full ai_service suite 59 passed/1 skipped (60 total); stage validator 16 check groups/1,830 assertions passed; experimental checkpoint smoke passed and required responder review.
+
+COPY-PASTE CONTEXT FOR CHATGPT
+The 2026-10-01 client-approved offline provisional experiment is complete under TEXT-RUBRIC-0.2-B. Human review is still 0/80 for A and 0/80 for B; reviewed eligible rows=0; adjudicator unassigned. The 400-row/99-group working dataset remains draft and unchanged. Frozen split=304/54/42 with zero group or normalized-text overlap. TF-IDF/logistic raw synthetic test accuracy/macro_F1=1.0000/1.0000 but routes 37/42 test rows and 73/80 short-challenge rows to review. Frozen-backbone mBERT raw test accuracy/macro_F1=0.1667/0.1069, collapses mostly to Critical, and routes all test/challenge rows to review. The best research diagnostic is the baseline, but neither model is approved or active. Next: actual independent A/B confirmation, real adjudication, family linking, a versioned human-reviewed short/panic batch, then family-disjoint retraining/evaluation.

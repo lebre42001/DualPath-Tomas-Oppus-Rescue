@@ -1,0 +1,26 @@
+{
+  "status": "RECONCILED_FOR_GATE_DECISION_WITH_LIMITATION",
+  "authoritative_method": "Join saved prediction rows one-to-one by case_id to the frozen EXPOSED_TEST CSV, then recompute fixed-four-label macro-F1 within each language. Independent final QA reproduced the same values.",
+  "aggregate_metrics": "Aggregate confusion matrix and macro-F1 in evaluation_metrics.json agree with case-ID recomputation.",
+  "saved_evaluation_metrics_per_language": {
+    "en": 0.872619,
+    "tl": 0.822222,
+    "ceb": 0.703984,
+    "mixed": 0.803571
+  },
+  "case_id_recomputed_per_language": {
+    "en": 0.958041958041958,
+    "tl": 0.8728632478632479,
+    "ceb": 0.7767857142857143,
+    "mixed": 0.7375
+  },
+  "counts": {"en": 24, "tl": 23, "ceb": 25, "mixed": 12},
+  "gate_impact": "The language-floor gate is FAIL using the independently recomputed case-ID metrics because mixed=0.7375 < 0.75. The discrepancy must be investigated before a future evaluation release; no labels or outputs were modified to conceal it.",
+  "original_metrics_preserved": true,
+  "source_evidence": [
+    "EVALUATIONS_WITH_PREDICTIONS/EXPOSED_TEST/evaluation_metrics.json",
+    "EVALUATION_AUDIT/EVALUATION_AUDIT.json",
+    "FINAL_QA_AUDIT.json"
+  ],
+  "operational_implication": "None: checkpoint remains NO_ELIGIBLE_CHECKPOINT and MANUAL_ONLY remains active."
+}

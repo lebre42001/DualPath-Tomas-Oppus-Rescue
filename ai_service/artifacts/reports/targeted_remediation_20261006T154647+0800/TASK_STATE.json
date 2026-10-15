@@ -1,0 +1,111 @@
+{
+  "repo_root": "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main",
+  "active_model": "unchanged",
+  "started_local": "2026-10-06T15:47:49.9515857+08:00",
+  "track_manual_only_release": "prepared; code tests pass; no staging/deploy",
+  "previous_sealed_package_hash": "5285b85b492e258187eae2b9aacd9397a0f43d132f509456383d585aa904ec27",
+  "current_gpu_processes": 0,
+  "production_deployment": "not performed",
+  "task_id": "targeted-remediation-20261006T154647+0800",
+  "requirements": [
+    {
+      "id": "EVIDENCE_RECONCILE",
+      "status": "complete",
+      "evidence": "BASELINE_EVIDENCE.json; CURRENT_EVIDENCE_VERIFICATION.json; prior handoff backup"
+    },
+    {
+      "id": "ATTESTATION_PRESERVE",
+      "status": "complete",
+      "evidence": "PROVENANCE_RECEIPT.json; no labels rewritten or batch approval reset"
+    },
+    {
+      "id": "TARGETED_UNION_9_PLUS_6",
+      "status": "prepared_human_decisions_pending",
+      "evidence": "CASE_AUDIT/; deduplicated union of nine; no final responder decisions"
+    },
+    {
+      "id": "PIPELINE_AUDIT",
+      "status": "complete_with_limited_actionable_fix",
+      "evidence": "PIPELINE_AUDIT/; skip-aware AMP scheduler fix and telemetry implemented"
+    },
+    {
+      "id": "FAMILY_EXPOSURE",
+      "status": "complete_with_access_limitations",
+      "evidence": "FAMILY_EXPOSURE_AUDIT/; 60 restricted files unreadable; inventory counts unreconciled"
+    },
+    {
+      "id": "EXPERIMENT_PROTOCOL",
+      "status": "complete_frozen_before_training",
+      "evidence": "EXPERIMENT_PROTOCOL.json"
+    },
+    {
+      "id": "FULL_BACKBONE_RETRAIN",
+      "status": "complete_research_run",
+      "evidence": "TRAINING_HISTORY.json; GPU_PREFLIGHT.json; best diagnostic epoch 6"
+    },
+    {
+      "id": "HUMAN_MANUAL_MODE",
+      "status": "implemented_and_tested; staging_not_run",
+      "evidence": "MANUAL_MODE_TEST_REPORT.json; RELEASE_MANUAL_ONLY.md"
+    },
+    {
+      "id": "TESTS_RELEASE_PACKAGE",
+      "status": "source_bundle_verified; Docker_build_and_staging_not_run",
+      "evidence": "APPLICATION_RELEASE_RECEIPT.json; MANUAL_MODE_TEST_REPORT.json"
+    },
+    {
+      "id": "INDEPENDENT_QA",
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence": "FINAL_QA_AUDIT.json; PASS_WITH_LIMITATIONS does not override failed model gates"
+    }
+  ],
+  "gpu_policy": "one GPU-heavy process at a time",
+  "prior_handoff_backup": "ai_service\\artifacts\\reports\\targeted_remediation_20261006T154647+0800\\PRIOR_HANDOFF_20261006.txt",
+  "git_status": "unavailable: repo root not a Git work tree",
+  "specialist_roles": [
+    {
+      "agent": "target_case_audit",
+      "workstream": "targeted severity/text-first case and human worksheet audit",
+      "status": "complete",
+      "output": "CASE_AUDIT/"
+    },
+    {
+      "agent": "pipeline_defect_audit",
+      "workstream": "training/inference implementation audit",
+      "status": "complete",
+      "output": "PIPELINE_AUDIT/"
+    },
+    {
+      "agent": "family_exposure_audit",
+      "workstream": "family linkage and historical source-access audit",
+      "status": "complete",
+      "output": "FAMILY_EXPOSURE_AUDIT/"
+    },
+    {
+      "agent": "manual_mode_engineer",
+      "workstream": "Laravel/FastAPI MANUAL_ONLY implementation and app tests",
+      "status": "complete",
+      "output": "RELEASE_MANUAL_ONLY.md; ROLLBACK.md; ai_service tests; Laravel tests"
+    },
+    {
+      "agent": "evaluation_auditor",
+      "workstream": "saved probability evaluation/calibration audit",
+      "status": "complete",
+      "output": "EVALUATION_AUDIT/"
+    },
+    {
+      "agent": "qa_final_independent2",
+      "workstream": "independent final artifact/code review",
+      "status": "complete",
+      "output": "FINAL_QA_AUDIT.json"
+    },
+    {
+      "agent": "root coordinator",
+      "workstream": "integration, GPU experiment, handoff, final decision",
+      "status": "in_progress",
+      "output": "root run artifacts"
+    }
+  ],
+  "previous_evidence": "preserved",
+  "track_ai_research": "bounded run complete; NO_ELIGIBLE_CHECKPOINT; research only"
+}

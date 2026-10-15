@@ -1,0 +1,116 @@
+{
+  "rows": 400,
+  "groups": 99,
+  "by_label": {
+    "critical": 100,
+    "minor": 100,
+    "needs_review": 100,
+    "serious": 100
+  },
+  "by_language": {
+    "ceb": 120,
+    "en": 120,
+    "mixed": 40,
+    "tl": 120
+  },
+  "by_review_status": {
+    "draft": 400
+  },
+  "eligible_approved_rows": 0,
+  "dataset_fingerprint": "535d54dab55097cb7803a05e7ce39ec9242acd926b42fe74cb3488f7834107df",
+  "coverage": {
+    "en": {
+      "minor": {
+        "rows": 30,
+        "approved": 0,
+        "groups": 26
+      },
+      "serious": {
+        "rows": 30,
+        "approved": 0,
+        "groups": 28
+      },
+      "critical": {
+        "rows": 30,
+        "approved": 0,
+        "groups": 17
+      },
+      "needs_review": {
+        "rows": 30,
+        "approved": 0,
+        "groups": 28
+      }
+    },
+    "tl": {
+      "minor": {
+        "rows": 30,
+        "approved": 0,
+        "groups": 26
+      },
+      "serious": {
+        "rows": 30,
+        "approved": 0,
+        "groups": 28
+      },
+      "critical": {
+        "rows": 30,
+        "approved": 0,
+        "groups": 17
+      },
+      "needs_review": {
+        "rows": 30,
+        "approved": 0,
+        "groups": 28
+      }
+    },
+    "ceb": {
+      "minor": {
+        "rows": 30,
+        "approved": 0,
+        "groups": 26
+      },
+      "serious": {
+        "rows": 30,
+        "approved": 0,
+        "groups": 28
+      },
+      "critical": {
+        "rows": 30,
+        "approved": 0,
+        "groups": 17
+      },
+      "needs_review": {
+        "rows": 30,
+        "approved": 0,
+        "groups": 28
+      }
+    },
+    "mixed": {
+      "minor": {
+        "rows": 10,
+        "approved": 0,
+        "groups": 9
+      },
+      "serious": {
+        "rows": 10,
+        "approved": 0,
+        "groups": 10
+      },
+      "critical": {
+        "rows": 10,
+        "approved": 0,
+        "groups": 9
+      },
+      "needs_review": {
+        "rows": 10,
+        "approved": 0,
+        "groups": 10
+      }
+    }
+  },
+  "duplicate_normalized_text_count": 0,
+  "over_1000_character_case_ids": [],
+  "review_needed": 400,
+  "ready_for_release": false,
+  "note": "Schema and counts are not human review or independent field validation."
+}

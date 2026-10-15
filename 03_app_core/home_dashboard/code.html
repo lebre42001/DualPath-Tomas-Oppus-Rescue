@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vigilant Sentinel - Home Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-fixed-variant": "#004786",
+              "surface-dim": "#cbdde7",
+              "surface-bright": "#f4faff",
+              "error-container": "#ffdad6",
+              "tertiary-fixed-dim": "#7bd1f8",
+              "surface-container-high": "#d9ebf5",
+              "tertiary-container": "#00799c",
+              "on-secondary": "#ffffff",
+              "inverse-on-surface": "#e2f3fd",
+              "on-secondary-container": "#003567",
+              "surface-tint": "#ba1a20",
+              "on-primary-fixed": "#410003",
+              "surface-container-highest": "#d4e5ef",
+              "on-tertiary-fixed-variant": "#004d65",
+              "outline-variant": "#e4beba",
+              "on-secondary-fixed": "#001c3a",
+              "secondary-fixed-dim": "#a5c8ff",
+              "surface-container-low": "#e7f6ff",
+              "on-primary-fixed-variant": "#930010",
+              "outline": "#8f6f6c",
+              "secondary-container": "#54a0fe",
+              "surface-container": "#dff1fb",
+              "on-error-container": "#93000a",
+              "on-surface-variant": "#5b403d",
+              "on-tertiary": "#ffffff",
+              "primary-fixed": "#ffdad6",
+              "on-error": "#ffffff",
+              "tertiary-fixed": "#bee9ff",
+              "secondary": "#005faf",
+              "inverse-primary": "#ffb3ac",
+              "surface-variant": "#d4e5ef",
+              "on-tertiary-fixed": "#001f2a",
+              "primary-container": "#d32f2f",
+              "surface": "#f4faff",
+              "on-surface": "#0d1e25",
+              "inverse-surface": "#23333a",
+              "primary": "#af101a",
+              "secondary-fixed": "#d4e3ff",
+              "on-background": "#0d1e25",
+              "surface-container-lowest": "#ffffff",
+              "error": "#ba1a1a",
+              "on-primary-container": "#fff2f0",
+              "on-tertiary-container": "#e9f7ff",
+              "on-primary": "#ffffff",
+              "tertiary": "#005f7b",
+              "primary-fixed-dim": "#ffb3ac",
+              "background": "#f4faff"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-grid-pattern {
+            background-image: radial-gradient(circle at 1px 1px, rgba(13, 30, 37, 0.05) 1px, transparent 0);
+            background-size: 32px 32px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface min-h-screen flex flex-col selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopAppBar -->
+<header class="bg-[#f4faff] dark:bg-slate-950 flex justify-between items-center w-full px-6 py-4 sticky top-0 z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#D32F2F] text-2xl">security</span>
+<span class="text-lg font-black uppercase tracking-widest text-[#D32F2F]">Vigilant Sentinel</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#0d1e25] dark:text-slate-100 transition-all scale-95 active:opacity-80">account_circle</span>
+</div>
+</header>
+<main class="flex-1 px-6 pb-32 bg-grid-pattern">
+<!-- Welcome Section -->
+<section class="mt-8 mb-10">
+<div class="flex flex-col gap-1">
+<span class="font-label text-sm uppercase tracking-[0.05em] text-outline">Operator Status: Active</span>
+<h1 class="font-headline text-3xl font-extrabold tracking-tight text-on-surface">Hello, Operator</h1>
+</div>
+</section>
+<!-- Connectivity Bento Grid -->
+<section class="grid grid-cols-2 md:grid-cols-3 gap-5 mb-10">
+<!-- GPS Status -->
+<div class="bg-surface-container-lowest p-5 rounded-lg flex flex-col gap-3 justify-between">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-secondary text-xl">gps_fixed</span>
+<span class="bg-surface-container-high px-2 py-0.5 rounded-sm text-[10px] font-bold uppercase tracking-wider text-secondary">Locked</span>
+</div>
+<div>
+<p class="font-label text-[10px] uppercase tracking-wider text-outline mb-1">GPS Coordinates</p>
+<p class="font-headline text-sm font-bold">34.0522° N, 118.2437° W</p>
+</div>
+</div>
+<!-- Internet Status -->
+<div class="bg-surface-container-lowest p-5 rounded-lg flex flex-col gap-3 justify-between">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-secondary text-xl">language</span>
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="text-[10px] font-bold uppercase tracking-wider text-secondary">Online</span>
+</div>
+</div>
+<div>
+<p class="font-label text-[10px] uppercase tracking-wider text-outline mb-1">Network Stability</p>
+<p class="font-headline text-sm font-bold">High Precision (4G/LTE)</p>
+</div>
+</div>
+<!-- LoRa Status -->
+<div class="bg-surface-container-low p-5 rounded-lg flex flex-col gap-3 justify-between col-span-2 md:col-span-1 border border-outline-variant/10">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-outline text-xl">sensors_off</span>
+<span class="bg-surface-container-highest px-2 py-0.5 rounded-sm text-[10px] font-bold uppercase tracking-wider text-outline">Standby</span>
+</div>
+<div>
+<p class="font-label text-[10px] uppercase tracking-wider text-outline mb-1">LoRa Mesh Node</p>
+<p class="font-headline text-sm font-bold text-outline">Offline / Power Saving</p>
+</div>
+</div>
+</section>
+<!-- Primary Emergency Action -->
+<section class="mb-12">
+<div class="relative group">
+<!-- Background Pulse Effect -->
+<div class="absolute inset-0 bg-primary/20 blur-3xl rounded-full scale-75 group-hover:scale-100 transition-transform duration-1000"></div>
+<button class="relative w-full aspect-[4/3] md:aspect-video bg-gradient-to-br from-primary to-primary-container rounded-xl flex flex-col items-center justify-center text-on-primary gap-6 shadow-2xl transition-all active:scale-95">
+<div class="w-24 h-24 rounded-full border-4 border-on-primary/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-6xl" style="font-variation-settings: 'FILL' 1;">emergency</span>
+</div>
+<div class="text-center">
+<span class="font-headline text-2xl font-black uppercase tracking-tighter">Report Emergency</span>
+<p class="text-sm opacity-80 mt-1 font-medium">Immediate broadcast to local responders</p>
+</div>
+</button>
+</div>
+</section>
+<!-- Recent Activity -->
+<section>
+<div class="flex justify-between items-end mb-5 px-1">
+<h2 class="font-headline text-lg font-bold text-on-surface">Recent Reports</h2>
+<button class="text-primary text-xs font-bold uppercase tracking-widest hover:underline transition-all">View All</button>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Report Item 1 -->
+<div class="bg-surface-container-lowest p-4 rounded-lg flex items-center gap-4 transition-colors hover:bg-surface-container-low cursor-pointer">
+<div class="w-12 h-12 rounded bg-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-error">local_fire_department</span>
+</div>
+<div class="flex-1">
+<p class="font-headline text-sm font-bold text-on-surface">Brush Fire Reported</p>
+<p class="font-label text-[10px] text-outline uppercase tracking-wider">Sector 4-B • 14:22 PM</p>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<!-- Report Item 2 -->
+<div class="bg-surface-container-lowest p-4 rounded-lg flex items-center gap-4 transition-colors hover:bg-surface-container-low cursor-pointer">
+<div class="w-12 h-12 rounded bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface">medical_services</span>
+</div>
+<div class="flex-1">
+<p class="font-headline text-sm font-bold text-on-surface">Medical Dispatch Sent</p>
+<p class="font-label text-[10px] text-outline uppercase tracking-wider">Base Station • 10:05 AM</p>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<!-- Report Item 3 -->
+<div class="bg-surface-container-lowest p-4 rounded-lg flex items-center gap-4 transition-colors hover:bg-surface-container-low cursor-pointer">
+<div class="w-12 h-12 rounded bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface">settings_input_antenna</span>
+</div>
+<div class="flex-1">
+<p class="font-headline text-sm font-bold text-on-surface">Node Maintenance Log</p>
+<p class="font-label text-[10px] text-outline uppercase tracking-wider">Relay Node #09 • Yesterday</p>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Location Context Image (Map) -->
+<section class="mt-12 rounded-xl overflow-hidden h-48 relative border border-outline-variant/15">
+<img class="w-full h-full object-cover grayscale brightness-75 contrast-125" data-alt="Technical monochrome satellite map of a mountain range with tactical grid overlays and data points" data-location="Sierra Nevada Mountains" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSxxwW75yaQF6ybqaPEgggFrToNw4OHVgQUTa9yMnxJ7kI8Txe-JFfs8uoOqwbSqelcG8w0AMNURbfB83fCG4B91BAHOK9OLgc9rWKhZKvto-LeWKdXOyvE7G6C_V3XpDBuC_CGEJF2vSGHTBz_y1FSfCgyf26iDfah0-1IAIm1lbgZHwnnEqQNMJKYKejp0xBxm7_5U2_ePXhDPIlimtJUbrh4y8RzjrDc4C9NSlJHkN9wN-FgXBWD_o6qxl6iHx3tRkU24iq0OVw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4">
+<p class="font-label text-[10px] uppercase text-white tracking-[0.2em] opacity-80">System Location</p>
+<p class="text-white font-bold tracking-tight">Sierra Nevada Response Zone</p>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-[#f4faff]/70 dark:bg-slate-950/70 backdrop-blur-xl z-50 shadow-[0_-4px_40px_0_rgba(13,30,37,0.06)] border-t border-[#e4beba]/15">
+<a class="flex flex-col items-center justify-center text-[#D32F2F] bg-[#ffffff] dark:bg-slate-800 rounded-lg px-3 py-1 transition-opacity hover:opacity-100 tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+<span class="font-Inter text-[10px] uppercase tracking-[0.05em] font-bold">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#0d1e25] dark:text-slate-400 opacity-60 transition-opacity hover:opacity-100 tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-Inter text-[10px] uppercase tracking-[0.05em] font-bold">Reports</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#0d1e25] dark:text-slate-400 opacity-60 transition-opacity hover:opacity-100 tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined">sensors</span>
+<span class="font-Inter text-[10px] uppercase tracking-[0.05em] font-bold">Connectivity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#0d1e25] dark:text-slate-400 opacity-60 transition-opacity hover:opacity-100 tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-Inter text-[10px] uppercase tracking-[0.05em] font-bold">Profile</span>
+</a>
+</nav>
+</body></html>

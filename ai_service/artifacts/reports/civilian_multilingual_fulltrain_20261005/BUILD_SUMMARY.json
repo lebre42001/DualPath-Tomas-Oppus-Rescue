@@ -1,0 +1,200 @@
+{
+  "dataset_dir": "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\datasets\\emergency_text\\experiments\\civilian_multilingual_6000w_20261005",
+  "report_dir": "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\artifacts\\reports\\civilian_multilingual_fulltrain_20261005",
+  "rows": 850,
+  "words": 9520,
+  "languages": {
+    "en": {
+      "rows": 250,
+      "words": 2543,
+      "by_label": {
+        "minor": {
+          "rows": 63,
+          "words": 621
+        },
+        "serious": {
+          "rows": 64,
+          "words": 662
+        },
+        "critical": {
+          "rows": 61,
+          "words": 683
+        },
+        "needs_review": {
+          "rows": 62,
+          "words": 577
+        }
+      },
+      "by_length": {
+        "4-8": 104,
+        "1-3": 15,
+        "9-15": 96,
+        "16+": 35
+      }
+    },
+    "tl": {
+      "rows": 240,
+      "words": 2633,
+      "by_label": {
+        "minor": {
+          "rows": 60,
+          "words": 561
+        },
+        "serious": {
+          "rows": 60,
+          "words": 706
+        },
+        "critical": {
+          "rows": 60,
+          "words": 742
+        },
+        "needs_review": {
+          "rows": 60,
+          "words": 624
+        }
+      },
+      "by_length": {
+        "1-3": 13,
+        "4-8": 82,
+        "16+": 45,
+        "9-15": 100
+      }
+    },
+    "ceb": {
+      "rows": 240,
+      "words": 2619,
+      "by_label": {
+        "minor": {
+          "rows": 60,
+          "words": 689
+        },
+        "serious": {
+          "rows": 60,
+          "words": 697
+        },
+        "critical": {
+          "rows": 60,
+          "words": 699
+        },
+        "needs_review": {
+          "rows": 60,
+          "words": 534
+        }
+      },
+      "by_length": {
+        "1-3": 24,
+        "4-8": 50,
+        "9-15": 128,
+        "16+": 38
+      }
+    },
+    "mixed": {
+      "rows": 120,
+      "words": 1725,
+      "by_label": {
+        "minor": {
+          "rows": 30,
+          "words": 472
+        },
+        "serious": {
+          "rows": 30,
+          "words": 417
+        },
+        "critical": {
+          "rows": 30,
+          "words": 444
+        },
+        "needs_review": {
+          "rows": 30,
+          "words": 392
+        }
+      },
+      "by_length": {
+        "16+": 58,
+        "9-15": 49,
+        "4-8": 11,
+        "1-3": 2
+      }
+    }
+  },
+  "labels": {
+    "minor": {
+      "rows": 213,
+      "words": 2343,
+      "by_language": {
+        "en": 63,
+        "tl": 60,
+        "ceb": 60,
+        "mixed": 30
+      },
+      "by_length": {
+        "4-8": 76,
+        "16+": 46,
+        "9-15": 84,
+        "1-3": 7
+      }
+    },
+    "serious": {
+      "rows": 214,
+      "words": 2482,
+      "by_language": {
+        "en": 64,
+        "tl": 60,
+        "ceb": 60,
+        "mixed": 30
+      },
+      "by_length": {
+        "1-3": 8,
+        "4-8": 68,
+        "9-15": 92,
+        "16+": 46
+      }
+    },
+    "critical": {
+      "rows": 211,
+      "words": 2568,
+      "by_language": {
+        "en": 61,
+        "tl": 60,
+        "ceb": 60,
+        "mixed": 30
+      },
+      "by_length": {
+        "9-15": 104,
+        "1-3": 5,
+        "4-8": 52,
+        "16+": 50
+      }
+    },
+    "needs_review": {
+      "rows": 212,
+      "words": 2127,
+      "by_language": {
+        "en": 62,
+        "tl": 60,
+        "ceb": 60,
+        "mixed": 30
+      },
+      "by_length": {
+        "1-3": 34,
+        "9-15": 93,
+        "4-8": 51,
+        "16+": 34
+      }
+    }
+  },
+  "splits": {
+    "train": 516,
+    "validation": 124,
+    "calibration": 83,
+    "fresh_test": 84,
+    "challenge": 43
+  },
+  "staging_hashes": {
+    "english_draft.csv": "18abd1e5ce6b9064b249079e4e3647f5066a9b48b15280921b1000f614adaef0",
+    "tagalog_draft.csv": "2c0742589afa3bc7fb47e6465555f17f7ad54400ab854f0b1114f92ea36ef17e",
+    "cebuano_draft.csv": "bc2e0851bc4a73ad7ce6e1ef15e5179e11bb7e95c817679d210bdc3fba3b7f96",
+    "mixed_draft.csv": "f4cb740f2cb06b040e22e60d33f9f99f5b6cce02fac0bb3ed59d9735d15ef709"
+  },
+  "dataset_receipt": "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\datasets\\emergency_text\\experiments\\civilian_multilingual_6000w_20261005\\dataset_receipt.json"
+}

@@ -1,0 +1,17 @@
+{
+  "captured_at_local": "2026-10-05T17:49:53.357567+08:00",
+  "os": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.0",
+  "cpu": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+  "logical_cpus": 12,
+  "memory": {
+    "total_bytes": 7738183680,
+    "available_bytes": 1757773824
+  },
+  "gpu_status": "NVIDIA GeForce RTX 3050 Laptop GPU, 591.86, 4096 MiB, 0 MiB, 3962 MiB, 0 %",
+  "pytorch": "2.12.1+cu130",
+  "cuda_available": true,
+  "cuda_runtime": "13.0",
+  "training_completed": true,
+  "active_model_changed": false
+}

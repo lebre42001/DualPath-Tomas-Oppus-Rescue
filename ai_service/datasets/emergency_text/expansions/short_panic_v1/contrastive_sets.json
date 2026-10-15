@@ -1,0 +1,386 @@
+{
+  "status": "provisional_design_only",
+  "candidate_source": "candidates.csv",
+  "extra_illustrations_are_training_rows": false,
+  "sets": [
+    {
+      "set_id": "SP-C01",
+      "topic": "patay: ambiguity, uncertainty and source",
+      "candidate_ids": [
+        "SPV1-071",
+        "SPV1-072",
+        "SPV1-073",
+        "SPV1-055",
+        "SPV1-057"
+      ],
+      "additional_illustrations": [],
+      "decisive_difference": "Bare wording lacks a referent; murag adds uncertainty and giingon nila adds hearsay. Identified present human nonresponse or a current human death claim supports urgent verification, not confirmation.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C02",
+      "topic": "patay: person versus engine",
+      "candidate_ids": [
+        "SPV1-013",
+        "SPV1-057"
+      ],
+      "additional_illustrations": [
+        {
+          "text": "patay ang makina",
+          "proposed_label": "needs_review",
+          "reason": "Engine failure alone says nothing about injuries or remaining road hazards."
+        }
+      ],
+      "decisive_difference": "An explicitly stopped engine with everyone unhurt and safe supports minor. A current claim about a driver supports critical plus reported_unverified. The shared word is not the label.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C03",
+      "topic": "patay: negation does not erase unconsciousness",
+      "candidate_ids": [
+        "SPV1-056",
+        "SPV1-065"
+      ],
+      "additional_illustrations": [],
+      "decisive_difference": "Negating death while affirming unconsciousness remains urgent. Reporting a driver alive with unknown injuries does not prove minor.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C04",
+      "topic": "dugo: amount, body site and missing context",
+      "candidate_ids": [
+        "SPV1-064",
+        "SPV1-033",
+        "SPV1-054"
+      ],
+      "additional_illustrations": [
+        {
+          "text": "dugo",
+          "proposed_label": "needs_review",
+          "reason": "Source and amount are unknown."
+        },
+        {
+          "text": "gamay ra dugo",
+          "proposed_label": "needs_review",
+          "reason": "The amount is described but source and affected person are missing."
+        },
+        {
+          "text": "kusog kaayo ang dugo",
+          "proposed_label": "needs_review",
+          "reason": "Possible severe bleeding warrants urgent clarification; subject and literal meaning remain unspecified."
+        }
+      ],
+      "decisive_difference": "A bare blood word is insufficient; a hand with small bleeding is a concrete injury; very heavy bleeding from a leg supports critical.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C05",
+      "topic": "dugo: stopped bleeding versus ongoing heavy loss",
+      "candidate_ids": [
+        "SPV1-038",
+        "SPV1-047"
+      ],
+      "additional_illustrations": [
+        {
+          "text": "nihunong na ang dugo",
+          "proposed_label": "needs_review",
+          "reason": "Stopped blood alone does not establish source, prior severity or current condition."
+        }
+      ],
+      "decisive_difference": "Stopped bleeding does not undo the hand injury. Continuous pouring blood supports greater urgency.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C06",
+      "topic": "motubag: digital reply versus physical response",
+      "candidate_ids": [
+        "SPV1-063",
+        "SPV1-074",
+        "SPV1-052"
+      ],
+      "additional_illustrations": [
+        {
+          "text": "wala motubag",
+          "proposed_label": "needs_review",
+          "reason": "Under a description-only contract the mode of nonresponse is unresolved; if a human is explicitly observed not responding, critical may be supported."
+        }
+      ],
+      "decisive_difference": "An unanswered message is not physical unresponsiveness. The observed bodily nonresponse in the longer fragment is informative despite short length.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C07",
+      "topic": "naipit: unspecified subject, released finger, trapped occupant",
+      "candidate_ids": [
+        "SPV1-075",
+        "SPV1-035",
+        "SPV1-053"
+      ],
+      "additional_illustrations": [
+        {
+          "text": "naipit tudlo",
+          "proposed_label": "serious",
+          "reason": "A localized finger injury is provisionally serious absent a supported life threat; not proof that circulation is safe."
+        },
+        {
+          "text": "naipit sulod sa sakyanan",
+          "proposed_label": "needs_review",
+          "reason": "Without an explicit human referent this could mean a person or object; urgently clarify rather than invent the subject."
+        }
+      ],
+      "decisive_difference": "Identify what is trapped and whether it is released. A released painful finger differs from a person unable to escape a vehicle.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C08",
+      "topic": "sunog: extinguished safe scene versus occupied vehicle fire",
+      "candidate_ids": [
+        "SPV1-010",
+        "SPV1-048"
+      ],
+      "additional_illustrations": [],
+      "decisive_difference": "A resolved fire with everyone unhurt and the scene safe differs from a person inside a currently burning car.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C09",
+      "topic": "sunog: current versus historical",
+      "candidate_ids": [
+        "SPV1-058",
+        "SPV1-070"
+      ],
+      "additional_illustrations": [],
+      "decisive_difference": "A current trapped occupant faces danger; a past fire with unknown current condition requires clarification.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C10",
+      "topic": "conscious: concrete injury versus breathing distress",
+      "candidate_ids": [
+        "SPV1-037",
+        "SPV1-043"
+      ],
+      "additional_illustrations": [],
+      "decisive_difference": "Being conscious does not determine severity. A painful knee and normal breathing differ from gasping with inability to speak.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C11",
+      "topic": "conscious: question versus assertion",
+      "candidate_ids": [
+        "SPV1-069",
+        "SPV1-041"
+      ],
+      "additional_illustrations": [],
+      "decisive_difference": "Asking whether someone is awake is uncertainty; directly describing an unconscious driver supports urgency.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C12",
+      "topic": "conscious: conflict versus clear temporal change",
+      "candidate_ids": [
+        "SPV1-078",
+        "SPV1-041"
+      ],
+      "additional_illustrations": [
+        {
+          "text": "Driver awake before, unconscious now.",
+          "proposed_label": "critical",
+          "reason": "A chronological deterioration is coherent, not a contradiction."
+        }
+      ],
+      "decisive_difference": "Unresolved simultaneous contradictory reports differ from a clear current observation.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C13",
+      "topic": "walking: no injury, painful injury, major bleeding",
+      "candidate_ids": [
+        "SPV1-005",
+        "SPV1-024",
+        "SPV1-044"
+      ],
+      "additional_illustrations": [],
+      "decisive_difference": "Walking can coexist with no injury, a knee injury or heavy bleeding. The condition and hazard evidence decide.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C14",
+      "topic": "bali: human limb versus broken property",
+      "candidate_ids": [
+        "SPV1-026",
+        "SPV1-009"
+      ],
+      "additional_illustrations": [],
+      "decisive_difference": "Bali applied to the reporter's foot or leg is a claimed injury; applied to a mirror with everyone safe is property damage.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C15",
+      "topic": "bali: known arm injury versus unidentified object",
+      "candidate_ids": [
+        "SPV1-032",
+        "SPV1-079"
+      ],
+      "additional_illustrations": [],
+      "decisive_difference": "A body part and possessor support a concrete injury; something broken without a visible referent is insufficient.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C16",
+      "topic": "dili kalihok: localized arm, crushed chest, immobile car",
+      "candidate_ids": [
+        "SPV1-039",
+        "SPV1-059",
+        "SPV1-077"
+      ],
+      "additional_illustrations": [],
+      "decisive_difference": "The same inability-to-move idea describes different subjects and mechanisms; chest compression is an urgent hazard.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C17",
+      "topic": "breathing: absence, impairment and uncertainty",
+      "candidate_ids": [
+        "SPV1-042",
+        "SPV1-043",
+        "SPV1-080"
+      ],
+      "additional_illustrations": [],
+      "decisive_difference": "Not breathing, gasping and uncertain breathing are distinct meanings; uncertainty must not be silently converted into normal breathing.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C18",
+      "topic": "breathing: subject attribution",
+      "candidate_ids": [
+        "SPV1-060",
+        "SPV1-037"
+      ],
+      "additional_illustrations": [
+        {
+          "text": "Driver breathing normally, passenger unconscious.",
+          "proposed_label": "critical",
+          "reason": "Normal breathing in one person does not describe the unconscious passenger."
+        }
+      ],
+      "decisive_difference": "A well passenger cannot cancel a different person's absent breathing. Keep each condition attached to the right person.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C19",
+      "topic": "crash: event-only versus explicit no injury and safety",
+      "candidate_ids": [
+        "SPV1-062",
+        "SPV1-011",
+        "SPV1-016",
+        "SPV1-076"
+      ],
+      "additional_illustrations": [],
+      "decisive_difference": "Crash describes an event, not its severity. No injury plus safety supports minor; unknown condition requires review.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C20",
+      "topic": "gasgas: object versus body versus absent subject",
+      "candidate_ids": [
+        "SPV1-007",
+        "SPV1-040"
+      ],
+      "additional_illustrations": [
+        {
+          "text": "gasgas ra",
+          "proposed_label": "needs_review",
+          "reason": "The scratched subject and remaining danger are unspecified."
+        }
+      ],
+      "decisive_difference": "A vehicle scratch with explicit safety differs from a skin cut; lang does not erase injury.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C21",
+      "topic": "cannot stand: impaired leg versus unsupported general request",
+      "candidate_ids": [
+        "SPV1-030",
+        "SPV1-036",
+        "SPV1-061"
+      ],
+      "additional_illustrations": [],
+      "decisive_difference": "A painful ankle or leg with impaired standing is an actual symptom; help alone offers no injury detail.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C22",
+      "topic": "head injury: awake versus unresponsive",
+      "candidate_ids": [
+        "SPV1-022",
+        "SPV1-034",
+        "SPV1-041"
+      ],
+      "additional_illustrations": [],
+      "decisive_difference": "Wakefulness does not make a head cut minor; reported unresponsiveness establishes a separate urgent concern.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C23",
+      "topic": "drowning: actual entrapment versus quoted scenario",
+      "candidate_ids": [
+        "SPV1-045"
+      ],
+      "additional_illustrations": [
+        {
+          "text": "For drill: passenger trapped underwater, no real crash.",
+          "proposed_label": "needs_review",
+          "reason": "Explicit hypothetical context is out of scope for live severity classification."
+        },
+        {
+          "text": "drowning",
+          "proposed_label": "needs_review",
+          "reason": "A bare topic word lacks event, person and current-status context; urgently clarify."
+        }
+      ],
+      "decisive_difference": "A present trapped submerged passenger differs from an educational question.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C24",
+      "topic": "fatality: present human claim versus undated forward",
+      "candidate_ids": [
+        "SPV1-050",
+        "SPV1-068"
+      ],
+      "additional_illustrations": [],
+      "decisive_difference": "Current scene-linked hearsay can justify urgent verification without proving death. An undated or possibly old post does not establish present urgency.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C25",
+      "topic": "injury: vague claim versus concrete wound",
+      "candidate_ids": [
+        "SPV1-067",
+        "SPV1-029",
+        "SPV1-040"
+      ],
+      "additional_illustrations": [],
+      "decisive_difference": "An unspecified hurt person needs clarification to locate urgency; a described hand wound or cut provides actionable injury evidence.",
+      "status": "provisional_design_only"
+    },
+    {
+      "set_id": "SP-C26",
+      "topic": "normal breathing: not equivalent to responsiveness",
+      "candidate_ids": [
+        "SPV1-037",
+        "SPV1-052"
+      ],
+      "additional_illustrations": [
+        {
+          "text": "Driver breathing but unconscious.",
+          "proposed_label": "critical",
+          "reason": "Explicit unconsciousness remains urgent even with breathing reported."
+        }
+      ],
+      "decisive_difference": "Normal breathing does not establish that a person is responsive.",
+      "status": "provisional_design_only"
+    }
+  ]
+}

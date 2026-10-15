@@ -1,0 +1,82 @@
+{
+  "frozen_rule": {
+    "rule_id": "balanced_safety_v1_pretest_frozen",
+    "frozen_at": "2026-10-05",
+    "validation_only_selection": true,
+    "candidate_trials": [
+      {
+        "seed": 42,
+        "learning_rate": 1e-05
+      },
+      {
+        "seed": 42,
+        "learning_rate": 2e-05
+      },
+      {
+        "seed": 42,
+        "learning_rate": 3e-05
+      }
+    ],
+    "lexicographic_order": [
+      "minimize raw serious_or_critical_undertriage_count",
+      "maximize raw macro_f1",
+      "maximize min(critical_recall, serious_recall)",
+      "maximize critical_precision",
+      "tie_break lower learning_rate",
+      "if still tied, select lower learning rate"
+    ],
+    "prohibited_for_selection": [
+      "fresh_test",
+      "calibration",
+      "challenge"
+    ],
+    "proposed_research_gates_not_clinical_standards": {
+      "macro_f1_min": 0.8,
+      "critical_recall_min": 0.95,
+      "serious_or_critical_detection_recall_min": 0.9,
+      "per_observed_language_macro_f1_min": 0.75,
+      "raw_high_risk_undertriage_max": 0
+    },
+    "limits": [
+      "All corpus labels are AI-authored drafts; metrics describe synthetic examples only.",
+      "No gate implies responder acceptance, clinical validity, production readiness or permission to activate the checkpoint.",
+      "Fresh-test and challenge are family-disjoint within this experiment only; some previous CSV copies were inaccessible and complete historical exposure cannot be verified."
+    ]
+  },
+  "candidate_results": [
+    {
+      "learning_rate": 1e-05,
+      "checkpoint": "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\artifacts\\checkpoints\\text_xlmr_civilian_multilingual_20261005\\trial_lr_1e-5_seed42",
+      "best_epoch": 8,
+      "validation_raw_high_risk_undertriage_count": 3,
+      "validation_macro_f1": 0.7883456322026527,
+      "critical_recall": 0.8064516129032258,
+      "serious_recall": 0.96875,
+      "critical_precision": 0.78125,
+      "selected": false
+    },
+    {
+      "learning_rate": 2e-05,
+      "checkpoint": "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\artifacts\\checkpoints\\text_xlmr_civilian_multilingual_20261005\\trial_lr_2e-5_seed42",
+      "best_epoch": 6,
+      "validation_raw_high_risk_undertriage_count": 3,
+      "validation_macro_f1": 0.9191785389018996,
+      "critical_recall": 0.8709677419354839,
+      "serious_recall": 0.9375,
+      "critical_precision": 0.9,
+      "selected": true
+    },
+    {
+      "learning_rate": 3e-05,
+      "checkpoint": "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\artifacts\\checkpoints\\text_xlmr_civilian_multilingual_20261005\\trial_lr_3e-5_seed42",
+      "best_epoch": 3,
+      "validation_raw_high_risk_undertriage_count": 5,
+      "validation_macro_f1": 0.7919562439321098,
+      "critical_recall": 0.8387096774193549,
+      "serious_recall": 0.96875,
+      "critical_precision": 0.8125,
+      "selected": false
+    }
+  ],
+  "selected_learning_rate": 2e-05
+}

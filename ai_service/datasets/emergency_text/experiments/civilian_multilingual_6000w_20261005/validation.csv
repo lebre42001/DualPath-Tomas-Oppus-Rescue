@@ -1,0 +1,125 @@
+case_id,group_id,language,text,label,review_status,reviewer,notes
+CEB-CRITICAL-005,CEB-FAM-CRITICAL-005,ceb,Naglisod kaayo pagginhawa ang drayber human madugmok iyang dughan sa bangga.,critical,draft,,Synthetic draft; unreviewed.
+CEB-CRITICAL-006,CEB-FAM-CRITICAL-006,ceb,Naipit ang pasahero sa nagdilaab nga awto; dili makagawas.,critical,draft,,Synthetic draft; unreviewed.
+CEB-CRITICAL-007,CEB-FAM-CRITICAL-007,ceb,Nahulog ang drayber sa motor sa lawom nga kanal; naa pa siya sa tubig ug wala makagawas.,critical,draft,,Synthetic draft; unreviewed.
+CEB-CRITICAL-021,CEB-FAM-CRITICAL-021,ceb,Walay ginhawa ang pasahero human sa bangga.,critical,draft,,Synthetic draft; unreviewed.
+CEB-CRITICAL-032,CEB-FAM-CRITICAL-032,ceb,Naa sa nagdilaab nga awto ang drayber.,critical,draft,,Synthetic draft; unreviewed.
+CEB-CRITICAL-033,CEB-FAM-CRITICAL-033,ceb,Dili na motubag ang pasahero ug naglisod moginhawa.,critical,draft,,Synthetic draft; unreviewed.
+CEB-CRITICAL-041,CEB-FAM-CRITICAL-041,ceb,"Naigo ang motor sa trak, naipit ang drayber ug nagdilaab ang makina duol niya.",critical,draft,,Synthetic draft; unreviewed.
+CEB-CRITICAL-044,CEB-FAM-CRITICAL-044,ceb,"Naipit ang pasahero ilawom sa awto, naghuot ang dughan ug dili makagawas.",critical,draft,,Synthetic draft; unreviewed.
+CEB-CRITICAL-051,CEB-FAM-CRITICAL-051,ceb,"Human sa kusog nga bangga, walay panimuot ang drayber, dili motubag ug halos dili makita ang iyang pagginhawa.",critical,draft,,Synthetic draft; unreviewed.
+CEB-MINOR-003,CEB-FAM-MINOR-003,ceb,"Walay samad, naglakaw.",minor,draft,,Synthetic draft; unreviewed.
+CEB-MINOR-006,CEB-FAM-MINOR-006,ceb,Walay samad sa mga sakay; nag-estorya ug naglakaw silang normal.,minor,draft,,Synthetic draft; unreviewed.
+CEB-MINOR-020,CEB-FAM-MINOR-020,ceb,Gasgas ra sa bukton; mata ang drayber ug walay laing samad.,minor,draft,,Synthetic draft; unreviewed.
+CEB-MINOR-037,CEB-FAM-MINOR-037,ceb,Nagkabangga ang duha ka motor; mata ang drayber ug gasgas ra sa tuhod.,minor,draft,,Synthetic draft; unreviewed.
+CEB-MINOR-041,CEB-FAM-MINOR-041,ceb,"Natumba ang pasahero sa traysikol, gamayng garas sa tuhod ug nakatindog dayon.",minor,draft,,Synthetic draft; unreviewed.
+CEB-MINOR-042,CEB-FAM-MINOR-042,ceb,"Nasamad ang drayber sa kamot, mata ug klaro mosulti, wala nay lain nga reklamo.",minor,draft,,Synthetic draft; unreviewed.
+CEB-MINOR-044,CEB-FAM-MINOR-044,ceb,"Nagasgas ang tuhod sa pasahero, mata siya ug kontrolado ang gamayng pagdugo.",minor,draft,,Synthetic draft; unreviewed.
+CEB-MINOR-056,CEB-FAM-MINOR-056,ceb,"Nasangit ang sapatos sa siklista ug nahulog siya, gamayng hiwa sa tudlo apan klaro mosulti ug kontrolado ang dugo.",minor,draft,,Synthetic draft; unreviewed.
+CEB-MINOR-058,CEB-FAM-MINOR-058,ceb,"Sa hinay nga bangga sa parkingan, gamayng bun-og sa paa ang drayber ug wala siyay lisod nga pagginhawa o paglihok.",minor,draft,,Synthetic draft; unreviewed.
+CEB-NEEDS_REVIEW-004,CEB-FAM-NEEDS_REVIEW-004,ceb,Wala koy klaro,needs_review,draft,,Synthetic draft; unreviewed.
+CEB-NEEDS_REVIEW-007,CEB-FAM-NEEDS_REVIEW-007,ceb,Naay samad kuno,needs_review,draft,,Synthetic draft; unreviewed.
+CEB-NEEDS_REVIEW-015,CEB-FAM-NEEDS_REVIEW-015,ceb,Dili makita,needs_review,draft,,Synthetic draft; unreviewed.
+CEB-NEEDS_REVIEW-018,CEB-FAM-NEEDS_REVIEW-018,ceb,Ambot iyang kahimtang,needs_review,draft,,Synthetic draft; unreviewed.
+CEB-NEEDS_REVIEW-020,CEB-FAM-NEEDS_REVIEW-020,ceb,Murag wala motubag,needs_review,draft,,Synthetic draft; unreviewed.
+CEB-NEEDS_REVIEW-022,CEB-FAM-NEEDS_REVIEW-022,ceb,"Motor ang naigo, wala ko kabalo kung naay tawo.",needs_review,draft,,Synthetic draft; unreviewed.
+CEB-NEEDS_REVIEW-040,CEB-FAM-NEEDS_REVIEW-040,ceb,"Giingon nila nga adunay dugo, pero wala mahibaloi kung tawo ba o hayop.",needs_review,draft,,Synthetic draft; unreviewed.
+CEB-NEEDS_REVIEW-049,CEB-FAM-NEEDS_REVIEW-049,ceb,Nakadungog kog pag-iyak human sa aksidente pero wala ko kita kung kinsa.,needs_review,draft,,Synthetic draft; unreviewed.
+CEB-NEEDS_REVIEW-057,CEB-FAM-NEEDS_REVIEW-057,ceb,Wala ko sa dapit sa aksidente ug dili ko kahibalo kung bag-o ba o kagahapon pa kini.,needs_review,draft,,Synthetic draft; unreviewed.
+CEB-SERIOUS-002,CEB-FAM-SERIOUS-002,ceb,Bukton bali; dili magamit.,serious,draft,,Synthetic draft; unreviewed.
+CEB-SERIOUS-004,CEB-FAM-SERIOUS-004,ceb,"Nasamad ang paa sa bangga; mata ang pasahero, lisod molakaw.",serious,draft,,Synthetic draft; unreviewed.
+CEB-SERIOUS-018,CEB-FAM-SERIOUS-018,ceb,"Samad sa bukton nagdugo; napugngan sa panapton, drayber mata ug normal moginhawa.",serious,draft,,Synthetic draft; unreviewed.
+CEB-SERIOUS-022,CEB-FAM-SERIOUS-022,ceb,Dili makatindog tungod sa sakit nga paa.,serious,draft,,Synthetic draft; unreviewed.
+CEB-SERIOUS-026,CEB-FAM-SERIOUS-026,ceb,Dili magamit ang kamot human matumba.,serious,draft,,Synthetic draft; unreviewed.
+CEB-SERIOUS-027,CEB-FAM-SERIOUS-027,ceb,"Grabe ang kasakit sa likod, dili siya makatindog.",serious,draft,,Synthetic draft; unreviewed.
+CEB-SERIOUS-038,CEB-FAM-SERIOUS-038,ceb,"Sa pagbangga sa traysikol, naipit ug nasamad ang paa sa pasahero ilawom sa lingkoranan. Mata siya, normal ang ginhawa; walay pagdugmok sa dughan o kusog nga pagdugo.",serious,draft,,Synthetic draft; unreviewed.
+CEB-SERIOUS-040,CEB-FAM-SERIOUS-040,ceb,"Samad sa bukton sa siklista; gamay ang dugo, napugngan ug klaro motubag.",serious,draft,,Synthetic draft; unreviewed.
+CEB-SERIOUS-046,CEB-FAM-SERIOUS-046,ceb,"Lawom samad sa kamot sa drayber; pultahan naablihan, dugo napugngan ug mata siya.",serious,draft,,Synthetic draft; unreviewed.
+EN-012,ENF-012,en,Someone not moving.,needs_review,draft,,Synthetic draft; unreviewed.
+EN-013,ENF-013,en,No injuries; roadway clear.,minor,draft,,Synthetic draft; unreviewed.
+EN-015,ENF-015,en,"A passenger may be trapped, but the vehicle and current danger are unconfirmed.",needs_review,draft,,Synthetic draft; unreviewed.
+EN-017,ENF-017,en,Passenger has a tiny cut.,minor,draft,,Synthetic draft; unreviewed.
+EN-031,ENF-031,en,Ejected motorcyclist unresponsive.,critical,draft,,Synthetic draft; unreviewed.
+EN-040,ENF-040,en,There was an impact.,needs_review,draft,,Synthetic draft; unreviewed.
+EN-045,ENF-045,en,"Small elbow scrape, bleeding already stopped.",minor,draft,,Synthetic draft; unreviewed.
+EN-047,ENF-047,en,Motorcyclist is not breathing at the scene.,critical,draft,,Synthetic draft; unreviewed.
+EN-049,ENF-049,en,Bumper dent; nobody was injured.,minor,draft,,Synthetic draft; unreviewed.
+EN-053,ENF-053,en,Cyclist has one shallow knee graze.,minor,draft,,Synthetic draft; unreviewed.
+EN-056,ENF-056,en,A passenger is not moving now.,needs_review,draft,,Synthetic draft; unreviewed.
+EN-064,ENF-064,en,A person may be trapped inside.,needs_review,draft,,Synthetic draft; unreviewed.
+EN-066,ENF-066,en,Motorist has a head injury and dizziness.,serious,draft,,Synthetic draft; unreviewed.
+EN-068,ENF-068,en,The motorcycle is under a truck.,needs_review,draft,,Synthetic draft; unreviewed.
+EN-074,ENF-074,en,Driver has a significant shoulder injury.,serious,draft,,Synthetic draft; unreviewed.
+EN-083,ENF-083,en,"After a car crash, the driver has a deep leg wound; responders have controlled the bleeding, and he is alert and breathing normally.",serious,draft,,Synthetic draft; unreviewed.
+EN-086,ENF-086,en,The passenger has a deep cut needing care.,serious,draft,,Synthetic draft; unreviewed.
+EN-094,ENF-094,en,Cyclist has persistent pain in the lower back.,serious,draft,,Synthetic draft; unreviewed.
+EN-098,ENF-098,en,One arm is injured and hard to move.,serious,draft,,Synthetic draft; unreviewed.
+EN-099,ENF-099,en,The vehicle rolled over; the driver will not wake.,critical,draft,,Synthetic draft; unreviewed.
+EN-115,ENF-115,en,The injured person is unresponsive with heavy bleeding.,critical,draft,,Synthetic draft; unreviewed.
+EN-119,ENF-119,en,A van has crushed a person against the wall.,critical,draft,,Synthetic draft; unreviewed.
+EN-121,ENF-121,en,Two cars bumped; everyone says they are fine.,minor,draft,,Synthetic draft; unreviewed.
+EN-126,ENF-126,en,Driver complains of strong neck pain after impact.,serious,draft,,Synthetic draft; unreviewed.
+EN-129,ENF-129,en,"The driver has a small, clean surface cut.",minor,draft,,Synthetic draft; unreviewed.
+EN-145,ENF-145,en,"A small bruise is reported, with no movement trouble.",minor,draft,,Synthetic draft; unreviewed.
+EN-154,ENF-154,en,A passenger has a deep cut on the forearm with bleeding now controlled.,serious,draft,,Synthetic draft; unreviewed.
+EN-160,ENF-160,en,"The driver went quiet after the impact, but responsiveness is not clear.",needs_review,draft,,Synthetic draft; unreviewed.
+EN-163,ENF-163,en,The rider was ejected and is not responding to anyone nearby.,critical,draft,,Synthetic draft; unreviewed.
+EN-167,ENF-167,en,A trapped passenger is surrounded by flames inside the overturned car.,critical,draft,,Synthetic draft; unreviewed.
+EN-170,ENF-170,en,A child has a deep knee wound; bleeding slowed after pressure was applied.,serious,draft,,Synthetic draft; unreviewed.
+EN-173,ENF-173,en,"After a gentle rear bump, everyone got out and reports no injuries.",minor,draft,,Synthetic draft; unreviewed.
+EN-212,ENF-212,en,"Someone is lying beside the road, but their state is unclear.",needs_review,draft,,Synthetic draft; unreviewed.
+EN-216,ENF-216,en,A witness heard Help me and then lost sight of the rider.,needs_review,draft,,Synthetic draft; unreviewed.
+EN-243,ENF-243,en,A vehicle slid off an icy road into a pond; a child passenger fell through thin ice and has not resurfaced after immediate searching.,critical,draft,,Synthetic draft; unreviewed.
+EN-246,ENF-246,en,"Following a side impact, one occupant has severe knee pain and cannot stand; other passengers are alert and out of traffic.",serious,draft,,Synthetic draft; unreviewed.
+EN-247,ENF-247,en,"After the truck overturned, a person was crushed underneath; the victim cannot be awakened and is struggling for breath.",critical,draft,,Synthetic draft; unreviewed.
+MX-CRITICAL-016,MX-FAM-CRITICAL-016,mixed,"Naa pa sa tubig yung passenger, wala motubag ug dili makita kung nagginhawa pa.",critical,draft,,Synthetic draft; unreviewed.
+MX-CRITICAL-017,MX-FAM-CRITICAL-017,mixed,"Human sa bangga, naipit ang pasahero ug naglisod na siya pagginhawa samtang misulod ang aso sa sakyanan.",critical,draft,,Synthetic draft; unreviewed.
+MX-CRITICAL-024,MX-FAM-CRITICAL-024,mixed,"Human maigo sa poste, unconscious yung passenger, nagdugo ang ulo ug lisod kaayo iyang pagginhawa.",critical,draft,,Synthetic draft; unreviewed.
+MX-CRITICAL-026,MX-FAM-CRITICAL-026,mixed,Nasa kanal yung kotse na puno ng tubig; hindi pa nailalabas ang pasahero at wala siyang sagot.,critical,draft,,Synthetic draft; unreviewed.
+MX-MINOR-003,MX-FAM-MINOR-003,mixed,Natumba ang siklista duol sa merkado; gising siya ug gasgas ra sa palad ang iyang samad.,minor,draft,,Synthetic draft; unreviewed.
+MX-MINOR-015,MX-FAM-MINOR-015,mixed,"Naigo ang motor sa likod sa sakyanan; gising ang rider, gamayng hiwa ug mihunong na ang dugo.",minor,draft,,Synthetic draft; unreviewed.
+MX-MINOR-025,MX-FAM-MINOR-025,mixed,Rider awake ug makigstorya; ang iyang reklamo gamayng scratch ra sa kamot human sa hinay nga pagkahulog.,minor,draft,,Synthetic draft; unreviewed.
+MX-MINOR-027,MX-FAM-MINOR-027,mixed,"Nadulas sa basang kalsada ang siklista; gising siya, gasgas lang sa tuhod ug makalakaw siya.",minor,draft,,Synthetic draft; unreviewed.
+MX-NEEDS_REVIEW-008,MX-FAM-NEEDS_REVIEW-008,mixed,"Naaksidente raw, condition unknown, wala pa namin makita.",needs_review,draft,,Synthetic draft; unreviewed.
+MX-NEEDS_REVIEW-015,MX-FAM-NEEDS_REVIEW-015,mixed,"Nakadungog ko nga lisod ginhawa siya, pero lahi ang sulti sa uban; dili klaro kung kinsa ang nakita.",needs_review,draft,,Synthetic draft; unreviewed.
+MX-NEEDS_REVIEW-021,MX-FAM-NEEDS_REVIEW-021,mixed,"Naay dugo sa karsada, but wala ko kabalo kung gikan ba sa tawo o sa sakyanan.",needs_review,draft,,Synthetic draft; unreviewed.
+MX-NEEDS_REVIEW-030,MX-FAM-NEEDS_REVIEW-030,mixed,"May nagsabi na may namatay sa banggaan, pero hindi siya saksi at wala akong ibang detalye.",needs_review,draft,,Synthetic draft; unreviewed.
+MX-SERIOUS-005,MX-FAM-SERIOUS-005,mixed,Dili na niya maalsa ang hand human sa pagkatumba.,serious,draft,,Synthetic draft; unreviewed.
+MX-SERIOUS-010,MX-FAM-SERIOUS-010,mixed,"Nabangga yung motor sa van; gising ang rider, posibleng bali ang binti at hindi makatayo.",serious,draft,,Synthetic draft; unreviewed.
+MX-SERIOUS-019,MX-FAM-SERIOUS-019,mixed,"Naipit ang kamot sa pultahan sa bangga; naablihan na, deep cut pero napugngan ang dugo ug awake siya.",serious,draft,,Synthetic draft; unreviewed.
+MX-SERIOUS-027,MX-FAM-SERIOUS-027,mixed,"Natumba ang motor sa iyang bitiis; gising siya, normal ang ginhawa pero dili makagawas nga siya ra.",serious,draft,,Synthetic draft; unreviewed.
+TL-010,TL-FAM-010,tl,Maliit na hiwa; huminto ang kaunting dugo.,minor,draft,,Synthetic draft; unreviewed.
+TL-019,TL-FAM-019,tl,Maliit na sugat sa daliri; dugo huminto.,minor,draft,,Synthetic draft; unreviewed.
+TL-028,TL-FAM-028,tl,Walang nasaktan nang magdikit ang dalawang kotse.,minor,draft,,Synthetic draft; unreviewed.
+TL-032,TL-FAM-032,tl,Maliit na galos sa tuhod; ligtas ang rider.,minor,draft,,Synthetic draft; unreviewed.
+TL-044,TL-FAM-044,tl,Basag ang side mirror matapos sumagi sa poste; walang taong nasaktan.,minor,draft,,Synthetic draft; unreviewed.
+TL-048,TL-FAM-048,tl,Gasgas lang ang binti ng pasahero matapos madulas; nasa ligtas na hintuan sila.,minor,draft,,Synthetic draft; unreviewed.
+TL-056,TL-FAM-056,tl,"Maliit na hiwa sa daliri ng pasahero; kaunti ang dugo, huminto na at ligtas ang lugar.",minor,draft,,Synthetic draft; unreviewed.
+TL-058,TL-FAM-058,tl,Basag ang headlight ng motorsiklo matapos sumagi sa bakod; walang taong nasaktan at wala nang panganib.,minor,draft,,Synthetic draft; unreviewed.
+TL-062,TL-FAM-062,tl,Bali ang binti.,serious,draft,,Synthetic draft; unreviewed.
+TL-064,TL-FAM-064,tl,"Matapos mabangga ang motorsiklo, hindi maigalaw ng rider ang kanang kamay at masakit ito; gising siya at nakakasagot.",serious,draft,,Synthetic draft; unreviewed.
+TL-065,TL-FAM-065,tl,Malalim ang hiwa sa hita.,serious,draft,,Synthetic draft; unreviewed.
+TL-072,TL-FAM-072,tl,"Matapos ang banggaan, gising at nakakasagot ang pasahero, pero matindi ang sakit ng likod niya at hirap siyang maupo o tumayo nang tuwid.",serious,draft,,Synthetic draft; unreviewed.
+TL-086,TL-FAM-086,tl,May malaking pasa sa balakang at hirap tumayo.,serious,draft,,Synthetic draft; unreviewed.
+TL-087,TL-FAM-087,tl,"Nabagok ang ulo ng rider sa bintana nang mabangga ang motorsiklo. Gising at sumasagot siya, pero tuloy-tuloy at matindi ang sakit ng ulo niya; wala siyang pagsusuka o hirap huminga.",serious,draft,,Synthetic draft; unreviewed.
+TL-098,TL-FAM-098,tl,Masakit ang tuhod ng rider at hindi niya maihakbang matapos ang banggaan sa kanto.,serious,draft,,Synthetic draft; unreviewed.
+TL-102,TL-FAM-102,tl,Hirap tumayo ang pasahero dahil masakit ang balakang; kailangan siyang alalayan papunta sa tabi.,serious,draft,,Synthetic draft; unreviewed.
+TL-105,TL-FAM-105,tl,May malalim na sugat sa braso; nabenda na ito ngunit masakit igalaw.,serious,draft,,Synthetic draft; unreviewed.
+TL-123,TL-FAM-123,tl,Hindi nagigising ang drayber.,critical,draft,,Synthetic draft; unreviewed.
+TL-135,TL-FAM-135,tl,Naipit ang sakay sa ilalim ng bumaligtad na jeep.,critical,draft,,Synthetic draft; unreviewed.
+TL-136,TL-FAM-136,tl,Bumubuhos ang dugo sa hita ng rider.,critical,draft,,Synthetic draft; unreviewed.
+TL-141,TL-FAM-141,tl,"Matapos bumangga nang malakas ang kotse, naipit ang pasahero sa pagitan ng dashboard at upuan; hindi siya makalabas at hirap na hirap siyang huminga.",critical,draft,,Synthetic draft; unreviewed.
+TL-144,TL-FAM-144,tl,Nasusunog ang kotse habang may taong nasa loob.,critical,draft,,Synthetic draft; unreviewed.
+TL-149,TL-FAM-149,tl,"Matapos mabangga ng truck ang motorsiklo, naipit ang rider sa ilalim ng harapang bahagi ng truck; hindi siya makawala at halos hindi makahinga.",critical,draft,,Synthetic draft; unreviewed.
+TL-158,TL-FAM-158,tl,Bumubuhos ang dugo sa hita ng pasahero; hindi ito mapigil habang naghihintay ng rescue.,critical,draft,,Synthetic draft; unreviewed.
+TL-162,TL-FAM-162,tl,Nakalubog ang kotse sa ilog at may pasaherong hindi pa nailalabas mula sa loob.,critical,draft,,Synthetic draft; unreviewed.
+TL-178,TL-FAM-178,tl,Tumilapon ang rider sa mabilis na salpukan; walang malay siya at hindi tumutugon sa mga tumatawag.,critical,draft,,Synthetic draft; unreviewed.
+TL-185,TL-FAM-185,tl,Di gumagalaw.,needs_review,draft,,Synthetic draft; unreviewed.
+TL-190,TL-FAM-190,tl,May taong nakahiga sa tabi ng motorsiklo.,needs_review,draft,,Synthetic draft; unreviewed.
+TL-201,TL-FAM-201,tl,May banggaan sa tulay; di alam kung may nahulog.,needs_review,draft,,Synthetic draft; unreviewed.
+TL-211,TL-FAM-211,tl,Duguan daw ang pasahero; di alam kung gaano karami.,needs_review,draft,,Synthetic draft; unreviewed.
+TL-218,TL-FAM-218,tl,Hindi sumasagot ang drayber sa telepono matapos ang banggaan; di alam kung nasaan siya.,needs_review,draft,,Synthetic draft; unreviewed.
+TL-220,TL-FAM-220,tl,Nakita ang pasahero sa gilid; hindi malinaw kung nasugatan o nag-aayos lang.,needs_review,draft,,Synthetic draft; unreviewed.
+TL-224,TL-FAM-224,tl,Bumaligtad daw ang jeep sa kanto; walang impormasyon kung may sakay o sugatan.,needs_review,draft,,Synthetic draft; unreviewed.
+TL-227,TL-FAM-227,tl,May nag-ulat na may apoy sa kotse; hindi alam kung may tao sa loob.,needs_review,draft,,Synthetic draft; unreviewed.
+TL-228,TL-FAM-228,tl,Nasa tubig raw ang drayber; di alam kung nakalabas na siya o nangangailangan ng tulong.,needs_review,draft,,Synthetic draft; unreviewed.

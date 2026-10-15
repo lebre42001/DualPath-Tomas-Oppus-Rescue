@@ -1,0 +1,874 @@
+{
+  "source": "ai_service/datasets/emergency_text/working/reports.csv",
+  "source_sha256": "5e2a4f508a6de869ad0eee1c6c7385b03c2df542eadbd7f79a315b0243f9db1e",
+  "word_count_method": "len(text.split()) on original CSV text; whitespace-separated units; no text rewriting",
+  "audit_date": "2026-10-01",
+  "all": {
+    "rows": 400,
+    "minimum": 22,
+    "median": 32.0,
+    "mean": 30.8675,
+    "maximum": 39,
+    "total_words": 12347,
+    "bins": {
+      "1": {
+        "count": 0,
+        "percent": 0.0
+      },
+      "2-3": {
+        "count": 0,
+        "percent": 0.0
+      },
+      "4-8": {
+        "count": 0,
+        "percent": 0.0
+      },
+      "9-15": {
+        "count": 0,
+        "percent": 0.0
+      },
+      "16-30": {
+        "count": 155,
+        "percent": 38.75
+      },
+      "31+": {
+        "count": 245,
+        "percent": 61.25
+      }
+    }
+  },
+  "by_label": {
+    "minor": {
+      "rows": 100,
+      "minimum": 24,
+      "median": 31.0,
+      "mean": 30.23,
+      "maximum": 36,
+      "total_words": 3023,
+      "bins": {
+        "1": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "2-3": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "4-8": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "9-15": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "16-30": {
+          "count": 44,
+          "percent": 44.0
+        },
+        "31+": {
+          "count": 56,
+          "percent": 56.0
+        }
+      }
+    },
+    "serious": {
+      "rows": 100,
+      "minimum": 25,
+      "median": 33.0,
+      "mean": 31.73,
+      "maximum": 39,
+      "total_words": 3173,
+      "bins": {
+        "1": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "2-3": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "4-8": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "9-15": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "16-30": {
+          "count": 33,
+          "percent": 33.0
+        },
+        "31+": {
+          "count": 67,
+          "percent": 67.0
+        }
+      }
+    },
+    "critical": {
+      "rows": 100,
+      "minimum": 22,
+      "median": 32.0,
+      "mean": 30.51,
+      "maximum": 39,
+      "total_words": 3051,
+      "bins": {
+        "1": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "2-3": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "4-8": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "9-15": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "16-30": {
+          "count": 39,
+          "percent": 39.0
+        },
+        "31+": {
+          "count": 61,
+          "percent": 61.0
+        }
+      }
+    },
+    "needs_review": {
+      "rows": 100,
+      "minimum": 25,
+      "median": 32.5,
+      "mean": 31,
+      "maximum": 37,
+      "total_words": 3100,
+      "bins": {
+        "1": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "2-3": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "4-8": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "9-15": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "16-30": {
+          "count": 39,
+          "percent": 39.0
+        },
+        "31+": {
+          "count": 61,
+          "percent": 61.0
+        }
+      }
+    }
+  },
+  "by_language": {
+    "en": {
+      "rows": 120,
+      "minimum": 24,
+      "median": 32.0,
+      "mean": 30.675,
+      "maximum": 36,
+      "total_words": 3681,
+      "bins": {
+        "1": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "2-3": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "4-8": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "9-15": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "16-30": {
+          "count": 43,
+          "percent": 35.83
+        },
+        "31+": {
+          "count": 77,
+          "percent": 64.17
+        }
+      }
+    },
+    "tl": {
+      "rows": 120,
+      "minimum": 22,
+      "median": 33.0,
+      "mean": 31.308333333333334,
+      "maximum": 39,
+      "total_words": 3757,
+      "bins": {
+        "1": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "2-3": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "4-8": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "9-15": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "16-30": {
+          "count": 40,
+          "percent": 33.33
+        },
+        "31+": {
+          "count": 80,
+          "percent": 66.67
+        }
+      }
+    },
+    "ceb": {
+      "rows": 120,
+      "minimum": 22,
+      "median": 33.0,
+      "mean": 31.608333333333334,
+      "maximum": 39,
+      "total_words": 3793,
+      "bins": {
+        "1": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "2-3": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "4-8": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "9-15": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "16-30": {
+          "count": 37,
+          "percent": 30.83
+        },
+        "31+": {
+          "count": 83,
+          "percent": 69.17
+        }
+      }
+    },
+    "mixed": {
+      "rows": 40,
+      "minimum": 24,
+      "median": 28.0,
+      "mean": 27.9,
+      "maximum": 32,
+      "total_words": 1116,
+      "bins": {
+        "1": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "2-3": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "4-8": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "9-15": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "16-30": {
+          "count": 35,
+          "percent": 87.5
+        },
+        "31+": {
+          "count": 5,
+          "percent": 12.5
+        }
+      }
+    }
+  },
+  "by_label_language": {
+    "minor": {
+      "en": {
+        "rows": 30,
+        "minimum": 24,
+        "median": 31.0,
+        "mean": 30.266666666666666,
+        "maximum": 36,
+        "total_words": 908,
+        "bins": {
+          "1": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "2-3": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "4-8": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "9-15": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "16-30": {
+            "count": 12,
+            "percent": 40.0
+          },
+          "31+": {
+            "count": 18,
+            "percent": 60.0
+          }
+        }
+      },
+      "tl": {
+        "rows": 30,
+        "minimum": 24,
+        "median": 31.5,
+        "mean": 30.333333333333332,
+        "maximum": 34,
+        "total_words": 910,
+        "bins": {
+          "1": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "2-3": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "4-8": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "9-15": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "16-30": {
+            "count": 12,
+            "percent": 40.0
+          },
+          "31+": {
+            "count": 18,
+            "percent": 60.0
+          }
+        }
+      },
+      "ceb": {
+        "rows": 30,
+        "minimum": 24,
+        "median": 33.0,
+        "mean": 31.2,
+        "maximum": 35,
+        "total_words": 936,
+        "bins": {
+          "1": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "2-3": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "4-8": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "9-15": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "16-30": {
+            "count": 10,
+            "percent": 33.33
+          },
+          "31+": {
+            "count": 20,
+            "percent": 66.67
+          }
+        }
+      },
+      "mixed": {
+        "rows": 10,
+        "minimum": 24,
+        "median": 26.5,
+        "mean": 26.9,
+        "maximum": 29,
+        "total_words": 269,
+        "bins": {
+          "1": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "2-3": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "4-8": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "9-15": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "16-30": {
+            "count": 10,
+            "percent": 100.0
+          },
+          "31+": {
+            "count": 0,
+            "percent": 0.0
+          }
+        }
+      }
+    },
+    "serious": {
+      "en": {
+        "rows": 30,
+        "minimum": 25,
+        "median": 32.0,
+        "mean": 30.7,
+        "maximum": 35,
+        "total_words": 921,
+        "bins": {
+          "1": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "2-3": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "4-8": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "9-15": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "16-30": {
+            "count": 11,
+            "percent": 36.67
+          },
+          "31+": {
+            "count": 19,
+            "percent": 63.33
+          }
+        }
+      },
+      "tl": {
+        "rows": 30,
+        "minimum": 26,
+        "median": 33.5,
+        "mean": 32.56666666666667,
+        "maximum": 37,
+        "total_words": 977,
+        "bins": {
+          "1": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "2-3": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "4-8": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "9-15": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "16-30": {
+            "count": 8,
+            "percent": 26.67
+          },
+          "31+": {
+            "count": 22,
+            "percent": 73.33
+          }
+        }
+      },
+      "ceb": {
+        "rows": 30,
+        "minimum": 26,
+        "median": 34.0,
+        "mean": 32.53333333333333,
+        "maximum": 39,
+        "total_words": 976,
+        "bins": {
+          "1": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "2-3": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "4-8": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "9-15": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "16-30": {
+            "count": 8,
+            "percent": 26.67
+          },
+          "31+": {
+            "count": 22,
+            "percent": 73.33
+          }
+        }
+      },
+      "mixed": {
+        "rows": 10,
+        "minimum": 27,
+        "median": 29.5,
+        "mean": 29.9,
+        "maximum": 32,
+        "total_words": 299,
+        "bins": {
+          "1": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "2-3": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "4-8": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "9-15": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "16-30": {
+            "count": 6,
+            "percent": 60.0
+          },
+          "31+": {
+            "count": 4,
+            "percent": 40.0
+          }
+        }
+      }
+    },
+    "critical": {
+      "en": {
+        "rows": 30,
+        "minimum": 24,
+        "median": 32.0,
+        "mean": 30.733333333333334,
+        "maximum": 36,
+        "total_words": 922,
+        "bins": {
+          "1": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "2-3": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "4-8": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "9-15": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "16-30": {
+            "count": 10,
+            "percent": 33.33
+          },
+          "31+": {
+            "count": 20,
+            "percent": 66.67
+          }
+        }
+      },
+      "tl": {
+        "rows": 30,
+        "minimum": 22,
+        "median": 32.5,
+        "mean": 30.9,
+        "maximum": 39,
+        "total_words": 927,
+        "bins": {
+          "1": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "2-3": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "4-8": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "9-15": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "16-30": {
+            "count": 10,
+            "percent": 33.33
+          },
+          "31+": {
+            "count": 20,
+            "percent": 66.67
+          }
+        }
+      },
+      "ceb": {
+        "rows": 30,
+        "minimum": 22,
+        "median": 32.0,
+        "mean": 30.766666666666666,
+        "maximum": 35,
+        "total_words": 923,
+        "bins": {
+          "1": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "2-3": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "4-8": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "9-15": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "16-30": {
+            "count": 10,
+            "percent": 33.33
+          },
+          "31+": {
+            "count": 20,
+            "percent": 66.67
+          }
+        }
+      },
+      "mixed": {
+        "rows": 10,
+        "minimum": 24,
+        "median": 27.5,
+        "mean": 27.9,
+        "maximum": 32,
+        "total_words": 279,
+        "bins": {
+          "1": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "2-3": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "4-8": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "9-15": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "16-30": {
+            "count": 9,
+            "percent": 90.0
+          },
+          "31+": {
+            "count": 1,
+            "percent": 10.0
+          }
+        }
+      }
+    },
+    "needs_review": {
+      "en": {
+        "rows": 30,
+        "minimum": 25,
+        "median": 32.0,
+        "mean": 31,
+        "maximum": 36,
+        "total_words": 930,
+        "bins": {
+          "1": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "2-3": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "4-8": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "9-15": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "16-30": {
+            "count": 10,
+            "percent": 33.33
+          },
+          "31+": {
+            "count": 20,
+            "percent": 66.67
+          }
+        }
+      },
+      "tl": {
+        "rows": 30,
+        "minimum": 25,
+        "median": 33.5,
+        "mean": 31.433333333333334,
+        "maximum": 36,
+        "total_words": 943,
+        "bins": {
+          "1": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "2-3": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "4-8": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "9-15": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "16-30": {
+            "count": 10,
+            "percent": 33.33
+          },
+          "31+": {
+            "count": 20,
+            "percent": 66.67
+          }
+        }
+      },
+      "ceb": {
+        "rows": 30,
+        "minimum": 25,
+        "median": 34.0,
+        "mean": 31.933333333333334,
+        "maximum": 37,
+        "total_words": 958,
+        "bins": {
+          "1": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "2-3": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "4-8": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "9-15": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "16-30": {
+            "count": 9,
+            "percent": 30.0
+          },
+          "31+": {
+            "count": 21,
+            "percent": 70.0
+          }
+        }
+      },
+      "mixed": {
+        "rows": 10,
+        "minimum": 25,
+        "median": 26.5,
+        "mean": 26.9,
+        "maximum": 29,
+        "total_words": 269,
+        "bins": {
+          "1": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "2-3": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "4-8": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "9-15": {
+            "count": 0,
+            "percent": 0.0
+          },
+          "16-30": {
+            "count": 10,
+            "percent": 100.0
+          },
+          "31+": {
+            "count": 0,
+            "percent": 0.0
+          }
+        }
+      }
+    }
+  },
+  "review_status": {
+    "draft": 400
+  },
+  "groups": 99
+}

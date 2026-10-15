@@ -1,0 +1,131 @@
+{
+  "experiment_name": "bontoc_southern_leyte_photo_relevance_phone_augmented",
+  "location_focus": "Bontoc, Southern Leyte, Philippines",
+  "labels": [
+    "related",
+    "unrelated"
+  ],
+  "source_domains": [
+    "road_accident",
+    "general_accident",
+    "emergency_scene",
+    "ui_reference",
+    "public_non_incident_reference"
+  ],
+  "dataset_sizes": {
+    "train": 799,
+    "val": 166,
+    "test": 179
+  },
+  "label_distribution": {
+    "train": {
+      "related": 477,
+      "unrelated": 322
+    },
+    "val": {
+      "related": 102,
+      "unrelated": 64
+    },
+    "test": {
+      "related": 101,
+      "unrelated": 78
+    }
+  },
+  "missing_training_labels": [],
+  "best_checkpoint_path": "C:\\laragon\\www\\CAPSTONE EMERGENCY SYSTEM\\stitch updated\\stitch\\ai_service\\artifacts\\checkpoints\\bontoc_photo_relevance_phone_augmented_best.pt",
+  "best_val_accuracy": 0.9879518072289156,
+  "test_metrics": {
+    "loss": 0.05969450109333903,
+    "accuracy": 0.9720670391061452,
+    "per_class": {
+      "related": {
+        "support": 101,
+        "correct": 97,
+        "accuracy": 0.9603960396039604,
+        "precision": 0.9897959183673469,
+        "recall": 0.9603960396039604,
+        "f1": 0.9748743718592964
+      },
+      "unrelated": {
+        "support": 78,
+        "correct": 77,
+        "accuracy": 0.9871794871794872,
+        "precision": 0.9506172839506173,
+        "recall": 0.9871794871794872,
+        "f1": 0.9685534591194969
+      }
+    },
+    "confusion_matrix": {
+      "related": {
+        "related": 97,
+        "unrelated": 4
+      },
+      "unrelated": {
+        "related": 1,
+        "unrelated": 77
+      }
+    },
+    "macro_precision": 0.970206601158982,
+    "macro_recall": 0.9737877633917238,
+    "macro_f1": 0.9717139154893966
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.2941883621464608,
+      "train_accuracy": 0.8986232790988736,
+      "val_loss": 0.10267162002492114,
+      "val_accuracy": 0.9819277108433735
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.10115500260727277,
+      "train_accuracy": 0.9712140175219024,
+      "val_loss": 0.03957820094128473,
+      "val_accuracy": 0.9879518072289156
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.137866687266219,
+      "train_accuracy": 0.9486858573216521,
+      "val_loss": 0.07261217830994401,
+      "val_accuracy": 0.9819277108433735
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.13448304296686817,
+      "train_accuracy": 0.9561952440550688,
+      "val_loss": 0.07464891535280102,
+      "val_accuracy": 0.9578313253012049
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.0978201115818622,
+      "train_accuracy": 0.9586983729662077,
+      "val_loss": 0.053714483572416996,
+      "val_accuracy": 0.9879518072289156
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.08984802595953992,
+      "train_accuracy": 0.9699624530663329,
+      "val_loss": 0.049854101348950255,
+      "val_accuracy": 0.9759036144578314
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.041531804322238276,
+      "train_accuracy": 0.9887359198998749,
+      "val_loss": 0.1847101009000883,
+      "val_accuracy": 0.9397590361445783
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.02199604779770959,
+      "train_accuracy": 0.9937421777221527,
+      "val_loss": 0.05749928513165309,
+      "val_accuracy": 0.9819277108433735
+    }
+  ],
+  "responder_review_action": "needs_responder_review"
+}

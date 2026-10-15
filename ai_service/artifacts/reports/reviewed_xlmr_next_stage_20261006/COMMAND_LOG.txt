@@ -1,0 +1,17 @@
+Review-preparation execution log (2026-10-06)
+
+Read-only source and checkpoint inspection; creation of human-review worksheets/audit reports only.
+
+Verified source hashes:
+- reports.csv: fd0fb65ccb718a1dee93fd315aa3a0e12cb5a8c2123bc08c8466e51c75fc7645
+- provenance.csv: fb8c89f5a72859f0070305ba046d6295e86f985514935a7c51a912e9f3ecf3df
+- fresh_test.csv: 3ef72767dcc74dfb5f054c06fee8e3924d0d068b53c64e7e57a8e8e02320bc7b
+- selected model.safetensors: 13ad4e9ec1c45c817fd33082072bf430aabe3afa4571e8b88ed5d0e333269fa2
+- selected metadata.json: 5b2165bc330b8c6a6d96fbcb43053ef4fd1b46649c218490271ceb085a45aeac
+- existing sealed research ZIP: 9f08434cce39dc8b054ee55c5395012316e99a9c71496e3695b55681464e9033
+
+Selected model inference was run on the existing 84-row held-out fresh_test.csv in eval mode with the checkpoint's local XLM-R tokenizer, max_length=64, no truncation scoring beyond the supported limit. The reproduced confusion matrix exactly matched civilian_multilingual_fulltrain_20261005/fresh_test_eval/evaluation_metrics.json. This was diagnostic inference only; no training, checkpoint selection, or model change occurred. The loader emitted an existing tokenizer warning; see TOKENIZER_WARNING_AUDIT.json.
+
+New deliverables are under ai_service/artifacts/reports/reviewed_xlmr_next_stage_20261006/. Human review fields are blank. Held-out model predictions appear only for 84 held-out cases; the remaining 766 rows have no model score in the worksheet.
+
+Not run: reviewed-dataset finalization, new split, training, model promotion, deployment, prior-source ACL changes, or prior-exposure audit (60 source files remain inaccessible).

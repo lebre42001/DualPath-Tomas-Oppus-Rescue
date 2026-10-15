@@ -1,0 +1,130 @@
+{
+  "experiment_name": "bontoc_southern_leyte_kaggle_trial_300",
+  "location_focus": "Bontoc, Southern Leyte, Philippines",
+  "labels": [
+    "minor",
+    "serious",
+    "fatal"
+  ],
+  "source_domains": [
+    "road_accident",
+    "general_accident",
+    "emergency_scene"
+  ],
+  "dataset_sizes": {
+    "train": 402,
+    "val": 87,
+    "test": 84
+  },
+  "label_distribution": {
+    "train": {
+      "minor": 134,
+      "serious": 134,
+      "fatal": 134
+    },
+    "val": {
+      "minor": 29,
+      "serious": 29,
+      "fatal": 29
+    },
+    "test": {
+      "minor": 28,
+      "serious": 28,
+      "fatal": 28
+    }
+  },
+  "missing_training_labels": [],
+  "best_checkpoint_path": "C:\\laragon\\www\\CAPSTONE EMERGENCY SYSTEM\\stitch updated\\stitch\\ai_service\\artifacts\\checkpoints\\bontoc_severity_kaggle_trial_best.pt",
+  "best_val_accuracy": 0.735632183908046,
+  "test_metrics": {
+    "loss": 0.5935798149023738,
+    "accuracy": 0.7619047619047619
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.9962445764399287,
+      "train_accuracy": 0.5597014925373134,
+      "val_loss": 1.1624892227266026,
+      "val_accuracy": 0.5747126436781609
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.6792913853232541,
+      "train_accuracy": 0.7238805970149254,
+      "val_loss": 1.0111826918591027,
+      "val_accuracy": 0.6091954022988506
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.592804899411415,
+      "train_accuracy": 0.746268656716418,
+      "val_loss": 0.740242700124609,
+      "val_accuracy": 0.7126436781609196
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.41412793114707247,
+      "train_accuracy": 0.8557213930348259,
+      "val_loss": 0.8555650005395385,
+      "val_accuracy": 0.6781609195402298
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.43321450228863095,
+      "train_accuracy": 0.8333333333333334,
+      "val_loss": 0.8594457418069072,
+      "val_accuracy": 0.7241379310344828
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.2656956069653307,
+      "train_accuracy": 0.8980099502487562,
+      "val_loss": 0.931850433007054,
+      "val_accuracy": 0.6896551724137931
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.4670689050386201,
+      "train_accuracy": 0.8432835820895522,
+      "val_loss": 0.8480762818763996,
+      "val_accuracy": 0.7011494252873564
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.3465359323653416,
+      "train_accuracy": 0.8631840796019901,
+      "val_loss": 1.1197667032822796,
+      "val_accuracy": 0.6206896551724138
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.34290498917672174,
+      "train_accuracy": 0.8781094527363185,
+      "val_loss": 0.8733127302136915,
+      "val_accuracy": 0.7011494252873564
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.33015093704064685,
+      "train_accuracy": 0.8731343283582089,
+      "val_loss": 0.6711860614261408,
+      "val_accuracy": 0.735632183908046
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.20744821618297207,
+      "train_accuracy": 0.917910447761194,
+      "val_loss": 0.877913273271473,
+      "val_accuracy": 0.7011494252873564
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.1956155920280746,
+      "train_accuracy": 0.927860696517413,
+      "val_loss": 0.8878647568582119,
+      "val_accuracy": 0.7126436781609196
+    }
+  ],
+  "responder_review_action": "needs_responder_review"
+}

@@ -1,0 +1,23 @@
+﻿{
+    "python_details":  {
+                           "python":  "3.13.0",
+                           "torch":  "2.12.1+cu130",
+                           "transformers":  "4.57.6",
+                           "scikit_learn":  "1.9.1",
+                           "safetensors":  "0.8.0",
+                           "cuda_available":  true,
+                           "cuda_version":  "13.0",
+                           "gpu":  "NVIDIA GeForce RTX 3050 Laptop GPU",
+                           "gpu_total_bytes":  4294443008,
+                           "adafactor_scale_parameter_default":  true,
+                           "adafactor_relative_step_default":  true
+                       },
+    "recorded_local":  "2026-10-06T15:57:06.7222671+08:00",
+    "package_manifest":  "ai_service/requirements-text.txt",
+    "user_processes_gpus":  "one GPU job at a time enforced by task-level lock",
+    "ram_total_gb":  7.21,
+    "ram_free_gb":  1.36,
+    "external_network_downloads":  "not requested; GPU preflight will use local model cache only",
+    "disk_c_free_gb":  129.7,
+    "gpu_snapshot":  "NVIDIA GeForce RTX 3050 Laptop GPU, 4096 MiB, 3962 MiB, 0 MiB"
+}

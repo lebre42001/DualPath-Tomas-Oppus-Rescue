@@ -1,0 +1,17 @@
+{
+  "status": "colab_package_ready_not_executed",
+  "package_id": "emergency-text-xlmr-provisional-20261004",
+  "created_at": "2026-10-04T06:41:08.873304+00:00",
+  "mode": "provisional_research",
+  "bundle": "ai_service/artifacts/colab_packages/emergency_text_xlmr_provisional_20261004/emergency_text_xlmr_provisional_20261004.zip",
+  "bundle_sha256": "197f16b0cf0a01867c3dae2f5a5945724214b254d6f7d054da8b5c2b7854969d",
+  "notebook": "ai_service/notebooks/EMERGENCY_TEXT_XLMR_COLAB.ipynb",
+  "notebook_sha256": "e7ab3936e58f0940a3e8abc5175b73b2cfe49eab98971575001b9ebd4de1483b",
+  "dataset_rows": 400,
+  "dataset_groups": 99,
+  "human_review_complete": false,
+  "training_executed": false,
+  "active_model_changed": false,
+  "approved_for_deployment": false,
+  "notebook_refreshed_at": "2026-10-04T07:35:53.325249+00:00"
+}

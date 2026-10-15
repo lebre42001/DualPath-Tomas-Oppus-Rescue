@@ -1,0 +1,15 @@
+﻿{
+  "selection_rule_id": "balanced_safety_v1",
+  "frozen_before_legacy_test_evaluation": true,
+  "split_for_selection": "validation only; frozen 54-case group split",
+  "lexicographic_objective": [
+    "minimize raw Critical/Serious under-triage count",
+    "maximize four-label macro-F1",
+    "maximize the lower of Critical recall and Serious recall",
+    "maximize Critical precision"
+  ],
+  "anti_collapse_note": "macro-F1 is the second criterion after minimizing unsafe high-risk under-triage; Critical precision is the final tie-breaker to discourage predicting Critical broadly",
+  "legacy_test_policy": "do not use for checkpoint selection; one post-selection regression evaluation only",
+  "challenge_policy": "blank human intake remains untouched; no challenge labels exist",
+  "calibration_policy": "no calibration fitting on selected validation data; report calibration as unavailable/insufficient unless an independent calibration set exists"
+}

@@ -1,0 +1,1020 @@
+{
+  "split": "test",
+  "model_version": "text-20261006T062737855310Z",
+  "labels": [
+    "minor",
+    "serious",
+    "critical",
+    "needs_review"
+  ],
+  "rows": [
+    {
+      "case_id": "CEB-CRITICAL-001",
+      "group_id": "FS-e57689a077b39f8f",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": [
+        0.9078455567359924,
+        0.017959268763661385,
+        0.061924394220113754,
+        0.012270838022232056
+      ]
+    },
+    {
+      "case_id": "CEB-CRITICAL-003",
+      "group_id": "FS-c9b483986d960069",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": [
+        0.4741027355194092,
+        0.08978775143623352,
+        0.42694857716560364,
+        0.009160937741398811
+      ]
+    },
+    {
+      "case_id": "CEB-CRITICAL-010",
+      "group_id": "FS-7a89fe572e6d101c",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": [
+        0.05823748558759689,
+        0.8649397492408752,
+        0.06706810742616653,
+        0.009754651226103306
+      ]
+    },
+    {
+      "case_id": "CEB-CRITICAL-024",
+      "group_id": "FS-01cda6ddbfcfe61c",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": [
+        0.1153959408402443,
+        0.814522922039032,
+        0.060501981526613235,
+        0.009579201228916645
+      ]
+    },
+    {
+      "case_id": "CEB-CRITICAL-025",
+      "group_id": "FS-7edd6b453175f14d",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": [
+        0.027413612231612206,
+        0.10578314960002899,
+        0.855094313621521,
+        0.011708845384418964
+      ]
+    },
+    {
+      "case_id": "CEB-CRITICAL-046",
+      "group_id": "FS-9c830a1547e55f18",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": [
+        0.1012284979224205,
+        0.40627217292785645,
+        0.4792006015777588,
+        0.013298788107931614
+      ]
+    },
+    {
+      "case_id": "CEB-MINOR-002",
+      "group_id": "FS-914430d59fe82570",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.9428986310958862,
+        0.02322707325220108,
+        0.02057729661464691,
+        0.013296983204782009
+      ]
+    },
+    {
+      "case_id": "CEB-MINOR-005",
+      "group_id": "FS-2d74b2ae0dc7f463",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.927168607711792,
+        0.03304148092865944,
+        0.02769646607339382,
+        0.01209346391260624
+      ]
+    },
+    {
+      "case_id": "CEB-MINOR-011",
+      "group_id": "FS-bab5e2856c7ebcfa",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.1727159023284912,
+        0.7682939171791077,
+        0.04469461739063263,
+        0.01429559476673603
+      ]
+    },
+    {
+      "case_id": "CEB-MINOR-021",
+      "group_id": "FS-914430d59fe82570",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.9042419195175171,
+        0.03799291327595711,
+        0.037107761949300766,
+        0.02065739780664444
+      ]
+    },
+    {
+      "case_id": "CEB-MINOR-026",
+      "group_id": "FS-9583ca3f9883c652",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.9272961020469666,
+        0.0304671972990036,
+        0.028668198734521866,
+        0.013568555936217308
+      ]
+    },
+    {
+      "case_id": "CEB-MINOR-039",
+      "group_id": "FS-7aacdc6439ed60dd",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.8399242162704468,
+        0.10657922923564911,
+        0.04834587872028351,
+        0.005150623619556427
+      ]
+    },
+    {
+      "case_id": "CEB-MINOR-045",
+      "group_id": "FS-182ab7c87344ea1b",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.8138439059257507,
+        0.01749400980770588,
+        0.15865623950958252,
+        0.010005897842347622
+      ]
+    },
+    {
+      "case_id": "CEB-NEEDS_REVIEW-008",
+      "group_id": "FS-c583e33978dfb0d8",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.008371897973120213,
+        0.007913898676633835,
+        0.014689377509057522,
+        0.9690247774124146
+      ]
+    },
+    {
+      "case_id": "CEB-NEEDS_REVIEW-017",
+      "group_id": "FS-3e32ccfb13c82824",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.019603854045271873,
+        0.01035771332681179,
+        0.10542042553424835,
+        0.8646179437637329
+      ]
+    },
+    {
+      "case_id": "CEB-NEEDS_REVIEW-027",
+      "group_id": "FS-fd3ffdd689c02982",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.008092103525996208,
+        0.008312266319990158,
+        0.015767360106110573,
+        0.9678282737731934
+      ]
+    },
+    {
+      "case_id": "CEB-NEEDS_REVIEW-030",
+      "group_id": "FS-460bbf7243e49a69",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.008677140809595585,
+        0.0077188750728964806,
+        0.015236468985676765,
+        0.9683674573898315
+      ]
+    },
+    {
+      "case_id": "CEB-NEEDS_REVIEW-048",
+      "group_id": "FS-e5a048e14c6bb37b",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.0067620836198329926,
+        0.007208979222923517,
+        0.025543181225657463,
+        0.9604857563972473
+      ]
+    },
+    {
+      "case_id": "CEB-NEEDS_REVIEW-051",
+      "group_id": "FS-8ac7aad7ccefd1e1",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.007680180482566357,
+        0.008537440560758114,
+        0.033466044813394547,
+        0.9503163695335388
+      ]
+    },
+    {
+      "case_id": "CEB-SERIOUS-006",
+      "group_id": "FS-51e2a47ede2d2710",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.027838511392474174,
+        0.9372061491012573,
+        0.029099902138113976,
+        0.005855409894138575
+      ]
+    },
+    {
+      "case_id": "CEB-SERIOUS-010",
+      "group_id": "FS-03b4b709f9c79233",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.042508188635110855,
+        0.9012109041213989,
+        0.04725584387779236,
+        0.00902506522834301
+      ]
+    },
+    {
+      "case_id": "CEB-SERIOUS-021",
+      "group_id": "FS-d193939ff7df7e27",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.0384548045694828,
+        0.9260957837104797,
+        0.026732712984085083,
+        0.008716681972146034
+      ]
+    },
+    {
+      "case_id": "CEB-SERIOUS-032",
+      "group_id": "FS-596276917222129d",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.040066324174404144,
+        0.8996593356132507,
+        0.04835759103298187,
+        0.011916713789105415
+      ]
+    },
+    {
+      "case_id": "CEB-SERIOUS-043",
+      "group_id": "FS-edb6c82c7e954c2e",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.020009972155094147,
+        0.9402914643287659,
+        0.033692359924316406,
+        0.006006142590194941
+      ]
+    },
+    {
+      "case_id": "CEB-SERIOUS-052",
+      "group_id": "FS-8a6922acf407992c",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.04205658659338951,
+        0.89760422706604,
+        0.05384354293346405,
+        0.006495581939816475
+      ]
+    },
+    {
+      "case_id": "EN-007",
+      "group_id": "FS-9b5cc05fe662d6ce",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.08528012037277222,
+        0.10740609467029572,
+        0.7934268116950989,
+        0.013886958360671997
+      ]
+    },
+    {
+      "case_id": "EN-014",
+      "group_id": "FS-234f0922b061acf0",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.06692101806402206,
+        0.8778839707374573,
+        0.04349964112043381,
+        0.011695422232151031
+      ]
+    },
+    {
+      "case_id": "EN-024",
+      "group_id": "FS-a75e104fac230ed8",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.018407447263598442,
+        0.016052551567554474,
+        0.025021612644195557,
+        0.940518319606781
+      ]
+    },
+    {
+      "case_id": "EN-034",
+      "group_id": "FS-80b097802d5c546e",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.027196496725082397,
+        0.9478043913841248,
+        0.01857696659862995,
+        0.006422216538339853
+      ]
+    },
+    {
+      "case_id": "EN-038",
+      "group_id": "FS-63c36a3858c63189",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.02262178808450699,
+        0.9331964254379272,
+        0.03888791427016258,
+        0.005293796304613352
+      ]
+    },
+    {
+      "case_id": "EN-044",
+      "group_id": "FS-975ee767e60f3fd2",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.04181982949376106,
+        0.02121412195265293,
+        0.3393993675708771,
+        0.5975666046142578
+      ]
+    },
+    {
+      "case_id": "EN-061",
+      "group_id": "FS-fb6be42c759bc057",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.8571354150772095,
+        0.04732111468911171,
+        0.035589635372161865,
+        0.05995390936732292
+      ]
+    },
+    {
+      "case_id": "EN-076",
+      "group_id": "FS-138300676eae3776",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.009855651296675205,
+        0.012696036137640476,
+        0.02194475755095482,
+        0.955503523349762
+      ]
+    },
+    {
+      "case_id": "EN-081",
+      "group_id": "FS-b565d194c90e9103",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.8879194259643555,
+        0.022069619968533516,
+        0.06339302659034729,
+        0.026617927476763725
+      ]
+    },
+    {
+      "case_id": "EN-085",
+      "group_id": "FS-cab9e288422cc123",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9420775771141052,
+        0.02663535065948963,
+        0.021124282851815224,
+        0.010162833146750927
+      ]
+    },
+    {
+      "case_id": "EN-092",
+      "group_id": "FS-733144041fcd5e3b",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.00994778610765934,
+        0.007713798899203539,
+        0.018441636115312576,
+        0.9638966917991638
+      ]
+    },
+    {
+      "case_id": "EN-110",
+      "group_id": "FS-06ab98618c3c2a1b",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.024774404242634773,
+        0.9441160559654236,
+        0.02520800195634365,
+        0.005901547148823738
+      ]
+    },
+    {
+      "case_id": "EN-127",
+      "group_id": "FS-ddee9cf2a1e77de7",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.017717037349939346,
+        0.018159057945013046,
+        0.7025364637374878,
+        0.26158738136291504
+      ]
+    },
+    {
+      "case_id": "EN-131",
+      "group_id": "FS-362af37689710ae3",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.019829969853162766,
+        0.11268018186092377,
+        0.8472287058830261,
+        0.020261207595467567
+      ]
+    },
+    {
+      "case_id": "EN-143",
+      "group_id": "FS-406ee448ccb70b27",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.5178844928741455,
+        0.05548737198114395,
+        0.302247554063797,
+        0.12438056617975235
+      ]
+    },
+    {
+      "case_id": "EN-150",
+      "group_id": "FS-2f1e683da8429fcd",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.029479581862688065,
+        0.927790105342865,
+        0.03406533971428871,
+        0.008664993569254875
+      ]
+    },
+    {
+      "case_id": "EN-161",
+      "group_id": "FS-b8897a89a1651e38",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.943588137626648,
+        0.022742778062820435,
+        0.022299813106656075,
+        0.011369282379746437
+      ]
+    },
+    {
+      "case_id": "EN-176",
+      "group_id": "FS-404ba3f3d9c14550",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.00810760073363781,
+        0.009243039414286613,
+        0.025720620527863503,
+        0.9569287896156311
+      ]
+    },
+    {
+      "case_id": "EN-177",
+      "group_id": "FS-7e99c201a7dbee70",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.7350438237190247,
+        0.21759256720542908,
+        0.040317755192518234,
+        0.007045923266559839
+      ]
+    },
+    {
+      "case_id": "EN-209",
+      "group_id": "FS-3a5128360a553e67",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.8960697650909424,
+        0.06688623875379562,
+        0.025895286351442337,
+        0.011148705147206783
+      ]
+    },
+    {
+      "case_id": "EN-215",
+      "group_id": "FS-fb2571fa752d2fbb",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.01731954701244831,
+        0.01712080091238022,
+        0.8168232440948486,
+        0.1487364023923874
+      ]
+    },
+    {
+      "case_id": "EN-235",
+      "group_id": "FS-bf2a9aa45af6d956",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.03812351077795029,
+        0.7207082509994507,
+        0.23549379408359528,
+        0.005674393381923437
+      ]
+    },
+    {
+      "case_id": "EN-238",
+      "group_id": "FS-ab4041fb29d43a99",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.033192895352840424,
+        0.9204524755477905,
+        0.036288272589445114,
+        0.010066380724310875
+      ]
+    },
+    {
+      "case_id": "EN-244",
+      "group_id": "FS-077ef0ca61b4a15f",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.0070213573053479195,
+        0.008810817264020443,
+        0.025853943079710007,
+        0.9583138823509216
+      ]
+    },
+    {
+      "case_id": "MX-CRITICAL-002",
+      "group_id": "FS-eccb3710b89c4707",
+      "language": "mixed",
+      "label": "critical",
+      "probabilities": [
+        0.37114620208740234,
+        0.31275078654289246,
+        0.30920255184173584,
+        0.0069004250690341
+      ]
+    },
+    {
+      "case_id": "MX-CRITICAL-013",
+      "group_id": "FS-5ceb5832dcc08870",
+      "language": "mixed",
+      "label": "critical",
+      "probabilities": [
+        0.07000164687633514,
+        0.8828760385513306,
+        0.04082974046468735,
+        0.006292605772614479
+      ]
+    },
+    {
+      "case_id": "MX-CRITICAL-022",
+      "group_id": "FS-9be3384c3279491b",
+      "language": "mixed",
+      "label": "critical",
+      "probabilities": [
+        0.015320532023906708,
+        0.030455615371465683,
+        0.9376192092895508,
+        0.01660470850765705
+      ]
+    },
+    {
+      "case_id": "MX-MINOR-010",
+      "group_id": "FS-6509f1a8e36a2fb6",
+      "language": "mixed",
+      "label": "minor",
+      "probabilities": [
+        0.9189672470092773,
+        0.02835024707019329,
+        0.0456676259636879,
+        0.0070148492231965065
+      ]
+    },
+    {
+      "case_id": "MX-MINOR-011",
+      "group_id": "FS-f6ebc6a93f7085f7",
+      "language": "mixed",
+      "label": "minor",
+      "probabilities": [
+        0.9307738542556763,
+        0.03535289317369461,
+        0.02832076884806156,
+        0.005552503280341625
+      ]
+    },
+    {
+      "case_id": "MX-MINOR-020",
+      "group_id": "FS-0badebdba135b90c",
+      "language": "mixed",
+      "label": "minor",
+      "probabilities": [
+        0.8887125253677368,
+        0.027420425787568092,
+        0.07808979600667953,
+        0.005777251441031694
+      ]
+    },
+    {
+      "case_id": "MX-NEEDS_REVIEW-010",
+      "group_id": "FS-d3843cac9394634a",
+      "language": "mixed",
+      "label": "needs_review",
+      "probabilities": [
+        0.00754928681999445,
+        0.009277929551899433,
+        0.020084571093320847,
+        0.9630882143974304
+      ]
+    },
+    {
+      "case_id": "MX-NEEDS_REVIEW-022",
+      "group_id": "FS-c6407360676eaedc",
+      "language": "mixed",
+      "label": "needs_review",
+      "probabilities": [
+        0.006967415101826191,
+        0.007362268399447203,
+        0.02356022410094738,
+        0.9621101021766663
+      ]
+    },
+    {
+      "case_id": "MX-NEEDS_REVIEW-024",
+      "group_id": "FS-110d22dd349b1102",
+      "language": "mixed",
+      "label": "needs_review",
+      "probabilities": [
+        0.021221384406089783,
+        0.015552460215985775,
+        0.8033422231674194,
+        0.15988385677337646
+      ]
+    },
+    {
+      "case_id": "MX-SERIOUS-011",
+      "group_id": "FS-20c6f67551947070",
+      "language": "mixed",
+      "label": "serious",
+      "probabilities": [
+        0.027511438354849815,
+        0.8565428256988525,
+        0.11044938862323761,
+        0.005496313329786062
+      ]
+    },
+    {
+      "case_id": "MX-SERIOUS-016",
+      "group_id": "FS-ceaa6b5677422b8a",
+      "language": "mixed",
+      "label": "serious",
+      "probabilities": [
+        0.02250100113451481,
+        0.9375830292701721,
+        0.03382246941328049,
+        0.0060935551300644875
+      ]
+    },
+    {
+      "case_id": "MX-SERIOUS-023",
+      "group_id": "FS-7da926b251ef7547",
+      "language": "mixed",
+      "label": "serious",
+      "probabilities": [
+        0.027401864528656006,
+        0.9381306767463684,
+        0.02942371368408203,
+        0.005043718498200178
+      ]
+    },
+    {
+      "case_id": "TL-011",
+      "group_id": "FS-059a28f06d4ca074",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.9483617544174194,
+        0.020585911348462105,
+        0.021457241848111153,
+        0.00959513708949089
+      ]
+    },
+    {
+      "case_id": "TL-023",
+      "group_id": "FS-fd529514a09fd88e",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.9124317169189453,
+        0.022282550111413002,
+        0.045233264565467834,
+        0.020052464678883553
+      ]
+    },
+    {
+      "case_id": "TL-039",
+      "group_id": "FS-d54b844109e4f02d",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.5273714065551758,
+        0.019175255671143532,
+        0.4380077123641968,
+        0.015445664525032043
+      ]
+    },
+    {
+      "case_id": "TL-041",
+      "group_id": "FS-953615eea2d0a5bf",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.8665969967842102,
+        0.05030205845832825,
+        0.07693213224411011,
+        0.006168858613818884
+      ]
+    },
+    {
+      "case_id": "TL-043",
+      "group_id": "FS-50cfef073e997742",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.8875422477722168,
+        0.06212133541703224,
+        0.03911207988858223,
+        0.011224368587136269
+      ]
+    },
+    {
+      "case_id": "TL-070",
+      "group_id": "FS-6b72210d7eb76bca",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.03308342024683952,
+        0.9301928877830505,
+        0.029399147257208824,
+        0.007324576377868652
+      ]
+    },
+    {
+      "case_id": "TL-083",
+      "group_id": "FS-a43292c654be94e8",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.029313936829566956,
+        0.9133407473564148,
+        0.049636416137218475,
+        0.007708895951509476
+      ]
+    },
+    {
+      "case_id": "TL-088",
+      "group_id": "FS-cb354dab97ee21b1",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.02417469397187233,
+        0.930691659450531,
+        0.0388924740254879,
+        0.006241081282496452
+      ]
+    },
+    {
+      "case_id": "TL-089",
+      "group_id": "FS-91d3afb89176884e",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.01854979805648327,
+        0.9190819263458252,
+        0.05231447145342827,
+        0.010053722187876701
+      ]
+    },
+    {
+      "case_id": "TL-096",
+      "group_id": "FS-d4efe3c7a5a4c89c",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.01711510680615902,
+        0.9308211803436279,
+        0.04696057736873627,
+        0.005103118252009153
+      ]
+    },
+    {
+      "case_id": "TL-099",
+      "group_id": "FS-beab807316688337",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.11658257246017456,
+        0.8372185826301575,
+        0.036925602704286575,
+        0.009273232892155647
+      ]
+    },
+    {
+      "case_id": "TL-126",
+      "group_id": "FS-90e2363490fc3532",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.8614107966423035,
+        0.018856849521398544,
+        0.11063650250434875,
+        0.00909575168043375
+      ]
+    },
+    {
+      "case_id": "TL-132",
+      "group_id": "FS-ac830e9a29959242",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.029388664290308952,
+        0.40612146258354187,
+        0.5446434617042542,
+        0.01984640210866928
+      ]
+    },
+    {
+      "case_id": "TL-143",
+      "group_id": "FS-8b1035b83c9d80a0",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.02004672959446907,
+        0.10217426717281342,
+        0.8629365563392639,
+        0.014842525124549866
+      ]
+    },
+    {
+      "case_id": "TL-166",
+      "group_id": "FS-da183b01b6f54d7e",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.014956221915781498,
+        0.05210141837596893,
+        0.9147962927818298,
+        0.018146144226193428
+      ]
+    },
+    {
+      "case_id": "TL-168",
+      "group_id": "FS-135e3e94329c541b",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.03540370985865593,
+        0.37712904810905457,
+        0.5752989053726196,
+        0.01216834969818592
+      ]
+    },
+    {
+      "case_id": "TL-188",
+      "group_id": "FS-8ad271f52837be16",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.023834463208913803,
+        0.029988091439008713,
+        0.33440327644348145,
+        0.6117741465568542
+      ]
+    },
+    {
+      "case_id": "TL-195",
+      "group_id": "FS-6434a56bfa914cd3",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.026740482077002525,
+        0.030194004997611046,
+        0.925136923789978,
+        0.017928583547472954
+      ]
+    },
+    {
+      "case_id": "TL-198",
+      "group_id": "FS-a3ac8498e8636c6e",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.007813364267349243,
+        0.007696294691413641,
+        0.020326117053627968,
+        0.964164137840271
+      ]
+    },
+    {
+      "case_id": "TL-208",
+      "group_id": "FS-040e79e6da06fc37",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.012996495701372623,
+        0.009647947736084461,
+        0.05333137884736061,
+        0.924024224281311
+      ]
+    },
+    {
+      "case_id": "TL-214",
+      "group_id": "FS-a3ac8498e8636c6e",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.007828337140381336,
+        0.007992930710315704,
+        0.01581491343677044,
+        0.968363881111145
+      ]
+    },
+    {
+      "case_id": "TL-232",
+      "group_id": "FS-442dc08b9bc82a1f",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.00777576956897974,
+        0.008016610518097878,
+        0.020215019583702087,
+        0.9639926552772522
+      ]
+    },
+    {
+      "case_id": "TL-236",
+      "group_id": "FS-884f5bac3df53cfe",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.007829809561371803,
+        0.0119216563180089,
+        0.05163850635290146,
+        0.9286100268363953
+      ]
+    }
+  ]
+}

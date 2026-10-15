@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Report Emergency | Vigilant Sentinel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-fixed-variant": "#004786",
+              "surface-dim": "#cbdde7",
+              "surface-bright": "#f4faff",
+              "error-container": "#ffdad6",
+              "tertiary-fixed-dim": "#7bd1f8",
+              "surface-container-high": "#d9ebf5",
+              "tertiary-container": "#00799c",
+              "on-secondary": "#ffffff",
+              "inverse-on-surface": "#e2f3fd",
+              "on-secondary-container": "#003567",
+              "surface-tint": "#ba1a20",
+              "on-primary-fixed": "#410003",
+              "surface-container-highest": "#d4e5ef",
+              "on-tertiary-fixed-variant": "#004d65",
+              "outline-variant": "#e4beba",
+              "on-secondary-fixed": "#001c3a",
+              "secondary-fixed-dim": "#a5c8ff",
+              "surface-container-low": "#e7f6ff",
+              "on-primary-fixed-variant": "#930010",
+              "outline": "#8f6f6c",
+              "secondary-container": "#54a0fe",
+              "surface-container": "#dff1fb",
+              "on-error-container": "#93000a",
+              "on-surface-variant": "#5b403d",
+              "on-tertiary": "#ffffff",
+              "primary-fixed": "#ffdad6",
+              "on-error": "#ffffff",
+              "tertiary-fixed": "#bee9ff",
+              "secondary": "#005faf",
+              "inverse-primary": "#ffb3ac",
+              "surface-variant": "#d4e5ef",
+              "on-tertiary-fixed": "#001f2a",
+              "primary-container": "#d32f2f",
+              "surface": "#f4faff",
+              "on-surface": "#0d1e25",
+              "inverse-surface": "#23333a",
+              "primary": "#af101a",
+              "secondary-fixed": "#d4e3ff",
+              "on-background": "#0d1e25",
+              "surface-container-lowest": "#ffffff",
+              "error": "#ba1a1a",
+              "on-primary-container": "#fff2f0",
+              "on-tertiary-container": "#e9f7ff",
+              "on-primary": "#ffffff",
+              "tertiary": "#005f7b",
+              "primary-fixed-dim": "#ffb3ac",
+              "background": "#f4faff"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .urgent-gradient {
+            background: linear-gradient(135deg, #af101a 0%, #d32f2f 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-[#f4faff] dark:bg-slate-950 flex justify-between items-center w-full px-6 py-4 sticky top-0 z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#D32F2F]" data-icon="security">security</span>
+<h1 class="font-Inter font-bold tracking-tight text-[#0d1e25] dark:text-slate-100 text-lg uppercase tracking-widest text-[#D32F2F]">Vigilant Sentinel</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-[#0d1e25] dark:text-slate-400 hover:bg-[#e7f6ff] dark:hover:bg-slate-800 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<main class="flex-grow p-6 space-y-8 max-w-4xl mx-auto w-full pb-32">
+<!-- Header Section -->
+<section class="space-y-2">
+<h2 class="text-3xl font-black tracking-tight text-on-surface uppercase">Report Emergency</h2>
+<p class="text-on-surface-variant font-medium">Tactical dispatch interface. High urgency mode active.</p>
+</section>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Left Column: Media & Info -->
+<div class="md:col-span-7 space-y-10">
+<!-- Media Input Section -->
+<div class="space-y-5">
+<label class="font-label text-sm uppercase tracking-[0.05em] font-bold text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="perm_media">perm_media</span>
+                        Evidence Collection
+                    </label>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex flex-col items-center justify-center gap-3 p-8 bg-surface-container-lowest rounded-xl shadow-sm border-b-2 border-transparent active:border-primary transition-all group">
+<span class="material-symbols-outlined text-primary text-4xl group-hover:scale-110 transition-transform" data-icon="photo_camera">photo_camera</span>
+<span class="font-label text-xs font-bold uppercase tracking-wider">Capture Image</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-3 p-8 bg-surface-container-lowest rounded-xl shadow-sm border-b-2 border-transparent active:border-primary transition-all group">
+<span class="material-symbols-outlined text-primary text-4xl group-hover:scale-110 transition-transform" data-icon="videocam">videocam</span>
+<span class="font-label text-xs font-bold uppercase tracking-wider">Record Video</span>
+</button>
+</div>
+<button class="w-full py-4 bg-surface-container-highest rounded-lg flex items-center justify-center gap-3 hover:bg-surface-dim transition-colors group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-y-[-2px] transition-transform" data-icon="upload_file">upload_file</span>
+<span class="font-label text-sm font-bold uppercase tracking-wider text-on-surface-variant">Upload Existing Media</span>
+</button>
+</div>
+<!-- Description Form -->
+<div class="space-y-5">
+<label class="font-label text-sm uppercase tracking-[0.05em] font-bold text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="description">description</span>
+                        Incident Details
+                    </label>
+<div class="relative">
+<textarea class="w-full bg-surface-container-highest border-0 border-b-2 border-outline/15 focus:border-primary focus:ring-0 p-5 rounded-t-lg min-h-[160px] text-on-surface placeholder-on-surface-variant/50 text-lg" placeholder="Describe the situation briefly..."></textarea>
+<div class="absolute bottom-4 right-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/40">
+                            Clear Concise Tactical Data Only
+                        </div>
+</div>
+</div>
+</div>
+<!-- Right Column: Location & Analysis -->
+<div class="md:col-span-5 space-y-10">
+<!-- Location Section -->
+<div class="space-y-5 bg-surface-container-low p-6 rounded-xl">
+<label class="font-label text-sm uppercase tracking-[0.05em] font-bold text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+                        Geospatial Lock
+                    </label>
+<div class="rounded-lg overflow-hidden h-48 relative group shadow-inner">
+<img alt="Satellite view of urban intersection with high-contrast tactical mapping overlays and grid lines" class="w-full h-full object-cover grayscale contrast-125 opacity-80 group-hover:opacity-100 transition-opacity" data-location="Austin, Texas" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-fGKe8AKN3s7OLH6zc4Z9BCEgqAozWWjgHQeAF7i5RA-lUIOueBwlMu5dTeSXNcPL6BoxGfVM3FIfG-3IXDpA1N8bj9Sli37tj2zBEagndNKieE5M5Q9UNRhJUxyCfBtUUxXCpdLeiMJfCbWc5s7R44viJKUt5243GTXEqBjLs8QPh3i4Bl6y5BbccchZB3EP0Es0QsT8-LpbQUenxHNkPH_d8yucA3UGcV7R4A-IQNepAgtDm2-Kf5mAn860nuZv0O6LMUH1T8Ce"/>
+<div class="absolute inset-0 bg-primary/5 pointer-events-none"></div>
+<div class="absolute top-4 right-4">
+<div class="bg-primary px-3 py-1 rounded-sm flex items-center gap-2">
+<div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+<span class="text-[10px] font-bold text-white uppercase tracking-tighter">Live GPS</span>
+</div>
+</div>
+</div>
+<div class="space-y-3">
+<div class="bg-surface-container-highest p-4 rounded-md">
+<span class="block text-[10px] uppercase tracking-widest font-bold text-on-surface-variant mb-1">Current Coordinates</span>
+<code class="text-sm font-mono font-bold text-secondary">30.2672° N, 97.7431° W</code>
+</div>
+<button class="w-full py-4 urgent-gradient text-white rounded-lg flex items-center justify-center gap-3 shadow-lg active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="my_location">my_location</span>
+<span class="font-label text-sm font-bold uppercase tracking-widest">Auto-Detect Location</span>
+</button>
+</div>
+</div>
+<!-- AI Analysis Placeholder -->
+<div class="bg-surface-container-highest p-6 rounded-xl border-l-4 border-outline-variant space-y-4">
+<div class="flex justify-between items-center">
+<label class="font-label text-sm uppercase tracking-[0.05em] font-bold text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="psychology">psychology</span>
+                            Severity Analysis
+                        </label>
+<span class="material-symbols-outlined text-outline-variant animate-spin" data-icon="sync">sync</span>
+</div>
+<div class="py-4 text-center">
+<p class="text-on-surface-variant italic font-medium opacity-60">Awaiting media or description for automated priority triage...</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Section -->
+<div class="pt-10 flex flex-col md:flex-row gap-4">
+<button class="flex-grow-[2] py-6 urgent-gradient text-white rounded-xl flex items-center justify-center gap-4 shadow-xl active:scale-[0.98] transition-all group">
+<span class="material-symbols-outlined text-3xl group-hover:translate-x-1 transition-transform" data-icon="send">send</span>
+<span class="font-Inter text-xl font-black uppercase tracking-[0.15em]">Send Emergency Report</span>
+</button>
+<button class="flex-grow py-6 bg-surface-container-highest text-on-surface-variant rounded-xl flex items-center justify-center gap-3 hover:bg-surface-dim transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+<span class="font-label text-sm font-bold uppercase tracking-widest">Cancel / Clear</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar (Hidden on desktop via style_shell_layout logic) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-[#f4faff]/70 dark:bg-slate-950/70 backdrop-blur-xl z-50 shadow-[0_-4px_40px_0_rgba(13,30,37,0.06)] md:hidden">
+<a class="flex flex-col items-center justify-center text-[#0d1e25] dark:text-slate-400 opacity-60 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-Inter text-[10px] uppercase tracking-[0.05em] font-bold mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#D32F2F] bg-[#ffffff] dark:bg-slate-800 rounded-lg px-3 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-Inter text-[10px] uppercase tracking-[0.05em] font-bold mt-1">Reports</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#0d1e25] dark:text-slate-400 opacity-60 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
+<span class="font-Inter text-[10px] uppercase tracking-[0.05em] font-bold mt-1">Connectivity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#0d1e25] dark:text-slate-400 opacity-60 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-Inter text-[10px] uppercase tracking-[0.05em] font-bold mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

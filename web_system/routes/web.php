@@ -1,0 +1,101 @@
+<?php
+
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\WelcomeController;
+use App\Http\Controllers\Web\AccountVerificationController;
+use App\Http\Controllers\Web\AdminDashboardController;
+use App\Http\Controllers\Web\AiTextTestController;
+use App\Http\Controllers\Web\CivilianAccountController;
+use App\Http\Controllers\Web\DashboardController;
+use App\Http\Controllers\Web\IncidentReportController;
+use App\Http\Controllers\Web\IncidentReportExportController;
+use App\Http\Controllers\Web\MonitoringDashboardController;
+use App\Http\Controllers\Web\ProfileController;
+use App\Http\Controllers\Web\SettingsController;
+use App\Support\SystemVersion;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/system/version', static function (SystemVersion $systemVersion) {
+    return response()->json([
+        'version' => $systemVersion->current(),
+        'generated_at' => now()->toIso8601String(),
+    ], 200, [
+        'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+        'Pragma' => 'no-cache',
+        'Expires' => '0',
+    ]);
+})->name('system.version');
+
+Route::middleware('guest')->group(function (): void {
+    Route::get('/', WelcomeController::class)->name('welcome');
+    Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+    Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('auth.google.redirect');
+    Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
+    Route::get('/admin/login', [AuthenticatedSessionController::class, 'createAdmin'])->name('admin.login');
+    Route::post('/admin/login', [AuthenticatedSessionController::class, 'storeAdmin'])->name('admin.login.store');
+    Route::get('/responder/login', [AuthenticatedSessionController::class, 'createResponder'])->name('responder.login');
+    Route::post('/responder/login', [AuthenticatedSessionController::class, 'storeResponder'])->name('responder.login.store');
+    Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+    Route::post('/register', [RegisteredUserController::class, 'store']);
+});
+
+Route::middleware(['auth', 'account.active'])->group(function (): void {
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::redirect('/home', '/dashboard');
+    Route::get('/account/verify', [AccountVerificationController::class, 'create'])->name('account.verify');
+    Route::post('/account/verify', [AccountVerificationController::class, 'store'])->name('account.verify.store');
+
+    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function (): void {
+        Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
+        Route::get('/text-ai-test', [AiTextTestController::class, 'index'])->name('text-ai-test');
+        Route::post('/text-ai-test', [AiTextTestController::class, 'predict'])->name('text-ai-test.predict');
+    });
+
+    Route::middleware('responder')->group(function (): void {
+        Route::get('/monitoring', MonitoringDashboardController::class)->name('monitoring');
+        Route::get('/monitoring/lora-mesh', [MonitoringDashboardController::class, 'loraMesh'])->name('monitoring.lora-mesh');
+        Route::get('/monitoring/lora-mesh/nodes', [MonitoringDashboardController::class, 'loraMeshNodes'])->name('monitoring.lora-mesh.nodes');
+
+        Route::prefix('civilian-accounts')->name('civilian-accounts.')->group(function (): void {
+            Route::get('/', [CivilianAccountController::class, 'index'])->name('index');
+            Route::get('/{civilianAccount}/verification-image', [CivilianAccountController::class, 'verificationImage'])->name('verification-image');
+            Route::patch('/{civilianAccount}/block', [CivilianAccountController::class, 'block'])->name('block');
+            Route::delete('/{civilianAccount}', [CivilianAccountController::class, 'destroy'])->name('destroy');
+        });
+    });
+
+    Route::middleware('responder')->prefix('reports')->name('reports.')->group(function (): void {
+        Route::get('/export/preview', [IncidentReportExportController::class, 'preview'])->name('export.preview');
+        Route::get('/export', [IncidentReportExportController::class, 'download'])->name('export');
+    });
+
+    Route::prefix('reports')->name('reports.')->group(function (): void {
+        Route::get('/', [IncidentReportController::class, 'index'])->name('index');
+        Route::get('/create', [IncidentReportController::class, 'create'])->name('create');
+        Route::post('/', [IncidentReportController::class, 'store'])->name('store');
+        Route::get('/{incidentReport}/evidence', [IncidentReportController::class, 'evidence'])->name('evidence');
+        Route::get('/{incidentReport}/selfie', [IncidentReportController::class, 'selfie'])->name('selfie');
+        Route::get('/{incidentReport}', [IncidentReportController::class, 'show'])->name('show');
+        Route::get('/{incidentReport}/success', [IncidentReportController::class, 'success'])->name('success');
+
+        Route::middleware('responder')->group(function (): void {
+            Route::delete('/', [IncidentReportController::class, 'destroyAll'])->name('destroy-all');
+            Route::post('/{incidentReport}/coordination', [IncidentReportController::class, 'updateCoordination'])->name('coordination');
+            Route::delete('/{incidentReport}', [IncidentReportController::class, 'destroy'])->name('destroy');
+            Route::get('/{incidentReport}/ai-severity', [IncidentReportController::class, 'severity'])->name('severity');
+            Route::get('/{incidentReport}/transmissions', [IncidentReportController::class, 'transmissions'])->name('transmissions');
+        });
+    });
+
+    Route::get('/profile/photo', [ProfileController::class, 'photo'])->name('profile.photo');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::get('/settings/readiness', [SettingsController::class, 'readiness'])->name('settings.readiness');
+    Route::post('/settings/preferences', [SettingsController::class, 'update'])->name('settings.update');
+});

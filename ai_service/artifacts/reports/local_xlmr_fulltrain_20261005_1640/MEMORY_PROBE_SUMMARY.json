@@ -1,0 +1,45 @@
+{
+  "method": "one real full-backbone forward/backward/optimizer update, batch1, FP16 autocast, gradient checkpointing, padded sequence length96; repeated separately for each optimizer",
+  "model": "FacebookAI/xlm-roberta-base",
+  "revision": "42f548f32366559214515ec137cdd16002968bf6",
+  "trainable_parameters": 278046724,
+  "frozen_parameters": 0,
+  "total_vram_bytes": 4294443008,
+  "results": [
+    {
+      "optimizer": "adamw",
+      "status": "one_full_backbone_update_passed",
+      "total_parameters": 278046724,
+      "trainable_parameters": 278046724,
+      "frozen_parameters": 0,
+      "trainable_percentage": 100.0,
+      "input_shape": [
+        1,
+        96
+      ],
+      "actual_text_tokens": 72,
+      "loss_finite": true,
+      "peak_allocated_bytes": 6005686784,
+      "peak_reserved_bytes": 6209667072,
+      "elapsed_seconds": 12.2
+    },
+    {
+      "optimizer": "adafactor",
+      "status": "one_full_backbone_update_passed",
+      "total_parameters": 278046724,
+      "trainable_parameters": 278046724,
+      "frozen_parameters": 0,
+      "trainable_percentage": 100.0,
+      "input_shape": [
+        1,
+        96
+      ],
+      "actual_text_tokens": 72,
+      "loss_finite": true,
+      "peak_allocated_bytes": 3783180288,
+      "peak_reserved_bytes": 3915382784,
+      "elapsed_seconds": 6.59
+    }
+  ],
+  "decision": "Use Adafactor for full training: it completed the step with peak reserved memory below physical VRAM; AdamW also completed but reported >physical VRAM allocation, indicating WDDM shared-memory oversubscription and poor safety margin."
+}

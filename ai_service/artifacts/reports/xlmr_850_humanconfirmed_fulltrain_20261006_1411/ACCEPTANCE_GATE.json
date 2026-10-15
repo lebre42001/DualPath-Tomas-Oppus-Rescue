@@ -1,0 +1,30 @@
+{
+  "gate_type": "research gates preserved from previous experiment; not clinical standards",
+  "source": "existing ai_service/artifacts/reports/civilian_multilingual_fulltrain_20261005/ACCEPTANCE_GATE.json plus explicit zero Critical-to-Minor gate in master task",
+  "fresh_test_count": 84,
+  "fresh_test_macro_f1_raw": 0.8455574644288798,
+  "critical_recall": 0.55,
+  "serious_or_critical_detection_recall": 0.8780487804878049,
+  "raw_per_language_macro_f1": {
+    "en": 0.9115384615384615,
+    "tl": 0.9080419580419581,
+    "ceb": 0.775,
+    "mixed": 0.7285714285714285
+  },
+  "raw_urgent_undertriage_count": 9,
+  "critical_to_minor_automatic_at_0_65": 2,
+  "checks": {
+    "overall_macro_f1_at_least_0_80": true,
+    "critical_recall_at_least_0_95": false,
+    "serious_or_critical_detection_recall_at_least_0_90": false,
+    "every_observed_language_raw_macro_f1_at_least_0_75": false,
+    "zero_raw_high_risk_undertriage": false,
+    "zero_critical_to_minor_automatic_at_0_65": false
+  },
+  "passed": 1,
+  "total": 6,
+  "status": "FAIL",
+  "clinical_or_production_claim": false,
+  "decision": "NOT_ACCEPTABLE",
+  "reason": "Critical recall, urgent detection, mixed-language raw macro-F1, raw zero-undertriage, and zero automatic Critical-to-Minor gates fail; only overall macro-F1 gate passes."
+}

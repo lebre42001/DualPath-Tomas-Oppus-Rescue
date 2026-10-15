@@ -1,0 +1,30 @@
+{
+  "matched_fresh_test_comparison": {
+    "n": 83,
+    "excluded_case_due_old_model_train_validation_exposure": [
+      "CEB-MINOR-021"
+    ],
+    "previous_xlmr_trial_lr_2e-5_seed42": {
+      "raw_macro_f1": 0.8749336772592586,
+      "critical_recall": 0.7,
+      "serious_recall": 0.9523809523809523,
+      "raw_urgent_undertriage": 6
+    },
+    "new_xlmr_full_backbone": {
+      "raw_macro_f1": 0.8440752509901446,
+      "critical_recall": 0.55,
+      "serious_recall": 1.0,
+      "raw_urgent_undertriage": 9
+    }
+  },
+  "tfidf_logistic": {
+    "new_same_split_baseline_status": "BLOCKED_BY_WINDOWS_APPLICATION_CONTROL",
+    "errors": [
+      "ai_service/.venv-xlmrt-fulltrain: DLL load failed while importing arrayfuncs; an Application Control policy blocked this file",
+      "ai_service/.venv-text: DLL load failed while importing _cython_blas; an Application Control policy blocked this file"
+    ],
+    "historic_candidate": "text_provisional_synthetic_research_20261001_202001/baseline was fit on 400 draft rows with a different split/fingerprint and is not an apples-to-apples baseline for this reviewed dataset",
+    "current_tf_idf_same_split_metrics": null
+  },
+  "overall_interpretation": "On the 83-row common subset, previous XLM-R has higher macro-F1 and critical recall and fewer raw urgent undertriage errors; new model improves serious recall. This is not independent prospective validation; source corpus is synthetic and prior model-development exposed."
+}

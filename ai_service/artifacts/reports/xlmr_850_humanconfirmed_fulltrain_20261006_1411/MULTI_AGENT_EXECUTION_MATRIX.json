@@ -1,0 +1,184 @@
+﻿{
+    "workstreams":  [
+                        {
+                            "agent":  "attestation_dataset_build",
+                            "workstream":  "850-row attestation record",
+                            "finding":  "Owner-attested batch bound to source hash; not independently corroborated.",
+                            "status":  "COMPLETE",
+                            "agent_role":  1
+                        },
+                        {
+                            "agent":  "ai_adjudication_audit",
+                            "workstream":  "AI responder-style adjudication",
+                            "finding":  "850 AI screens; disagreements preserved, not human corrections.",
+                            "status":  "COMPLETE",
+                            "agent_role":  2
+                        },
+                        {
+                            "agent":  "ai_adjudication_audit + lead",
+                            "workstream":  "Six high-risk cases",
+                            "finding":  "Six compared against old/new models; four still undertriaged, two review-routed.",
+                            "status":  "COMPLETE",
+                            "agent_role":  3
+                        },
+                        {
+                            "agent":  "mixed_language_audit",
+                            "workstream":  "English language audit",
+                            "finding":  "AI-only; no fluent human verification.",
+                            "status":  "PARTIAL",
+                            "agent_role":  4
+                        },
+                        {
+                            "agent":  "mixed_language_audit",
+                            "workstream":  "Tagalog language audit",
+                            "finding":  "AI-only; no fluent human verification.",
+                            "status":  "PARTIAL",
+                            "agent_role":  5
+                        },
+                        {
+                            "agent":  "mixed_language_audit",
+                            "workstream":  "Cebuano/Bisaya language audit",
+                            "finding":  "AI-only; no fluent human verification.",
+                            "status":  "PARTIAL",
+                            "agent_role":  6
+                        },
+                        {
+                            "agent":  "mixed_language_audit",
+                            "workstream":  "Mixed-language audit",
+                            "finding":  "AI lexical/code-switch screen; no fluent human verification.",
+                            "status":  "PARTIAL",
+                            "agent_role":  7
+                        },
+                        {
+                            "agent":  "ai_adjudication_audit + lead",
+                            "workstream":  "Short/panic audit",
+                            "finding":  "674 corpus rows and test slices summarized; not human severity validation.",
+                            "status":  "COMPLETE",
+                            "agent_role":  8
+                        },
+                        {
+                            "agent":  "ai_adjudication_audit",
+                            "workstream":  "Negation/person-object red team",
+                            "finding":  "AI risk screen only; not an independent human semantic red team.",
+                            "status":  "PARTIAL",
+                            "agent_role":  9
+                        },
+                        {
+                            "agent":  "family_reconciliation",
+                            "workstream":  "Scenario-family reconciliation",
+                            "finding":  "41 pairs: 19 same-family recommendations, 22 related-but-distinct; source IDs unchanged.",
+                            "status":  "COMPLETE",
+                            "agent_role":  10
+                        },
+                        {
+                            "agent":  "lead + split_leakage_independent",
+                            "workstream":  "Duplicate/prior exposure",
+                            "finding":  "Prior run exposure confirmed; 60 inaccessible files limit full audit.",
+                            "status":  "PARTIAL",
+                            "agent_role":  11
+                        },
+                        {
+                            "agent":  "lead",
+                            "workstream":  "Historical CSV access recovery",
+                            "finding":  "60 files remain permission-denied; no ACL changes.",
+                            "status":  "BLOCKED",
+                            "agent_role":  12
+                        },
+                        {
+                            "agent":  "attestation_dataset_build + lead",
+                            "workstream":  "Dataset build/schema",
+                            "finding":  "Versioned 850-row set; texts/labels preserved; schema validation passed.",
+                            "status":  "COMPLETE",
+                            "agent_role":  13
+                        },
+                        {
+                            "agent":  "lead",
+                            "workstream":  "Split design",
+                            "finding":  "Five partitions frozen: 514/126/83/84/43.",
+                            "status":  "COMPLETE",
+                            "agent_role":  14
+                        },
+                        {
+                            "agent":  "split_leakage_independent",
+                            "workstream":  "Independent leakage audit",
+                            "finding":  "No current split leakage across audited fields; historic exposure caveat.",
+                            "status":  "COMPLETE",
+                            "agent_role":  15
+                        },
+                        {
+                            "agent":  "lead",
+                            "workstream":  "Hardware/CUDA audit",
+                            "finding":  "RTX 3050 Laptop GPU/CUDA run verified.",
+                            "status":  "COMPLETE",
+                            "agent_role":  16
+                        },
+                        {
+                            "agent":  "pipeline_safety_audit",
+                            "workstream":  "Training pipeline audit",
+                            "finding":  "Pinned full-backbone config/checkpoint independently checked.",
+                            "status":  "COMPLETE",
+                            "agent_role":  17
+                        },
+                        {
+                            "agent":  "lead",
+                            "workstream":  "Full training execution",
+                            "finding":  "Full XLM-R backbone, eight epochs; best epoch six.",
+                            "status":  "COMPLETE",
+                            "agent_role":  18
+                        },
+                        {
+                            "agent":  "lead",
+                            "workstream":  "Validation/safety evaluation",
+                            "finding":  "Fresh test evaluated; critical safety gates fail.",
+                            "status":  "COMPLETE",
+                            "agent_role":  19
+                        },
+                        {
+                            "agent":  "lead",
+                            "workstream":  "Fresh-test/mixed/short evaluation",
+                            "finding":  "84 test rows, mixed n=12, short slices reported with limits.",
+                            "status":  "COMPLETE",
+                            "agent_role":  20
+                        },
+                        {
+                            "agent":  "lead",
+                            "workstream":  "Calibration/routing",
+                            "finding":  "83-row calibration-only analysis; no runtime threshold promoted.",
+                            "status":  "COMPLETE",
+                            "agent_role":  21
+                        },
+                        {
+                            "agent":  "lead",
+                            "workstream":  "Model comparison",
+                            "finding":  "Previous XLM-R comparable subset; TF-IDF blocked by Windows policy; no mBERT run.",
+                            "status":  "PARTIAL",
+                            "agent_role":  22
+                        },
+                        {
+                            "agent":  "lead",
+                            "workstream":  "Sealed package/hash verification",
+                            "finding":  "Sealed package ZIP passed integrity and SHA-256 verification.",
+                            "status":  "COMPLETE",
+                            "agent_role":  23
+                        },
+                        {
+                            "agent":  "final_qa",
+                            "workstream":  "Independent final QA/red team",
+                            "finding":  "Independent artifact QA PASS_WITH_LIMITATIONS; operational model acceptance remains NOT_ACCEPTABLE.",
+                            "status":  "COMPLETE",
+                            "agent_role":  24
+                        }
+                    ],
+    "lead":  "/root",
+    "task":  "850-row owner-attested emergency-text full-backbone experiment",
+    "note":  "24 required roles are workstreams, not 24 distinct agents. Seven specialist agents were used across the task; lead completed remaining work. No agent impersonated a responder.",
+    "distinct_specialist_agents":  [
+                                       "attestation_dataset_build",
+                                       "ai_adjudication_audit",
+                                       "family_reconciliation",
+                                       "mixed_language_audit",
+                                       "split_leakage_independent",
+                                       "pipeline_safety_audit",
+                                       "final_qa"
+                                   ]
+}

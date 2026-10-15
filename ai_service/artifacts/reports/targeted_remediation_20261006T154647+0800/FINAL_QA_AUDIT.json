@@ -1,0 +1,160 @@
+{
+  "audit_type": "independent_final_read_only_QA",
+  "run_id": "targeted_remediation_20261006T154647+0800",
+  "status": "PASS_WITH_LIMITATIONS",
+  "scope_and_safety": {
+    "read_only": true,
+    "source_model_dataset_selector_edited": false,
+    "training_or_inference_run": false,
+    "gpu_used": false,
+    "staging_or_deployment": false,
+    "prediction_inputs": "saved EXPOSED_TEST probabilities only; authoritative frozen test CSV joined by case_id"
+  },
+  "commands_and_inputs": [
+    "Read ai_service/artifacts/reports/targeted_remediation_20261006T154647+0800/GATE_RESULTS.json, EVALUATION_AUDIT/EVALUATION_AUDIT.json, EXPERIMENT_PROTOCOL.json, PROVENANCE_RECEIPT.json, CURRENT_EVIDENCE_VERIFICATION.json, BEST_CHECKPOINT.json, TRAINING_HISTORY.json, MANUAL_MODE_TEST_REPORT.json, RELEASE_MANUAL_ONLY.md, ROLLBACK.md.",
+    "Read ai_service/artifacts/reports/targeted_remediation_20261006T154647+0800/EVALUATIONS_WITH_PREDICTIONS/EXPOSED_TEST/evaluation_predictions.json and evaluation_metrics.json; independently joined prediction rows by case_id to ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/frozen_splits/fresh_test.csv.",
+    "Executed a read-only Python 3.13 inline calculation with ai_service/.venv-xlmrt-fulltrain/Scripts/python.exe using sklearn f1_score/confusion_matrix; recomputed four-label raw macro-F1, per-language macro-F1, Serious+Critical detection, raw undertriage, and automatic Critical-to-Minor count at threshold 0.65.",
+    "Executed a read-only Python 3.13 SHA-256 verification against every path listed in CURRENT_EVIDENCE_VERIFICATION.json, using 4 MiB streaming chunks.",
+    "Inspected ai_service/src/ai_service/operation_mode.py, ai_service/src/ai_service/api.py, ai_service/src/ai_service/text_api.py, ai_service/serve_api.py, ai_service/tests/test_operation_mode.py, render.yaml, RELEASE_MANUAL_ONLY.md, and ROLLBACK.md; relied on recorded focused test results rather than rerunning tests."
+  ],
+  "independent_exposed_test_calculation": {
+    "rows": 84,
+    "case_id_join": "one-to-one; all 84 prediction case IDs matched the frozen CSV",
+    "actual_language_counts": {
+      "ceb": 25,
+      "en": 24,
+      "mixed": 12,
+      "tl": 23
+    },
+    "label_order": [
+      "minor",
+      "serious",
+      "critical",
+      "needs_review"
+    ],
+    "raw_macro_f1": 0.8523234689393225,
+    "confusion_matrix_actual_rows_predicted_columns": [
+      [
+        19,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        21,
+        0,
+        0
+      ],
+      [
+        2,
+        5,
+        13,
+        0
+      ],
+      [
+        0,
+        0,
+        3,
+        19
+      ]
+    ],
+    "critical_recall": {
+      "correct": 13,
+      "support": 20,
+      "value": 0.65
+    },
+    "serious_critical_detection_recall": {
+      "detected_as_serious_or_critical": 39,
+      "support": 41,
+      "value": 0.9512195121951219
+    },
+    "per_language_raw_macro_f1": {
+      "ceb": 0.7767857142857143,
+      "en": 0.958041958041958,
+      "mixed": 0.7375,
+      "tl": 0.8728632478632479
+    },
+    "raw_urgent_undertriage": {
+      "count": 7,
+      "support": 41
+    },
+    "automatic_critical_to_minor_at_0_65": 2,
+    "gate_results": [
+      {
+        "gate": "overall macro-F1 >= 0.80",
+        "result": "PASS"
+      },
+      {
+        "gate": "Critical recall >= 0.95",
+        "result": "FAIL"
+      },
+      {
+        "gate": "Serious/Critical detection recall >= 0.90",
+        "result": "PASS"
+      },
+      {
+        "gate": "every observed language raw macro-F1 >= 0.75",
+        "result": "FAIL",
+        "limiting_group": "mixed",
+        "value": 0.7375
+      },
+      {
+        "gate": "zero raw urgent undertriage",
+        "result": "FAIL",
+        "count": 7
+      },
+      {
+        "gate": "zero automatic Critical-to-Minor at 0.65",
+        "result": "FAIL",
+        "count": 2
+      }
+    ],
+    "passed": 2,
+    "total": 6,
+    "interpretation": "Matches GATE_RESULTS.json and case-ID-based EVALUATION_AUDIT.json. The research acceptance is not met; this checkpoint is diagnostic only."
+  },
+  "conflicts_and_resolution": [
+    {
+      "issue": "The saved EXPOSED_TEST/evaluation_metrics.json per_language subgroup figures differ from the case-ID rejoin calculation and EVALUATION_AUDIT.json, although the aggregate confusion matrix, aggregate macro-F1, and subgroup counts agree.",
+      "evidence": "Saved evaluation_metrics.json lists en macro-F1 0.872619, tl 0.822222, ceb 0.703984, mixed 0.803571; authoritative case-ID rejoin yields en 0.958042, tl 0.872863, ceb 0.776786, mixed 0.737500. The evaluation auditor also recomputed by case_id and its saved_metric_consistency_checks do not check per-language subgroup confusion/F1.",
+      "resolution": "For the six frozen gates, used independent recomputation joining saved probability vectors to the authoritative frozen test CSV by case_id. This agrees with GATE_RESULTS.json and EVALUATION_AUDIT.json. Do not cite stale per-language fields in evaluation_metrics.json; preserve and investigate their subgroup discrepancy before any future evaluation release."
+    },
+    {
+      "issue": "RELEASE_MANUAL_ONLY.md file inventory omits the FastAPI implementation/configuration files changed for MANUAL_ONLY.",
+      "evidence": "The prose describes the FastAPI switch, but the ?Files changed for this release? inventory lists only web_system/render artifacts and docs. Relevant inspected additions/changes include ai_service/src/ai_service/operation_mode.py, ai_service/src/ai_service/api.py, ai_service/src/ai_service/text_api.py, ai_service/serve_api.py, and ai_service/tests/test_operation_mode.py.",
+      "resolution": "Manual enforcement looks fail-closed in the inspected code and is covered by the recorded focused tests; release inventory is documentation-incomplete and should be corrected before release packaging/staging."
+    },
+    {
+      "issue": "The preserved owner attestation is not direct row-level responder evidence.",
+      "evidence": "PROVENANCE_RECEIPT.json says project-owner-attested verbal batch, not independently corroborated direct responder testimony; all examples have synthetic origin; no human language-fluency validation is evidenced; real-world final test is unavailable.",
+      "resolution": "Report only as owner-attested batch metadata; make no claim of individually verified responder labels, real-world validation, or operational safety."
+    },
+    {
+      "issue": "Evaluation ordering has a disclosed exposure limitation.",
+      "evidence": "EVALUATION_AUDIT.json says an initial exposed-test evaluation and inspection happened before calibration diagnostic policy freeze; final numbers were recalculated afterward from preserved scores.",
+      "resolution": "Treat exposed test/challenge as historically exposed regression diagnostics only, not confirmatory or fresh heldouts."
+    }
+  ],
+  "verification": {
+    "evidence_hashes": "all five hashes in CURRENT_EVIDENCE_VERIFICATION.json were independently recomputed and matched: active selector, development CSV, frozen split manifest, new checkpoint weights, prior rejected checkpoint weights.",
+    "active_selector": "unchanged; ai_service/active_config.txt SHA-256 5e56620321a9d19e485f54369cad2e0fa2d6cd8305b6b817f3efa9c0366b41ba.",
+    "prior_rejected_checkpoint": "unchanged; SHA-256 053a2851d3e1a9fb342825bc86a786a49baad7e06f51c6a8442a655f97fe6881.",
+    "new_checkpoint": "SHA-256 ce7b62bbe3d4f50d8952f8508b67a6b5adba0a04d5fc0175fc3187639adbbad9; BEST_CHECKPOINT.json correctly says NO_ELIGIBLE_CHECKPOINT and deployment_eligible false.",
+    "historical_exposure": "DATASET_RECEIPT.json records train 514, validation 126, calibration 83, exposed_test 84, exposed_challenge 43; all rows have prior model-development exposure.",
+    "provenance": "source batch hash fd0fb65ccb718a1dee93fd315aa3a0e12cb5a8c2123bc08c8466e51c75fc7645; zero row/label decisions changed; synthetic_origin true; AI audit agree 769, disagree 38, uncertain 43.",
+    "full_backbone_training": "metadata records XLM-R base revision 42f548f32366559214515ec137cdd16002968bf6, backbone_frozen false, 278046724/278046724 trainable parameters, frozen split, zero truncations, epoch 6 selected diagnostically.",
+    "optimizer_telemetry": "264 attempted; 260 successful; 4 GradScaler-skipped; scheduler_steps 260. TRAINING_HISTORY records these epoch totals. Metadata parameter fingerprints report all 14 trainable groups changed and all encoder groups changed; successful-step gradient evidence is finite/nonzero.",
+    "manual_only": "Inspected FastAPI gates for photo/text prediction, ready/warmup, lazy predictor loading, startup preload, and checkpoint sync; unknown mode falls closed. Test_operation_mode.py exercises manual mode with conflicting enable flags and explicit opt-in behavior. Render config/report set manual-only.",
+    "test_record": "MANUAL_MODE_TEST_REPORT.json records 39 Laravel focused tests/316 assertions, 76 mobile-auth-report tests/951 assertions, 21 AI service tests, npm build and syntax/YAML checks pass. Persistent migration, localhost smoke, Docker build, staging and public deployment were not performed; Docker/isolated target unavailable and production deployment was unauthorized."
+  },
+  "limitations": [
+    "No eligible research checkpoint: four of six exposed-test gates fail.",
+    "No genuinely fresh real-world responder-labeled test set is available; all data is synthetic and historically exposed.",
+    "Human case decisions, fluent language validation, rubric authority, and row-level responder corroboration remain missing.",
+    "60 restricted source files remain unreadable per source access audit; historical inventory counts remain unreconciled.",
+    "No Git metadata is available to identify a commit; no local runtime, persistent DB migration, Docker build, staging, or deployment was tested.",
+    "Threshold and calibration values remain diagnostic only and establish no safety claim."
+  ],
+  "created_at_local": "2026-10-06T16:53:59+08:00"
+}

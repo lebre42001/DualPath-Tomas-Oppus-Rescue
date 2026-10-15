@@ -1,0 +1,640 @@
+{
+  "run_metadata": {
+    "schema_version": 1,
+    "version": "text-20261006T062737855310Z",
+    "model_type": "transformers",
+    "base_model": "FacebookAI/xlm-roberta-base",
+    "labels": [
+      "minor",
+      "serious",
+      "critical",
+      "needs_review"
+    ],
+    "languages": [
+      "en",
+      "tl",
+      "ceb",
+      "mixed"
+    ],
+    "scope": "road_vehicle_accidents",
+    "domain": "road_vehicle_accidents",
+    "observed_languages": [
+      "ceb",
+      "en",
+      "mixed",
+      "tl"
+    ],
+    "language_support_status": "requires_separate_language_evaluation",
+    "max_length": 64,
+    "review_threshold": 0.65,
+    "review_threshold_status": "provisional",
+    "confidence_calibrated": false,
+    "approved_for_deployment": false,
+    "deployment_status": "experimental",
+    "all_data_reviewed": true,
+    "allow_draft": false,
+    "dataset_fingerprint": "8fe3c2fb7d79ba50175ab67026ffedac9b0b015913ba6c6b4deb9f91c152d282",
+    "dataset_summary": {
+      "rows": 724,
+      "groups": 694,
+      "by_label": {
+        "critical": 179,
+        "minor": 182,
+        "needs_review": 180,
+        "serious": 183
+      },
+      "by_language": {
+        "ceb": 204,
+        "en": 214,
+        "mixed": 101,
+        "tl": 205
+      },
+      "by_review_status": {
+        "approved": 724
+      },
+      "eligible_approved_rows": 724,
+      "dataset_fingerprint": "8fe3c2fb7d79ba50175ab67026ffedac9b0b015913ba6c6b4deb9f91c152d282"
+    },
+    "seed": 42,
+    "validation_fraction": 0.15,
+    "test_fraction": 0.15,
+    "test_evaluated_during_training": false,
+    "split_source": "frozen_manifest",
+    "software_versions": {
+      "torch": "2.12.1+cu130",
+      "transformers": "4.57.6",
+      "scikit-learn": "1.9.1"
+    },
+    "limitations": [
+      "No deployment approval is granted by training or metrics",
+      "Confidence and review threshold are not calibrated",
+      "Group IDs require human identification of translations and paraphrases",
+      "Language balance is reported, not guaranteed",
+      "Small or synthetic datasets do not establish clinical or operational safety"
+    ],
+    "backbone_frozen": false,
+    "learning_rate": 2e-05,
+    "epochs": 8,
+    "batch_size": 1,
+    "gradient_accumulation": 16,
+    "device": "cuda",
+    "base_model_revision": "42f548f32366559214515ec137cdd16002968bf6",
+    "requested_revision": "42f548f32366559214515ec137cdd16002968bf6",
+    "optimizer": "adafactor",
+    "weight_decay": 0.0,
+    "gradient_checkpointing": true,
+    "precision": "cuda_fp16_autocast",
+    "scheduler": "linear_warmup_decay",
+    "warmup_ratio": 0.05,
+    "warmup_steps": 14,
+    "planned_optimizer_steps": 264,
+    "total_parameters": 278046724,
+    "trainable_parameters": 278046724,
+    "loss_normalization": "weighted_sum_over_accumulation_window_weight_sum",
+    "class_weights": {
+      "minor": 0.9961240291595459,
+      "serious": 0.9884615540504456,
+      "critical": 1.00390625,
+      "needs_review": 1.0118110179901123
+    },
+    "selection_metric": "balanced_safety",
+    "early_stopping_patience": 2,
+    "truncated_rows_by_split": {
+      "train": 0,
+      "validation": 0,
+      "test": 0
+    },
+    "best_epoch": 6,
+    "epochs_completed": 8,
+    "training_and_selection_seconds": 963.81,
+    "peak_cuda_memory_allocated_bytes": 3781308416,
+    "peak_cuda_memory_reserved_bytes": 4009754624
+  },
+  "training_history": {
+    "epochs": [
+      {
+        "epoch": 1,
+        "train_loss": 1.3886506292297702,
+        "validation_macro_f1": 0.3393158431445258,
+        "validation_critical_recall": 0.06451612903225806,
+        "validation_critical_precision": 0.5,
+        "validation_serious_recall": 0.625,
+        "validation_raw_high_risk_undertriage_count": 41,
+        "learning_rate_after_epoch": 1.8480000000000003e-05
+      },
+      {
+        "epoch": 2,
+        "train_loss": 1.3032809709225301,
+        "validation_macro_f1": 0.5797054869025691,
+        "validation_critical_recall": 0.16129032258064516,
+        "validation_critical_precision": 0.8333333333333334,
+        "validation_serious_recall": 0.8125,
+        "validation_raw_high_risk_undertriage_count": 31,
+        "learning_rate_after_epoch": 1.584e-05
+      },
+      {
+        "epoch": 3,
+        "train_loss": 1.018232863074929,
+        "validation_macro_f1": 0.6307764996476442,
+        "validation_critical_recall": 0.3870967741935484,
+        "validation_critical_precision": 0.7058823529411765,
+        "validation_serious_recall": 1.0,
+        "validation_raw_high_risk_undertriage_count": 16,
+        "learning_rate_after_epoch": 1.3200000000000002e-05
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.7879456022499942,
+        "validation_macro_f1": 0.7788461538461537,
+        "validation_critical_recall": 0.8064516129032258,
+        "validation_critical_precision": 0.7352941176470589,
+        "validation_serious_recall": 0.875,
+        "validation_raw_high_risk_undertriage_count": 6,
+        "learning_rate_after_epoch": 1.056e-05
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.561908830365133,
+        "validation_macro_f1": 0.8806408783662001,
+        "validation_critical_recall": 0.8387096774193549,
+        "validation_critical_precision": 0.9285714285714286,
+        "validation_serious_recall": 0.8125,
+        "validation_raw_high_risk_undertriage_count": 8,
+        "learning_rate_after_epoch": 7.92e-06
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.4171888663767449,
+        "validation_macro_f1": 0.8895965367565333,
+        "validation_critical_recall": 0.8709677419354839,
+        "validation_critical_precision": 0.9642857142857143,
+        "validation_serious_recall": 0.96875,
+        "validation_raw_high_risk_undertriage_count": 3,
+        "learning_rate_after_epoch": 5.28e-06
+      },
+      {
+        "epoch": 7,
+        "train_loss": 0.3003134479776715,
+        "validation_macro_f1": 0.8891619694960212,
+        "validation_critical_recall": 0.8387096774193549,
+        "validation_critical_precision": 0.9629629629629629,
+        "validation_serious_recall": 0.875,
+        "validation_raw_high_risk_undertriage_count": 6,
+        "learning_rate_after_epoch": 2.64e-06
+      },
+      {
+        "epoch": 8,
+        "train_loss": 0.2694623243695716,
+        "validation_macro_f1": 0.8968616452991452,
+        "validation_critical_recall": 0.8709677419354839,
+        "validation_critical_precision": 0.9310344827586207,
+        "validation_serious_recall": 0.90625,
+        "validation_raw_high_risk_undertriage_count": 4,
+        "learning_rate_after_epoch": 0.0
+      }
+    ],
+    "selection_metric": "balanced_safety"
+  },
+  "best_epoch": 6,
+  "best_checkpoint": "ai_service\\artifacts\\checkpoints\\text_xlmr_850_humanconfirmed_fulltrain_20261006_1411",
+  "validation_metrics": {
+    "dataset_fingerprint": "8c917c01fdf6b105eaef94719cd238f0248e60b6c84d05e76afa6d201db86a91",
+    "count": 126,
+    "raw_classifier": {
+      "count": 126,
+      "accuracy": 0.8888888888888888,
+      "macro_f1": 0.8895965367565333,
+      "per_class": {
+        "minor": {
+          "precision": 0.9285714285714286,
+          "recall": 0.8125,
+          "f1": 0.8666666666666666,
+          "support": 32
+        },
+        "serious": {
+          "precision": 0.7948717948717948,
+          "recall": 0.96875,
+          "f1": 0.8732394366197183,
+          "support": 32
+        },
+        "critical": {
+          "precision": 0.9642857142857143,
+          "recall": 0.8709677419354839,
+          "f1": 0.9152542372881356,
+          "support": 31
+        },
+        "needs_review": {
+          "precision": 0.9032258064516129,
+          "recall": 0.9032258064516129,
+          "f1": 0.9032258064516129,
+          "support": 31
+        }
+      },
+      "confusion_matrix": {
+        "labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ],
+        "rows_actual_columns_predicted": [
+          [
+            26,
+            5,
+            0,
+            1
+          ],
+          [
+            1,
+            31,
+            0,
+            0
+          ],
+          [
+            0,
+            2,
+            27,
+            2
+          ],
+          [
+            1,
+            1,
+            1,
+            28
+          ]
+        ]
+      }
+    },
+    "review_routed": {
+      "count": 126,
+      "accuracy": 0.8333333333333334,
+      "macro_f1": 0.8343125022744169,
+      "per_class": {
+        "minor": {
+          "precision": 0.9230769230769231,
+          "recall": 0.75,
+          "f1": 0.8275862068965517,
+          "support": 32
+        },
+        "serious": {
+          "precision": 0.8571428571428571,
+          "recall": 0.9375,
+          "f1": 0.8955223880597014,
+          "support": 32
+        },
+        "critical": {
+          "precision": 0.9583333333333334,
+          "recall": 0.7419354838709677,
+          "f1": 0.8363636363636364,
+          "support": 31
+        },
+        "needs_review": {
+          "precision": 0.6829268292682927,
+          "recall": 0.9032258064516129,
+          "f1": 0.7777777777777778,
+          "support": 31
+        }
+      },
+      "confusion_matrix": {
+        "labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ],
+        "rows_actual_columns_predicted": [
+          [
+            24,
+            2,
+            0,
+            6
+          ],
+          [
+            1,
+            30,
+            0,
+            1
+          ],
+          [
+            0,
+            2,
+            23,
+            6
+          ],
+          [
+            1,
+            1,
+            1,
+            28
+          ]
+        ]
+      }
+    },
+    "per_language": {
+      "en": {
+        "count": 37,
+        "accuracy": 0.9459459459459459,
+        "macro_f1": 0.9455255786525136,
+        "per_class": {
+          "minor": {
+            "precision": 1.0,
+            "recall": 0.8888888888888888,
+            "f1": 0.9411764705882353,
+            "support": 9
+          },
+          "serious": {
+            "precision": 0.9090909090909091,
+            "recall": 1.0,
+            "f1": 0.9523809523809523,
+            "support": 10
+          },
+          "critical": {
+            "precision": 1.0,
+            "recall": 0.8888888888888888,
+            "f1": 0.9411764705882353,
+            "support": 9
+          },
+          "needs_review": {
+            "precision": 0.9,
+            "recall": 1.0,
+            "f1": 0.9473684210526316,
+            "support": 9
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "minor",
+            "serious",
+            "critical",
+            "needs_review"
+          ],
+          "rows_actual_columns_predicted": [
+            [
+              8,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              10,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              8,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              9
+            ]
+          ]
+        },
+        "high_risk_support": 19,
+        "high_risk_undertriage_count": 1,
+        "high_risk_undertriage_rate": 0.05263157894736842,
+        "high_risk_review_rate": 0.0,
+        "coverage": 0.7297297297297297,
+        "unscored_review_count": 0
+      },
+      "tl": {
+        "count": 37,
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.8373151014791881,
+        "per_class": {
+          "minor": {
+            "precision": 1.0,
+            "recall": 0.7,
+            "f1": 0.8235294117647058,
+            "support": 10
+          },
+          "serious": {
+            "precision": 0.8181818181818182,
+            "recall": 1.0,
+            "f1": 0.9,
+            "support": 9
+          },
+          "critical": {
+            "precision": 0.8888888888888888,
+            "recall": 0.8888888888888888,
+            "f1": 0.8888888888888888,
+            "support": 9
+          },
+          "needs_review": {
+            "precision": 0.7,
+            "recall": 0.7777777777777778,
+            "f1": 0.7368421052631577,
+            "support": 9
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "minor",
+            "serious",
+            "critical",
+            "needs_review"
+          ],
+          "rows_actual_columns_predicted": [
+            [
+              7,
+              1,
+              0,
+              2
+            ],
+            [
+              0,
+              9,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              8,
+              1
+            ],
+            [
+              0,
+              1,
+              1,
+              7
+            ]
+          ]
+        },
+        "high_risk_support": 18,
+        "high_risk_undertriage_count": 0,
+        "high_risk_undertriage_rate": 0.0,
+        "high_risk_review_rate": 0.05555555555555555,
+        "coverage": 0.7297297297297297,
+        "unscored_review_count": 0
+      },
+      "ceb": {
+        "count": 36,
+        "accuracy": 0.75,
+        "macro_f1": 0.7562659846547315,
+        "per_class": {
+          "minor": {
+            "precision": 0.75,
+            "recall": 0.6666666666666666,
+            "f1": 0.7058823529411765,
+            "support": 9
+          },
+          "serious": {
+            "precision": 0.875,
+            "recall": 0.7777777777777778,
+            "f1": 0.823529411764706,
+            "support": 9
+          },
+          "critical": {
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8,
+            "support": 9
+          },
+          "needs_review": {
+            "precision": 0.5714285714285714,
+            "recall": 0.8888888888888888,
+            "f1": 0.6956521739130435,
+            "support": 9
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "minor",
+            "serious",
+            "critical",
+            "needs_review"
+          ],
+          "rows_actual_columns_predicted": [
+            [
+              6,
+              1,
+              0,
+              2
+            ],
+            [
+              1,
+              7,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              6,
+              3
+            ],
+            [
+              1,
+              0,
+              0,
+              8
+            ]
+          ]
+        },
+        "high_risk_support": 18,
+        "high_risk_undertriage_count": 1,
+        "high_risk_undertriage_rate": 0.05555555555555555,
+        "high_risk_review_rate": 0.2222222222222222,
+        "coverage": 0.6111111111111112,
+        "unscored_review_count": 0
+      },
+      "mixed": {
+        "count": 16,
+        "accuracy": 0.75,
+        "macro_f1": 0.7183261183261184,
+        "per_class": {
+          "minor": {
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571,
+            "support": 4
+          },
+          "serious": {
+            "precision": 0.8,
+            "recall": 1.0,
+            "f1": 0.888888888888889,
+            "support": 4
+          },
+          "critical": {
+            "precision": 1.0,
+            "recall": 0.25,
+            "f1": 0.4,
+            "support": 4
+          },
+          "needs_review": {
+            "precision": 0.5714285714285714,
+            "recall": 1.0,
+            "f1": 0.7272727272727273,
+            "support": 4
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "minor",
+            "serious",
+            "critical",
+            "needs_review"
+          ],
+          "rows_actual_columns_predicted": [
+            [
+              3,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              4,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              1,
+              2
+            ],
+            [
+              0,
+              0,
+              0,
+              4
+            ]
+          ]
+        },
+        "high_risk_support": 8,
+        "high_risk_undertriage_count": 1,
+        "high_risk_undertriage_rate": 0.125,
+        "high_risk_review_rate": 0.25,
+        "coverage": 0.5625,
+        "unscored_review_count": 0
+      }
+    },
+    "unscored_review_count": 0,
+    "unscored_review_policy": "Transformer inputs beyond max_length receive no prediction and require review",
+    "coverage": 0.6746031746031746,
+    "abstention_rate": 0.32539682539682535,
+    "accepted_accuracy": 0.9058823529411765,
+    "high_risk_support": 63,
+    "high_risk_undertriage_count": 3,
+    "high_risk_undertriage_rate": 0.047619047619047616,
+    "raw_high_risk_undertriage_count": 3,
+    "raw_high_risk_support": 63,
+    "raw_high_risk_undertriage_rate": 0.047619047619047616,
+    "high_risk_review_rate": 0.1111111111111111,
+    "review_threshold": 0.65,
+    "confidence_calibrated": false,
+    "review_threshold_status": "provisional",
+    "approved_for_deployment": false,
+    "split": "validation",
+    "all_data_reviewed": true,
+    "model_version": "text-20261006T062737855310Z"
+  },
+  "command_output_log": "TRAINING_COMMAND_LOG.txt"
+}

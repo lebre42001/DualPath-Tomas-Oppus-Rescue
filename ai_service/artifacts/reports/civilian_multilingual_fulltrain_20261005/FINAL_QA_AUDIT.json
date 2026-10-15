@@ -1,0 +1,17 @@
+{
+  "status": "PASS_WITH_LIMITATIONS",
+  "dataset_counts_and_provenance": "PASS: 850 rows, all synthetic drafts, 0 approved.",
+  "five_way_split": "PASS: rows 516/124/83/84/43; recorded family/text overlap 0.",
+  "selection": "PASS: LR 2e-5 epoch 6 selected under frozen validation-only balanced_safety rule.",
+  "research_acceptance_gates": "FAIL: fresh-test Critical recall 0.714, raw mixed-language macro-F1 0.731 below 0.75, and raw high-risk undertriage 6. Routed per-language scores are separately reported.",
+  "active_config": "PASS: pre/post SHA-256 match; no active checkpoint change.",
+  "deployment": "PASS: none performed.",
+  "prior_exposure": "PARTIAL: 60 historical CSVs inaccessible; readable-source inventory counts differ by method (1,732 vs 2,708 rows).",
+  "language_quality": "PARTIAL: no fluent human review of Tagalog/Cebuano/mixed draft corpus.",
+  "tokenizer_warning": "PARTIAL: Transformers printed a Mistral regex warning while loading XLM-R tokenizer; unresolved.",
+  "sealed_package": "PASS: ZIP CRC and per-member SHA-256 checks passed.",
+  "independent_audit_agent": "final_experiment_audit",
+  "human_review_required": true,
+  "active_model_changed": false,
+  "deployment_performed": false
+}

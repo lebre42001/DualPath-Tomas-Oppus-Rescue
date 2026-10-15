@@ -1,0 +1,84 @@
+{
+  "dataset_rows": 850,
+  "human_confirmed": 0,
+  "human_revised": 0,
+  "human_unresolved": 0,
+  "pending_human_review": 850,
+  "label_changes": 0,
+  "human_review_rows_completed": 0,
+  "responder_review_counts": {
+    "critical_reviewed": 0,
+    "serious_reviewed": 0,
+    "mixed_reviewed": 0,
+    "short_panic_reviewed": 0
+  },
+  "draft_label_counts": {
+    "minor": 213,
+    "serious": 214,
+    "critical": 211,
+    "needs_review": 212
+  },
+  "language_rows": {
+    "en": 250,
+    "tl": 240,
+    "ceb": 240,
+    "mixed": 120
+  },
+  "length_rows": {
+    "4-8": 247,
+    "1-3": 54,
+    "9-15": 373,
+    "16+": 176
+  },
+  "priority_queue_rows": 850,
+  "short_panic_flagged_rows": 360,
+  "known_raw_high_risk_undertriage": {
+    "count": 6,
+    "critical_to_minor": 4,
+    "critical_to_serious": 2
+  },
+  "status": "PREPARED_PENDING_ALL_GENUINE_HUMAN_REVIEW",
+  "human_fields_blank": true,
+  "notes": [
+    "The 850 original rows are synthetic draft candidates; none is human-confirmed.",
+    "Model predictions are intentionally left blank until held-out predictions are attached; do not fill with in-sample scores.",
+    "Short/panic and minor-boundary tags use transparent lexical heuristics only and require human interpretation.",
+    "The six known Critical undertriage rows are held-out fresh-test errors; see HIGH_RISK_ERROR_AUDIT.json when completed."
+  ],
+  "language_review_completed": 0,
+  "language_review_pending": 850,
+  "reviewer_completion_counts": {
+    "responder": 0,
+    "english_language": 0,
+    "tagalog_language": 0,
+    "cebuano_language": 0,
+    "mixed_language": 0
+  },
+  "held_out_model_predictions_attached": 84,
+  "held_out_predictions_available": 84,
+  "in_sample_predictions_intentionally_omitted": 766,
+  "known_raw_high_risk_undertriage_ids": [
+    "CEB-CRITICAL-001",
+    "CEB-CRITICAL-003",
+    "CEB-CRITICAL-024",
+    "MX-CRITICAL-002",
+    "MX-CRITICAL-013",
+    "TL-126"
+  ],
+  "priority_queue_top_6_are_known_undertriage_cases": true,
+  "priority_stage_definition": {
+    "1": "six known raw Critical undertriage model disagreements",
+    "2": "remaining current Critical drafts",
+    "3": "current Serious drafts",
+    "4": "needs_review drafts",
+    "5": "Minor lexical boundary candidates",
+    "6": "remaining rows",
+    "overlap_handling": "short and mixed Critical/Serious candidates appear as secondary tags because all Critical/Serious drafts are already in stages 2-3"
+  },
+  "short_panic_review_queue_rows": 674,
+  "short_panic_review_queue_by_length_bucket": {
+    "1-3": 54,
+    "4-8": 247,
+    "9-15": 373
+  }
+}

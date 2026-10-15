@@ -1,0 +1,16 @@
+{
+  "package_id": "reviewed-xlmr-next-stage-20261006",
+  "source_dataset_dir": "ai_service\\datasets\\emergency_text\\experiments\\civilian_multilingual_6000w_20261005",
+  "source_reports_sha256": "fd0fb65ccb718a1dee93fd315aa3a0e12cb5a8c2123bc08c8466e51c75fc7645",
+  "source_provenance_sha256": "fb8c89f5a72859f0070305ba046d6295e86f985514935a7c51a912e9f3ecf3df",
+  "source_fresh_test_sha256": "3ef72767dcc74dfb5f054c06fee8e3924d0d068b53c64e7e57a8e8e02320bc7b",
+  "selected_checkpoint_dir": "ai_service\\artifacts\\checkpoints\\text_xlmr_civilian_multilingual_20261005\\trial_lr_2e-5_seed42",
+  "selected_checkpoint_metadata_sha256": "5b2165bc330b8c6a6d96fbcb43053ef4fd1b46649c218490271ceb085a45aeac",
+  "source_sealed_package_sha256": "9f08434cce39dc8b054ee55c5395012316e99a9c71496e3695b55681464e9033",
+  "source_rows": 850,
+  "eligible_human_reviewed_rows": 0,
+  "original_dataset_modified": false,
+  "active_model_changed": false,
+  "deployment_performed": false,
+  "training_performed": false
+}

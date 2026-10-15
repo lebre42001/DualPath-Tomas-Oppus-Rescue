@@ -1,0 +1,41 @@
+experiment:
+  name: bontoc_southern_leyte_production_candidate_external
+  municipality: Bontoc
+  province: Southern Leyte
+  country: Philippines
+  labels:
+    - minor
+    - serious
+    - fatal
+  source_domains:
+    - road_accident
+    - general_accident
+    - emergency_scene
+
+dataset:
+  root: datasets/bontoc_southern_leyte
+  manifests:
+    train: metadata/train_production_candidate_external_approved_kaggle_300.csv
+    val: metadata/val_production_candidate_external_approved_kaggle_300.csv
+    test: metadata/test_production_candidate_external_approved_kaggle_300.csv
+  image_size: 224
+
+training:
+  architecture: resnet18
+  pretrained: true
+  batch_size: 8
+  epochs: 12
+  learning_rate: 0.0003
+  weight_decay: 0.0001
+  num_workers: 0
+  seed: 42
+
+inference:
+  low_confidence_threshold: 0.65
+  responder_review_action: needs_responder_review
+
+outputs:
+  checkpoints_dir: artifacts/checkpoints
+  reports_dir: artifacts/reports
+  best_checkpoint_name: bontoc_severity_production_candidate_external_best.pt
+  metrics_report_name: bontoc_severity_production_candidate_external_metrics.json

@@ -1,0 +1,1096 @@
+{
+  "audit_version": "family-provenance-audit-2026-10-06-v1",
+  "scope": "Read-only review of the existing 850-row synthetic draft experiment corpus.",
+  "source_files": {
+    "reports_csv_sha256": "fd0fb65ccb718a1dee93fd315aa3a0e12cb5a8c2123bc08c8466e51c75fc7645",
+    "provenance_csv_sha256": "fb8c89f5a72859f0070305ba046d6295e86f985514935a7c51a912e9f3ecf3df",
+    "family_manifest_sha256": "547a5257616eb5f3b25e39bce5d79f37fdebf955aa8fbc315e9acb812271e7c2"
+  },
+  "mechanically_verified": {
+    "rows": 850,
+    "provenance_rows": 850,
+    "unique_case_ids": 850,
+    "current_family_count": 833,
+    "families_with_multiple_cases": 13,
+    "cases_in_multi_case_families": 30,
+    "same_normalized_text_hash_collisions": [],
+    "identity_language_text_label_status_alignment_errors": [],
+    "review_status_counts": {
+      "draft": 850
+    },
+    "generation_source_counts": {
+      "synthetic_ai_generated": 850
+    },
+    "relationship_counts": {
+      "original_draft": 833,
+      "same_scenario_variant": 17
+    },
+    "language_counts": {
+      "en": 250,
+      "tl": 240,
+      "ceb": 240,
+      "mixed": 120
+    },
+    "label_counts": {
+      "minor": 213,
+      "serious": 214,
+      "critical": 211,
+      "needs_review": 212
+    },
+    "short_1_to_3_word_rows": 54,
+    "short_rows_by_label": {
+      "serious": 8,
+      "needs_review": 34,
+      "critical": 5,
+      "minor": 7
+    },
+    "short_rows_by_language": {
+      "en": 15,
+      "tl": 13,
+      "ceb": 24,
+      "mixed": 2
+    },
+    "same_language_token_jaccard_pairs_ge_0_55": 41,
+    "jaccard_method": "set intersection / union over Unicode word tokens after casefolding; heuristic screen only",
+    "parent_reference_missing_count": 0,
+    "parent_family_or_language_mismatch_count": 0,
+    "current_family_manifest_case_membership_mismatches": 0,
+    "family_manifest_case_membership_check": "every provenance case is listed exactly once in the source family manifest under its recorded scenario_family_id"
+  },
+  "family_link_findings": [
+    {
+      "current_scenario_family_id": "CEB-FAM-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01",
+      "case_ids": [
+        "CEB-SERIOUS-007",
+        "CEB-SERIOUS-024",
+        "CEB-SERIOUS-033",
+        "CEB-SERIOUS-056"
+      ],
+      "current_annotation_group_ids": [
+        "CEB-GRP-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01"
+      ],
+      "current_relationship_types": [
+        "original_draft",
+        "same_scenario_variant"
+      ],
+      "language": "ceb",
+      "current_label_set": [
+        "serious"
+      ],
+      "cases": [
+        {
+          "case_id": "CEB-SERIOUS-007",
+          "parent_case_id": "",
+          "relationship_type": "original_draft",
+          "text": "Natumba motor, nasamad ug naipit tiil sa drayber; dili nadugmok. Mata, normal ginhawa; dili makatindog."
+        },
+        {
+          "case_id": "CEB-SERIOUS-024",
+          "parent_case_id": "CEB-SERIOUS-007",
+          "relationship_type": "same_scenario_variant",
+          "text": "Naipit ug nasamad tiil sa drayber sa motor; dili nadugmok. Alert, normal ginhawa, dili makatindog."
+        },
+        {
+          "case_id": "CEB-SERIOUS-033",
+          "parent_case_id": "CEB-SERIOUS-007",
+          "relationship_type": "same_scenario_variant",
+          "text": "Nasamad ug naipit bitiis sa drayber ilawom motor; dili nadugmok. Mata, normal ginhawa, dili makatindog."
+        },
+        {
+          "case_id": "CEB-SERIOUS-056",
+          "parent_case_id": "CEB-SERIOUS-007",
+          "relationship_type": "same_scenario_variant",
+          "text": "Naipit ug nasamad tiil sa drayber ilawom sa nahunong nga awto; dili nadugmok. Alert, normal ginhawa, dili makatindog."
+        }
+      ],
+      "recommendation": "human_review_required_before_keep_or_split",
+      "recommended_scenario_family_id": null,
+      "recommended_annotation_group_id": null,
+      "reason": "Assess whether reports refer to the same underlying incident with decisive information preserved. Do not auto-reassign."
+    },
+    {
+      "current_scenario_family_id": "ENF-011",
+      "case_ids": [
+        "EN-011",
+        "EN-051"
+      ],
+      "current_annotation_group_ids": [
+        "ENG-011"
+      ],
+      "current_relationship_types": [
+        "original_draft",
+        "same_scenario_variant"
+      ],
+      "language": "en",
+      "current_label_set": [
+        "critical"
+      ],
+      "cases": [
+        {
+          "case_id": "EN-011",
+          "parent_case_id": "",
+          "relationship_type": "original_draft",
+          "text": "After a sedan collision, the driver has heavy leg bleeding that continues despite firm pressure."
+        },
+        {
+          "case_id": "EN-051",
+          "parent_case_id": "EN-011",
+          "relationship_type": "same_scenario_variant",
+          "text": "In the same sedan collision, the driver's heavy leg bleeding remains uncontrolled despite continued pressure."
+        }
+      ],
+      "recommendation": "human_review_required_before_keep_or_split",
+      "recommended_scenario_family_id": null,
+      "recommended_annotation_group_id": null,
+      "reason": "Assess whether reports refer to the same underlying incident with decisive information preserved. Do not auto-reassign."
+    },
+    {
+      "current_scenario_family_id": "MX-FAM-SERIOUS-LEG-WOUND-AFTER-CRASH-01",
+      "case_ids": [
+        "MX-SERIOUS-007",
+        "MX-SERIOUS-013"
+      ],
+      "current_annotation_group_ids": [
+        "MX-GRP-SERIOUS-LEG-WOUND-AFTER-CRASH-01"
+      ],
+      "current_relationship_types": [
+        "original_draft",
+        "same_scenario_variant"
+      ],
+      "language": "mixed",
+      "current_label_set": [
+        "serious"
+      ],
+      "cases": [
+        {
+          "case_id": "MX-SERIOUS-007",
+          "parent_case_id": "",
+          "relationship_type": "original_draft",
+          "text": "Deep ang samad sa paa after bangga; nagdugo gamay pero kontrolado, awake siya ug normal ang ginhawa."
+        },
+        {
+          "case_id": "MX-SERIOUS-013",
+          "parent_case_id": "MX-SERIOUS-007",
+          "relationship_type": "same_scenario_variant",
+          "text": "Naigo ang paa sa metal sa bangga; lawom ang hiwa, kontrolado ang dugo ug awake siya, normal ang ginhawa."
+        }
+      ],
+      "recommendation": "human_review_required_before_keep_or_split",
+      "recommended_scenario_family_id": null,
+      "recommended_annotation_group_id": null,
+      "reason": "Assess whether reports refer to the same underlying incident with decisive information preserved. Do not auto-reassign."
+    },
+    {
+      "current_scenario_family_id": "TL-FAM-015",
+      "case_ids": [
+        "TL-015",
+        "TL-018",
+        "TL-031"
+      ],
+      "current_annotation_group_ids": [
+        "TL-GRP-015"
+      ],
+      "current_relationship_types": [
+        "original_draft",
+        "same_scenario_variant"
+      ],
+      "language": "tl",
+      "current_label_set": [
+        "minor"
+      ],
+      "cases": [
+        {
+          "case_id": "TL-015",
+          "parent_case_id": "",
+          "relationship_type": "original_draft",
+          "text": "Walang nasaktan sa banggaan ng motorsiklo."
+        },
+        {
+          "case_id": "TL-018",
+          "parent_case_id": "TL-015",
+          "relationship_type": "same_scenario_variant",
+          "text": "Walang taong nasaktan sa banggaan."
+        },
+        {
+          "case_id": "TL-031",
+          "parent_case_id": "TL-015",
+          "relationship_type": "same_scenario_variant",
+          "text": "Walang taong nasaktan sa banggaan ng van."
+        }
+      ],
+      "recommendation": "human_review_required_before_keep_or_split",
+      "recommended_scenario_family_id": null,
+      "recommended_annotation_group_id": null,
+      "reason": "Assess whether reports refer to the same underlying incident with decisive information preserved. Do not auto-reassign."
+    },
+    {
+      "current_scenario_family_id": "TL-FAM-036",
+      "case_ids": [
+        "TL-036",
+        "TL-046"
+      ],
+      "current_annotation_group_ids": [
+        "TL-GRP-036"
+      ],
+      "current_relationship_types": [
+        "original_draft",
+        "same_scenario_variant"
+      ],
+      "language": "tl",
+      "current_label_set": [
+        "minor"
+      ],
+      "cases": [
+        {
+          "case_id": "TL-036",
+          "parent_case_id": "",
+          "relationship_type": "original_draft",
+          "text": "Walang sugatan nang mabangga ang dalawang motorsiklo sa kanto."
+        },
+        {
+          "case_id": "TL-046",
+          "parent_case_id": "TL-036",
+          "relationship_type": "same_scenario_variant",
+          "text": "Walang sugatan sa banggaan ng dalawang motorsiklo; pareho nang nasa bangketa."
+        }
+      ],
+      "recommendation": "human_review_required_before_keep_or_split",
+      "recommended_scenario_family_id": null,
+      "recommended_annotation_group_id": null,
+      "reason": "Assess whether reports refer to the same underlying incident with decisive information preserved. Do not auto-reassign."
+    },
+    {
+      "current_scenario_family_id": "TL-FAM-037",
+      "case_ids": [
+        "TL-037",
+        "TL-052",
+        "TL-054"
+      ],
+      "current_annotation_group_ids": [
+        "TL-GRP-037"
+      ],
+      "current_relationship_types": [
+        "original_draft",
+        "same_scenario_variant"
+      ],
+      "language": "tl",
+      "current_label_set": [
+        "minor"
+      ],
+      "cases": [
+        {
+          "case_id": "TL-037",
+          "parent_case_id": "",
+          "relationship_type": "original_draft",
+          "text": "Mababaw ang gasgas sa tuhod ng rider; kaunti ang dugo at ligtas na siya."
+        },
+        {
+          "case_id": "TL-052",
+          "parent_case_id": "TL-037",
+          "relationship_type": "same_scenario_variant",
+          "text": "Mababaw ang gasgas sa palad ng rider; huminto ang dugo at ligtas siya."
+        },
+        {
+          "case_id": "TL-054",
+          "parent_case_id": "TL-037",
+          "relationship_type": "same_scenario_variant",
+          "text": "Mababaw ang gasgas sa tuhod ng rider; kaunti ang dugo, huminto na ito at ligtas siya sa tabi."
+        }
+      ],
+      "recommendation": "human_review_required_before_keep_or_split",
+      "recommended_scenario_family_id": null,
+      "recommended_annotation_group_id": null,
+      "reason": "Assess whether reports refer to the same underlying incident with decisive information preserved. Do not auto-reassign."
+    },
+    {
+      "current_scenario_family_id": "TL-FAM-050",
+      "case_ids": [
+        "TL-050",
+        "TL-059"
+      ],
+      "current_annotation_group_ids": [
+        "TL-GRP-050"
+      ],
+      "current_relationship_types": [
+        "original_draft",
+        "same_scenario_variant"
+      ],
+      "language": "tl",
+      "current_label_set": [
+        "minor"
+      ],
+      "cases": [
+        {
+          "case_id": "TL-050",
+          "parent_case_id": "",
+          "relationship_type": "original_draft",
+          "text": "Maliit na galos sa siko; kaunti ang dugo at ligtas na ang siklista."
+        },
+        {
+          "case_id": "TL-059",
+          "parent_case_id": "TL-050",
+          "relationship_type": "same_scenario_variant",
+          "text": "Mababaw ang galos sa siko; kaunti ang dugo at ligtas na ang sakay, nasa gilid na ng kalsada."
+        }
+      ],
+      "recommendation": "human_review_required_before_keep_or_split",
+      "recommended_scenario_family_id": null,
+      "recommended_annotation_group_id": null,
+      "reason": "Assess whether reports refer to the same underlying incident with decisive information preserved. Do not auto-reassign."
+    },
+    {
+      "current_scenario_family_id": "TL-FAM-073",
+      "case_ids": [
+        "TL-073",
+        "TL-094"
+      ],
+      "current_annotation_group_ids": [
+        "TL-GRP-073"
+      ],
+      "current_relationship_types": [
+        "original_draft",
+        "same_scenario_variant"
+      ],
+      "language": "tl",
+      "current_label_set": [
+        "serious"
+      ],
+      "cases": [
+        {
+          "case_id": "TL-073",
+          "parent_case_id": "",
+          "relationship_type": "original_draft",
+          "text": "May hiwa sa noo at nahihilo ang sakay."
+        },
+        {
+          "case_id": "TL-094",
+          "parent_case_id": "TL-073",
+          "relationship_type": "same_scenario_variant",
+          "text": "May sugat sa noo at nahihilo pa ang pasahero."
+        }
+      ],
+      "recommendation": "human_review_required_before_keep_or_split",
+      "recommended_scenario_family_id": null,
+      "recommended_annotation_group_id": null,
+      "reason": "Assess whether reports refer to the same underlying incident with decisive information preserved. Do not auto-reassign."
+    },
+    {
+      "current_scenario_family_id": "TL-FAM-101",
+      "case_ids": [
+        "TL-101",
+        "TL-119"
+      ],
+      "current_annotation_group_ids": [
+        "TL-GRP-101"
+      ],
+      "current_relationship_types": [
+        "original_draft",
+        "same_scenario_variant"
+      ],
+      "language": "tl",
+      "current_label_set": [
+        "serious"
+      ],
+      "cases": [
+        {
+          "case_id": "TL-101",
+          "parent_case_id": "",
+          "relationship_type": "original_draft",
+          "text": "May sugat sa anit matapos tumama sa bintana; nahihilo ang sakay at tuloy ang sakit."
+        },
+        {
+          "case_id": "TL-119",
+          "parent_case_id": "TL-101",
+          "relationship_type": "same_scenario_variant",
+          "text": "May sugat sa anit matapos tumama sa loob ng jeep; nahihilo ang pasahero at patuloy ang pananakit ng ulo."
+        }
+      ],
+      "recommendation": "human_review_required_before_keep_or_split",
+      "recommended_scenario_family_id": null,
+      "recommended_annotation_group_id": null,
+      "reason": "Assess whether reports refer to the same underlying incident with decisive information preserved. Do not auto-reassign."
+    },
+    {
+      "current_scenario_family_id": "TL-FAM-121",
+      "case_ids": [
+        "TL-121",
+        "TL-146"
+      ],
+      "current_annotation_group_ids": [
+        "TL-GRP-121"
+      ],
+      "current_relationship_types": [
+        "original_draft",
+        "same_scenario_variant"
+      ],
+      "language": "tl",
+      "current_label_set": [
+        "critical"
+      ],
+      "cases": [
+        {
+          "case_id": "TL-121",
+          "parent_case_id": "",
+          "relationship_type": "original_draft",
+          "text": "Hindi humihinga ang drayber ngayon matapos mabangga ang kotse sa motorsiklo."
+        },
+        {
+          "case_id": "TL-146",
+          "parent_case_id": "TL-121",
+          "relationship_type": "same_scenario_variant",
+          "text": "Hindi humihinga ang bata matapos mabangga ng motorsiklo."
+        }
+      ],
+      "recommendation": "human_review_required_before_keep_or_split",
+      "recommended_scenario_family_id": null,
+      "recommended_annotation_group_id": null,
+      "reason": "Assess whether reports refer to the same underlying incident with decisive information preserved. Do not auto-reassign."
+    },
+    {
+      "current_scenario_family_id": "TL-FAM-127",
+      "case_ids": [
+        "TL-127",
+        "TL-155"
+      ],
+      "current_annotation_group_ids": [
+        "TL-GRP-127"
+      ],
+      "current_relationship_types": [
+        "original_draft",
+        "same_scenario_variant"
+      ],
+      "language": "tl",
+      "current_label_set": [
+        "critical"
+      ],
+      "cases": [
+        {
+          "case_id": "TL-127",
+          "parent_case_id": "",
+          "relationship_type": "original_draft",
+          "text": "Hindi humihinga ang pasahero matapos bumangga."
+        },
+        {
+          "case_id": "TL-155",
+          "parent_case_id": "TL-127",
+          "relationship_type": "same_scenario_variant",
+          "text": "Hindi humihinga ang pasahero sa likod ng bumanggang van."
+        }
+      ],
+      "recommendation": "human_review_required_before_keep_or_split",
+      "recommended_scenario_family_id": null,
+      "recommended_annotation_group_id": null,
+      "reason": "Assess whether reports refer to the same underlying incident with decisive information preserved. Do not auto-reassign."
+    },
+    {
+      "current_scenario_family_id": "TL-FAM-163",
+      "case_ids": [
+        "TL-163",
+        "TL-179"
+      ],
+      "current_annotation_group_ids": [
+        "TL-GRP-163"
+      ],
+      "current_relationship_types": [
+        "original_draft",
+        "same_scenario_variant"
+      ],
+      "language": "tl",
+      "current_label_set": [
+        "critical"
+      ],
+      "cases": [
+        {
+          "case_id": "TL-163",
+          "parent_case_id": "",
+          "relationship_type": "original_draft",
+          "text": "Naipit ang drayber sa ilalim ng bumaligtad na trak; hindi siya maiahon ng mga saksi sa lugar."
+        },
+        {
+          "case_id": "TL-179",
+          "parent_case_id": "TL-163",
+          "relationship_type": "same_scenario_variant",
+          "text": "Naipit ang pasahero sa ilalim ng bumagsak na jeep; hindi siya maiahon ng mga taong naroon."
+        }
+      ],
+      "recommendation": "human_review_required_before_keep_or_split",
+      "recommended_scenario_family_id": null,
+      "recommended_annotation_group_id": null,
+      "reason": "Assess whether reports refer to the same underlying incident with decisive information preserved. Do not auto-reassign."
+    },
+    {
+      "current_scenario_family_id": "TL-FAM-198",
+      "case_ids": [
+        "TL-198",
+        "TL-214"
+      ],
+      "current_annotation_group_ids": [
+        "TL-GRP-198"
+      ],
+      "current_relationship_types": [
+        "original_draft",
+        "same_scenario_variant"
+      ],
+      "language": "tl",
+      "current_label_set": [
+        "needs_review"
+      ],
+      "cases": [
+        {
+          "case_id": "TL-198",
+          "parent_case_id": "",
+          "relationship_type": "original_draft",
+          "text": "May usok sa sasakyan; di alam kung may tao."
+        },
+        {
+          "case_id": "TL-214",
+          "parent_case_id": "TL-198",
+          "relationship_type": "same_scenario_variant",
+          "text": "May usok mula sa van; di alam kung may apoy."
+        }
+      ],
+      "recommendation": "human_review_required_before_keep_or_split",
+      "recommended_scenario_family_id": null,
+      "recommended_annotation_group_id": null,
+      "reason": "Assess whether reports refer to the same underlying incident with decisive information preserved. Do not auto-reassign."
+    }
+  ],
+  "cross_family_similarity_screen": [
+    {
+      "language": "tl",
+      "case_a": "TL-037",
+      "label_a": "minor",
+      "family_a": "TL-FAM-037",
+      "text_a": "Mababaw ang gasgas sa tuhod ng rider; kaunti ang dugo at ligtas na siya.",
+      "case_b": "TL-054",
+      "label_b": "minor",
+      "family_b": "TL-FAM-037",
+      "text_b": "Mababaw ang gasgas sa tuhod ng rider; kaunti ang dugo, huminto na ito at ligtas siya sa tabi.",
+      "token_jaccard": 0.812,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-SERIOUS-007",
+      "label_a": "serious",
+      "family_a": "CEB-FAM-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01",
+      "text_a": "Natumba motor, nasamad ug naipit tiil sa drayber; dili nadugmok. Mata, normal ginhawa; dili makatindog.",
+      "case_b": "CEB-SERIOUS-024",
+      "label_b": "serious",
+      "family_b": "CEB-FAM-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01",
+      "text_b": "Naipit ug nasamad tiil sa drayber sa motor; dili nadugmok. Alert, normal ginhawa, dili makatindog.",
+      "token_jaccard": 0.8,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-SERIOUS-007",
+      "label_a": "serious",
+      "family_a": "CEB-FAM-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01",
+      "text_a": "Natumba motor, nasamad ug naipit tiil sa drayber; dili nadugmok. Mata, normal ginhawa; dili makatindog.",
+      "case_b": "CEB-SERIOUS-033",
+      "label_b": "serious",
+      "family_b": "CEB-FAM-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01",
+      "text_b": "Nasamad ug naipit bitiis sa drayber ilawom motor; dili nadugmok. Mata, normal ginhawa, dili makatindog.",
+      "token_jaccard": 0.75,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-SERIOUS-013",
+      "label_a": "serious",
+      "family_a": "CEB-FAM-SERIOUS-013",
+      "text_a": "Dili magamit ang kamot human matumba; miburot ang pulso.",
+      "case_b": "CEB-SERIOUS-026",
+      "label_b": "serious",
+      "family_b": "CEB-FAM-SERIOUS-026",
+      "text_b": "Dili magamit ang kamot human matumba.",
+      "token_jaccard": 0.75,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-040",
+      "label_a": "minor",
+      "family_a": "TL-FAM-040",
+      "text_a": "Maliit na hiwa sa daliri; huminto ang kaunting dugo at ligtas ang pasahero.",
+      "case_b": "TL-056",
+      "label_b": "minor",
+      "family_b": "TL-FAM-056",
+      "text_b": "Maliit na hiwa sa daliri ng pasahero; kaunti ang dugo, huminto na at ligtas ang lugar.",
+      "token_jaccard": 0.733,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-018",
+      "label_a": "minor",
+      "family_a": "TL-FAM-015",
+      "text_a": "Walang taong nasaktan sa banggaan.",
+      "case_b": "TL-031",
+      "label_b": "minor",
+      "family_b": "TL-FAM-015",
+      "text_b": "Walang taong nasaktan sa banggaan ng van.",
+      "token_jaccard": 0.714,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-SERIOUS-024",
+      "label_a": "serious",
+      "family_a": "CEB-FAM-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01",
+      "text_a": "Naipit ug nasamad tiil sa drayber sa motor; dili nadugmok. Alert, normal ginhawa, dili makatindog.",
+      "case_b": "CEB-SERIOUS-056",
+      "label_b": "serious",
+      "family_b": "CEB-FAM-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01",
+      "text_b": "Naipit ug nasamad tiil sa drayber ilawom sa nahunong nga awto; dili nadugmok. Alert, normal ginhawa, dili makatindog.",
+      "token_jaccard": 0.706,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-SERIOUS-024",
+      "label_a": "serious",
+      "family_a": "CEB-FAM-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01",
+      "text_a": "Naipit ug nasamad tiil sa drayber sa motor; dili nadugmok. Alert, normal ginhawa, dili makatindog.",
+      "case_b": "CEB-SERIOUS-033",
+      "label_b": "serious",
+      "family_b": "CEB-FAM-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01",
+      "text_b": "Nasamad ug naipit bitiis sa drayber ilawom motor; dili nadugmok. Mata, normal ginhawa, dili makatindog.",
+      "token_jaccard": 0.688,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-037",
+      "label_a": "minor",
+      "family_a": "TL-FAM-037",
+      "text_a": "Mababaw ang gasgas sa tuhod ng rider; kaunti ang dugo at ligtas na siya.",
+      "case_b": "TL-052",
+      "label_b": "minor",
+      "family_b": "TL-FAM-037",
+      "text_b": "Mababaw ang gasgas sa palad ng rider; huminto ang dugo at ligtas siya.",
+      "token_jaccard": 0.667,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-084",
+      "label_a": "serious",
+      "family_a": "TL-FAM-084",
+      "text_a": "Namamaga ang kamay at hindi maisara ang mga daliri.",
+      "case_b": "TL-100",
+      "label_b": "serious",
+      "family_b": "TL-FAM-100",
+      "text_b": "Namamaga ang kamay matapos ang salpukan at hindi maisara nang maayos ang mga daliri.",
+      "token_jaccard": 0.667,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-MINOR-002",
+      "label_a": "minor",
+      "family_a": "CEB-FAM-MINOR-002",
+      "text_a": "Gasgas ra, mata siya.",
+      "case_b": "CEB-MINOR-021",
+      "label_b": "minor",
+      "family_b": "CEB-FAM-MINOR-021",
+      "text_b": "Gasgas ra ang tuhod, mata siya.",
+      "token_jaccard": 0.667,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-CRITICAL-022",
+      "label_a": "critical",
+      "family_a": "CEB-FAM-CRITICAL-022",
+      "text_a": "Dili motubag ang drayber ug walay panimuot.",
+      "case_b": "CEB-CRITICAL-027",
+      "label_b": "critical",
+      "family_b": "CEB-FAM-CRITICAL-027",
+      "text_b": "Naigo ang ulo, walay panimuot ug dili motubag.",
+      "token_jaccard": 0.667,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-052",
+      "label_a": "minor",
+      "family_a": "TL-FAM-037",
+      "text_a": "Mababaw ang gasgas sa palad ng rider; huminto ang dugo at ligtas siya.",
+      "case_b": "TL-054",
+      "label_b": "minor",
+      "family_b": "TL-FAM-037",
+      "text_b": "Mababaw ang gasgas sa tuhod ng rider; kaunti ang dugo, huminto na ito at ligtas siya sa tabi.",
+      "token_jaccard": 0.647,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "en",
+      "case_a": "EN-151",
+      "label_a": "critical",
+      "family_a": "ENF-151",
+      "text_a": "The driver is unconscious with severe breathing difficulty.",
+      "case_b": "EN-223",
+      "label_b": "critical",
+      "family_b": "ENF-223",
+      "text_b": "The driver is trapped, unconscious, and breathing with great difficulty.",
+      "token_jaccard": 0.636,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-135",
+      "label_a": "critical",
+      "family_a": "TL-FAM-135",
+      "text_a": "Naipit ang sakay sa ilalim ng bumaligtad na jeep.",
+      "case_b": "TL-145",
+      "label_b": "critical",
+      "family_b": "TL-FAM-145",
+      "text_b": "May sakay na naipit sa ilalim ng bumaligtad na van.",
+      "token_jaccard": 0.636,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-MINOR-030",
+      "label_a": "minor",
+      "family_a": "CEB-FAM-MINOR-030",
+      "text_a": "Nabuak ang headlight sa hinay nga bangga; mabaw nga gasgas ra sa panit sa drayber, walay pagdugo ug mata siya.",
+      "case_b": "CEB-MINOR-048",
+      "label_b": "minor",
+      "family_b": "CEB-FAM-MINOR-048",
+      "text_b": "Sa hinay nga bangga sa duha ka sakyanan, mabaw ra ang gasgas sa panit sa drayber; walay laing samad ug mata siya.",
+      "token_jaccard": 0.636,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-015",
+      "label_a": "minor",
+      "family_a": "TL-FAM-015",
+      "text_a": "Walang nasaktan sa banggaan ng motorsiklo.",
+      "case_b": "TL-031",
+      "label_b": "minor",
+      "family_b": "TL-FAM-015",
+      "text_b": "Walang taong nasaktan sa banggaan ng van.",
+      "token_jaccard": 0.625,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-141",
+      "label_a": "critical",
+      "family_a": "TL-FAM-141",
+      "text_a": "Matapos bumangga nang malakas ang kotse, naipit ang pasahero sa pagitan ng dashboard at upuan; hindi siya makalabas at hirap na hirap siyang huminga.",
+      "case_b": "TL-171",
+      "label_b": "critical",
+      "family_b": "TL-FAM-171",
+      "text_b": "Naipit ang pasahero sa pagitan ng upuan at harapan ng kotse matapos ang malakas na salpukan; hirap na hirap huminga at hindi makasagot.",
+      "token_jaccard": 0.625,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-097",
+      "label_a": "serious",
+      "family_a": "TL-FAM-097",
+      "text_a": "Bali ang braso ng pasahero ayon sa kasama; gising siya at naghihintay ng pagsusuri.",
+      "case_b": "TL-115",
+      "label_b": "serious",
+      "family_b": "TL-FAM-115",
+      "text_b": "Bali ang binti ng pasahero ayon sa saksi; gising siya, hindi makatayo, at naghihintay ng pagsusuri sa tabi.",
+      "token_jaccard": 0.611,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-074",
+      "label_a": "serious",
+      "family_a": "TL-FAM-074",
+      "text_a": "Hindi maitaas ang balikat matapos sumalpok.",
+      "case_b": "TL-106",
+      "label_b": "serious",
+      "family_b": "TL-FAM-106",
+      "text_b": "Hindi maitaas ang balikat matapos sumalpok ang motorsiklo sa mababang harang.",
+      "token_jaccard": 0.6,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-124",
+      "label_a": "critical",
+      "family_a": "TL-FAM-124",
+      "text_a": "Matapos ang banggaan, malakas at tuloy-tuloy ang pagdurugo ng rider mula sa sugat sa hita; hindi humuhupa kahit dinidiinan ng tela.",
+      "case_b": "TL-129",
+      "label_b": "critical",
+      "family_b": "TL-FAM-129",
+      "text_b": "Malakas ang pagdurugo sa hita ng pasahero matapos ang banggaan at hindi mapigil kahit dinidiinan.",
+      "token_jaccard": 0.6,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-139",
+      "label_a": "critical",
+      "family_a": "TL-FAM-139",
+      "text_a": "Hindi tumutugon ang drayber at walang malay.",
+      "case_b": "TL-156",
+      "label_b": "critical",
+      "family_b": "TL-FAM-156",
+      "text_b": "Tumilapon ang siklista; walang malay at hindi tumutugon ngayon.",
+      "token_jaccard": 0.6,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-MINOR-004",
+      "label_a": "minor",
+      "family_a": "CEB-FAM-MINOR-004",
+      "text_a": "Mabaw nga hiwa sa tudlo; mihunong ang dugo ug magamit pa.",
+      "case_b": "CEB-MINOR-013",
+      "label_b": "minor",
+      "family_b": "CEB-FAM-MINOR-013",
+      "text_b": "Hiwa ra sa tudlo; mabaw ang samad, kontrolado ang dugo ug magamit pa ang kamot.",
+      "token_jaccard": 0.6,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-MINOR-046",
+      "label_a": "minor",
+      "family_a": "CEB-FAM-MINOR-046",
+      "text_a": "Naigo sa salamin ang siko sa pasahero, gamayng bun-og ug normal ang lihok.",
+      "case_b": "CEB-MINOR-053",
+      "label_b": "minor",
+      "family_b": "CEB-FAM-MINOR-053",
+      "text_b": "Naigo ang traysikol sa kilid sa awto; mata ang pasahero, gamayng bun-og sa bukton ug normal ang lihok.",
+      "token_jaccard": 0.588,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-CRITICAL-007",
+      "label_a": "critical",
+      "family_a": "CEB-FAM-CRITICAL-007",
+      "text_a": "Nahulog ang drayber sa motor sa lawom nga kanal; naa pa siya sa tubig ug wala makagawas.",
+      "case_b": "CEB-CRITICAL-030",
+      "label_b": "critical",
+      "family_b": "CEB-FAM-CRITICAL-030",
+      "text_b": "Nahulog sa baha ang nagmotor, naa pa sa tubig ug wala pa siya makagawas.",
+      "token_jaccard": 0.588,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-010",
+      "label_a": "minor",
+      "family_a": "TL-FAM-010",
+      "text_a": "Maliit na hiwa; huminto ang kaunting dugo.",
+      "case_b": "TL-040",
+      "label_b": "minor",
+      "family_b": "TL-FAM-040",
+      "text_b": "Maliit na hiwa sa daliri; huminto ang kaunting dugo at ligtas ang pasahero.",
+      "token_jaccard": 0.583,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-073",
+      "label_a": "serious",
+      "family_a": "TL-FAM-073",
+      "text_a": "May hiwa sa noo at nahihilo ang sakay.",
+      "case_b": "TL-108",
+      "label_b": "serious",
+      "family_b": "TL-FAM-108",
+      "text_b": "May hiwa sa noo at nahihilo ang drayber matapos tumama sa manibela.",
+      "token_jaccard": 0.583,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-CRITICAL-031",
+      "label_a": "critical",
+      "family_a": "CEB-FAM-CRITICAL-031",
+      "text_a": "Nagdugo pag-ayo ang samad ug nangluspad ang pasahero.",
+      "case_b": "CEB-CRITICAL-047",
+      "label_b": "critical",
+      "family_b": "CEB-FAM-CRITICAL-047",
+      "text_b": "Nagdugo pag-ayo ang samad sa liog ug naghinay ang pagginhawa sa pasahero.",
+      "token_jaccard": 0.583,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-055",
+      "label_a": "minor",
+      "family_a": "TL-FAM-055",
+      "text_a": "Walang nasaktan sa banggaan ng dalawang kotse; nakatabi na ang mga sasakyan at maluwag ang daanan.",
+      "case_b": "TL-060",
+      "label_b": "minor",
+      "family_b": "TL-FAM-060",
+      "text_b": "Walang nasaktan sa banggaan ng jeep at kotse; nakatabi na ang mga ito at ligtas ang lugar.",
+      "token_jaccard": 0.579,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-MINOR-038",
+      "label_a": "minor",
+      "family_a": "CEB-FAM-MINOR-038",
+      "text_a": "Natumba ang siklista, gamayng bun-og sa siko ug nakalakaw siya nga walay tabang.",
+      "case_b": "CEB-MINOR-052",
+      "label_b": "minor",
+      "family_b": "CEB-FAM-MINOR-052",
+      "text_b": "Natumba ang siklista sa hinay nga dagan, gamayng samad sa palad ang makita ug nakalakaw siya nga walay tabang.",
+      "token_jaccard": 0.579,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-SERIOUS-007",
+      "label_a": "serious",
+      "family_a": "CEB-FAM-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01",
+      "text_a": "Natumba motor, nasamad ug naipit tiil sa drayber; dili nadugmok. Mata, normal ginhawa; dili makatindog.",
+      "case_b": "CEB-SERIOUS-056",
+      "label_b": "serious",
+      "family_b": "CEB-FAM-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01",
+      "text_b": "Naipit ug nasamad tiil sa drayber ilawom sa nahunong nga awto; dili nadugmok. Alert, normal ginhawa, dili makatindog.",
+      "token_jaccard": 0.579,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-SERIOUS-033",
+      "label_a": "serious",
+      "family_a": "CEB-FAM-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01",
+      "text_a": "Nasamad ug naipit bitiis sa drayber ilawom motor; dili nadugmok. Mata, normal ginhawa, dili makatindog.",
+      "case_b": "CEB-SERIOUS-056",
+      "label_b": "serious",
+      "family_b": "CEB-FAM-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01",
+      "text_b": "Naipit ug nasamad tiil sa drayber ilawom sa nahunong nga awto; dili nadugmok. Alert, normal ginhawa, dili makatindog.",
+      "token_jaccard": 0.579,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-CRITICAL-007",
+      "label_a": "critical",
+      "family_a": "CEB-FAM-CRITICAL-007",
+      "text_a": "Nahulog ang drayber sa motor sa lawom nga kanal; naa pa siya sa tubig ug wala makagawas.",
+      "case_b": "CEB-CRITICAL-053",
+      "label_b": "critical",
+      "family_b": "CEB-FAM-CRITICAL-053",
+      "text_b": "Naunlod ang motor sa kanal nga lawom ang tubig, ang sakay wala pa makagawas ug ang nawong natabonan.",
+      "token_jaccard": 0.579,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "mixed",
+      "case_a": "MX-SERIOUS-009",
+      "label_a": "serious",
+      "family_a": "MX-FAM-SERIOUS-009",
+      "text_a": "Nadagma ang rider ug nabali ang iyang kamot; conscious siya pero dili na makagunit sa handlebar.",
+      "case_b": "MX-SERIOUS-021",
+      "label_b": "serious",
+      "family_b": "MX-FAM-SERIOUS-021",
+      "text_b": "Nadagma ang nagmotor ug nabali ang iyang pulso; conscious siya, pero dili makalihok sa maong kamot.",
+      "token_jaccard": 0.579,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-007",
+      "label_a": "minor",
+      "family_a": "TL-FAM-007",
+      "text_a": "Nagkiskisan ang kotse; walang nasaktan.",
+      "case_b": "TL-034",
+      "label_b": "minor",
+      "family_b": "TL-FAM-034",
+      "text_b": "Nagasgasan ang kotse; walang taong nasaktan.",
+      "token_jaccard": 0.571,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-015",
+      "label_a": "minor",
+      "family_a": "TL-FAM-015",
+      "text_a": "Walang nasaktan sa banggaan ng motorsiklo.",
+      "case_b": "TL-018",
+      "label_b": "minor",
+      "family_b": "TL-FAM-015",
+      "text_b": "Walang taong nasaktan sa banggaan.",
+      "token_jaccard": 0.571,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-SERIOUS-029",
+      "label_a": "serious",
+      "family_a": "CEB-FAM-SERIOUS-029",
+      "text_a": "Lawom samad sa paa sa bangga; napugngan ang dugo ug klaro motubag.",
+      "case_b": "CEB-SERIOUS-040",
+      "label_b": "serious",
+      "family_b": "CEB-FAM-SERIOUS-040",
+      "text_b": "Samad sa bukton sa siklista; gamay ang dugo, napugngan ug klaro motubag.",
+      "token_jaccard": 0.571,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-047",
+      "label_a": "minor",
+      "family_a": "TL-FAM-047",
+      "text_a": "Mababaw ang hiwa sa kamay, kaunti ang dugo at ligtas na ang lugar.",
+      "case_b": "TL-056",
+      "label_b": "minor",
+      "family_b": "TL-FAM-056",
+      "text_b": "Maliit na hiwa sa daliri ng pasahero; kaunti ang dugo, huminto na at ligtas ang lugar.",
+      "token_jaccard": 0.562,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-154",
+      "label_a": "critical",
+      "family_a": "TL-FAM-154",
+      "text_a": "Naipit ang drayber sa ilalim ng sasakyan; hindi siya maiahon.",
+      "case_b": "TL-163",
+      "label_b": "critical",
+      "family_b": "TL-FAM-163",
+      "text_b": "Naipit ang drayber sa ilalim ng bumaligtad na trak; hindi siya maiahon ng mga saksi sa lugar.",
+      "token_jaccard": 0.562,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "tl",
+      "case_a": "TL-065",
+      "label_a": "serious",
+      "family_a": "TL-FAM-065",
+      "text_a": "Malalim ang hiwa sa hita.",
+      "case_b": "TL-077",
+      "label_b": "serious",
+      "family_b": "TL-FAM-077",
+      "text_b": "May malalim na hiwa sa hita; kontrolado ang dugo.",
+      "token_jaccard": 0.556,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    },
+    {
+      "language": "ceb",
+      "case_a": "CEB-CRITICAL-013",
+      "label_a": "critical",
+      "family_a": "CEB-FAM-CRITICAL-013",
+      "text_a": "Nasunog ang awto human sa bangga; naa pa sulod ang drayber ug dili siya motubag.",
+      "case_b": "CEB-CRITICAL-057",
+      "label_b": "critical",
+      "family_b": "CEB-FAM-CRITICAL-057",
+      "text_b": "Nasangit ang drayber sa awto nga nasunog human sa bangga; dili makagawas ug wala motubag.",
+      "token_jaccard": 0.556,
+      "interpretation": "screening_signal_only; not an adjudicated duplicate or semantic equivalence"
+    }
+  ],
+  "assessment": "Current grouping is mostly one case per family (833 families / 850 cases), with 17 linked families. The manifest establishes provenance labels mechanically but does not prove that singletons are unique incidents or that linked variants preserve incident identity. The closest cross-family pairs suggest some paraphrase/template recurrence may remain unlinked; lexical similarity is only a review queue signal.",
+  "human_required": true,
+  "no_auto_reassignment": true
+}

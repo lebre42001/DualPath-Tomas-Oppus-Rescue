@@ -1,0 +1,36 @@
+﻿EMERGENCY TEXT XLM-R — AUTHORITATIVE HANDOFF (2026-10-06)
+
+STATUS
+The authorized full-backbone experiment completed. Decision: NOT_ACCEPTABLE for live triage or controlled operational integration because fresh-test safety gates failed. Research checkpoint only. Active model/config unchanged; no deployment.
+
+RESPONDER ATTESTATION AND DATA
+Project owner reports responders verbally reviewed and accepted all 850 existing descriptions and labels. Record this accurately as a project-owner-attested verbal batch, not direct or independently corroborated responder testimony. No individual responder identity, audio/transcript, row-specific rationale, or correction was supplied. Codex did not impersonate a responder. Batch: OWNER-ATTESTED-850-FD0FB65CCB718A1D.
+Source: ai_service/datasets/emergency_text/experiments/civilian_multilingual_6000w_20261005/reports.csv
+Source SHA256: fd0fb65ccb718a1dee93fd315aa3a0e12cb5a8c2123bc08c8466e51c75fc7645
+Rows: 850 unique, all attested. Labels unchanged: minor 213, serious 214, critical 211, needs_review 212. Languages: English 250, Tagalog 240, Cebuano 240, mixed 120. All examples remain synthetic-AI-generated; this is not real-world data.
+Reviewed dataset: ai_service/datasets/emergency_text/reviewed/civilian_multilingual_850_humanconfirmed_20261006T141537+0800/
+
+AI AUDIT / LANGUAGE / SHORT TEXT
+AI audit: 850 rows; 769 agree, 38 disagree, 43 uncertain (81 not-AGREE). AI suggestions do not change human-attested labels. All-language work is AI-only; fluent human validation remains outstanding. Six high-risk cases audited: 0 fixed, 4 still undertriaged, 2 routed to review. Short/panic 1–15 words: 674 total (1–3:54; 4–8:247; 9–15:373; 16+:176).
+
+FAMILY / SPLITS / PRIOR EXPOSURE
+833 declared family IDs. Of 41 candidate pairs, 19 AI-supported same-family links and 22 related-but-distinct were used only for split isolation; source IDs unchanged. Independent leakage audit found no current overlap across groups/families/normalized texts/effective links. Partitions: train 514, validation 126, calibration 83, fresh test 84, challenge 43. All 850 had prior model-development exposure in earlier partitions, so the test is not historically unseen. Sixty historical CSVs remain permission-denied; cause and overlap unresolved. Accessible scan populations differed (1,732 vs 2,708 rows), so no complete historical exposure claim.
+
+TRAINING
+Pinned FacebookAI/xlm-roberta-base revision 42f548f32366559214515ec137cdd16002968bf6. Fully trainable: 278,046,724/278,046,724. RTX 3050 Laptop GPU; CUDA FP16, Adafactor, LR 2e-5, batch 1, accumulation 16, gradient checkpointing, max length 64. 8 epochs, best epoch 6, 963.81 seconds. Checkpoint: ai_service/artifacts/checkpoints/text_xlmr_850_humanconfirmed_fulltrain_20261006_1411/. Weights SHA256: 053a2851d3e1a9fb342825bc86a786a49baad7e06f51c6a8442a655f97fe6881. Tokenizer warning checked with 8 multilingual/negation probes, zero token ID mismatches; no Mistral regex fix.
+
+EVALUATION
+Fresh test n=84: raw macro-F1 .8456; Critical recall .55 (11/20), Serious recall 1.00 (21/21), Serious-or-Critical detection recall .878. Critical→Minor 5; Critical→Serious 4; raw urgent undertriage 9/41. At provisional, uncalibrated threshold .65, 2 Critical cases still auto-route to Minor and 6 high-risk cases remain undertriaged. Language raw macro-F1: English .912, Tagalog .908, Cebuano .775, mixed .729 (mixed n=12 only; Critical recall 1/3). Short test buckets have 7/29/33/15 cases; Critical recall .50/.714/.50/.333. needs_review support 22: precision 1.00, recall .909.
+Calibration n=83: T=1.05, ECE .1089→.0988; diagnostic only, no weights or threshold changed. At calibration threshold .95, zero observed undertriage coincided with 15.7% total coverage (only 1/42 urgent automatic); not proof of safety.
+Six regressions: 0 fixed, 4 still undertriaged (CEB-CRITICAL-001, TL-126, CEB-CRITICAL-024, MX-CRITICAL-013), 2 routed to review (CEB-CRITICAL-003, MX-CRITICAL-002). Matched 83-row previous/new XLM-R: previous .875 macro-F1/.70 Critical recall/.952 Serious recall/6 undertriage; new .844/.55/1.0/9. Same-split TF-IDF blocked by Windows Application Control; old 400-row baseline is incomparable. Challenge n=43 curated synthetic; not used for selection.
+Acceptance gates: 1/6 pass; only overall macro-F1. Critical recall, urgent detection, per-language floor, zero raw undertriage, and zero automatic Critical→Minor fail. Research gates, not clinical standards.
+
+QA / PACKAGE
+Independent artifact QA: PASS_WITH_LIMITATIONS. The sealed package receipt is next to the ZIP in ai_service/artifacts/packages/. This QA status does not override the NOT_ACCEPTABLE model safety decision. Do not deploy, activate, or use this checkpoint for live triage.
+
+NEXT ACTION
+Have responders adjudicate the 81 AI disagreement/uncertain rows and six known failures; fluent reviewers validate all languages; resolve historical access/exposure limits and collect consented de-identified real reports with responder-confirmed labels. Then build a distinct dataset and genuinely unseen family-safe test before another promotion decision. Do not train on the current test examples based on these outcomes.
+
+COPY-PASTE CONTEXT FOR CHATGPT
+An 850-row project-owner-attested synthetic-origin batch was used for full-backbone XLM-R retraining. The verbal attestation is not independently corroborated. New fresh test n=84: macro-F1 .8456, Critical recall .55, Serious recall 1.0, 9/41 raw urgent undertriage, and two Critical→Minor automatic predictions at provisional threshold .65. Only one of six research gates passed. Decision is NOT_ACCEPTABLE for live triage or controlled integration. Mixed-language test support is only 12; the corpus had previous model-development exposure; 60 historical CSVs remain inaccessible. Checkpoint remains inactive; no deployment. Next: responder adjudication, fluent language review, historical data audit, and consented real-world responder-labeled data followed by a genuinely unseen family-safe evaluation.
+

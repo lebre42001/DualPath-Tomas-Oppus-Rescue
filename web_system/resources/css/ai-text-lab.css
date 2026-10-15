@@ -1,0 +1,29 @@
+.ai-text-lab{display:grid;gap:1rem;max-width:1100px;margin:0 auto;padding:clamp(.75rem,2vw,1.5rem)}
+.ai-lab-card,.ai-lab-notice{background:var(--surface,#fff);border:1px solid var(--line,#dbe3ec);border-radius:1rem;padding:clamp(1rem,2vw,1.5rem);color:var(--ink,#152437)}
+.ai-lab-notice{border-color:#e8c875;background:#fff8e7;}
+.ai-lab-notice p,.ai-lab-card p{line-height:1.6;margin:.5rem 0;color:var(--muted,#53657a)}
+.ai-lab-card h2{font-size:clamp(1.2rem,2vw,1.6rem);margin:0 0 .5rem}
+.ai-lab-form{display:grid;gap:.7rem;margin-top:1rem}
+.ai-lab-form label{font-weight:700}
+.ai-lab-form textarea{width:100%;min-height:9rem;resize:vertical;border:1px solid var(--line,#cbd5e1);border-radius:.75rem;padding:.9rem;font:inherit;color:var(--ink,#152437);background:var(--surface,#fff)}
+.ai-lab-form textarea:focus{outline:3px solid #2c7be5;outline-offset:2px}
+.ai-lab-form button{justify-self:start;min-height:2.8rem}
+.ai-lab-error,.ai-lab-error-panel{color:#a51d27!important}
+.ai-lab-result-head{display:flex;justify-content:space-between;align-items:start;gap:1rem}
+.ai-lab-kicker{font-size:.75rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted,#53657a)}
+.ai-lab-badge{border-radius:999px;padding:.4rem .7rem;background:#fff0d0;color:#774600;font-size:.75rem;font-weight:800;letter-spacing:.08em}
+.ai-lab-scores{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.6rem;margin:0}
+.ai-lab-scores div{border:1px solid var(--line,#dbe3ec);border-radius:.7rem;padding:.75rem}
+.ai-lab-scores dt{color:var(--muted,#53657a);font-size:.9rem}
+.ai-lab-scores dd{margin:.25rem 0 0;font-size:1.25rem;font-weight:800}
+.ai-lab-model{font-size:.85rem}
+.ai-lab-fatality-flag{margin-top:1rem;border:1px solid #c82732;border-left-width:5px;border-radius:.7rem;padding:.8rem 1rem;background:#fff0f0;color:#7f1018}
+.ai-lab-fatality-flag p{margin:.35rem 0 0;color:inherit}
+@media(max-width:700px){.ai-lab-scores{grid-template-columns:repeat(2,minmax(0,1fr))}.ai-lab-result-head{align-items:center}}
+html[data-theme="dark"] .ai-lab-card{background:#151c25;color:#eef4fb;border-color:#354354}
+html[data-theme="dark"] .ai-lab-notice{background:#302817;color:#fff1c2;border-color:#725c2e}
+html[data-theme="dark"] .ai-lab-notice p,html[data-theme="dark"] .ai-lab-card p,html[data-theme="dark"] .ai-lab-scores dt{color:#b9c6d6}
+html[data-theme="dark"] .ai-lab-form textarea{background:#0e141b;color:#eef4fb;border-color:#536274}
+html[data-theme="dark"] .ai-lab-scores div{border-color:#354354}
+html[data-theme="dark"] .ai-lab-badge{background:#493712;color:#ffdc91}
+html[data-theme="dark"] .ai-lab-fatality-flag{background:#351b20;border-color:#e55b68;color:#ffd9dc}

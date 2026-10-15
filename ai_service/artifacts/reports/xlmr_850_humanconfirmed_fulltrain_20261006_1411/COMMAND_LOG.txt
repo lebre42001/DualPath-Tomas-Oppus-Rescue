@@ -1,0 +1,15 @@
+WORKSPACE: C:\laragon\www\CAPSTONE-EMERGENCY-SYSTEM-main
+
+TRAINING (completed; stdout also in TRAINING_COMMAND_LOG.txt):
+python ai_service/train_text.py train --data ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/model_data/model_development.csv --output ai_service/artifacts/checkpoints/text_xlmr_850_humanconfirmed_fulltrain_20261006_1411 --seed 42 --split-manifest ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/training_split_manifest.json --base-model FacebookAI/xlm-roberta-base --revision 42f548f32366559214515ec137cdd16002968bf6 --epochs 8 --early-stopping-patience 2 --selection-metric balanced_safety --batch-size 1 --gradient-accumulation 16 --max-length 64 --unfreeze-backbone --gradient-checkpointing --optimizer adafactor --warmup-ratio 0.05 --learning-rate 2e-5 --threads 2 --device cuda --review-threshold 0.65
+
+POST-SELECTION FRESH TEST:
+python ai_service/train_text.py evaluate --data ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/model_data/model_development.csv --model ai_service/artifacts/checkpoints/text_xlmr_850_humanconfirmed_fulltrain_20261006_1411 --output ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/fresh_test_evaluation --split test --batch-size 8 --device cuda
+
+TF-IDF SAME-SPLIT BASELINE ATTEMPTS (blocked by Windows Application Control native DLL policy):
+- venv-xlmrt-fulltrain: DLL load failed while importing arrayfuncs; Application Control blocked the file.
+- venv-text: DLL load failed while importing _cython_blas; Application Control blocked the file.
+No policy changes, bypass, or untrusted DLL load attempted. Historical 400-row baseline not treated as comparable.
+
+Calibration-only temperature/threshold diagnostics: calibration_analysis.py uses CALIBRATION only. Model checkpoint weights unchanged.
+Active model changed: NO. Deployment: NO.

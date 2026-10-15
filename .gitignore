@@ -1,0 +1,95 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.fleet/
+.zed/
+
+# Secrets / local env
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.render.example
+!**/.env.render.free-demo.example
+**/auth.json
+
+# Logs
+*.log
+tool/runtime/
+
+# Arduino local deployment secrets
+Arduino.zip
+Arduino/**/arduino_secrets.h
+Arduino/**/field_node_secrets.h
+Arduino/**/libraries/
+
+# Python
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.venv/
+**/.venv-text/
+**/venv/
+**/.venv-*/
+ai_service/.cache/
+
+# Node / frontend build
+**/node_modules/
+web_system/public/build/
+web_system/public/hot
+
+# Laravel runtime / local uploads
+web_system/vendor/
+web_system/bootstrap/cache/*.php
+web_system/storage/*.key
+web_system/storage/pail/
+web_system/storage/logs/*
+!web_system/storage/logs/.gitignore
+web_system/storage/framework/cache/data/*
+!web_system/storage/framework/cache/data/.gitignore
+web_system/storage/framework/sessions/*
+!web_system/storage/framework/sessions/.gitignore
+web_system/storage/framework/testing/*
+!web_system/storage/framework/testing/.gitignore
+web_system/storage/framework/views/*
+!web_system/storage/framework/views/.gitignore
+web_system/test-results/
+web_system/storage/app/private/*
+!web_system/storage/app/private/.gitignore
+web_system/storage/app/public/*
+!web_system/storage/app/public/.gitignore
+web_system/public/storage/
+web_system/database/*.sqlite
+
+# Flutter / mobile generated output
+mobile_app/.dart_tool/
+mobile_app/build/
+mobile_app/.flutter-plugins-dependencies
+mobile_app/.pub-cache/
+mobile_app/.pub/
+
+# AI runtime artifacts
+ai_service/artifacts/checkpoints/
+ai_service/artifacts/torch-cache/
+ai_service/artifacts/packages/*.zip
+ai_service/artifacts/**/*.zip
+ai_service/artifacts/review_packs/
+ai_service/datasets/emergency_text/reviews/
+ai_service/datasets/**/*.zip
+ai_service/datasets/emergency_text/reviewed/**/SOURCE_RESPONDER_REVIEW.*
+ai_service/datasets/emergency_text/reviewed/**/human_review_records.csv
+ai_service/datasets/emergency_text/reviewed/
+ai_service/datasets/emergency_text/**/by_severity/
+
+# AI datasets: keep docs/manifests, exclude raw and image blobs
+ai_service/datasets/**/raw/
+ai_service/datasets/**/unlabeled/
+ai_service/datasets/**/archives/
+ai_service/datasets/**/extracted/
+ai_service/datasets/**/import_staging/
+ai_service/datasets/**/images/
+ai_service/datasets/**/local_validation/phone_upload_test/
+ai_service/datasets/**/reviewed_pool/

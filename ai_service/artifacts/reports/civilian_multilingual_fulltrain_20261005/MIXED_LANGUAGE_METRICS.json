@@ -1,0 +1,88 @@
+{
+  "support": 12,
+  "families": 12,
+  "raw_classifier_metrics": {
+    "rows": 12,
+    "families": 12,
+    "raw_macro_f1": 0.7309523809523809,
+    "routed_macro_f1_at_provisional_0_65": 0.7309523809523809,
+    "critical_recall": 0.3333333333333333,
+    "serious_recall": 0.6666666666666666,
+    "needs_review_recall": 1.0,
+    "raw_high_risk_undertriage": 2,
+    "routed_high_risk_undertriage": 2,
+    "coverage_at_provisional_0_65": 0.75
+  },
+  "confidence_routed_metrics_at_0_65": {
+    "count": 12,
+    "accuracy": 0.75,
+    "macro_f1": 0.7309523809523809,
+    "per_class": {
+      "minor": {
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571,
+        "support": 3
+      },
+      "serious": {
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666,
+        "support": 3
+      },
+      "critical": {
+        "precision": 0.5,
+        "recall": 0.3333333333333333,
+        "f1": 0.4,
+        "support": 3
+      },
+      "needs_review": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 3
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "minor",
+        "serious",
+        "critical",
+        "needs_review"
+      ],
+      "rows_actual_columns_predicted": [
+        [
+          3,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          3
+        ]
+      ]
+    },
+    "high_risk_support": 6,
+    "high_risk_undertriage_count": 2,
+    "high_risk_undertriage_rate": 0.3333333333333333,
+    "high_risk_review_rate": 0.0,
+    "coverage": 0.75,
+    "unscored_review_count": 0
+  },
+  "qualification": "Insufficient support for a strong conclusion (12 rows; 3 rows per class)."
+}

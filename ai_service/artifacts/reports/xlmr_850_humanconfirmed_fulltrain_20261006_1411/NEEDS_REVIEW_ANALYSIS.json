@@ -1,0 +1,36 @@
+{
+  "support": 22,
+  "precision": 1.0,
+  "recall": 0.9090909090909091,
+  "routed_review_count": [
+    [
+      19,
+      1,
+      0,
+      1
+    ],
+    [
+      0,
+      21,
+      0,
+      0
+    ],
+    [
+      2,
+      4,
+      8,
+      6
+    ],
+    [
+      0,
+      0,
+      2,
+      20
+    ]
+  ],
+  "unscored_review_count": 0,
+  "at_0_65_coverage": 0.6785714285714286,
+  "automatically_scored_non_needs_review_cases_below_threshold": 7,
+  "confident_dangerous_undertriage_count_confidence_ge_0_65": 6,
+  "note": "High confidence is raw softmax, not calibrated probability; “needs_review” is an uncertainty label and does not imply low severity."
+}

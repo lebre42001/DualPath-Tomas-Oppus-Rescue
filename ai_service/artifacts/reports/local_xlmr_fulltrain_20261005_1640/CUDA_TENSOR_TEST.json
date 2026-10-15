@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "torch": "2.12.1+cu130",
+  "torch_cuda": "13.0",
+  "cuda_available": true,
+  "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "compute_capability": "8.6",
+  "operation": "FP16 2048x2048 CUDA matrix multiplication",
+  "result_finite": true,
+  "memory_allocated_bytes_after_test": 0
+}

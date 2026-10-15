@@ -1,0 +1,28 @@
+{
+  "gate_type": "proposed research acceptance gates; not clinical standards",
+  "source": "CHECKPOINT_SELECTION_RULE.json frozen before held-out test",
+  "test_results": {
+    "macro_f1_at_least_0_80": true,
+    "critical_recall_at_least_0_95": false,
+    "serious_or_critical_detection_recall_at_least_0_90": true,
+    "each_observed_language_macro_f1_at_least_0_75": false,
+    "zero_raw_high_risk_undertriage": false
+  },
+  "language_macro_f1_raw": {
+    "en": 1.0,
+    "tl": 0.8730769230769231,
+    "ceb": 0.8232600732600732,
+    "mixed": 0.7309523809523809
+  },
+  "language_macro_f1_after_provisional_routing": {
+    "en": 0.958041958041958,
+    "tl": 0.8338661338661338,
+    "ceb": 0.7250874125874125,
+    "mixed": 0.7309523809523809
+  },
+  "serious_or_critical_detection_recall": 0.9047619047619048,
+  "passed": 2,
+  "total": 5,
+  "status": "FAIL",
+  "reason": "Critical recall, raw mixed-language F1 floor, and zero-undertriage requirements fail on fresh_test; overall macro-F1 and combined high-risk detection recall pass."
+}

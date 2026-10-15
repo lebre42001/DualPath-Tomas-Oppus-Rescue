@@ -1,0 +1,425 @@
+﻿{
+    "date":  "2026-10-01T01:16:22.3275614Z",
+    "scope":  "ai_service/datasets only",
+    "status":  "completed",
+    "removed_folders":  [
+                            {
+                                "folder":  "bontoc_southern_leyte",
+                                "file_count":  93,
+                                "bytes":  3411377,
+                                "files":  [
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\dataset_card.md",
+                                                  "sha256":  "E2231F69623406698DC41BA0512A63027F39BBE9126B6A906EC8A3859408CE4B"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\README.md",
+                                                  "sha256":  "197667CB5E08DE95AEF29B45AAE83282409BD2D4AA960D0EAE36E7012319D00B"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\annotations\\class_map.yaml",
+                                                  "sha256":  "AD31F1B67843317153C52A94060C4E7E6A22BBDA92808ACD6E882D513859053E"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\annotations\\labeling_guide.md",
+                                                  "sha256":  "69ED17385F0E563B018E502DA3F24706ABDF8D54E9CEEE303A7B16694741A1C2"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\annotations\\manifest_schema.md",
+                                                  "sha256":  "B17C07674CC4FE786B75ADF9C5C2C07F8E36355EB3B7EAE5E8671A2AF7982BF5"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\LOCAL_VALIDATION_RUNNER_GUIDE.md",
+                                                  "sha256":  "EE718D11860254EBF8A2CF77890CA1818699D487BE50950CDC821B054CF9275B"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\README.md",
+                                                  "sha256":  "00C948D9AFF318381410E416541E3755933254FA6D05838EE9E7C0985C65FC5E"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\checklists\\DATASET_ACQUISITION_CHECKLIST.md",
+                                                  "sha256":  "39D2291BA338EAA551400FB3828136185F6FA7303F03DF0A02E22ED4FFCDC4AC"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\checklists\\LOCAL_VALIDATION_CAPTURE_PLAN.md",
+                                                  "sha256":  "4FC228BCBE62D06C05B4CF052676C79CA18DE57904C47D8E102AB086FE469B80"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\manifests\\local_validation_manifest_template.csv",
+                                                  "sha256":  "BE7B4CD8A681F1789C3D804D151720DDA16ABC3E196C6F1BCE9164319967632A"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\manifests\\scenario_coverage_template.csv",
+                                                  "sha256":  "2A2EB8706E12B3A5481CD49C95BF34246134001283AFF18C0D5D0FA883136681"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\manifests\\wikimedia_commons_public_seed_manifest_2026_04_04.csv",
+                                                  "sha256":  "BB2C65393A84DD8AB7D73AB56FFC6EE6654EBFEAF43C8EFDE7CB97DF4198A146"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\accuracy_candidate_local_eval_2026_05_13.csv",
+                                                  "sha256":  "D5785B30DFA1B6F178472D4BF12E5B3C99CC488B926E3CAFA17BB651E4C210FD"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\accuracy_candidate_local_eval_2026_05_13.md",
+                                                  "sha256":  "431660C7961AB5981CF5BB50EE62BA1074059CE27A5CE571FFF35C84E05565A0"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\local_validation_eval_2026_04_04_211935.csv",
+                                                  "sha256":  "FF64205DF59A434D3A01086C7AAE531493CE6D6CB3B13172F1AC358ECEF76B9B"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\local_validation_eval_2026_04_04_211935.md",
+                                                  "sha256":  "6ECFACAAB1E2F9AF33EB17E2C3000D90BBD8C3C996CD513B7A42D30497CDFBD4"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\local_validation_eval_2026_04_04_212030.csv",
+                                                  "sha256":  "7589FB0E60D2FD28E835DC9FDE7EC1B1D087C62F11AF04EADE27B8B57B013AF3"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\local_validation_eval_2026_04_04_212030.md",
+                                                  "sha256":  "F454472FCAD2939B00559B15E775B4EB8984FE9A961FFF807DA92AF27E786E24"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\local_validation_eval_2026_04_04_212316.csv",
+                                                  "sha256":  "9D607348681CE9DE388B8BA1FBEE81A8170AADE9C562D9399B1B367424E83044"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\local_validation_eval_2026_04_04_212316.md",
+                                                  "sha256":  "76411BEB926326089E21902FE8CEE3345D1DFA8613126419CDA16658FB6377E3"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\local_validation_eval_2026_04_04_212449.csv",
+                                                  "sha256":  "7589FB0E60D2FD28E835DC9FDE7EC1B1D087C62F11AF04EADE27B8B57B013AF3"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\local_validation_eval_2026_04_04_212449.md",
+                                                  "sha256":  "99A180F51AF993105F003EB913DA18A8091FC5C5A5A4692B31183C87CB427CE1"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\production_candidate_local_eval_2026_05_13.csv",
+                                                  "sha256":  "D5785B30DFA1B6F178472D4BF12E5B3C99CC488B926E3CAFA17BB651E4C210FD"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\production_candidate_local_eval_2026_05_13.md",
+                                                  "sha256":  "1D7373919DA06465E5C8AA44C98CD387173A72D3B263E433A5AAAA569D40AF98"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\v0_3_candidate_local_eval.csv",
+                                                  "sha256":  "EAD0DD6766F93905182AD983A0307AF726C539B7348E363E6A3E0C6DEEB223A7"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\v0_3_candidate_local_eval.md",
+                                                  "sha256":  "EF558BD990DA691B9B1D740E9FA4E28AC0123F1A1F006E82505321417018491D"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\reports\\local_validation_eval_2026_04_04_211935.csv",
+                                                  "sha256":  "FF64205DF59A434D3A01086C7AAE531493CE6D6CB3B13172F1AC358ECEF76B9B"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\reports\\local_validation_eval_2026_04_04_211935.md",
+                                                  "sha256":  "6ECFACAAB1E2F9AF33EB17E2C3000D90BBD8C3C996CD513B7A42D30497CDFBD4"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\reports\\local_validation_eval_2026_04_04_212030.csv",
+                                                  "sha256":  "7589FB0E60D2FD28E835DC9FDE7EC1B1D087C62F11AF04EADE27B8B57B013AF3"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\reports\\local_validation_eval_2026_04_04_212030.md",
+                                                  "sha256":  "F454472FCAD2939B00559B15E775B4EB8984FE9A961FFF807DA92AF27E786E24"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\reports\\production_candidate_local_eval_7img.csv",
+                                                  "sha256":  "610861EE8A07B7E41DEE2C671385B58EBDE5A32BF42DCCB0E225295BB0AB37E8"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\reports\\production_candidate_local_eval_7img.md",
+                                                  "sha256":  "ED58973D9C94802807C6B9FFEE6A12897BA267149143D095FCF8144ECF341505"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\reports\\v0_3_candidate_local_eval.csv",
+                                                  "sha256":  "EAD0DD6766F93905182AD983A0307AF726C539B7348E363E6A3E0C6DEEB223A7"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\reports\\reports\\v0_3_candidate_local_eval.md",
+                                                  "sha256":  "F2EB56295AF3DF307CEA2AA21EB3E31BDA463D8C168096B43F04C59CC3921321"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\local_validation\\review\\local_validation_review_template.csv",
+                                                  "sha256":  "EFFF2B36811B0CD2FED53DD90E1E9B9B8E05158B135DCF165D8734B9089BCFAC"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\external_import_manifest_accident_images_analysis_dataset.csv",
+                                                  "sha256":  "FC8135A738D2FB7A9C7DB3907497233B9FFADED16F46217C1AF5DB9A1AF884E1"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\hard_negative_mined_check_2026_05_22.csv",
+                                                  "sha256":  "FC2BF9D828D2B07DC2230E44BCDC78ABC59EB3A1DAF6D55F691F87258B069692"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\phone_upload_test_photo_relevance_holdout_2026_05_22.csv",
+                                                  "sha256":  "7207116F898BB8BB9DB410D65CE5CF82B7C1BAECD2B945C6FF8E807E51C73A22"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\phone_upload_test_photo_relevance_holdout_2026_05_23.csv",
+                                                  "sha256":  "A279541BBF09FF8AD58AEE499D24B7DCB4F9EE01DE8B118D426A92F66C6860D2"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\phone_upload_test_photo_relevance_validation_2026_05_22.csv",
+                                                  "sha256":  "493F6D2C2B0592CDF3551CADC6EF7C2589307F1CB71215B66B64BB44C1B9A235"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\phone_upload_test_photo_relevance_validation_2026_05_23.csv",
+                                                  "sha256":  "4281C91091E866B8198A020CD378D36BCC4EDC0F7370AE5781F09D74A96AC6C1"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\phone_upload_test_real_sources_2026_05_22.csv",
+                                                  "sha256":  "CB1F7415AA7419B76C6D1179D445542B13BE44994F7E2748EE470A891DA74447"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\phone_upload_test_real_sources_added_2026_05_22_batch2.csv",
+                                                  "sha256":  "8AF74EE11DCCDB41749B8ED17C96DA2E527D84C47FB0F191C5B842FC572E6618"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\phone_upload_test_real_sources_added_2026_05_23_batch3.csv",
+                                                  "sha256":  "0181A32D041E433DAC205661CA974986767A204D99924F016A1B42CF89D7566E"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\photo_relevance_hard_negative_sources_2026_05_22.csv",
+                                                  "sha256":  "A50ACBA6597275C0AB709118594361EB6F0325FE2663876ACC3FBB6FA79B27B6"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\photo_relevance_negative_sources_2026_04_24.csv",
+                                                  "sha256":  "0A85191AD67A006FB6325424F76E758BD1EBD899F35AEBA0C5C6A32B6F9975E5"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\retraining_candidate_split_plan_accident_images_analysis_dataset.csv",
+                                                  "sha256":  "2E540E114D0A43AC1372ABD7DFF4C207D53EB312D547C25FAE835EB3A25952ED"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\test_external_trial_accident_images_analysis_dataset.csv",
+                                                  "sha256":  "A1BCF70AE838C4117FB219460ED3E7E790F3899197B9C96E80000E89E3533262"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\test_external_trial_accident_severity_image_dataset_v4.csv",
+                                                  "sha256":  "4D39BA3F5205B5C6F9CBA6C325DCBAB7D79C4ED38B67ADA728A87E4DCAC383CB"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\test_photo_relevance.csv",
+                                                  "sha256":  "2CFBF8DFF11BBD3223AE287A7E1F8577F40BA70E0D00FA23BE45856B96FF844F"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\test_photo_relevance_phone_augmented_2026_05_22.csv",
+                                                  "sha256":  "B37836F917BD7D3BA7AE285F005A31017BDAB0525DBFE951D29095FA0F17E54B"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\test_photo_relevance_phone_augmented_hardneg_v2_2026_05_22.csv",
+                                                  "sha256":  "3CF1D4C3651D2D67100ECC701D998C0AEB9A268D05965E1E038C8D8DD0A009C7"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\test_photo_relevance_phone_augmented_hardpos_v3_2026_05_23.csv",
+                                                  "sha256":  "70910ACDFCADDE5F46BD8820CE142668B1DEBED4C179A396AB882810ACD4747A"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\test_production_candidate_external_approved_kaggle_300.csv",
+                                                  "sha256":  "AA1D56BD01A2BEE82FB272C0E0745FEC409CD69E9A34A864CF414D401D1938B2"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\test_template.csv",
+                                                  "sha256":  "0A04DCC5244D9C5115B3B8E85F975F266BEFF128B4441728DA6A812059152680"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\train_external_trial_accident_images_analysis_dataset.csv",
+                                                  "sha256":  "15B41000166C6C21B671DB215D00BA95702E4580EF82E1337AD9DAA41116BC53"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\train_external_trial_accident_severity_image_dataset_v4.csv",
+                                                  "sha256":  "85947D4C27730358992E68D13BFAF6594E55A0413A688160D11617D7177C9631"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\train_photo_relevance.csv",
+                                                  "sha256":  "D1A3C6032D4062BBC99B2FFBAE125E76A3515D34072532ADCE093CC7CACA970D"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\train_photo_relevance_phone_augmented_2026_05_22.csv",
+                                                  "sha256":  "359CD50D8CA0344C2C470097D87D600D2E7516421DE0D240A7E4C147F15D6615"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\train_photo_relevance_phone_augmented_hardneg_v2_2026_05_22.csv",
+                                                  "sha256":  "A8CA6CBD686E1787E7F043A1B43D0509AEBFFC98896D3FF725129177A90E4467"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\train_photo_relevance_phone_augmented_hardpos_v3_2026_05_23.csv",
+                                                  "sha256":  "F1531C7DBEA8E1AC00988B0E502B740F181198DD0E7642A3131E9210748602AF"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\train_production_candidate_external_approved_kaggle_300.csv",
+                                                  "sha256":  "7CBB1DCD6FDD9718568C4CFC03118AEFD9E12DF51D5C76AD617C370F6DE53385"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\train_template.csv",
+                                                  "sha256":  "0A04DCC5244D9C5115B3B8E85F975F266BEFF128B4441728DA6A812059152680"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\val_external_trial_accident_images_analysis_dataset.csv",
+                                                  "sha256":  "5159266BF322887AC59A3763F0D8E5466442EBA1D96679B9A9CAF75A7F9EE133"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\val_external_trial_accident_severity_image_dataset_v4.csv",
+                                                  "sha256":  "8F9D550482D47964E647FF46111B769542BEFF351304ECD64317152FCB33FCBE"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\val_photo_relevance.csv",
+                                                  "sha256":  "58AADF4315BEF0C3B529F1E616B6CAEC0C7551B5B371E1AD5CE6B44E7250FEAC"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\val_photo_relevance_phone_augmented_2026_05_22.csv",
+                                                  "sha256":  "D718586FE28288BFDC0A84056E358D5802CA5A6E905555B6F5E7C68FCEF4BC2D"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\val_photo_relevance_phone_augmented_hardneg_v2_2026_05_22.csv",
+                                                  "sha256":  "D718586FE28288BFDC0A84056E358D5802CA5A6E905555B6F5E7C68FCEF4BC2D"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\val_photo_relevance_phone_augmented_hardpos_v3_2026_05_23.csv",
+                                                  "sha256":  "7133ED1DE9EE6CF38FF57297B39F8E6EFD0E1263C6A120EAA30F2EB4F237DB3A"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\val_production_candidate_external_approved_kaggle_300.csv",
+                                                  "sha256":  "031013A78892CE7CD8E0FEBF4141E3C70E7E9E401C03CADBE4E1E8D42918A8A8"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\val_template.csv",
+                                                  "sha256":  "0A04DCC5244D9C5115B3B8E85F975F266BEFF128B4441728DA6A812059152680"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\video_candidates.csv",
+                                                  "sha256":  "CCEC07FF91745ECDAE5486EF8D534E63B1061DE2A033B9CB6E4D3F0BF167EB29"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\metadata\\wikimedia_relevance_negative_sources_2026_05_13.csv",
+                                                  "sha256":  "3481F9EB45E471F8DB4298FC420A3AC9FD4052169DAF5B74AF8498D3B153339F"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\qa\\external_import_review_accident_images_analysis_dataset.csv",
+                                                  "sha256":  "5AE63F5C310B840E179317852E8878B957D423655E0450D4880E6246406C59B3"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\qa\\review_log_template.csv",
+                                                  "sha256":  "D22DB8BC63E49D791B7F5BE4F9D179D24098FB0CE8CB8E58EEB7A5E2CEC1DFEC"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\README.md",
+                                                  "sha256":  "A34EC4B057ADC96E17771E9196BA75BF0B44A87C66D8101767FBFFF15E3CBDCC"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\manifests\\reviewed_pool_manifest_template.csv",
+                                                  "sha256":  "C0E0EFEE36B6710C3E1774881ED5F04DF6E8356B5E7D1CF5E325F7714A5B00E3"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\manifests\\scenario_balance_tracker.csv",
+                                                  "sha256":  "DDF0FCB8AC61AA31D9774C8700C0D583A41FA3513B4145E0D616F4F268B3C28B"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\manifests\\test_v0_3_candidate_template.csv",
+                                                  "sha256":  "63EDDDCFF21BD1B3D61CB44AE074C8D9C41EE78119F83064B9B33C1550C13557"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\manifests\\train_v0_3_candidate_template.csv",
+                                                  "sha256":  "351736F8A86EDF0AE9515F9B0A618C1D1D5F3AF20D5CFE5C4A02AB675A9D9CE2"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\manifests\\val_v0_3_candidate_template.csv",
+                                                  "sha256":  "8B2F81C4141FCECE7AEA340642F1356D0C1930DC419E89B6B02A95A3293214E4"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\reports\\v0_3_candidate_split_summary.md",
+                                                  "sha256":  "9EDC512F11CA66428C8BB306F37F0FC565194D7BF047852B4F750E69BD651E00"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\review\\v0_3_candidate_review_template.csv",
+                                                  "sha256":  "A81C797CC85394D0C941025331823D75DCB2062CCD81B068EC0277D4E98C877B"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\source_batches\\wikimedia_commons_seed_batch_2026_04_04.csv",
+                                                  "sha256":  "0302003B13682FEF7DF5DA3F315143B0B781B32C82FB15AD65A7AC0BEE006A80"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\v0_3_candidate\\README.md",
+                                                  "sha256":  "A34EC4B057ADC96E17771E9196BA75BF0B44A87C66D8101767FBFFF15E3CBDCC"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\v0_3_candidate\\manifests\\reviewed_pool_manifest_template.csv",
+                                                  "sha256":  "C0E0EFEE36B6710C3E1774881ED5F04DF6E8356B5E7D1CF5E325F7714A5B00E3"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\v0_3_candidate\\manifests\\scenario_balance_tracker.csv",
+                                                  "sha256":  "DDF0FCB8AC61AA31D9774C8700C0D583A41FA3513B4145E0D616F4F268B3C28B"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\v0_3_candidate\\manifests\\test_v0_3_candidate_template.csv",
+                                                  "sha256":  "63EDDDCFF21BD1B3D61CB44AE074C8D9C41EE78119F83064B9B33C1550C13557"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\v0_3_candidate\\manifests\\train_v0_3_candidate_template.csv",
+                                                  "sha256":  "351736F8A86EDF0AE9515F9B0A618C1D1D5F3AF20D5CFE5C4A02AB675A9D9CE2"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\v0_3_candidate\\manifests\\val_v0_3_candidate_template.csv",
+                                                  "sha256":  "8B2F81C4141FCECE7AEA340642F1356D0C1930DC419E89B6B02A95A3293214E4"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\v0_3_candidate\\reports\\v0_3_candidate_split_summary.md",
+                                                  "sha256":  "CB984056E3741BD8C3DC08B31F0F24C7D01BBDD9081E6D5B1C0B597CA21F4F67"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\v0_3_candidate\\review\\v0_3_candidate_review_template.csv",
+                                                  "sha256":  "A81C797CC85394D0C941025331823D75DCB2062CCD81B068EC0277D4E98C877B"
+                                              },
+                                              {
+                                                  "path":  "bontoc_southern_leyte\\v0_3_candidate\\v0_3_candidate\\source_batches\\wikimedia_commons_seed_batch_2026_04_04.csv",
+                                                  "sha256":  "0302003B13682FEF7DF5DA3F315143B0B781B32C82FB15AD65A7AC0BEE006A80"
+                                              }
+                                          ]
+                            },
+                            {
+                                "folder":  "external_image_sources",
+                                "file_count":  3,
+                                "bytes":  6010,
+                                "files":  [
+                                              {
+                                                  "path":  "external_image_sources\\ACCIDENT_IMAGES_ANALYSIS_DATASET.md",
+                                                  "sha256":  "B944C5236E97F77702B657559B4A90F58A93FF104AA028657551A3C120EBB225"
+                                              },
+                                              {
+                                                  "path":  "external_image_sources\\ACCIDENT_SEVERITY_IMAGE_DATASET_V4.md",
+                                                  "sha256":  "D07DC38D6AD9F9629F876AB2F7ECA034B5F36913CD19EBA44A11A506DBDFF354"
+                                              },
+                                              {
+                                                  "path":  "external_image_sources\\SECOND_DATASET_RESEARCH_2026_04_04.md",
+                                                  "sha256":  "C0CC7922AA0578C6190A94E95C000A94BD0A12312F4987A9E50DF49D90A05A7B"
+                                              }
+                                          ]
+                            },
+                            {
+                                "folder":  "external_tabular_sources",
+                                "file_count":  2,
+                                "bytes":  2852,
+                                "files":  [
+                                              {
+                                                  "path":  "external_tabular_sources\\CATALOG.md",
+                                                  "sha256":  "B641FB8178856CAF09FAF1E94CA92527C47E55F1BEB183D190F2FB2D11324314"
+                                              },
+                                              {
+                                                  "path":  "external_tabular_sources\\LABEL_MAPPING.md",
+                                                  "sha256":  "DDB31926A07B23637776C88D7E0DE82E189C1B0F50432259E7ABB86B0C342914"
+                                              }
+                                          ]
+                            }
+                        ],
+    "preserved_file_count":  85,
+    "emergency_text_hashes_unchanged":  true,
+    "remaining_entries":  [
+                              "emergency_text"
+                          ]
+}

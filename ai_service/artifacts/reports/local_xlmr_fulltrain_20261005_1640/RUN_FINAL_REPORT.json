@@ -1,0 +1,317 @@
+{
+  "status": "full_backbone_training_completed_provisional_not_deployable",
+  "completed_at_local": "2026-10-05T17:49:51.638748+08:00",
+  "package_id": "emergency-text-xlmr-local-fulltrain-20261005",
+  "dataset": {
+    "path": "ai_service\\datasets\\emergency_text\\experiments\\xlmr_fulltrain_20261005_1628_pht\\reports.csv",
+    "snapshot_sha256": "5e2a4f508a6de869ad0eee1c6c7385b03c2df542eadbd7f79a315b0243f9db1e",
+    "rows": 400,
+    "groups": 99,
+    "review_status_counts": {
+      "draft": 400
+    },
+    "eligible_approved_rows": 0,
+    "fingerprint": "535d54dab55097cb7803a05e7ce39ec9242acd926b42fe74cb3488f7834107df",
+    "split_manifest_path": "ai_service\\datasets\\emergency_text\\experiments\\xlmr_fulltrain_20261005_1628_pht\\split_manifest.json",
+    "splits": {
+      "train": {
+        "rows": 304,
+        "languages": {
+          "ceb": 91,
+          "en": 91,
+          "mixed": 31,
+          "tl": 91
+        },
+        "labels": {
+          "critical": 84,
+          "minor": 76,
+          "needs_review": 70,
+          "serious": 74
+        },
+        "word_length_buckets": {
+          "1-3": 0,
+          "4-8": 0,
+          "9-15": 0,
+          "16+": 304
+        },
+        "min_words": 22,
+        "max_words": 39,
+        "macro_f1": null
+      },
+      "validation": {
+        "rows": 54,
+        "languages": {
+          "ceb": 16,
+          "en": 16,
+          "mixed": 6,
+          "tl": 16
+        },
+        "labels": {
+          "critical": 10,
+          "minor": 14,
+          "needs_review": 16,
+          "serious": 14
+        },
+        "word_length_buckets": {
+          "1-3": 0,
+          "4-8": 0,
+          "9-15": 0,
+          "16+": 54
+        },
+        "min_words": 25,
+        "max_words": 36,
+        "macro_f1": 1.0
+      },
+      "test": {
+        "rows": 42,
+        "languages": {
+          "ceb": 13,
+          "en": 13,
+          "mixed": 3,
+          "tl": 13
+        },
+        "labels": {
+          "critical": 6,
+          "minor": 10,
+          "needs_review": 14,
+          "serious": 12
+        },
+        "word_length_buckets": {
+          "1-3": 0,
+          "4-8": 0,
+          "9-15": 0,
+          "16+": 42
+        },
+        "min_words": 24,
+        "max_words": 35,
+        "macro_f1": 1.0
+      }
+    },
+    "human_reviewed": false,
+    "receipt_status": "snapshot_used_for_completed_provisional_research_training"
+  },
+  "environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.0",
+    "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "gpu_vram_bytes": 4294443008,
+    "gpu_cuda_runtime": "13.0",
+    "pytorch": "2.12.1+cu130",
+    "transformers": "4.57.6",
+    "base_model": "FacebookAI/xlm-roberta-base",
+    "revision": "42f548f32366559214515ec137cdd16002968bf6"
+  },
+  "training": {
+    "full_backbone": true,
+    "total_parameters": 278046724,
+    "trainable_parameters": 278046724,
+    "frozen_parameters": 0,
+    "trainable_fraction": 1.0,
+    "optimizer": "Adafactor",
+    "mixed_precision": "CUDA FP16 autocast with GradScaler",
+    "gradient_checkpointing": true,
+    "batch_size": 1,
+    "gradient_accumulation": 16,
+    "max_length": 72,
+    "trials": [
+      {
+        "learning_rate": "1e-5",
+        "best_epoch": 3,
+        "epochs_completed": 5,
+        "trainable_parameters": 278046724,
+        "total_parameters": 278046724,
+        "peak_cuda_memory_allocated_bytes": 3831377920,
+        "peak_cuda_memory_reserved_bytes": 4057989120,
+        "training_and_selection_seconds": 377.73,
+        "validation_macro_f1": 0.9352204203500967,
+        "validation_per_language_macro_f1": {
+          "en": 0.11904761904761904,
+          "tl": 0.11904761904761904,
+          "ceb": 0.11904761904761904,
+          "mixed": 0.07142857142857142
+        },
+        "validation_critical_recall": 0.8,
+        "validation_serious_recall": 1.0,
+        "validation_raw_high_risk_undertriage_count": 2
+      },
+      {
+        "learning_rate": "2e-5",
+        "best_epoch": 4,
+        "epochs_completed": 6,
+        "trainable_parameters": 278046724,
+        "total_parameters": 278046724,
+        "peak_cuda_memory_allocated_bytes": 3831377920,
+        "peak_cuda_memory_reserved_bytes": 4057989120,
+        "training_and_selection_seconds": 456.86,
+        "validation_macro_f1": 1.0,
+        "validation_per_language_macro_f1": {
+          "en": 0.9415584415584415,
+          "tl": 1.0,
+          "ceb": 1.0,
+          "mixed": 1.0
+        },
+        "validation_critical_recall": 1.0,
+        "validation_serious_recall": 1.0,
+        "validation_raw_high_risk_undertriage_count": 0
+      },
+      {
+        "learning_rate": "3e-5",
+        "best_epoch": 1,
+        "epochs_completed": 3,
+        "trainable_parameters": 278046724,
+        "total_parameters": 278046724,
+        "peak_cuda_memory_allocated_bytes": 3831377920,
+        "peak_cuda_memory_reserved_bytes": 4057989120,
+        "training_and_selection_seconds": 234.75,
+        "validation_macro_f1": 0.40664463090092384,
+        "validation_per_language_macro_f1": {
+          "en": 0.11904761904761904,
+          "tl": 0.11904761904761904,
+          "ceb": 0.11904761904761904,
+          "mixed": 0.07142857142857142
+        },
+        "validation_critical_recall": 0.8,
+        "validation_serious_recall": 0.21428571428571427,
+        "validation_raw_high_risk_undertriage_count": 2
+      }
+    ],
+    "selection_rule": "balanced_safety_v1",
+    "selected": {
+      "learning_rate": "2e-5",
+      "path": "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\artifacts\\checkpoints\\text_xlmr_fulltrain_local_20261005_1724\\trial_lr_2e-5_seed42",
+      "best_epoch": 4,
+      "raw_undertriage": 0,
+      "macro_f1": 1.0,
+      "critical_recall": 1.0,
+      "serious_recall": 1.0,
+      "critical_precision": 1.0,
+      "selection_key": [
+        0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "test_used_for_selection_or_tuning": false,
+    "legacy_test_evaluation_count": 1
+  },
+  "validation": {
+    "rows": 54,
+    "raw_macro_f1": 1.0,
+    "critical_recall": 1.0,
+    "serious_recall": 1.0,
+    "raw_high_risk_undertriage_count": 0,
+    "per_language": {
+      "en": {
+        "rows": 16,
+        "macro_f1": 0.9415584415584415,
+        "critical_support": 3,
+        "serious_support": 4
+      },
+      "tl": {
+        "rows": 16,
+        "macro_f1": 1.0,
+        "critical_support": 3,
+        "serious_support": 4
+      },
+      "ceb": {
+        "rows": 16,
+        "macro_f1": 1.0,
+        "critical_support": 3,
+        "serious_support": 4
+      },
+      "mixed": {
+        "rows": 6,
+        "macro_f1": 1.0,
+        "critical_support": 1,
+        "serious_support": 2
+      }
+    },
+    "short_text_support_under_16_words": 0
+  },
+  "legacy_regression_evaluation": {
+    "rows": 42,
+    "accuracy": 1.0,
+    "macro_f1": 1.0,
+    "critical_support": 6,
+    "critical_recall": 1.0,
+    "serious_support": 12,
+    "serious_recall": 1.0,
+    "raw_high_risk_undertriage_count": 0,
+    "per_language": {
+      "en": {
+        "rows": 13,
+        "macro_f1": 1.0,
+        "high_risk_support": 6,
+        "undertriage": 0
+      },
+      "tl": {
+        "rows": 13,
+        "macro_f1": 1.0,
+        "high_risk_support": 6,
+        "undertriage": 0
+      },
+      "ceb": {
+        "rows": 13,
+        "macro_f1": 1.0,
+        "high_risk_support": 6,
+        "undertriage": 0
+      },
+      "mixed": {
+        "rows": 3,
+        "macro_f1": 0.5,
+        "high_risk_support": 0,
+        "undertriage": 0
+      }
+    },
+    "short_text_support_under_16_words": 0,
+    "interpretation": "Regression-only; not an independent or human-reviewed test. Historical exact text/scenario ancestry was previously exposed in older experiments."
+  },
+  "comparison_to_prior_summary": {
+    "baseline_seed_42/validation_metrics.json": {
+      "count": 54,
+      "macro_f1": 0.9800307219662059,
+      "critical_recall": 1.0,
+      "serious_recall": 1.0,
+      "raw_high_risk_undertriage_count": 0,
+      "split_ids_match_current": null
+    },
+    "xlmr_seed_42/validation_metrics.json": {
+      "count": 54,
+      "macro_f1": 1.0,
+      "critical_recall": 1.0,
+      "serious_recall": 1.0,
+      "raw_high_risk_undertriage_count": 0,
+      "split_ids_match_current": null
+    },
+    "best_model_test_evaluation/evaluation_metrics.json": {
+      "count": 42,
+      "macro_f1": 1.0,
+      "critical_recall": 1.0,
+      "serious_recall": 1.0,
+      "raw_high_risk_undertriage_count": 0,
+      "split_ids_match_current": null
+    },
+    "split_ids_match_current": true
+  },
+  "calibration": {
+    "calibrated": false,
+    "review_threshold": 0.65,
+    "threshold_status": "provisional",
+    "independent_calibration_set": false
+  },
+  "deployment": {
+    "approved_for_deployment": false,
+    "active_model_changed": false,
+    "deployed": false,
+    "integration_recommended": false
+  },
+  "limitations": [
+    "All 400 dataset rows are synthetic draft examples; zero responder-approved rows.",
+    "Validation has 54 examples, only 6 mixed-language rows; per-language estimates are small and synthetic.",
+    "No examples under 16 words exist, so short panic-style behavior is unevaluated.",
+    "The 42-row legacy test overlaps exact texts and scenario families previously used in other experiments; it is regression-only despite 42/42.",
+    "Confidence and review threshold are uncalibrated.",
+    "No independently collected, responder-labeled, real-world evaluation or operational safety study was performed."
+  ]
+}

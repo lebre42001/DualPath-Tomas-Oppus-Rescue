@@ -1,0 +1,14 @@
+[
+  {
+    "candidate": "text_mbert_draft_head_20260919",
+    "all_80_encodings_match_pinned_base": true,
+    "tokenizer_class": "BertTokenizerFast",
+    "pre_tokenizer": "BertPreTokenizer"
+  },
+  {
+    "candidate": "text_mbert_draft_full_20260919",
+    "all_80_encodings_match_pinned_base": true,
+    "tokenizer_class": "BertTokenizerFast",
+    "pre_tokenizer": "BertPreTokenizer"
+  }
+]

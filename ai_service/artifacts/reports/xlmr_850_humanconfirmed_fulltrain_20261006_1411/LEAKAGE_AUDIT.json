@@ -1,0 +1,186 @@
+{
+  "audit_id": "independent-split-leakage-audit-2026-10-06",
+  "status": "PASS_WITH_HISTORICAL_EXPOSURE_LIMITATION",
+  "scope": "Read-only independent audit of SPLIT_MANIFEST.json, training_split_manifest.json, reviewed source records, family reconciliation recommendations, and model development file.",
+  "files": {
+    "five_way_split_manifest": "ai_service\\artifacts\\reports\\xlmr_850_humanconfirmed_fulltrain_20261006_1411\\SPLIT_MANIFEST.json",
+    "five_way_split_manifest_sha256": "379aa746d819c63c57499f8537fc794ab69cc6b154cbe12327e7f914f34efe67",
+    "training_split_manifest": "ai_service\\artifacts\\reports\\xlmr_850_humanconfirmed_fulltrain_20261006_1411\\training_split_manifest.json",
+    "training_split_manifest_sha256": "8272432855d09f4945d897be3f925535aa0e5c3ce30be6c6e8d1f5f980f37f48",
+    "reviewed_reports_sha256": "405dee8f46be0021aa590e72989dbb64a7b4d3a8b53457eb80b00c58a17f6443",
+    "reviewed_provenance_sha256": "dbdfab58ab2a02a72ac705d1e687022eac68994f62131168235f35def0a61a0f",
+    "family_reconciliation_sha256": "801b9986bb28fece08afda782c06cda964899a4eb21f57ebf0e06a222de851dc",
+    "model_development_sha256": "79ab94ad4877159dc1a58bb621b5c743ab5cd7b832e7fed92aa23148591e6342"
+  },
+  "partition_counts": {
+    "train": 514,
+    "validation": 126,
+    "calibration": 83,
+    "fresh_test": 84,
+    "challenge": 43
+  },
+  "checks": {
+    "source_group_id": {
+      "pass": true,
+      "overlapping_keys": 0,
+      "examples": {}
+    },
+    "scenario_family_id": {
+      "pass": true,
+      "overlapping_keys": 0,
+      "examples": {}
+    },
+    "annotation_group_id": {
+      "pass": true,
+      "overlapping_keys": 0,
+      "examples": {}
+    },
+    "normalized_text": {
+      "pass": true,
+      "overlapping_keys": 0,
+      "examples": {}
+    },
+    "parent_child": {
+      "pass": true,
+      "edges": 17,
+      "missing_parent_ids": [],
+      "cross_partition_edges": []
+    },
+    "effective_split_groups": {
+      "pass": true,
+      "effective_group_count": 820,
+      "overlapping_keys": 0,
+      "examples": {}
+    },
+    "declared_family_manifest": {
+      "pass": true,
+      "overlapping_keys": 0,
+      "examples": {}
+    },
+    "same_scenario_family_recommendations": {
+      "expected_pair_count": 19,
+      "observed_pair_count": 19,
+      "pass": true,
+      "missing_pairs": [],
+      "cross_partition_pairs": []
+    },
+    "training_manifest_alignment": {
+      "pass": true,
+      "effective_group_hashes_derived_from": "model_data/model_development.csv (group_id stores conservative union-component IDs)",
+      "partitions": {
+        "train": {
+          "count_matches": true,
+          "id_set_matches": true,
+          "unique_ids": true,
+          "group_hashes_match": true,
+          "text_hashes_match": true,
+          "actual_rows": 514,
+          "expected_rows": 514
+        },
+        "validation": {
+          "count_matches": true,
+          "id_set_matches": true,
+          "unique_ids": true,
+          "group_hashes_match": true,
+          "text_hashes_match": true,
+          "actual_rows": 126,
+          "expected_rows": 126
+        },
+        "test": {
+          "count_matches": true,
+          "id_set_matches": true,
+          "unique_ids": true,
+          "group_hashes_match": true,
+          "text_hashes_match": true,
+          "actual_rows": 84,
+          "expected_rows": 84
+        }
+      }
+    },
+    "training_data_membership": {
+      "pass": true,
+      "rows": 724,
+      "expected_rows": 724,
+      "reserve_rows_excluded": 0
+    },
+    "required_label_support": {
+      "pass": true,
+      "by_partition": {
+        "train": {
+          "critical": 128,
+          "minor": 129,
+          "needs_review": 127,
+          "serious": 130
+        },
+        "validation": {
+          "critical": 31,
+          "minor": 32,
+          "needs_review": 31,
+          "serious": 32
+        },
+        "calibration": {
+          "critical": 21,
+          "minor": 20,
+          "needs_review": 21,
+          "serious": 21
+        },
+        "fresh_test": {
+          "critical": 20,
+          "minor": 21,
+          "needs_review": 22,
+          "serious": 21
+        },
+        "challenge": {
+          "critical": 11,
+          "minor": 11,
+          "needs_review": 11,
+          "serious": 10
+        }
+      }
+    },
+    "partition_assignment_and_ids": {
+      "pass": true,
+      "source_row_count": 850,
+      "provenance_row_count": 850,
+      "all_ids_assigned_once": true,
+      "partition_total": 850,
+      "duplicate_provenance_ids": 0,
+      "missing_provenance_ids": [],
+      "unknown_split_ids": []
+    },
+    "training_manifest_cross_partition_hashes": {
+      "pass": true,
+      "overlaps": []
+    }
+  },
+  "historical_prior_exposure": {
+    "old_manifest_found": true,
+    "old_partition_names": [
+      "train",
+      "validation",
+      "calibration",
+      "fresh_test",
+      "challenge"
+    ],
+    "source_case_ids_covered": 850,
+    "current_case_ids_with_prior_partition": 850,
+    "counts_by_old_partition": {
+      "train": 516,
+      "calibration": 83,
+      "challenge": 43,
+      "fresh_test": 84,
+      "validation": 124
+    },
+    "all_current_rows_have_historical_partition": true,
+    "old_partition_assignment_duplicate_ids": 0
+  },
+  "limitations": [
+    "All 850 rows have prior exposure in historical train/validation/calibration/fresh-test/challenge workflows; the newly disjoint partitions are only leakage-controlled for this run, not independent or unseen relative to earlier project work.",
+    "The 19 SAME_SCENARIO_FAMILY links are AI technical recommendations; this audit checks split containment and does not certify their clinical/semantic correctness.",
+    "No original data or split artifacts were changed."
+  ],
+  "training_performed": false,
+  "source_data_modified": false,
+  "active_model_changed": false,
+  "deployment_performed": false
+}

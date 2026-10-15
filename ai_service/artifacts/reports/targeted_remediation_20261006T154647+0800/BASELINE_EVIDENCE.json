@@ -1,0 +1,37 @@
+﻿{
+    "recorded_local":  "2026-10-06T15:46:47.5419646+08:00",
+    "repo_root":  "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main",
+    "git_status":  "unavailable: repository directory is not a Git work tree",
+    "source_reports_sha256":  "fd0fb65ccb718a1dee93fd315aa3a0e12cb5a8c2123bc08c8466e51c75fc7645",
+    "rejected_checkpoint_sha256":  "053a2851d3e1a9fb342825bc86a786a49baad7e06f51c6a8442a655f97fe6881",
+    "active_config_sha256":  "5e56620321a9d19e485f54369cad2e0fa2d6cd8305b6b817f3efa9c0366b41ba",
+    "active_config":  "configs/bontoc_southern_leyte_production_candidate_external.yaml",
+    "prior_sealed_package_sha256":  "5285b85b492e258187eae2b9aacd9397a0f43d132f509456383d585aa904ec27",
+    "existing_checkpoint_selector_preserved":  true,
+    "gpu_processes":  [
+                          {
+                              "ProcessName":  "NVIDIA Share",
+                              "Id":  10308,
+                              "CPU":  5.3125,
+                              "WorkingSet64":  15552512
+                          },
+                          {
+                              "ProcessName":  "NVIDIA Share",
+                              "Id":  14204,
+                              "CPU":  119.625,
+                              "WorkingSet64":  13029376
+                          },
+                          {
+                              "ProcessName":  "NVIDIA Share",
+                              "Id":  20204,
+                              "CPU":  3.578125,
+                              "WorkingSet64":  16048128
+                          },
+                          {
+                              "ProcessName":  "NVIDIA Web Helper",
+                              "Id":  2296,
+                              "CPU":  5.15625,
+                              "WorkingSet64":  4874240
+                          }
+                      ]
+}

@@ -1,0 +1,762 @@
+{
+  "scope": "new retrain selected checkpoint; single reserved 84-row held-out split",
+  "source": "owner-attested synthetic-origin reports",
+  "raw_metrics": {
+    "minor": {
+      "support": 21,
+      "precision": 0.8,
+      "recall": 0.9523809523809523,
+      "f1": 0.8695652173913043
+    },
+    "serious": {
+      "support": 21,
+      "precision": 0.8076923076923077,
+      "recall": 1.0,
+      "f1": 0.8936170212765957
+    },
+    "critical": {
+      "support": 20,
+      "precision": 0.8461538461538461,
+      "recall": 0.55,
+      "f1": 0.6666666666666667
+    },
+    "needs_review": {
+      "support": 22,
+      "precision": 1.0,
+      "recall": 0.9090909090909091,
+      "f1": 0.9523809523809523
+    },
+    "accuracy": 0.8571428571428571,
+    "macro_f1": 0.8455574644288798,
+    "confusion_labels": [
+      "minor",
+      "serious",
+      "critical",
+      "needs_review"
+    ],
+    "confusion_matrix": [
+      [
+        20,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        21,
+        0,
+        0
+      ],
+      [
+        5,
+        4,
+        11,
+        0
+      ],
+      [
+        0,
+        0,
+        2,
+        20
+      ]
+    ]
+  },
+  "by_language": {
+    "en": {
+      "minor": {
+        "support": 6,
+        "precision": 0.8571428571428571,
+        "recall": 1.0,
+        "f1": 0.923076923076923
+      },
+      "serious": {
+        "support": 6,
+        "precision": 0.8571428571428571,
+        "recall": 1.0,
+        "f1": 0.923076923076923
+      },
+      "critical": {
+        "support": 6,
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "f1": 0.8
+      },
+      "needs_review": {
+        "support": 6,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "accuracy": 0.9166666666666666,
+      "macro_f1": 0.9115384615384615,
+      "confusion_labels": [
+        "minor",
+        "serious",
+        "critical",
+        "needs_review"
+      ],
+      "confusion_matrix": [
+        [
+          6,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          4,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          6
+        ]
+      ]
+    },
+    "tl": {
+      "minor": {
+        "support": 5,
+        "precision": 0.8333333333333334,
+        "recall": 1.0,
+        "f1": 0.9090909090909091
+      },
+      "serious": {
+        "support": 6,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "critical": {
+        "support": 5,
+        "precision": 0.8,
+        "recall": 0.8,
+        "f1": 0.8000000000000002
+      },
+      "needs_review": {
+        "support": 7,
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1": 0.923076923076923
+      },
+      "accuracy": 0.9130434782608695,
+      "macro_f1": 0.9080419580419581,
+      "confusion_labels": [
+        "minor",
+        "serious",
+        "critical",
+        "needs_review"
+      ],
+      "confusion_matrix": [
+        [
+          5,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          4,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          6
+        ]
+      ]
+    },
+    "ceb": {
+      "minor": {
+        "support": 7,
+        "precision": 0.75,
+        "recall": 0.8571428571428571,
+        "f1": 0.7999999999999999
+      },
+      "serious": {
+        "support": 6,
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8
+      },
+      "critical": {
+        "support": 6,
+        "precision": 1.0,
+        "recall": 0.3333333333333333,
+        "f1": 0.5
+      },
+      "needs_review": {
+        "support": 6,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "accuracy": 0.8,
+      "macro_f1": 0.775,
+      "confusion_labels": [
+        "minor",
+        "serious",
+        "critical",
+        "needs_review"
+      ],
+      "confusion_matrix": [
+        [
+          6,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          0,
+          0
+        ],
+        [
+          2,
+          2,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          6
+        ]
+      ]
+    },
+    "mixed": {
+      "minor": {
+        "support": 3,
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571
+      },
+      "serious": {
+        "support": 3,
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571
+      },
+      "critical": {
+        "support": 3,
+        "precision": 0.5,
+        "recall": 0.3333333333333333,
+        "f1": 0.4
+      },
+      "needs_review": {
+        "support": 3,
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "f1": 0.8
+      },
+      "accuracy": 0.75,
+      "macro_f1": 0.7285714285714285,
+      "confusion_labels": [
+        "minor",
+        "serious",
+        "critical",
+        "needs_review"
+      ],
+      "confusion_matrix": [
+        [
+          3,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          3,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          2
+        ]
+      ]
+    }
+  },
+  "safety_errors": {
+    "critical_support": 20,
+    "critical_recall": 0.55,
+    "critical_precision": 0.8461538461538461,
+    "critical_to_minor": 5,
+    "critical_to_serious": 4,
+    "critical_to_needs_review": 0,
+    "serious_support": 21,
+    "serious_recall": 1.0,
+    "serious_precision": 0.8076923076923077,
+    "serious_to_minor": 0,
+    "serious_to_needs_review": 0,
+    "serious_or_critical_support": 41,
+    "raw_urgent_undertriage_count": 9,
+    "raw_urgent_undertriage_rate": 0.21951219512195122,
+    "undertriage_case_ids": [
+      "CEB-CRITICAL-001",
+      "CEB-CRITICAL-003",
+      "CEB-CRITICAL-010",
+      "CEB-CRITICAL-024",
+      "EN-143",
+      "EN-235",
+      "MX-CRITICAL-002",
+      "MX-CRITICAL-013",
+      "TL-126"
+    ],
+    "six_known_cases": {
+      "CEB-CRITICAL-001": {
+        "human_confirmed_label": "critical",
+        "old_prediction": "minor",
+        "old_confidence_raw": "0.79480040",
+        "new_prediction": "minor",
+        "new_confidence_raw": 0.9078455567359924,
+        "route_at_0_65": "minor",
+        "status": "STILL_UNDERTRIAGED"
+      },
+      "CEB-CRITICAL-003": {
+        "human_confirmed_label": "critical",
+        "old_prediction": "minor",
+        "old_confidence_raw": "0.58555275",
+        "new_prediction": "minor",
+        "new_confidence_raw": 0.4741027355194092,
+        "route_at_0_65": "needs_review",
+        "status": "ROUTED_TO_REVIEW"
+      },
+      "MX-CRITICAL-002": {
+        "human_confirmed_label": "critical",
+        "old_prediction": "minor",
+        "old_confidence_raw": "0.78896189",
+        "new_prediction": "minor",
+        "new_confidence_raw": 0.37114620208740234,
+        "route_at_0_65": "needs_review",
+        "status": "ROUTED_TO_REVIEW"
+      },
+      "TL-126": {
+        "human_confirmed_label": "critical",
+        "old_prediction": "minor",
+        "old_confidence_raw": "0.73481202",
+        "new_prediction": "minor",
+        "new_confidence_raw": 0.8614107966423035,
+        "route_at_0_65": "minor",
+        "status": "STILL_UNDERTRIAGED"
+      },
+      "CEB-CRITICAL-024": {
+        "human_confirmed_label": "critical",
+        "old_prediction": "serious",
+        "old_confidence_raw": "0.56816733",
+        "new_prediction": "serious",
+        "new_confidence_raw": 0.814522922039032,
+        "route_at_0_65": "serious",
+        "status": "STILL_UNDERTRIAGED"
+      },
+      "MX-CRITICAL-013": {
+        "human_confirmed_label": "critical",
+        "old_prediction": "serious",
+        "old_confidence_raw": "0.88702905",
+        "new_prediction": "serious",
+        "new_confidence_raw": 0.8828760385513306,
+        "route_at_0_65": "serious",
+        "status": "STILL_UNDERTRIAGED"
+      }
+    }
+  },
+  "needs_review_analysis": {
+    "needs_review_support": 22,
+    "needs_review_precision": 1.0,
+    "needs_review_recall": 0.9090909090909091,
+    "predicted_needs_review_count": 20,
+    "true_nonreview_routed_to_review_at_0_65": 7,
+    "confident_dangerous_undertriage_count_confidence_ge_0_65": 6,
+    "undertriage_case_ids": [
+      "CEB-CRITICAL-001",
+      "CEB-CRITICAL-003",
+      "CEB-CRITICAL-010",
+      "CEB-CRITICAL-024",
+      "EN-143",
+      "EN-235",
+      "MX-CRITICAL-002",
+      "MX-CRITICAL-013",
+      "TL-126"
+    ],
+    "clear_case_review_ids": [
+      "CEB-CRITICAL-003",
+      "CEB-CRITICAL-046",
+      "EN-143",
+      "MX-CRITICAL-002",
+      "TL-039",
+      "TL-132",
+      "TL-168"
+    ]
+  },
+  "length_buckets": {
+    "1-3": {
+      "rows": 7,
+      "families": 7,
+      "metrics": {
+        "minor": {
+          "support": 0,
+          "precision": 0.0,
+          "recall": 0,
+          "f1": 0
+        },
+        "serious": {
+          "support": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "critical": {
+          "support": 2,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666
+        },
+        "needs_review": {
+          "support": 3,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "accuracy": 0.8571428571428571,
+        "macro_f1": 0.6666666666666666,
+        "confusion_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ],
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            3
+          ]
+        ]
+      },
+      "serious_recall": 1.0,
+      "critical_recall": 0.5,
+      "urgent_undertriage": 1
+    },
+    "4-8": {
+      "rows": 29,
+      "families": 29,
+      "metrics": {
+        "minor": {
+          "support": 8,
+          "precision": 0.8888888888888888,
+          "recall": 1.0,
+          "f1": 0.9411764705882353
+        },
+        "serious": {
+          "support": 8,
+          "precision": 0.8888888888888888,
+          "recall": 1.0,
+          "f1": 0.9411764705882353
+        },
+        "critical": {
+          "support": 7,
+          "precision": 0.8333333333333334,
+          "recall": 0.7142857142857143,
+          "f1": 0.7692307692307692
+        },
+        "needs_review": {
+          "support": 6,
+          "precision": 1.0,
+          "recall": 0.8333333333333334,
+          "f1": 0.9090909090909091
+        },
+        "accuracy": 0.896551724137931,
+        "macro_f1": 0.8901686548745372,
+        "confusion_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ],
+        "confusion_matrix": [
+          [
+            8,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            8,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            5,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            5
+          ]
+        ]
+      },
+      "serious_recall": 1.0,
+      "critical_recall": 0.7142857142857143,
+      "urgent_undertriage": 2
+    },
+    "9-15": {
+      "rows": 33,
+      "families": 32,
+      "metrics": {
+        "minor": {
+          "support": 10,
+          "precision": 0.8181818181818182,
+          "recall": 0.9,
+          "f1": 0.8571428571428572
+        },
+        "serious": {
+          "support": 7,
+          "precision": 0.7,
+          "recall": 1.0,
+          "f1": 0.8235294117647058
+        },
+        "critical": {
+          "support": 8,
+          "precision": 0.8,
+          "recall": 0.5,
+          "f1": 0.6153846153846154
+        },
+        "needs_review": {
+          "support": 8,
+          "precision": 1.0,
+          "recall": 0.875,
+          "f1": 0.9333333333333333
+        },
+        "accuracy": 0.8181818181818182,
+        "macro_f1": 0.807347554406378,
+        "confusion_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ],
+        "confusion_matrix": [
+          [
+            9,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            7,
+            0,
+            0
+          ],
+          [
+            2,
+            2,
+            4,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            7
+          ]
+        ]
+      },
+      "serious_recall": 1.0,
+      "critical_recall": 0.5,
+      "urgent_undertriage": 4
+    },
+    "16+": {
+      "rows": 15,
+      "families": 15,
+      "metrics": {
+        "minor": {
+          "support": 3,
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1": 0.8571428571428571
+        },
+        "serious": {
+          "support": 4,
+          "precision": 0.8,
+          "recall": 1.0,
+          "f1": 0.888888888888889
+        },
+        "critical": {
+          "support": 3,
+          "precision": 1.0,
+          "recall": 0.3333333333333333,
+          "f1": 0.5
+        },
+        "needs_review": {
+          "support": 5,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "accuracy": 0.8666666666666667,
+        "macro_f1": 0.8115079365079365,
+        "confusion_labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ],
+        "confusion_matrix": [
+          [
+            3,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            4,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            5
+          ]
+        ]
+      },
+      "serious_recall": 1.0,
+      "critical_recall": 0.3333333333333333,
+      "urgent_undertriage": 2
+    }
+  },
+  "mixed_language": {
+    "rows": 12,
+    "families": 12,
+    "metrics": {
+      "minor": {
+        "support": 3,
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571
+      },
+      "serious": {
+        "support": 3,
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571
+      },
+      "critical": {
+        "support": 3,
+        "precision": 0.5,
+        "recall": 0.3333333333333333,
+        "f1": 0.4
+      },
+      "needs_review": {
+        "support": 3,
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "f1": 0.8
+      },
+      "accuracy": 0.75,
+      "macro_f1": 0.7285714285714285,
+      "confusion_labels": [
+        "minor",
+        "serious",
+        "critical",
+        "needs_review"
+      ],
+      "confusion_matrix": [
+        [
+          3,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          3,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    "serious_critical_support": 6,
+    "critical_support": 3,
+    "undertriage": 2,
+    "qualification": "tiny 12-row subset; 3 per class; descriptive only"
+  },
+  "limitations": [
+    "not independently collected real-world data",
+    "all rows have prior exposure in project history; model being evaluated is new, but corpus was used in prior research/model-development",
+    "small per-language and per-length test supports",
+    "raw softmax is uncalibrated",
+    "do not use for live triage"
+  ]
+}

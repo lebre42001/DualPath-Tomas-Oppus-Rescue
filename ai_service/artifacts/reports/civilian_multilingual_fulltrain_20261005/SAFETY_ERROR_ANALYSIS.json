@@ -1,0 +1,23 @@
+{
+  "fresh_test_support": 84,
+  "family_support": 83,
+  "serious_support": 21,
+  "serious_recall": 0.9523809523809523,
+  "critical_support": 21,
+  "critical_recall": 0.7142857142857143,
+  "critical_to_serious": 2,
+  "critical_to_minor": 4,
+  "critical_to_needs_review_raw": 0,
+  "serious_to_minor": 0,
+  "serious_to_needs_review_raw": 0,
+  "serious_to_critical": 1,
+  "raw_high_risk_undertriage": 6,
+  "review_routed_high_risk_undertriage": 4,
+  "critical_routed_to_review": 4,
+  "serious_routed_to_review": 1,
+  "limitations": [
+    "All examples are synthetic draft data.",
+    "Only 21 Critical and 21 Serious fresh-test rows.",
+    "Language-specific high-risk slices are small."
+  ]
+}

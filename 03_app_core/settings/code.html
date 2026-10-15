@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings | BONTOC RESCUE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-container": "#ffdad6",
+              "on-primary-fixed": "#410003",
+              "on-tertiary": "#ffffff",
+              "surface-container-high": "#d9ebf5",
+              "inverse-on-surface": "#e2f3fd",
+              "surface-dim": "#cbdde7",
+              "on-surface": "#0d1e25",
+              "inverse-primary": "#ffb3ac",
+              "surface-container-lowest": "#ffffff",
+              "primary-container": "#d32f2f",
+              "on-primary": "#ffffff",
+              "on-primary-container": "#fff2f0",
+              "secondary-container": "#54a0fe",
+              "on-tertiary-container": "#e9f7ff",
+              "on-background": "#0d1e25",
+              "inverse-surface": "#23333a",
+              "on-secondary": "#ffffff",
+              "surface": "#f4faff",
+              "surface-container": "#dff1fb",
+              "tertiary-fixed-dim": "#7bd1f8",
+              "surface-tint": "#ba1a20",
+              "surface-bright": "#f4faff",
+              "on-tertiary-fixed-variant": "#004d65",
+              "secondary-fixed-dim": "#a5c8ff",
+              "primary-fixed-dim": "#ffb3ac",
+              "primary-fixed": "#ffdad6",
+              "on-surface-variant": "#5b403d",
+              "on-tertiary-fixed": "#001f2a",
+              "outline-variant": "#e4beba",
+              "on-error-container": "#93000a",
+              "tertiary-container": "#00799c",
+              "on-secondary-container": "#003567",
+              "on-error": "#ffffff",
+              "background": "#f4faff",
+              "on-primary-fixed-variant": "#930010",
+              "error": "#ba1a1a",
+              "tertiary-fixed": "#bee9ff",
+              "surface-variant": "#d4e5ef",
+              "secondary-fixed": "#d4e3ff",
+              "primary": "#af101a",
+              "on-secondary-fixed": "#001c3a",
+              "surface-container-highest": "#d4e5ef",
+              "on-secondary-fixed-variant": "#004786",
+              "tertiary": "#005f7b",
+              "secondary": "#005faf",
+              "outline": "#8f6f6c",
+              "surface-container-low": "#e7f6ff"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(244, 250, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-14 bg-[#f4faff] dark:bg-[#0d1e25]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#D32F2F] dark:text-[#af101a]" data-icon="emergency">emergency</span>
+<h1 class="font-['Inter'] font-bold tracking-tighter uppercase text-sm text-[#D32F2F] dark:text-[#af101a]">BONTOC RESCUE</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#0d1e25] dark:text-[#f4faff]" data-icon="signal_cellular_alt">signal_cellular_alt</span>
+</div>
+<div class="absolute bottom-0 left-0 bg-[#cbdde7] dark:bg-[#1a2f38] h-[2px] w-full"></div>
+</header>
+<main class="pt-20 px-4 max-w-4xl mx-auto space-y-10">
+<!-- Header Section -->
+<section class="space-y-2">
+<div class="flex items-center gap-2">
+<span class="w-2 h-6 bg-primary rounded-sm"></span>
+<h2 class="text-2xl font-black tracking-tight uppercase text-on-surface">System Settings</h2>
+</div>
+<p class="text-sm font-medium text-outline uppercase tracking-widest">Protocol Configuration &amp; Security</p>
+</section>
+<!-- Settings Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+<!-- Notifications Card -->
+<div class="md:col-span-7 bg-surface-container-lowest p-6 rounded-xl border-l-4 border-primary transition-all hover:bg-surface-container-low group">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="font-bold text-lg text-on-surface">Notifications</h3>
+<p class="text-xs text-outline font-label uppercase tracking-wider">Communication Channels</p>
+</div>
+<span class="material-symbols-outlined text-primary opacity-50 group-hover:opacity-100" data-icon="notifications_active">notifications_active</span>
+</div>
+<div class="space-y-5">
+<div class="flex justify-between items-center">
+<div class="space-y-1">
+<span class="text-sm font-bold block">Critical Alerts</span>
+<span class="text-xs text-outline block">Override silent mode for life-threat events</span>
+</div>
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<div class="space-y-1">
+<span class="text-sm font-bold block">Push Notifications</span>
+<span class="text-xs text-outline block">Standard dispatch updates and unit status</span>
+</div>
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<div class="space-y-1">
+<span class="text-sm font-bold block">SMS Backup</span>
+<span class="text-xs text-outline block">Redundant alerts via cellular SMS network</span>
+</div>
+<div class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Dark Mode Toggle (Asymmetric) -->
+<div class="md:col-span-5 bg-on-surface text-surface p-6 rounded-xl flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-3xl mb-4" data-icon="dark_mode">dark_mode</span>
+<h3 class="font-bold text-lg">Visual Protocol</h3>
+<p class="text-xs text-surface-dim opacity-70 uppercase tracking-widest mt-1">Interface Optimization</p>
+</div>
+<div class="mt-8 flex gap-2">
+<button class="flex-1 py-2 bg-surface-container-highest text-on-surface rounded-md text-xs font-bold uppercase tracking-tighter">Light</button>
+<button class="flex-1 py-2 bg-primary text-white rounded-md text-xs font-bold uppercase tracking-tighter">Dark</button>
+</div>
+</div>
+<!-- Permissions Card -->
+<div class="md:col-span-4 bg-surface-container-low p-6 rounded-xl space-y-6">
+<div>
+<h3 class="font-bold text-on-surface">Hardware Permissions</h3>
+<p class="text-[10px] text-outline font-label uppercase tracking-[0.1em]">Access Control List</p>
+</div>
+<ul class="space-y-4">
+<li class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-container-lowest flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+</div>
+<span class="text-xs font-bold flex-1 uppercase tracking-tight">Precise GPS</span>
+<span class="text-[10px] font-black text-secondary uppercase">Always</span>
+</li>
+<li class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-container-lowest flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="photo_camera">photo_camera</span>
+</div>
+<span class="text-xs font-bold flex-1 uppercase tracking-tight">Camera Support</span>
+<span class="text-[10px] font-black text-secondary uppercase">Active</span>
+</li>
+<li class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-container-lowest flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="mic">mic</span>
+</div>
+<span class="text-xs font-bold flex-1 uppercase tracking-tight">Radio Mic</span>
+<span class="text-[10px] font-black text-error uppercase">Restricted</span>
+</li>
+</ul>
+</div>
+<!-- LoRa Fallback Card -->
+<div class="md:col-span-8 relative overflow-hidden bg-surface-container-lowest rounded-xl p-8 flex flex-col md:flex-row gap-8 items-center border border-surface-container">
+<div class="flex-1 space-y-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+<span class="text-[10px] font-bold text-secondary uppercase tracking-widest">Network Redundancy</span>
+</div>
+<h3 class="text-2xl font-black text-on-surface leading-tight">LoRa Fallback Mode</h3>
+<p class="text-sm text-outline leading-relaxed max-w-sm">Automatically switch to Long Range radio connectivity when cellular and satellite data signals drop below tactical thresholds.</p>
+<button class="px-6 py-2 bg-secondary text-white text-xs font-bold uppercase tracking-wider rounded-md hover:bg-on-secondary-container transition-colors">Configure Frequency</button>
+</div>
+<div class="w-full md:w-48 aspect-square rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-6xl text-surface-dim" data-icon="sensors">sensors</span>
+</div>
+</div>
+<!-- Help & Support -->
+<div class="md:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-5">
+<a class="p-4 bg-white border border-outline-variant/20 rounded-lg flex items-center gap-4 hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined text-primary" data-icon="help_center">help_center</span>
+<div>
+<span class="block text-sm font-bold">Standard Protocol Guide</span>
+<span class="text-[10px] text-outline uppercase tracking-tight">Manual &amp; Documentation</span>
+</div>
+</a>
+<a class="p-4 bg-white border border-outline-variant/20 rounded-lg flex items-center gap-4 hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined text-secondary" data-icon="support_agent">support_agent</span>
+<div>
+<span class="block text-sm font-bold">Priority Tech Dispatch</span>
+<span class="text-[10px] text-outline uppercase tracking-tight">24/7 Admin Support</span>
+</div>
+</a>
+<a class="p-4 bg-white border border-outline-variant/20 rounded-lg flex items-center gap-4 hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined text-on-surface" data-icon="info">info</span>
+<div>
+<span class="block text-sm font-bold">System Manifest</span>
+<span class="text-[10px] text-outline uppercase tracking-tight">v4.8.2 Tactical Build</span>
+</div>
+</a>
+</div>
+</div>
+<!-- Danger Zone -->
+<section class="pt-8 border-t border-outline-variant/20">
+<h3 class="text-xs font-bold text-error uppercase tracking-[0.2em] mb-4">Critical Actions</h3>
+<div class="flex flex-wrap gap-4">
+<button class="px-5 py-2.5 border border-error text-error text-[10px] font-black uppercase tracking-widest rounded hover:bg-error-container transition-colors">Clear Local Data</button>
+<button class="px-5 py-2.5 bg-error text-white text-[10px] font-black uppercase tracking-widest rounded hover:opacity-90 transition-opacity">Decommission Device</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-[#f4faff]/70 dark:bg-[#0d1e25]/70 backdrop-blur-xl border-t border-[#cbdde7]/20 shadow-[0_-4px_40px_0_rgba(13,30,37,0.06)]">
+<a class="flex flex-col items-center justify-center text-[#0d1e25] dark:text-[#cbdde7] opacity-60 hover:opacity-100 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#0d1e25] dark:text-[#cbdde7] opacity-60 hover:opacity-100 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="Assignment">assignment</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Reports</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#0d1e25] dark:text-[#cbdde7] opacity-60 hover:opacity-100 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Connectivity</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#D32F2F] dark:bg-[#af101a] text-white rounded-[0.375rem] px-3 py-1 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

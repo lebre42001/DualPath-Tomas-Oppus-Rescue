@@ -1,0 +1,155 @@
+{
+  "checkpoint": "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\artifacts\\checkpoints\\text_xlmr_civilian_multilingual_20261005\\trial_lr_2e-5_seed42",
+  "method": "scalar temperature scaling; grid search minimizing calibration negative log-likelihood",
+  "temperature": 0.7741419687922484,
+  "support": 83,
+  "calibration_only_fit": true,
+  "raw": {
+    "nll": 0.3165534525832419,
+    "brier_multiclass": 0.14903511087403465,
+    "top_label_ece_10_bins": {
+      "bins": 10,
+      "ece": 0.06292431648955288,
+      "by_bin": [
+        {
+          "lower": 0.4,
+          "upper": 0.5,
+          "count": 2,
+          "mean_confidence": 0.48550789058208466,
+          "accuracy": 0.5
+        },
+        {
+          "lower": 0.5,
+          "upper": 0.6,
+          "count": 4,
+          "mean_confidence": 0.5288678258657455,
+          "accuracy": 0.75
+        },
+        {
+          "lower": 0.6,
+          "upper": 0.7,
+          "count": 7,
+          "mean_confidence": 0.6621825609888349,
+          "accuracy": 0.8571428571428571
+        },
+        {
+          "lower": 0.7,
+          "upper": 0.8,
+          "count": 8,
+          "mean_confidence": 0.7510776817798615,
+          "accuracy": 0.875
+        },
+        {
+          "lower": 0.8,
+          "upper": 0.9,
+          "count": 14,
+          "mean_confidence": 0.8624466189316341,
+          "accuracy": 0.9285714285714286
+        },
+        {
+          "lower": 0.9,
+          "upper": 1.0,
+          "count": 48,
+          "mean_confidence": 0.9369300541778406,
+          "accuracy": 0.9583333333333334
+        }
+      ]
+    }
+  },
+  "temperature_scaled": {
+    "nll": 0.2981267693556239,
+    "brier_multiclass": 0.14173005984393827,
+    "top_label_ece_10_bins": {
+      "bins": 10,
+      "ece": 0.03650675928204988,
+      "by_bin": [
+        {
+          "lower": 0.5,
+          "upper": 0.6,
+          "count": 5,
+          "mean_confidence": 0.5470038028578516,
+          "accuracy": 0.6
+        },
+        {
+          "lower": 0.6,
+          "upper": 0.7,
+          "count": 3,
+          "mean_confidence": 0.6481110335569839,
+          "accuracy": 0.6666666666666666
+        },
+        {
+          "lower": 0.7,
+          "upper": 0.8,
+          "count": 7,
+          "mean_confidence": 0.7629488111051541,
+          "accuracy": 0.8571428571428571
+        },
+        {
+          "lower": 0.8,
+          "upper": 0.9,
+          "count": 7,
+          "mean_confidence": 0.8507410101974602,
+          "accuracy": 1.0
+        },
+        {
+          "lower": 0.9,
+          "upper": 1.0,
+          "count": 61,
+          "mean_confidence": 0.9672990472866991,
+          "accuracy": 0.9508196721311475
+        }
+      ]
+    }
+  },
+  "routing_sweep_calibration_only": [
+    {
+      "threshold": 0.5,
+      "coverage": 0.7469879518072289,
+      "review_routing_percent": 0.2530120481927711,
+      "critical_routed_to_review": 0,
+      "serious_routed_to_review": 0,
+      "routed_high_risk_undertriage": 3
+    },
+    {
+      "threshold": 0.6,
+      "coverage": 0.6867469879518072,
+      "review_routing_percent": 0.3132530120481928,
+      "critical_routed_to_review": 2,
+      "serious_routed_to_review": 0,
+      "routed_high_risk_undertriage": 2
+    },
+    {
+      "threshold": 0.65,
+      "coverage": 0.6746987951807228,
+      "review_routing_percent": 0.32530120481927716,
+      "critical_routed_to_review": 2,
+      "serious_routed_to_review": 0,
+      "routed_high_risk_undertriage": 2
+    },
+    {
+      "threshold": 0.7,
+      "coverage": 0.6506024096385542,
+      "review_routing_percent": 0.3493975903614458,
+      "critical_routed_to_review": 2,
+      "serious_routed_to_review": 1,
+      "routed_high_risk_undertriage": 1
+    },
+    {
+      "threshold": 0.8,
+      "coverage": 0.5662650602409639,
+      "review_routing_percent": 0.4337349397590361,
+      "critical_routed_to_review": 5,
+      "serious_routed_to_review": 1,
+      "routed_high_risk_undertriage": 1
+    },
+    {
+      "threshold": 0.9,
+      "coverage": 0.5060240963855421,
+      "review_routing_percent": 0.49397590361445787,
+      "critical_routed_to_review": 5,
+      "serious_routed_to_review": 3,
+      "routed_high_risk_undertriage": 1
+    }
+  ],
+  "warning": "83 synthetic draft rows; calibration statistics are exploratory and do not establish reliable probability calibration."
+}

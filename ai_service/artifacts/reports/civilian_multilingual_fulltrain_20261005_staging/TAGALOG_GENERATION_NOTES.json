@@ -1,0 +1,140 @@
+{
+  "status": "synthetic_draft_staging_only_not_human_reviewed_not_training_eligible",
+  "created_at": "2026-10-05",
+  "csv_file": "tagalog_draft.csv",
+  "row_count": 240,
+  "language": "tl",
+  "generation_source": "synthetic_ai_generated",
+  "review_status": "draft_for_human_review",
+  "rubric_version": "TEXT-RUBRIC-0.2-B",
+  "label_counts": {
+    "minor": 60,
+    "serious": 60,
+    "critical": 60,
+    "needs_review": 60
+  },
+  "whitespace_word_counts_by_label": {
+    "minor": 561,
+    "serious": 706,
+    "critical": 742,
+    "needs_review": 624
+  },
+  "total_whitespace_words": 2633,
+  "word_length_buckets_by_label": {
+    "minor": {
+      "1-3": 5,
+      "4-8": 27,
+      "9-15": 20,
+      "16+": 8
+    },
+    "serious": {
+      "1-3": 2,
+      "4-8": 25,
+      "9-15": 20,
+      "16+": 13
+    },
+    "critical": {
+      "1-3": 0,
+      "4-8": 17,
+      "9-15": 26,
+      "16+": 17
+    },
+    "needs_review": {
+      "1-3": 6,
+      "4-8": 13,
+      "9-15": 34,
+      "16+": 7
+    }
+  },
+  "scenario_family_count": 228,
+  "annotation_group_count": 228,
+  "unique_normalized_text_hashes": 240,
+  "csv_sha256": "2c0742589afa3bc7fb47e6465555f17f7ad54400ab854f0b1114f92ea36ef17e",
+  "limitations": [
+    "All entries are synthetic drafts, not real reports.",
+    "Labels are proposed only and require qualified responder and fluent Tagalog review; none are human-confirmed.",
+    "No training, evaluation, calibration, merge, activation, or deployment occurred.",
+    "Labels are not medical diagnoses or autonomous dispatch decisions.",
+    "Automated similarity screening identified linked same-scenario variants listed below; it does not establish full semantic independence. Fluent Tagalog and responder review remains required.",
+    "Related synthetic paraphrase patterns listed in redteam_revisions share family and annotation-group IDs; parent_case_id and relationship_type mark variants. Similarity screening does not prove that other separate IDs are semantically independent. Human review remains required."
+  ],
+  "targeted_rubric_support_revisions": {
+    "case_ids": [
+      "TL-016",
+      "TL-064",
+      "TL-068",
+      "TL-072",
+      "TL-076",
+      "TL-087",
+      "TL-090",
+      "TL-112",
+      "TL-124",
+      "TL-141",
+      "TL-149"
+    ],
+    "changed_text_rows": 11,
+    "labels_changed": 0,
+    "review_status_changed": 0,
+    "note": "Wording clarified Tagalog subject, current accident context, injury extent/control or explicit immediate threat under working TEXT-RUBRIC-0.2-B. All labels remain proposed synthetic draft labels and require human review."
+  },
+  "redteam_revisions": {
+    "changed_text_rows": 6,
+    "linked_same_scenario_pairs": [
+      [
+        "TL-037",
+        "TL-054"
+      ],
+      [
+        "TL-037",
+        "TL-052"
+      ],
+      [
+        "TL-073",
+        "TL-094"
+      ],
+      [
+        "TL-101",
+        "TL-119"
+      ],
+      [
+        "TL-127",
+        "TL-155"
+      ],
+      [
+        "TL-163",
+        "TL-179"
+      ],
+      [
+        "TL-018",
+        "TL-031"
+      ],
+      [
+        "TL-198",
+        "TL-214"
+      ],
+      [
+        "TL-036",
+        "TL-046"
+      ],
+      [
+        "TL-050",
+        "TL-059"
+      ],
+      [
+        "TL-015",
+        "TL-018"
+      ],
+      [
+        "TL-018",
+        "TL-031"
+      ],
+      [
+        "TL-121",
+        "TL-146"
+      ]
+    ],
+    "labels_changed": 0,
+    "review_status_changed": 0,
+    "note": "Related paraphrase/pattern variants share scenario_family_id and annotation_group_id; variant rows point to their root via parent_case_id. Wording clarifies person/context/support; proposed labels remain synthetic and unreviewed."
+  }
+}

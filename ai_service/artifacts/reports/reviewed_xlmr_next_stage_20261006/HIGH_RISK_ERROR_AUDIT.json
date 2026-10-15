@@ -1,0 +1,543 @@
+{
+  "audit_id": "reviewed-xlmr-next-stage-20261006-high-risk-errors",
+  "created_at_local_date": "2026-10-06",
+  "status": "DIAGNOSTIC_AUDIT_COMPLETE_HUMAN_SEVERITY_REVIEW_PENDING",
+  "method": {
+    "prediction_reproduction": "Loaded selected local XLM-R checkpoint and its local tokenizer with Transformers; eval mode; default tokenizer configuration; batched fresh_test.csv rows in batches of 8; softmax over logits. Reproduced saved confusion matrix exactly.",
+    "confidence": "Maximum raw softmax probability; not calibrated and not a validated risk score.",
+    "nearest_training_examples": "Top 3 by whitespace-independent lowercase Unicode token-set Jaccard against train.csv. This is a lexical overlap aid only, not semantic similarity, attribution, or evidence of leakage.",
+    "word_count": "Recorded source provenance word_count and independently computed whitespace split count.",
+    "constraints": "No source rows, labels, checkpoint, active config, or deployment were modified. No human decisions or corrected labels were created."
+  },
+  "verified_counts": {
+    "fresh_test_rows": 84,
+    "actual_critical_rows": 21,
+    "critical_to_minor": 4,
+    "critical_to_serious": 2,
+    "critical_to_critical": 15,
+    "critical_to_needs_review": 0,
+    "raw_critical_undertriage_total": 6,
+    "saved_confusion_matrix_exact_match": true,
+    "synthetic_draft_test_rows": 84,
+    "human_confirmed_test_rows": 0
+  },
+  "metrics_reference": {
+    "dataset_fingerprint": "308cf06a552b652d9f201f00516bb602afb40428a840b3a67043773eade92498",
+    "model_version": "text-20261005T135449737752Z",
+    "critical_support": 21,
+    "critical_recall": 0.7142857142857143,
+    "raw_high_risk_undertriage_count": 6,
+    "raw_high_risk_support": 42,
+    "confusion_labels": [
+      "minor",
+      "serious",
+      "critical",
+      "needs_review"
+    ],
+    "confusion_rows_actual_columns_predicted": [
+      [
+        18,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        20,
+        1,
+        0
+      ],
+      [
+        4,
+        2,
+        15,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        21
+      ]
+    ]
+  },
+  "source_sha256": {
+    "fresh_test.csv": "3ef72767dcc74dfb5f054c06fee8e3924d0d068b53c64e7e57a8e8e02320bc7b",
+    "train.csv": "f01b9356cf40fa8c199f38e1802744846bd446fd6c3deec1966cc37ed8582b9c",
+    "provenance.csv": "fb8c89f5a72859f0070305ba046d6295e86f985514935a7c51a912e9f3ecf3df",
+    "evaluation_metrics.json": "63078a2fd2a473b784f967c457a33e67419d5e389cee5f77c98c658bbce7c325",
+    "model.safetensors": "13ad4e9ec1c45c817fd33082072bf430aabe3afa4571e8b88ed5d0e333269fa2",
+    "metadata.json": "5b2165bc330b8c6a6d96fbcb43053ef4fd1b46649c218490271ceb085a45aeac"
+  },
+  "checkpoint": {
+    "path": "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\artifacts\\checkpoints\\text_xlmr_civilian_multilingual_20261005\\trial_lr_2e-5_seed42",
+    "model_safetensors_sha256": "13ad4e9ec1c45c817fd33082072bf430aabe3afa4571e8b88ed5d0e333269fa2",
+    "metadata_version": "text-20261005T135449737752Z",
+    "active_model_changed": false,
+    "deployment_approved": false
+  },
+  "cases": [
+    {
+      "priority_rank": 1,
+      "case_id": "CEB-CRITICAL-001",
+      "scenario_family_id": "CEB-FAM-CRITICAL-001",
+      "annotation_group_id": "CEB-GRP-CRITICAL-001",
+      "language": "ceb",
+      "text": "Pasahero, walay ginhawa.",
+      "word_count_source": "3",
+      "word_count_whitespace": 3,
+      "length_bucket": "1-3",
+      "current_draft_label": "critical",
+      "model_prediction": "minor",
+      "model_confidence_raw_softmax": 0.7948017716407776,
+      "confidence_is_calibrated": false,
+      "class_probabilities": {
+        "minor": 0.7948017716407776,
+        "serious": 0.03958498314023018,
+        "critical": 0.13796819746494293,
+        "needs_review": 0.02764512039721012
+      },
+      "model_error_relative_to_draft_label": true,
+      "draft_label_correctness": "not established; requires independent human review",
+      "category_flags": [
+        "MODEL_ERROR",
+        "SHORT_TEXT_FAILURE",
+        "OTHER"
+      ],
+      "lexical_cues": [
+        "pasahero (passenger)",
+        "walay ginhawa (no breathing)",
+        "Single-language Cebuano example; language interpretation concern is not itself proof of classifier failure mechanism."
+      ],
+      "negation_observation": "No grammatical negation; walay is an absence marker in Cebuano. Human fluent reviewer should confirm intended meaning.",
+      "person_object_observation": "Subject appears to be a passenger/person, not a vehicle/object; compact phrasing leaves context sparse.",
+      "ambiguity_observation": "Three-word panic-style fragment. ?No breathing? is a critical cue if it refers to the passenger; reviewer must verify.",
+      "family_observation": "Unique declared scenario_family_id; no parent_case_id or relationship link in provenance. Family uniqueness is not independent semantic validation.",
+      "generator_observation": "synthetic_ai_generated; original_draft. Very short, template-like fragment; possible shortcut/length artifact, not established.",
+      "human_review_focus": "Confirm Cebuano meaning and whether ?walay ginhawa? refers to a living passenger who is not breathing.",
+      "provenance": {
+        "generation_source": "synthetic_ai_generated",
+        "review_status": "draft",
+        "parent_case_id": "",
+        "relationship_type": "original_draft",
+        "normalized_text_hash": "98574ac658e8bab7e0fe4f6881bab0b50326e9da23a410cc3b9dbd6cccbf6b58"
+      },
+      "nearest_train_examples_lexical_only": [
+        {
+          "case_id": "CEB-CRITICAL-017",
+          "current_draft_label": "critical",
+          "language": "ceb",
+          "text": "Walay tubag ang pasahero; halos dili makita iyang ginhawa.",
+          "token_jaccard": 0.3333,
+          "scenario_family_id": "CEB-FAM-CRITICAL-017",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        },
+        {
+          "case_id": "CEB-MINOR-001",
+          "current_draft_label": "minor",
+          "language": "ceb",
+          "text": "Bangga, walay nasamdan.",
+          "token_jaccard": 0.2,
+          "scenario_family_id": "CEB-FAM-MINOR-001",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        },
+        {
+          "case_id": "CEB-CRITICAL-002",
+          "current_draft_label": "critical",
+          "language": "ceb",
+          "text": "Drayber, walay panimuot.",
+          "token_jaccard": 0.2,
+          "scenario_family_id": "CEB-FAM-CRITICAL-002",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        }
+      ],
+      "classification_note": "OTHER denotes Cebuano linguistic interpretation/reviewer-verification risk; it does not mean mixed-language text."
+    },
+    {
+      "priority_rank": 2,
+      "case_id": "CEB-CRITICAL-003",
+      "scenario_family_id": "CEB-FAM-CRITICAL-003",
+      "annotation_group_id": "CEB-GRP-CRITICAL-003",
+      "language": "ceb",
+      "text": "Naigo sa awto ang siklista; dili siya motubag ug kusog ang dugo nga nag-agas karon.",
+      "word_count_source": "15",
+      "word_count_whitespace": 15,
+      "length_bucket": "9-15",
+      "current_draft_label": "critical",
+      "model_prediction": "minor",
+      "model_confidence_raw_softmax": 0.5855500102043152,
+      "confidence_is_calibrated": false,
+      "class_probabilities": {
+        "minor": 0.5855500102043152,
+        "serious": 0.028125718235969543,
+        "critical": 0.37924766540527344,
+        "needs_review": 0.007076646666973829
+      },
+      "model_error_relative_to_draft_label": true,
+      "draft_label_correctness": "not established; requires independent human review",
+      "category_flags": [
+        "MODEL_ERROR",
+        "NEGATION_FAILURE",
+        "OTHER"
+      ],
+      "lexical_cues": [
+        "cyclist hit by car",
+        "dili siya motubag (does not respond)",
+        "kusog ang dugo nga nag-agas karon (heavy blood flowing now)",
+        "Single-language Cebuano example; language interpretation concern is not itself proof of classifier failure mechanism."
+      ],
+      "negation_observation": "dili scopes over motubag (not responding); the polarity conveys unresponsiveness, not a negated injury.",
+      "person_object_observation": "siya refers to the person/cyclist in the sentence; no clear subject/object swap in wording.",
+      "ambiguity_observation": "Dense Cebuano description with collision, nonresponse, and active heavy bleeding; human reviewer should validate idiom and referent.",
+      "family_observation": "Unique declared family; provenance has no parent or translation link.",
+      "generator_observation": "synthetic_ai_generated; original_draft. Semicolon-separated cue bundle may be a generated severity template.",
+      "human_review_focus": "Check native Cebuano interpretation of nonresponse and heavy bleeding, then judge severity independently.",
+      "provenance": {
+        "generation_source": "synthetic_ai_generated",
+        "review_status": "draft",
+        "parent_case_id": "",
+        "relationship_type": "original_draft",
+        "normalized_text_hash": "b53a58f94e6b6f51823c435169f1ff35ab54e44e4b244cc757fd9507883190da"
+      },
+      "nearest_train_examples_lexical_only": [
+        {
+          "case_id": "CEB-CRITICAL-039",
+          "current_draft_label": "critical",
+          "language": "ceb",
+          "text": "Bug-at nga dugo ang nag-agas sa samad ug dili kini mohunong bisan gipugngan.",
+          "token_jaccard": 0.3636,
+          "scenario_family_id": "CEB-FAM-CRITICAL-039",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        },
+        {
+          "case_id": "CEB-CRITICAL-043",
+          "current_draft_label": "critical",
+          "language": "ceb",
+          "text": "Natumba ang siklista ug dili momata, naglisod usab siya sa pagginhawa karon.",
+          "token_jaccard": 0.35,
+          "scenario_family_id": "CEB-FAM-CRITICAL-043",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        },
+        {
+          "case_id": "CEB-CRITICAL-009",
+          "current_draft_label": "critical",
+          "language": "ceb",
+          "text": "Walay panimuot ang bata nga naigo sa awto karon.",
+          "token_jaccard": 0.3333,
+          "scenario_family_id": "CEB-FAM-CRITICAL-009",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        }
+      ],
+      "classification_note": "OTHER denotes Cebuano linguistic interpretation/reviewer-verification risk; it does not mean mixed-language text."
+    },
+    {
+      "priority_rank": 3,
+      "case_id": "CEB-CRITICAL-024",
+      "scenario_family_id": "CEB-FAM-CRITICAL-024",
+      "annotation_group_id": "CEB-GRP-CRITICAL-024",
+      "language": "ceb",
+      "text": "Human sa bangga, grabe ang pagdugo sa bukton sa drayber ug dili mohunong.",
+      "word_count_source": "13",
+      "word_count_whitespace": 13,
+      "length_bucket": "9-15",
+      "current_draft_label": "critical",
+      "model_prediction": "serious",
+      "model_confidence_raw_softmax": 0.5681710839271545,
+      "confidence_is_calibrated": false,
+      "class_probabilities": {
+        "minor": 0.38912343978881836,
+        "serious": 0.5681710839271545,
+        "critical": 0.03668762370944023,
+        "needs_review": 0.006017822772264481
+      },
+      "model_error_relative_to_draft_label": true,
+      "draft_label_correctness": "not established; requires independent human review",
+      "category_flags": [
+        "MODEL_ERROR",
+        "OTHER"
+      ],
+      "lexical_cues": [
+        "human sa bangga (after collision)",
+        "grabe ang pagdugo sa bukton sa drayber (severe bleeding on driver arm)",
+        "dili mohunong (does not stop)",
+        "Single-language Cebuano example; language interpretation concern is not itself proof of classifier failure mechanism."
+      ],
+      "negation_observation": "dili modifies mohunong (does not stop); this is ongoing, not negated bleeding.",
+      "person_object_observation": "Bleeding is attributed to the driver?s arm; grammatical agent is clear.",
+      "ambiguity_observation": "No explicit loss of consciousness or inability to move; persistent severe bleeding is nevertheless an urgent cue if phrase is understood literally.",
+      "family_observation": "Unique declared family; provenance has no parent/translation relationship.",
+      "generator_observation": "synthetic_ai_generated; original_draft. May reflect a recurring severity phrase pattern; check family audit.",
+      "human_review_focus": "Verify whether ?grabe? and ?dili mohunong? communicate severe, uncontrolled bleeding in local Cebuano usage.",
+      "provenance": {
+        "generation_source": "synthetic_ai_generated",
+        "review_status": "draft",
+        "parent_case_id": "",
+        "relationship_type": "original_draft",
+        "normalized_text_hash": "9056bb6cf37d63f3bb586dc1de7194059eb2ae78bd0a511b9d62ad2b96c813ee"
+      },
+      "nearest_train_examples_lexical_only": [
+        {
+          "case_id": "CEB-SERIOUS-057",
+          "current_draft_label": "serious",
+          "language": "ceb",
+          "text": "Human matumba ang motor, dili magamit sa drayber ang bukton ug nagreklamo siya sa kasakit sa abaga.",
+          "token_jaccard": 0.3889,
+          "scenario_family_id": "CEB-FAM-SERIOUS-057",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        },
+        {
+          "case_id": "CEB-CRITICAL-057",
+          "current_draft_label": "critical",
+          "language": "ceb",
+          "text": "Nasangit ang drayber sa awto nga nasunog human sa bangga; dili makagawas ug wala motubag.",
+          "token_jaccard": 0.3889,
+          "scenario_family_id": "CEB-FAM-CRITICAL-057",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        },
+        {
+          "case_id": "CEB-CRITICAL-013",
+          "current_draft_label": "critical",
+          "language": "ceb",
+          "text": "Nasunog ang awto human sa bangga; naa pa sulod ang drayber ug dili siya motubag.",
+          "token_jaccard": 0.3889,
+          "scenario_family_id": "CEB-FAM-CRITICAL-013",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        }
+      ],
+      "classification_note": "OTHER denotes Cebuano linguistic interpretation/reviewer-verification risk; it does not mean mixed-language text."
+    },
+    {
+      "priority_rank": 4,
+      "case_id": "MX-CRITICAL-002",
+      "scenario_family_id": "MX-FAM-CRITICAL-002",
+      "annotation_group_id": "MX-GRP-CRITICAL-002",
+      "language": "mixed",
+      "text": "Human sa kusog nga bangga, dili motubag ang driver ug shallow na ang paghinga niya ngayon.",
+      "word_count_source": "16",
+      "word_count_whitespace": 16,
+      "length_bucket": "16+",
+      "current_draft_label": "critical",
+      "model_prediction": "minor",
+      "model_confidence_raw_softmax": 0.7889612317085266,
+      "confidence_is_calibrated": false,
+      "class_probabilities": {
+        "minor": 0.7889612317085266,
+        "serious": 0.041321393102407455,
+        "critical": 0.1636631041765213,
+        "needs_review": 0.006054236553609371
+      },
+      "model_error_relative_to_draft_label": true,
+      "draft_label_correctness": "not established; requires independent human review",
+      "category_flags": [
+        "MODEL_ERROR",
+        "MIXED_LANGUAGE_FAILURE",
+        "NEGATION_FAILURE"
+      ],
+      "lexical_cues": [
+        "kusog nga bangga (severe collision)",
+        "dili motubag ang driver (driver does not respond)",
+        "shallow na ang paghinga niya ngayon (breathing is shallow now)"
+      ],
+      "negation_observation": "dili scopes over motubag (not responding); no negation cancels the breathing concern.",
+      "person_object_observation": "Driver is the person said to be unresponsive and breathing shallowly.",
+      "ambiguity_observation": "Cebuano phrases plus Tagalog ngayon and English shallow; confirm whether intended mixed-language category is accurate and clauses describe the same driver.",
+      "family_observation": "Unique declared family; no parent or relationship link in provenance.",
+      "generator_observation": "synthetic_ai_generated; original_draft. Three-language cue mixing and bundled signs warrant template audit.",
+      "human_review_focus": "Fluent Cebuano/Tagalog reviewer confirms language mix, pronouns, and shallow-breathing meaning.",
+      "provenance": {
+        "generation_source": "synthetic_ai_generated",
+        "review_status": "draft",
+        "parent_case_id": "",
+        "relationship_type": "original_draft",
+        "normalized_text_hash": "7c03a2314bb74eb099845356e97f6498d05e664a61f836fc18be20ba102a4581"
+      },
+      "nearest_train_examples_lexical_only": [
+        {
+          "case_id": "MX-SERIOUS-017",
+          "current_draft_label": "serious",
+          "language": "mixed",
+          "text": "Human sa bangga dili na niya maalsa ang bukton; conscious siya ug kusog ang kasakit sa abaga.",
+          "token_jaccard": 0.4286,
+          "scenario_family_id": "MX-FAM-SERIOUS-017",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        },
+        {
+          "case_id": "CEB-CRITICAL-057",
+          "current_draft_label": "critical",
+          "language": "ceb",
+          "text": "Nasangit ang drayber sa awto nga nasunog human sa bangga; dili makagawas ug wala motubag.",
+          "token_jaccard": 0.381,
+          "scenario_family_id": "CEB-FAM-CRITICAL-057",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        },
+        {
+          "case_id": "CEB-CRITICAL-038",
+          "current_draft_label": "critical",
+          "language": "ceb",
+          "text": "Naipit ang drayber sulod sa awto ug walay ginhawa human sa kusog nga bangga.",
+          "token_jaccard": 0.3333,
+          "scenario_family_id": "CEB-FAM-CRITICAL-038",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        }
+      ]
+    },
+    {
+      "priority_rank": 5,
+      "case_id": "MX-CRITICAL-013",
+      "scenario_family_id": "MX-FAM-CRITICAL-013",
+      "annotation_group_id": "MX-GRP-CRITICAL-013",
+      "language": "mixed",
+      "text": "Bug-at kaayo ang pagdugo sa paa ug dili mohunong; nangluspad siya ug hinay na motubag.",
+      "word_count_source": "15",
+      "word_count_whitespace": 15,
+      "length_bucket": "9-15",
+      "current_draft_label": "critical",
+      "model_prediction": "serious",
+      "model_confidence_raw_softmax": 0.8870298862457275,
+      "confidence_is_calibrated": false,
+      "class_probabilities": {
+        "minor": 0.08153284341096878,
+        "serious": 0.8870298862457275,
+        "critical": 0.025836767628788948,
+        "needs_review": 0.005600555334240198
+      },
+      "model_error_relative_to_draft_label": true,
+      "draft_label_correctness": "not established; requires independent human review",
+      "category_flags": [
+        "MODEL_ERROR",
+        "MIXED_LANGUAGE_FAILURE",
+        "NEGATION_FAILURE"
+      ],
+      "lexical_cues": [
+        "bug-at kaayo ang pagdugo (very heavy bleeding)",
+        "paa (leg)",
+        "dili mohunong (does not stop)",
+        "nangluspad (became pale)",
+        "hinay na motubag (responding slowly)"
+      ],
+      "negation_observation": "dili modifies mohunong; bleeding is described as continuing. The slow response clause is affirmative.",
+      "person_object_observation": "The bleeding, pallor, and slow response appear to describe one person, but pronoun/reference is omitted.",
+      "ambiguity_observation": "Cebuano and Tagalog lexical elements may be mixed; verify whether ?paa? is natural in this Cebuano text and whether signs refer to same patient.",
+      "family_observation": "Unique declared family; no parent or relationship link in provenance.",
+      "generator_observation": "synthetic_ai_generated; original_draft. Multi-cue list may be formulaic; audit semantic families and generator templates.",
+      "human_review_focus": "Check language naturalness and whether all symptoms belong to one injured person.",
+      "provenance": {
+        "generation_source": "synthetic_ai_generated",
+        "review_status": "draft",
+        "parent_case_id": "",
+        "relationship_type": "original_draft",
+        "normalized_text_hash": "4601c07e2b9db324239c4720292cd95de5b9e4deefb063714a94c481ccb9be94"
+      },
+      "nearest_train_examples_lexical_only": [
+        {
+          "case_id": "CEB-CRITICAL-054",
+          "current_draft_label": "critical",
+          "language": "ceb",
+          "text": "Bug-at ang pagdugo sa samad sa paa sa drayber, nangluspad siya ug dili na motubag sa tawag.",
+          "token_jaccard": 0.6667,
+          "scenario_family_id": "CEB-FAM-CRITICAL-054",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        },
+        {
+          "case_id": "MX-CRITICAL-025",
+          "current_draft_label": "critical",
+          "language": "mixed",
+          "text": "Naigo ang motor sa bus; dili motubag ang rider, bug-at ang pagdugo ug nagka blue na ang iyang ngabil.",
+          "token_jaccard": 0.3913,
+          "scenario_family_id": "MX-FAM-CRITICAL-025",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        },
+        {
+          "case_id": "MX-CRITICAL-027",
+          "current_draft_label": "critical",
+          "language": "mixed",
+          "text": "Naghuot ang dughan sa pasahero ug wala na motubag, dili na siya momata bisan pukawon.",
+          "token_jaccard": 0.3182,
+          "scenario_family_id": "MX-FAM-CRITICAL-027",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        }
+      ]
+    },
+    {
+      "priority_rank": 6,
+      "case_id": "TL-126",
+      "scenario_family_id": "TL-FAM-126",
+      "annotation_group_id": "TL-GRP-126",
+      "language": "tl",
+      "text": "Nalubog ang kotse, may sakay.",
+      "word_count_source": "5",
+      "word_count_whitespace": 5,
+      "length_bucket": "4-8",
+      "current_draft_label": "critical",
+      "model_prediction": "minor",
+      "model_confidence_raw_softmax": 0.7348114848136902,
+      "confidence_is_calibrated": false,
+      "class_probabilities": {
+        "minor": 0.7348114848136902,
+        "serious": 0.018246937543153763,
+        "critical": 0.23354505002498627,
+        "needs_review": 0.013396530412137508
+      },
+      "model_error_relative_to_draft_label": true,
+      "draft_label_correctness": "not established; requires independent human review",
+      "category_flags": [
+        "MODEL_ERROR",
+        "SHORT_TEXT_FAILURE",
+        "AMBIGUOUS_TEXT",
+        "POSSIBLE_LABEL_ERROR"
+      ],
+      "lexical_cues": [
+        "nalubog ang kotse (the car became submerged)",
+        "may sakay (there is an occupant/passenger)"
+      ],
+      "negation_observation": "No negation present.",
+      "person_object_observation": "Car is submerged; an occupant is present. Text does not state if the occupant is trapped, injured, conscious, or rescued.",
+      "ambiguity_observation": "Five-word report omits occupant status and whether immediate danger remains. The Critical draft label is plausible for an active submerged-vehicle emergency but is not fully substantiated by the text alone; this is a possible label-quality issue for human adjudication, not a confirmed error.",
+      "family_observation": "Unique declared family; provenance has no parent/translation relationship.",
+      "generator_observation": "synthetic_ai_generated; original_draft. Short, single-clause scenario may create severity shortcut and underspecified label.",
+      "human_review_focus": "Ask whether the intended scenario includes a person trapped/in immediate danger or merely an occupied submerged car with outcome unspecified.",
+      "provenance": {
+        "generation_source": "synthetic_ai_generated",
+        "review_status": "draft",
+        "parent_case_id": "",
+        "relationship_type": "original_draft",
+        "normalized_text_hash": "a2b0595d91d028c59e1800fa09861740693f9f26152ecb06def157cbdbc69aba"
+      },
+      "nearest_train_examples_lexical_only": [
+        {
+          "case_id": "TL-134",
+          "current_draft_label": "critical",
+          "language": "tl",
+          "text": "Nalubog ang kotse; hindi makalabas ang pasahero.",
+          "token_jaccard": 0.375,
+          "scenario_family_id": "TL-FAM-134",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        },
+        {
+          "case_id": "TL-006",
+          "current_draft_label": "minor",
+          "language": "tl",
+          "text": "Gasgas ang kotse.",
+          "token_jaccard": 0.3333,
+          "scenario_family_id": "TL-FAM-006",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        },
+        {
+          "case_id": "TL-073",
+          "current_draft_label": "serious",
+          "language": "tl",
+          "text": "May hiwa sa noo at nahihilo ang sakay.",
+          "token_jaccard": 0.3,
+          "scenario_family_id": "TL-FAM-073",
+          "note": "Lexical token-set overlap only; not a semantic or model-neighbor explanation."
+        }
+      ]
+    }
+  ],
+  "interpretation_limits": [
+    "These are six model disagreements against synthetic draft labels, not six verified labeling errors.",
+    "The model predictions were reproduced from the selected checkpoint on the designated fresh synthetic test file; do not use these examples for tuning or training before human review and a new split.",
+    "All per-case severity questions remain pending qualified responder/language review. No automatic severity adjudication is made.",
+    "Several examples mix languages or rely on region-specific Cebuano/Tagalog wording; fluent reviewers must validate both language and meaning."
+  ]
+}

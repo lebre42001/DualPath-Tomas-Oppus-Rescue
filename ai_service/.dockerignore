@@ -1,0 +1,13 @@
+.git
+.github
+__pycache__
+*.pyc
+.pytest_cache
+.venv
+.venv-text
+tests
+datasets
+artifacts/reports
+# Local text-training candidates are never implicitly shipped by COPY . .
+artifacts/checkpoints/text_*
+tool

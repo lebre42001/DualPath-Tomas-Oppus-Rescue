@@ -1,0 +1,1315 @@
+{
+  "model_version": "text-20260920T051044998351Z",
+  "historical_test": true,
+  "all_reference_labels_reviewed": false,
+  "metrics": {
+    "dataset_fingerprint": "a9034cc31dd1f32e10fa689621b21ec2cec143eba26581c5d3284dcb62d598cb",
+    "count": 27,
+    "raw_classifier": {
+      "count": 27,
+      "accuracy": 0.7037037037037037,
+      "macro_f1": 0.6461152882205514,
+      "per_class": {
+        "minor": {
+          "precision": 0.8571428571428571,
+          "recall": 0.75,
+          "f1": 0.7999999999999999,
+          "support": 8
+        },
+        "serious": {
+          "precision": 0.625,
+          "recall": 0.8333333333333334,
+          "f1": 0.7142857142857143,
+          "support": 6
+        },
+        "critical": {
+          "precision": 1.0,
+          "recall": 0.2,
+          "f1": 0.33333333333333337,
+          "support": 5
+        },
+        "needs_review": {
+          "precision": 0.6363636363636364,
+          "recall": 0.875,
+          "f1": 0.7368421052631579,
+          "support": 8
+        }
+      },
+      "confusion_matrix": {
+        "labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ],
+        "rows_actual_columns_predicted": [
+          [
+            6,
+            0,
+            0,
+            2
+          ],
+          [
+            0,
+            5,
+            0,
+            1
+          ],
+          [
+            0,
+            3,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            0,
+            7
+          ]
+        ]
+      }
+    },
+    "review_routed": {
+      "count": 27,
+      "accuracy": 0.4444444444444444,
+      "macro_f1": 0.32903225806451614,
+      "per_class": {
+        "minor": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 8
+        },
+        "serious": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "support": 6
+        },
+        "critical": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 5
+        },
+        "needs_review": {
+          "precision": 0.34782608695652173,
+          "recall": 1.0,
+          "f1": 0.5161290322580645,
+          "support": 8
+        }
+      },
+      "confusion_matrix": {
+        "labels": [
+          "minor",
+          "serious",
+          "critical",
+          "needs_review"
+        ],
+        "rows_actual_columns_predicted": [
+          [
+            0,
+            0,
+            0,
+            8
+          ],
+          [
+            0,
+            4,
+            0,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            8
+          ]
+        ]
+      }
+    },
+    "per_language": {
+      "en": {
+        "count": 9,
+        "accuracy": 0.3333333333333333,
+        "macro_f1": 0.125,
+        "per_class": {
+          "minor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 3
+          },
+          "serious": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2
+          },
+          "critical": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 1
+          },
+          "needs_review": {
+            "precision": 0.3333333333333333,
+            "recall": 1.0,
+            "f1": 0.5,
+            "support": 3
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "minor",
+            "serious",
+            "critical",
+            "needs_review"
+          ],
+          "rows_actual_columns_predicted": [
+            [
+              0,
+              0,
+              0,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              2
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              3
+            ]
+          ]
+        },
+        "high_risk_support": 3,
+        "high_risk_undertriage_count": 0,
+        "high_risk_undertriage_rate": 0.0,
+        "high_risk_review_rate": 1.0,
+        "coverage": 0.0,
+        "unscored_review_count": 0,
+        "raw_classifier": {
+          "count": 9,
+          "accuracy": 0.5555555555555556,
+          "macro_f1": 0.44166666666666665,
+          "per_class": {
+            "minor": {
+              "precision": 1.0,
+              "recall": 0.3333333333333333,
+              "f1": 0.5,
+              "support": 3
+            },
+            "serious": {
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "support": 2
+            },
+            "critical": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 1
+            },
+            "needs_review": {
+              "precision": 0.42857142857142855,
+              "recall": 1.0,
+              "f1": 0.6,
+              "support": 3
+            }
+          },
+          "confusion_matrix": {
+            "labels": [
+              "minor",
+              "serious",
+              "critical",
+              "needs_review"
+            ],
+            "rows_actual_columns_predicted": [
+              [
+                1,
+                0,
+                0,
+                2
+              ],
+              [
+                0,
+                1,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                3
+              ]
+            ]
+          }
+        }
+      },
+      "tl": {
+        "count": 9,
+        "accuracy": 0.4444444444444444,
+        "macro_f1": 0.3611111111111111,
+        "per_class": {
+          "minor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 3
+          },
+          "serious": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 2
+          },
+          "critical": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2
+          },
+          "needs_review": {
+            "precision": 0.2857142857142857,
+            "recall": 1.0,
+            "f1": 0.4444444444444445,
+            "support": 2
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "minor",
+            "serious",
+            "critical",
+            "needs_review"
+          ],
+          "rows_actual_columns_predicted": [
+            [
+              0,
+              0,
+              0,
+              3
+            ],
+            [
+              0,
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              2
+            ],
+            [
+              0,
+              0,
+              0,
+              2
+            ]
+          ]
+        },
+        "high_risk_support": 4,
+        "high_risk_undertriage_count": 0,
+        "high_risk_undertriage_rate": 0.0,
+        "high_risk_review_rate": 0.5,
+        "coverage": 0.2222222222222222,
+        "unscored_review_count": 0,
+        "raw_classifier": {
+          "count": 9,
+          "accuracy": 0.7777777777777778,
+          "macro_f1": 0.6666666666666666,
+          "per_class": {
+            "minor": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 3
+            },
+            "serious": {
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "support": 2
+            },
+            "critical": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 2
+            },
+            "needs_review": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 2
+            }
+          },
+          "confusion_matrix": {
+            "labels": [
+              "minor",
+              "serious",
+              "critical",
+              "needs_review"
+            ],
+            "rows_actual_columns_predicted": [
+              [
+                3,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                2,
+                0,
+                0
+              ],
+              [
+                0,
+                2,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                2
+              ]
+            ]
+          }
+        }
+      },
+      "ceb": {
+        "count": 9,
+        "accuracy": 0.5555555555555556,
+        "macro_f1": 0.4,
+        "per_class": {
+          "minor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2
+          },
+          "serious": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 2
+          },
+          "critical": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2
+          },
+          "needs_review": {
+            "precision": 0.42857142857142855,
+            "recall": 1.0,
+            "f1": 0.6,
+            "support": 3
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "minor",
+            "serious",
+            "critical",
+            "needs_review"
+          ],
+          "rows_actual_columns_predicted": [
+            [
+              0,
+              0,
+              0,
+              2
+            ],
+            [
+              0,
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              2
+            ],
+            [
+              0,
+              0,
+              0,
+              3
+            ]
+          ]
+        },
+        "high_risk_support": 4,
+        "high_risk_undertriage_count": 0,
+        "high_risk_undertriage_rate": 0.0,
+        "high_risk_review_rate": 0.5,
+        "coverage": 0.2222222222222222,
+        "unscored_review_count": 0,
+        "raw_classifier": {
+          "count": 9,
+          "accuracy": 0.7777777777777778,
+          "macro_f1": 0.7666666666666667,
+          "per_class": {
+            "minor": {
+              "precision": 0.6666666666666666,
+              "recall": 1.0,
+              "f1": 0.8,
+              "support": 2
+            },
+            "serious": {
+              "precision": 0.6666666666666666,
+              "recall": 1.0,
+              "f1": 0.8,
+              "support": 2
+            },
+            "critical": {
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "support": 2
+            },
+            "needs_review": {
+              "precision": 1.0,
+              "recall": 0.6666666666666666,
+              "f1": 0.8,
+              "support": 3
+            }
+          },
+          "confusion_matrix": {
+            "labels": [
+              "minor",
+              "serious",
+              "critical",
+              "needs_review"
+            ],
+            "rows_actual_columns_predicted": [
+              [
+                2,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                2,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                1,
+                0
+              ],
+              [
+                1,
+                0,
+                0,
+                2
+              ]
+            ]
+          }
+        }
+      },
+      "mixed": {
+        "count": 0,
+        "accuracy": null,
+        "macro_f1": null,
+        "per_class": {
+          "minor": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 0
+          },
+          "serious": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 0
+          },
+          "critical": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 0
+          },
+          "needs_review": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 0
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "minor",
+            "serious",
+            "critical",
+            "needs_review"
+          ],
+          "rows_actual_columns_predicted": [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        "high_risk_support": 0,
+        "high_risk_undertriage_count": 0,
+        "high_risk_undertriage_rate": null,
+        "high_risk_review_rate": null,
+        "coverage": null,
+        "unscored_review_count": 0
+      }
+    },
+    "unscored_review_count": 0,
+    "unscored_review_policy": "Transformer inputs beyond max_length receive no prediction and require review",
+    "coverage": 0.14814814814814814,
+    "abstention_rate": 0.8518518518518519,
+    "accepted_accuracy": 1.0,
+    "high_risk_support": 11,
+    "high_risk_undertriage_count": 0,
+    "high_risk_undertriage_rate": 0.0,
+    "raw_high_risk_undertriage_count": 3,
+    "raw_high_risk_support": 11,
+    "raw_high_risk_undertriage_rate": 0.2727272727272727,
+    "high_risk_review_rate": 0.6363636363636364,
+    "review_threshold": 0.65,
+    "confidence_calibrated": false,
+    "review_threshold_status": "provisional",
+    "approved_for_deployment": false
+  },
+  "predictions": [
+    {
+      "case_id": "SYN_A_MINOR_08_CEB",
+      "language": "ceb",
+      "reference_label": "minor",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "minor",
+        "confidence": 0.505808,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.505808,
+          "serious": 0.090058,
+          "critical": 0.098632,
+          "needs_review": 0.305502
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.3836561999632977
+    },
+    {
+      "case_id": "SYN_A_MINOR_08_EN",
+      "language": "en",
+      "reference_label": "minor",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "minor",
+        "confidence": 0.308265,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.308265,
+          "serious": 0.195864,
+          "critical": 0.187714,
+          "needs_review": 0.308157
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.14549229998374358
+    },
+    {
+      "case_id": "SYN_A_MINOR_08_TL",
+      "language": "tl",
+      "reference_label": "minor",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "minor",
+        "confidence": 0.484745,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.484745,
+          "serious": 0.108279,
+          "critical": 0.109746,
+          "needs_review": 0.29723
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.1681012000190094
+    },
+    {
+      "case_id": "SYN_A_NEEDS_REVIEW_03_CEB",
+      "language": "ceb",
+      "reference_label": "needs_review",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "needs_review",
+        "confidence": 0.427859,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.422472,
+          "serious": 0.057008,
+          "critical": 0.092661,
+          "needs_review": 0.427859
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.16244030004600063
+    },
+    {
+      "case_id": "SYN_A_NEEDS_REVIEW_03_EN",
+      "language": "en",
+      "reference_label": "needs_review",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "needs_review",
+        "confidence": 0.322274,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.305821,
+          "serious": 0.18823,
+          "critical": 0.183675,
+          "needs_review": 0.322274
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.14363030000822619
+    },
+    {
+      "case_id": "SYN_A_NEEDS_REVIEW_04_CEB",
+      "language": "ceb",
+      "reference_label": "needs_review",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "needs_review",
+        "confidence": 0.472554,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.400191,
+          "serious": 0.053235,
+          "critical": 0.074021,
+          "needs_review": 0.472554
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.2069488000124693
+    },
+    {
+      "case_id": "SYN_A_NEEDS_REVIEW_04_EN",
+      "language": "en",
+      "reference_label": "needs_review",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "needs_review",
+        "confidence": 0.317388,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.308,
+          "serious": 0.190574,
+          "critical": 0.184038,
+          "needs_review": 0.317388
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.13443090004147962
+    },
+    {
+      "case_id": "SYN_A_NEEDS_REVIEW_04_TL",
+      "language": "tl",
+      "reference_label": "needs_review",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "needs_review",
+        "confidence": 0.441871,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.411763,
+          "serious": 0.060155,
+          "critical": 0.086212,
+          "needs_review": 0.441871
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.1880578999989666
+    },
+    {
+      "case_id": "SYN_A_SERIOUS_08_TL",
+      "language": "tl",
+      "reference_label": "serious",
+      "review_status": "draft",
+      "prediction": {
+        "severity": "serious",
+        "predicted_label": "serious",
+        "confidence": 0.686107,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.085479,
+          "serious": 0.686107,
+          "critical": 0.17448,
+          "needs_review": 0.053934
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "complete",
+        "summary": "Experimental model; not validated for dispatch. Text model suggests Serious urgency from the submitted description. A responder must verify this suggestion.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.20212390000233427
+    },
+    {
+      "case_id": "SYN_CRITICALC_06_CEB",
+      "language": "ceb",
+      "reference_label": "critical",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "critical",
+        "confidence": 0.481344,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.080718,
+          "serious": 0.35919,
+          "critical": 0.481344,
+          "needs_review": 0.078748
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.1743768000160344
+    },
+    {
+      "case_id": "SYN_CRITICALC_06_TL",
+      "language": "tl",
+      "reference_label": "critical",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "serious",
+        "confidence": 0.544526,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.078573,
+          "serious": 0.544526,
+          "critical": 0.321391,
+          "needs_review": 0.05551
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.17017699999269098
+    },
+    {
+      "case_id": "SYN_NEEDS_REVIEWC_07_CEB",
+      "language": "ceb",
+      "reference_label": "needs_review",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "minor",
+        "confidence": 0.446785,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.446785,
+          "serious": 0.098997,
+          "critical": 0.105027,
+          "needs_review": 0.349191
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.1710194000042975
+    },
+    {
+      "case_id": "SYN_NEEDS_REVIEWC_07_EN",
+      "language": "en",
+      "reference_label": "needs_review",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "needs_review",
+        "confidence": 0.323831,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.306786,
+          "serious": 0.187029,
+          "critical": 0.182354,
+          "needs_review": 0.323831
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.18271520000416785
+    },
+    {
+      "case_id": "SYN_NEEDS_REVIEWC_07_TL",
+      "language": "tl",
+      "reference_label": "needs_review",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "needs_review",
+        "confidence": 0.431905,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.400252,
+          "serious": 0.06145,
+          "critical": 0.106393,
+          "needs_review": 0.431905
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.2018905999721028
+    },
+    {
+      "case_id": "SYN_ROAD_B_CRITICAL_02_CEB",
+      "language": "ceb",
+      "reference_label": "critical",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "serious",
+        "confidence": 0.640265,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.078476,
+          "serious": 0.640265,
+          "critical": 0.23193,
+          "needs_review": 0.04933
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.17508799995994195
+    },
+    {
+      "case_id": "SYN_ROAD_B_CRITICAL_02_EN",
+      "language": "en",
+      "reference_label": "critical",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "needs_review",
+        "confidence": 0.298433,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.284473,
+          "serious": 0.209687,
+          "critical": 0.207406,
+          "needs_review": 0.298433
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.12539030000334606
+    },
+    {
+      "case_id": "SYN_ROAD_B_CRITICAL_02_TL",
+      "language": "tl",
+      "reference_label": "critical",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "serious",
+        "confidence": 0.55066,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.078701,
+          "serious": 0.55066,
+          "critical": 0.319943,
+          "needs_review": 0.050696
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.17390120000345632
+    },
+    {
+      "case_id": "SYN_ROAD_B_MINOR_02_CEB",
+      "language": "ceb",
+      "reference_label": "minor",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "minor",
+        "confidence": 0.461622,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.461622,
+          "serious": 0.15658,
+          "critical": 0.144879,
+          "needs_review": 0.236919
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.18064559996128082
+    },
+    {
+      "case_id": "SYN_ROAD_B_MINOR_02_EN",
+      "language": "en",
+      "reference_label": "minor",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "needs_review",
+        "confidence": 0.306607,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.303877,
+          "serious": 0.198699,
+          "critical": 0.190817,
+          "needs_review": 0.306607
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.13334200001554564
+    },
+    {
+      "case_id": "SYN_ROAD_B_MINOR_02_TL",
+      "language": "tl",
+      "reference_label": "minor",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "minor",
+        "confidence": 0.466901,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.466901,
+          "serious": 0.060436,
+          "critical": 0.095281,
+          "needs_review": 0.377382
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.1670227000140585
+    },
+    {
+      "case_id": "SYN_ROAD_B_MINOR_03_EN",
+      "language": "en",
+      "reference_label": "minor",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "needs_review",
+        "confidence": 0.309967,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.308685,
+          "serious": 0.195074,
+          "critical": 0.186275,
+          "needs_review": 0.309967
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.11806339997565374
+    },
+    {
+      "case_id": "SYN_ROAD_B_MINOR_03_TL",
+      "language": "tl",
+      "reference_label": "minor",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "minor",
+        "confidence": 0.467447,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.467447,
+          "serious": 0.092388,
+          "critical": 0.105082,
+          "needs_review": 0.335083
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.17428460001247004
+    },
+    {
+      "case_id": "SYN_ROAD_B_SERIOUS_05_CEB",
+      "language": "ceb",
+      "reference_label": "serious",
+      "review_status": "draft",
+      "prediction": {
+        "severity": "serious",
+        "predicted_label": "serious",
+        "confidence": 0.691046,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.091962,
+          "serious": 0.691046,
+          "critical": 0.15447,
+          "needs_review": 0.062522
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "complete",
+        "summary": "Experimental model; not validated for dispatch. Text model suggests Serious urgency from the submitted description. A responder must verify this suggestion.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.16292149998480454
+    },
+    {
+      "case_id": "SYN_ROAD_B_SERIOUS_05_EN",
+      "language": "en",
+      "reference_label": "serious",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "needs_review",
+        "confidence": 0.303299,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.296462,
+          "serious": 0.207161,
+          "critical": 0.193077,
+          "needs_review": 0.303299
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.1579063999815844
+    },
+    {
+      "case_id": "SYN_ROAD_B_SERIOUS_09_CEB",
+      "language": "ceb",
+      "reference_label": "serious",
+      "review_status": "draft",
+      "prediction": {
+        "severity": "serious",
+        "predicted_label": "serious",
+        "confidence": 0.698295,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.08725,
+          "serious": 0.698295,
+          "critical": 0.159079,
+          "needs_review": 0.055376
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "complete",
+        "summary": "Experimental model; not validated for dispatch. Text model suggests Serious urgency from the submitted description. A responder must verify this suggestion.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.18794410000555217
+    },
+    {
+      "case_id": "SYN_ROAD_B_SERIOUS_09_EN",
+      "language": "en",
+      "reference_label": "serious",
+      "review_status": "draft",
+      "prediction": {
+        "severity": null,
+        "predicted_label": "serious",
+        "confidence": 0.469587,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.174069,
+          "serious": 0.469587,
+          "critical": 0.235119,
+          "needs_review": 0.121225
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "needs_review",
+        "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.15021560003515333
+    },
+    {
+      "case_id": "SYN_ROAD_B_SERIOUS_09_TL",
+      "language": "tl",
+      "reference_label": "serious",
+      "review_status": "draft",
+      "prediction": {
+        "severity": "serious",
+        "predicted_label": "serious",
+        "confidence": 0.694891,
+        "confidence_calibrated": false,
+        "probabilities": {
+          "minor": 0.082717,
+          "serious": 0.694891,
+          "critical": 0.168904,
+          "needs_review": 0.053489
+        },
+        "responder_review_required": true,
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "model_version": "text-20260920T051044998351Z",
+        "status": "complete",
+        "summary": "Experimental model; not validated for dispatch. Text model suggests Serious urgency from the submitted description. A responder must verify this suggestion.",
+        "deployment_status": "experimental"
+      },
+      "seconds": 0.1597431999980472
+    }
+  ],
+  "approved_for_deployment": false,
+  "note": "Offline comparison only. Human operational acceptance, calibration and release are separate."
+}

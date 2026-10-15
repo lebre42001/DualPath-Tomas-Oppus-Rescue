@@ -1,0 +1,240 @@
+{
+  "status": "research_candidate_evaluated_not_deployable",
+  "dataset_version": "civilian_multilingual_850_responder_reconciled_20261007",
+  "dataset_fingerprint": "0afc1388a2967a924633d4753ea42e44e3944ecf7e781ef29f99e183885cc06b",
+  "split": {
+    "seed": 20261007,
+    "sizes": {
+      "train": 600,
+      "validation": 123,
+      "test": 127
+    },
+    "group_text_id_leakage_check": "pass",
+    "external_independence": "no; prior model-development exposure exists"
+  },
+  "model": {
+    "base_model": "FacebookAI/xlm-roberta-base",
+    "revision": "42f548f32366559214515ec137cdd16002968bf6",
+    "seed": 41,
+    "best_epoch": 2,
+    "training_rows": 600,
+    "validation_rows": 123,
+    "test_rows": 127,
+    "fully_fine_tuned": true,
+    "checkpoint": "artifacts/checkpoints/text_xlmr_responder_reconciled_20261007/seed_41",
+    "active_model_changed": false,
+    "deployment_approved": false
+  },
+  "test_metrics": {
+    "accuracy": 0.5905511811023622,
+    "macro_f1": 0.5788110212638514,
+    "critical_recall": 0.9393939393939394,
+    "serious_recall": 0.4838709677419355,
+    "raw_urgent_detection_recall": 0.953125,
+    "raw_high_risk_undertriage": 3,
+    "raw_high_risk_support": 64,
+    "thresholded_coverage": 0.0,
+    "thresholded_review_routed_macro_f1": 0.09810126582278482,
+    "language_raw_classifier": {
+      "ceb": {
+        "macro_f1": 0.5777777777777778,
+        "count": 39,
+        "per_class_f1": {
+          "minor": 0.4,
+          "serious": 0.5,
+          "critical": 0.6111111111111112,
+          "needs_review": 0.8
+        },
+        "confusion_matrix": [
+          [
+            3,
+            2,
+            7,
+            0
+          ],
+          [
+            0,
+            3,
+            4,
+            0
+          ],
+          [
+            0,
+            0,
+            11,
+            0
+          ],
+          [
+            0,
+            0,
+            3,
+            6
+          ]
+        ]
+      },
+      "en": {
+        "macro_f1": 0.7033549783549784,
+        "count": 40,
+        "per_class_f1": {
+          "minor": 0.42857142857142855,
+          "serious": 0.8181818181818181,
+          "critical": 0.6666666666666667,
+          "needs_review": 0.9
+        },
+        "confusion_matrix": [
+          [
+            3,
+            3,
+            5,
+            0
+          ],
+          [
+            0,
+            9,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            8,
+            0
+          ],
+          [
+            0,
+            0,
+            2,
+            9
+          ]
+        ]
+      },
+      "mixed": {
+        "macro_f1": 0.3940789473684211,
+        "count": 17,
+        "per_class_f1": {
+          "minor": 0,
+          "serious": 0.25,
+          "critical": 0.5263157894736842,
+          "needs_review": 0.8
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            1,
+            6,
+            0
+          ],
+          [
+            0,
+            0,
+            5,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            2
+          ]
+        ]
+      },
+      "tl": {
+        "macro_f1": 0.45929070929070936,
+        "count": 31,
+        "per_class_f1": {
+          "minor": 0.36363636363636365,
+          "serious": 0.36363636363636365,
+          "critical": 0.5384615384615385,
+          "needs_review": 0.5714285714285715
+        },
+        "confusion_matrix": [
+          [
+            2,
+            1,
+            3,
+            1
+          ],
+          [
+            2,
+            2,
+            4,
+            0
+          ],
+          [
+            0,
+            0,
+            7,
+            1
+          ],
+          [
+            0,
+            0,
+            4,
+            4
+          ]
+        ]
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "minor",
+        "serious",
+        "critical",
+        "needs_review"
+      ],
+      "rows_actual_columns_predicted": [
+        [
+          8,
+          6,
+          17,
+          1
+        ],
+        [
+          2,
+          15,
+          14,
+          0
+        ],
+        [
+          0,
+          1,
+          31,
+          1
+        ],
+        [
+          0,
+          0,
+          10,
+          21
+        ]
+      ]
+    }
+  },
+  "acceptance_gates": {
+    "overall_macro_f1_ge_0_80": false,
+    "critical_recall_ge_0_95": false,
+    "serious_critical_detection_recall_ge_0_90": true,
+    "zero_raw_high_risk_undertriage": false,
+    "language_macro_f1_ge_0_75_all_observed": false,
+    "thresholded_routing_has_nonzero_coverage": false
+  },
+  "all_acceptance_gates_pass": false,
+  "reason_not_deployable": [
+    "macro-F1 below 0.80",
+    "Critical recall below 0.95",
+    "3 raw serious/critical under-triage cases",
+    "all four language macro-F1 scores below 0.75",
+    "thresholded responder routing has 0% automated coverage",
+    "test cases are not independent external examples",
+    "source examples are synthetic-origin"
+  ],
+  "confidence_calibrated": false,
+  "review_threshold_status": "provisional",
+  "acceptance_report_is_not_promotion": true
+}

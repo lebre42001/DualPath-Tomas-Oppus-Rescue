@@ -1,0 +1,90 @@
+{
+  "audit_id": "tokenizer-warning-audit-20261006",
+  "status": "WARNING_REPRODUCED_FALSE_POSITIVE_CAUSE_IDENTIFIED",
+  "scope": "Read-only diagnosis of incorrect-regex warning while locally loading XLM-R.",
+  "verified": {
+    "runtime": {
+      "python": "3.13.0",
+      "transformers": "4.57.6",
+      "source_file": "ai_service/.venv-xlmrt-fulltrain/Lib/site-packages/transformers/tokenization_utils_base.py"
+    },
+    "checkpoint": {
+      "path": "ai_service/artifacts/checkpoints/text_xlmr_civilian_multilingual_20261005/trial_lr_2e-5_seed42",
+      "model_type": "xlm-roberta",
+      "config_transformers_version": "4.57.6",
+      "tokenizer_class_in_tokenizer_config": "XLMRobertaTokenizer"
+    },
+    "local_only_reproduction": {
+      "returncode": 0,
+      "stdout_json": {
+        "class": "XLMRobertaTokenizerFast",
+        "is_fast": true,
+        "pre_tokenizer": {
+          "type": "Sequence",
+          "pretokenizers": [
+            {
+              "type": "WhitespaceSplit"
+            },
+            {
+              "type": "Metaspace",
+              "replacement": "▁",
+              "prepend_scheme": "always",
+              "split": true
+            }
+          ]
+        },
+        "sample_ids": [
+          0,
+          38383,
+          53,
+          673,
+          1847,
+          71,
+          57,
+          156,
+          18397,
+          2
+        ]
+      },
+      "warning_emitted": true,
+      "warning_stderr": "The tokenizer you are loading from 'artifacts/checkpoints/text_xlmr_civilian_multilingual_20261005/trial_lr_2e-5_seed42' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue."
+    },
+    "warning_detector_analysis": {
+      "source_logic": "In installed Transformers 4.57.6, the local non-Mistral model_type bypass is only applied when config transformers_version <= 4.57.2. A local config with version 4.57.6 falls through, is marked mistral_config_detected, and triggers the Mistral regex warning; a broad skip only occurs at version >= 5.0.0.",
+      "config_model_type": "xlm-roberta",
+      "source_excerpt_lines_2446_to_2505": "                \"config.json\",\n                cache_dir=cache_dir,\n                token=token,\n                local_files_only=local_files_only,\n                _raise_exceptions_for_missing_entries=False,\n                _raise_exceptions_for_connection_errors=False,\n                _commit_hash=_commit_hash,\n            )\n\n            # Detected using a (local) mistral tokenizer\n            mistral_config_detected = False\n            if _config_file is not None:\n                with open(_config_file, encoding=\"utf-8\") as f:\n                    _config = json.load(f)\n                transformers_version = _config.get(\"transformers_version\")\n                transformers_model_type = _config.get(\"model_type\")\n\n                # Detect if we can skip the mistral fix by\n                #   a) having a non-mistral tokenizer\n                #   b) fixed version of transformers\n                if transformers_version and version.parse(transformers_version) <= version.parse(\"4.57.2\"):\n                    if (\n                        _is_local\n                        and transformers_model_type is not None\n                        and transformers_model_type\n                        not in [\n                            \"mistral\",\n                            \"mistral3\",\n                            \"voxtral\",\n                            \"ministral\",\n                            \"pixtral\",\n                        ]\n                    ):\n                        return tokenizer\n                elif transformers_version and version.parse(transformers_version) >= version.parse(\"5.0.0\"):\n                    return tokenizer\n\n                mistral_config_detected = True\n\n            if mistral_config_detected or (not _is_local and is_base_mistral(pretrained_model_name_or_path)):\n                # Expose the `fix_mistral_regex` flag on the tokenizer when provided, even if no correction is applied.\n                if init_kwargs and \"fix_mistral_regex\" in init_kwargs:\n                    setattr(tokenizer, \"fix_mistral_regex\", init_kwargs[\"fix_mistral_regex\"])\n\n                # only warn if its not explicitly passed\n                if fix_mistral_regex is None and not getattr(tokenizer, \"fix_mistral_regex\", False):\n                    setattr(tokenizer, \"fix_mistral_regex\", False)\n                    logger.warning(\n                        f\"The tokenizer you are loading from '{pretrained_model_name_or_path}'\"\n                        f\" with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e.\"\n                        \" This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.\"\n                    )\n                elif fix_mistral_regex is True or getattr(tokenizer, \"fix_mistral_regex\", False):\n                    setattr(tokenizer, \"fix_mistral_regex\", True)\n                    import tokenizers\n\n                    tokenizer.backend_tokenizer.pre_tokenizer[0] = tokenizers.pre_tokenizers.Split(\n                        pattern=tokenizers.Regex(\n                            r\"[^\\r\\n\\p{L}\\p{N}]?[\\p{Lu}\\p{Lt}\\p{Lm}\\p{Lo}\\p{M}]*[\\p{Ll}\\p{Lm}\\p{Lo}\\p{M}]+|[^\\r\\n\\p{L}\\p{N}]?[\\p{Lu}\\p{Lt}\\p{Lm}\\p{Lo}\\p{M}]+[\\p{Ll}\\p{Lm}\\p{Lo}\\p{M}]*|\\p{N}| ?[^\\s\\p{L}\\p{N}]+[\\r\\n/]*|\\s*[\\r\\n]+|\\s+(?!\\S)|\\s+\"\n                        ),",
+      "conclusion": "The Mistral warning is a false-positive from this installed local-tokenizer detection path for the verified xlm-roberta model_type; it is not evidence that the checkpoint is a Mistral tokenizer."
+    },
+    "tokenizer_structure": {
+      "type": "Sequence",
+      "pretokenizers": [
+        {
+          "type": "WhitespaceSplit"
+        },
+        {
+          "type": "Metaspace",
+          "replacement": "▁",
+          "prepend_scheme": "always",
+          "split": true
+        }
+      ]
+    },
+    "changes_made": "None; local-only read and tokenizer load, no files written."
+  },
+  "safety_interpretation": {
+    "fix_mistral_regex_flag": "Do not set fix_mistral_regex=True for XLM-R as a warning-suppression workaround. In this installed code path it would replace backend_tokenizer.pre_tokenizer[0] with a Mistral-specific regex Split and could change XLM-R tokenization.",
+    "not_established": [
+      "This does not prove prior training token IDs were wrong; absent the flag, the warning path defaults the fix flag to false.",
+      "This does not independently verify every historic run or compare all tokenizer artifacts to the pinned upstream tokenizer."
+    ]
+  },
+  "recommended_follow_up": [
+    "For a future controlled run, choose a Transformers release whose local detector is verified to honor non-Mistral model_type, or apply a narrow upstream-compatible fix only after regression tests; pin the environment.",
+    "Compare token IDs to the pinned FacebookAI/xlm-roberta-base revision before using any changed library/tokenizer path.",
+    "Do not modify completed checkpoints or silence the warning without documenting the library behavior."
+  ],
+  "limitations": [
+    "No current upstream version lookup was performed; no version number is recommended.",
+    "No tokenizer, package installation, checkpoint, training output, or config was modified."
+  ]
+}

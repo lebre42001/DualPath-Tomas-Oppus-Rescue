@@ -1,0 +1,55 @@
+{
+  "dataset_name": "civilian_multilingual_850_humanconfirmed_20261006T141537+0800",
+  "dataset_version_id": "OWNER-ATTESTED-850-FD0FB65CCB718A1D",
+  "created_at": "2026-10-06T14:15:37+08:00",
+  "source_dataset_path": "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\datasets\\emergency_text\\experiments\\civilian_multilingual_6000w_20261005\\reports.csv",
+  "source_dataset_sha256": "fd0fb65ccb718a1dee93fd315aa3a0e12cb5a8c2123bc08c8466e51c75fc7645",
+  "source_provenance_path": "C:\\laragon\\www\\CAPSTONE-EMERGENCY-SYSTEM-main\\ai_service\\datasets\\emergency_text\\experiments\\civilian_multilingual_6000w_20261005\\provenance.csv",
+  "source_provenance_sha256": "fb8c89f5a72859f0070305ba046d6295e86f985514935a7c51a912e9f3ecf3df",
+  "row_count": 850,
+  "unique_case_ids": 850,
+  "scenario_family_count": 833,
+  "batch_attestation_path": "RESPONDER_BATCH_ATTESTATION.json",
+  "reviewed_reports_path": "reports.csv",
+  "row_level_review_records_path": "human_review_records.csv",
+  "copied_enriched_provenance_path": "provenance.csv",
+  "review_status": "human_confirmed_by_project_owner_attested_verbal_batch",
+  "generation_source": "synthetic_ai_generated",
+  "immutable_binding": {
+    "batch_id_derived_from_source_reports_sha256_prefix": "fd0fb65ccb718a1d",
+    "batch_id": "OWNER-ATTESTED-850-FD0FB65CCB718A1D"
+  },
+  "loader_schema_compatibility": {
+    "loader": "ai_service/src/ai_service/text_training.py::load_dataset",
+    "reports_csv_columns": [
+      "case_id",
+      "group_id",
+      "language",
+      "text",
+      "label",
+      "review_status",
+      "reviewer",
+      "notes"
+    ],
+    "details": "The loader enforces exactly eight reports.csv columns. Additional row-level attestation fields are recorded in human_review_records.csv and provenance.csv."
+  },
+  "training_performed": true,
+  "split_created": true,
+  "active_model_changed": false,
+  "deployment_performed": false,
+  "evidence_limitations": [
+    "The verbal review is reported by the project owner; no direct responder testimony or recording was supplied for independent confirmation.",
+    "No individual responder identity can be attributed from the available repository evidence.",
+    "No row-specific clinical rationale or comments were reported; none are inferred or fabricated.",
+    "The existing descriptions and labels are synthetic drafts; owner attestation records a human approval claim but does not establish real-world representativeness."
+  ],
+  "finalized_package_at": "2026-10-06T06:59:46.446766+00:00",
+  "ai_adjudication_rows": 850,
+  "ai_disagreements_and_uncertain_rows": 81,
+  "ai_review_decisions_are_not_human_label_corrections": true,
+  "synthetic_origin_preserved": true,
+  "human_attestation_not_independently_corroborated": true,
+  "training_run_path": "ai_service/artifacts/checkpoints/text_xlmr_850_humanconfirmed_fulltrain_20261006_1411",
+  "five_way_split_manifest_path": "ai_service/artifacts/reports/xlmr_850_humanconfirmed_fulltrain_20261006_1411/SPLIT_MANIFEST.json",
+  "selected_epoch": 6
+}

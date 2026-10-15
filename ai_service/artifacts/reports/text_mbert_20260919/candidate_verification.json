@@ -1,0 +1,567 @@
+{
+  "synthetic_unreviewed_data": true,
+  "candidates": [
+    {
+      "candidate": "text_mbert_draft_head_20260919",
+      "release_gate_blocks": true,
+      "overlength_review_passed": true,
+      "checkpoint_load_seconds": 8.865792000025976,
+      "parameter_count": 177856516,
+      "inference_threads": 2,
+      "test_raw_correct": 1,
+      "test_count": 10,
+      "median_inference_seconds": 0.15727830000105314,
+      "per_language_raw": {
+        "en": {
+          "count": 1,
+          "correct": 0
+        },
+        "tl": {
+          "count": 3,
+          "correct": 1
+        },
+        "ceb": {
+          "count": 2,
+          "correct": 0
+        },
+        "mixed": {
+          "count": 4,
+          "correct": 0
+        }
+      },
+      "predictions": [
+        {
+          "case_id": "CEB006",
+          "language": "ceb",
+          "draft_label": "serious",
+          "description": "Natumba ang nagmotor sa eskina. Mata siya ug motubag namo, pero hubag ug sakit ang buolbuol ug dili niya matamakan.",
+          "latency_seconds": 1.899965999997221,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "critical",
+            "confidence": 0.266201,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.220588,
+              "serious": 0.251449,
+              "critical": 0.266201,
+              "needs_review": 0.261762
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164232042472Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "CEB017",
+          "language": "ceb",
+          "draft_label": "needs_review",
+          "description": "Walay bangga dinhi, nangayo mi og tabang kay nasunog ang kusina sa balay ug naa pay tawo sa sulod.",
+          "latency_seconds": 0.12589809999917634,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "critical",
+            "confidence": 0.280888,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.203417,
+              "serious": 0.244036,
+              "critical": 0.280888,
+              "needs_review": 0.271659
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164232042472Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "EN006",
+          "language": "en",
+          "draft_label": "serious",
+          "description": "A motorcycle rider fell at the junction. He is awake and answering us, but his ankle is swollen and painful and he cannot stand on it.",
+          "latency_seconds": 0.16397640001378022,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "needs_review",
+            "confidence": 0.306053,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.170832,
+              "serious": 0.252996,
+              "critical": 0.270118,
+              "needs_review": 0.306053
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164232042472Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "MIX004",
+          "language": "mixed",
+          "draft_label": "minor",
+          "description": "Nisagi ang akong scooter sa plastic barrier at low speed. Wla ko nasamdi or nakuyapan, no pain, ug hawan na ang dalan.",
+          "latency_seconds": 0.16263619999517687,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "needs_review",
+            "confidence": 0.288266,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.186587,
+              "serious": 0.243586,
+              "critical": 0.281562,
+              "needs_review": 0.288266
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164232042472Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "MIX005",
+          "language": "mixed",
+          "draft_label": "minor",
+          "description": "Sa car park lang ang maliit na bangga. Hindi bleeding or unconscious ang driver, walang sakit kaming lahat, dent lang sa bumper.",
+          "latency_seconds": 0.1380836000025738,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "needs_review",
+            "confidence": 0.284143,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.194317,
+              "serious": 0.24313,
+              "critical": 0.27841,
+              "needs_review": 0.284143
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164232042472Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "MIX006",
+          "language": "mixed",
+          "draft_label": "serious",
+          "description": "Natumba ang motorcycle rider sa junction. Gising siya and answering us, pero hubag ug sakit ang ankle niya and dili niya matamakan.",
+          "latency_seconds": 0.12399510000250302,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "needs_review",
+            "confidence": 0.279203,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.19699,
+              "serious": 0.248571,
+              "critical": 0.275236,
+              "needs_review": 0.279203
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164232042472Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "MIX007",
+          "language": "mixed",
+          "draft_label": "serious",
+          "description": "Na-slide ang motor sa wet road. Awake ang rider pero bleeding ang elbow wound niya ug sakit ang wrist, nangayo siya og tabang.",
+          "latency_seconds": 0.14829000001191162,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "critical",
+            "confidence": 0.285567,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.199684,
+              "serious": 0.247399,
+              "critical": 0.285567,
+              "needs_review": 0.26735
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164232042472Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "TL006",
+          "language": "tl",
+          "draft_label": "serious",
+          "description": "Natumba ang isang nagmomotorsiklo sa sangandaan. Gising siya at sumasagot, pero namamaga at masakit ang bukong-bukong niya at hindi niya ito maapakan.",
+          "latency_seconds": 0.1519204000069294,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "critical",
+            "confidence": 0.272511,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.212793,
+              "serious": 0.244863,
+              "critical": 0.272511,
+              "needs_review": 0.269833
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164232042472Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "TL012",
+          "language": "tl",
+          "draft_label": "critical",
+          "description": "Naipit ang pasahero sa loob ng kotse na nahulog sa ilog. Tumataas na ang tubig sa loob at hindi namin mabuksan ang pinto.",
+          "latency_seconds": 0.1723587000160478,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "needs_review",
+            "confidence": 0.28488,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.190451,
+              "serious": 0.243909,
+              "critical": 0.280759,
+              "needs_review": 0.28488
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164232042472Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "TL017",
+          "language": "tl",
+          "draft_label": "needs_review",
+          "description": "Bumabaha sa aming bahay at may mga bata sa ikalawang palapag. Walang sasakyang naaksidente, pero kailangan namin ng tulong.",
+          "latency_seconds": 0.17332139998325147,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "needs_review",
+            "confidence": 0.271602,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.206177,
+              "serious": 0.251839,
+              "critical": 0.270383,
+              "needs_review": 0.271602
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164232042472Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "text_mbert_draft_full_20260919",
+      "release_gate_blocks": true,
+      "overlength_review_passed": true,
+      "checkpoint_load_seconds": 0.21501980000175536,
+      "parameter_count": 177856516,
+      "inference_threads": 2,
+      "test_raw_correct": 2,
+      "test_count": 10,
+      "median_inference_seconds": 0.14090344999567606,
+      "per_language_raw": {
+        "en": {
+          "count": 1,
+          "correct": 0
+        },
+        "tl": {
+          "count": 3,
+          "correct": 1
+        },
+        "ceb": {
+          "count": 2,
+          "correct": 1
+        },
+        "mixed": {
+          "count": 4,
+          "correct": 0
+        }
+      },
+      "predictions": [
+        {
+          "case_id": "CEB006",
+          "language": "ceb",
+          "draft_label": "serious",
+          "description": "Natumba ang nagmotor sa eskina. Mata siya ug motubag namo, pero hubag ug sakit ang buolbuol ug dili niya matamakan.",
+          "latency_seconds": 0.33620499999960884,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "critical",
+            "confidence": 0.299645,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.204526,
+              "serious": 0.245184,
+              "critical": 0.299645,
+              "needs_review": 0.250645
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164324857499Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "CEB017",
+          "language": "ceb",
+          "draft_label": "needs_review",
+          "description": "Walay bangga dinhi, nangayo mi og tabang kay nasunog ang kusina sa balay ug naa pay tawo sa sulod.",
+          "latency_seconds": 0.1268380999972578,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "needs_review",
+            "confidence": 0.30199,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.20132,
+              "serious": 0.205131,
+              "critical": 0.291559,
+              "needs_review": 0.30199
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164324857499Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "EN006",
+          "language": "en",
+          "draft_label": "serious",
+          "description": "A motorcycle rider fell at the junction. He is awake and answering us, but his ankle is swollen and painful and he cannot stand on it.",
+          "latency_seconds": 0.17989930001203902,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "needs_review",
+            "confidence": 0.263486,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.241567,
+              "serious": 0.249066,
+              "critical": 0.245881,
+              "needs_review": 0.263486
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164324857499Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "MIX004",
+          "language": "mixed",
+          "draft_label": "minor",
+          "description": "Nisagi ang akong scooter sa plastic barrier at low speed. Wla ko nasamdi or nakuyapan, no pain, ug hawan na ang dalan.",
+          "latency_seconds": 0.1744736999971792,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "critical",
+            "confidence": 0.290571,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.216612,
+              "serious": 0.224217,
+              "critical": 0.290571,
+              "needs_review": 0.268601
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164324857499Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "MIX005",
+          "language": "mixed",
+          "draft_label": "minor",
+          "description": "Sa car park lang ang maliit na bangga. Hindi bleeding or unconscious ang driver, walang sakit kaming lahat, dent lang sa bumper.",
+          "latency_seconds": 0.1299806000024546,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "critical",
+            "confidence": 0.298308,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.21748,
+              "serious": 0.21548,
+              "critical": 0.298308,
+              "needs_review": 0.268732
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164324857499Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "MIX006",
+          "language": "mixed",
+          "draft_label": "serious",
+          "description": "Natumba ang motorcycle rider sa junction. Gising siya and answering us, pero hubag ug sakit ang ankle niya and dili niya matamakan.",
+          "latency_seconds": 0.1390325000102166,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "critical",
+            "confidence": 0.314691,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.189782,
+              "serious": 0.232955,
+              "critical": 0.314691,
+              "needs_review": 0.262572
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164324857499Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "MIX007",
+          "language": "mixed",
+          "draft_label": "serious",
+          "description": "Na-slide ang motor sa wet road. Awake ang rider pero bleeding ang elbow wound niya ug sakit ang wrist, nangayo siya og tabang.",
+          "latency_seconds": 0.1300453000003472,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "critical",
+            "confidence": 0.343653,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.185305,
+              "serious": 0.233392,
+              "critical": 0.343653,
+              "needs_review": 0.237651
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164324857499Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "TL006",
+          "language": "tl",
+          "draft_label": "serious",
+          "description": "Natumba ang isang nagmomotorsiklo sa sangandaan. Gising siya at sumasagot, pero namamaga at masakit ang bukong-bukong niya at hindi niya ito maapakan.",
+          "latency_seconds": 0.15589540000655688,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "critical",
+            "confidence": 0.312512,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.198793,
+              "serious": 0.238155,
+              "critical": 0.312512,
+              "needs_review": 0.25054
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164324857499Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "TL012",
+          "language": "tl",
+          "draft_label": "critical",
+          "description": "Naipit ang pasahero sa loob ng kotse na nahulog sa ilog. Tumataas na ang tubig sa loob at hindi namin mabuksan ang pinto.",
+          "latency_seconds": 0.1427743999811355,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "critical",
+            "confidence": 0.329142,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.205725,
+              "serious": 0.21349,
+              "critical": 0.329142,
+              "needs_review": 0.251643
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164324857499Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        },
+        {
+          "case_id": "TL017",
+          "language": "tl",
+          "draft_label": "needs_review",
+          "description": "Bumabaha sa aming bahay at may mga bata sa ikalawang palapag. Walang sasakyang naaksidente, pero kailangan namin ng tulong.",
+          "latency_seconds": 0.1383520999806933,
+          "prediction": {
+            "severity": null,
+            "predicted_label": "critical",
+            "confidence": 0.266571,
+            "confidence_calibrated": false,
+            "probabilities": {
+              "minor": 0.224755,
+              "serious": 0.243608,
+              "critical": 0.266571,
+              "needs_review": 0.265066
+            },
+            "responder_review_required": true,
+            "model_name": "google-bert/bert-base-multilingual-cased",
+            "model_version": "text-20260918T164324857499Z",
+            "status": "needs_review",
+            "summary": "Experimental model; not validated for dispatch. The description could not be assigned a reliable severity. Responder review is required.",
+            "deployment_status": "experimental"
+          }
+        }
+      ]
+    }
+  ]
+}

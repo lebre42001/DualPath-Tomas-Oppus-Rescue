@@ -1,0 +1,79 @@
+{
+  "prior_rejected_checkpoint_same_84": {
+    "path": "ai_service\\artifacts\\reports\\xlmr_850_humanconfirmed_fulltrain_20261006_1411\\fresh_test_evaluation\\evaluation_metrics.json",
+    "sha256": "b26df036114226ce1b557aec2392c182b1de62f712b5b0bed063d23d30bf9118",
+    "n": 84,
+    "fingerprint": "fa7ed9baf10078ffaf5fc5f877cd56bb231b33d91c9f92f2d7414bb45ef9f84f",
+    "raw_macro_f1": 0.8455574644288798,
+    "raw_accuracy": 0.8571428571428571,
+    "critical_recall": 0.55,
+    "serious_recall": 1.0,
+    "raw_urgent_undertriage_count": 9,
+    "routed_urgent_undertriage_count": 6,
+    "coverage": 0.6785714285714286,
+    "model_version": "text-20261006T062737855310Z"
+  },
+  "previous_checkpoint_matched_83": {
+    "path": "ai_service\\artifacts\\reports\\xlmr_850_humanconfirmed_fulltrain_20261006_1411\\previous_xlmr_fresh_test_comparison\\evaluation_metrics.json",
+    "sha256": "093c98005ab64ad2af0b5c975672d1924d4cc1ee359793206d051437e31244b1",
+    "n": 83,
+    "fingerprint": "59b1fd26124983ab207256ba06ec041db0e0006f761874c4189290da8f1a0b5c",
+    "raw_macro_f1": 0.8749336772592586,
+    "raw_accuracy": 0.8795180722891566,
+    "critical_recall": 0.7,
+    "serious_recall": 0.9523809523809523,
+    "raw_urgent_undertriage_count": 6,
+    "routed_urgent_undertriage_count": 4,
+    "coverage": 0.6746987951807228,
+    "model_version": "text-20261005T135449737752Z"
+  },
+  "new_checkpoint_matched_83": {
+    "path": "ai_service\\artifacts\\reports\\xlmr_850_humanconfirmed_fulltrain_20261006_1411\\new_xlmr_fresh_test_matched_comparison\\evaluation_metrics.json",
+    "sha256": "10adbf5f59ce7f80a6af400624ac3f5aec486f647d222245948407cdbdeadac8",
+    "n": 83,
+    "fingerprint": "59b1fd26124983ab207256ba06ec041db0e0006f761874c4189290da8f1a0b5c",
+    "raw_macro_f1": 0.8440752509901446,
+    "raw_accuracy": 0.8554216867469879,
+    "critical_recall": 0.55,
+    "serious_recall": 1.0,
+    "raw_urgent_undertriage_count": 9,
+    "routed_urgent_undertriage_count": 6,
+    "coverage": 0.6746987951807228,
+    "model_version": "text-20261006T062737855310Z"
+  },
+  "same_84_row_delta_current_minus_prior_rejected": {
+    "fingerprint_matches": true,
+    "count_matches": true,
+    "macro_f1_delta": 0.006766004510442736,
+    "accuracy_delta": 0.0,
+    "critical_recall_delta": 0.09999999999999998,
+    "raw_urgent_undertriage_count_current_vs_old": [
+      7,
+      9
+    ],
+    "routed_urgent_undertriage_count_current_vs_old_at_065": [
+      6,
+      6
+    ]
+  },
+  "historical_matched_83_row_comparison": {
+    "fingerprints_match": true,
+    "macro_f1_old_vs_new": [
+      0.8749336772592586,
+      0.8440752509901446
+    ],
+    "critical_recall_old_vs_new": [
+      0.7,
+      0.55
+    ],
+    "raw_undertriage_old_vs_new": [
+      6,
+      9
+    ],
+    "routed_undertriage_old_vs_new_at_065": [
+      4,
+      6
+    ],
+    "note": "This is the historical 83-row previous-vs-earlier-new comparison, separate from the new targeted checkpoint's 84-row evaluation. It is not pooled or mixed with the 84-row comparison."
+  }
+}

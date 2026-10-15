@@ -1,0 +1,322 @@
+[
+  {
+    "id": "a_minor_01",
+    "label": "minor",
+    "en": "While entering a supermarket parking bay slowly, our car touched the trolley enclosure. Only the front trim is scuffed; nobody is injured, and the stopped car creates no immediate hazard.",
+    "tl": "Habang mabagal na pumapasok sa paradahan ng supermarket, sumagi ang kotse namin sa harang ng mga kariton. Gasgas lang ang palamuti sa harap; walang nasaktan, at walang agarang panganib ang nakahintong kotse.",
+    "ceb": "Samtang hinay ming misulod sa parkinganan sa supermarket, nasagi sa among awto ang koral sa mga kariton. Garas ra sa dekorasyon sa atubangan; walay nasamdan, ug walay dihadiha nga peligro ang nakahunong nga awto.",
+    "rationale": "Synthetic draft: slow parking contact causes limited trim damage, with explicit absence of injury and immediate hazard. Requires human label and language review."
+  },
+  {
+    "id": "a_minor_02",
+    "label": "minor",
+    "en": "An empty motorcycle tipped against a rubber stop while being pushed across the garage yard. Only its seat cover tore; nobody was injured, and it is upright without any immediate hazard.",
+    "tl": "Tumagilid sa harang na goma ang walang sakay na motorsiklong itinutulak sa bakuran ng garahe. Napunit lang ang takip ng upuan; walang nasaktan, at naitayo na ito nang walang agarang panganib.",
+    "ceb": "Natumba sa goma nga babag ang walay sakay nga motor samtang gitukmod sa nataran sa garahe. Napikas ra ang hapin sa lingkoranan; walay nasamdan, ug natindog na kini nga walay dihadiha nga peligro.",
+    "rationale": "Synthetic draft: an unoccupied pushed vehicle has limited property damage; injury and current danger are explicitly absent. This is not medical clearance."
+  },
+  {
+    "id": "a_minor_03",
+    "label": "minor",
+    "en": "A small delivery vehicle moving slowly caught the folded ramp at the loading bay. Its reflector cracked, but nobody was injured; the vehicle is secured and there is no immediate danger.",
+    "tl": "Sumabit sa nakatiklop na rampa ang maliit na sasakyang panghatid habang mabagal na umaandar sa kargahan. Nabasag ang reflector nito, pero walang nasaktan; nakaseguro na ito at walang agarang panganib.",
+    "ceb": "Nasangit sa gipilo nga rampa ang gamayng sakyanang panghatod samtang hinay nga nagdagan sa kargahanan. Nabuak ang reflector niini, apan walay nasamdan; gipahimutang na kini nga segurado ug walay dihadiha nga peligro.",
+    "rationale": "Synthetic draft: reflector damage after slow vehicle contact, with explicit no injury and no ongoing hazard. Vehicle size does not determine the suggested label."
+  },
+  {
+    "id": "a_minor_04",
+    "label": "minor",
+    "en": "Our car rolled a few centimeters into an empty wooden crate in the loading yard. Only the crate corner cracked; nobody was hurt, and the stopped vehicle presents no immediate danger.",
+    "tl": "Umusad nang ilang sentimetro ang kotse namin at tumama sa bakanteng kahoy na kahon sa bakuran ng kargahan. Sulok lang ng kahon ang nabiyak; walang nasaktan, at walang agarang panganib ang nakahintong sasakyan.",
+    "ceb": "Miuswag og pipila ka sentimetro ang among awto ug naigo ang bakanteng kahong kahoy sa nataran sa kargahanan. Eskina ra sa kahon ang naliki; walay nasamdan, ug walay dihadiha nga peligro ang nakahunong nga sakyanan.",
+    "rationale": "Synthetic draft: a short roll damages an empty crate only; no injury and no current danger are explicitly reported. Suggested label remains unapproved."
+  },
+  {
+    "id": "a_minor_05",
+    "label": "minor",
+    "en": "The door of our parked van struck a short bollard when opened at the shopping center. Only the door edge is scratched; nobody is injured, and there is no immediate hazard.",
+    "tl": "Tumama sa maikling poste ang pinto ng nakaparada naming van nang buksan sa shopping center. Gilid lang ng pinto ang nagasgas; walang nasaktan sa pangyayari, at wala namang agarang panganib dito.",
+    "ceb": "Naigo sa mubo nga poste ang pultahan sa among nakaparadang van sa pag-abli niini sa shopping center. Daplin ra sa pultahan ang nagaras; walay nasamdan sa hitabo, ug walay dihadiha nga peligro dinhi.",
+    "rationale": "Synthetic draft: a parked vehicle door causes limited property damage without reported injury or immediate hazard. The absence of injury is stated rather than inferred."
+  },
+  {
+    "id": "a_minor_06",
+    "label": "minor",
+    "en": "During slow reversing inside the enclosed loading bay, our truck touched a hanging chain. Only the plate frame bent; nobody was injured, and the secured truck leaves no immediate hazard.",
+    "tl": "Habang mabagal na umaatras sa saradong kargahan, sumagi ang trak namin sa nakasabit na kadena. Lalagyan lang ng plaka ang nayupi; walang nasaktan, at walang agarang panganib ang nakasegurong trak.",
+    "ceb": "Samtang hinay nga miatras sulod sa siradong kargahanan, nasagi sa among trak ang nagbitay nga kadena. Sudlanan ra sa plaka ang nayupi; walay nasamdan, ug walay dihadiha nga peligro ang gipasegurong trak.",
+    "rationale": "Synthetic draft: slow reversing causes plate-frame damage only, with explicit no injury and no immediate hazard. A truck alone does not imply high urgency."
+  },
+  {
+    "id": "a_minor_07",
+    "label": "minor",
+    "en": "At walking speed in the garage yard, our car wheel caught an empty plastic bucket. Only the bucket split; everyone is uninjured, the pieces are collected, and no immediate danger remains.",
+    "tl": "Sa bilis ng paglalakad sa bakuran ng garahe, nasagi ng gulong ng kotse namin ang bakanteng plastik na timba. Timba lang ang nabiyak; walang nasaktan, naligpit ang mga piraso, at walang natitirang agarang panganib.",
+    "ceb": "Sa kahinay sa paglakaw sa nataran sa garahe, nasagi sa ligid sa among awto ang bakanteng plastik nga balde. Balde ra ang nabuka; walay nasamdan, natigom ang mga piraso, ug walay nahibiling dihadiha nga peligro.",
+    "rationale": "Synthetic draft: limited bucket damage, explicit absence of injury, and cleared debris support the proposed minor label. No unstated clinical condition is inferred."
+  },
+  {
+    "id": "a_minor_08",
+    "label": "minor",
+    "en": "A maintenance trolley nudged the side of an empty delivery tricycle in our loading yard. Only the paint chipped; nobody was injured, both are secured, and there is no immediate danger.",
+    "tl": "Nasagi ng karitong pangkumpuni ang gilid ng walang sakay na traysikol na panghatid sa kargahan namin. Pintura lang ang natuklap; walang nasaktan, parehong nakaseguro ang dalawa, at wala nang agarang panganib.",
+    "ceb": "Nasagi sa karitong pangkumpuni ang kilid sa walay sakay nga traysikol nga panghatod sa among kargahanan. Pintal ra ang natangtang; walay nasamdan, parehong gipaseguro ang duha, ug wala nay dihadiha nga peligro.",
+    "rationale": "Synthetic draft: light contact produces paint damage only; no injury and no ongoing hazard are explicit. Both vehicle and trolley conditions are retained across translations."
+  },
+  {
+    "id": "a_minor_09",
+    "label": "minor",
+    "en": "Our car mirror brushed a padded barrier while we entered the retail parking area slowly. Only its casing is scratched; nobody is injured, and the stopped car poses no immediate danger.",
+    "tl": "Sumagi ang salamin ng kotse namin sa may sapin na harang habang mabagal kaming pumapasok sa paradahan ng tindahan. Balot lang nito ang nagasgas; walang nasaktan, at walang agarang panganib ang nakahintong kotse.",
+    "ceb": "Nasagi sa salamin sa among awto ang gisapinan nga babag samtang hinay ming misulod sa parkinganan sa tindahan. Balay ra niini ang nagaras; walay nasamdan, ug walay dihadiha nga peligro ang nakahunong nga awto.",
+    "rationale": "Synthetic draft: slow contact with a padded barrier leaves casing damage only, with explicit no injury or immediate danger. Requires fluent-language and responder review."
+  },
+  {
+    "id": "a_minor_10",
+    "label": "minor",
+    "en": "A van roof touched a hanging plastic sign while moving slowly through the mall loading entrance. Only the sign is scuffed; nobody was injured, it remains secured, and no immediate hazard exists.",
+    "tl": "Sumagi ang bubong ng van sa nakabiting plastik na karatula habang mabagal na pumapasok sa kargahan ng mall. Karatula lang ang nagasgas; walang nasaktan, matibay pa itong nakakabit, at walang agarang panganib.",
+    "ceb": "Nasagi sa atop sa van ang nagbitay nga plastik nga karatula samtang hinay nga misulod sa kargahanan sa mall. Karatula ra ang nagaras; walay nasamdan, lig-on pa kini nga nakabitay, ug walay dihadiha nga peligro.",
+    "rationale": "Synthetic draft: low-speed contact with a secured sign causes limited property damage without injury or immediate hazard. No severity inference comes from the van itself."
+  },
+  {
+    "id": "a_serious_01",
+    "label": "serious",
+    "en": "A cyclist moving slowly down the parking ramp fell after a pedal caught a trolley. Her wrist is painful and difficult to move; she is awake, breathing normally, and requesting assistance.",
+    "tl": "Nahulog ang siklistang mabagal na bumababa sa rampa ng paradahan nang sumabit ang pedal sa kariton. Masakit at mahirap igalaw ang kanyang pulsuhan; gising siya, normal ang paghinga, at humihingi ng tulong.",
+    "ceb": "Natumba ang nagbisikletang hinay nga nanaog sa rampa sa parkinganan pagkasangit sa pedal sa kariton. Sakit ug lisod lihokon ang iyang pulso; mata siya, normal ang pagginhawa, ug nangayo og tabang.",
+    "rationale": "Synthetic draft: painful restricted wrist movement and requested assistance follow a low-speed fall; wakefulness and normal breathing are stated, with no immediate grave indicator described."
+  },
+  {
+    "id": "a_serious_02",
+    "label": "serious",
+    "en": "Two golf carts collided slowly on the resort road, knocking a passenger's ankle against the door. He needs help because it hurts; he remains awake and breathing normally beside the stopped carts.",
+    "tl": "Mabagal na nagbanggaan ang dalawang golf cart sa daan ng resort at tumama sa pinto ang bukungbukong ng pasahero. Kailangan niya ng tulong dahil masakit; gising siya at normal ang paghinga sa tabi ng mga nakahintong cart.",
+    "ceb": "Hinay nga nagbangga ang duha ka golf cart sa dalan sa resort ug naigo sa pultahan ang buolbuol sa pasahero. Nanginahanglan siya og tabang tungod sa kasakit; mata siya ug normal ang pagginhawa tupad sa mga mihunong nga cart.",
+    "rationale": "Synthetic draft: a painful ankle injury requires assistance after slow contact; the passenger is awake and breathing normally. No fracture or prognosis is asserted."
+  },
+  {
+    "id": "a_serious_03",
+    "label": "serious",
+    "en": "Our tricycle hit a shopping trolley at walking speed, and a passenger cut her lip. The bleeding has stopped; she is awake, breathing normally, and asking for help with the painful wound.",
+    "tl": "Sa bilis ng paglalakad, nabangga ng traysikol namin ang kariton at nasugatan ang labi ng pasahero. Tumigil na ang pagdurugo; gising siya, normal ang paghinga, at humihingi ng tulong dahil masakit ang sugat.",
+    "ceb": "Sa kahinay sa paglakaw, nabangga sa among traysikol ang kariton ug nasamad ang ngabil sa pasahero. Mihunong na ang pagdugo; mata siya, normal ang pagginhawa, ug nangayog tabang tungod sa sakit nga samad.",
+    "rationale": "Synthetic draft: an actual painful lip wound and assistance request are reported; bleeding has stopped and normal breathing is explicit. This is a provisional urgency label."
+  },
+  {
+    "id": "a_serious_04",
+    "label": "serious",
+    "en": "A taxi reversed slowly into a parking post, knocking its passenger's shin against the console. He is awake and breathing normally, but his lower leg is swollen and painful; he cannot walk without help.",
+    "tl": "Mabagal na umatras ang taxi at tumama sa poste sa paradahan, kaya nauntog sa console ang lulod ng pasahero. Gising siya at normal ang paghinga, pero namamaga at masakit ang binti; kailangan niya ng tulong sa paglakad.",
+    "ceb": "Hinay nga miatras ang taxi ug nabunggo sa poste sa parkinganan, busa naigo sa console ang lulod sa pasahero. Mata siya ug normal ang pagginhawa, apan nihubag ug sakit ang batiis; kinahanglan siyag tabang sa paglakaw.",
+    "rationale": "Draft: current localized painful injury after low-speed vehicle contact; awake and normal breathing are stated. No diagnosis or approval is implied. Responder review required."
+  },
+  {
+    "id": "a_serious_05",
+    "label": "serious",
+    "en": "A minibus clipped a roadside bin at low speed, throwing a seated passenger against the armrest. His elbow is bruised and painful; he is awake, breathing normally, and requesting help.",
+    "tl": "Nasagi ng minibus ang basurahan sa tabi ng daan habang mabagal at naitulak ang nakaupong pasahero sa patungan ng braso. May pasa at sakit sa kanyang siko; gising siya, normal ang paghinga, at humihingi ng tulong.",
+    "ceb": "Nasagi sa minibus ang basurahan daplin sa dalan samtang hinay ug nabangga ang naglingkod nga pasahero sa patungan sa bukton. May bun-og ug sakit sa iyang siko; mata siya, normal ang pagginhawa, ug nangayog tabang.",
+    "rationale": "Synthetic draft: a painful bruised elbow and help request follow a low-speed collision; no immediate grave indicator is stated. The vehicle type is not the labeling basis."
+  },
+  {
+    "id": "a_serious_06",
+    "label": "serious",
+    "en": "After a slow collision beside the ferry queue, a driver scraped his palm on the damaged door. He is awake and breathing normally; the small wound hurts, and he asks for assistance.",
+    "tl": "Matapos ang mabagal na banggaan sa tabi ng pila sa pantalan, nagasgas ang palad ng drayber sa sirang pinto. Gising siya at normal ang paghinga; masakit ang maliit na sugat at humihingi siya ng tulong.",
+    "ceb": "Human sa hinay nga bangga tapad sa pila sa pantalan, nagaras ang palad sa drayber sa naguba nga pultahan. Mata siya ug normal ang pagginhawa; sakit ang gamayng samad ug nangayo siyag tabang.",
+    "rationale": "Synthetic draft: a described palm wound and requested help distinguish this from property-damage-only incidents; wakefulness and normal breathing remain explicit."
+  },
+  {
+    "id": "a_serious_07",
+    "label": "serious",
+    "en": "A scooter skidded at low speed across loose gravel near the warehouse. The rider has a painful shoulder abrasion and needs assistance; she is awake and breathing normally beside the stopped scooter.",
+    "tl": "Dumulas ang scooter sa graba malapit sa bodega habang mabagal ang takbo. May masakit na gasgas sa balikat ang sakay at kailangan ng tulong; gising siya at normal ang paghinga sa tabi ng nakahintong scooter.",
+    "ceb": "Midailos ang scooter sa graba duol sa bodega samtang hinay ang dagan. Naay sakit nga garas sa abaga ang sakay ug nanginahanglag tabang; mata siya ug normal ang pagginhawa tapad sa nakahunong nga scooter.",
+    "rationale": "Synthetic draft: a painful abrasion and assistance need are reported after a low-speed skid, with wakefulness and normal breathing. No unseen internal injury is inferred."
+  },
+  {
+    "id": "a_serious_08",
+    "label": "serious",
+    "en": "A delivery van turning slowly bumped a bin near the bakery. Its seated passenger struck her thigh against the door; she is awake and breathing normally, but the bruised thigh hurts when she walks.",
+    "tl": "Mabagal na lumiko ang delivery van at nabangga ang basurahan malapit sa panaderya. Tumama sa pinto ang hita ng nakaupong pasahero; gising siya at normal ang paghinga, pero masakit ang pasang hita kapag naglalakad.",
+    "ceb": "Hinay nga miliko ang delivery van ug nabunggo sa basurahan duol sa panaderya. Naigo sa pultahan ang paa sa naglingkod nga pasahero; mata siya ug normal ang pagginhawa, apan sakit ang nabun-og nga paa kon molakaw.",
+    "rationale": "Draft: current localized painful injury after low-speed vehicle contact; awake and normal breathing are stated. No diagnosis or approval is implied. Responder review required."
+  },
+  {
+    "id": "a_serious_09",
+    "label": "serious",
+    "en": "Two cars bumped at low speed near the fuel station exit. A passenger has a painful finger caught by a displaced seat; she is awake, breathing normally, and needs help freeing it.",
+    "tl": "Mabagal na nagbanggaan ang dalawang kotse malapit sa labasan ng gasolinahan. Masakit ang daliri ng pasaherong naipit sa nausog na upuan; gising siya, normal ang paghinga, at kailangan ng tulong para maalis ito.",
+    "ceb": "Hinay nga nagbangga ang duha ka awto duol sa gawasan sa gasolinahan. Sakit ang tudlo sa pasaherong nasipit sa nausog nga lingkoranan; mata siya, normal ang pagginhawa, ug nanginahanglag tabang aron mahaw-as kini.",
+    "rationale": "Synthetic draft: a trapped painful finger requires assistance, with wakefulness and normal breathing and no active threat stated. Location near fuel does not establish a fire."
+  },
+  {
+    "id": "a_serious_10",
+    "label": "serious",
+    "en": "A bicycle and a handcart collided slowly beside the produce depot. The cyclist's knee has a painful scrape; he is awake, breathing normally, and asking for help because bending it hurts.",
+    "tl": "Mabagal na nagbanggaan ang bisikleta at kariton sa tabi ng bagsakan ng gulay. Masakit ang gasgas sa tuhod ng siklista; gising siya, normal ang paghinga, at humihingi ng tulong dahil masakit itong ibaluktot.",
+    "ceb": "Hinay nga nagbangga ang bisikleta ug kariton tapad sa bagsakan sa utanon. Sakit ang garas sa tuhod sa nagbisikleta; mata siya, normal ang pagginhawa, ug nangayog tabang kay sakit kini pil-on.",
+    "rationale": "Synthetic draft: painful knee abrasion and an assistance request follow slow contact; no immediate grave sign is reported. The proposed label does not diagnose the injury."
+  },
+  {
+    "id": "a_critical_01",
+    "label": "critical",
+    "en": "A delivery cab hit the barrier above the drainage culvert. Its door is open, but the driver has slumped forward and does not respond when we call him; his breathing is unknown.",
+    "tl": "Bumangga ang sasakyang panghatid sa harang sa ibabaw ng daluyan ng tubig. Bukas ang pinto, pero nakayuko ang drayber at hindi tumutugon kapag tinatawag namin; hindi namin alam kung humihinga siya.",
+    "ceb": "Nabangga ang sakyanang panghatod sa babag ibabaw sa agianan sa tubig. Abli ang pultahan, apan nahagbong paatubangan ang drayber ug dili motubag kon tawgon namo; wala mi kahibalo kon nagginhawa siya.",
+    "rationale": "Synthetic draft: present unresponsiveness supports the proposed urgent label. Breathing is explicitly unknown; neither absent breathing nor death is inferred."
+  },
+  {
+    "id": "a_critical_02",
+    "label": "critical",
+    "en": "Near the roundabout, a scooter struck a bicycle. The cyclist answered us immediately after falling, but now she does not respond to her name or touch; we need help at this location.",
+    "tl": "Nabangga ng scooter ang bisikleta malapit sa rotonda. Sumagot ang siklista agad pagkahulog, pero ngayon ay hindi na tumutugon sa pangalan niya o sa paghawak; kailangan namin ng tulong sa lugar na ito.",
+    "ceb": "Nabangga sa scooter ang bisikleta duol sa rotonda. Mitubag ang nagbisikleta pagkahulog niya, apan karon dili na motubag sa iyang ngalan o sa paghikap; kinahanglan namog tabang dinhi sa maong lugar.",
+    "rationale": "Synthetic draft: the message clearly distinguishes earlier responsiveness from current unresponsiveness. The label relies on the present condition rather than the collision type."
+  },
+  {
+    "id": "a_critical_03",
+    "label": "critical",
+    "en": "After a bus struck another vehicle at the terminal exit, a passenger is lying across two seats. She is not breathing and does not respond; another passenger is calling for immediate help.",
+    "tl": "Matapos bumangga ang bus sa ibang sasakyan sa labasan ng terminal, nakahiga sa dalawang upuan ang pasahero. Hindi siya humihinga at hindi tumutugon; humihingi ng agarang tulong ang isa pang pasahero.",
+    "ceb": "Human mabangga ang bus sa laing sakyanan sa gawasan sa terminal, naghigda ibabaw sa duha ka lingkoranan ang pasahero. Dili siya moginhawa ug dili motubag; nangayog dihadiha nga tabang ang laing pasahero.",
+    "rationale": "Synthetic draft: absent breathing and unresponsiveness are directly reported after the collision. These statements indicate urgency, not a confirmed fatality."
+  },
+  {
+    "id": "a_critical_04",
+    "label": "critical",
+    "en": "A cargo jeep struck the curb beside the pier, injuring its driver's leg. He is awake, but very heavy bleeding continues and blood is pooling beneath him while we wait for assistance.",
+    "tl": "Tumama sa gilid ng bangketa sa tabi ng pantalan ang dyip na pangkarga at nasugatan ang binti ng drayber. Gising siya, pero tuloy ang napakalakas na pagdurugo at naiipon ang dugo sa ilalim niya habang naghihintay kami ng tulong.",
+    "ceb": "Naigo sa dyip nga pangkarga ang kilid sa bangketa tapad sa pantalan ug nasamad ang batiis sa drayber. Mata siya, apan nagpadayon ang hilabihang pagdugo ug nagtigom ang dugo ilalom niya samtang naghulat mig tabang.",
+    "rationale": "Synthetic draft: ongoing very heavy bleeding is explicitly observed; wakefulness does not cancel that reported danger. No cause beyond the stated collision is invented."
+  },
+  {
+    "id": "a_critical_05",
+    "label": "critical",
+    "en": "A van struck a tree beside the plantation road. A rear passenger remains trapped by a crushed door, and flames are burning beneath her seat; she is speaking but cannot get out.",
+    "tl": "Bumangga ang van sa puno sa tabi ng daan ng taniman. Naipit ang pasahero sa likod dahil sa nayuping pinto, at may apoy sa ilalim ng upuan niya; nakapagsasalita siya pero hindi makalabas.",
+    "ceb": "Nabangga ang van sa kahoy tapad sa dalan sa plantasyon. Naipit ang pasahero sa likod tungod sa nayuping pultahan, ug naay kalayo ilalom sa iyang lingkoranan; makasulti siya apan dili makagawas.",
+    "rationale": "Synthetic draft: entrapment is combined with active flames beneath the occupied seat. The person's ability to speak does not remove the immediate reported threat."
+  },
+  {
+    "id": "a_critical_06",
+    "label": "critical",
+    "en": "A truck rolled from the loading platform into the river beside it. The driver cannot leave the crushed cabin, and water inside has risen to his chest while he is calling out.",
+    "tl": "Gumulong ang trak mula sa plataporma ng kargahan papunta sa katabing ilog. Hindi makalabas ang drayber sa nayuping kabina, at umabot na sa dibdib niya ang tubig sa loob habang sumisigaw siya.",
+    "ceb": "Naligid ang trak gikan sa plataporma sa kargahanan ngadto sa tapad nga suba. Dili makagawas ang drayber sa nayuping kabina, ug miabot na sa iyang dughan ang tubig sulod samtang nagsinggit siya.",
+    "rationale": "Synthetic draft: a trapped occupant faces rising water inside the cabin. The label is based on active entrapment danger, without inferring drowning or death."
+  },
+  {
+    "id": "a_critical_07",
+    "label": "critical",
+    "en": "Following a sidecar collision beside the repair shop, the rider's arm is bleeding very heavily. Blood continues soaking through the cloth; he remains awake while his brother asks us to call for help.",
+    "tl": "Pagkatapos ng banggaan ng sasakyang may sidecar sa tabi ng talyer, napakalakas ng pagdurugo sa braso ng sakay. Patuloy na bumabasa ang dugo sa tela; gising siya habang nagpapatawag ng tulong ang kapatid niya.",
+    "ceb": "Human sa bangga sa sakyanang may sidecar tapad sa talyer, hilabihan ang pagdugo sa bukton sa sakay. Padayon nga nagbasa ang dugo sa panapton; mata siya samtang nagpatawag og tabang ang iyang igsoon.",
+    "rationale": "Synthetic draft: ongoing very heavy arm bleeding through cloth is expressly described. Wakefulness is preserved, and neither a diagnosis nor treatment advice is added."
+  },
+  {
+    "id": "a_critical_08",
+    "label": "critical",
+    "en": "A delivery vehicle rolled slowly across the driveway and pinned an adult against the wall. The vehicle has stopped, but the person does not respond when called or touched; breathing is uncertain.",
+    "tl": "Mabagal na gumulong ang sasakyang panghatid sa daanan at naipit sa pader ang isang adulto. Nakahinto na ang sasakyan, pero hindi tumutugon ang tao kapag tinatawag o hinahawakan; hindi tiyak kung humihinga.",
+    "ceb": "Hinay nga naligid ang sakyanang panghatod sa agianan ug naipit sa bungbong ang usa ka hamtong. Nakahunong na ang sakyanan, apan dili motubag ang tawo kon tawgon o hikapon; dili matino kon nagginhawa.",
+    "rationale": "Synthetic draft: current unresponsiveness drives the suggested urgency despite low vehicle speed and cessation of movement. Breathing remains uncertain rather than declared absent."
+  },
+  {
+    "id": "a_critical_09",
+    "label": "critical",
+    "en": "A taxi rolled into the shallow roadside ditch near the orchard. Its front passenger is talking, but the driver is unresponsive despite repeated calls; we cannot determine the driver's breathing from here.",
+    "tl": "Gumulong ang taksi sa mababaw na kanal malapit sa taniman ng prutas. Nagsasalita ang pasahero sa harap, pero hindi tumutugon ang drayber sa paulit-ulit na tawag; hindi namin matiyak ang paghinga niya mula rito.",
+    "ceb": "Naligid ang taksi sa mabaw nga kanal duol sa taniman sa prutas. Nagsulti ang pasahero sa atubangan, apan dili motubag ang drayber bisan balikbalik nga tawgon; dili namo matino ang iyang pagginhawa gikan dinhi.",
+    "rationale": "Synthetic draft: the responsive passenger and unresponsive driver are distinct people. The driver's reported condition supports urgency; unknown breathing is not treated as confirmed absence."
+  },
+  {
+    "id": "a_critical_10",
+    "label": "critical",
+    "en": "Another vehicle hit the rear of a school service van at the junction. An occupant beside the sliding door is not breathing; the attendant says the person also gives no response when called.",
+    "tl": "Binangga ng ibang sasakyan ang likod ng van na serbis sa paaralan sa sangandaan. Hindi humihinga ang sakay sa tabi ng pintuang dumudulas; ayon sa bantay, hindi rin ito tumutugon kapag tinatawag.",
+    "ceb": "Gibanggaan sa laing sakyanan ang likod sa van nga serbis sa eskuylahan sa kinasang-an. Dili moginhawa ang sakay tapad sa pultahang i-slide; sumala sa bantay, dili usab kini motubag kon tawgon.",
+    "rationale": "Synthetic draft: absent breathing and an attributed report of unresponsiveness establish reported urgency. The occupant's age and confirmed outcome are not stated or inferred."
+  },
+  {
+    "id": "a_needs_review_01",
+    "label": "needs_review",
+    "en": "The service station received a photograph of a scratched car beside its entrance. The sender calls it a collision, but gives no information about people, injuries, immediate hazards, or when it happened.",
+    "tl": "Nakatanggap ang gasolinahan ng larawan ng kotse na may gasgas sa tabi ng pasukan. Sabi ng nagpadala, banggaan ito, pero walang detalye tungkol sa mga tao, pinsala, agarang panganib, o oras ng pangyayari.",
+    "ceb": "Nakadawat ang gasolinahan og litrato sa awtong may garas tapad sa agianan pasulod. Bangga kini matod sa nagpadala, apan walay detalye bahin sa mga tawo, samad, dihadiha nga peligro, o kanus-a kini nahitabo.",
+    "rationale": "Synthetic draft: the text references an unconfirmed photograph without current person or hazard information. Visible-looking vehicle damage cannot supply missing text-only severity facts."
+  },
+  {
+    "id": "a_needs_review_02",
+    "label": "needs_review",
+    "en": "The radio caller mentioned a collision near the grain depot, then said something about breathing. Static hid whether the word was 'not'; we have no clear statement of anyone's present condition.",
+    "tl": "Binanggit ng tumatawag sa radyo ang banggaan malapit sa bodega ng butil, saka nagsalita tungkol sa paghinga. Natabunan kung sinabi niyang 'hindi'; wala kaming malinaw na pahayag tungkol sa kasalukuyang kalagayan ng sinuman.",
+    "ceb": "Gihisgotan sa nagtawag sa radyo ang bangga duol sa bodega sa lugas, dayon nagsulti bahin sa pagginhawa. Natabonan kon miingon ba siyag 'dili'; wala miy klarong pahayag bahin sa kasamtangang kahimtang sa bisan kinsa.",
+    "rationale": "Synthetic draft: an unresolved negation in a relayed breathing statement prevents a supported severity judgment. Potential danger must remain visible for prompt human clarification."
+  },
+  {
+    "id": "a_needs_review_03",
+    "label": "needs_review",
+    "en": "This morning's dispatch sheet lists a collision beside the rice mill, but the injury column is blank. Nobody here has contacted the scene, so we cannot describe the occupants or current hazards.",
+    "tl": "Nakalista sa tala ngayong umaga ang banggaan sa tabi ng gilingan ng bigas, pero blangko ang bahagi tungkol sa pinsala. Wala pang nakakausap sa lugar, kaya hindi namin mailarawan ang mga sakay o kasalukuyang panganib.",
+    "ceb": "Nakalista sa tala karong buntaga ang bangga tapad sa galingan sa bugas, apan blangko ang bahin sa mga samad. Wala pay nakaistorya sa lugar, busa dili namo mahulagway ang mga sakay o kasamtangang peligro.",
+    "rationale": "Synthetic draft: a blank injury field and lack of scene contact mean condition and hazards are unknown. Missing information must not become a no-injury finding."
+  },
+  {
+    "id": "a_needs_review_04",
+    "label": "needs_review",
+    "en": "A caller reported a slow collision near the toll booth before the connection failed. We have the road name, but no details about injuries, trapped occupants, or whether anyone still needs assistance.",
+    "tl": "Nagbalita ang tumatawag ng mabagal na banggaan malapit sa bayaran sa kalsada bago naputol ang koneksiyon. Alam namin ang pangalan ng daan, pero walang detalye sa pinsala, pagkaipit, o kung may nangangailangan pa ng tulong.",
+    "ceb": "Mitaho ang nagtawag og hinay nga bangga duol sa bayranan sa dalan sa wala pa maputol ang koneksiyon. Nahibalo mi sa ngalan sa dalan, apan walay detalye sa samad, pagkaipit, o kon may nagkinahanglan pag tabang.",
+    "rationale": "Synthetic draft: low collision speed does not replace missing condition and assistance information. The interrupted report requires clarification rather than an automatic minor label."
+  },
+  {
+    "id": "a_needs_review_05",
+    "label": "needs_review",
+    "en": "A printed notice describes a vehicle collision outside the sports hall yesterday afternoon. It does not say whether anyone was hurt, and the person handing it out cannot confirm the situation today.",
+    "tl": "May nakalimbag na abiso tungkol sa banggaan sa labas ng bulwagang pampalakasan kahapon ng hapon. Hindi nakasaad kung may nasaktan, at hindi matiyak ng namimigay nito ang kalagayan sa lugar ngayong araw.",
+    "ceb": "May giimprentang pahibalo bahin sa bangga sa gawas sa bulwagan sa sports kagahapon sa hapon. Wala gisulti kon may nasamdan, ug dili makamatino ang namahagi niini sa kahimtang sa lugar karong adlawa.",
+    "rationale": "Synthetic draft: past accident timing, absent injury details, and unverified present conditions prevent a current urgency assessment. The passage does not establish that assistance is unnecessary."
+  },
+  {
+    "id": "a_needs_review_06",
+    "label": "needs_review",
+    "en": "An account posted an accident photo beside the bypass, claiming that emergency help is needed. There is no timestamp or description of any person's condition, and I cannot confirm the post myself.",
+    "tl": "May account na naglagay ng larawan ng aksidente sa tabi ng bypass at humihingi ng agarang tulong. Walang oras o paglalarawan ng kalagayan ng sinuman, at hindi ko mismo makumpirma ang inilathala.",
+    "ceb": "May account nga mipatik og litrato sa aksidente tapad sa bypass ug nangayo og dihadiha nga tabang. Walay oras o paghulagway sa kahimtang sa bisan kinsa, ug dili nako makumpirma mismo ang gipatik.",
+    "rationale": "Synthetic draft: an unverified image-based request lacks timing and person-condition details. Review is required without treating the request as either low urgency or a confirmed critical injury."
+  },
+  {
+    "id": "a_needs_review_07",
+    "label": "needs_review",
+    "en": "After mentioning a collision at the hardware store exit, the driver said 'everyone has no...' before the audio stopped. I cannot tell whether he meant injuries, transport, or something else entirely.",
+    "tl": "Matapos banggitin ang banggaan sa labasan ng tindahan ng materyales, sinabi ng drayber na 'lahat ay walang...' bago huminto ang tunog. Hindi ko alam kung pinsala, masasakyan, o ibang bagay ang ibig niyang sabihin.",
+    "ceb": "Human hisgoti ang bangga sa gawasan sa tindahan sa materyales, miingon ang drayber og 'ang tanan walay...' sa wala pa mahunong ang tingog. Dili ko kahibalo kon samad, sakyanan, o laing butang ang gipasabot niya.",
+    "rationale": "Synthetic draft: a truncated negative statement has no established object and cannot substantiate absence of injury. No completion of the missing speech is assumed."
+  },
+  {
+    "id": "a_needs_review_08",
+    "label": "needs_review",
+    "en": "There are helmets and bags beside two vehicles touching outside the shopping arcade. People are blocking my view, so I cannot establish who was involved or whether anyone is injured or trapped.",
+    "tl": "May mga helmet at bag sa tabi ng dalawang magkadikit na sasakyan sa labas ng pamilihan. Nahaharangan ng mga tao ang tanaw ko, kaya hindi ko matiyak kung sino ang sangkot o may nasaktan o naipit.",
+    "ceb": "Naay mga helmet ug bag tapad sa duha ka nagdikit nga sakyanan sa gawas sa pamilihan. Gibabagan sa mga tawo ang akong panan-aw, busa dili ko matino kinsay naapil o kon may nasamdan o naipit.",
+    "rationale": "Synthetic draft: belongings and touching vehicles do not establish occupant injuries or entrapment. The observer explicitly lacks sufficient visibility and person-condition information."
+  },
+  {
+    "id": "a_needs_review_09",
+    "label": "needs_review",
+    "en": "The roadside attendant says someone was taken away after a collision near the feed store. He does not know their condition, destination, or whether other occupants remain, and cannot describe the current scene.",
+    "tl": "Sabi ng bantay sa tabing daan, may inilayo matapos ang banggaan malapit sa tindahan ng pakain. Hindi niya alam ang kalagayan, destinasyon, o kung may ibang sakay pa, at hindi niya mailarawan ang lugar ngayon.",
+    "ceb": "Miingon ang bantay daplin sa dalan nga may gidala palayo human sa bangga duol sa tindahan sa feeds. Wala siya kahibalo sa kahimtang, padulngan, o kon may laing sakay pa, ug dili niya mahulagway ang lugar karon.",
+    "rationale": "Synthetic draft: transport away from a scene does not establish injury severity or the current needs of remaining occupants. The informant's uncertainty is retained in all translations."
+  },
+  {
+    "id": "a_needs_review_10",
+    "label": "needs_review",
+    "en": "Two messages describe the same driver after a collision at the textile warehouse. One says he is injured, the other says he is unhurt; neither gives a time, and nobody has clarified the difference.",
+    "tl": "Tungkol sa parehong drayber ang dalawang mensahe matapos ang banggaan sa bodega ng tela. Sabi ng isa, nasaktan siya; sabi ng iba, hindi. Walang ibinigay na oras, at wala pang nagpapaliwanag sa pagkakaiba.",
+    "ceb": "Bahin sa samang drayber ang duha ka mensahe human sa bangga sa bodega sa tela. Ang usa miingong nasamdan siya, ang lain miingong wala. Walay gihatag nga oras, ug wala pay nagklaro sa kalainan.",
+    "rationale": "Synthetic draft: conflicting injury statements about one identified person have unresolved timing. Review is required; the exporter must not silently choose either account as ground truth."
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "rows": 400,
+  "groups": 99,
+  "unique_case_ids": 400,
+  "unique_normalized_texts": 400,
+  "by_label": {
+    "critical": 100,
+    "minor": 100,
+    "needs_review": 100,
+    "serious": 100
+  },
+  "by_language": {
+    "ceb": 120,
+    "en": 120,
+    "mixed": 40,
+    "tl": 120
+  },
+  "by_review_status": {
+    "draft": 400
+  },
+  "word_count": {
+    "min": 22,
+    "max": 39,
+    "at_most_8": 0,
+    "at_most_15": 0,
+    "16_to_30": 155,
+    "31_to_60": 245,
+    "over_60": 0
+  },
+  "approved_rows": 0,
+  "source_label_distribution_is_not_ground_truth": true
+}

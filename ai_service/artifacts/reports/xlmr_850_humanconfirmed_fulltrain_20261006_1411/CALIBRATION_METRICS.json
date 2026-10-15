@@ -1,0 +1,175 @@
+{
+  "dataset": "CALIBRATION only",
+  "count": 83,
+  "language_counts": {
+    "en": 24,
+    "tl": 23,
+    "ceb": 24,
+    "mixed": 12
+  },
+  "label_counts": {
+    "minor": 20,
+    "serious": 21,
+    "critical": 21,
+    "needs_review": 21
+  },
+  "confidence_is_raw_softmax_unless_temperature_scaled": true,
+  "raw_ece_10_bin": 0.10892091709447195,
+  "temperature_scaling": {
+    "method": "grid-search scalar T in [0.50,5.00] step 0.01 minimizing NLL on calibration partition only",
+    "temperature": 1.05,
+    "raw_nll": 0.5026403665542603,
+    "calibrated_nll": 0.501705527305603,
+    "calibrated_ece_10_bin": 0.09879058491752808,
+    "calibration_examples": 83,
+    "model_weights_changed": false
+  },
+  "raw_confidence_bins": [
+    {
+      "bin_lower": 0.4,
+      "bin_upper": 0.5,
+      "count": 1,
+      "mean_confidence": 0.47414469718933105,
+      "accuracy": 1.0
+    },
+    {
+      "bin_lower": 0.5,
+      "bin_upper": 0.6,
+      "count": 5,
+      "mean_confidence": 0.5387482643127441,
+      "accuracy": 0.4000000059604645
+    },
+    {
+      "bin_lower": 0.6,
+      "bin_upper": 0.7,
+      "count": 5,
+      "mean_confidence": 0.6438378095626831,
+      "accuracy": 0.4000000059604645
+    },
+    {
+      "bin_lower": 0.7,
+      "bin_upper": 0.8,
+      "count": 7,
+      "mean_confidence": 0.7572287917137146,
+      "accuracy": 0.4285714328289032
+    },
+    {
+      "bin_lower": 0.8,
+      "bin_upper": 0.9,
+      "count": 19,
+      "mean_confidence": 0.8611548542976379,
+      "accuracy": 0.7368420958518982
+    },
+    {
+      "bin_lower": 0.9,
+      "bin_upper": 1.0,
+      "count": 46,
+      "mean_confidence": 0.9361063838005066,
+      "accuracy": 0.97826087474823
+    }
+  ],
+  "calibrated_confidence_bins": [
+    {
+      "bin_lower": 0.4,
+      "bin_upper": 0.5,
+      "count": 1,
+      "mean_confidence": 0.46553218364715576,
+      "accuracy": 1.0
+    },
+    {
+      "bin_lower": 0.5,
+      "bin_upper": 0.6,
+      "count": 5,
+      "mean_confidence": 0.5305832028388977,
+      "accuracy": 0.4000000059604645
+    },
+    {
+      "bin_lower": 0.6,
+      "bin_upper": 0.7,
+      "count": 6,
+      "mean_confidence": 0.6404005885124207,
+      "accuracy": 0.5
+    },
+    {
+      "bin_lower": 0.7,
+      "bin_upper": 0.8,
+      "count": 6,
+      "mean_confidence": 0.7494618892669678,
+      "accuracy": 0.3333333432674408
+    },
+    {
+      "bin_lower": 0.8,
+      "bin_upper": 0.9,
+      "count": 23,
+      "mean_confidence": 0.8541575074195862,
+      "accuracy": 0.782608687877655
+    },
+    {
+      "bin_lower": 0.9,
+      "bin_upper": 1.0,
+      "count": 42,
+      "mean_confidence": 0.9279181361198425,
+      "accuracy": 0.976190447807312
+    }
+  ],
+  "routing_thresholds_on_calibration_only": [
+    {
+      "threshold": 0.5,
+      "automatic_coverage": 0.9879518072289156,
+      "human_review_rate": 0.012048192771084376,
+      "high_risk_automatic_coverage": 1.0,
+      "unsafe_automatic_undertriage": 7,
+      "high_risk_support": 42
+    },
+    {
+      "threshold": 0.65,
+      "automatic_coverage": 0.8795180722891566,
+      "human_review_rate": 0.12048192771084343,
+      "high_risk_automatic_coverage": 0.8571428571428571,
+      "unsafe_automatic_undertriage": 3,
+      "high_risk_support": 42
+    },
+    {
+      "threshold": 0.75,
+      "automatic_coverage": 0.8433734939759037,
+      "human_review_rate": 0.15662650602409633,
+      "high_risk_automatic_coverage": 0.7857142857142857,
+      "unsafe_automatic_undertriage": 3,
+      "high_risk_support": 42
+    },
+    {
+      "threshold": 0.85,
+      "automatic_coverage": 0.7108433734939759,
+      "human_review_rate": 0.28915662650602414,
+      "high_risk_automatic_coverage": 0.6904761904761905,
+      "unsafe_automatic_undertriage": 2,
+      "high_risk_support": 42
+    },
+    {
+      "threshold": 0.9,
+      "automatic_coverage": 0.5542168674698795,
+      "human_review_rate": 0.4457831325301205,
+      "high_risk_automatic_coverage": 0.5238095238095238,
+      "unsafe_automatic_undertriage": 1,
+      "high_risk_support": 42
+    },
+    {
+      "threshold": 0.95,
+      "automatic_coverage": 0.1566265060240964,
+      "human_review_rate": 0.8433734939759037,
+      "high_risk_automatic_coverage": 0.023809523809523808,
+      "unsafe_automatic_undertriage": 0,
+      "high_risk_support": 42
+    },
+    {
+      "threshold": 0.99,
+      "automatic_coverage": 0.0,
+      "human_review_rate": 1.0,
+      "high_risk_automatic_coverage": 0.0,
+      "unsafe_automatic_undertriage": 0,
+      "high_risk_support": 42
+    }
+  ],
+  "threshold_note": "descriptive calibration-set operating points; optimistic to quote as final performance; raw 0.65 runtime threshold remains provisional unless explicitly set later; do not apply calibration results to fresh test.",
+  "approved_for_deployment": false
+}

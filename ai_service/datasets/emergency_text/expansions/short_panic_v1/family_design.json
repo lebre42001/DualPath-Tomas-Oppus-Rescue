@@ -1,0 +1,485 @@
+{
+  "schema": "short_panic_family_design_v1",
+  "status": "draft_design_only",
+  "training_eligible": false,
+  "split_assignments_created": false,
+  "legacy_loader_compatible": false,
+  "legacy_constraint": "Current eight-column loader requires one label per group_id; counterfactual families need a versioned family/equivalence distinction.",
+  "cross_family_contrast_sets": [
+    "SP-C02",
+    "SP-C07",
+    "SP-C10",
+    "SP-C11",
+    "SP-C12",
+    "SP-C14",
+    "SP-C15",
+    "SP-C16",
+    "SP-C18",
+    "SP-C19",
+    "SP-C20",
+    "SP-C21",
+    "SP-C22",
+    "SP-C25",
+    "SP-C26"
+  ],
+  "dependency_policy": "Resolve near-duplicate, translation, shortening, counterfactual and old-holdout links before any merge. Keep connected dependency components in one split. This entire preview is development material, not an independent test set.",
+  "families": [
+    {
+      "scenario_family": "SP-F01",
+      "candidate_ids": [
+        "SPV1-001",
+        "SPV1-006",
+        "SPV1-011",
+        "SPV1-016"
+      ],
+      "proposed_labels": [
+        "minor"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_ROAD_B_MINOR_05_EN",
+        "SYN_ROAD_B_REVIEW_01_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_road_b_minor_05",
+        "synthetic_road_b_review_01"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F02",
+      "candidate_ids": [
+        "SPV1-002",
+        "SPV1-007",
+        "SPV1-012",
+        "SPV1-017"
+      ],
+      "proposed_labels": [
+        "minor"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_ROAD_B_MINOR_05_EN",
+        "SYN_A_SERIOUS_07_TL"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_a_serious_07",
+        "synthetic_road_b_minor_05"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F03",
+      "candidate_ids": [
+        "SPV1-003",
+        "SPV1-008",
+        "SPV1-013",
+        "SPV1-018"
+      ],
+      "proposed_labels": [
+        "minor"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_ROAD_B_MINOR_06_TL",
+        "SYN_ROAD_B_REVIEW_07_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_family_reverse_empty_tricycle",
+        "synthetic_road_b_review_07"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F04",
+      "candidate_ids": [
+        "SPV1-004",
+        "SPV1-009",
+        "SPV1-014"
+      ],
+      "proposed_labels": [
+        "minor"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_ROAD_B_MINOR_02_EN",
+        "SYN_A_MINOR_09_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_family_parking_entry_fixed_barrier",
+        "synthetic_road_b_minor_02"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F05",
+      "candidate_ids": [
+        "SPV1-005",
+        "SPV1-015",
+        "SPV1-019",
+        "SPV1-024",
+        "SPV1-044"
+      ],
+      "proposed_labels": [
+        "critical",
+        "minor",
+        "serious"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_A_SERIOUS_08_EN",
+        "SYN_ROAD_B_CRITICAL_04_EN",
+        "SYN_ROAD_B_MINOR_09_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_a_serious_08",
+        "synthetic_family_persistent_heavy_limb_bleeding",
+        "synthetic_road_b_minor_09"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F06",
+      "candidate_ids": [
+        "SPV1-010",
+        "SPV1-020",
+        "SPV1-048",
+        "SPV1-058",
+        "SPV1-070"
+      ],
+      "proposed_labels": [
+        "critical",
+        "minor",
+        "needs_review"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_A_CRITICAL_05_EN",
+        "SYN_CRITICALC_02_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_family_trapped_occupant_burning_van"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F07",
+      "candidate_ids": [
+        "SPV1-021",
+        "SPV1-027",
+        "SPV1-032",
+        "SPV1-039"
+      ],
+      "proposed_labels": [
+        "serious"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_ROAD_B_SERIOUS_06_CEB",
+        "SYN_SERIOUSC_09_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_road_b_serious_06",
+        "synthetic_seriousc_09"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F08",
+      "candidate_ids": [
+        "SPV1-022",
+        "SPV1-028",
+        "SPV1-034"
+      ],
+      "proposed_labels": [
+        "serious"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_ROAD_B_SERIOUS_04_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_road_b_serious_04"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F09",
+      "candidate_ids": [
+        "SPV1-023",
+        "SPV1-035",
+        "SPV1-075"
+      ],
+      "proposed_labels": [
+        "needs_review",
+        "serious"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_A_SERIOUS_09_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_a_serious_09"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F10",
+      "candidate_ids": [
+        "SPV1-025",
+        "SPV1-029",
+        "SPV1-033",
+        "SPV1-038",
+        "SPV1-040",
+        "SPV1-047",
+        "SPV1-054",
+        "SPV1-064"
+      ],
+      "proposed_labels": [
+        "critical",
+        "needs_review",
+        "serious"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_A_CRITICAL_04_EN",
+        "SYN_A_CRITICAL_07_EN",
+        "SYN_ROAD_B_SERIOUS_10_EN",
+        "SYN_SERIOUSC_08_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_family_interior_fitting_finger_cut",
+        "synthetic_family_persistent_heavy_limb_bleeding",
+        "synthetic_road_b_serious_10"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F11",
+      "candidate_ids": [
+        "SPV1-026",
+        "SPV1-030",
+        "SPV1-031",
+        "SPV1-036"
+      ],
+      "proposed_labels": [
+        "serious"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_ROAD_B_SERIOUS_01_EN",
+        "SYN_A_SERIOUS_04_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_a_serious_04",
+        "synthetic_road_b_serious_01"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F12",
+      "candidate_ids": [
+        "SPV1-041",
+        "SPV1-052",
+        "SPV1-063",
+        "SPV1-074"
+      ],
+      "proposed_labels": [
+        "critical",
+        "needs_review"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_A_CRITICAL_01_EN",
+        "SYN_ROAD_B_CRITICAL_01_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_a_critical_01",
+        "synthetic_road_b_critical_01"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F13",
+      "candidate_ids": [
+        "SPV1-042",
+        "SPV1-043",
+        "SPV1-046",
+        "SPV1-049",
+        "SPV1-051",
+        "SPV1-060",
+        "SPV1-080"
+      ],
+      "proposed_labels": [
+        "critical",
+        "needs_review"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_A_CRITICAL_03_EN",
+        "SYN_ROAD_B_CRITICAL_03_EN",
+        "SYN_CRITICALC_04_EN",
+        "SYN_NEEDS_REVIEWC_05_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_a_critical_03",
+        "synthetic_family_broken_audio_breathing_negation",
+        "synthetic_family_bus_passenger_breathing_distress",
+        "synthetic_family_driver_not_breathing_passenger_awake"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F14",
+      "candidate_ids": [
+        "SPV1-045"
+      ],
+      "proposed_labels": [
+        "critical"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_ROAD_B_CRITICAL_06_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_family_trapped_vehicle_in_water"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F15",
+      "candidate_ids": [
+        "SPV1-050",
+        "SPV1-055",
+        "SPV1-056",
+        "SPV1-057",
+        "SPV1-065",
+        "SPV1-068",
+        "SPV1-071",
+        "SPV1-072",
+        "SPV1-073"
+      ],
+      "proposed_labels": [
+        "critical",
+        "needs_review"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_ROAD_B_REVIEW_04_EN",
+        "SYN_NEEDS_REVIEWC_08_EN",
+        "SYN_CRITICALC_09_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_family_child_unresponsive_adult_awake",
+        "synthetic_family_undated_death_forward"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F16",
+      "candidate_ids": [
+        "SPV1-053",
+        "SPV1-059",
+        "SPV1-077"
+      ],
+      "proposed_labels": [
+        "critical",
+        "needs_review"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_ROAD_B_CRITICAL_09_EN",
+        "SYN_NEEDS_REVIEWC_04_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_needs_reviewc_04",
+        "synthetic_road_b_critical_09"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F17",
+      "candidate_ids": [
+        "SPV1-037",
+        "SPV1-069",
+        "SPV1-078"
+      ],
+      "proposed_labels": [
+        "needs_review",
+        "serious"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_NEEDS_REVIEWC_01_EN",
+        "SYN_ROAD_B_REVIEW_03_EN",
+        "SYN_SERIOUSC_04_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_needs_reviewc_01",
+        "synthetic_road_b_review_03",
+        "synthetic_seriousc_04"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    },
+    {
+      "scenario_family": "SP-F18",
+      "candidate_ids": [
+        "SPV1-061",
+        "SPV1-062",
+        "SPV1-066",
+        "SPV1-067",
+        "SPV1-076",
+        "SPV1-079"
+      ],
+      "proposed_labels": [
+        "needs_review"
+      ],
+      "review_status": "pending",
+      "split_assignment": null,
+      "possible_existing_case_links_for_review_only": [
+        "SYN_ROAD_B_REVIEW_01_EN",
+        "SYN_A_NEEDS_REVIEW_04_EN"
+      ],
+      "possible_existing_group_links_for_review_only": [
+        "synthetic_a_needs_review_04",
+        "synthetic_road_b_review_01"
+      ],
+      "ancestry_status": "not_adjudicated",
+      "note": "Conservative provisional family. Related old cases are review leads, not confirmed ancestry. Labels may differ. Never treat a new ID as proof of independence."
+    }
+  ]
+}

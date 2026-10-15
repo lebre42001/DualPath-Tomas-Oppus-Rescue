@@ -1,0 +1,1000 @@
+{
+  "status": "source_group_mapping_only_semantic_ancestry_not_verified",
+  "family_key_used": "source group_id (not independently adjudicated)",
+  "groups": [
+    {
+      "group_id": "synthetic_a_critical_01",
+      "case_ids": [
+        "SYN_A_CRITICAL_01_CEB",
+        "SYN_A_CRITICAL_01_EN",
+        "SYN_A_CRITICAL_01_MIXED",
+        "SYN_A_CRITICAL_01_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_critical_03",
+      "case_ids": [
+        "SYN_A_CRITICAL_03_CEB",
+        "SYN_A_CRITICAL_03_EN",
+        "SYN_A_CRITICAL_03_MIXED",
+        "SYN_A_CRITICAL_03_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_critical_08",
+      "case_ids": [
+        "SYN_A_CRITICAL_08_CEB",
+        "SYN_A_CRITICAL_08_EN",
+        "SYN_A_CRITICAL_08_MIXED",
+        "SYN_A_CRITICAL_08_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_critical_09",
+      "case_ids": [
+        "SYN_A_CRITICAL_09_CEB",
+        "SYN_A_CRITICAL_09_EN",
+        "SYN_A_CRITICAL_09_MIXED",
+        "SYN_A_CRITICAL_09_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_critical_10",
+      "case_ids": [
+        "SYN_A_CRITICAL_10_CEB",
+        "SYN_A_CRITICAL_10_EN",
+        "SYN_A_CRITICAL_10_MIXED",
+        "SYN_A_CRITICAL_10_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_minor_02",
+      "case_ids": [
+        "SYN_A_MINOR_02_CEB",
+        "SYN_A_MINOR_02_EN",
+        "SYN_A_MINOR_02_MIXED",
+        "SYN_A_MINOR_02_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_minor_03",
+      "case_ids": [
+        "SYN_A_MINOR_03_CEB",
+        "SYN_A_MINOR_03_EN",
+        "SYN_A_MINOR_03_MIXED",
+        "SYN_A_MINOR_03_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_minor_04",
+      "case_ids": [
+        "SYN_A_MINOR_04_CEB",
+        "SYN_A_MINOR_04_EN",
+        "SYN_A_MINOR_04_MIXED",
+        "SYN_A_MINOR_04_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_minor_05",
+      "case_ids": [
+        "SYN_A_MINOR_05_CEB",
+        "SYN_A_MINOR_05_EN",
+        "SYN_A_MINOR_05_MIXED",
+        "SYN_A_MINOR_05_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_minor_06",
+      "case_ids": [
+        "SYN_A_MINOR_06_CEB",
+        "SYN_A_MINOR_06_EN",
+        "SYN_A_MINOR_06_MIXED",
+        "SYN_A_MINOR_06_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_minor_07",
+      "case_ids": [
+        "SYN_A_MINOR_07_CEB",
+        "SYN_A_MINOR_07_EN",
+        "SYN_A_MINOR_07_MIXED",
+        "SYN_A_MINOR_07_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_minor_08",
+      "case_ids": [
+        "SYN_A_MINOR_08_CEB",
+        "SYN_A_MINOR_08_EN",
+        "SYN_A_MINOR_08_MIXED",
+        "SYN_A_MINOR_08_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_minor_10",
+      "case_ids": [
+        "SYN_A_MINOR_10_CEB",
+        "SYN_A_MINOR_10_EN",
+        "SYN_A_MINOR_10_MIXED",
+        "SYN_A_MINOR_10_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_needs_review_01",
+      "case_ids": [
+        "SYN_A_NEEDS_REVIEW_01_CEB",
+        "SYN_A_NEEDS_REVIEW_01_EN",
+        "SYN_A_NEEDS_REVIEW_01_MIXED",
+        "SYN_A_NEEDS_REVIEW_01_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_needs_review_03",
+      "case_ids": [
+        "SYN_A_NEEDS_REVIEW_03_CEB",
+        "SYN_A_NEEDS_REVIEW_03_EN",
+        "SYN_A_NEEDS_REVIEW_03_MIXED",
+        "SYN_A_NEEDS_REVIEW_03_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_needs_review_04",
+      "case_ids": [
+        "SYN_A_NEEDS_REVIEW_04_CEB",
+        "SYN_A_NEEDS_REVIEW_04_EN",
+        "SYN_A_NEEDS_REVIEW_04_MIXED",
+        "SYN_A_NEEDS_REVIEW_04_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_needs_review_05",
+      "case_ids": [
+        "SYN_A_NEEDS_REVIEW_05_CEB",
+        "SYN_A_NEEDS_REVIEW_05_EN",
+        "SYN_A_NEEDS_REVIEW_05_MIXED",
+        "SYN_A_NEEDS_REVIEW_05_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_needs_review_06",
+      "case_ids": [
+        "SYN_A_NEEDS_REVIEW_06_CEB",
+        "SYN_A_NEEDS_REVIEW_06_EN",
+        "SYN_A_NEEDS_REVIEW_06_MIXED",
+        "SYN_A_NEEDS_REVIEW_06_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_needs_review_07",
+      "case_ids": [
+        "SYN_A_NEEDS_REVIEW_07_CEB",
+        "SYN_A_NEEDS_REVIEW_07_EN",
+        "SYN_A_NEEDS_REVIEW_07_MIXED",
+        "SYN_A_NEEDS_REVIEW_07_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_needs_review_08",
+      "case_ids": [
+        "SYN_A_NEEDS_REVIEW_08_CEB",
+        "SYN_A_NEEDS_REVIEW_08_EN",
+        "SYN_A_NEEDS_REVIEW_08_MIXED",
+        "SYN_A_NEEDS_REVIEW_08_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_needs_review_09",
+      "case_ids": [
+        "SYN_A_NEEDS_REVIEW_09_CEB",
+        "SYN_A_NEEDS_REVIEW_09_EN",
+        "SYN_A_NEEDS_REVIEW_09_MIXED",
+        "SYN_A_NEEDS_REVIEW_09_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_needs_review_10",
+      "case_ids": [
+        "SYN_A_NEEDS_REVIEW_10_CEB",
+        "SYN_A_NEEDS_REVIEW_10_EN",
+        "SYN_A_NEEDS_REVIEW_10_MIXED",
+        "SYN_A_NEEDS_REVIEW_10_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_serious_01",
+      "case_ids": [
+        "SYN_A_SERIOUS_01_CEB",
+        "SYN_A_SERIOUS_01_EN",
+        "SYN_A_SERIOUS_01_MIXED",
+        "SYN_A_SERIOUS_01_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_serious_02",
+      "case_ids": [
+        "SYN_A_SERIOUS_02_CEB",
+        "SYN_A_SERIOUS_02_EN",
+        "SYN_A_SERIOUS_02_MIXED",
+        "SYN_A_SERIOUS_02_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_serious_03",
+      "case_ids": [
+        "SYN_A_SERIOUS_03_CEB",
+        "SYN_A_SERIOUS_03_EN",
+        "SYN_A_SERIOUS_03_MIXED",
+        "SYN_A_SERIOUS_03_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_serious_04",
+      "case_ids": [
+        "SYN_A_SERIOUS_04_CEB",
+        "SYN_A_SERIOUS_04_EN",
+        "SYN_A_SERIOUS_04_MIXED",
+        "SYN_A_SERIOUS_04_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_serious_05",
+      "case_ids": [
+        "SYN_A_SERIOUS_05_CEB",
+        "SYN_A_SERIOUS_05_EN",
+        "SYN_A_SERIOUS_05_MIXED",
+        "SYN_A_SERIOUS_05_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_serious_06",
+      "case_ids": [
+        "SYN_A_SERIOUS_06_CEB",
+        "SYN_A_SERIOUS_06_EN",
+        "SYN_A_SERIOUS_06_MIXED",
+        "SYN_A_SERIOUS_06_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_serious_07",
+      "case_ids": [
+        "SYN_A_SERIOUS_07_CEB",
+        "SYN_A_SERIOUS_07_EN",
+        "SYN_A_SERIOUS_07_MIXED",
+        "SYN_A_SERIOUS_07_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_serious_08",
+      "case_ids": [
+        "SYN_A_SERIOUS_08_CEB",
+        "SYN_A_SERIOUS_08_EN",
+        "SYN_A_SERIOUS_08_MIXED",
+        "SYN_A_SERIOUS_08_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_serious_09",
+      "case_ids": [
+        "SYN_A_SERIOUS_09_CEB",
+        "SYN_A_SERIOUS_09_EN",
+        "SYN_A_SERIOUS_09_MIXED",
+        "SYN_A_SERIOUS_09_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_a_serious_10",
+      "case_ids": [
+        "SYN_A_SERIOUS_10_CEB",
+        "SYN_A_SERIOUS_10_EN",
+        "SYN_A_SERIOUS_10_MIXED",
+        "SYN_A_SERIOUS_10_TL"
+      ],
+      "member_count": 4
+    },
+    {
+      "group_id": "synthetic_criticalc_06",
+      "case_ids": [
+        "SYN_CRITICALC_06_CEB",
+        "SYN_CRITICALC_06_EN",
+        "SYN_CRITICALC_06_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_family_belted_parking_contact_limb_pain",
+      "case_ids": [
+        "SYN_SERIOUSC_01_CEB",
+        "SYN_SERIOUSC_01_EN",
+        "SYN_SERIOUSC_01_TL",
+        "SYN_SERIOUSC_03_CEB",
+        "SYN_SERIOUSC_03_EN",
+        "SYN_SERIOUSC_03_TL"
+      ],
+      "member_count": 6
+    },
+    {
+      "group_id": "synthetic_family_broken_audio_breathing_negation",
+      "case_ids": [
+        "SYN_A_NEEDS_REVIEW_02_CEB",
+        "SYN_A_NEEDS_REVIEW_02_EN",
+        "SYN_A_NEEDS_REVIEW_02_MIXED",
+        "SYN_A_NEEDS_REVIEW_02_TL",
+        "SYN_NEEDS_REVIEWC_05_CEB",
+        "SYN_NEEDS_REVIEWC_05_EN",
+        "SYN_NEEDS_REVIEWC_05_TL"
+      ],
+      "member_count": 7
+    },
+    {
+      "group_id": "synthetic_family_bus_passenger_breathing_distress",
+      "case_ids": [
+        "SYN_CRITICALC_05_CEB",
+        "SYN_CRITICALC_05_EN",
+        "SYN_CRITICALC_05_TL",
+        "SYN_ROAD_B_CRITICAL_03_CEB",
+        "SYN_ROAD_B_CRITICAL_03_EN",
+        "SYN_ROAD_B_CRITICAL_03_TL"
+      ],
+      "member_count": 6
+    },
+    {
+      "group_id": "synthetic_family_child_unresponsive_adult_awake",
+      "case_ids": [
+        "SYN_CRITICALC_09_CEB",
+        "SYN_CRITICALC_09_EN",
+        "SYN_CRITICALC_09_TL",
+        "SYN_ROAD_B_CRITICAL_07_CEB",
+        "SYN_ROAD_B_CRITICAL_07_EN",
+        "SYN_ROAD_B_CRITICAL_07_TL"
+      ],
+      "member_count": 6
+    },
+    {
+      "group_id": "synthetic_family_driver_not_breathing_passenger_awake",
+      "case_ids": [
+        "SYN_CRITICALC_04_CEB",
+        "SYN_CRITICALC_04_EN",
+        "SYN_CRITICALC_04_TL",
+        "SYN_CRITICALC_10_CEB",
+        "SYN_CRITICALC_10_EN",
+        "SYN_CRITICALC_10_TL"
+      ],
+      "member_count": 6
+    },
+    {
+      "group_id": "synthetic_family_empty_bicycle_parked_car",
+      "case_ids": [
+        "SYN_MINORC_09_CEB",
+        "SYN_MINORC_09_EN",
+        "SYN_MINORC_09_TL",
+        "SYN_ROAD_B_MINOR_04_CEB",
+        "SYN_ROAD_B_MINOR_04_EN",
+        "SYN_ROAD_B_MINOR_04_TL"
+      ],
+      "member_count": 6
+    },
+    {
+      "group_id": "synthetic_family_interior_fitting_finger_cut",
+      "case_ids": [
+        "SYN_SERIOUSC_02_CEB",
+        "SYN_SERIOUSC_02_EN",
+        "SYN_SERIOUSC_02_TL",
+        "SYN_SERIOUSC_08_CEB",
+        "SYN_SERIOUSC_08_EN",
+        "SYN_SERIOUSC_08_TL"
+      ],
+      "member_count": 6
+    },
+    {
+      "group_id": "synthetic_family_now_unresponsive_after_talking",
+      "case_ids": [
+        "SYN_A_CRITICAL_02_CEB",
+        "SYN_A_CRITICAL_02_EN",
+        "SYN_A_CRITICAL_02_MIXED",
+        "SYN_A_CRITICAL_02_TL",
+        "SYN_CRITICALC_01_CEB",
+        "SYN_CRITICALC_01_EN",
+        "SYN_CRITICALC_01_TL",
+        "SYN_CRITICALC_08_CEB",
+        "SYN_CRITICALC_08_EN",
+        "SYN_CRITICALC_08_TL",
+        "SYN_ROAD_B_CRITICAL_10_CEB",
+        "SYN_ROAD_B_CRITICAL_10_EN",
+        "SYN_ROAD_B_CRITICAL_10_TL"
+      ],
+      "member_count": 13
+    },
+    {
+      "group_id": "synthetic_family_parking_entry_fixed_barrier",
+      "case_ids": [
+        "SYN_A_MINOR_01_CEB",
+        "SYN_A_MINOR_01_EN",
+        "SYN_A_MINOR_01_MIXED",
+        "SYN_A_MINOR_01_TL",
+        "SYN_A_MINOR_09_CEB",
+        "SYN_A_MINOR_09_EN",
+        "SYN_A_MINOR_09_MIXED",
+        "SYN_A_MINOR_09_TL"
+      ],
+      "member_count": 8
+    },
+    {
+      "group_id": "synthetic_family_persistent_heavy_limb_bleeding",
+      "case_ids": [
+        "SYN_A_CRITICAL_04_CEB",
+        "SYN_A_CRITICAL_04_EN",
+        "SYN_A_CRITICAL_04_MIXED",
+        "SYN_A_CRITICAL_04_TL",
+        "SYN_A_CRITICAL_07_CEB",
+        "SYN_A_CRITICAL_07_EN",
+        "SYN_A_CRITICAL_07_MIXED",
+        "SYN_A_CRITICAL_07_TL",
+        "SYN_CRITICALC_03_CEB",
+        "SYN_CRITICALC_03_EN",
+        "SYN_CRITICALC_03_TL",
+        "SYN_ROAD_B_CRITICAL_04_CEB",
+        "SYN_ROAD_B_CRITICAL_04_EN",
+        "SYN_ROAD_B_CRITICAL_04_TL"
+      ],
+      "member_count": 14
+    },
+    {
+      "group_id": "synthetic_family_reverse_empty_tricycle",
+      "case_ids": [
+        "SYN_MINORC_07_CEB",
+        "SYN_MINORC_07_EN",
+        "SYN_MINORC_07_TL",
+        "SYN_ROAD_B_MINOR_01_CEB",
+        "SYN_ROAD_B_MINOR_01_EN",
+        "SYN_ROAD_B_MINOR_01_TL",
+        "SYN_ROAD_B_MINOR_06_CEB",
+        "SYN_ROAD_B_MINOR_06_EN",
+        "SYN_ROAD_B_MINOR_06_TL"
+      ],
+      "member_count": 9
+    },
+    {
+      "group_id": "synthetic_family_trapped_occupant_burning_van",
+      "case_ids": [
+        "SYN_A_CRITICAL_05_CEB",
+        "SYN_A_CRITICAL_05_EN",
+        "SYN_A_CRITICAL_05_MIXED",
+        "SYN_A_CRITICAL_05_TL",
+        "SYN_CRITICALC_02_CEB",
+        "SYN_CRITICALC_02_EN",
+        "SYN_CRITICALC_02_TL",
+        "SYN_ROAD_B_CRITICAL_05_CEB",
+        "SYN_ROAD_B_CRITICAL_05_EN",
+        "SYN_ROAD_B_CRITICAL_05_TL"
+      ],
+      "member_count": 10
+    },
+    {
+      "group_id": "synthetic_family_trapped_vehicle_in_water",
+      "case_ids": [
+        "SYN_A_CRITICAL_06_CEB",
+        "SYN_A_CRITICAL_06_EN",
+        "SYN_A_CRITICAL_06_MIXED",
+        "SYN_A_CRITICAL_06_TL",
+        "SYN_CRITICALC_07_CEB",
+        "SYN_CRITICALC_07_EN",
+        "SYN_CRITICALC_07_TL",
+        "SYN_ROAD_B_CRITICAL_06_CEB",
+        "SYN_ROAD_B_CRITICAL_06_EN",
+        "SYN_ROAD_B_CRITICAL_06_TL"
+      ],
+      "member_count": 10
+    },
+    {
+      "group_id": "synthetic_family_undated_death_forward",
+      "case_ids": [
+        "SYN_NEEDS_REVIEWC_08_CEB",
+        "SYN_NEEDS_REVIEWC_08_EN",
+        "SYN_NEEDS_REVIEWC_08_TL",
+        "SYN_ROAD_B_REVIEW_04_CEB",
+        "SYN_ROAD_B_REVIEW_04_EN",
+        "SYN_ROAD_B_REVIEW_04_TL"
+      ],
+      "member_count": 6
+    },
+    {
+      "group_id": "synthetic_minorc_01",
+      "case_ids": [
+        "SYN_MINORC_01_CEB",
+        "SYN_MINORC_01_EN",
+        "SYN_MINORC_01_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_minorc_02",
+      "case_ids": [
+        "SYN_MINORC_02_CEB",
+        "SYN_MINORC_02_EN",
+        "SYN_MINORC_02_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_minorc_03",
+      "case_ids": [
+        "SYN_MINORC_03_CEB",
+        "SYN_MINORC_03_EN",
+        "SYN_MINORC_03_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_minorc_04",
+      "case_ids": [
+        "SYN_MINORC_04_CEB",
+        "SYN_MINORC_04_EN",
+        "SYN_MINORC_04_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_minorc_05",
+      "case_ids": [
+        "SYN_MINORC_05_CEB",
+        "SYN_MINORC_05_EN",
+        "SYN_MINORC_05_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_minorc_06",
+      "case_ids": [
+        "SYN_MINORC_06_CEB",
+        "SYN_MINORC_06_EN",
+        "SYN_MINORC_06_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_minorc_08",
+      "case_ids": [
+        "SYN_MINORC_08_CEB",
+        "SYN_MINORC_08_EN",
+        "SYN_MINORC_08_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_minorc_10",
+      "case_ids": [
+        "SYN_MINORC_10_CEB",
+        "SYN_MINORC_10_EN",
+        "SYN_MINORC_10_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_needs_reviewc_01",
+      "case_ids": [
+        "SYN_NEEDS_REVIEWC_01_CEB",
+        "SYN_NEEDS_REVIEWC_01_EN",
+        "SYN_NEEDS_REVIEWC_01_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_needs_reviewc_02",
+      "case_ids": [
+        "SYN_NEEDS_REVIEWC_02_CEB",
+        "SYN_NEEDS_REVIEWC_02_EN",
+        "SYN_NEEDS_REVIEWC_02_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_needs_reviewc_03",
+      "case_ids": [
+        "SYN_NEEDS_REVIEWC_03_CEB",
+        "SYN_NEEDS_REVIEWC_03_EN",
+        "SYN_NEEDS_REVIEWC_03_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_needs_reviewc_04",
+      "case_ids": [
+        "SYN_NEEDS_REVIEWC_04_CEB",
+        "SYN_NEEDS_REVIEWC_04_EN",
+        "SYN_NEEDS_REVIEWC_04_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_needs_reviewc_06",
+      "case_ids": [
+        "SYN_NEEDS_REVIEWC_06_CEB",
+        "SYN_NEEDS_REVIEWC_06_EN",
+        "SYN_NEEDS_REVIEWC_06_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_needs_reviewc_07",
+      "case_ids": [
+        "SYN_NEEDS_REVIEWC_07_CEB",
+        "SYN_NEEDS_REVIEWC_07_EN",
+        "SYN_NEEDS_REVIEWC_07_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_needs_reviewc_09",
+      "case_ids": [
+        "SYN_NEEDS_REVIEWC_09_CEB",
+        "SYN_NEEDS_REVIEWC_09_EN",
+        "SYN_NEEDS_REVIEWC_09_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_needs_reviewc_10",
+      "case_ids": [
+        "SYN_NEEDS_REVIEWC_10_CEB",
+        "SYN_NEEDS_REVIEWC_10_EN",
+        "SYN_NEEDS_REVIEWC_10_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_critical_01",
+      "case_ids": [
+        "SYN_ROAD_B_CRITICAL_01_CEB",
+        "SYN_ROAD_B_CRITICAL_01_EN",
+        "SYN_ROAD_B_CRITICAL_01_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_critical_02",
+      "case_ids": [
+        "SYN_ROAD_B_CRITICAL_02_CEB",
+        "SYN_ROAD_B_CRITICAL_02_EN",
+        "SYN_ROAD_B_CRITICAL_02_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_critical_08",
+      "case_ids": [
+        "SYN_ROAD_B_CRITICAL_08_CEB",
+        "SYN_ROAD_B_CRITICAL_08_EN",
+        "SYN_ROAD_B_CRITICAL_08_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_critical_09",
+      "case_ids": [
+        "SYN_ROAD_B_CRITICAL_09_CEB",
+        "SYN_ROAD_B_CRITICAL_09_EN",
+        "SYN_ROAD_B_CRITICAL_09_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_minor_02",
+      "case_ids": [
+        "SYN_ROAD_B_MINOR_02_CEB",
+        "SYN_ROAD_B_MINOR_02_EN",
+        "SYN_ROAD_B_MINOR_02_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_minor_03",
+      "case_ids": [
+        "SYN_ROAD_B_MINOR_03_CEB",
+        "SYN_ROAD_B_MINOR_03_EN",
+        "SYN_ROAD_B_MINOR_03_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_minor_05",
+      "case_ids": [
+        "SYN_ROAD_B_MINOR_05_CEB",
+        "SYN_ROAD_B_MINOR_05_EN",
+        "SYN_ROAD_B_MINOR_05_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_minor_07",
+      "case_ids": [
+        "SYN_ROAD_B_MINOR_07_CEB",
+        "SYN_ROAD_B_MINOR_07_EN",
+        "SYN_ROAD_B_MINOR_07_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_minor_08",
+      "case_ids": [
+        "SYN_ROAD_B_MINOR_08_CEB",
+        "SYN_ROAD_B_MINOR_08_EN",
+        "SYN_ROAD_B_MINOR_08_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_minor_09",
+      "case_ids": [
+        "SYN_ROAD_B_MINOR_09_CEB",
+        "SYN_ROAD_B_MINOR_09_EN",
+        "SYN_ROAD_B_MINOR_09_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_minor_10",
+      "case_ids": [
+        "SYN_ROAD_B_MINOR_10_CEB",
+        "SYN_ROAD_B_MINOR_10_EN",
+        "SYN_ROAD_B_MINOR_10_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_review_01",
+      "case_ids": [
+        "SYN_ROAD_B_REVIEW_01_CEB",
+        "SYN_ROAD_B_REVIEW_01_EN",
+        "SYN_ROAD_B_REVIEW_01_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_review_02",
+      "case_ids": [
+        "SYN_ROAD_B_REVIEW_02_CEB",
+        "SYN_ROAD_B_REVIEW_02_EN",
+        "SYN_ROAD_B_REVIEW_02_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_review_03",
+      "case_ids": [
+        "SYN_ROAD_B_REVIEW_03_CEB",
+        "SYN_ROAD_B_REVIEW_03_EN",
+        "SYN_ROAD_B_REVIEW_03_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_review_05",
+      "case_ids": [
+        "SYN_ROAD_B_REVIEW_05_CEB",
+        "SYN_ROAD_B_REVIEW_05_EN",
+        "SYN_ROAD_B_REVIEW_05_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_review_06",
+      "case_ids": [
+        "SYN_ROAD_B_REVIEW_06_CEB",
+        "SYN_ROAD_B_REVIEW_06_EN",
+        "SYN_ROAD_B_REVIEW_06_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_review_07",
+      "case_ids": [
+        "SYN_ROAD_B_REVIEW_07_CEB",
+        "SYN_ROAD_B_REVIEW_07_EN",
+        "SYN_ROAD_B_REVIEW_07_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_review_08",
+      "case_ids": [
+        "SYN_ROAD_B_REVIEW_08_CEB",
+        "SYN_ROAD_B_REVIEW_08_EN",
+        "SYN_ROAD_B_REVIEW_08_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_review_09",
+      "case_ids": [
+        "SYN_ROAD_B_REVIEW_09_CEB",
+        "SYN_ROAD_B_REVIEW_09_EN",
+        "SYN_ROAD_B_REVIEW_09_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_review_10",
+      "case_ids": [
+        "SYN_ROAD_B_REVIEW_10_CEB",
+        "SYN_ROAD_B_REVIEW_10_EN",
+        "SYN_ROAD_B_REVIEW_10_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_serious_01",
+      "case_ids": [
+        "SYN_ROAD_B_SERIOUS_01_CEB",
+        "SYN_ROAD_B_SERIOUS_01_EN",
+        "SYN_ROAD_B_SERIOUS_01_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_serious_02",
+      "case_ids": [
+        "SYN_ROAD_B_SERIOUS_02_CEB",
+        "SYN_ROAD_B_SERIOUS_02_EN",
+        "SYN_ROAD_B_SERIOUS_02_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_serious_03",
+      "case_ids": [
+        "SYN_ROAD_B_SERIOUS_03_CEB",
+        "SYN_ROAD_B_SERIOUS_03_EN",
+        "SYN_ROAD_B_SERIOUS_03_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_serious_04",
+      "case_ids": [
+        "SYN_ROAD_B_SERIOUS_04_CEB",
+        "SYN_ROAD_B_SERIOUS_04_EN",
+        "SYN_ROAD_B_SERIOUS_04_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_serious_05",
+      "case_ids": [
+        "SYN_ROAD_B_SERIOUS_05_CEB",
+        "SYN_ROAD_B_SERIOUS_05_EN",
+        "SYN_ROAD_B_SERIOUS_05_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_serious_06",
+      "case_ids": [
+        "SYN_ROAD_B_SERIOUS_06_CEB",
+        "SYN_ROAD_B_SERIOUS_06_EN",
+        "SYN_ROAD_B_SERIOUS_06_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_serious_07",
+      "case_ids": [
+        "SYN_ROAD_B_SERIOUS_07_CEB",
+        "SYN_ROAD_B_SERIOUS_07_EN",
+        "SYN_ROAD_B_SERIOUS_07_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_serious_08",
+      "case_ids": [
+        "SYN_ROAD_B_SERIOUS_08_CEB",
+        "SYN_ROAD_B_SERIOUS_08_EN",
+        "SYN_ROAD_B_SERIOUS_08_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_serious_09",
+      "case_ids": [
+        "SYN_ROAD_B_SERIOUS_09_CEB",
+        "SYN_ROAD_B_SERIOUS_09_EN",
+        "SYN_ROAD_B_SERIOUS_09_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_road_b_serious_10",
+      "case_ids": [
+        "SYN_ROAD_B_SERIOUS_10_CEB",
+        "SYN_ROAD_B_SERIOUS_10_EN",
+        "SYN_ROAD_B_SERIOUS_10_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_seriousc_04",
+      "case_ids": [
+        "SYN_SERIOUSC_04_CEB",
+        "SYN_SERIOUSC_04_EN",
+        "SYN_SERIOUSC_04_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_seriousc_05",
+      "case_ids": [
+        "SYN_SERIOUSC_05_CEB",
+        "SYN_SERIOUSC_05_EN",
+        "SYN_SERIOUSC_05_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_seriousc_06",
+      "case_ids": [
+        "SYN_SERIOUSC_06_CEB",
+        "SYN_SERIOUSC_06_EN",
+        "SYN_SERIOUSC_06_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_seriousc_07",
+      "case_ids": [
+        "SYN_SERIOUSC_07_CEB",
+        "SYN_SERIOUSC_07_EN",
+        "SYN_SERIOUSC_07_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_seriousc_09",
+      "case_ids": [
+        "SYN_SERIOUSC_09_CEB",
+        "SYN_SERIOUSC_09_EN",
+        "SYN_SERIOUSC_09_TL"
+      ],
+      "member_count": 3
+    },
+    {
+      "group_id": "synthetic_seriousc_10",
+      "case_ids": [
+        "SYN_SERIOUSC_10_CEB",
+        "SYN_SERIOUSC_10_EN",
+        "SYN_SERIOUSC_10_TL"
+      ],
+      "member_count": 3
+    }
+  ]
+}

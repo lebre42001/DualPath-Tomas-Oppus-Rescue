@@ -1,0 +1,21 @@
+{
+  "status": "PARTIAL",
+  "checks": {
+    "all_four_labels_present_in_each_language": true,
+    "length_bucket_distribution_reported": true,
+    "exact_duplicate_check": "pass_with_limitations; see DUPLICATE_AUDIT.json",
+    "near_duplicate_review": "38 internal similarity pairs >=0.75 reported by independent red-team; pair relationships were reviewed/linked where detected; further human semantic audit required",
+    "native_language_subject_negation_person_object_review": "not established without fluent responder reviewers"
+  },
+  "risk": "Synthetic labels may remain associated with wording, severity cues, and template style. Metrics alone cannot establish full-meaning interpretation.",
+  "required_human_checks": [
+    "person vs vehicle/object",
+    "dead engine vs deceased/unresponsive person",
+    "phone nonresponse vs victim nonresponse",
+    "negation",
+    "bleeding modifiers",
+    "functional impairment",
+    "short panic texts",
+    "language naturalness"
+  ]
+}

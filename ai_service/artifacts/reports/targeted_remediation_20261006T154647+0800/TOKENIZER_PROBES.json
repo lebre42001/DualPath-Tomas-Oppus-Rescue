@@ -1,0 +1,77 @@
+{
+  "base_model": "FacebookAI/xlm-roberta-base",
+  "revision": "42f548f32366559214515ec137cdd16002968bf6",
+  "base_tokenizer_class": "XLMRobertaTokenizerFast",
+  "saved_tokenizer_class": "XLMRobertaTokenizerFast",
+  "base_is_fast": true,
+  "saved_is_fast": true,
+  "probe_count": 8,
+  "all_token_ids_equal": true,
+  "probes": [
+    {
+      "probe": "ceb_negation_person_nonresponse",
+      "base_token_count": 18,
+      "saved_token_count": 18,
+      "token_ids_equal": true,
+      "base_ids_sha256": "10a44dfd85b3c541cacdb42258c428eae355235677b5e03d3dd9817f29eb7a7a",
+      "saved_ids_sha256": "10a44dfd85b3c541cacdb42258c428eae355235677b5e03d3dd9817f29eb7a7a"
+    },
+    {
+      "probe": "ceb_current_bleeding",
+      "base_token_count": 22,
+      "saved_token_count": 22,
+      "token_ids_equal": true,
+      "base_ids_sha256": "982c536e3d4f4a7307c05ccb112fb3639e83e5ac8d3e5c9258d65449b3ece930",
+      "saved_ids_sha256": "982c536e3d4f4a7307c05ccb112fb3639e83e5ac8d3e5c9258d65449b3ece930"
+    },
+    {
+      "probe": "ceb_no_breathing",
+      "base_token_count": 16,
+      "saved_token_count": 16,
+      "token_ids_equal": true,
+      "base_ids_sha256": "f5125c3f60da656c5c822ee0cb9a398e3b0114d8cbe96c12c8db30a89e56d3d6",
+      "saved_ids_sha256": "f5125c3f60da656c5c822ee0cb9a398e3b0114d8cbe96c12c8db30a89e56d3d6"
+    },
+    {
+      "probe": "tl_negation_person_nonresponse",
+      "base_token_count": 18,
+      "saved_token_count": 18,
+      "token_ids_equal": true,
+      "base_ids_sha256": "e794dce86a84535da229b420852524159e1e3e4f66b71f938ac43721989a3b52",
+      "saved_ids_sha256": "e794dce86a84535da229b420852524159e1e3e4f66b71f938ac43721989a3b52"
+    },
+    {
+      "probe": "tl_controlled_bleeding",
+      "base_token_count": 18,
+      "saved_token_count": 18,
+      "token_ids_equal": true,
+      "base_ids_sha256": "96734057bf0eebb8cdb592aa7239df739987958eb158fb123805f35650da0e90",
+      "saved_ids_sha256": "96734057bf0eebb8cdb592aa7239df739987958eb158fb123805f35650da0e90"
+    },
+    {
+      "probe": "en_object_vs_person",
+      "base_token_count": 18,
+      "saved_token_count": 18,
+      "token_ids_equal": true,
+      "base_ids_sha256": "d86685323ca86534226a96730beed972d03b0dba7181c33915bd39a9344fc582",
+      "saved_ids_sha256": "d86685323ca86534226a96730beed972d03b0dba7181c33915bd39a9344fc582"
+    },
+    {
+      "probe": "mixed_timeline",
+      "base_token_count": 18,
+      "saved_token_count": 18,
+      "token_ids_equal": true,
+      "base_ids_sha256": "885f9d7d76c0f3a94481cdf6dbd095391d3cb287161691bc28af944b9ebc71d8",
+      "saved_ids_sha256": "885f9d7d76c0f3a94481cdf6dbd095391d3cb287161691bc28af944b9ebc71d8"
+    },
+    {
+      "probe": "unicode_punctuation",
+      "base_token_count": 19,
+      "saved_token_count": 19,
+      "token_ids_equal": true,
+      "base_ids_sha256": "9b13143fe7ec2e5ba910b8c0f5a4de573b2917012d32e85c42d29ad38e5b6ebc",
+      "saved_ids_sha256": "9b13143fe7ec2e5ba910b8c0f5a4de573b2917012d32e85c42d29ad38e5b6ebc"
+    }
+  ],
+  "scope_note": "Eight targeted strings compare pinned base tokenizer with saved tokenizer. This does not prove correctness on all future text or establish language fluency. The library's generic Mistral regex warning was not patched because both classes identify as XLM-R tokenizers and no mismatch was observed."
+}

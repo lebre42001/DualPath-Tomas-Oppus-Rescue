@@ -1,0 +1,13 @@
+import './bootstrap';
+import './echo';
+import './stitch-dashboard';
+import './pwa';
+import './permission-readiness';
+import './report-form';
+import './report-drafts';
+import './account-verification';
+import './civilian-accounts';
+import './shell-dialogs';
+import './report-index';
+import './profile-page';
+import './settings-page';

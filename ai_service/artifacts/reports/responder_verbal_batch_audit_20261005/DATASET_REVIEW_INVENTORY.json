@@ -1,0 +1,53 @@
+{
+  "candidate_pack": {
+    "path": "ai_service\\datasets\\emergency_text\\expansions\\short_panic_v1\\candidates.csv",
+    "sha256": "4e5a2bab3f175f9ac62d4c3b4f02a1cce451d97e79c836ee88e491e593b17b55",
+    "rows": 80,
+    "status": "draft_preview_only",
+    "approved_rows": 0,
+    "training_eligible": false,
+    "labels": {
+      "minor": 20,
+      "serious": 20,
+      "critical": 20,
+      "needs_review": 20
+    },
+    "languages": {
+      "en": 20,
+      "tl": 20,
+      "ceb": 20,
+      "mixed": 20
+    },
+    "length_buckets": {
+      "4-8": 48,
+      "9-15": 12,
+      "1-3": 20
+    },
+    "proposed_families": 18
+  },
+  "master_400": {
+    "path": "ai_service/datasets/emergency_text/working/reports.csv",
+    "sha256": "5e2a4f508a6de869ad0eee1c6c7385b03c2df542eadbd7f79a315b0243f9db1e",
+    "rows": 400,
+    "all_draft": true,
+    "approved": 0
+  },
+  "reviewer_A_repo_workbook": {
+    "path": "ai_service/artifacts/review_packs/short_panic_v1_human_review_20261001/reviewer_A/REVIEWER_A_SHORT_PANIC.xlsx",
+    "sha256": "0655fa5d357e6aee36074d889fccc8ce81a6be6c37fec0c475b738908808ed76",
+    "status": "NOT_READY; 75 approve and 5 revise but 72 incomplete/8 errors; not independently verified"
+  },
+  "reviewer_B_repo_workbook": {
+    "path": "ai_service/artifacts/review_packs/short_panic_v1_human_review_20261001/reviewer_B/REVIEWER_B_SHORT_PANIC.xlsx",
+    "sha256": "0e329bfe4a5246733506c80d79b424a21d640b8d56b01aa8abe1ec9ada1be9a2",
+    "status": "NOT_READY; 80 incomplete, zero confirmed"
+  },
+  "owner_bulk_workbooks": {
+    "reviewer_A_download_sha256": "92fdde2430c944edaf3bafcc3053234c8bb66b18b1c07f904b324e7cd7162b2f",
+    "reviewer_B_download_sha256": "604a523ca791eccf6c0216ea42893c51daeaddb04b9cfbdd88a7fcd6277cfa45",
+    "status": "owner bulk instructions; 80 rows each; independent review count 0"
+  },
+  "human_confirmed_row_count": 0,
+  "privacy_screen": "limited automated scan found no phone/email/ID/plate/coordinate pattern matches in master/candidate text; not a manual semantic PII audit",
+  "fresh_calibration_test_available": false
+}

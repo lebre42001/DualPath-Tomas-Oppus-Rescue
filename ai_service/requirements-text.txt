@@ -1,0 +1,6 @@
+# Optional text experiments/inference. Install in an isolated environment.
+# The existing image service dependencies and active configuration stay separate.
+torch>=2.6,<3.0
+transformers>=4.51,<5.0
+safetensors>=0.5,<1.0
+scikit-learn>=1.6,<2.0

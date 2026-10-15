@@ -1,0 +1,88 @@
+{
+  "run_date": "2026-10-11",
+  "status": "research_candidates_only_not_deployable",
+  "dataset": "civilian_multilingual_850_responder_reconciled_20261007",
+  "dataset_fingerprint": "0afc1388a2967a924633d4753ea42e44e3944ecf7e781ef29f99e183885cc06b",
+  "rows": 850,
+  "frozen_split": {
+    "train": 600,
+    "validation": 123,
+    "test": 127
+  },
+  "training": "Full-backbone XLM-R pinned revision; seeds 42 and 43; early stopping and checkpoint selection used validation only.",
+  "test_evaluation": "Not rerun. The same frozen test split was already evaluated for seed 41 on 2026-10-07 and has prior model-development exposure; no independent external test set exists.",
+  "new_seed_results": {
+    "42": {
+      "checkpoint": "artifacts\\checkpoints\\text_xlmr_responder_reconciled_20261011\\seed_42",
+      "version": "text-20261011T055630671670Z",
+      "best_epoch": 4,
+      "validation_macro_f1": 0.8173738614732403,
+      "critical_recall": 0.8709677419354839,
+      "serious_recall": 0.8064516129032258,
+      "raw_high_risk_undertriage_count": 2,
+      "coverage_at_provisional_threshold": 0.5365853658536586,
+      "review_threshold": 0.65,
+      "per_language_macro_f1": {
+        "en": 0.7571428571428572,
+        "tl": 0.9253146853146853,
+        "ceb": 0.6818181818181818,
+        "mixed": 0.8682692307692308
+      },
+      "approved_for_deployment": false
+    },
+    "43": {
+      "checkpoint": "artifacts\\checkpoints\\text_xlmr_responder_reconciled_20261011\\seed_43",
+      "version": "text-20261011T061120800974Z",
+      "best_epoch": 8,
+      "validation_macro_f1": 0.8949410095225453,
+      "critical_recall": 0.9354838709677419,
+      "serious_recall": 0.8709677419354839,
+      "raw_high_risk_undertriage_count": 2,
+      "coverage_at_provisional_threshold": 0.7317073170731707,
+      "review_threshold": 0.65,
+      "per_language_macro_f1": {
+        "en": 0.875139842359522,
+        "tl": 0.9490663322185061,
+        "ceb": 0.8544372294372294,
+        "mixed": 0.8772727272727273
+      },
+      "approved_for_deployment": false
+    }
+  },
+  "prior_seed_41_validation": {
+    "checkpoint": "artifacts\\checkpoints\\text_xlmr_responder_reconciled_20261007\\seed_41",
+    "version": "text-20261007T124537066912Z",
+    "best_epoch": 2,
+    "validation_macro_f1": 0.5324438845625287,
+    "critical_recall": 0.9354838709677419,
+    "serious_recall": 0.41935483870967744,
+    "raw_high_risk_undertriage_count": 4,
+    "coverage_at_provisional_threshold": 0.0,
+    "review_threshold": 0.65,
+    "per_language_macro_f1": {
+      "en": 0.1,
+      "tl": 0.11111111111111112,
+      "ceb": 0.05172413793103448,
+      "mixed": 0.14285714285714288
+    },
+    "approved_for_deployment": false
+  },
+  "selection": "Seed 43 has the strongest validation macro-F1 among these runs; this is not a deployment selection.",
+  "safety_gates": {
+    "macro_f1_at_least_0_80": true,
+    "critical_recall_at_least_0_95": false,
+    "zero_raw_high_risk_undertriage": false,
+    "all_language_macro_f1_at_least_0_75": true,
+    "coverage_nonzero": true
+  },
+  "limitations": [
+    "All source narratives are synthetic-origin.",
+    "Reviewer identity is user-attested and was not independently verified.",
+    "Validation is not an independent real-world test.",
+    "The 36 Southern Leyte dialect drafts were excluded.",
+    "Confidence threshold is provisional and uncalibrated."
+  ],
+  "active_model_changed": false,
+  "active_config_changed": false,
+  "approved_for_deployment": false
+}

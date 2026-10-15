@@ -1,0 +1,6683 @@
+{
+  "ENF-001": {
+    "case_ids": [
+      "EN-001"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-002": {
+    "case_ids": [
+      "EN-002"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-003": {
+    "case_ids": [
+      "EN-003"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-004": {
+    "case_ids": [
+      "EN-004"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-005": {
+    "case_ids": [
+      "EN-005"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-006": {
+    "case_ids": [
+      "EN-006"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-007": {
+    "case_ids": [
+      "EN-007"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-008": {
+    "case_ids": [
+      "EN-008"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-009": {
+    "case_ids": [
+      "EN-009"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-010": {
+    "case_ids": [
+      "EN-010"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-011": {
+    "case_ids": [
+      "EN-011",
+      "EN-051"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "same_scenario_variant"
+  },
+  "ENF-012": {
+    "case_ids": [
+      "EN-012"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-013": {
+    "case_ids": [
+      "EN-013"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-014": {
+    "case_ids": [
+      "EN-014"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-015": {
+    "case_ids": [
+      "EN-015"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-016": {
+    "case_ids": [
+      "EN-016"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-017": {
+    "case_ids": [
+      "EN-017"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-018": {
+    "case_ids": [
+      "EN-018"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-019": {
+    "case_ids": [
+      "EN-019"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-020": {
+    "case_ids": [
+      "EN-020"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-021": {
+    "case_ids": [
+      "EN-021"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-022": {
+    "case_ids": [
+      "EN-022"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-023": {
+    "case_ids": [
+      "EN-023"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-024": {
+    "case_ids": [
+      "EN-024"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-025": {
+    "case_ids": [
+      "EN-025"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-026": {
+    "case_ids": [
+      "EN-026"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-027": {
+    "case_ids": [
+      "EN-027"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-028": {
+    "case_ids": [
+      "EN-028"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-029": {
+    "case_ids": [
+      "EN-029"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-030": {
+    "case_ids": [
+      "EN-030"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-031": {
+    "case_ids": [
+      "EN-031"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-032": {
+    "case_ids": [
+      "EN-032"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-033": {
+    "case_ids": [
+      "EN-033"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-034": {
+    "case_ids": [
+      "EN-034"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-035": {
+    "case_ids": [
+      "EN-035"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-036": {
+    "case_ids": [
+      "EN-036"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-037": {
+    "case_ids": [
+      "EN-037"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-038": {
+    "case_ids": [
+      "EN-038"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-039": {
+    "case_ids": [
+      "EN-039"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-040": {
+    "case_ids": [
+      "EN-040"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-041": {
+    "case_ids": [
+      "EN-041"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-042": {
+    "case_ids": [
+      "EN-042"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-043": {
+    "case_ids": [
+      "EN-043"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-044": {
+    "case_ids": [
+      "EN-044"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-045": {
+    "case_ids": [
+      "EN-045"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-046": {
+    "case_ids": [
+      "EN-046"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-047": {
+    "case_ids": [
+      "EN-047"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-048": {
+    "case_ids": [
+      "EN-048"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-049": {
+    "case_ids": [
+      "EN-049"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-050": {
+    "case_ids": [
+      "EN-050"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-052": {
+    "case_ids": [
+      "EN-052"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-053": {
+    "case_ids": [
+      "EN-053"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-054": {
+    "case_ids": [
+      "EN-054"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-055": {
+    "case_ids": [
+      "EN-055"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-056": {
+    "case_ids": [
+      "EN-056"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-057": {
+    "case_ids": [
+      "EN-057"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-058": {
+    "case_ids": [
+      "EN-058"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-059": {
+    "case_ids": [
+      "EN-059"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-060": {
+    "case_ids": [
+      "EN-060"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-061": {
+    "case_ids": [
+      "EN-061"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-062": {
+    "case_ids": [
+      "EN-062"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-063": {
+    "case_ids": [
+      "EN-063"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-064": {
+    "case_ids": [
+      "EN-064"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-065": {
+    "case_ids": [
+      "EN-065"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-066": {
+    "case_ids": [
+      "EN-066"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-067": {
+    "case_ids": [
+      "EN-067"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-068": {
+    "case_ids": [
+      "EN-068"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-069": {
+    "case_ids": [
+      "EN-069"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-070": {
+    "case_ids": [
+      "EN-070"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-071": {
+    "case_ids": [
+      "EN-071"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-072": {
+    "case_ids": [
+      "EN-072"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-073": {
+    "case_ids": [
+      "EN-073"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-074": {
+    "case_ids": [
+      "EN-074"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-075": {
+    "case_ids": [
+      "EN-075"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-076": {
+    "case_ids": [
+      "EN-076"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-077": {
+    "case_ids": [
+      "EN-077"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-078": {
+    "case_ids": [
+      "EN-078"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-079": {
+    "case_ids": [
+      "EN-079"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-080": {
+    "case_ids": [
+      "EN-080"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-081": {
+    "case_ids": [
+      "EN-081"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-082": {
+    "case_ids": [
+      "EN-082"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-083": {
+    "case_ids": [
+      "EN-083"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-084": {
+    "case_ids": [
+      "EN-084"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-085": {
+    "case_ids": [
+      "EN-085"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-086": {
+    "case_ids": [
+      "EN-086"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-087": {
+    "case_ids": [
+      "EN-087"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-088": {
+    "case_ids": [
+      "EN-088"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-089": {
+    "case_ids": [
+      "EN-089"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-090": {
+    "case_ids": [
+      "EN-090"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-091": {
+    "case_ids": [
+      "EN-091"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-092": {
+    "case_ids": [
+      "EN-092"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-093": {
+    "case_ids": [
+      "EN-093"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-094": {
+    "case_ids": [
+      "EN-094"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-095": {
+    "case_ids": [
+      "EN-095"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-096": {
+    "case_ids": [
+      "EN-096"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-097": {
+    "case_ids": [
+      "EN-097"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-098": {
+    "case_ids": [
+      "EN-098"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-099": {
+    "case_ids": [
+      "EN-099"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-100": {
+    "case_ids": [
+      "EN-100"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-101": {
+    "case_ids": [
+      "EN-101"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-102": {
+    "case_ids": [
+      "EN-102"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-103": {
+    "case_ids": [
+      "EN-103"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-104": {
+    "case_ids": [
+      "EN-104"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-105": {
+    "case_ids": [
+      "EN-105"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-106": {
+    "case_ids": [
+      "EN-106"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-107": {
+    "case_ids": [
+      "EN-107"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-108": {
+    "case_ids": [
+      "EN-108"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-109": {
+    "case_ids": [
+      "EN-109"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-110": {
+    "case_ids": [
+      "EN-110"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-111": {
+    "case_ids": [
+      "EN-111"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-112": {
+    "case_ids": [
+      "EN-112"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-113": {
+    "case_ids": [
+      "EN-113"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-114": {
+    "case_ids": [
+      "EN-114"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-115": {
+    "case_ids": [
+      "EN-115"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-116": {
+    "case_ids": [
+      "EN-116"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-117": {
+    "case_ids": [
+      "EN-117"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-118": {
+    "case_ids": [
+      "EN-118"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-119": {
+    "case_ids": [
+      "EN-119"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-120": {
+    "case_ids": [
+      "EN-120"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-121": {
+    "case_ids": [
+      "EN-121"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-122": {
+    "case_ids": [
+      "EN-122"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-123": {
+    "case_ids": [
+      "EN-123"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-124": {
+    "case_ids": [
+      "EN-124"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-125": {
+    "case_ids": [
+      "EN-125"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-126": {
+    "case_ids": [
+      "EN-126"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-127": {
+    "case_ids": [
+      "EN-127"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-128": {
+    "case_ids": [
+      "EN-128"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-129": {
+    "case_ids": [
+      "EN-129"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-130": {
+    "case_ids": [
+      "EN-130"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-131": {
+    "case_ids": [
+      "EN-131"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-132": {
+    "case_ids": [
+      "EN-132"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-133": {
+    "case_ids": [
+      "EN-133"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-134": {
+    "case_ids": [
+      "EN-134"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-135": {
+    "case_ids": [
+      "EN-135"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-136": {
+    "case_ids": [
+      "EN-136"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-137": {
+    "case_ids": [
+      "EN-137"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-138": {
+    "case_ids": [
+      "EN-138"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-139": {
+    "case_ids": [
+      "EN-139"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-140": {
+    "case_ids": [
+      "EN-140"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-141": {
+    "case_ids": [
+      "EN-141"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-142": {
+    "case_ids": [
+      "EN-142"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-143": {
+    "case_ids": [
+      "EN-143"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-144": {
+    "case_ids": [
+      "EN-144"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-145": {
+    "case_ids": [
+      "EN-145"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-146": {
+    "case_ids": [
+      "EN-146"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-147": {
+    "case_ids": [
+      "EN-147"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-148": {
+    "case_ids": [
+      "EN-148"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-149": {
+    "case_ids": [
+      "EN-149"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-150": {
+    "case_ids": [
+      "EN-150"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-151": {
+    "case_ids": [
+      "EN-151"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-152": {
+    "case_ids": [
+      "EN-152"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-153": {
+    "case_ids": [
+      "EN-153"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-154": {
+    "case_ids": [
+      "EN-154"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-155": {
+    "case_ids": [
+      "EN-155"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-156": {
+    "case_ids": [
+      "EN-156"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-157": {
+    "case_ids": [
+      "EN-157"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-158": {
+    "case_ids": [
+      "EN-158"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-159": {
+    "case_ids": [
+      "EN-159"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-160": {
+    "case_ids": [
+      "EN-160"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-161": {
+    "case_ids": [
+      "EN-161"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-162": {
+    "case_ids": [
+      "EN-162"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-163": {
+    "case_ids": [
+      "EN-163"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-164": {
+    "case_ids": [
+      "EN-164"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-165": {
+    "case_ids": [
+      "EN-165"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-166": {
+    "case_ids": [
+      "EN-166"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-167": {
+    "case_ids": [
+      "EN-167"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-168": {
+    "case_ids": [
+      "EN-168"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-169": {
+    "case_ids": [
+      "EN-169"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-170": {
+    "case_ids": [
+      "EN-170"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-171": {
+    "case_ids": [
+      "EN-171"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-172": {
+    "case_ids": [
+      "EN-172"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-173": {
+    "case_ids": [
+      "EN-173"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-174": {
+    "case_ids": [
+      "EN-174"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-175": {
+    "case_ids": [
+      "EN-175"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-176": {
+    "case_ids": [
+      "EN-176"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-177": {
+    "case_ids": [
+      "EN-177"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-178": {
+    "case_ids": [
+      "EN-178"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-179": {
+    "case_ids": [
+      "EN-179"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-180": {
+    "case_ids": [
+      "EN-180"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-181": {
+    "case_ids": [
+      "EN-181"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-182": {
+    "case_ids": [
+      "EN-182"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-183": {
+    "case_ids": [
+      "EN-183"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-184": {
+    "case_ids": [
+      "EN-184"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-185": {
+    "case_ids": [
+      "EN-185"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-186": {
+    "case_ids": [
+      "EN-186"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-187": {
+    "case_ids": [
+      "EN-187"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-188": {
+    "case_ids": [
+      "EN-188"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-189": {
+    "case_ids": [
+      "EN-189"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-190": {
+    "case_ids": [
+      "EN-190"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-191": {
+    "case_ids": [
+      "EN-191"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-192": {
+    "case_ids": [
+      "EN-192"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-193": {
+    "case_ids": [
+      "EN-193"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-194": {
+    "case_ids": [
+      "EN-194"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-195": {
+    "case_ids": [
+      "EN-195"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-196": {
+    "case_ids": [
+      "EN-196"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-197": {
+    "case_ids": [
+      "EN-197"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-198": {
+    "case_ids": [
+      "EN-198"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-199": {
+    "case_ids": [
+      "EN-199"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-200": {
+    "case_ids": [
+      "EN-200"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-201": {
+    "case_ids": [
+      "EN-201"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-202": {
+    "case_ids": [
+      "EN-202"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-203": {
+    "case_ids": [
+      "EN-203"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-204": {
+    "case_ids": [
+      "EN-204"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-205": {
+    "case_ids": [
+      "EN-205"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-206": {
+    "case_ids": [
+      "EN-206"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-207": {
+    "case_ids": [
+      "EN-207"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-208": {
+    "case_ids": [
+      "EN-208"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-209": {
+    "case_ids": [
+      "EN-209"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-210": {
+    "case_ids": [
+      "EN-210"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-211": {
+    "case_ids": [
+      "EN-211"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-212": {
+    "case_ids": [
+      "EN-212"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-213": {
+    "case_ids": [
+      "EN-213"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-214": {
+    "case_ids": [
+      "EN-214"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-215": {
+    "case_ids": [
+      "EN-215"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-216": {
+    "case_ids": [
+      "EN-216"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-217": {
+    "case_ids": [
+      "EN-217"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-218": {
+    "case_ids": [
+      "EN-218"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-219": {
+    "case_ids": [
+      "EN-219"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-220": {
+    "case_ids": [
+      "EN-220"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-221": {
+    "case_ids": [
+      "EN-221"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-222": {
+    "case_ids": [
+      "EN-222"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-223": {
+    "case_ids": [
+      "EN-223"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-224": {
+    "case_ids": [
+      "EN-224"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-225": {
+    "case_ids": [
+      "EN-225"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-226": {
+    "case_ids": [
+      "EN-226"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-227": {
+    "case_ids": [
+      "EN-227"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-228": {
+    "case_ids": [
+      "EN-228"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-229": {
+    "case_ids": [
+      "EN-229"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-230": {
+    "case_ids": [
+      "EN-230"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-231": {
+    "case_ids": [
+      "EN-231"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-232": {
+    "case_ids": [
+      "EN-232"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-233": {
+    "case_ids": [
+      "EN-233"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-234": {
+    "case_ids": [
+      "EN-234"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-235": {
+    "case_ids": [
+      "EN-235"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-236": {
+    "case_ids": [
+      "EN-236"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-237": {
+    "case_ids": [
+      "EN-237"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-238": {
+    "case_ids": [
+      "EN-238"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-239": {
+    "case_ids": [
+      "EN-239"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-240": {
+    "case_ids": [
+      "EN-240"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-241": {
+    "case_ids": [
+      "EN-241"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-242": {
+    "case_ids": [
+      "EN-242"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-243": {
+    "case_ids": [
+      "EN-243"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-244": {
+    "case_ids": [
+      "EN-244"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-245": {
+    "case_ids": [
+      "EN-245"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-246": {
+    "case_ids": [
+      "EN-246"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "ENF-247": {
+    "case_ids": [
+      "EN-247"
+    ],
+    "language": "en",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "ENF-248": {
+    "case_ids": [
+      "EN-248"
+    ],
+    "language": "en",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "ENF-249": {
+    "case_ids": [
+      "EN-249"
+    ],
+    "language": "en",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "ENF-250": {
+    "case_ids": [
+      "EN-250"
+    ],
+    "language": "en",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-001": {
+    "case_ids": [
+      "TL-001"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-002": {
+    "case_ids": [
+      "TL-002"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-003": {
+    "case_ids": [
+      "TL-003"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-004": {
+    "case_ids": [
+      "TL-004"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-005": {
+    "case_ids": [
+      "TL-005"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-006": {
+    "case_ids": [
+      "TL-006"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-007": {
+    "case_ids": [
+      "TL-007"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-008": {
+    "case_ids": [
+      "TL-008"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-009": {
+    "case_ids": [
+      "TL-009"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-010": {
+    "case_ids": [
+      "TL-010"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-011": {
+    "case_ids": [
+      "TL-011"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-012": {
+    "case_ids": [
+      "TL-012"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-013": {
+    "case_ids": [
+      "TL-013"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-014": {
+    "case_ids": [
+      "TL-014"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-015": {
+    "case_ids": [
+      "TL-015",
+      "TL-018",
+      "TL-031"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "same_scenario_variant"
+  },
+  "TL-FAM-016": {
+    "case_ids": [
+      "TL-016"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-017": {
+    "case_ids": [
+      "TL-017"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-019": {
+    "case_ids": [
+      "TL-019"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-020": {
+    "case_ids": [
+      "TL-020"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-021": {
+    "case_ids": [
+      "TL-021"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-022": {
+    "case_ids": [
+      "TL-022"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-023": {
+    "case_ids": [
+      "TL-023"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-024": {
+    "case_ids": [
+      "TL-024"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-025": {
+    "case_ids": [
+      "TL-025"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-026": {
+    "case_ids": [
+      "TL-026"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-027": {
+    "case_ids": [
+      "TL-027"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-028": {
+    "case_ids": [
+      "TL-028"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-029": {
+    "case_ids": [
+      "TL-029"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-030": {
+    "case_ids": [
+      "TL-030"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-032": {
+    "case_ids": [
+      "TL-032"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-033": {
+    "case_ids": [
+      "TL-033"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-034": {
+    "case_ids": [
+      "TL-034"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-035": {
+    "case_ids": [
+      "TL-035"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-036": {
+    "case_ids": [
+      "TL-036",
+      "TL-046"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "same_scenario_variant"
+  },
+  "TL-FAM-037": {
+    "case_ids": [
+      "TL-037",
+      "TL-052",
+      "TL-054"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "same_scenario_variant"
+  },
+  "TL-FAM-038": {
+    "case_ids": [
+      "TL-038"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-039": {
+    "case_ids": [
+      "TL-039"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-040": {
+    "case_ids": [
+      "TL-040"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-041": {
+    "case_ids": [
+      "TL-041"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-042": {
+    "case_ids": [
+      "TL-042"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-043": {
+    "case_ids": [
+      "TL-043"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-044": {
+    "case_ids": [
+      "TL-044"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-045": {
+    "case_ids": [
+      "TL-045"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-047": {
+    "case_ids": [
+      "TL-047"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-048": {
+    "case_ids": [
+      "TL-048"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-049": {
+    "case_ids": [
+      "TL-049"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-050": {
+    "case_ids": [
+      "TL-050",
+      "TL-059"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "same_scenario_variant"
+  },
+  "TL-FAM-051": {
+    "case_ids": [
+      "TL-051"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-053": {
+    "case_ids": [
+      "TL-053"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-055": {
+    "case_ids": [
+      "TL-055"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-056": {
+    "case_ids": [
+      "TL-056"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-057": {
+    "case_ids": [
+      "TL-057"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-058": {
+    "case_ids": [
+      "TL-058"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-060": {
+    "case_ids": [
+      "TL-060"
+    ],
+    "language": "tl",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-061": {
+    "case_ids": [
+      "TL-061"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-062": {
+    "case_ids": [
+      "TL-062"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-063": {
+    "case_ids": [
+      "TL-063"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-064": {
+    "case_ids": [
+      "TL-064"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-065": {
+    "case_ids": [
+      "TL-065"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-066": {
+    "case_ids": [
+      "TL-066"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-067": {
+    "case_ids": [
+      "TL-067"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-068": {
+    "case_ids": [
+      "TL-068"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-069": {
+    "case_ids": [
+      "TL-069"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-070": {
+    "case_ids": [
+      "TL-070"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-071": {
+    "case_ids": [
+      "TL-071"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-072": {
+    "case_ids": [
+      "TL-072"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-073": {
+    "case_ids": [
+      "TL-073",
+      "TL-094"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "same_scenario_variant"
+  },
+  "TL-FAM-074": {
+    "case_ids": [
+      "TL-074"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-075": {
+    "case_ids": [
+      "TL-075"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-076": {
+    "case_ids": [
+      "TL-076"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-077": {
+    "case_ids": [
+      "TL-077"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-078": {
+    "case_ids": [
+      "TL-078"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-079": {
+    "case_ids": [
+      "TL-079"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-080": {
+    "case_ids": [
+      "TL-080"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-081": {
+    "case_ids": [
+      "TL-081"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-082": {
+    "case_ids": [
+      "TL-082"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-083": {
+    "case_ids": [
+      "TL-083"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-084": {
+    "case_ids": [
+      "TL-084"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-085": {
+    "case_ids": [
+      "TL-085"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-086": {
+    "case_ids": [
+      "TL-086"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-087": {
+    "case_ids": [
+      "TL-087"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-088": {
+    "case_ids": [
+      "TL-088"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-089": {
+    "case_ids": [
+      "TL-089"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-090": {
+    "case_ids": [
+      "TL-090"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-091": {
+    "case_ids": [
+      "TL-091"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-092": {
+    "case_ids": [
+      "TL-092"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-093": {
+    "case_ids": [
+      "TL-093"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-095": {
+    "case_ids": [
+      "TL-095"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-096": {
+    "case_ids": [
+      "TL-096"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-097": {
+    "case_ids": [
+      "TL-097"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-098": {
+    "case_ids": [
+      "TL-098"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-099": {
+    "case_ids": [
+      "TL-099"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-100": {
+    "case_ids": [
+      "TL-100"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-101": {
+    "case_ids": [
+      "TL-101",
+      "TL-119"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "same_scenario_variant"
+  },
+  "TL-FAM-102": {
+    "case_ids": [
+      "TL-102"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-103": {
+    "case_ids": [
+      "TL-103"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-104": {
+    "case_ids": [
+      "TL-104"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-105": {
+    "case_ids": [
+      "TL-105"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-106": {
+    "case_ids": [
+      "TL-106"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-107": {
+    "case_ids": [
+      "TL-107"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-108": {
+    "case_ids": [
+      "TL-108"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-109": {
+    "case_ids": [
+      "TL-109"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-110": {
+    "case_ids": [
+      "TL-110"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-111": {
+    "case_ids": [
+      "TL-111"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-112": {
+    "case_ids": [
+      "TL-112"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-113": {
+    "case_ids": [
+      "TL-113"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-114": {
+    "case_ids": [
+      "TL-114"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-115": {
+    "case_ids": [
+      "TL-115"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-116": {
+    "case_ids": [
+      "TL-116"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-117": {
+    "case_ids": [
+      "TL-117"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-118": {
+    "case_ids": [
+      "TL-118"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-120": {
+    "case_ids": [
+      "TL-120"
+    ],
+    "language": "tl",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-121": {
+    "case_ids": [
+      "TL-121",
+      "TL-146"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "same_scenario_variant"
+  },
+  "TL-FAM-122": {
+    "case_ids": [
+      "TL-122"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-123": {
+    "case_ids": [
+      "TL-123"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-124": {
+    "case_ids": [
+      "TL-124"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-125": {
+    "case_ids": [
+      "TL-125"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-126": {
+    "case_ids": [
+      "TL-126"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-127": {
+    "case_ids": [
+      "TL-127",
+      "TL-155"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "same_scenario_variant"
+  },
+  "TL-FAM-128": {
+    "case_ids": [
+      "TL-128"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-129": {
+    "case_ids": [
+      "TL-129"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-130": {
+    "case_ids": [
+      "TL-130"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-131": {
+    "case_ids": [
+      "TL-131"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-132": {
+    "case_ids": [
+      "TL-132"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-133": {
+    "case_ids": [
+      "TL-133"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-134": {
+    "case_ids": [
+      "TL-134"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-135": {
+    "case_ids": [
+      "TL-135"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-136": {
+    "case_ids": [
+      "TL-136"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-137": {
+    "case_ids": [
+      "TL-137"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-138": {
+    "case_ids": [
+      "TL-138"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-139": {
+    "case_ids": [
+      "TL-139"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-140": {
+    "case_ids": [
+      "TL-140"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-141": {
+    "case_ids": [
+      "TL-141"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-142": {
+    "case_ids": [
+      "TL-142"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-143": {
+    "case_ids": [
+      "TL-143"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-144": {
+    "case_ids": [
+      "TL-144"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-145": {
+    "case_ids": [
+      "TL-145"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-147": {
+    "case_ids": [
+      "TL-147"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-148": {
+    "case_ids": [
+      "TL-148"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-149": {
+    "case_ids": [
+      "TL-149"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-150": {
+    "case_ids": [
+      "TL-150"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-151": {
+    "case_ids": [
+      "TL-151"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-152": {
+    "case_ids": [
+      "TL-152"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-153": {
+    "case_ids": [
+      "TL-153"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-154": {
+    "case_ids": [
+      "TL-154"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-156": {
+    "case_ids": [
+      "TL-156"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-157": {
+    "case_ids": [
+      "TL-157"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-158": {
+    "case_ids": [
+      "TL-158"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-159": {
+    "case_ids": [
+      "TL-159"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-160": {
+    "case_ids": [
+      "TL-160"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-161": {
+    "case_ids": [
+      "TL-161"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-162": {
+    "case_ids": [
+      "TL-162"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-163": {
+    "case_ids": [
+      "TL-163",
+      "TL-179"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "same_scenario_variant"
+  },
+  "TL-FAM-164": {
+    "case_ids": [
+      "TL-164"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-165": {
+    "case_ids": [
+      "TL-165"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-166": {
+    "case_ids": [
+      "TL-166"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-167": {
+    "case_ids": [
+      "TL-167"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-168": {
+    "case_ids": [
+      "TL-168"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-169": {
+    "case_ids": [
+      "TL-169"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-170": {
+    "case_ids": [
+      "TL-170"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-171": {
+    "case_ids": [
+      "TL-171"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-172": {
+    "case_ids": [
+      "TL-172"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-173": {
+    "case_ids": [
+      "TL-173"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-174": {
+    "case_ids": [
+      "TL-174"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-175": {
+    "case_ids": [
+      "TL-175"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-176": {
+    "case_ids": [
+      "TL-176"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-177": {
+    "case_ids": [
+      "TL-177"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-178": {
+    "case_ids": [
+      "TL-178"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-180": {
+    "case_ids": [
+      "TL-180"
+    ],
+    "language": "tl",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-181": {
+    "case_ids": [
+      "TL-181"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-182": {
+    "case_ids": [
+      "TL-182"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-183": {
+    "case_ids": [
+      "TL-183"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-184": {
+    "case_ids": [
+      "TL-184"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-185": {
+    "case_ids": [
+      "TL-185"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-186": {
+    "case_ids": [
+      "TL-186"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-187": {
+    "case_ids": [
+      "TL-187"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-188": {
+    "case_ids": [
+      "TL-188"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-189": {
+    "case_ids": [
+      "TL-189"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-190": {
+    "case_ids": [
+      "TL-190"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-191": {
+    "case_ids": [
+      "TL-191"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-192": {
+    "case_ids": [
+      "TL-192"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-193": {
+    "case_ids": [
+      "TL-193"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-194": {
+    "case_ids": [
+      "TL-194"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-195": {
+    "case_ids": [
+      "TL-195"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-196": {
+    "case_ids": [
+      "TL-196"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-197": {
+    "case_ids": [
+      "TL-197"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-198": {
+    "case_ids": [
+      "TL-198",
+      "TL-214"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "same_scenario_variant"
+  },
+  "TL-FAM-199": {
+    "case_ids": [
+      "TL-199"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-200": {
+    "case_ids": [
+      "TL-200"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-201": {
+    "case_ids": [
+      "TL-201"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-202": {
+    "case_ids": [
+      "TL-202"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-203": {
+    "case_ids": [
+      "TL-203"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-204": {
+    "case_ids": [
+      "TL-204"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-205": {
+    "case_ids": [
+      "TL-205"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-206": {
+    "case_ids": [
+      "TL-206"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-207": {
+    "case_ids": [
+      "TL-207"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-208": {
+    "case_ids": [
+      "TL-208"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-209": {
+    "case_ids": [
+      "TL-209"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-210": {
+    "case_ids": [
+      "TL-210"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-211": {
+    "case_ids": [
+      "TL-211"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-212": {
+    "case_ids": [
+      "TL-212"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-213": {
+    "case_ids": [
+      "TL-213"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-215": {
+    "case_ids": [
+      "TL-215"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-216": {
+    "case_ids": [
+      "TL-216"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-217": {
+    "case_ids": [
+      "TL-217"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-218": {
+    "case_ids": [
+      "TL-218"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-219": {
+    "case_ids": [
+      "TL-219"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-220": {
+    "case_ids": [
+      "TL-220"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-221": {
+    "case_ids": [
+      "TL-221"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-222": {
+    "case_ids": [
+      "TL-222"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-223": {
+    "case_ids": [
+      "TL-223"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-224": {
+    "case_ids": [
+      "TL-224"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-225": {
+    "case_ids": [
+      "TL-225"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-226": {
+    "case_ids": [
+      "TL-226"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-227": {
+    "case_ids": [
+      "TL-227"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-228": {
+    "case_ids": [
+      "TL-228"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-229": {
+    "case_ids": [
+      "TL-229"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-230": {
+    "case_ids": [
+      "TL-230"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-231": {
+    "case_ids": [
+      "TL-231"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-232": {
+    "case_ids": [
+      "TL-232"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-233": {
+    "case_ids": [
+      "TL-233"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-234": {
+    "case_ids": [
+      "TL-234"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-235": {
+    "case_ids": [
+      "TL-235"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-236": {
+    "case_ids": [
+      "TL-236"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-237": {
+    "case_ids": [
+      "TL-237"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-238": {
+    "case_ids": [
+      "TL-238"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-239": {
+    "case_ids": [
+      "TL-239"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "TL-FAM-240": {
+    "case_ids": [
+      "TL-240"
+    ],
+    "language": "tl",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-001": {
+    "case_ids": [
+      "CEB-MINOR-001"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-002": {
+    "case_ids": [
+      "CEB-MINOR-002"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-003": {
+    "case_ids": [
+      "CEB-MINOR-003"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-004": {
+    "case_ids": [
+      "CEB-MINOR-004"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-005": {
+    "case_ids": [
+      "CEB-MINOR-005"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-006": {
+    "case_ids": [
+      "CEB-MINOR-006"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-007": {
+    "case_ids": [
+      "CEB-MINOR-007"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-008": {
+    "case_ids": [
+      "CEB-MINOR-008"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-009": {
+    "case_ids": [
+      "CEB-MINOR-009"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-010": {
+    "case_ids": [
+      "CEB-MINOR-010"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-011": {
+    "case_ids": [
+      "CEB-MINOR-011"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-012": {
+    "case_ids": [
+      "CEB-MINOR-012"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-013": {
+    "case_ids": [
+      "CEB-MINOR-013"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-014": {
+    "case_ids": [
+      "CEB-MINOR-014"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-015": {
+    "case_ids": [
+      "CEB-MINOR-015"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-016": {
+    "case_ids": [
+      "CEB-MINOR-016"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-017": {
+    "case_ids": [
+      "CEB-MINOR-017"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-018": {
+    "case_ids": [
+      "CEB-MINOR-018"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-019": {
+    "case_ids": [
+      "CEB-MINOR-019"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-020": {
+    "case_ids": [
+      "CEB-MINOR-020"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-021": {
+    "case_ids": [
+      "CEB-MINOR-021"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-022": {
+    "case_ids": [
+      "CEB-MINOR-022"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-023": {
+    "case_ids": [
+      "CEB-MINOR-023"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-024": {
+    "case_ids": [
+      "CEB-MINOR-024"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-025": {
+    "case_ids": [
+      "CEB-MINOR-025"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-026": {
+    "case_ids": [
+      "CEB-MINOR-026"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-027": {
+    "case_ids": [
+      "CEB-MINOR-027"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-028": {
+    "case_ids": [
+      "CEB-MINOR-028"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-029": {
+    "case_ids": [
+      "CEB-MINOR-029"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-030": {
+    "case_ids": [
+      "CEB-MINOR-030"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-031": {
+    "case_ids": [
+      "CEB-MINOR-031"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-032": {
+    "case_ids": [
+      "CEB-MINOR-032"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-033": {
+    "case_ids": [
+      "CEB-MINOR-033"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-034": {
+    "case_ids": [
+      "CEB-MINOR-034"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-035": {
+    "case_ids": [
+      "CEB-MINOR-035"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-036": {
+    "case_ids": [
+      "CEB-MINOR-036"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-037": {
+    "case_ids": [
+      "CEB-MINOR-037"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-038": {
+    "case_ids": [
+      "CEB-MINOR-038"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-039": {
+    "case_ids": [
+      "CEB-MINOR-039"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-040": {
+    "case_ids": [
+      "CEB-MINOR-040"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-041": {
+    "case_ids": [
+      "CEB-MINOR-041"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-042": {
+    "case_ids": [
+      "CEB-MINOR-042"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-043": {
+    "case_ids": [
+      "CEB-MINOR-043"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-044": {
+    "case_ids": [
+      "CEB-MINOR-044"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-045": {
+    "case_ids": [
+      "CEB-MINOR-045"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-046": {
+    "case_ids": [
+      "CEB-MINOR-046"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-047": {
+    "case_ids": [
+      "CEB-MINOR-047"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-048": {
+    "case_ids": [
+      "CEB-MINOR-048"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-049": {
+    "case_ids": [
+      "CEB-MINOR-049"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-050": {
+    "case_ids": [
+      "CEB-MINOR-050"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-051": {
+    "case_ids": [
+      "CEB-MINOR-051"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-052": {
+    "case_ids": [
+      "CEB-MINOR-052"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-053": {
+    "case_ids": [
+      "CEB-MINOR-053"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-054": {
+    "case_ids": [
+      "CEB-MINOR-054"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-055": {
+    "case_ids": [
+      "CEB-MINOR-055"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-056": {
+    "case_ids": [
+      "CEB-MINOR-056"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-057": {
+    "case_ids": [
+      "CEB-MINOR-057"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-058": {
+    "case_ids": [
+      "CEB-MINOR-058"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-059": {
+    "case_ids": [
+      "CEB-MINOR-059"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-MINOR-060": {
+    "case_ids": [
+      "CEB-MINOR-060"
+    ],
+    "language": "ceb",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-001": {
+    "case_ids": [
+      "CEB-SERIOUS-001"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-002": {
+    "case_ids": [
+      "CEB-SERIOUS-002"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-003": {
+    "case_ids": [
+      "CEB-SERIOUS-003"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-004": {
+    "case_ids": [
+      "CEB-SERIOUS-004"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-005": {
+    "case_ids": [
+      "CEB-SERIOUS-005"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-006": {
+    "case_ids": [
+      "CEB-SERIOUS-006"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01": {
+    "case_ids": [
+      "CEB-SERIOUS-007",
+      "CEB-SERIOUS-024",
+      "CEB-SERIOUS-033",
+      "CEB-SERIOUS-056"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "same_scenario_variant"
+  },
+  "CEB-FAM-SERIOUS-008": {
+    "case_ids": [
+      "CEB-SERIOUS-008"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-009": {
+    "case_ids": [
+      "CEB-SERIOUS-009"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-010": {
+    "case_ids": [
+      "CEB-SERIOUS-010"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-011": {
+    "case_ids": [
+      "CEB-SERIOUS-011"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-012": {
+    "case_ids": [
+      "CEB-SERIOUS-012"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-013": {
+    "case_ids": [
+      "CEB-SERIOUS-013"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-014": {
+    "case_ids": [
+      "CEB-SERIOUS-014"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-015": {
+    "case_ids": [
+      "CEB-SERIOUS-015"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-016": {
+    "case_ids": [
+      "CEB-SERIOUS-016"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-017": {
+    "case_ids": [
+      "CEB-SERIOUS-017"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-018": {
+    "case_ids": [
+      "CEB-SERIOUS-018"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-019": {
+    "case_ids": [
+      "CEB-SERIOUS-019"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-020": {
+    "case_ids": [
+      "CEB-SERIOUS-020"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-021": {
+    "case_ids": [
+      "CEB-SERIOUS-021"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-022": {
+    "case_ids": [
+      "CEB-SERIOUS-022"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-023": {
+    "case_ids": [
+      "CEB-SERIOUS-023"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-025": {
+    "case_ids": [
+      "CEB-SERIOUS-025"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-026": {
+    "case_ids": [
+      "CEB-SERIOUS-026"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-027": {
+    "case_ids": [
+      "CEB-SERIOUS-027"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-028": {
+    "case_ids": [
+      "CEB-SERIOUS-028"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-029": {
+    "case_ids": [
+      "CEB-SERIOUS-029"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-030": {
+    "case_ids": [
+      "CEB-SERIOUS-030"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-031": {
+    "case_ids": [
+      "CEB-SERIOUS-031"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-032": {
+    "case_ids": [
+      "CEB-SERIOUS-032"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-034": {
+    "case_ids": [
+      "CEB-SERIOUS-034"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-035": {
+    "case_ids": [
+      "CEB-SERIOUS-035"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-036": {
+    "case_ids": [
+      "CEB-SERIOUS-036"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-037": {
+    "case_ids": [
+      "CEB-SERIOUS-037"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-038": {
+    "case_ids": [
+      "CEB-SERIOUS-038"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-039": {
+    "case_ids": [
+      "CEB-SERIOUS-039"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-040": {
+    "case_ids": [
+      "CEB-SERIOUS-040"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-041": {
+    "case_ids": [
+      "CEB-SERIOUS-041"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-042": {
+    "case_ids": [
+      "CEB-SERIOUS-042"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-043": {
+    "case_ids": [
+      "CEB-SERIOUS-043"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-044": {
+    "case_ids": [
+      "CEB-SERIOUS-044"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-045": {
+    "case_ids": [
+      "CEB-SERIOUS-045"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-046": {
+    "case_ids": [
+      "CEB-SERIOUS-046"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-047": {
+    "case_ids": [
+      "CEB-SERIOUS-047"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-048": {
+    "case_ids": [
+      "CEB-SERIOUS-048"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-049": {
+    "case_ids": [
+      "CEB-SERIOUS-049"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-050": {
+    "case_ids": [
+      "CEB-SERIOUS-050"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-051": {
+    "case_ids": [
+      "CEB-SERIOUS-051"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-052": {
+    "case_ids": [
+      "CEB-SERIOUS-052"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-053": {
+    "case_ids": [
+      "CEB-SERIOUS-053"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-054": {
+    "case_ids": [
+      "CEB-SERIOUS-054"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-055": {
+    "case_ids": [
+      "CEB-SERIOUS-055"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-057": {
+    "case_ids": [
+      "CEB-SERIOUS-057"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-058": {
+    "case_ids": [
+      "CEB-SERIOUS-058"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-059": {
+    "case_ids": [
+      "CEB-SERIOUS-059"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-SERIOUS-060": {
+    "case_ids": [
+      "CEB-SERIOUS-060"
+    ],
+    "language": "ceb",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-001": {
+    "case_ids": [
+      "CEB-CRITICAL-001"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-002": {
+    "case_ids": [
+      "CEB-CRITICAL-002"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-003": {
+    "case_ids": [
+      "CEB-CRITICAL-003"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-004": {
+    "case_ids": [
+      "CEB-CRITICAL-004"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-005": {
+    "case_ids": [
+      "CEB-CRITICAL-005"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-006": {
+    "case_ids": [
+      "CEB-CRITICAL-006"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-007": {
+    "case_ids": [
+      "CEB-CRITICAL-007"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-008": {
+    "case_ids": [
+      "CEB-CRITICAL-008"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-009": {
+    "case_ids": [
+      "CEB-CRITICAL-009"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-010": {
+    "case_ids": [
+      "CEB-CRITICAL-010"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-011": {
+    "case_ids": [
+      "CEB-CRITICAL-011"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-012": {
+    "case_ids": [
+      "CEB-CRITICAL-012"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-013": {
+    "case_ids": [
+      "CEB-CRITICAL-013"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-014": {
+    "case_ids": [
+      "CEB-CRITICAL-014"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-015": {
+    "case_ids": [
+      "CEB-CRITICAL-015"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-016": {
+    "case_ids": [
+      "CEB-CRITICAL-016"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-017": {
+    "case_ids": [
+      "CEB-CRITICAL-017"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-018": {
+    "case_ids": [
+      "CEB-CRITICAL-018"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-019": {
+    "case_ids": [
+      "CEB-CRITICAL-019"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-020": {
+    "case_ids": [
+      "CEB-CRITICAL-020"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-021": {
+    "case_ids": [
+      "CEB-CRITICAL-021"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-022": {
+    "case_ids": [
+      "CEB-CRITICAL-022"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-023": {
+    "case_ids": [
+      "CEB-CRITICAL-023"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-024": {
+    "case_ids": [
+      "CEB-CRITICAL-024"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-025": {
+    "case_ids": [
+      "CEB-CRITICAL-025"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-026": {
+    "case_ids": [
+      "CEB-CRITICAL-026"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-027": {
+    "case_ids": [
+      "CEB-CRITICAL-027"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-028": {
+    "case_ids": [
+      "CEB-CRITICAL-028"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-029": {
+    "case_ids": [
+      "CEB-CRITICAL-029"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-030": {
+    "case_ids": [
+      "CEB-CRITICAL-030"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-031": {
+    "case_ids": [
+      "CEB-CRITICAL-031"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-032": {
+    "case_ids": [
+      "CEB-CRITICAL-032"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-033": {
+    "case_ids": [
+      "CEB-CRITICAL-033"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-034": {
+    "case_ids": [
+      "CEB-CRITICAL-034"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-035": {
+    "case_ids": [
+      "CEB-CRITICAL-035"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-036": {
+    "case_ids": [
+      "CEB-CRITICAL-036"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-037": {
+    "case_ids": [
+      "CEB-CRITICAL-037"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-038": {
+    "case_ids": [
+      "CEB-CRITICAL-038"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-039": {
+    "case_ids": [
+      "CEB-CRITICAL-039"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-040": {
+    "case_ids": [
+      "CEB-CRITICAL-040"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-041": {
+    "case_ids": [
+      "CEB-CRITICAL-041"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-042": {
+    "case_ids": [
+      "CEB-CRITICAL-042"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-043": {
+    "case_ids": [
+      "CEB-CRITICAL-043"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-044": {
+    "case_ids": [
+      "CEB-CRITICAL-044"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-045": {
+    "case_ids": [
+      "CEB-CRITICAL-045"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-046": {
+    "case_ids": [
+      "CEB-CRITICAL-046"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-047": {
+    "case_ids": [
+      "CEB-CRITICAL-047"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-048": {
+    "case_ids": [
+      "CEB-CRITICAL-048"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-049": {
+    "case_ids": [
+      "CEB-CRITICAL-049"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-050": {
+    "case_ids": [
+      "CEB-CRITICAL-050"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-051": {
+    "case_ids": [
+      "CEB-CRITICAL-051"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-052": {
+    "case_ids": [
+      "CEB-CRITICAL-052"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-053": {
+    "case_ids": [
+      "CEB-CRITICAL-053"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-054": {
+    "case_ids": [
+      "CEB-CRITICAL-054"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-055": {
+    "case_ids": [
+      "CEB-CRITICAL-055"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-056": {
+    "case_ids": [
+      "CEB-CRITICAL-056"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-057": {
+    "case_ids": [
+      "CEB-CRITICAL-057"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-058": {
+    "case_ids": [
+      "CEB-CRITICAL-058"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-059": {
+    "case_ids": [
+      "CEB-CRITICAL-059"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-CRITICAL-060": {
+    "case_ids": [
+      "CEB-CRITICAL-060"
+    ],
+    "language": "ceb",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-001": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-001"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-002": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-002"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-003": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-003"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-004": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-004"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-005": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-005"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-006": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-006"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-007": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-007"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-008": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-008"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-009": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-009"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-010": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-010"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-011": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-011"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-012": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-012"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-013": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-013"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-014": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-014"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-015": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-015"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-016": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-016"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-017": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-017"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-018": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-018"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-019": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-019"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-020": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-020"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-021": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-021"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-022": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-022"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-023": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-023"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-024": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-024"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-025": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-025"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-026": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-026"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-027": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-027"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-028": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-028"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-029": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-029"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-030": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-030"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-031": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-031"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-032": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-032"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-033": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-033"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-034": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-034"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-035": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-035"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-036": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-036"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-037": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-037"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-038": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-038"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-039": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-039"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-040": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-040"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-041": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-041"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-042": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-042"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-043": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-043"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-044": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-044"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-045": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-045"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-046": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-046"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-047": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-047"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-048": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-048"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-049": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-049"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-050": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-050"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-051": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-051"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-052": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-052"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-053": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-053"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-054": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-054"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-055": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-055"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-056": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-056"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-057": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-057"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-058": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-058"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-059": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-059"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "CEB-FAM-NEEDS_REVIEW-060": {
+    "case_ids": [
+      "CEB-NEEDS_REVIEW-060"
+    ],
+    "language": "ceb",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-001": {
+    "case_ids": [
+      "MX-MINOR-001"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-002": {
+    "case_ids": [
+      "MX-MINOR-002"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-003": {
+    "case_ids": [
+      "MX-MINOR-003"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-004": {
+    "case_ids": [
+      "MX-MINOR-004"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-005": {
+    "case_ids": [
+      "MX-MINOR-005"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-006": {
+    "case_ids": [
+      "MX-MINOR-006"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-007": {
+    "case_ids": [
+      "MX-MINOR-007"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-008": {
+    "case_ids": [
+      "MX-MINOR-008"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-009": {
+    "case_ids": [
+      "MX-MINOR-009"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-010": {
+    "case_ids": [
+      "MX-MINOR-010"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-011": {
+    "case_ids": [
+      "MX-MINOR-011"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-012": {
+    "case_ids": [
+      "MX-MINOR-012"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-013": {
+    "case_ids": [
+      "MX-MINOR-013"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-014": {
+    "case_ids": [
+      "MX-MINOR-014"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-015": {
+    "case_ids": [
+      "MX-MINOR-015"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-016": {
+    "case_ids": [
+      "MX-MINOR-016"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-017": {
+    "case_ids": [
+      "MX-MINOR-017"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-018": {
+    "case_ids": [
+      "MX-MINOR-018"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-019": {
+    "case_ids": [
+      "MX-MINOR-019"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-020": {
+    "case_ids": [
+      "MX-MINOR-020"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-021": {
+    "case_ids": [
+      "MX-MINOR-021"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-022": {
+    "case_ids": [
+      "MX-MINOR-022"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-023": {
+    "case_ids": [
+      "MX-MINOR-023"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-024": {
+    "case_ids": [
+      "MX-MINOR-024"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-025": {
+    "case_ids": [
+      "MX-MINOR-025"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-026": {
+    "case_ids": [
+      "MX-MINOR-026"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-027": {
+    "case_ids": [
+      "MX-MINOR-027"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-028": {
+    "case_ids": [
+      "MX-MINOR-028"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-029": {
+    "case_ids": [
+      "MX-MINOR-029"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-MINOR-030": {
+    "case_ids": [
+      "MX-MINOR-030"
+    ],
+    "language": "mixed",
+    "label": "minor",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-001": {
+    "case_ids": [
+      "MX-SERIOUS-001"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-002": {
+    "case_ids": [
+      "MX-SERIOUS-002"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-003": {
+    "case_ids": [
+      "MX-SERIOUS-003"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-004": {
+    "case_ids": [
+      "MX-SERIOUS-004"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-005": {
+    "case_ids": [
+      "MX-SERIOUS-005"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-006": {
+    "case_ids": [
+      "MX-SERIOUS-006"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-LEG-WOUND-AFTER-CRASH-01": {
+    "case_ids": [
+      "MX-SERIOUS-007",
+      "MX-SERIOUS-013"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "same_scenario_variant"
+  },
+  "MX-FAM-SERIOUS-008": {
+    "case_ids": [
+      "MX-SERIOUS-008"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-009": {
+    "case_ids": [
+      "MX-SERIOUS-009"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-010": {
+    "case_ids": [
+      "MX-SERIOUS-010"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-011": {
+    "case_ids": [
+      "MX-SERIOUS-011"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-012": {
+    "case_ids": [
+      "MX-SERIOUS-012"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-014": {
+    "case_ids": [
+      "MX-SERIOUS-014"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-015": {
+    "case_ids": [
+      "MX-SERIOUS-015"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-016": {
+    "case_ids": [
+      "MX-SERIOUS-016"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-017": {
+    "case_ids": [
+      "MX-SERIOUS-017"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-018": {
+    "case_ids": [
+      "MX-SERIOUS-018"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-019": {
+    "case_ids": [
+      "MX-SERIOUS-019"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-020": {
+    "case_ids": [
+      "MX-SERIOUS-020"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-021": {
+    "case_ids": [
+      "MX-SERIOUS-021"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-022": {
+    "case_ids": [
+      "MX-SERIOUS-022"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-023": {
+    "case_ids": [
+      "MX-SERIOUS-023"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-024": {
+    "case_ids": [
+      "MX-SERIOUS-024"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-025": {
+    "case_ids": [
+      "MX-SERIOUS-025"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-026": {
+    "case_ids": [
+      "MX-SERIOUS-026"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-027": {
+    "case_ids": [
+      "MX-SERIOUS-027"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-028": {
+    "case_ids": [
+      "MX-SERIOUS-028"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-029": {
+    "case_ids": [
+      "MX-SERIOUS-029"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-SERIOUS-030": {
+    "case_ids": [
+      "MX-SERIOUS-030"
+    ],
+    "language": "mixed",
+    "label": "serious",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-001": {
+    "case_ids": [
+      "MX-CRITICAL-001"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-002": {
+    "case_ids": [
+      "MX-CRITICAL-002"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-003": {
+    "case_ids": [
+      "MX-CRITICAL-003"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-004": {
+    "case_ids": [
+      "MX-CRITICAL-004"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-005": {
+    "case_ids": [
+      "MX-CRITICAL-005"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-006": {
+    "case_ids": [
+      "MX-CRITICAL-006"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-007": {
+    "case_ids": [
+      "MX-CRITICAL-007"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-008": {
+    "case_ids": [
+      "MX-CRITICAL-008"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-009": {
+    "case_ids": [
+      "MX-CRITICAL-009"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-010": {
+    "case_ids": [
+      "MX-CRITICAL-010"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-011": {
+    "case_ids": [
+      "MX-CRITICAL-011"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-012": {
+    "case_ids": [
+      "MX-CRITICAL-012"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-013": {
+    "case_ids": [
+      "MX-CRITICAL-013"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-014": {
+    "case_ids": [
+      "MX-CRITICAL-014"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-015": {
+    "case_ids": [
+      "MX-CRITICAL-015"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-016": {
+    "case_ids": [
+      "MX-CRITICAL-016"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-017": {
+    "case_ids": [
+      "MX-CRITICAL-017"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-018": {
+    "case_ids": [
+      "MX-CRITICAL-018"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-019": {
+    "case_ids": [
+      "MX-CRITICAL-019"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-020": {
+    "case_ids": [
+      "MX-CRITICAL-020"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-021": {
+    "case_ids": [
+      "MX-CRITICAL-021"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-022": {
+    "case_ids": [
+      "MX-CRITICAL-022"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-023": {
+    "case_ids": [
+      "MX-CRITICAL-023"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-024": {
+    "case_ids": [
+      "MX-CRITICAL-024"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-025": {
+    "case_ids": [
+      "MX-CRITICAL-025"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-026": {
+    "case_ids": [
+      "MX-CRITICAL-026"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-027": {
+    "case_ids": [
+      "MX-CRITICAL-027"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-028": {
+    "case_ids": [
+      "MX-CRITICAL-028"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-029": {
+    "case_ids": [
+      "MX-CRITICAL-029"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-CRITICAL-030": {
+    "case_ids": [
+      "MX-CRITICAL-030"
+    ],
+    "language": "mixed",
+    "label": "critical",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-001": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-001"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-002": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-002"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-003": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-003"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-004": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-004"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-005": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-005"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-006": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-006"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-007": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-007"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-008": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-008"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-009": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-009"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-010": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-010"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-011": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-011"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-012": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-012"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-013": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-013"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-014": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-014"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-015": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-015"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-016": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-016"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-017": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-017"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-018": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-018"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-019": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-019"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-020": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-020"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-021": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-021"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-022": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-022"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-023": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-023"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-024": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-024"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-025": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-025"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-026": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-026"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-027": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-027"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-028": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-028"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-029": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-029"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  },
+  "MX-FAM-NEEDS_REVIEW-030": {
+    "case_ids": [
+      "MX-NEEDS_REVIEW-030"
+    ],
+    "language": "mixed",
+    "label": "needs_review",
+    "relationship_type": "original_draft"
+  }
+}

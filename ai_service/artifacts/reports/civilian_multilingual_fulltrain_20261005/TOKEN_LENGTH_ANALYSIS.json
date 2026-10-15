@@ -1,0 +1,14 @@
+{
+  "dataset_rows": 850,
+  "percentiles": {
+    "p50": 20,
+    "p90": 31,
+    "p95": 34,
+    "p99": 39,
+    "max": 55
+  },
+  "over_64": 0,
+  "max_length_selected": 64,
+  "no_truncation_at_selected_max_length": true,
+  "tokenizer_source": "existing local XLM-R checkpoint tokenizer; same architecture/revision lineage"
+}

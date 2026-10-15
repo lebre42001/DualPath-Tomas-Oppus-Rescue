@@ -1,0 +1,44 @@
+body.admin-portal .lora-monitoring-shortcut .panel-head { align-items: center; }
+body.admin-portal .lora-monitoring-shortcut .panel-heading { flex: 1 1 320px; }
+body.admin-portal .lora-monitoring-shortcut .btn { flex: 0 0 auto; }
+body.admin-portal .lora-mesh-hero .hero-grid { grid-template-columns: minmax(0,1.15fr) minmax(280px,.85fr); }
+body.admin-portal .lora-mesh-hero-metrics { grid-template-columns: repeat(2,minmax(0,1fr)); }
+body.admin-portal .lora-mesh-panel { min-width: 0; }
+body.admin-portal .lora-mesh-toolbar { align-items: end; }
+body.admin-portal .lora-node-search { display: grid; gap: 5px; width: min(100%,340px); color: var(--muted); font-size: .78rem; font-weight: 800; }
+body.admin-portal .lora-node-search input { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); }
+body.admin-portal .lora-mesh-live-fragment { display: grid; gap: 16px; }
+body.admin-portal .lora-mesh-summary-strip { grid-template-columns: repeat(4,minmax(0,1fr)); }
+body.admin-portal .lora-node-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+body.admin-portal .lora-node-card { min-width: 0; padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow-soft); }
+body.admin-portal .lora-node-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+body.admin-portal .lora-node-card-head h3 { margin: 2px 0 0; color: var(--ink); font-size: 1.05rem; line-height: 1.35; }
+body.admin-portal .lora-node-card-head .tag { flex: 0 1 auto; }
+body.admin-portal .lora-node-location { margin: 5px 0 12px; color: var(--muted); font-size: .88rem; }
+body.admin-portal .lora-node-details { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 18px; margin: 0; }
+body.admin-portal .lora-node-details > div { min-width: 0; padding: 8px 0; border-top: 1px solid var(--line); }
+body.admin-portal .lora-node-details dt { color: var(--muted); font-size: .7rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+body.admin-portal .lora-node-details dd { margin: 2px 0 0; overflow-wrap: anywhere; color: var(--ink); font-size: .86rem; line-height: 1.4; }
+body.admin-portal .lora-node-details dd span { color: var(--muted); }
+body.admin-portal .lora-node-filter-empty { margin: 0; padding: 18px; border: 1px dashed var(--line); border-radius: 12px; color: var(--muted); text-align: center; }
+body.admin-portal .lora-node-empty { grid-column: 1 / -1; }
+
+@media (max-width: 900px) {
+    body.admin-portal .lora-mesh-hero .hero-grid { grid-template-columns: minmax(0,1fr); }
+}
+
+@media (max-width: 700px) {
+    body.admin-portal .lora-monitoring-shortcut .panel-head { align-items: stretch; }
+    body.admin-portal .lora-monitoring-shortcut .btn { width: 100%; }
+    body.admin-portal .lora-mesh-toolbar { align-items: stretch; }
+    body.admin-portal .lora-node-search { width: 100%; }
+    body.admin-portal .lora-mesh-summary-strip,
+    body.admin-portal .lora-node-grid { grid-template-columns: minmax(0,1fr); }
+    body.admin-portal .lora-mesh-hero-metrics { grid-template-columns: minmax(0,1fr); }
+}
+
+@media (max-width: 460px) {
+    body.admin-portal .lora-node-card-head { display: grid; }
+    body.admin-portal .lora-node-card-head .tag { justify-self: start; }
+    body.admin-portal .lora-node-details { grid-template-columns: minmax(0,1fr); }
+}

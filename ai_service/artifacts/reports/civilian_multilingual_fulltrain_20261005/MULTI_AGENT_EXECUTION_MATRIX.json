@@ -1,0 +1,48 @@
+{
+  "agents_assigned": 4,
+  "agents_completed": 4,
+  "agents_partial": 0,
+  "agents_blocked": 0,
+  "agents_failed": 0,
+  "agents": [
+    {
+      "agent": "dataset_privacy_inventory",
+      "role": "English draft corpus and privacy/provenance inventory",
+      "status": "COMPLETE",
+      "main_artifact": "staging/english_draft.csv + ENGLISH_GENERATION_NOTES.json",
+      "finding": "250 rows; 2,543 words; all drafts."
+    },
+    {
+      "agent": "checkpoint_pipeline_audit",
+      "role": "Cebuano and mixed-language corpus/pipeline audit",
+      "status": "COMPLETE",
+      "main_artifact": "staging/cebuano_draft.csv + mixed_draft.csv and notes",
+      "finding": "240 Cebuano and 120 mixed rows; language categories remain heuristically unverified."
+    },
+    {
+      "agent": "phase1_independent_redteam",
+      "role": "Independent corpus overlap, duplicate, privacy and semantic red-team",
+      "status": "COMPLETE_WITH_LIMITATIONS",
+      "main_artifact": "DUPLICATE_AUDIT.json + LEAKAGE_AUDIT.json",
+      "finding": "No exact prior matches in accessible sources; 60 CSV files inaccessible; human multilingual review remains required."
+    },
+    {
+      "agent": "final_experiment_audit",
+      "role": "Independent final metrics, split, checkpoint and active-model QA",
+      "status": "COMPLETE_WITH_LIMITATIONS",
+      "main_artifact": "FINAL_QA_AUDIT.json",
+      "finding": "Selection is consistent; fresh-test gates fail; active config unchanged."
+    }
+  ],
+  "conflicts_found": [
+    "Provenance scan reports 1,732 prior text records while independent red-team inventory reports 2,708 rows across 17 readable files; scan populations/definitions differ."
+  ],
+  "conflicts_resolved": [
+    "Selected checkpoint resolved by frozen validation rule; old EN/CEB family-link corrections incorporated before splitting.",
+    "Per-language raw F1 is now reported separately from post-threshold routed F1; the CLI per_language field represents routed results."
+  ],
+  "unresolved_conflicts": [
+    "Prior-source inventory counts are not directly reconcilable, and 60 CSV files were inaccessible."
+  ],
+  "scope_note": "Four focused agent assignments were used; the 20 example workstreams in the task were not each separately staffed. Lead coordinator completed training/evaluation and artifact assembly."
+}

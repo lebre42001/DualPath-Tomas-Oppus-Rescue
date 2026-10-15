@@ -1,0 +1,17 @@
+{
+  "created_at_local": "2026-10-06T16:56:26.161392+08:00",
+  "owner_attestation": "OWNER-ATTESTED-850-FD0FB65CCB718A1D; project-owner-attested verbal batch; not independently corroborated direct responder testimony.",
+  "source_file": "ai_service/datasets/emergency_text/experiments/civilian_multilingual_6000w_20261005/reports.csv",
+  "source_sha256": "fd0fb65ccb718a1dee93fd315aa3a0e12cb5a8c2123bc08c8466e51c75fc7645",
+  "derived_model_development_data_sha256": "79ab94ad4877159dc1a58bb621b5c743ab5cd7b832e7fed92aa23148591e6342",
+  "row_decisions_or_label_changes": 0,
+  "ai_audit": {
+    "agree": 769,
+    "disagree": 38,
+    "uncertain": 43,
+    "non_agree": 81
+  },
+  "synthetic_origin": true,
+  "human_language_fluency_validation": "not evidenced",
+  "real_world_final_test": "REAL_WORLD_FINAL_TEST_NOT_AVAILABLE"
+}

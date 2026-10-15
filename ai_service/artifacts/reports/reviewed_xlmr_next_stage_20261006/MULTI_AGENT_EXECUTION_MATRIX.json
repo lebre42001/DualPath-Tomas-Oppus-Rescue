@@ -1,0 +1,295 @@
+{
+  "package": "reviewed_xlmr_next_stage_20261006",
+  "created_at": "2026-10-06",
+  "source_rows": 850,
+  "execution": [
+    {
+      "workstream": "1 HIGH_RISK_ERROR_AUDIT",
+      "agent": "/root/high_risk_error_audit",
+      "status": "COMPLETE",
+      "files_created": [
+        "HIGH_RISK_ERROR_AUDIT.json",
+        "HIGH_RISK_REVIEW_PRIORITY.csv"
+      ],
+      "key_result": "Reproduced exact held-out confusion matrix; 4 Critical->Minor and 2 Critical->Serious. Draft label correctness still unverified.",
+      "files_read": [
+        "fresh_test.csv",
+        "train.csv",
+        "provenance.csv",
+        "fresh_test_eval/evaluation_metrics.json",
+        "selected checkpoint model.safetensors and metadata.json"
+      ],
+      "files_modified": [
+        "HIGH_RISK_ERROR_AUDIT.json",
+        "HIGH_RISK_REVIEW_PRIORITY.csv"
+      ],
+      "commands_run": [
+        "Local Python/Transformers inference in eval mode",
+        "CSV/provenance checks",
+        "SHA-256 verification"
+      ],
+      "counts_metrics": "84 test rows; exact confusion reproduced; Critical->Minor 4; Critical->Serious 2; 6 total.",
+      "risks": "Predictions are raw uncalibrated softmax and compare to synthetic draft labels.",
+      "unresolved": "All six label interpretations need human responder/language review; no label error established.",
+      "recommendation": "Review all six cases before any reviewed dataset or retraining."
+    },
+    {
+      "workstream": "2 HUMAN_REVIEW_WORKSHEET",
+      "agent": "/root coordinator",
+      "status": "COMPLETE_PREP_ONLY",
+      "files_created": [
+        "RESPONDER_HUMAN_REVIEW.csv"
+      ],
+      "key_result": "850 rows, all human fields blank; only 84 held-out model predictions shown; in-sample scores omitted.",
+      "files_read": [
+        "reports.csv",
+        "provenance.csv",
+        "fresh_test.csv",
+        "selected checkpoint metadata.json"
+      ],
+      "files_modified": [
+        "RESPONDER_HUMAN_REVIEW.csv"
+      ],
+      "commands_run": [
+        "Python CSV generation and source-preservation checks"
+      ],
+      "counts_metrics": "850 rows; 84 held-out prediction suggestions; 766 in-sample prediction cells blank; zero human fields filled.",
+      "risks": "Model outputs can bias reviewers; confidence is uncalibrated.",
+      "unresolved": "Actual responder reviews pending for all 850.",
+      "recommendation": "Enter only genuine human decisions and reviewer metadata."
+    },
+    {
+      "workstream": "3 RESPONDER_PRIORITY_QUEUE",
+      "agent": "/root coordinator",
+      "status": "COMPLETE_PREP_ONLY",
+      "files_created": [
+        "RESPONDER_REVIEW_PRIORITY.csv"
+      ],
+      "key_result": "All 850 rows ranked; six confirmed model disagreements occupy ranks 1-6.",
+      "files_read": [
+        "reports.csv",
+        "provenance.csv",
+        "HIGH_RISK_REVIEW_PRIORITY.csv"
+      ],
+      "files_modified": [
+        "RESPONDER_REVIEW_PRIORITY.csv"
+      ],
+      "commands_run": [
+        "Python priority construction and rank/row validation"
+      ],
+      "counts_metrics": "850 rows in six contiguous stages; six known model disagreements first.",
+      "risks": "Short/mixed priority groups overlap Critical/Serious stages and are represented by secondary tags.",
+      "unresolved": "Priority tags do not confirm actual severity.",
+      "recommendation": "Follow staged queue; do not treat ranking as ground truth."
+    },
+    {
+      "workstream": "4 LANGUAGE_REVIEW_PREPARATION",
+      "agent": "/root coordinator",
+      "status": "COMPLETE_PREP_ONLY",
+      "files_created": [
+        "LANGUAGE_REVIEW_ENGLISH.csv",
+        "LANGUAGE_REVIEW_TAGALOG.csv",
+        "LANGUAGE_REVIEW_CEBUANO.csv",
+        "LANGUAGE_REVIEW_MIXED.csv"
+      ],
+      "key_result": "Separate sheets; language judgments blank and severity decisions separate.",
+      "files_read": [
+        "reports.csv",
+        "provenance.csv"
+      ],
+      "files_modified": [
+        "LANGUAGE_REVIEW_ENGLISH.csv",
+        "LANGUAGE_REVIEW_TAGALOG.csv",
+        "LANGUAGE_REVIEW_CEBUANO.csv",
+        "LANGUAGE_REVIEW_MIXED.csv"
+      ],
+      "commands_run": [
+        "Python CSV generation and source-label preservation checks"
+      ],
+      "counts_metrics": "English 250; Tagalog 240; Cebuano 240; mixed 120; all 850 unique rows.",
+      "risks": "Language quality and severity review are distinct.",
+      "unresolved": "All language reviews pending.",
+      "recommendation": "Use fluent reviewers; preserve original text."
+    },
+    {
+      "workstream": "5 MIXED_LANGUAGE_AUDIT",
+      "agent": "/root/mixed_language_audit",
+      "status": "COMPLETE_INTAKE_ONLY",
+      "files_created": [
+        "MIXED_LANGUAGE_HUMAN_REVIEW_INTAKE.csv"
+      ],
+      "key_result": "120 rows; heuristic category hints explicitly unverified; reviewer fields blank.",
+      "files_read": [
+        "mixed_draft.csv",
+        "MIXED_GENERATION_NOTES.json",
+        "reports.csv",
+        "provenance.csv"
+      ],
+      "files_modified": [
+        "MIXED_LANGUAGE_HUMAN_REVIEW_INTAKE.csv"
+      ],
+      "commands_run": [
+        "Read-only CSV source-match and blank-field checks"
+      ],
+      "counts_metrics": "120 rows; lexical-combination hints: tri-language 54, Cebuano-Tagalog 32, Tagalog-English 11, Cebuano-English 14, unclear 9; all unverified.",
+      "risks": "Existing mixed test support n=12 only; not sufficient for safety conclusions.",
+      "unresolved": "Actual language combinations, naturalness, meaning, and severity wording require fluent reviewers.",
+      "recommendation": "Complete mixed-language human review before claiming language coverage."
+    },
+    {
+      "workstream": "6 SHORT_PANIC_REVIEW_AUDIT",
+      "agent": "/root coordinator",
+      "status": "COMPLETE_HEURISTIC_QUEUE_ONLY",
+      "files_created": [
+        "SHORT_PANIC_REVIEW_PRIORITY.csv"
+      ],
+      "key_result": "All 674 reports in 1?3, 4?8, and 9?15 word buckets included; lexical flags are screening hints only.",
+      "files_read": [
+        "reports.csv",
+        "provenance.csv"
+      ],
+      "files_modified": [
+        "SHORT_PANIC_REVIEW_PRIORITY.csv"
+      ],
+      "commands_run": [
+        "Python word-count bucket checks and lexical screen"
+      ],
+      "counts_metrics": "674 rows: 1-3 words 54; 4-8 words 247; 9-15 words 373. Heuristic-flag count 360.",
+      "risks": "Keyword and ambiguity tags are heuristic screening signals only.",
+      "unresolved": "All short/panic cases need human interpretation; short labels may be underspecified.",
+      "recommendation": "Review the entire short queue, beginning with Critical/Serious cases."
+    },
+    {
+      "workstream": "7 PERSON_OBJECT_NEGATION_RED_TEAM",
+      "agent": "/root/family_semantic_audit",
+      "status": "COMPLETE_READ_ONLY",
+      "files_created": [
+        "SEMANTIC_RED_TEAM_AUDIT.json"
+      ],
+      "key_result": "Semantic and negation risk review; no labels or families changed.",
+      "files_read": [
+        "reports.csv",
+        "provenance.csv",
+        "family_manifest.json",
+        "dataset generation notes"
+      ],
+      "files_modified": [
+        "SEMANTIC_RED_TEAM_AUDIT.json"
+      ],
+      "commands_run": [
+        "Read-only lexical/semantic cue scans and source integrity checks"
+      ],
+      "counts_metrics": "54 1-3-word records identified; no automated label or family changes.",
+      "risks": "Lexical matches cannot establish referents or intended meaning.",
+      "unresolved": "Person/object, negation, nonresponse, bleeding, entrapment, and mobility interpretations need human review.",
+      "recommendation": "Use qualified responder plus fluent language review."
+    },
+    {
+      "workstream": "8 SCENARIO_FAMILY_AUDIT",
+      "agent": "/root/family_semantic_audit",
+      "status": "COMPLETE_READ_ONLY",
+      "files_created": [
+        "SCENARIO_FAMILY_AUDIT.json",
+        "FAMILY_MANIFEST_REVISED.json"
+      ],
+      "key_result": "833 current families preserved; proposed family reassignment remains pending human confirmation.",
+      "files_read": [
+        "reports.csv",
+        "provenance.csv",
+        "family_manifest.json",
+        "split manifests"
+      ],
+      "files_modified": [
+        "SCENARIO_FAMILY_AUDIT.json",
+        "FAMILY_MANIFEST_REVISED.json"
+      ],
+      "commands_run": [
+        "Read-only family membership/parent/hash checks; lexical Jaccard screen"
+      ],
+      "counts_metrics": "850 rows; 833 current families; 13 multi-row families; 41 similarity pairs; zero exact normalized-text collisions.",
+      "risks": "Similarity is not proof of same incident; proposed family assignments remain null.",
+      "unresolved": "Translations, paraphrases, and same-incident relationships need human confirmation.",
+      "recommendation": "Do not reassign families automatically; adjudicate proposed links."
+    },
+    {
+      "workstream": "9 PRIOR_SOURCE_ACCESS_AUDIT",
+      "agent": "/root/prior_tokenizer_audit",
+      "status": "PARTIAL_ACCESS_DENIED_CAUSE_UNRESOLVED",
+      "files_created": [
+        "PRIOR_SOURCE_ACCESS_AUDIT.json"
+      ],
+      "key_result": "60 historical CSVs are access-blocked; no ACL changes or exposure audit.",
+      "files_read": [
+        "historical by_severity tree inventory and candidate CSV paths"
+      ],
+      "files_modified": [
+        "PRIOR_SOURCE_ACCESS_AUDIT.json"
+      ],
+      "commands_run": [
+        "Read-only filesystem existence checks and representative Get-Acl attempts"
+      ],
+      "counts_metrics": "60 inaccessible CSVs across three trees, 20 each; ACL reads denied.",
+      "risks": "No source content/exposure conclusion for inaccessible files.",
+      "unresolved": "Precise access-control cause unresolved; prior exposure audit not run.",
+      "recommendation": "Restore authorized access through normal repository owner process and rerun audit; do not assume missing data."
+    },
+    {
+      "workstream": "10 TOKENIZER_WARNING_AUDIT",
+      "agent": "/root/prior_tokenizer_audit",
+      "status": "WARNING_REPRODUCED_FALSE_POSITIVE_CAUSE_IDENTIFIED",
+      "files_created": [
+        "TOKENIZER_WARNING_AUDIT.json"
+      ],
+      "key_result": "Transformers 4.57.6 warning falsely matches local XLM-R config; do not apply Mistral regex fix.",
+      "files_read": [
+        "selected checkpoint tokenizer_config.json",
+        "tokenizer.json",
+        "metadata.json",
+        "local Transformers tokenizer implementation/version"
+      ],
+      "files_modified": [
+        "TOKENIZER_WARNING_AUDIT.json"
+      ],
+      "commands_run": [
+        "Local-only AutoTokenizer load and warning reproduction; tokenizer configuration inspection"
+      ],
+      "counts_metrics": "Transformers 4.57.6, XLMRobertaTokenizerFast, model_type xlm-roberta, local WhitespaceSplit/Metaspace backend.",
+      "risks": "Do not apply Mistral-specific regex fix; preserve tokenizer behavior for reproducibility.",
+      "unresolved": "Historic runs/tokenizer assets outside available local checkpoint not exhaustively compared.",
+      "recommendation": "Document warning; do not patch without technically justified tokenizer change and fresh experiment."
+    },
+    {
+      "workstream": "Independent final QA",
+      "agent": "/root/independent_final_qa",
+      "status": "PASS_WITH_LIMITATIONS",
+      "files_created": [
+        "FINAL_QA_AUDIT.json"
+      ],
+      "key_result": "Independent read-only audit passed with limitations; human evidence, synthetic scope, small test support, 60 inaccessible historical files, and pending family confirmation remain.",
+      "files_read": [
+        "all review-package CSV/JSON/README/decision files",
+        "reports.csv",
+        "provenance.csv",
+        "fresh_test.csv",
+        "selected checkpoint metadata and saved evaluation metrics",
+        "sealed package ZIP"
+      ],
+      "files_modified": [
+        "FINAL_QA_AUDIT.json"
+      ],
+      "commands_run": [
+        "Independent JSON/CSV parse checks",
+        "Source hash/row equality checks",
+        "Priority and prediction reconciliation",
+        "Family-ID split-overlap check"
+      ],
+      "counts_metrics": "10 JSON and 11 CSV parse; 850 reviewer rows, 84 prediction rows, 766 blanks; confusion matrix exact; 674 short rows; 120 mixed rows.",
+      "risks": "Structural QA does not establish human label correctness or real-world safety.",
+      "unresolved": "All human review pending; 60 historical files inaccessible; semantic family links pending.",
+      "recommendation": "PASS_WITH_LIMITATIONS for prep package only; keep model blocked/inactive."
+    }
+  ],
+  "training_performed": false,
+  "active_model_changed": false,
+  "deployment_performed": false
+}

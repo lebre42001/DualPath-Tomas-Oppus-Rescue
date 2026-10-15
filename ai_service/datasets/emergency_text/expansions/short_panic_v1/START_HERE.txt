@@ -1,0 +1,28 @@
+SHORT/PANIC TEXT PREVIEW — DRAFT, NOT APPROVED, NOT TRAINING DATA YET
+Date: 2026-10-01
+
+Open FULL_REPORT_COPY_PASTE.txt for the complete audit, all 80 candidate rows,
+26 contrastive sets, design recommendations and next steps in one document.
+
+candidates.csv is the sole candidate master for this separate preview.
+The existing working/reports.csv remains unchanged and is not replaced.
+Each proposed label, language assignment and family link requires human review.
+Do not run training, import this preview, mark it approved or merge it automatically.
+The seven-column preview deliberately differs from the current training CSV schema.
+
+Files:
+- FULL_REPORT_COPY_PASTE.txt: consolidated A–N report.
+- candidates.csv: 80 provisional reports; 20 per label and per language.
+- contrastive_sets.json: 26 explanation sets; extra illustrative phrases are not candidate rows.
+- current_length_audit.json: measured 400-row length statistics.
+- coverage_audit.csv: semantic coverage findings with source case IDs.
+- family_design.json: pending family/ancestry review leads, not split assignments.
+- protected_files_before.json: protected existing file SHA-256 values.
+- verification.json: structural/preservation checks, not human approval.
+- manifest.json: provenance, draft status and artifact hashes.
+
+The 400-row master has no descriptions of 1–15 words. All rows remain draft.
+This preview is development material, not an independent test set.
+It is not a blinded review worksheet: proposed labels and reasons are visible.
+Do not send this as the first-pass label sheet to independent reviewers.
+No model, runtime service, application code, database or deployment was changed.

@@ -1,0 +1,24 @@
+{
+  "status": "PARTIAL_HISTORICAL_EXPOSURE_CONFIRMED",
+  "scope": "Historical model-development exposure across the current 850-row corpus; exact model run records and CSV permissions limit complete source audit.",
+  "all_850_prior_partitioned": true,
+  "historical_partition_counts": {
+    "train": 516,
+    "validation": 124,
+    "calibration": 83,
+    "fresh_test": 84,
+    "challenge": 43
+  },
+  "current_run_partitions": {
+    "train": 514,
+    "validation": 126,
+    "calibration": 83,
+    "fresh_test": 84,
+    "challenge": 43
+  },
+  "new_test_interpretation": "FRESH_TEST is family/text-disjoint for this training run and was excluded from fitting/checkpoint selection. The same 850-row corpus has appeared in earlier model-development partitions, and the previous selected XLM-R evaluated its old fresh_test. Thus this is not historically unseen or independent across experiments.",
+  "inaccessible_historical_sources": 60,
+  "access_audit": "PRIOR_SOURCE_ACCESS_AUDIT.json",
+  "access_limitation": "60 prior CSVs across working/by_severity, synthetic_9000words_20260920/by_severity and archive/initial_80/by_severity remain permission-denied. Root cause and row overlap cannot be determined; no ACL or ownership changes attempted.",
+  "accessible_overlap_audit": "Prior scans reported 1,732 vs 2,708 readable rows with unreconciled population definitions; zero accessible exact-overlap result is not generalized to inaccessible files."
+}

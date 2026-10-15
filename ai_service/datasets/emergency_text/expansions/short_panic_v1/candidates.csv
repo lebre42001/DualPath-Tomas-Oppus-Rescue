@@ -1,0 +1,81 @@
+candidate_id,language,text,proposed_label,reason,scenario_family,word_count
+SPV1-001,en,"No injuries, scene safe.",minor,Both absence of injury and scene safety are explicit.,SP-F01,4
+SPV1-002,en,"Bumper scratched after parking bump. Everyone unhurt, road clear and safe.",minor,Property damage is identified; nobody is hurt and the scene is safe.,SP-F02,11
+SPV1-003,en,"Engine dead, all unhurt, safely parked.",minor,Dead describes the engine; no injury or continuing danger is reported.,SP-F03,6
+SPV1-004,en,"Mirror broken, nobody hurt, no danger.",minor,Broken refers to property; injury and danger are explicitly denied.,SP-F04,6
+SPV1-005,en,"Everyone walking, no injuries; cars safely parked.",minor,No injury and safe parking support the label; walking alone would not.,SP-F05,7
+SPV1-006,tl,"Walang nasaktan, ligtas na lahat.",minor,The message explicitly says nobody is hurt and everyone is now safe.,SP-F01,5
+SPV1-007,tl,"Gasgas sa pinto lang, walang nasaktan, ligtas.",minor,The scratch belongs to the door; nobody is hurt and safety is stated.,SP-F02,7
+SPV1-008,tl,"Patay makina, walang nasaktan, ligtas sa gilid.",minor,"Patay refers to the engine, with explicit no injury and a safe location.",SP-F03,7
+SPV1-009,tl,"Bali salamin, walang nasaktan, ligtas dito.",minor,A broken mirror is property damage; people are unhurt and the scene is safe.,SP-F04,6
+SPV1-010,tl,"Apoy patay na, lahat walang sugat, ligtas na ang lugar.",minor,Fire is reported extinguished and everyone uninjured and safe; not an active fire.,SP-F06,10
+SPV1-011,ceb,"Bangga, walay nasamdan, luwas na.",minor,A collision is reported with explicit no injury and current safety.,SP-F01,5
+SPV1-012,ceb,"Garas sa awto ra; walay nasamdan, walay peligro.",minor,"The scratch is on the vehicle, with no injured person or remaining danger.",SP-F02,8
+SPV1-013,ceb,"Patay ang makina, walay nasamdan, luwas na.",minor,Engine stoppage is distinguished from human death; people are unhurt and safe.,SP-F03,7
+SPV1-014,ceb,"Nabali samin, walay nasamdan, walay peligro.",minor,The damaged object is a mirror; no injury and no danger are stated.,SP-F04,6
+SPV1-015,ceb,"Nakalakaw tanan, walay nasamdan, luwas na.",minor,No injury and current safety are explicit; ability to walk is not the deciding fact.,SP-F05,6
+SPV1-016,mixed,"Crash, walay injured, safe na tanan.",minor,The report explicitly combines no injured people with everyone now safe.,SP-F01,6
+SPV1-017,mixed,"Bumper lang gasgas, no injuries, safe dito.",minor,Only bumper damage is described and injury and ongoing danger are excluded.,SP-F02,7
+SPV1-018,mixed,"Engine off, walang nasaktan, safely parked.",minor,The engine state concerns the vehicle; no injury and safe parking are stated.,SP-F03,6
+SPV1-019,mixed,"Clear na ang road after bangga, all unhurt, safe na.",minor,The people are explicitly unhurt and the roadway is described as safe.,SP-F05,10
+SPV1-020,mixed,"Fire out, walay injured, safe na ang lugar.",minor,Extinguished fire plus explicit no injury and current safety; not fire alone.,SP-F06,8
+SPV1-021,en,Broken arm.,serious,A reported limb injury supports provisional serious; this does not medically confirm a fracture.,SP-F07,2
+SPV1-022,en,"Head cut after slow bump, awake and breathing normally now.",serious,A concrete head wound is reported with responsiveness and normal breathing; clinical review remains necessary.,SP-F08,10
+SPV1-023,en,"Finger pinched, painful; free now.",serious,A painful finger injury remains after release; this is not whole-body entrapment.,SP-F09,5
+SPV1-024,en,"Walking, but my knee hurts.",serious,Walking does not cancel a concrete painful knee injury.,SP-F05,5
+SPV1-025,en,"Hand cut, bleeding stopped.",serious,The wound persists even though the bleeding has stopped.,SP-F10,4
+SPV1-026,tl,Bali paa ko.,serious,A person reports a foot or leg fracture; anatomical precision and diagnosis remain unconfirmed.,SP-F11,3
+SPV1-027,tl,Bali braso ko.,serious,"A personal arm injury is stated, unlike a broken vehicle part.",SP-F07,3
+SPV1-028,tl,"May sugat ulo, gising at normal huminga.",serious,A head wound is present without an explicit immediate life threat; not a declaration of safety.,SP-F08,7
+SPV1-029,tl,"Nasugatan kamay, kaunti dugo.",serious,A hand wound with a small reported amount of blood is more than property-only damage.,SP-F10,4
+SPV1-030,tl,"Masakit bukungbukong, di makatayo.",serious,Ankle pain with inability to stand is a concrete impairment.,SP-F11,4
+SPV1-031,ceb,Bali akong paa.,serious,A personal limb injury is claimed; no diagnosis or absent complications are inferred.,SP-F11,3
+SPV1-032,ceb,Bali akong bukton.,serious,A personal arm injury is explicit; serious remains a provisional triage suggestion.,SP-F07,3
+SPV1-033,ceb,"Nagdugo kamot, gamay ra.",serious,"The bleeding is attached to a hand and described as small, rather than unspecified blood.",SP-F10,4
+SPV1-034,ceb,"Nasamad ulo human bangga, mata ug normal moginhawa, gamay rang dugo.",serious,A head wound is described with wakefulness and normal breathing; a responder must assess it.,SP-F08,11
+SPV1-035,ceb,"Naipit tudlo, nakagawas na, sakit.",serious,A finger was pinched and is now free but painful; ongoing major entrapment is not reported.,SP-F09,5
+SPV1-036,mixed,"Leg hurts kaayo after bangga, can't stand, normal akong breathing.",serious,Severe leg pain and inability to stand identify a concrete impairment without an explicit life threat.,SP-F11,10
+SPV1-037,mixed,"Conscious siya, knee painful, breathing normal.",serious,Consciousness does not erase the knee injury; normal breathing is explicitly described.,SP-F17,6
+SPV1-038,mixed,"Kamot cut, nihunong na ang bleeding.",serious,A hand wound remains an injury after bleeding stops.,SP-F10,6
+SPV1-039,mixed,"Arm pain, dili kalihok akong bukton.",serious,Inability to move is localized to a painful arm; do not infer whole-body paralysis.,SP-F07,6
+SPV1-040,mixed,"Small cut lang, awake, normal ang breathing.",serious,A small cut is still an injury under this project's strict no-injury minor definition.,SP-F10,7
+SPV1-041,en,Driver unconscious.,critical,"An identified person is reported unconscious; this is an urgency suggestion, not death confirmation.",SP-F12,2
+SPV1-042,en,Driver not breathing.,critical,Absent breathing is asserted about the driver in a current report.,SP-F13,3
+SPV1-043,en,"Awake but gasping, can't speak.",critical,Wakefulness does not remove the supported severe breathing difficulty.,SP-F13,5
+SPV1-044,en,Walking but blood pouring from leg.,critical,Walking does not cancel explicitly heavy ongoing bleeding.,SP-F05,6
+SPV1-045,en,"Passenger trapped underwater in crashed car, we can't get him out.",critical,"A person remains trapped underwater, supporting immediate danger.",SP-F14,11
+SPV1-046,tl,Hindi humihinga drayber.,critical,"The negation concerns the driver's breathing, not uncertainty about the report.",SP-F13,3
+SPV1-047,tl,Tuloy ang buhos ng dugo sa hita.,critical,Continuous pouring blood from a person's thigh supports urgent review.,SP-F10,7
+SPV1-048,tl,May tao sa loob ng nasusunog na kotse.,critical,An occupied vehicle is actively burning; immediate danger is supported.,SP-F06,8
+SPV1-049,tl,Gising ako pero di makahinga.,critical,The speaker is awake but reports inability to breathe; awake is not a safety guarantee.,SP-F13,5
+SPV1-050,tl,"Patay daw drayber sa bangga ngayon, nasa tabi ako niya.",critical,"A current human fatality claim warrants urgent verification; reported_unverified, never confirmed death.",SP-F15,10
+SPV1-051,ceb,Dili ginhawa.,critical,Proposed reading is a present human breathing failure in the emergency channel; fluent reviewers must confirm this elliptical interpretation.,SP-F13,2
+SPV1-052,ceb,Wala motubag bisan tawagon ug uyogon.,critical,"The message describes physical unresponsiveness, unlike an unanswered text; it is not advice to shake a victim.",SP-F12,6
+SPV1-053,ceb,"Naipit sulod sa sakyanan, dili makagawas.",critical,"The reported person cannot escape vehicle entrapment, unlike an unspecified pinched object.",SP-F16,6
+SPV1-054,ceb,Kusog kaayo ang dugo sa paa.,critical,The message locates very heavy bleeding on a person's leg; no fatality is inferred.,SP-F10,6
+SPV1-055,ceb,"Drayber murag patay, dili motubag.",critical,The driver's nonresponse supports urgency independently of the uncertain death wording.,SP-F15,5
+SPV1-056,mixed,"Dili patay, unconscious lang ang driver.",critical,Death is negated but unconsciousness remains; lang does not cancel that urgent observation.,SP-F15,6
+SPV1-057,mixed,"Patay na driver, crash just happened.",critical,"A current human death claim requires urgent verification and reported_unverified, not AI-confirmed death.",SP-F15,6
+SPV1-058,mixed,Passenger conscious pero trapped sa burning van.,critical,A conscious passenger still faces entrapment in an active vehicle fire.,SP-F06,7
+SPV1-059,mixed,"Dili kalihok, chest pinned under truck.",critical,"Immobility is tied to chest compression beneath a truck, not a stalled car.",SP-F16,6
+SPV1-060,mixed,"Gising ang passenger pero ang driver not breathing, naa ko diri.",critical,The passenger and driver are different people; the driver's breathing failure controls urgency.,SP-F13,11
+SPV1-061,en,Help.,needs_review,The request gives no victim condition or identifiable immediate hazard; it must still reach a responder.,SP-F18,1
+SPV1-062,en,Crash.,needs_review,"A crash is reported without injury, responsiveness, breathing, or hazard information.",SP-F18,1
+SPV1-063,en,Not replying.,needs_review,Could refer to messages rather than physical unresponsiveness; clarify subject and observation.,SP-F12,2
+SPV1-064,en,Blood.,needs_review,"Source, amount, timing and affected person are unspecified.",SP-F10,1
+SPV1-065,en,"Driver alive after crash, but injuries and current hazards unknown.",needs_review,Alive is not the same as uninjured or safe; injury and hazard severity remain unknown.,SP-F15,10
+SPV1-066,tl,Bangga.,needs_review,A collision word alone does not describe anyone's condition.,SP-F18,1
+SPV1-067,tl,May nasaktan.,needs_review,Someone being hurt is too nonspecific here to distinguish the injury or urgent threat; adjudicate this boundary.,SP-F18,2
+SPV1-068,tl,"Patay daw, lumang post yata.",needs_review,The death claim has no clear human subject or reliable current timing.,SP-F15,5
+SPV1-069,tl,Gising ba? di ko makita.,needs_review,A question and obstructed view do not establish that the person is conscious.,SP-F17,5
+SPV1-070,tl,"Sunog sa kotse kahapon, di ko alam ang lagay ngayon.",needs_review,A past fire with unknown present conditions does not establish a current severity.,SP-F06,10
+SPV1-071,ceb,patay,needs_review,"Subject and meaning are absent; this could refer to a person, engine or other object.",SP-F15,1
+SPV1-072,ceb,murag patay,needs_review,Uncertain death-like wording without an identified subject or current observation needs urgent clarification.,SP-F15,2
+SPV1-073,ceb,giingon nila patay,needs_review,Hearsay lacks an identified subject and current scene information; do not confirm death.,SP-F15,3
+SPV1-074,ceb,wala motubag sa text,needs_review,Failure to reply to a text is not evidence of physical unresponsiveness.,SP-F12,4
+SPV1-075,ceb,naipit,needs_review,"The trapped or pinched subject, body part, mechanism and current danger are unknown.",SP-F09,1
+SPV1-076,mixed,"Na crash, condition unknown.",needs_review,An accident is reported but the affected people's condition is explicitly unknown.,SP-F18,4
+SPV1-077,mixed,"Dili kalihok ang car, occupants unknown.",needs_review,The thing that cannot move is a car; no human condition is established.,SP-F16,6
+SPV1-078,mixed,"Conscious daw, unconscious daw, same driver karon, dili namo ma klaro.",needs_review,Simultaneous conflicting statements about one person remain unresolved; urgent human clarification is needed.,SP-F17,11
+SPV1-079,mixed,"Bali something, di ko makita.",needs_review,The damaged thing is unknown and cannot safely be treated as a person's fracture.,SP-F18,5
+SPV1-080,mixed,Breathing? di sure.,needs_review,Breathing is questioned rather than clearly affirmed or denied.,SP-F13,3

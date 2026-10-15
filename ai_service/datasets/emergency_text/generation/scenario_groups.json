@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "groups": [
+    {
+      "id": "family_empty_bicycle_parked_car",
+      "members": [
+        "road_b_minor_04",
+        "minorc_09"
+      ],
+      "reason": "Close variants: unattended bicycle falls against parked car, scratches only, explicitly no injuries and path cleared."
+    },
+    {
+      "id": "family_reverse_empty_tricycle",
+      "members": [
+        "road_b_minor_06",
+        "minorc_07",
+        "road_b_minor_01"
+      ],
+      "reason": "Close variants of reversing vehicle damaging an empty tricycle with explicitly uninjured people and secured scene."
+    },
+    {
+      "id": "family_undated_death_forward",
+      "members": [
+        "road_b_review_04",
+        "needs_reviewc_08"
+      ],
+      "reason": "Unverified forwarded death report with unknown timing and present scene conditions."
+    },
+    {
+      "id": "family_broken_audio_breathing_negation",
+      "members": [
+        "a_needs_review_02",
+        "needs_reviewc_05"
+      ],
+      "reason": "Broken audio obscures whether breathing is negated; same uncertainty pattern."
+    },
+    {
+      "id": "family_now_unresponsive_after_talking",
+      "members": [
+        "criticalc_01",
+        "criticalc_08",
+        "road_b_critical_10",
+        "a_critical_02"
+      ],
+      "reason": "Conservative family: previously responsive crash victim is explicitly unresponsive now, despite surface vehicle/context differences."
+    },
+    {
+      "id": "family_driver_not_breathing_passenger_awake",
+      "members": [
+        "criticalc_04",
+        "criticalc_10"
+      ],
+      "reason": "Same condition contrast: driver reportedly not breathing while a separate passenger is awake."
+    },
+    {
+      "id": "family_trapped_occupant_burning_van",
+      "members": [
+        "criticalc_02",
+        "road_b_critical_05",
+        "a_critical_05"
+      ],
+      "reason": "Conservative family: occupied crashed van with trapped person and current fire or smoke threat."
+    },
+    {
+      "id": "family_trapped_vehicle_in_water",
+      "members": [
+        "criticalc_07",
+        "road_b_critical_06",
+        "a_critical_06"
+      ],
+      "reason": "Conservative family: trapped occupant in vehicle with active rising water/submersion threat."
+    },
+    {
+      "id": "family_child_unresponsive_adult_awake",
+      "members": [
+        "criticalc_09",
+        "road_b_critical_07"
+      ],
+      "reason": "Same condition contrast: unresponsive child despite a separate awake adult occupant."
+    },
+    {
+      "id": "family_bus_passenger_breathing_distress",
+      "members": [
+        "criticalc_05",
+        "road_b_critical_03"
+      ],
+      "reason": "Close bus/minibus crash variants with an awake passenger unable to speak normally because of breathing distress."
+    },
+    {
+      "id": "family_persistent_heavy_limb_bleeding",
+      "members": [
+        "criticalc_03",
+        "road_b_critical_04",
+        "a_critical_04",
+        "a_critical_07"
+      ],
+      "reason": "Conservative family for ongoing very heavy limb bleeding; body part and vehicle differences are not treated as independent evaluation concepts."
+    },
+    {
+      "id": "family_parking_entry_fixed_barrier",
+      "members": [
+        "a_minor_01",
+        "a_minor_09"
+      ],
+      "reason": "Conservative family: slow retail parking entry contacts a fixed barrier/enclosure; scratched component only with explicitly no injury or current hazard."
+    },
+    {
+      "id": "family_belted_parking_contact_limb_pain",
+      "members": [
+        "seriousc_01",
+        "seriousc_03"
+      ],
+      "reason": "Closely phrased belted adult passenger, slow parking contact and isolated painful limb; do not split surface body-part variants."
+    },
+    {
+      "id": "family_interior_fitting_finger_cut",
+      "members": [
+        "seriousc_02",
+        "seriousc_08"
+      ],
+      "reason": "Conservative family: belted occupant cuts finger/thumb on vehicle interior during low-speed collision, bleeding controlled and awake with normal breathing."
+    }
+  ]
+}

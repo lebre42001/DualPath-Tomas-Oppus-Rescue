@@ -1,0 +1,127 @@
+{
+  "status": "synthetic_draft_staging_only",
+  "artifact": "cebuano_draft.csv",
+  "created_at": "2026-10-05",
+  "language": "Cebuano/Bisaya (ceb)",
+  "domain": "road and vehicle accident emergency descriptions",
+  "row_count": 240,
+  "sha256": "bc2e0851bc4a73ad7ce6e1ef15e5179e11bb7e95c817679d210bdc3fba3b7f96",
+  "label_counts": {
+    "minor": 60,
+    "serious": 60,
+    "critical": 60,
+    "needs_review": 60
+  },
+  "whitespace_word_count_by_label": {
+    "minor": 689,
+    "serious": 697,
+    "critical": 699,
+    "needs_review": 534
+  },
+  "word_count_target_per_label": "approximately 500; observed per-label totals provided",
+  "length_bucket_counts_by_label": {
+    "minor": {
+      "1-3": 2,
+      "4-8": 16,
+      "9-15": 30,
+      "16+": 12
+    },
+    "serious": {
+      "1-3": 1,
+      "4-8": 14,
+      "9-15": 35,
+      "16+": 10
+    },
+    "critical": {
+      "1-3": 2,
+      "9-15": 35,
+      "4-8": 14,
+      "16+": 9
+    },
+    "needs_review": {
+      "1-3": 19,
+      "4-8": 6,
+      "9-15": 28,
+      "16+": 7
+    }
+  },
+  "length_bucket_definition": {
+    "1-3": "1 to 3 whitespace-separated words",
+    "4-8": "4 to 8 whitespace-separated words",
+    "9-15": "9 to 15 whitespace-separated words",
+    "16+": "16 or more whitespace-separated words"
+  },
+  "scenario_family_count": 237,
+  "annotation_group_count": 237,
+  "unique_normalized_text_count": 240,
+  "rubric_version": "TEXT-RUBRIC-0.2-B",
+  "generation_source": "synthetic_ai_generated",
+  "limitations": [
+    "All entries are synthetic drafts, not real incident reports or approved training data.",
+    "Cebuano phrasing and dialect require fluent native-speaker review; labels require responder review under TEXT-RUBRIC-0.2-B.",
+    "Short panic-style statements are intentionally sparse in context and must be evaluated as such.",
+    "No training or model promotion was performed."
+  ],
+  "validation_checks": {
+    "240_rows": true,
+    "60_per_label": true,
+    "unique_case_ids_and_hashes": true,
+    "hash_and_word_counts_recomputed": true,
+    "all_four_length_buckets_present_per_label": true,
+    "450_to_700_words_per_label": true,
+    "all_rows_draft_synthetic": true,
+    "no_training_or_model_promotion": true,
+    "class_label_word_leakage_absent": true,
+    "row_count_preserved": true,
+    "label_counts_preserved": true,
+    "unique_normalized_text_hashes": true,
+    "word_count_and_bucket_recomputed_from_text": true,
+    "draft_synthetic_provenance_preserved": true,
+    "linked_near_paraphrases_recorded": true,
+    "parent_relationships_match_family_groups": true,
+    "base_rows_original_draft_parent_blank": true,
+    "variants_reference_base_case": true,
+    "no_class_label_words_in_text": true,
+    "word_counts_and_buckets_recomputed": true,
+    "all_rows_remain_draft_synthetic": true,
+    "all_four_requested_variants_linked_to_base": true,
+    "base_original_draft_parent_blank": true,
+    "all_variants_same_scenario_variant_parent_007": true,
+    "metadata_hashes_and_counts_recomputed": true
+  },
+  "family_link_review": [
+    {
+      "scenario_family_id": "CEB-FAM-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01",
+      "annotation_group_id": "CEB-GRP-SERIOUS-MOTORCYCLE-FOOT-ENTRAPMENT-01",
+      "base_case_id": "CEB-SERIOUS-007",
+      "variant_case_ids": [
+        "CEB-SERIOUS-024",
+        "CEB-SERIOUS-033",
+        "CEB-SERIOUS-056"
+      ],
+      "members": [
+        "CEB-SERIOUS-007",
+        "CEB-SERIOUS-024",
+        "CEB-SERIOUS-033",
+        "CEB-SERIOUS-056"
+      ],
+      "relationship_type_by_case_id": {
+        "CEB-SERIOUS-007": "original_draft",
+        "CEB-SERIOUS-024": "same_scenario_variant",
+        "CEB-SERIOUS-033": "same_scenario_variant",
+        "CEB-SERIOUS-056": "same_scenario_variant"
+      },
+      "parent_case_id_by_case_id": {
+        "CEB-SERIOUS-007": "",
+        "CEB-SERIOUS-024": "CEB-SERIOUS-007",
+        "CEB-SERIOUS-033": "CEB-SERIOUS-007",
+        "CEB-SERIOUS-056": "CEB-SERIOUS-007"
+      },
+      "rationale": "Conservative split-safety pattern family: responsive road-crash driver with an injured/trapped lower limb, normal breathing, and no chest compression or heavy bleeding. CEB-SERIOUS-007/-024/-033 use a fallen motorcycle; CEB-SERIOUS-056 uses a stopped car. They are not asserted to be the same incident, but share a close scenario/template pattern and are held together to reduce near-duplicate split leakage."
+    }
+  ],
+  "relationship_type_counts": {
+    "original_draft": 237,
+    "same_scenario_variant": 3
+  }
+}

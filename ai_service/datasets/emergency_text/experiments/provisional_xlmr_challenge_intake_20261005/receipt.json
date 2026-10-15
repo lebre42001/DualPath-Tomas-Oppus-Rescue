@@ -1,0 +1,65 @@
+{
+  "artifact_id": "provisional_xlmr_challenge_intake_20261005",
+  "created_date": "2026-10-05",
+  "artifact_type": "human_authored_challenge_intake_plan",
+  "status": "preparation_only_not_dataset_not_evaluation",
+  "training_eligible": false,
+  "evaluation_eligible": false,
+  "approved_for_deployment": false,
+  "active_model_changed": false,
+  "generated_emergency_examples": 0,
+  "intake_slots": 24,
+  "completed_texts": 0,
+  "assigned_labels": 0,
+  "reviewer_attestations": 0,
+  "review_rubric": "TEXT-RUBRIC-0.2-B",
+  "rubric_formal_approval": "pending",
+  "source_dataset": "ai_service/datasets/emergency_text/working/reports.csv",
+  "source_dataset_sha256": "5e2a4f508a6de869ad0eee1c6c7385b03c2df542eadbd7f79a315b0243f9db1e",
+  "existing_short_panic_preview": "ai_service/datasets/emergency_text/expansions/short_panic_v1/candidates.csv",
+  "existing_short_panic_status": "80 fictional draft rows; 18 proposed families; ancestry not adjudicated; not independent evaluation",
+  "evidence_summary": {
+    "current_working_rows": 400,
+    "current_working_groups": 99,
+    "current_mixed_rows": 40,
+    "current_rows_with_at_most_8_whitespace_words": 0,
+    "short_panic_preview_rows": 80,
+    "short_panic_proposed_families": 18,
+    "reported_mixed_language_test_rows": 3,
+    "reported_test_rows": 42
+  },
+  "challenge_coverage": {
+    "mixed_language_short_slots": 12,
+    "language_pairs": ["en-ceb", "en-tl", "ceb-tl"],
+    "single_language_edge_slots": 12,
+    "single_languages": ["en", "tl", "ceb"],
+    "themes": [
+      "Policy B superficial-injury boundary",
+      "uncertain bleeding",
+      "physical versus digital nonresponse",
+      "ambiguous entrapment or inability to move",
+      "mixed-language urgent reports involving current nonresponse, breathing, entrapment, or bleeding"
+    ]
+  },
+  "review_workflow": {
+    "independent_reviewers_required": 2,
+    "fluent_language_review_required": true,
+    "human_adjudication_required": true,
+    "new_scenario_family_ids_assigned": false,
+    "split_assignments_created": false,
+    "model_evaluated": false
+  },
+  "protected_scope": [
+    "working/reports.csv",
+    "short_panic_v1 preview and review package",
+    "frozen Colab training/evaluation outputs",
+    "active_config.txt",
+    "model checkpoints"
+  ],
+  "notes": [
+    "All worksheet text and labels are intentionally blank.",
+    "Do not train or evaluate on this intake worksheet.",
+    "Human reviewers must determine labels from the actual text under the cited rubric.",
+    "Scenario prompts are coverage guidance only and are not emergency reports."
+  ]
+}

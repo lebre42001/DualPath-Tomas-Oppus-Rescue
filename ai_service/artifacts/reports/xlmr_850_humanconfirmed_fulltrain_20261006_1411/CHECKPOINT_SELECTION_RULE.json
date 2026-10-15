@@ -1,0 +1,15 @@
+{
+  "frozen_before_training_start": true,
+  "frozen_before_held_out_test_evaluation": true,
+  "implementation": "ai_service/src/ai_service/text_training.py::selection_key balanced_safety",
+  "priority_order": [
+    "minimize raw serious/critical undertriage count on validation",
+    "maximize validation macro_f1",
+    "maximize min(critical_recall, serious_recall)",
+    "maximize critical_precision"
+  ],
+  "early_stopping": "patience=2 on validation selection key",
+  "test_policy": "fresh_test, calibration, and challenge excluded from checkpoint selection; fresh_test to be evaluated only after selected checkpoint is saved",
+  "clinical_standard": false,
+  "risk": "small synthetic validation support means metrics are noisy and do not establish deployment safety"
+}

@@ -1,0 +1,17 @@
+READ-ONLY COMMAND LOG ? 2026-10-06 (Asia/Manila)
+
+Working directory: C:\laragon\www\CAPSTONE-EMERGENCY-SYSTEM-main
+
+1) Audit generation, successful final run:
+& "C:\laragon\bin\python\python-3.13\python.exe" "ai_service\artifacts\reports\targeted_remediation_20261006T154647+0800\FAMILY_EXPOSURE_AUDIT\audit_family_exposure.py"
+Result: 850 reports + 850 provenance rows; 833 family IDs; 41 candidate links (19 SAME_SCENARIO_FAMILY, 22 RELATED_BUT_DISTINCT); 820 effective groups; 0 current split cross-partition effective components; 3 historical split components crossing due the new 19 SAME recommendations; 60 restricted paths; 16 currently readable CSV paths in the current scanner scope; 4,974 nonblank text rows in the current later-tree scan; 5 archive containers inspected by central-directory names only.
+
+2) Read-only representative permission/ACL-display probes:
+icacls "ai_service\datasets\emergency_text\working\by_severity\critical\examples.csv"
+icacls "ai_service\datasets\emergency_text\experiments\synthetic_9000words_20260920\by_severity\critical\examples.csv"
+icacls "ai_service\datasets\emergency_text\archive\initial_80\by_severity\critical\examples.csv"
+Result for each: `Successfully processed 0 files; Failed processing 1 files`; Access is denied; exit code 5. No ACL entries were returned. No changes or retries with elevated rights were attempted.
+
+3) Archive discovery (Python pathlib rglob for *.zip, *.tar, *.tar.gz, *.tgz beneath ai_service; zip/tar central-directory member names only; no extraction): 5 containers; zero members matching by_severity paths or examples.csv names. One venv test zip and four research/model bundles were included in the count.
+
+4) `Get-ChildItem` / source inspection and prior artifact searches were read-only. No source CSV, manifests, split, ACL, owner, model, runtime config or deployment was changed. No GPU/training command was run.

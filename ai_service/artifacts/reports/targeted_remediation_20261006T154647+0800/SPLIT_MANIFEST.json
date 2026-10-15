@@ -1,0 +1,23 @@
+{
+  "authoritative_frozen_manifest": "ai_service\\artifacts\\reports\\xlmr_850_humanconfirmed_fulltrain_20261006_1411\\training_split_manifest.json",
+  "sha256": "8272432855d09f4945d897be3f925535aa0e5c3ce30be6c6e8d1f5f980f37f48",
+  "partitions": {
+    "train": {
+      "rows": 514,
+      "groups": 489,
+      "fingerprint": "0ed3eb3409e3fbf44a833451a6b872b6fceb06a776f31f2c72a48603c2993040"
+    },
+    "validation": {
+      "rows": 126,
+      "groups": 123,
+      "fingerprint": "8c917c01fdf6b105eaef94719cd238f0248e60b6c84d05e76afa6d201db86a91"
+    },
+    "test": {
+      "rows": 84,
+      "groups": 82,
+      "fingerprint": "fa7ed9baf10078ffaf5fc5f877cd56bb231b33d91c9f92f2d7414bb45ef9f84f"
+    }
+  },
+  "calibration_and_challenge": "Separate externally evaluated partitions, recorded in EVALUATION_AUDIT and not used for fitting or checkpoint selection.",
+  "exposure": "These held-out identities have prior project development exposure; regression/diagnostic only."
+}

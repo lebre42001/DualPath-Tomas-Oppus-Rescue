@@ -1,0 +1,682 @@
+EMERGENCY TEXT AI — SHORT/PANIC REPORT AUDIT AND PROPOSED EXPANSION
+Audit date: 2026-10-01
+Workspace: C:\laragon\www\CAPSTONE-EMERGENCY-SYSTEM-main
+Status: DESIGN AND SYNTHETIC PREVIEW ONLY — NOT REVIEWED, NOT TRAINING-ELIGIBLE
+
+This document consolidates the measured audit, all 80 candidate records, all 26 contrastive sets, and the proposed next steps. It can be copied as one document for discussion. The proposed labels, explanations, family assignments and language choices require responder and fluent-speaker review. They are not clinical decisions or evaluation ground truth.
+
+Only new preview artifacts were created under:
+ai_service/datasets/emergency_text/expansions/short_panic_v1/
+
+The 400-row working master and existing 32-row calibration pack were left unchanged. No row was approved. No training, model activation, Laravel/database change, service restart or deployment was performed. Photos remain evidence; this proposal concerns description-based severity only.
+
+A. MEASURED COVERAGE OF THE EXISTING 400 ROWS
+
+Source: ai_service/datasets/emergency_text/working/reports.csv
+Source SHA-256: 5e2a4f508a6de869ad0eee1c6c7385b03c2df542eadbd7f79a315b0243f9db1e
+Method: Python len(text.split()), counting whitespace-separated words. Attached punctuation and contractions stay within their word. This is an auditable length measure, not the transformer's subword-token count.
+All 400 rows were counted, including all language variants. Semantic inspection considered their text, not just exact keyword presence. The qualitative findings below are an analyst audit, not human annotation.
+
+Subset | N | 1 words | 2-3 words | 4-8 words | 9-15 words | 16-30 words | 31+ words
+--- | --- | --- | --- | --- | --- | --- | ---
+All | 400 | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 155 (38.75%) | 245 (61.25%)
+minor | 100 | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 44 (44.00%) | 56 (56.00%)
+serious | 100 | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 33 (33.00%) | 67 (67.00%)
+critical | 100 | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 39 (39.00%) | 61 (61.00%)
+needs_review | 100 | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 39 (39.00%) | 61 (61.00%)
+en | 120 | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 43 (35.83%) | 77 (64.17%)
+tl | 120 | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 40 (33.33%) | 80 (66.67%)
+ceb | 120 | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 37 (30.83%) | 83 (69.17%)
+mixed | 40 | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 0 (0.00%) | 35 (87.50%) | 5 (12.50%)
+
+Percentages use the row count of the named subset, not 400 for every row.
+
+Subset | Minimum | Median | Mean | Maximum
+--- | --- | --- | --- | ---
+All | 22 | 32 | 30.87 | 39
+minor | 24 | 31 | 30.23 | 36
+serious | 25 | 33 | 31.73 | 39
+critical | 22 | 32 | 30.51 | 39
+needs_review | 25 | 32.5 | 31.00 | 37
+en | 24 | 32 | 30.68 | 36
+tl | 22 | 33 | 31.31 | 39
+ceb | 22 | 33 | 31.61 | 39
+mixed | 24 | 28 | 27.90 | 32
+
+Overall mean before rounding: 30.8675 words. Full-precision values and label-language cross-tabs are in current_length_audit.json.
+
+The shortest report has 22 words, and the longest has 39. There are ZERO reports in every 1–15-word bin, in every label and language. There are also no reports of 16–21 or 40+ words. The 16–30 bin must not be mistaken for coverage down to 16 words.
+All 400 rows are draft; approved rows = 0. They contain 99 existing group_id families, not 400 independent incidents.
+The mixed-language reports are systematically shorter than the three single-language subsets. That is a potential style/language confound to inspect during future evaluation.
+These measurements establish a coverage gap. They do not measure model performance or prove that an existing model will fail every short message.
+
+B. SEMANTIC COVERAGE GAPS
+
+Existing long descriptions already cover many useful concepts: physical unresponsiveness, absent breathing, heavy bleeding, fire with a trapped occupant, submersion, localized injuries, property-only events, contradictory messages and uncertain timing. What is missing is their short, incomplete, naturally phrased expression and short contextual contrasts.
+
+The dataset has explicit leg/arm pain and impaired movement, but no direct assertion of a broken leg or arm was found. Forehead impact/pain is not equivalent to an explicit head cut. Human death claims occur as uncertain/old forwarded reports; a current scene-linked short human fatality claim is missing. Tagalog already uses patay for an engine in a minor scene, so the engine/person distinction is not entirely absent; it is absent in SHORT contrastive form.
+
+1. unresponsive / wala motubag
+Coverage: Present in long reports
+Evidence: SYN_A_CRITICAL_01_CEB;SYN_ROAD_B_CRITICAL_01_EN;SYN_CRITICALC_09_TL
+Gap: Current physical unresponsiveness and person attribution exist. No short fragments or digital nonreply contrast.
+
+2. not breathing / dili ginhawa
+Coverage: Present in long reports
+Evidence: SYN_A_CRITICAL_03_CEB;SYN_ROAD_B_CRITICAL_02_TL
+Gap: Explicit breathing failure exists, but not elliptical two-word reporting.
+
+3. unconscious
+Coverage: Present in long reports
+Evidence: SYN_CRITICALC_09_EN
+Gap: Unconscious child versus responsive mother exists. No one- or two-word positive observation.
+
+4. heavy bleeding / grabe dugo
+Coverage: Present in long reports
+Evidence: SYN_A_CRITICAL_04_EN;SYN_ROAD_B_CRITICAL_04_CEB
+Gap: Heavy ongoing bleeding exists with rich context; source/amount ambiguity in brief text is missing.
+
+5. trapped / naipit
+Coverage: Present in differentiated long reports
+Evidence: SYN_A_SERIOUS_09_CEB;SYN_ROAD_B_CRITICAL_09_CEB;SYN_NEEDS_REVIEWC_04_CEB
+Gap: Finger entrapment, major crush and an undated entrapment screenshot differ. No short subject-resolution tests.
+
+6. drowning / submerged passenger
+Coverage: Present in long vehicle-related reports
+Evidence: SYN_ROAD_B_CRITICAL_06_EN;SYN_CRITICALC_07_CEB
+Gap: Trapped person underwater is present; a bare drowning report and scope ambiguity are missing.
+
+7. fire / nasunog sulod
+Coverage: Present in long reports
+Evidence: SYN_A_CRITICAL_05_CEB;SYN_CRITICALC_02_TL
+Gap: Occupied burning vehicles exist. Short active/resolved/historical fire contrasts are missing.
+
+8. possible fatality / patay
+Coverage: Only uncertain or historical HUMAN death reports found
+Evidence: SYN_NEEDS_REVIEWC_08_EN;SYN_ROAD_B_REVIEW_04_CEB;SYN_ROAD_B_MINOR_06_TL
+Gap: Human death wording is in uncertain forwards; patay makina appears in a minor Tagalog scene. No current scene-linked short human fatality claim.
+
+9. broken leg / bali paa
+Coverage: No direct fracture assertion found
+Evidence: SYN_A_SERIOUS_04_EN;SYN_ROAD_B_SERIOUS_01_CEB
+Gap: Painful swollen leg/ankle and impaired standing are related but not a reported fracture. Do not equate injury with confirmed fracture.
+
+10. broken arm / bali bukton
+Coverage: No direct fracture assertion found
+Evidence: SYN_ROAD_B_SERIOUS_06_CEB;SYN_SERIOUSC_09_EN
+Gap: Painful shoulder/arm and restricted movement exist, but not an explicit arm fracture claim.
+
+11. cannot stand / dili makatindog
+Coverage: Present in long reports
+Evidence: SYN_ROAD_B_SERIOUS_01_CEB;SYN_ROAD_B_SERIOUS_05_TL
+Gap: Pain-linked inability to stand or bear weight is present; short localized versus general immobility is absent.
+
+12. head wound / nasamad ulo
+Coverage: Partial coverage only
+Evidence: SYN_ROAD_B_SERIOUS_04_EN;SYN_ROAD_B_SERIOUS_04_CEB
+Gap: Forehead impact and pain exist, but no clear head-cut description was found; do not count pain as an open wound.
+
+13. bleeding hand / nagdugo kamot
+Coverage: Present in long related reports
+Evidence: SYN_ROAD_B_SERIOUS_10_CEB;SYN_SERIOUSC_02_EN;SYN_SERIOUSC_08_TL
+Gap: Palm/finger/thumb wounds and limited or stopped bleeding exist. No compact fragment or ambiguous blood source.
+
+14. severe leg pain / sakit kaayo paa
+Coverage: Partial coverage
+Evidence: SYN_A_SERIOUS_04_CEB;SYN_A_SERIOUS_08_EN;SYN_ROAD_B_SERIOUS_01_EN
+Gap: Leg pain, bruising, swelling and functional impairment exist. Panic-style intensity phrasing is not established.
+
+15. no injuries / walay nasamdan
+Coverage: Present in long reports
+Evidence: SYN_ROAD_B_MINOR_01_CEB;SYN_A_MINOR_01_EN
+Gap: Explicit uninjured people plus resolved hazards recur. No short standalone no-injury phrase with unknown hazards.
+
+16. scratches only / gasgas ra
+Coverage: Present with object/body distinctions in long reports
+Evidence: SYN_ROAD_B_MINOR_05_TL;SYN_A_SERIOUS_07_TL
+Gap: Vehicle scratches and skin abrasions exist with different labels. Missing short unspecified-object ambiguity.
+
+17. minor crash
+Coverage: Present as descriptive low-speed scenes
+Evidence: SYN_ROAD_B_MINOR_05_EN;SYN_A_SERIOUS_09_EN
+Gap: Low-speed contact occurs in both minor and serious. The reporter calling an event minor must not replace condition evidence.
+
+18. everyone okay / okay ra tanan
+Coverage: Present as explicit unhurt statements
+Evidence: SYN_ROAD_B_MINOR_03_EN;SYN_ROAD_B_MINOR_03_CEB
+Gap: Clear uninjured/all-safe equivalents exist. Vague okay wording without injury/hazard information is missing.
+
+19. property damage only / damage ra
+Coverage: Present in long reports
+Evidence: SYN_A_MINOR_04_EN;SYN_MINORC_08_CEB
+Gap: Property-only damage with explicit no injury and safety is common. Short property evidence alone needs a distinct uncertainty example.
+
+20. crashed / na crash
+Coverage: Present only as fuller unknown-condition reports
+Evidence: SYN_ROAD_B_REVIEW_01_CEB;SYN_A_NEEDS_REVIEW_04_EN
+Gap: Unknown injuries/hazards are explained in complete sentences. No event-only fragment.
+
+21. accident here / aksidente diri
+Coverage: Present only as fuller reports
+Evidence: SYN_A_NEEDS_REVIEW_04_CEB
+Gap: Known location and incomplete conditions exist. Bare event-plus-location reports are absent.
+
+22. help / tabang
+Coverage: Help occurs within long reports; bare plea absent
+Evidence: SYN_A_CRITICAL_02_CEB;SYN_A_SERIOUS_02_CEB
+Gap: The surrounding condition currently supplies the label. Panic pleas alone need review rather than inferred severity.
+
+23. someone hurt / naa nasamdan
+Coverage: Partial coverage; not a standalone vague report
+Evidence: SYN_A_NEEDS_REVIEW_10_CEB;SYN_NEEDS_REVIEWC_03_TL
+Gap: Vague injury mentions occur in contradictory messages. Missing a short uncontradicted but nonspecific injury claim.
+
+24. collision / bangga
+Coverage: Present only inside full reports
+Evidence: SYN_ROAD_B_REVIEW_01_TL
+Gap: Collision word alone has no positive or negative condition evidence in the current data.
+
+25. unknown / wa ko kabalo
+Coverage: Present in long reports
+Evidence: SYN_ROAD_B_REVIEW_07_CEB;SYN_A_NEEDS_REVIEW_03_CEB
+Gap: Unknown person/time/injury information exists; terse uncertainty and slang are absent.
+
+26. negation, chronology and multi-person attribution
+Coverage: Present in long adversarial examples
+Evidence: SYN_CRITICALC_01_EN;SYN_CRITICALC_04_CEB;SYN_ROAD_B_REVIEW_08_TL;SYN_NEEDS_REVIEWC_05_EN
+Gap: Useful existing concepts, but no short minimal contrasts for engine/person, physical/digital response, literal/quoted statements.
+
+Absence of an exact phrase is not itself a defect. The important missing combinations are brevity + identifiable subject + negation + present/past timing + observation/uncertainty + concrete injury or hazard. No concept in the current master has a 1–15-word example.
+
+C. CONTEXT AND LANGUAGE RISKS
+
+Keep the transformer/context-aware classifier. Do not add a lookup dictionary that turns patay, dugo, naipit, sunog, unconscious, bali or crash into a label.
+
+The proposed annotation contract is a standalone description submitted through the road/vehicle emergency reporting flow. That channel provides domain context, but does not prove a current accident, a human referent, an eyewitness source or any missing vital sign. Explicit hypothetical, quoted, historical or contradictory wording overrides assumptions about a live observation. Do not use hidden scenario_family, proposed_label or reason fields as model input.
+
+A short fragment can still carry a clear observation. Driver unconscious identifies a person and condition. Dili ginhawa may conventionally convey human breathing failure in this channel; that interpretation is deliberately submitted to fluent Cebuano reviewers rather than made a universal two-word rule. Requiring a literal body-part word in every report would itself be a brittle rule. Equally, context that is genuinely unresolved must not be invented.
+
+Review subject/object (driver versus engine), negation scope (not dead but unconscious), timing (awake before, unresponsive now), evidence source (current witness versus undated forward), uncertainty (murag/daw/kuno/questions), and different victims in one sentence. Words such as lang/ra, awake or walking must not cancel an independently supported danger.
+
+The working minor definition is strict: explicit no injury AND no unresolved danger. Therefore gasgas ra, minor crash, okay ra tanan, damage ra or walay nasamdan alone do not reliably establish minor. A skin scratch is an injury under this rubric; a car scratch is property damage. A stopped bleed does not erase a wound or prove an earlier major loss of blood harmless.
+Serious means a concrete injury/symptom without supported immediate life threat in the text. It does not assert that unmentioned breathing, consciousness or circulation are normal. Borderline fragments such as may nasaktan and naipit tudlo need explicit adjudication.
+Needs_review is an unresolved assessment, never a low-priority medical conclusion.
+
+D. FATALITY WORDING AND CRITICAL-VS-FATAL CLEANUP
+
+Separate urgency from reported death information.
+
+Proposed optional field:
+reported_fatality = none | reported_unverified
+Here none means "no affirmative human death claim established from this message," NOT "nobody died" or "the patient is alive."
+For ambiguous interpretation, preserve an assessment status such as ambiguous or not_assessed (or null) in a versioned contract. Do not silently treat failed extraction as a confident negative.
+reported_unverified records a claim, possibly uncertain or secondhand; it is not a diagnosis, verified outcome or additional severity class. Attach the human referent, wording/evidence span and present/historical/unknown time where supported.
+
+Examples of proposed interpretation:
+- patay: needs_review, ambiguous subject. Do not infer human death.
+- murag patay: needs_review without a referent/current observation; urgently clarify possible human danger.
+- patay na driver, crash just happened: critical as a current human fatality claim requiring urgent verification; reported_unverified.
+- Drayber murag patay, dili motubag: critical due to physical nonresponse, with an uncertain human fatality claim.
+- patay ang makina: no human fatality claim; severity depends on other condition/hazard evidence, not engine stoppage.
+- dili patay, unconscious lang ang driver: critical for unconsciousness; human death is negated, not affirmed.
+- old post saying a driver died: reported_unverified when the human claim is clear, but present severity may remain needs_review.
+
+Never return confirmed_fatality from this classifier. Death verification and any later outcome record belong to an authorized human process.
+
+The current Laravel text client maps critical to the legacy stored Fatal value. IncidentReport displays Critical for specified text-model sources, but the legacy value and other sources can still expose Fatal wording. A future separately reviewed migration should establish Critical as urgency across storage, API, UI, filters and analytics, preserve original historical values/source lineage, and keep any reported-fatality observation separate. Never interpret existing Fatal rows as verified deaths or blanket-populate reported_fatality from them.
+Relevant current files include AiTextSeverityClient.php, IncidentReport.php, AiSeverityMapper.php and reports/severity.blade.php. None were changed here.
+
+The current four-class model has no independently validated fatality extractor. A future flag needs its own reviewed annotations, negation/subject/time tests and abstention behavior. Do not simulate it using a word search.
+
+E. SEPARATE VERSIONED PACK DESIGN
+
+Location: ai_service/datasets/emergency_text/expansions/short_panic_v1/
+The only candidate master in this PREVIEW is candidates.csv. It is not a replacement for working/reports.csv and is deliberately not compatible with the current eight-column training CSV schema.
+
+Each record has exactly:
+candidate_id, language, text, proposed_label, reason, scenario_family, word_count
+
+Manifest status: draft_preview_only
+Human review status: pending
+Training eligible: false
+Approved examples: 0
+Origin: AI-authored fictional examples, not actual civilian reports.
+
+The pack has 80 unique candidate texts: 20 per proposed label; 20 per language; exactly 5 in each of the 16 label-language cells. It uses en, tl, ceb and mixed as language identifiers. English/Tagalog/Cebuano include normal borrowed terms; mixed is intended for substantive code-switching. Fluent reviewers must confirm these assignments rather than classifying any borrowed English noun as mixed automatically.
+
+Preview length | Count | Percent
+--- | --- | ---
+1-3 | 20 | 25.00%
+4-8 | 48 | 60.00%
+9-15 | 12 | 15.00%
+
+Preview by proposed label (this does not imply reviewed correctness):
+Label | 1-3 | 4-8 | 9-15 | Total
+--- | --- | --- | --- | ---
+minor | 0 | 17 | 3 | 20
+serious | 5 | 12 | 3 | 20
+critical | 4 | 13 | 3 | 20
+needs_review | 11 | 6 | 3 | 20
+
+The 18 SP-Fxx identifiers are conservative PROPOSED seed/contrast families. They group related variants, not clinically identical observations, and can legitimately contain different proposed labels. They are not 18 certified independent incidents. Existing-dataset ancestry and cross-family dependencies remain unresolved until family review.
+
+Additional phrases inside contrastive_sets.json are explanatory probes, not extra rows in candidates.csv, not approved data, and not an independent holdout. Any later decision to train on one must create a separately tracked and reviewed candidate with appropriate ancestry. Do not ingest all text files in this folder recursively as training data.
+
+Do not create multiple editable copies by language or severity. Use filtered read-only views of candidates.csv if needed; candidate_id and the manifest remain authoritative. Freeze v1 as a preview snapshot and record any later revisions in a new version with lineage rather than overwriting source history.
+
+F. THE 80 PROPOSED CANDIDATE REPORTS
+
+Every label and explanation below is provisional. The rows intentionally contain incomplete grammar, everyday phrasing, some shorthand, code-switching and missing facts. Reasons describe what is present; they must not manufacture missing clinical observations.
+
+candidate_id | language | text | proposed_label | reason | scenario_family | word_count
+--- | --- | --- | --- | --- | --- | ---
+SPV1-001 | en | No injuries, scene safe. | minor | Both absence of injury and scene safety are explicit. | SP-F01 | 4
+SPV1-002 | en | Bumper scratched after parking bump. Everyone unhurt, road clear and safe. | minor | Property damage is identified; nobody is hurt and the scene is safe. | SP-F02 | 11
+SPV1-003 | en | Engine dead, all unhurt, safely parked. | minor | Dead describes the engine; no injury or continuing danger is reported. | SP-F03 | 6
+SPV1-004 | en | Mirror broken, nobody hurt, no danger. | minor | Broken refers to property; injury and danger are explicitly denied. | SP-F04 | 6
+SPV1-005 | en | Everyone walking, no injuries; cars safely parked. | minor | No injury and safe parking support the label; walking alone would not. | SP-F05 | 7
+SPV1-006 | tl | Walang nasaktan, ligtas na lahat. | minor | The message explicitly says nobody is hurt and everyone is now safe. | SP-F01 | 5
+SPV1-007 | tl | Gasgas sa pinto lang, walang nasaktan, ligtas. | minor | The scratch belongs to the door; nobody is hurt and safety is stated. | SP-F02 | 7
+SPV1-008 | tl | Patay makina, walang nasaktan, ligtas sa gilid. | minor | Patay refers to the engine, with explicit no injury and a safe location. | SP-F03 | 7
+SPV1-009 | tl | Bali salamin, walang nasaktan, ligtas dito. | minor | A broken mirror is property damage; people are unhurt and the scene is safe. | SP-F04 | 6
+SPV1-010 | tl | Apoy patay na, lahat walang sugat, ligtas na ang lugar. | minor | Fire is reported extinguished and everyone uninjured and safe; not an active fire. | SP-F06 | 10
+SPV1-011 | ceb | Bangga, walay nasamdan, luwas na. | minor | A collision is reported with explicit no injury and current safety. | SP-F01 | 5
+SPV1-012 | ceb | Garas sa awto ra; walay nasamdan, walay peligro. | minor | The scratch is on the vehicle, with no injured person or remaining danger. | SP-F02 | 8
+SPV1-013 | ceb | Patay ang makina, walay nasamdan, luwas na. | minor | Engine stoppage is distinguished from human death; people are unhurt and safe. | SP-F03 | 7
+SPV1-014 | ceb | Nabali samin, walay nasamdan, walay peligro. | minor | The damaged object is a mirror; no injury and no danger are stated. | SP-F04 | 6
+SPV1-015 | ceb | Nakalakaw tanan, walay nasamdan, luwas na. | minor | No injury and current safety are explicit; ability to walk is not the deciding fact. | SP-F05 | 6
+SPV1-016 | mixed | Crash, walay injured, safe na tanan. | minor | The report explicitly combines no injured people with everyone now safe. | SP-F01 | 6
+SPV1-017 | mixed | Bumper lang gasgas, no injuries, safe dito. | minor | Only bumper damage is described and injury and ongoing danger are excluded. | SP-F02 | 7
+SPV1-018 | mixed | Engine off, walang nasaktan, safely parked. | minor | The engine state concerns the vehicle; no injury and safe parking are stated. | SP-F03 | 6
+SPV1-019 | mixed | Clear na ang road after bangga, all unhurt, safe na. | minor | The people are explicitly unhurt and the roadway is described as safe. | SP-F05 | 10
+SPV1-020 | mixed | Fire out, walay injured, safe na ang lugar. | minor | Extinguished fire plus explicit no injury and current safety; not fire alone. | SP-F06 | 8
+SPV1-021 | en | Broken arm. | serious | A reported limb injury supports provisional serious; this does not medically confirm a fracture. | SP-F07 | 2
+SPV1-022 | en | Head cut after slow bump, awake and breathing normally now. | serious | A concrete head wound is reported with responsiveness and normal breathing; clinical review remains necessary. | SP-F08 | 10
+SPV1-023 | en | Finger pinched, painful; free now. | serious | A painful finger injury remains after release; this is not whole-body entrapment. | SP-F09 | 5
+SPV1-024 | en | Walking, but my knee hurts. | serious | Walking does not cancel a concrete painful knee injury. | SP-F05 | 5
+SPV1-025 | en | Hand cut, bleeding stopped. | serious | The wound persists even though the bleeding has stopped. | SP-F10 | 4
+SPV1-026 | tl | Bali paa ko. | serious | A person reports a foot or leg fracture; anatomical precision and diagnosis remain unconfirmed. | SP-F11 | 3
+SPV1-027 | tl | Bali braso ko. | serious | A personal arm injury is stated, unlike a broken vehicle part. | SP-F07 | 3
+SPV1-028 | tl | May sugat ulo, gising at normal huminga. | serious | A head wound is present without an explicit immediate life threat; not a declaration of safety. | SP-F08 | 7
+SPV1-029 | tl | Nasugatan kamay, kaunti dugo. | serious | A hand wound with a small reported amount of blood is more than property-only damage. | SP-F10 | 4
+SPV1-030 | tl | Masakit bukungbukong, di makatayo. | serious | Ankle pain with inability to stand is a concrete impairment. | SP-F11 | 4
+SPV1-031 | ceb | Bali akong paa. | serious | A personal limb injury is claimed; no diagnosis or absent complications are inferred. | SP-F11 | 3
+SPV1-032 | ceb | Bali akong bukton. | serious | A personal arm injury is explicit; serious remains a provisional triage suggestion. | SP-F07 | 3
+SPV1-033 | ceb | Nagdugo kamot, gamay ra. | serious | The bleeding is attached to a hand and described as small, rather than unspecified blood. | SP-F10 | 4
+SPV1-034 | ceb | Nasamad ulo human bangga, mata ug normal moginhawa, gamay rang dugo. | serious | A head wound is described with wakefulness and normal breathing; a responder must assess it. | SP-F08 | 11
+SPV1-035 | ceb | Naipit tudlo, nakagawas na, sakit. | serious | A finger was pinched and is now free but painful; ongoing major entrapment is not reported. | SP-F09 | 5
+SPV1-036 | mixed | Leg hurts kaayo after bangga, can't stand, normal akong breathing. | serious | Severe leg pain and inability to stand identify a concrete impairment without an explicit life threat. | SP-F11 | 10
+SPV1-037 | mixed | Conscious siya, knee painful, breathing normal. | serious | Consciousness does not erase the knee injury; normal breathing is explicitly described. | SP-F17 | 6
+SPV1-038 | mixed | Kamot cut, nihunong na ang bleeding. | serious | A hand wound remains an injury after bleeding stops. | SP-F10 | 6
+SPV1-039 | mixed | Arm pain, dili kalihok akong bukton. | serious | Inability to move is localized to a painful arm; do not infer whole-body paralysis. | SP-F07 | 6
+SPV1-040 | mixed | Small cut lang, awake, normal ang breathing. | serious | A small cut is still an injury under this project's strict no-injury minor definition. | SP-F10 | 7
+SPV1-041 | en | Driver unconscious. | critical | An identified person is reported unconscious; this is an urgency suggestion, not death confirmation. | SP-F12 | 2
+SPV1-042 | en | Driver not breathing. | critical | Absent breathing is asserted about the driver in a current report. | SP-F13 | 3
+SPV1-043 | en | Awake but gasping, can't speak. | critical | Wakefulness does not remove the supported severe breathing difficulty. | SP-F13 | 5
+SPV1-044 | en | Walking but blood pouring from leg. | critical | Walking does not cancel explicitly heavy ongoing bleeding. | SP-F05 | 6
+SPV1-045 | en | Passenger trapped underwater in crashed car, we can't get him out. | critical | A person remains trapped underwater, supporting immediate danger. | SP-F14 | 11
+SPV1-046 | tl | Hindi humihinga drayber. | critical | The negation concerns the driver's breathing, not uncertainty about the report. | SP-F13 | 3
+SPV1-047 | tl | Tuloy ang buhos ng dugo sa hita. | critical | Continuous pouring blood from a person's thigh supports urgent review. | SP-F10 | 7
+SPV1-048 | tl | May tao sa loob ng nasusunog na kotse. | critical | An occupied vehicle is actively burning; immediate danger is supported. | SP-F06 | 8
+SPV1-049 | tl | Gising ako pero di makahinga. | critical | The speaker is awake but reports inability to breathe; awake is not a safety guarantee. | SP-F13 | 5
+SPV1-050 | tl | Patay daw drayber sa bangga ngayon, nasa tabi ako niya. | critical | A current human fatality claim warrants urgent verification; reported_unverified, never confirmed death. | SP-F15 | 10
+SPV1-051 | ceb | Dili ginhawa. | critical | Proposed reading is a present human breathing failure in the emergency channel; fluent reviewers must confirm this elliptical interpretation. | SP-F13 | 2
+SPV1-052 | ceb | Wala motubag bisan tawagon ug uyogon. | critical | The message describes physical unresponsiveness, unlike an unanswered text; it is not advice to shake a victim. | SP-F12 | 6
+SPV1-053 | ceb | Naipit sulod sa sakyanan, dili makagawas. | critical | The reported person cannot escape vehicle entrapment, unlike an unspecified pinched object. | SP-F16 | 6
+SPV1-054 | ceb | Kusog kaayo ang dugo sa paa. | critical | The message locates very heavy bleeding on a person's leg; no fatality is inferred. | SP-F10 | 6
+SPV1-055 | ceb | Drayber murag patay, dili motubag. | critical | The driver's nonresponse supports urgency independently of the uncertain death wording. | SP-F15 | 5
+SPV1-056 | mixed | Dili patay, unconscious lang ang driver. | critical | Death is negated but unconsciousness remains; lang does not cancel that urgent observation. | SP-F15 | 6
+SPV1-057 | mixed | Patay na driver, crash just happened. | critical | A current human death claim requires urgent verification and reported_unverified, not AI-confirmed death. | SP-F15 | 6
+SPV1-058 | mixed | Passenger conscious pero trapped sa burning van. | critical | A conscious passenger still faces entrapment in an active vehicle fire. | SP-F06 | 7
+SPV1-059 | mixed | Dili kalihok, chest pinned under truck. | critical | Immobility is tied to chest compression beneath a truck, not a stalled car. | SP-F16 | 6
+SPV1-060 | mixed | Gising ang passenger pero ang driver not breathing, naa ko diri. | critical | The passenger and driver are different people; the driver's breathing failure controls urgency. | SP-F13 | 11
+SPV1-061 | en | Help. | needs_review | The request gives no victim condition or identifiable immediate hazard; it must still reach a responder. | SP-F18 | 1
+SPV1-062 | en | Crash. | needs_review | A crash is reported without injury, responsiveness, breathing, or hazard information. | SP-F18 | 1
+SPV1-063 | en | Not replying. | needs_review | Could refer to messages rather than physical unresponsiveness; clarify subject and observation. | SP-F12 | 2
+SPV1-064 | en | Blood. | needs_review | Source, amount, timing and affected person are unspecified. | SP-F10 | 1
+SPV1-065 | en | Driver alive after crash, but injuries and current hazards unknown. | needs_review | Alive is not the same as uninjured or safe; injury and hazard severity remain unknown. | SP-F15 | 10
+SPV1-066 | tl | Bangga. | needs_review | A collision word alone does not describe anyone's condition. | SP-F18 | 1
+SPV1-067 | tl | May nasaktan. | needs_review | Someone being hurt is too nonspecific here to distinguish the injury or urgent threat; adjudicate this boundary. | SP-F18 | 2
+SPV1-068 | tl | Patay daw, lumang post yata. | needs_review | The death claim has no clear human subject or reliable current timing. | SP-F15 | 5
+SPV1-069 | tl | Gising ba? di ko makita. | needs_review | A question and obstructed view do not establish that the person is conscious. | SP-F17 | 5
+SPV1-070 | tl | Sunog sa kotse kahapon, di ko alam ang lagay ngayon. | needs_review | A past fire with unknown present conditions does not establish a current severity. | SP-F06 | 10
+SPV1-071 | ceb | patay | needs_review | Subject and meaning are absent; this could refer to a person, engine or other object. | SP-F15 | 1
+SPV1-072 | ceb | murag patay | needs_review | Uncertain death-like wording without an identified subject or current observation needs urgent clarification. | SP-F15 | 2
+SPV1-073 | ceb | giingon nila patay | needs_review | Hearsay lacks an identified subject and current scene information; do not confirm death. | SP-F15 | 3
+SPV1-074 | ceb | wala motubag sa text | needs_review | Failure to reply to a text is not evidence of physical unresponsiveness. | SP-F12 | 4
+SPV1-075 | ceb | naipit | needs_review | The trapped or pinched subject, body part, mechanism and current danger are unknown. | SP-F09 | 1
+SPV1-076 | mixed | Na crash, condition unknown. | needs_review | An accident is reported but the affected people's condition is explicitly unknown. | SP-F18 | 4
+SPV1-077 | mixed | Dili kalihok ang car, occupants unknown. | needs_review | The thing that cannot move is a car; no human condition is established. | SP-F16 | 6
+SPV1-078 | mixed | Conscious daw, unconscious daw, same driver karon, dili namo ma klaro. | needs_review | Simultaneous conflicting statements about one person remain unresolved; urgent human clarification is needed. | SP-F17 | 11
+SPV1-079 | mixed | Bali something, di ko makita. | needs_review | The damaged thing is unknown and cannot safely be treated as a person's fracture. | SP-F18 | 5
+SPV1-080 | mixed | Breathing? di sure. | needs_review | Breathing is questioned rather than clearly affirmed or denied. | SP-F13 | 3
+
+G. CONTRASTIVE SETS: WHY KEYWORD MATCHING IS UNSAFE
+
+All examples below are provisional illustrations. A needs_review suggestion on an ambiguous danger message still calls for prompt responder clarification. Closely related candidate pairs and their transformations must not be split across training and evaluation.
+
+SP-C01 — patay: ambiguity, uncertainty and source
+  SPV1-071: patay -> proposed needs_review
+  SPV1-072: murag patay -> proposed needs_review
+  SPV1-073: giingon nila patay -> proposed needs_review
+  SPV1-055: Drayber murag patay, dili motubag. -> proposed critical
+  SPV1-057: Patay na driver, crash just happened. -> proposed critical
+  Decisive difference: Bare wording lacks a referent; murag adds uncertainty and giingon nila adds hearsay. Identified present human nonresponse or a current human death claim supports urgent verification, not confirmation.
+
+SP-C02 — patay: person versus engine
+  SPV1-013: Patay ang makina, walay nasamdan, luwas na. -> proposed minor
+  SPV1-057: Patay na driver, crash just happened. -> proposed critical
+  Illustration only (not an extra candidate row): patay ang makina -> proposed needs_review. Engine failure alone says nothing about injuries or remaining road hazards.
+  Decisive difference: An explicitly stopped engine with everyone unhurt and safe supports minor. A current claim about a driver supports critical plus reported_unverified. The shared word is not the label.
+
+SP-C03 — patay: negation does not erase unconsciousness
+  SPV1-056: Dili patay, unconscious lang ang driver. -> proposed critical
+  SPV1-065: Driver alive after crash, but injuries and current hazards unknown. -> proposed needs_review
+  Decisive difference: Negating death while affirming unconsciousness remains urgent. Reporting a driver alive with unknown injuries does not prove minor.
+
+SP-C04 — dugo: amount, body site and missing context
+  SPV1-064: Blood. -> proposed needs_review
+  SPV1-033: Nagdugo kamot, gamay ra. -> proposed serious
+  SPV1-054: Kusog kaayo ang dugo sa paa. -> proposed critical
+  Illustration only (not an extra candidate row): dugo -> proposed needs_review. Source and amount are unknown.
+  Illustration only (not an extra candidate row): gamay ra dugo -> proposed needs_review. The amount is described but source and affected person are missing.
+  Illustration only (not an extra candidate row): kusog kaayo ang dugo -> proposed needs_review. Possible severe bleeding warrants urgent clarification; subject and literal meaning remain unspecified.
+  Decisive difference: A bare blood word is insufficient; a hand with small bleeding is a concrete injury; very heavy bleeding from a leg supports critical.
+
+SP-C05 — dugo: stopped bleeding versus ongoing heavy loss
+  SPV1-038: Kamot cut, nihunong na ang bleeding. -> proposed serious
+  SPV1-047: Tuloy ang buhos ng dugo sa hita. -> proposed critical
+  Illustration only (not an extra candidate row): nihunong na ang dugo -> proposed needs_review. Stopped blood alone does not establish source, prior severity or current condition.
+  Decisive difference: Stopped bleeding does not undo the hand injury. Continuous pouring blood supports greater urgency.
+
+SP-C06 — motubag: digital reply versus physical response
+  SPV1-063: Not replying. -> proposed needs_review
+  SPV1-074: wala motubag sa text -> proposed needs_review
+  SPV1-052: Wala motubag bisan tawagon ug uyogon. -> proposed critical
+  Illustration only (not an extra candidate row): wala motubag -> proposed needs_review. Under a description-only contract the mode of nonresponse is unresolved; if a human is explicitly observed not responding, critical may be supported.
+  Decisive difference: An unanswered message is not physical unresponsiveness. The observed bodily nonresponse in the longer fragment is informative despite short length.
+
+SP-C07 — naipit: unspecified subject, released finger, trapped occupant
+  SPV1-075: naipit -> proposed needs_review
+  SPV1-035: Naipit tudlo, nakagawas na, sakit. -> proposed serious
+  SPV1-053: Naipit sulod sa sakyanan, dili makagawas. -> proposed critical
+  Illustration only (not an extra candidate row): naipit tudlo -> proposed serious. A localized finger injury is provisionally serious absent a supported life threat; not proof that circulation is safe.
+  Illustration only (not an extra candidate row): naipit sulod sa sakyanan -> proposed needs_review. Without an explicit human referent this could mean a person or object; urgently clarify rather than invent the subject.
+  Decisive difference: Identify what is trapped and whether it is released. A released painful finger differs from a person unable to escape a vehicle.
+
+SP-C08 — sunog: extinguished safe scene versus occupied vehicle fire
+  SPV1-010: Apoy patay na, lahat walang sugat, ligtas na ang lugar. -> proposed minor
+  SPV1-048: May tao sa loob ng nasusunog na kotse. -> proposed critical
+  Decisive difference: A resolved fire with everyone unhurt and the scene safe differs from a person inside a currently burning car.
+
+SP-C09 — sunog: current versus historical
+  SPV1-058: Passenger conscious pero trapped sa burning van. -> proposed critical
+  SPV1-070: Sunog sa kotse kahapon, di ko alam ang lagay ngayon. -> proposed needs_review
+  Decisive difference: A current trapped occupant faces danger; a past fire with unknown current condition requires clarification.
+
+SP-C10 — conscious: concrete injury versus breathing distress
+  SPV1-037: Conscious siya, knee painful, breathing normal. -> proposed serious
+  SPV1-043: Awake but gasping, can't speak. -> proposed critical
+  Decisive difference: Being conscious does not determine severity. A painful knee and normal breathing differ from gasping with inability to speak.
+
+SP-C11 — conscious: question versus assertion
+  SPV1-069: Gising ba? di ko makita. -> proposed needs_review
+  SPV1-041: Driver unconscious. -> proposed critical
+  Decisive difference: Asking whether someone is awake is uncertainty; directly describing an unconscious driver supports urgency.
+
+SP-C12 — conscious: conflict versus clear temporal change
+  SPV1-078: Conscious daw, unconscious daw, same driver karon, dili namo ma klaro. -> proposed needs_review
+  SPV1-041: Driver unconscious. -> proposed critical
+  Illustration only (not an extra candidate row): Driver awake before, unconscious now. -> proposed critical. A chronological deterioration is coherent, not a contradiction.
+  Decisive difference: Unresolved simultaneous contradictory reports differ from a clear current observation.
+
+SP-C13 — walking: no injury, painful injury, major bleeding
+  SPV1-005: Everyone walking, no injuries; cars safely parked. -> proposed minor
+  SPV1-024: Walking, but my knee hurts. -> proposed serious
+  SPV1-044: Walking but blood pouring from leg. -> proposed critical
+  Decisive difference: Walking can coexist with no injury, a knee injury or heavy bleeding. The condition and hazard evidence decide.
+
+SP-C14 — bali: human limb versus broken property
+  SPV1-026: Bali paa ko. -> proposed serious
+  SPV1-009: Bali salamin, walang nasaktan, ligtas dito. -> proposed minor
+  Decisive difference: Bali applied to the reporter's foot or leg is a claimed injury; applied to a mirror with everyone safe is property damage.
+
+SP-C15 — bali: known arm injury versus unidentified object
+  SPV1-032: Bali akong bukton. -> proposed serious
+  SPV1-079: Bali something, di ko makita. -> proposed needs_review
+  Decisive difference: A body part and possessor support a concrete injury; something broken without a visible referent is insufficient.
+
+SP-C16 — dili kalihok: localized arm, crushed chest, immobile car
+  SPV1-039: Arm pain, dili kalihok akong bukton. -> proposed serious
+  SPV1-059: Dili kalihok, chest pinned under truck. -> proposed critical
+  SPV1-077: Dili kalihok ang car, occupants unknown. -> proposed needs_review
+  Decisive difference: The same inability-to-move idea describes different subjects and mechanisms; chest compression is an urgent hazard.
+
+SP-C17 — breathing: absence, impairment and uncertainty
+  SPV1-042: Driver not breathing. -> proposed critical
+  SPV1-043: Awake but gasping, can't speak. -> proposed critical
+  SPV1-080: Breathing? di sure. -> proposed needs_review
+  Decisive difference: Not breathing, gasping and uncertain breathing are distinct meanings; uncertainty must not be silently converted into normal breathing.
+
+SP-C18 — breathing: subject attribution
+  SPV1-060: Gising ang passenger pero ang driver not breathing, naa ko diri. -> proposed critical
+  SPV1-037: Conscious siya, knee painful, breathing normal. -> proposed serious
+  Illustration only (not an extra candidate row): Driver breathing normally, passenger unconscious. -> proposed critical. Normal breathing in one person does not describe the unconscious passenger.
+  Decisive difference: A well passenger cannot cancel a different person's absent breathing. Keep each condition attached to the right person.
+
+SP-C19 — crash: event-only versus explicit no injury and safety
+  SPV1-062: Crash. -> proposed needs_review
+  SPV1-011: Bangga, walay nasamdan, luwas na. -> proposed minor
+  SPV1-016: Crash, walay injured, safe na tanan. -> proposed minor
+  SPV1-076: Na crash, condition unknown. -> proposed needs_review
+  Decisive difference: Crash describes an event, not its severity. No injury plus safety supports minor; unknown condition requires review.
+
+SP-C20 — gasgas: object versus body versus absent subject
+  SPV1-007: Gasgas sa pinto lang, walang nasaktan, ligtas. -> proposed minor
+  SPV1-040: Small cut lang, awake, normal ang breathing. -> proposed serious
+  Illustration only (not an extra candidate row): gasgas ra -> proposed needs_review. The scratched subject and remaining danger are unspecified.
+  Decisive difference: A vehicle scratch with explicit safety differs from a skin cut; lang does not erase injury.
+
+SP-C21 — cannot stand: impaired leg versus unsupported general request
+  SPV1-030: Masakit bukungbukong, di makatayo. -> proposed serious
+  SPV1-036: Leg hurts kaayo after bangga, can't stand, normal akong breathing. -> proposed serious
+  SPV1-061: Help. -> proposed needs_review
+  Decisive difference: A painful ankle or leg with impaired standing is an actual symptom; help alone offers no injury detail.
+
+SP-C22 — head injury: awake versus unresponsive
+  SPV1-022: Head cut after slow bump, awake and breathing normally now. -> proposed serious
+  SPV1-034: Nasamad ulo human bangga, mata ug normal moginhawa, gamay rang dugo. -> proposed serious
+  SPV1-041: Driver unconscious. -> proposed critical
+  Decisive difference: Wakefulness does not make a head cut minor; reported unresponsiveness establishes a separate urgent concern.
+
+SP-C23 — drowning: actual entrapment versus quoted scenario
+  SPV1-045: Passenger trapped underwater in crashed car, we can't get him out. -> proposed critical
+  Illustration only (not an extra candidate row): For drill: passenger trapped underwater, no real crash. -> proposed needs_review. Explicit hypothetical context is out of scope for live severity classification.
+  Illustration only (not an extra candidate row): drowning -> proposed needs_review. A bare topic word lacks event, person and current-status context; urgently clarify.
+  Decisive difference: A present trapped submerged passenger differs from an educational question.
+
+SP-C24 — fatality: present human claim versus undated forward
+  SPV1-050: Patay daw drayber sa bangga ngayon, nasa tabi ako niya. -> proposed critical
+  SPV1-068: Patay daw, lumang post yata. -> proposed needs_review
+  Decisive difference: Current scene-linked hearsay can justify urgent verification without proving death. An undated or possibly old post does not establish present urgency.
+
+SP-C25 — injury: vague claim versus concrete wound
+  SPV1-067: May nasaktan. -> proposed needs_review
+  SPV1-029: Nasugatan kamay, kaunti dugo. -> proposed serious
+  SPV1-040: Small cut lang, awake, normal ang breathing. -> proposed serious
+  Decisive difference: An unspecified hurt person needs clarification to locate urgency; a described hand wound or cut provides actionable injury evidence.
+
+SP-C26 — normal breathing: not equivalent to responsiveness
+  SPV1-037: Conscious siya, knee painful, breathing normal. -> proposed serious
+  SPV1-052: Wala motubag bisan tawagon ug uyogon. -> proposed critical
+  Illustration only (not an extra candidate row): Driver breathing but unconscious. -> proposed critical. Explicit unconsciousness remains urgent even with breathing reported.
+  Decisive difference: Normal breathing does not establish that a person is responsive.
+
+H. FUTURE DATASET BALANCE AND TRAINING STRATEGY — NO TRAINING NOW
+
+Do not train on short text alone. A reasonable INITIAL DEVELOPMENT SAMPLING target after human review is approximately:
+- 40% short reports of 1–8 words
+- 25% medium reports of 9–15 words
+- 35% full reports of 16+ words
+Within the short part, include both 1–3 and 4–8 words. These are adjustable sampling targets, not validated deployment proportions or a command to manufacture equal counts. Refine them from de-identified real reporter usage when available.
+
+Balance label and language within feasible length strata. Ensure all labels occur at 4–8, 9–15 and 16+ words; create useful 1–3-word injuries and threats as well as uncertain fragments. Do not force a 1–3-word minor quota when the wording cannot naturally establish both no injury and no unresolved danger.
+The preview has no 1–3-word minor examples. This is an explicit design limitation, not permission for a length-to-label shortcut. Test the shortest defensible minor phrasings with reviewers and broaden variation at the overlapping lengths.
+
+If all 400 old rows and all 80 preview candidates eventually passed human review and were combined, there would be 480 rows: 68 short (14.17%), 12 medium (2.50%) and 400 long (83.33%). This is only a hypothetical arithmetic comparison, not a merge. The current preview alone would leave the medium-length gap substantial.
+Do not multiply paraphrases just to reach a target word count. Expand distinct scenarios, reporters, spelling styles, missing-information patterns and independent incidents. Cap the contribution of repeated variants within a family. Use train-only sampling/weights when appropriate and document their effect on confidence calibration.
+Keep natural wording, case, punctuation and negations; do not remove stopwords such as not, dili, wala or hindi. Preserve spelling variants unless correcting a demonstrated data error with traceability. Split families BEFORE any abbreviation, translation, typo or paraphrase augmentation; augment training only. A shortened positive report must be relabeled if its decisive information was removed.
+Maintain matched short/medium/long descriptions within the same family, with labels based on what each version actually says. Do not fill the short input with synthetic missing context during inference.
+Retain the existing transformer approach for a first future comparison, with a documented baseline and identical independent evaluation. No model switch, training command or release is justified by this preview.
+
+I. SCENARIO FAMILIES AND LEAKAGE PREVENTION
+
+Existing master: 99 group_id values, with translations/related variants sharing groups. The current loader requires the exact eight-column schema and one non-rejected label per group_id. Its split logic stratifies a group using its first row's label. This cannot directly represent a mixed-label contrastive family safely.
+
+Future schema design should distinguish:
+1. scenario_family_id: same source incident/seed, translations, paraphrases, abbreviations and counterfactual relatives that must stay in one split.
+2. annotation_group_id: only genuinely equivalent observations expected to share a label.
+Keep original case_id and legacy group_id in provenance. Do not rename a group merely to make a holdout duplicate look new.
+A family may contain minor, serious, critical and needs_review variants after decisive context changes. Enforce label consistency only among adjudicated semantic equivalents, not across all counterfactuals.
+
+For this preview, family_design.json lists proposed SP-Fxx families, candidate membership and old cases requiring a relationship check. A possible old-family link is a review lead, not a claim that every similar symptom is the same incident. Review ancestry, normalized duplicates, near-duplicates, translations and counterfactual origin across ALL candidate/old/frozen datasets.
+If a new short description is a shortening of an old test/validation-family report, it cannot move into training. Keep it with that family or exclude it. Preserve frozen split lineage by ID and normalized content/relationship checks.
+
+Contrastive sets sometimes compare multiple SP-Fxx families. Treat intentional minimal/counterfactual transformations as dependency edges and take the connected component as the split unit. Do not cut a component to meet label quotas. Broad thematic examples may be unrelated incidents, but any decision not to link them needs a recorded rationale.
+No split assignments are made here. The entire 80-row preview should initially be development/review material, not a source for claiming held-out accuracy. If dependencies yield a large component, keep that component together or obtain new independent evaluation families.
+The future splitter must use family-level label/language/length counts rather than the first row's label, save immutable membership and reject overlap. Labels, reasons, family names and IDs are metadata only, never transformer features.
+
+J. DEDICATED SHORT-TEXT EVALUATION PLAN
+
+Create a fresh independently reviewed short-report holdout, plus an independently reviewed 16+ word comparator. Do not treat the existing test set, this 80-row preview, its illustrative probes, or the 32-row rubric calibration pack as untouched short-text test evidence.
+Source de-identified real reporting styles where authorized, or independently authored responder scenarios; label them before model evaluation. Fluent language reviewers and a responder should adjudicate uncertainty and borderline cases. Keep the label key hidden from model developers once the test is frozen.
+
+Use two separately reported views:
+- A challenge set with useful support for all four labels, languages, short lengths, negation, ambiguity, different victims, death/engine language and changing conditions.
+- A natural-use sample when available, preserving actual frequency and uncertainty patterns.
+Do not report an artificially balanced challenge set as expected live accuracy.
+
+An initial planning batch could contain roughly 320 reviewed descriptions from at least 80 independent families across the four languages, with a separate longer comparator if it is not included. This is a planning size, NOT a guarantee of precision or readiness. Increase the number of independent critical families until the agreed confidence interval and error tolerance can actually be evaluated. Review availability, observed data distribution and the required uncertainty bound determine the eventual size. Translation variants do not multiply independent clinical evidence.
+
+Report counts of both rows and independent families in every table. Use 1–3, 4–8, 9–15 and 16+ word strata, language strata en/tl/ceb/mixed, and their intersections where supported. Also publish label support. Mark an unsupported cell unavailable; do not silently convert undefined metrics to success.
+
+Required measures:
+- Overall four-class accuracy and macro F1, before abstention and after routing.
+- Per-label precision/recall/F1 and the full confusion matrix.
+- Critical recall = correctly identified critical / all truly critical.
+- Critical underclassification to minor or serious / all truly critical, with minor and serious errors separately counted.
+- Critical routed to needs_review / all truly critical. This is not a correct severity classification; report it separately from direct underclassification and measure whether timely review occurred.
+- Critical routing sensitivity = critical suggestions plus appropriately urgent human-review routing / all truly critical. Report separately; never substitute this for critical recall.
+- needs_review predicted-class rate and needs_review precision/recall.
+- Operational review_required rate including low confidence, unavailable model and ambiguous/out-of-scope input; this differs from the learned needs_review class.
+- Accepted automatic coverage, accuracy/F1 among accepted suggestions, and all-case metrics so a model cannot look good by abstaining on almost everything.
+- False critical escalation and responder review burden.
+- Each metric by language and length, plus critical error examples and reasons.
+
+Report uncertainty intervals with clustering at the family level; do not treat translations as independent observations. Use validation/calibration families to select any confidence threshold or probability calibration. Freeze all settings before opening the test labels. If test failures cause changes, that set becomes development evidence and a new untouched acceptance set is needed.
+Responder-approved acceptance limits for missed critical cases, review delay, review burden, calibration and language parity must be written BEFORE final acceptance. High observed accuracy on a small synthetic slice is not dispatch validation.
+If the fatality flag is later added, independently score false positive human death claims, missed claims, negation/subject/time handling and abstention, without treating reported claims as verified deaths.
+
+K. INFERENCE BEHAVIOR RECOMMENDATION — NOT IMPLEMENTED
+
+The current FastAPI request permits 1–1000 characters, subject to blank-input checks. There is no minimum word-count rule. The predictor already routes needs_review predictions, low confidence and over-token-limit inputs to review. Confidence is explicitly marked uncalibrated. It cannot currently substantiate a rich semantic review_reason or independent fatality flag simply by adding a response field.
+
+Preserve the principle: length alone does not force abstention.
+- Clear supported short threat: propose critical and route for responder verification.
+- Concrete short injury without a supported life threat: propose serious, subject to the validated model and review policy.
+- Explicit no injury AND safe/resolved scene: minor may be proposed.
+- Missing/ambiguous/contradictory/out-of-scope evidence: no confident severity; needs_review workflow.
+- Low calibrated confidence, unsupported input, model failure or input exceeding supported context: abstain visibly rather than guess or silently truncate.
+
+Suggested future response semantics:
+severity: minor | serious | critical | null
+predicted_label: minor | serious | critical | needs_review | null
+confidence: actual model score or null when unavailable; never a fabricated percentage
+confidence_calibrated: true only after demonstrated calibration
+review_required: boolean reflecting the responder workflow, not just text length
+review_reason: supported reason code(s), for example insufficient_information, ambiguous_subject, conflicting_reports, historical_or_hypothetical, low_confidence, model_unavailable, context_limit, or verification_required
+reported_fatality: optional independently validated semantic output as described above
+
+Keep learned needs_review separate from operational failure and low confidence. A high score for a concrete class cannot by itself resolve missing or contradictory facts. Any semantic rejection/explanation mechanism requires reviewed annotations and validation; do not add keyword overrides or claim an explanation was inferred when it was only a generic low-confidence fallback.
+For a critical suggestion awaiting verification, critical can remain visible alongside review_required=true. For unresolved severity, use severity=null rather than disguising it as minor or confirmed serious. Current Laravel placeholder behavior must be explicitly mapped when this future contract is implemented.
+A danger-ambiguous message must stay visible for prompt human contact. Clarifying questions must not block report submission or hide the original text/location. Prefer short checks such as the affected person, current responsiveness/breathing, bleeding amount, entrapment and location. Do not request a longer essay from someone in distress.
+Every AI output remains decision support. Do not infer confirmed death, injuries from a photo, normal vital signs from silence, or safety from a model confidence percentage.
+
+L. EXACT FILES AND FUTURE IMPLEMENTATION BOUNDARIES
+
+Created NOW, preview/documentation only, under ai_service/datasets/emergency_text/expansions/short_panic_v1/:
+- START_HERE.txt: purpose, status, file map and non-import warning.
+- FULL_REPORT_COPY_PASTE.txt: this complete A–N report with all candidates and contrasts.
+- candidates.csv: the 80 provisional seven-column candidate records.
+- contrastive_sets.json: 26 explanatory sets, including illustrative probes outside the 80.
+- current_length_audit.json: measured master statistics overall, by label, language and label-language.
+- coverage_audit.csv: qualitative concept findings and original case references.
+- family_design.json: proposed family membership and pending old-family relationship checks.
+- protected_files_before.json: hashes of the existing files protected during this task.
+- verification.json: artifact structure checks and before/after preservation results.
+- manifest.json: provenance, counts, status and artifact hashes.
+
+Future files to CREATE only when that stage is authorized:
+- ai_service/datasets/emergency_text/expansions/short_panic_v1/review/reviewer_A.csv
+- ai_service/datasets/emergency_text/expansions/short_panic_v1/review/reviewer_B.csv
+- ai_service/datasets/emergency_text/expansions/short_panic_v1/review/adjudication.csv
+- ai_service/datasets/emergency_text/expansions/short_panic_v1/review/family_links.csv
+- ai_service/datasets/emergency_text/expansions/short_panic_v1/review/review_manifest.json
+- ai_service/datasets/emergency_text/evaluation/short_panic_holdout_v1/reports.csv
+- ai_service/datasets/emergency_text/evaluation/short_panic_holdout_v1/family_manifest.json
+- ai_service/datasets/emergency_text/evaluation/short_panic_holdout_v1/protocol.txt
+- ai_service/artifacts/reports/short_panic_v1_evaluation.json
+Reviewer copies should hide proposed labels, reasons and label-revealing identifiers. A coordinator keeps the alias key. Blank review forms must remain pending until actual reviewers fill them. The evaluation CSV must remain separate from development data.
+
+Existing AI files that would require coordinated changes for a future schema/inference stage:
+- ai_service/src/ai_service/text_training.py: explicit schema version, family-aware splitting, length/language slice metrics and release gates.
+- ai_service/src/ai_service/text_review.py: versioned reviewer import, independent decisions, adjudication and equivalence/family validation.
+- ai_service/src/ai_service/text_dataset_views.py: derived views/provenance for the versioned schema; no additional editable masters.
+- ai_service/src/ai_service/text_inference.py: validated abstention and response semantics; no length-only rule.
+- ai_service/src/ai_service/text_api.py: versioned response contract, preserving valid short inputs.
+- ai_service/train_text.py and ai_service/review_text.py: update wrappers only if new options are required.
+- ai_service/tests/test_text_training.py
+- ai_service/tests/test_text_training_controls.py
+- ai_service/tests/test_text_review.py
+- ai_service/tests/test_text_dataset_views.py
+- ai_service/tests/test_text_inference.py
+- ai_service/datasets/emergency_text/annotation_guide.md: adjudicated short-report rubric and fatality wording.
+- ai_service/datasets/emergency_text/working/reports.csv and working/provenance.json: ONLY after review, a versioned schema plan and an explicit merge stage; not now.
+- ai_service/README.md: document accepted behavior at implementation time.
+No active_config.txt or checkpoint change is needed for this design stage. A later approved promotion must document a new model version and configuration explicitly.
+
+Separate later Laravel/API migration, NOT part of this work:
+- web_system/app/Services/AiTextSeverityClient.php
+- web_system/app/Models/IncidentReport.php
+- web_system/app/Support/AiSeverityMapper.php
+- web_system/resources/views/reports/severity.blade.php
+- web_system/tests/Feature/TextSeverityIntegrationTest.php
+- A NEW dated migration in web_system/database/migrations/ if storing semantic flags or changing legacy severity storage. Choose its timestamp at implementation; do not edit applied historical migrations.
+At that stage audit every actual Fatal consumer in validation, notifications, dashboard filters, exports and analytics before specifying the complete patch. The listed entry points are verified; this document does not pretend to enumerate all future affected consumers.
+Do not touch the existing 32-row calibration pack; resolve its review as its own process.
+
+M. HUMAN REVIEW BEFORE ANY MERGE
+
+YES. All 80 candidates, illustrative probes selected for use, language assignments and family relationships require review before entering a training-eligible master. Synthetic authoring is not responder approval.
+Use independent review from a road-emergency responder/MDRRMO representative and fluent language reviewers; obtain clinical input for disputed injury/threat boundaries as appropriate. Review Cebuano colloquialisms, Tagalog usage and mixed-language naturalness rather than treating translations as automatically correct.
+Adjudicate label, decisive evidence, missing facts, current-versus-past scope, physical-versus-digital nonresponse, human-versus-object subjects, uncertain fatality claims, injury severity boundaries and any family equivalence.
+Record reviewer identity, time, rubric version and rationale; preserve disagreements and revision history. Do not auto-approve all rows from a completed file, majority vote or model score.
+For a possible critical downgrade or unresolved threat, request explicit responder adjudication. Rejected/uncertain rows stay excluded from the approved training set.
+Do not ask a reviewer to see the proposed labels before their independent first pass; this report and candidates.csv are coordinator/design materials, not blinded worksheets.
+
+N. RECOMMENDED NEXT STEP
+
+First finish human calibration of the existing working rubric using the unchanged 32-row pack, then review this short-report preview in a SEPARATE workflow. Resolve the concrete ambiguous cases and write the annotation contract before creating a larger short-report collection.
+Next validate the grouping/schema design, plan an independent short-text holdout, and only then authorize an approved-only merge and future controlled training. Until reviewers are available, the useful work is this audit/design plus preparation of blank review materials and collection criteria, not claiming production readiness.
+The current 400-row master remains the existing working dataset. This short_panic_v1 folder is a proposed expansion, not a second training master. No training should start from these draft files.
+
+REFERENCE CONTEXT AND LIMITS
+
+The working four-label rubric is a local project proposal, not a WHO-certified text protocol. WHO's Interagency Integrated Triage Tool is designed for facility-based triage and uses three acuity colours; it does not validate this classifier, these labels or these translations.
+Source: https://www.who.int/tools/triage
+WHO's adult tool includes unresponsiveness, respiratory distress and heavy bleeding among high-acuity criteria; its reference card includes high-risk trauma such as vehicle entrapment. These informed a cautious review focus, not an automated keyword mapping or a remote diagnosis.
+Adult tool: https://cdn.who.int/media/docs/default-source/integrated-health-services-(ihs)/csy/iitt/iitt_adult.pdf?sfvrsn=b2a91431_1
+Reference card: https://cdn.who.int/media/docs/default-source/integrated-health-services-(ihs)/csy/iitt/iitt_reference-card09165e1c-0df5-472d-ab53-45506191a7bd.pdf?sfvrsn=eba17410_2
+
+VERIFICATION RECEIPT
+Checked 398 protected existing file hashes before and after creating the preview: all unchanged. This includes the 400-row master and every file in the existing 32-case calibration pack. Validated the 80-row schema, IDs, normalized uniqueness, recomputed word counts, 20-per-label/language totals, 5-per-label-language cells, 26 contrastive sets and all cited case IDs. No exact normalized candidate text equals a master description. This does NOT certify absence of semantic overlap. Clinical labels, language naturalness and family independence remain unreviewed. No runtime validation was needed because application code, configuration and services were not changed. See verification.json and manifest.json for the artifact receipt.

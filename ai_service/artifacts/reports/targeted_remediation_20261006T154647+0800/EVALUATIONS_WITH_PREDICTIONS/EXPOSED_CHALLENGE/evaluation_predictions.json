@@ -1,0 +1,530 @@
+{
+  "split": "external",
+  "model_version": "text-20261006T080310214858Z",
+  "labels": [
+    "minor",
+    "serious",
+    "critical",
+    "needs_review"
+  ],
+  "dataset_fingerprint": "8ecb564c53a8cdc9f8cf006971777ae71c9b50bab06f067481b979b5ee0e5112",
+  "all_data_reviewed": true,
+  "rows": [
+    {
+      "case_id": "CEB-CRITICAL-035",
+      "group_id": "CEB-FAM-CRITICAL-035",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": [
+        0.02845689095556736,
+        0.3129291236400604,
+        0.6501844525337219,
+        0.00842951238155365
+      ]
+    },
+    {
+      "case_id": "CEB-CRITICAL-047",
+      "group_id": "CEB-FAM-CRITICAL-047",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": [
+        0.024963324889540672,
+        0.09663109481334686,
+        0.8668054938316345,
+        0.011600101366639137
+      ]
+    },
+    {
+      "case_id": "CEB-CRITICAL-052",
+      "group_id": "CEB-FAM-CRITICAL-052",
+      "language": "ceb",
+      "label": "critical",
+      "probabilities": [
+        0.013926244340837002,
+        0.034035876393318176,
+        0.9363487362861633,
+        0.015689168125391006
+      ]
+    },
+    {
+      "case_id": "CEB-MINOR-028",
+      "group_id": "CEB-FAM-MINOR-028",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.9363455176353455,
+        0.023957563564181328,
+        0.03259596973657608,
+        0.007101052440702915
+      ]
+    },
+    {
+      "case_id": "CEB-MINOR-029",
+      "group_id": "CEB-FAM-MINOR-029",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.8832497596740723,
+        0.08644424378871918,
+        0.022458519786596298,
+        0.007847563363611698
+      ]
+    },
+    {
+      "case_id": "CEB-MINOR-036",
+      "group_id": "CEB-FAM-MINOR-036",
+      "language": "ceb",
+      "label": "minor",
+      "probabilities": [
+        0.587369978427887,
+        0.36730238795280457,
+        0.0391855388879776,
+        0.006142108701169491
+      ]
+    },
+    {
+      "case_id": "CEB-NEEDS_REVIEW-039",
+      "group_id": "CEB-FAM-NEEDS_REVIEW-039",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.033612895756959915,
+        0.7204152345657349,
+        0.13451315462589264,
+        0.11145878583192825
+      ]
+    },
+    {
+      "case_id": "CEB-NEEDS_REVIEW-044",
+      "group_id": "CEB-FAM-NEEDS_REVIEW-044",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.006757280323654413,
+        0.00811049249023199,
+        0.019645942375063896,
+        0.9654862284660339
+      ]
+    },
+    {
+      "case_id": "CEB-NEEDS_REVIEW-059",
+      "group_id": "CEB-FAM-NEEDS_REVIEW-059",
+      "language": "ceb",
+      "label": "needs_review",
+      "probabilities": [
+        0.006171124055981636,
+        0.008978243917226791,
+        0.02833651565015316,
+        0.9565141201019287
+      ]
+    },
+    {
+      "case_id": "CEB-SERIOUS-017",
+      "group_id": "CEB-FAM-SERIOUS-017",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.01887645199894905,
+        0.9509519934654236,
+        0.025032678619027138,
+        0.005138775333762169
+      ]
+    },
+    {
+      "case_id": "CEB-SERIOUS-025",
+      "group_id": "CEB-FAM-SERIOUS-025",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.02546199969947338,
+        0.950566828250885,
+        0.01992354355752468,
+        0.0040476019494235516
+      ]
+    },
+    {
+      "case_id": "CEB-SERIOUS-030",
+      "group_id": "CEB-FAM-SERIOUS-030",
+      "language": "ceb",
+      "label": "serious",
+      "probabilities": [
+        0.02426203154027462,
+        0.9472787380218506,
+        0.022088319063186646,
+        0.006370818708091974
+      ]
+    },
+    {
+      "case_id": "EN-026",
+      "group_id": "ENF-026",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.02578301541507244,
+        0.8870157599449158,
+        0.07798948138952255,
+        0.009211763739585876
+      ]
+    },
+    {
+      "case_id": "EN-055",
+      "group_id": "ENF-055",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.04274953529238701,
+        0.02508632279932499,
+        0.8931845426559448,
+        0.038979556411504745
+      ]
+    },
+    {
+      "case_id": "EN-058",
+      "group_id": "ENF-058",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.022090546786785126,
+        0.9513427019119263,
+        0.018128659576177597,
+        0.008438128046691418
+      ]
+    },
+    {
+      "case_id": "EN-065",
+      "group_id": "ENF-065",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.9364073872566223,
+        0.017505895346403122,
+        0.03762030228972435,
+        0.008466321974992752
+      ]
+    },
+    {
+      "case_id": "EN-077",
+      "group_id": "ENF-077",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.3393542766571045,
+        0.6351634860038757,
+        0.01732381246984005,
+        0.008158491924405098
+      ]
+    },
+    {
+      "case_id": "EN-089",
+      "group_id": "ENF-089",
+      "language": "en",
+      "label": "minor",
+      "probabilities": [
+        0.8577185273170471,
+        0.10885079205036163,
+        0.025941988453269005,
+        0.0074887266382575035
+      ]
+    },
+    {
+      "case_id": "EN-102",
+      "group_id": "ENF-102",
+      "language": "en",
+      "label": "serious",
+      "probabilities": [
+        0.029056360945105553,
+        0.9468912482261658,
+        0.01918672025203705,
+        0.004865586291998625
+      ]
+    },
+    {
+      "case_id": "EN-175",
+      "group_id": "ENF-175",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.029214875772595406,
+        0.09636852890253067,
+        0.8571578860282898,
+        0.017258748412132263
+      ]
+    },
+    {
+      "case_id": "EN-179",
+      "group_id": "ENF-179",
+      "language": "en",
+      "label": "critical",
+      "probabilities": [
+        0.037682343274354935,
+        0.01559135876595974,
+        0.9283033609390259,
+        0.018422989174723625
+      ]
+    },
+    {
+      "case_id": "EN-188",
+      "group_id": "ENF-188",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.015319005586206913,
+        0.008295702748000622,
+        0.046346116811037064,
+        0.9300392270088196
+      ]
+    },
+    {
+      "case_id": "EN-232",
+      "group_id": "ENF-232",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.007181389722973108,
+        0.007249530404806137,
+        0.02447107993066311,
+        0.9610980749130249
+      ]
+    },
+    {
+      "case_id": "EN-240",
+      "group_id": "ENF-240",
+      "language": "en",
+      "label": "needs_review",
+      "probabilities": [
+        0.008097936399281025,
+        0.008730213157832623,
+        0.03438573330640793,
+        0.9487861394882202
+      ]
+    },
+    {
+      "case_id": "MX-CRITICAL-028",
+      "group_id": "MX-FAM-CRITICAL-028",
+      "language": "mixed",
+      "label": "critical",
+      "probabilities": [
+        0.045653682202100754,
+        0.011329426430165768,
+        0.9311873912811279,
+        0.011829465627670288
+      ]
+    },
+    {
+      "case_id": "MX-CRITICAL-029",
+      "group_id": "MX-FAM-CRITICAL-029",
+      "language": "mixed",
+      "label": "critical",
+      "probabilities": [
+        0.021579572930932045,
+        0.016416164115071297,
+        0.9498298168182373,
+        0.012174440547823906
+      ]
+    },
+    {
+      "case_id": "MX-MINOR-014",
+      "group_id": "MX-FAM-MINOR-014",
+      "language": "mixed",
+      "label": "minor",
+      "probabilities": [
+        0.9181892275810242,
+        0.014089941047132015,
+        0.062149252742528915,
+        0.005571590270847082
+      ]
+    },
+    {
+      "case_id": "MX-MINOR-029",
+      "group_id": "MX-FAM-MINOR-029",
+      "language": "mixed",
+      "label": "minor",
+      "probabilities": [
+        0.9394201636314392,
+        0.017110323533415794,
+        0.03543373942375183,
+        0.008035661652684212
+      ]
+    },
+    {
+      "case_id": "MX-NEEDS_REVIEW-009",
+      "group_id": "MX-FAM-NEEDS_REVIEW-009",
+      "language": "mixed",
+      "label": "needs_review",
+      "probabilities": [
+        0.5939676761627197,
+        0.08217459172010422,
+        0.3070528507232666,
+        0.01680488884449005
+      ]
+    },
+    {
+      "case_id": "MX-NEEDS_REVIEW-026",
+      "group_id": "MX-FAM-NEEDS_REVIEW-026",
+      "language": "mixed",
+      "label": "needs_review",
+      "probabilities": [
+        0.0071012782864272594,
+        0.008824469521641731,
+        0.03436627238988876,
+        0.9497079849243164
+      ]
+    },
+    {
+      "case_id": "MX-SERIOUS-028",
+      "group_id": "MX-FAM-SERIOUS-028",
+      "language": "mixed",
+      "label": "serious",
+      "probabilities": [
+        0.015522683039307594,
+        0.9357444047927856,
+        0.04440535977482796,
+        0.004327565897256136
+      ]
+    },
+    {
+      "case_id": "TL-005",
+      "group_id": "TL-FAM-005",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.26508772373199463,
+        0.6892766356468201,
+        0.032672733068466187,
+        0.012962914071977139
+      ]
+    },
+    {
+      "case_id": "TL-020",
+      "group_id": "TL-FAM-020",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.9446536898612976,
+        0.014902276918292046,
+        0.031166527420282364,
+        0.009277492761611938
+      ]
+    },
+    {
+      "case_id": "TL-024",
+      "group_id": "TL-FAM-024",
+      "language": "tl",
+      "label": "minor",
+      "probabilities": [
+        0.9184665083885193,
+        0.015075557865202427,
+        0.058288149535655975,
+        0.008169742301106453
+      ]
+    },
+    {
+      "case_id": "TL-093",
+      "group_id": "TL-FAM-093",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.05244484543800354,
+        0.9115771055221558,
+        0.031187264248728752,
+        0.0047907037660479546
+      ]
+    },
+    {
+      "case_id": "TL-103",
+      "group_id": "TL-FAM-103",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.019504984840750694,
+        0.9407052993774414,
+        0.0322236493229866,
+        0.007566056679934263
+      ]
+    },
+    {
+      "case_id": "TL-116",
+      "group_id": "TL-FAM-116",
+      "language": "tl",
+      "label": "serious",
+      "probabilities": [
+        0.04187927767634392,
+        0.9317260384559631,
+        0.020877188071608543,
+        0.005517527926713228
+      ]
+    },
+    {
+      "case_id": "TL-145",
+      "group_id": "TL-FAM-145",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.04408242180943489,
+        0.012205070815980434,
+        0.9126498103141785,
+        0.03106270357966423
+      ]
+    },
+    {
+      "case_id": "TL-153",
+      "group_id": "TL-FAM-153",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.029831450432538986,
+        0.023950213566422462,
+        0.8982757329940796,
+        0.04794257879257202
+      ]
+    },
+    {
+      "case_id": "TL-159",
+      "group_id": "TL-FAM-159",
+      "language": "tl",
+      "label": "critical",
+      "probabilities": [
+        0.05747624859213829,
+        0.03340567648410797,
+        0.8987348079681396,
+        0.010383255779743195
+      ]
+    },
+    {
+      "case_id": "TL-186",
+      "group_id": "TL-FAM-186",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.011607592925429344,
+        0.013489162549376488,
+        0.022593101486563683,
+        0.9523102045059204
+      ]
+    },
+    {
+      "case_id": "TL-212",
+      "group_id": "TL-FAM-212",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.00845143012702465,
+        0.0068558272905647755,
+        0.020690277218818665,
+        0.9640024900436401
+      ]
+    },
+    {
+      "case_id": "TL-235",
+      "group_id": "TL-FAM-235",
+      "language": "tl",
+      "label": "needs_review",
+      "probabilities": [
+        0.007089396473020315,
+        0.008680060505867004,
+        0.039567459374666214,
+        0.9446630477905273
+      ]
+    }
+  ]
+}

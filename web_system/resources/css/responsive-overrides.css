@@ -1,0 +1,174 @@
+/* Shared responsive fixes for authenticated civilian and responder/admin pages. */
+body.admin-portal .ops-main,
+body.civilian-portal .ops-main,
+body.admin-portal .content-stack,
+body.civilian-portal .content-stack,
+body.admin-portal .panel,
+body.civilian-portal .panel,
+body.admin-portal .hero-card,
+body.civilian-portal .hero-card,
+body.admin-portal .topbar,
+body.civilian-portal .topbar {
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* A one-column modal must keep both report sections in that same column.
+   The general <=1520px layout assigns these sections to grid column 2. */
+body.admin-portal .report-detail-modal-body .incident-card.compact-live-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    min-width: 0;
+}
+
+body.admin-portal .report-detail-modal-body .incident-meta,
+body.admin-portal .report-detail-modal-body .incident-content {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-width: 0;
+}
+
+body.admin-portal .report-detail-modal-body .incident-meta {
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+body.admin-portal .report-detail-modal-body .incident-headline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+body.admin-portal .report-detail-modal-body .incident-headline > div:first-child {
+    flex: 1 1 320px;
+    min-width: 0;
+}
+
+body.admin-portal .report-detail-modal-body .incident-headline > .tag-row {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    justify-content: flex-start;
+}
+
+body.admin-portal .report-detail-modal-body .preview-grid,
+body.admin-portal .report-detail-modal-body .responder-feed-actions-grid,
+body.admin-portal .report-detail-modal-body .incident-content > * {
+    min-width: 0;
+}
+
+body.admin-portal .report-detail-modal-body :is(.incident-code, .incident-title, .incident-summary, .detail-copy, .preview-card, .detail-card, .meta-row strong) {
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+body.admin-portal .report-detail-modal,
+body.admin-portal .report-map-modal,
+body.admin-portal .profile-editor-modal,
+body.admin-portal .civilian-account-modal,
+body.admin-portal .command-audit-modal,
+body.admin-portal .media-viewer {
+    box-sizing: border-box;
+    overscroll-behavior: contain;
+}
+
+body.admin-portal .report-detail-modal-shell,
+body.admin-portal .report-map-modal-shell,
+body.admin-portal .profile-editor-modal-shell,
+body.admin-portal .civilian-account-modal-shell,
+body.admin-portal .command-audit-modal-shell,
+body.admin-portal .media-viewer-shell {
+    box-sizing: border-box;
+    min-width: 0;
+    width: min(1100px, calc(100vw - 32px));
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+}
+
+body.admin-portal .report-detail-modal-body,
+body.admin-portal .civilian-account-modal-body,
+body.admin-portal .profile-editor-modal-body,
+body.admin-portal .command-audit-modal-body {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+body.admin-portal .report-detail-modal-body .preview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 760px) {
+    body.admin-portal .report-detail-modal,
+    body.admin-portal .report-map-modal,
+    body.admin-portal .profile-editor-modal,
+    body.admin-portal .civilian-account-modal,
+    body.admin-portal .command-audit-modal,
+    body.admin-portal .media-viewer {
+        align-items: start;
+        padding: 8px;
+    }
+
+    body.admin-portal .report-detail-modal-shell,
+    body.admin-portal .report-map-modal-shell,
+    body.admin-portal .profile-editor-modal-shell,
+    body.admin-portal .civilian-account-modal-shell,
+    body.admin-portal .command-audit-modal-shell,
+    body.admin-portal .media-viewer-shell {
+        width: 100%;
+        max-height: calc(100vh - 16px);
+        max-height: calc(100dvh - 16px);
+        padding: 12px;
+        border-radius: 16px;
+    }
+
+    body.admin-portal .report-detail-modal-body .preview-grid,
+    body.admin-portal .report-detail-modal-body .responder-feed-actions-grid,
+    body.admin-portal .civilian-account-modal-body .preview-grid,
+    body.admin-portal .civilian-account-modal-body .civilian-account-action-grid,
+    body.admin-portal .command-audit-modal-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    body.admin-portal .report-detail-modal-body .incident-headline > div:first-child,
+    body.admin-portal .report-detail-modal-body .incident-headline > .tag-row {
+        flex-basis: 100%;
+    }
+
+    body.admin-portal .report-detail-modal-body .incident-meta .tag-row {
+        justify-content: flex-start;
+    }
+
+    body.admin-portal .report-detail-modal-body .incident-feed-modal-map {
+        height: 220px;
+        min-height: 220px;
+    }
+
+    body.admin-portal .report-detail-modal-head {
+        align-items: flex-start;
+    }
+
+    body.admin-portal .report-detail-modal-title strong {
+        font-size: clamp(1.1rem, 5vw, 1.5rem);
+        line-height: 1.15;
+    }
+}
+
+@media (max-width: 380px) {
+    body.admin-portal .ops-main,
+    body.civilian-portal .ops-main {
+        padding: 8px;
+    }
+
+    body.admin-portal .panel,
+    body.civilian-portal .panel,
+    body.admin-portal .topbar,
+    body.civilian-portal .topbar {
+        padding: 12px;
+    }
+
+    body.admin-portal .report-detail-modal-body .incident-meta {
+        padding: 10px;
+    }
+}

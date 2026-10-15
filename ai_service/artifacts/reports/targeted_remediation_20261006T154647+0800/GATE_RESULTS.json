@@ -1,0 +1,60 @@
+{
+  "evaluation_set": "EXPOSED_TEST",
+  "exposure_status": "historically exposed synthetic-origin regression diagnostics; not fresh",
+  "metric_source": "saved probabilities rejoined by case_id to the frozen test CSV; independent final QA reproduced these gate values",
+  "raw_metrics": {
+    "n": 84,
+    "macro_f1": 0.8523234689393226,
+    "critical_recall": 0.65,
+    "critical_support": 20,
+    "serious_recall": 1.0,
+    "serious_support": 21,
+    "raw_urgent_undertriage_count": 7,
+    "raw_urgent_support": 41,
+    "combined_serious_critical_detection_recall": 0.9512195121951219,
+    "per_language_macro_f1": {
+      "ceb": 0.7767857142857143,
+      "en": 0.958041958041958,
+      "mixed": 0.7375,
+      "tl": 0.8728632478632479
+    },
+    "threshold_0_65_critical_to_minor": 2
+  },
+  "gates": [
+    {
+      "id": "overall_macro_f1_ge_0_80",
+      "result": "PASS",
+      "passed": true
+    },
+    {
+      "id": "critical_recall_ge_0_95",
+      "result": "FAIL",
+      "passed": false
+    },
+    {
+      "id": "serious_critical_detection_ge_0_90",
+      "result": "PASS",
+      "passed": true
+    },
+    {
+      "id": "all_observed_languages_macro_f1_ge_0_75",
+      "result": "FAIL",
+      "passed": false
+    },
+    {
+      "id": "zero_raw_urgent_undertriage",
+      "result": "FAIL",
+      "passed": false
+    },
+    {
+      "id": "zero_automatic_critical_to_minor_at_0_65",
+      "result": "FAIL",
+      "passed": false
+    }
+  ],
+  "passed_count": 2,
+  "gate_count": 6,
+  "research_acceptance": "NOT_ACCEPTABLE; diagnostic model only",
+  "known_metric_issue": "Saved evaluation_metrics.json per_language fields disagree with case-ID recomputation; see PER_LANGUAGE_RECONCILIATION.json and FINAL_QA_AUDIT.json. Original artifacts were preserved.",
+  "note": "Research gates are project criteria, not clinical standards; gate results do not establish operational safety."
+}

@@ -1,0 +1,44 @@
+case_id,group_id,language,text,label,review_status,reviewer,notes
+CEB-CRITICAL-035,CEB-FAM-CRITICAL-035,ceb,Natumba ang nagmotor sa kanal; natabonan sa tubig ang iyang nawong ug naningkamot siya moginhawa.,critical,draft,,Synthetic draft; unreviewed.
+CEB-CRITICAL-047,CEB-FAM-CRITICAL-047,ceb,Nagdugo pag-ayo ang samad sa liog ug naghinay ang pagginhawa sa pasahero.,critical,draft,,Synthetic draft; unreviewed.
+CEB-CRITICAL-052,CEB-FAM-CRITICAL-052,ceb,Naipit ang pasahero sulod sa sakyanang nagdilaab; dili siya makagawas ug nagsugod nang mosulod ang aso.,critical,draft,,Synthetic draft; unreviewed.
+CEB-MINOR-028,CEB-FAM-MINOR-028,ceb,"Nasamad gamay ang kamot, kontrolado ang dugo.",minor,draft,,Synthetic draft; unreviewed.
+CEB-MINOR-029,CEB-FAM-MINOR-029,ceb,Gamayng bun-og ra sa paa; walay bali nga nakita.,minor,draft,,Synthetic draft; unreviewed.
+CEB-MINOR-036,CEB-FAM-MINOR-036,ceb,"Gamayng bukol sa agtang, walay kalipong.",minor,draft,,Synthetic draft; unreviewed.
+CEB-NEEDS_REVIEW-039,CEB-FAM-NEEDS_REVIEW-039,ceb,"Naay tawo duol sa motor nga natumba, apan dili ko makaduol ug makapangutana.",needs_review,draft,,Synthetic draft; unreviewed.
+CEB-NEEDS_REVIEW-044,CEB-FAM-NEEDS_REVIEW-044,ceb,"Naay nisulti nga dili siya motubag, apan wala ko makakita sa iyang kahimtang.",needs_review,draft,,Synthetic draft; unreviewed.
+CEB-NEEDS_REVIEW-059,CEB-FAM-NEEDS_REVIEW-059,ceb,"Naay nagsulti nga adunay namatay, pero wala ko didto ug wala ko makumpirma ang kasamtangang sitwasyon.",needs_review,draft,,Synthetic draft; unreviewed.
+CEB-SERIOUS-017,CEB-FAM-SERIOUS-017,ceb,"Miburot ang paa human maigo; grabe kasakit, dili makalakaw.",serious,draft,,Synthetic draft; unreviewed.
+CEB-SERIOUS-025,CEB-FAM-SERIOUS-025,ceb,Nasamad ang ulo ug naglibog gamay ang drayber.,serious,draft,,Synthetic draft; unreviewed.
+CEB-SERIOUS-030,CEB-FAM-SERIOUS-030,ceb,"Nasamad ang dughan, lisod molihok tungod sa sakit.",serious,draft,,Synthetic draft; unreviewed.
+EN-026,ENF-026,en,Passenger has concussion.,serious,draft,,Synthetic draft; unreviewed.
+EN-055,ENF-055,en,Passenger remains trapped in the crushed car after impact.,critical,draft,,Synthetic draft; unreviewed.
+EN-058,ENF-058,en,The passenger reports a possible wrist fracture.,serious,draft,,Synthetic draft; unreviewed.
+EN-065,ENF-065,en,Both drivers are unhurt and safe.,minor,draft,,Synthetic draft; unreviewed.
+EN-077,ENF-077,en,The rider has a superficial shin scrape.,minor,draft,,Synthetic draft; unreviewed.
+EN-089,ENF-089,en,"Minor scrape on one knee, no danger.",minor,draft,,Synthetic draft; unreviewed.
+EN-102,ENF-102,en,The driver has a bleeding scalp wound.,serious,draft,,Synthetic draft; unreviewed.
+EN-175,ENF-175,en,"A truck rolled onto someone, pinning the person beneath its frame.",critical,draft,,Synthetic draft; unreviewed.
+EN-179,ENF-179,en,A car carrying a child left the road into deep water; the child is submerged and has not resurfaced.,critical,draft,,Synthetic draft; unreviewed.
+EN-188,ENF-188,en,"A vehicle rolled over, with no information about its occupants.",needs_review,draft,,Synthetic draft; unreviewed.
+EN-232,ENF-232,en,"The message says he is not responding, but it is unclear whether the person was called aloud or contacted by text.",needs_review,draft,,Synthetic draft; unreviewed.
+EN-240,ENF-240,en,"A rider was reportedly pinned, but the message does not say whether a person or only a motorcycle part is trapped.",needs_review,draft,,Synthetic draft; unreviewed.
+MX-CRITICAL-028,MX-FAM-CRITICAL-028,mixed,"Naipit yung siklista sa ilawom sa awto, walay panimuot siya ug dili mohunong ang dugo.",critical,draft,,Synthetic draft; unreviewed.
+MX-CRITICAL-029,MX-FAM-CRITICAL-029,mixed,"Naa sa sunog nga sakyanan ang drayber, naipit siya ug naglisod kaayo moginhawa tungod sa aso.",critical,draft,,Synthetic draft; unreviewed.
+MX-MINOR-014,MX-FAM-MINOR-014,mixed,"Sumemplang ang bisikleta sa tapat ng bahay; awake si kuya, maliit na gasgas lang at wala nang pagdurugo.",minor,draft,,Synthetic draft; unreviewed.
+MX-MINOR-029,MX-FAM-MINOR-029,mixed,"Rider awake, gasgas ra sa siko.",minor,draft,,Synthetic draft; unreviewed.
+MX-NEEDS_REVIEW-009,MX-FAM-NEEDS_REVIEW-009,mixed,"Naa koy nadungog nga bangga sa highway, pero layo ko ug wala ko kakita sa mga tawo.",needs_review,draft,,Synthetic draft; unreviewed.
+MX-NEEDS_REVIEW-026,MX-FAM-NEEDS_REVIEW-026,mixed,May nakita silang nakahiga sa tabi ng motor; hindi ko alam kung siya ang driver o dumaan lang.,needs_review,draft,,Synthetic draft; unreviewed.
+MX-SERIOUS-028,MX-FAM-SERIOUS-028,mixed,"Naigo sa ulo ang passenger, awake pa siya pero nahilo ug naglisod pagbarog.",serious,draft,,Synthetic draft; unreviewed.
+TL-005,TL-FAM-005,tl,Basag ilaw lang.,minor,draft,,Synthetic draft; unreviewed.
+TL-020,TL-FAM-020,tl,Gasgas ang braso; ligtas na ang rider.,minor,draft,,Synthetic draft; unreviewed.
+TL-024,TL-FAM-024,tl,Walang sugatan sa pagsagi ng jeep.,minor,draft,,Synthetic draft; unreviewed.
+TL-093,TL-FAM-093,tl,Masakit ang likod ng drayber matapos ang banggaan.,serious,draft,,Synthetic draft; unreviewed.
+TL-103,TL-FAM-103,tl,Bali ang pulso ng siklista ayon sa saksi; hindi niya magamit ang kamay sa ngayon.,serious,draft,,Synthetic draft; unreviewed.
+TL-116,TL-FAM-116,tl,May malalim na hiwa sa braso matapos mabasag ang bintana; kontrolado ang dugo ngunit masakit igalaw.,serious,draft,,Synthetic draft; unreviewed.
+TL-145,TL-FAM-145,tl,May sakay na naipit sa ilalim ng bumaligtad na van.,critical,draft,,Synthetic draft; unreviewed.
+TL-153,TL-FAM-153,tl,May tao sa kotse habang kumakalat ang apoy mula sa makina.,critical,draft,,Synthetic draft; unreviewed.
+TL-159,TL-FAM-159,tl,Naipit ang sakay sa wasak na harapan ng jeep; hindi mabuksan ang pinto para mailabas siya.,critical,draft,,Synthetic draft; unreviewed.
+TL-186,TL-FAM-186,tl,Nabangga kami.,needs_review,draft,,Synthetic draft; unreviewed.
+TL-212,TL-FAM-212,tl,May kotse sa kanal; di alam kung may tao sa loob.,needs_review,draft,,Synthetic draft; unreviewed.
+TL-235,TL-FAM-235,tl,"May nagsabing duguan ang pasahero matapos ang banggaan, ngunit hindi alam kung kanino ang dugo o kung nagpapatuloy ito.",needs_review,draft,,Synthetic draft; unreviewed.
