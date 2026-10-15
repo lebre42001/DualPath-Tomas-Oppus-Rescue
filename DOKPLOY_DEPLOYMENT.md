@@ -55,6 +55,12 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
 ## Operations
 
+- Admin access starts at `/admin`, which sends guests to `/admin/login` and
+  signed-in accounts to the protected `/admin/dashboard`. Only admin accounts
+  can access that dashboard. After pulling an update that changes routes or
+  middleware, redeploy the `web` service from the latest `main` commit; verify
+  `/admin` redirects to `/admin/login` while signed out and that admin login
+  opens `/admin/dashboard`. A GitHub push alone does not confirm deployment.
 - Keep a copy of the `APP_KEY`; changing it invalidates encrypted cookies and
   other values encrypted by Laravel.
 - Back up both named volumes. Database migrations run automatically on startup;

@@ -15,6 +15,7 @@ use App\Http\Controllers\Web\MonitoringDashboardController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\SettingsController;
 use App\Support\SystemVersion;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/system/version', static function (SystemVersion $systemVersion) {
@@ -27,6 +28,10 @@ Route::get('/system/version', static function (SystemVersion $systemVersion) {
         'Expires' => '0',
     ]);
 })->name('system.version');
+
+Route::get('/admin', static function (Request $request) {
+    return redirect()->route($request->user() ? 'admin.dashboard' : 'admin.login');
+})->name('admin.index');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/', WelcomeController::class)->name('welcome');
