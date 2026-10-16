@@ -164,6 +164,7 @@
                                 <p>{{ $report->location_text }}</p>
                             </div>
                             <div class="command-review-meta">
+                                @include('reports.partials.ai-analysis', ['report' => $report, 'compact' => true])
                                 @if ($report->reported_fatality_flag)
                                     <span class="tag red">POSSIBLE FATALITY · VERIFY NOW</span>
                                 @endif

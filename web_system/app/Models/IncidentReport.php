@@ -233,6 +233,41 @@ class IncidentReport extends Model
         return $this->isOperationalSeveritySuppressed() || $this->isAwaitingTextSeverityConfirmation() ? null : $this->severity;
     }
 
+    /** Display the genuine highest classifier score, including below-cutoff results.
+     * This ranking never sets operational severity or overrides phrase suggestions.
+     */
+    public function getAiTopCategoryAttribute(): ?array
+    {
+        if (self::manualOnlyMode()) {
+            return null;
+        }
+        $review = $this->description_severity_review;
+        $scores = $review['ai_suggestion']['model_probabilities'] ?? $review['previous_ai_probabilities']
+            ?? (str_starts_with((string) $this->ai_source, 'text_') ? $this->ai_probabilities : null);
+        $labels = ['minor' => 'Minor', 'serious' => 'Serious', 'critical' => 'Critical', 'needs_review' => 'Needs review'];
+        if (! is_array($scores) || count($scores) !== 4 || array_diff(array_keys($labels), array_keys($scores))) {
+            return null;
+        }
+        foreach ($scores as $score) {
+            if ((! is_int($score) && ! is_float($score)) || ! is_finite($score) || $score < 0 || $score > 1) {
+                return null;
+            }
+        }
+        if (abs(array_sum($scores) - 1) > 0.0001) {
+            return null;
+        }
+        $maximum = max($scores);
+        $keys = array_keys(array_filter($scores, fn ($score) => abs($score - $maximum) < 0.000001));
+
+        return [
+            'key' => count($keys) === 1 ? $keys[0] : 'needs_review',
+            'label' => implode(' / ', array_map(fn ($key) => $labels[$key], $keys)),
+            'score' => round($maximum * 100, 1),
+            'tied' => count($keys) > 1,
+            'original' => $review !== null,
+        ];
+    }
+
     public function getOperationalAiConfidenceAttribute(): ?int
     {
         return $this->isOperationalSeveritySuppressed() ? null : $this->ai_confidence;

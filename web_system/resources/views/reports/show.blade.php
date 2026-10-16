@@ -255,6 +255,7 @@
                 <div class="detail-card"><strong>{{ $report->transmission_type === 'lora' ? 'Registered node coordinates' : 'GPS coordinates' }}</strong><p>@if ($report->latitude !== null && $report->longitude !== null){{ number_format((float) $report->latitude, 6) }}, {{ number_format((float) $report->longitude, 6) }}@else Coordinates not available @endif</p></div>
                 <div class="detail-card">
                     <strong>{{ in_array($report->operational_ai_source, ['manual_only', 'human_responder'], true) ? 'Severity assessment' : 'AI summary' }}</strong>
+                    @unless ($isCivilian)@include('reports.partials.ai-analysis', ['report' => $report, 'compact' => false])@endunless
                     <div class="tag-row">
                         <span class="tag {{ $tone($report->severity_display) }}">{{ $report->severity_display }} output</span>
                         <span class="badge {{ $confidenceTone($report->operational_ai_confidence) }}">{{ $report->ai_score_display }}</span>

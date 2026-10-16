@@ -160,6 +160,7 @@
                 <div class="detail-card"><strong>{{ $assessmentLabel }}</strong><span class="tag {{ $tone($analysis['predicted']) }}">{{ $analysis['predicted'] }}</span></div>
                 <div class="detail-card">
                     <strong>{{ $isPendingAssessment || $analysis['source'] === 'human_responder' ? 'Severity assessment' : 'AI quick read' }}</strong>
+                    @include('reports.partials.ai-analysis', ['report' => $report, 'compact' => false])
                     <div class="tag-row">
                         @if ($isSuppressedLegacySuggestion)
                             <span class="badge {{ $confidenceTone($report->ai_confidence !== null ? (string) $report->ai_confidence : null) }}">Historical AI score: {{ $report->ai_confidence !== null ? $report->ai_confidence.'%' : 'unavailable' }} (audit only)</span>

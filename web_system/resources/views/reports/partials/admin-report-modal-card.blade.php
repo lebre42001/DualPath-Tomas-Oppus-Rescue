@@ -68,15 +68,8 @@
             @else
                 <div class="preview-card">
                     <strong>{{ in_array($report->operational_ai_source, ['manual_only', 'human_responder'], true) ? 'Severity assessment' : 'AI quick read' }}</strong>
-                    <div class="tag-row">
-                        <span class="tag {{ $tone($report->severity_display) }}">{{ $report->severity_display }} output</span>
-                        <span class="badge {{ $confidenceTone($report->operational_ai_confidence) }}">{{ $report->ai_score_display }}</span>
-                        <span class="badge blue">{{ $aiSourceLabel($report->operational_ai_source) }}</span>
-                        <span class="badge {{ $aiStatusTone($report) }}">{{ $aiStatusLabel($report) }}</span>
-                        @include('reports.partials.photo-relevance-badges', ['report' => $report])
-                    </div>
-                    <p>{{ $report->operational_ai_summary ?: 'AI summary is still pending for this incident.' }}</p>
-                    <p><strong>Model:</strong> {{ $report->operational_ai_model_name ? $report->operational_ai_model_name.($report->operational_ai_model_version ? ' v'.$report->operational_ai_model_version : '') : 'Model pending' }}</p>
+                    @include('reports.partials.ai-analysis', ['report' => $report, 'compact' => false])
+                    @include('reports.partials.photo-relevance-badges', ['report' => $report])
                 </div>
             @endif
 

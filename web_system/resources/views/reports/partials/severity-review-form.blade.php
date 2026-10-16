@@ -15,13 +15,13 @@
     $modelAbstained = ! \App\Models\IncidentReport::manualOnlyMode()
         && $report->ai_source === 'text_review' && $report->ai_status === 'needs_review'
         && filled($report->ai_model_name);
-    $selectedReview = $isSubmittedReview ? old('severity_review_label', '') : ($textReview['reviewed_label'] ?? $reviewAiSuggestion['label'] ?? '');
+    $selectedReview = $isSubmittedReview ? old('severity_review_label', '') : ($textReview['reviewed_label'] ?? $reviewAiSuggestion['label'] ?? $report->ai_top_category['key'] ?? '');
     $scoreBreakdown = $savedAiSuggestion['model_probabilities'] ?? $textReview['previous_ai_probabilities']
         ?? ($currentAiSuggestion || $modelAbstained ? $report->ai_probabilities : null);
     $scoreBreakdown = \App\Models\IncidentReport::manualOnlyMode() ? null : $scoreBreakdown;
 @endphp
 
-<div class="stack" data-severity-review>
+<div class="stack" data-severity-review data-severity-review-for="{{ $report->id }}">
     <strong>Confirm or correct severity</strong>
     @if ($reviewAiSuggestion)
         <p><strong>{{ $currentAiSuggestion ? 'AI suggestion' : 'Original AI suggestion' }}:</strong> {{ ucwords(str_replace('_', ' ', $reviewAiSuggestion['label'])) }}
@@ -33,7 +33,11 @@
             <p>Suggestion method: multilingual word/phrase rules. The rule has no confidence score; trained-model scores are shown separately when available.</p>
         @endif
     @elseif ($modelAbstained)
-        <p>AI analyzed this description but could not suggest a supported severity. Review the report or request more information.</p>
+        @if ($report->ai_top_category)
+            <p>Highest model category: <strong>{{ $report->ai_top_category['label'] }} ({{ number_format($report->ai_top_category['score'], 1) }}%)</strong>. Confirm or correct it after reviewing the description.</p>
+        @else
+            <p>AI analyzed this description but could not suggest a supported severity. Review the report or request more information.</p>
+        @endif
     @else
         <p>AI suggestion unavailable for this report. An admin can record an assessment; reports created before activation can be analyzed with the active text model.</p>
     @endif
@@ -55,10 +59,11 @@
     @endif
     @if (! \App\Models\IncidentReport::manualOnlyMode() && config('services.ai_text.enabled')
         && ! in_array($report->ai_source, ['human_responder', 'text_human_override', 'manual_override'], true))
-        <form method="POST" action="{{ route('reports.ai-suggestion', $report) }}">
+        <form method="POST" action="{{ route('reports.ai-suggestion', $report) }}" data-ai-analyze-form data-report-id="{{ $report->id }}">
             @csrf
             <button type="submit" class="btn btn-secondary">{{ $currentAiSuggestion || $modelAbstained ? 'Analyze description again' : 'Analyze description with AI' }}</button>
         </form>
+        <p role="status" data-ai-analysis-feedback hidden></p>
     @endif
     <p>Review the submitted description, then confirm or correct the severity below. Choose Needs review when the information is insufficient or unclear.</p>
     @if ($textReview)

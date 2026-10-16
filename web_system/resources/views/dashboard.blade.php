@@ -541,6 +541,7 @@
 
                                 <div class="monitoring-card-body" role="button" tabindex="0" data-report-modal-trigger>
                                     <h3>{{ $report->incident_type }}</h3>
+                                    @include('reports.partials.ai-analysis', ['report' => $report, 'compact' => true])
                                     <div class="tag-row">
                                         <span class="tag {{ $tone($report->severity_display) }}">{{ $report->severity_display }}</span>
                                         @unless ($isLoRa)<span class="badge {{ $confidenceTone($report->operational_ai_confidence) }}">{{ $report->ai_score_display }}</span>@endunless

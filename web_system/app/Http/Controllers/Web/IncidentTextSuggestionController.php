@@ -7,12 +7,13 @@ use App\Models\IncidentReport;
 use App\Services\AiTextSeverityClient;
 use App\Support\IncidentFeedBroadcaster;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class IncidentTextSuggestionController extends Controller
 {
-    public function __invoke(Request $request, IncidentReport $incidentReport, AiTextSeverityClient $client): RedirectResponse
+    public function __invoke(Request $request, IncidentReport $incidentReport, AiTextSeverityClient $client): RedirectResponse|JsonResponse
     {
         abort_unless($request->user()?->is_admin, 403);
         abort_if(IncidentReport::manualOnlyMode() || ! $client->enabled(), 422, 'Text AI is unavailable.');
@@ -22,7 +23,9 @@ class IncidentTextSuggestionController extends Controller
         $analysis = $client->analyze($description);
         $modelAbstained = $analysis['source'] === 'text_review' && $analysis['model_name'] !== null;
         if (! in_array($analysis['source'], ['text_model', 'text_model_experimental', 'text_rule_advisory'], true) && ! $modelAbstained) {
-            return back()->with('status', 'The text model could not suggest a supported severity. Admin review is required.');
+            $message = 'Text analysis is unavailable. The existing assessment was preserved; please retry or review it manually.';
+            return $request->expectsJson() ? response()->json(['message' => $message], 422)
+                : back()->with('status', $message)->with('ai_review_report_id', $incidentReport->id);
         }
         if ($modelAbstained) {
             $analysis['severity'] = null;
@@ -67,8 +70,24 @@ class IncidentTextSuggestionController extends Controller
         });
         IncidentFeedBroadcaster::dispatch($report, 'ai_suggestion');
 
-        return back()->with('status', $modelAbstained
+        $message = $modelAbstained
             ? 'Text analysis completed without a supported severity suggestion. More information or admin review is required.'
-            : 'AI suggestion saved. Read the description and confirm or correct the severity.');
+            : 'AI suggestion saved. Read the description and confirm or correct the severity.';
+        if ($topCategory = $report->ai_top_category) {
+            $message = 'Text analyzed. Highest model category: '.$topCategory['label'].' ('
+                .number_format($topCategory['score'], 1).'%). Admin review is required.';
+        }
+        if ($request->expectsJson()) {
+            return response()->json([
+                'report_id' => $report->id,
+                'message' => $message,
+                'top_category' => $report->ai_top_category,
+                'analysis_html' => view('reports.partials.ai-analysis', ['report' => $report])->render(),
+                'compact_html' => view('reports.partials.ai-analysis', ['report' => $report, 'compact' => true])->render(),
+                'review_html' => view('reports.partials.severity-review-form', ['report' => $report])->render(),
+            ]);
+        }
+
+        return back()->with('status', $message)->with('ai_review_report_id', $report->id);
     }
 }

@@ -30,9 +30,8 @@ class IncidentReportController extends Controller
     {
         $user = $request->user();
         $isCivilian = $user?->isCivilian() ?? false;
-        $reviewReportId = ! $isCivilian && $request->integer('review') > 0
-            ? $request->integer('review')
-            : null;
+        $requestedReview = $request->integer('review') ?: (int) $request->session()->get('ai_review_report_id', 0);
+        $reviewReportId = ! $isCivilian && $requestedReview > 0 ? $requestedReview : null;
         $activeStatuses = ['received', 'acknowledged', 'dispatched', 'responding'];
         $reportsQuery = $filterQuery->build($request, $user)
             ->with(['reporter', 'assignedResponder']);

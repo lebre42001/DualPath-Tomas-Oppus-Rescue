@@ -61,6 +61,7 @@ class IncidentFeedUpdated implements ShouldBroadcastNow
                 'ai_summary' => $report->operational_ai_summary,
                 'ai_confidence' => $report->operational_ai_confidence,
                 'ai_suggested_severity' => $report->ai_suggested_severity,
+                'ai_top_category' => $report->ai_top_category,
                 'ai_source' => $report->operational_ai_source,
                 'ai_status' => $report->operational_ai_status,
                 'ai_model_name' => $report->operational_ai_model_name,

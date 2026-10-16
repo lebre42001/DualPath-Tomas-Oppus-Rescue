@@ -9,5 +9,6 @@ import './account-verification';
 import './civilian-accounts';
 import './shell-dialogs';
 import './report-index';
+import './report-ai-analysis';
 import './profile-page';
 import './settings-page';

@@ -755,6 +755,10 @@ function incrementCounter(name) {
 function buildIncidentCard(report) {
     const severity = report.severity ?? null;
     const aiSource = String(report.ai_source ?? '');
+    const topCategory = report.ai_top_category;
+    const topCategoryHtml = topCategory && Number.isFinite(Number(topCategory.score))
+        ? `<div class="stack" data-ai-analysis-for="${escapeAttribute(report.id)}" data-ai-analysis-layout="compact" tabindex="-1"><strong>${topCategory.original ? 'Original AI top category' : 'AI top category'}: ${escapeHtml(topCategory.label)} — ${Number(topCategory.score).toFixed(1)}%</strong><p>${topCategory.original ? 'Original model score; admin assessment recorded separately.' : 'Provisional model score; admin review required.'}</p><p data-ai-analysis-feedback role="status" hidden></p></div>`
+        : `<div data-ai-analysis-for="${escapeAttribute(report.id)}" data-ai-analysis-layout="compact"></div>`;
     const isProvisional = report.severity_is_provisional || aiSource === 'text_review';
     const severityDisplay = report.severity_display ?? (isProvisional || severity === null ? 'Needs review' : severity);
     const isTextAssessment = aiSource.startsWith('text_');
@@ -821,6 +825,7 @@ function buildIncidentCard(report) {
         </div>
         <div class="monitoring-card-body">
             <h3>${escapeHtml(report.incident_type ?? 'New Incident')}</h3>
+            ${topCategoryHtml}
             <div class="tag-row">
                 <span class="tag ${severityTone[severityDisplay] ?? 'blue'}">${escapeHtml(severityDisplay)}</span>
                 ${isLoRa ? '' : `<span class="badge neutral">${escapeHtml(aiScoreLabel)}</span>`}

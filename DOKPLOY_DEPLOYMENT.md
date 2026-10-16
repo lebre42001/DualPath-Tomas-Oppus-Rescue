@@ -88,6 +88,16 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
 ## Operations
 
+- Highest model category and in-place analysis (2026-10-16): deploy the web app
+  and rebuilt Vite assets together. All report cards and admin review views show
+  the actual highest-scoring model category/percentage, including below-cutoff
+  results, separately from final admin severity and phrase-rule suggestions.
+  Analyze again uses an authenticated JSON POST and replaces the visible result,
+  scores and review form inside the open modal; errors preserve the prior result
+  and pending review notes. Normal form submissions also reopen the report on
+  the reports page. No model, cutoff, severity mapping or migration changes.
+  Verify the changed `/system/version`, `/login` and ready AI status after deploy.
+
 - Counted-pack retraining v2 (2026-10-16): Compose and local active config select
   `dualpath-tfidf-20261016-v2`. This re-fit uses the unchanged canonical corpus
   and frozen train/validation/test split; the 8,000-word pack is already a subset

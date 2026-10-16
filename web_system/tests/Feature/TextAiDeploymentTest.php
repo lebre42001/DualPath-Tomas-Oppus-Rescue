@@ -96,7 +96,7 @@ class TextAiDeploymentTest extends TestCase
         $this->assertSame($payload['probabilities'], $report->ai_probabilities);
         $this->assertSame('AI analyzed text; no severity suggested', $report->ai_score_display);
         $this->get(route('reports.show', $report))->assertOk()
-            ->assertSee('AI analyzed this description but could not suggest a supported severity.')
+            ->assertSee('Highest model category:')->assertSee('Needs review (94.0%)')
             ->assertSee('Analyze description again')->assertDontSee('while text AI is unavailable');
         $this->post(route('reports.severity-review', $report), ['severity_review_label' => 'needs_review',
             'severity_review_notes' => 'The reported condition is unclear.'])->assertRedirect();
@@ -211,6 +211,88 @@ class TextAiDeploymentTest extends TestCase
             'description' => 'A driver is unresponsive after a collision.', 'status' => 'pending',
             'response_notes' => 'Original message.', 'ai_source' => 'manual_only', 'severity' => null,
             'transmission_type' => 'Online', 'submitted_at' => now()]);
+    }
+
+    public function test_ajax_analysis_shows_the_actual_top_category_for_every_report_without_finalizing_it(): void
+    {
+        $admin = User::factory()->create(['is_admin' => true, 'role' => 'admin']);
+        $cases = [
+            'Minor' => ['minor' => 0.46, 'serious' => 0.29, 'critical' => 0.15, 'needs_review' => 0.10],
+            'Serious' => ['minor' => 0.15, 'serious' => 0.50, 'critical' => 0.20, 'needs_review' => 0.15],
+            'Critical' => ['minor' => 0.062539, 'serious' => 0.037538, 'critical' => 0.632553, 'needs_review' => 0.267371],
+            'Needs review' => ['minor' => 0.20, 'serious' => 0.16, 'critical' => 0.10, 'needs_review' => 0.54],
+        ];
+        $payload = [];
+        Http::fake(function () use (&$payload) { return Http::response($payload); });
+        foreach ($cases as $label => $probabilities) {
+            $report = $this->report();
+            $payload = [...$this->prediction(), 'severity' => null, 'predicted_label' => array_search(max($probabilities), $probabilities),
+                'status' => 'needs_review', 'confidence' => max($probabilities), 'probabilities' => $probabilities];
+            $response = $this->actingAs($admin)->postJson(route('reports.ai-suggestion', $report))
+                ->assertOk()->assertJsonPath('report_id', $report->id)->assertJsonPath('top_category.label', $label)
+                ->assertJsonPath('top_category.score', fn ($score) => (float) $score === round(max($probabilities) * 100, 1));
+            $this->assertStringContainsString('AI top category', $response->json('analysis_html'));
+            $this->assertStringContainsString(number_format(max($probabilities) * 100, 1).'%', $response->json('analysis_html'));
+            $this->assertStringContainsString('data-ai-analyze-form', $response->json('review_html'));
+            $this->assertNull($report->fresh()->operational_severity);
+            $this->assertSame($probabilities, $report->fresh()->ai_probabilities);
+            $this->get(route('reports.index'))->assertOk()->assertSee('AI top category')->assertSee($label);
+            $this->get(route('monitoring'))->assertOk()->assertSee('AI top category');
+            $this->get(route('reports.show', $report))->assertOk()->assertSee('AI top category');
+        }
+    }
+
+    public function test_ajax_unavailable_service_keeps_existing_scores_and_returns_an_inline_error(): void
+    {
+        $admin = User::factory()->create(['is_admin' => true, 'role' => 'admin']);
+        $report = $this->report();
+        $report->update(['ai_source' => 'text_model_experimental', 'severity' => 'Critical',
+            'ai_probabilities' => $this->prediction()['probabilities']]);
+        Http::fake(['text-ai.test/predict/text' => Http::response([], 503)]);
+        $this->actingAs($admin)->postJson(route('reports.ai-suggestion', $report))->assertStatus(422)
+            ->assertJsonStructure(['message']);
+        $this->assertSame($this->prediction()['probabilities'], $report->fresh()->ai_probabilities);
+    }
+
+    public function test_normal_form_submission_reopens_the_same_report_after_redirect(): void
+    {
+        $admin = User::factory()->create(['is_admin' => true, 'role' => 'admin']);
+        $report = $this->report();
+        Http::fake(['text-ai.test/predict/text' => Http::response($this->prediction())]);
+        $this->actingAs($admin)->from(route('reports.index'))->post(route('reports.ai-suggestion', $report))
+            ->assertRedirect(route('reports.index'))->assertSessionHas('ai_review_report_id', $report->id);
+        $this->get(route('reports.index'))->assertOk()->assertSee('data-report-open-on-load', false)
+            ->assertSee('AI top category')->assertSee('94.0%');
+    }
+
+    public function test_top_category_remains_original_after_admin_review_and_is_hidden_in_manual_mode(): void
+    {
+        $admin = User::factory()->create(['is_admin' => true, 'role' => 'admin']);
+        $report = $this->report();
+        $scores = ['minor' => 0.10, 'serious' => 0.20, 'critical' => 0.60, 'needs_review' => 0.10];
+        $report->update(['ai_source' => 'text_review', 'ai_status' => 'needs_review',
+            'ai_model_name' => 'fixture-model', 'ai_probabilities' => $scores]);
+        $this->actingAs($admin)->post(route('reports.severity-review', $report), [
+            'severity_review_label' => 'serious', 'severity_review_notes' => 'Reviewed the condition.'])->assertRedirect();
+        $report->refresh();
+        $this->assertSame('Serious', $report->operational_severity);
+        $this->assertSame('Critical', $report->ai_top_category['label']);
+        $this->assertTrue($report->ai_top_category['original']);
+        $this->get(route('reports.show', $report))->assertOk()->assertSee('Original AI top category')->assertSee('60.0%');
+        config(['services.ai_text.mode' => 'MANUAL_ONLY']);
+        $this->assertNull($report->ai_top_category);
+    }
+
+    public function test_top_category_does_not_invent_scores_for_missing_invalid_or_tied_results(): void
+    {
+        $report = $this->report();
+        $this->assertNull($report->ai_top_category);
+        $report->ai_source = 'text_review';
+        $report->ai_probabilities = ['minor' => 0.25, 'serious' => 0.25, 'critical' => 0.25, 'needs_review' => 0.25];
+        $this->assertTrue($report->ai_top_category['tied']);
+        $this->assertSame('needs_review', $report->ai_top_category['key']);
+        $report->ai_probabilities = ['minor' => 99, 'serious' => 1, 'critical' => 0, 'needs_review' => 0];
+        $this->assertNull($report->ai_top_category);
     }
 
     private function prediction(): array
