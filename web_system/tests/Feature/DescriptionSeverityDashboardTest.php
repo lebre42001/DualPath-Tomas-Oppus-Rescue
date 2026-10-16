@@ -20,16 +20,18 @@ class DescriptionSeverityDashboardTest extends TestCase
         Http::preventStrayRequests();
     }
 
-    public function test_admin_and_monitoring_counts_separate_unassessed_reports_from_historical_severity(): void
+    public function test_admin_counts_and_shared_monitoring_alerts_separate_unassessed_reports_from_historical_severity(): void
     {
         $reports = $this->mixedReports();
         $admin = User::factory()->create(['role' => 'admin', 'is_admin' => true]);
         $expected = ['Minor' => 0, 'Serious' => 1, 'Critical / Fatal' => 1, 'needs_review' => 2];
 
-        foreach (['admin.dashboard' => 'fatal_alerts', 'monitoring' => 'fatal'] as $route => $fatalKey) {
+        $this->actingAs($admin)->get(route('admin.dashboard'))->assertOk()
+            ->assertViewHas('severityBreakdown', $expected)
+            ->assertViewHas('stats', fn (array $stats): bool => $stats['needs_review'] === 2 && $stats['fatal_alerts'] === 1);
+
+        foreach (['admin.dashboard', 'monitoring'] as $route) {
             $this->actingAs($admin)->get(route($route))->assertOk()
-                ->assertViewHas('severityBreakdown', $expected)
-                ->assertViewHas('stats', fn (array $stats): bool => $stats['needs_review'] === 2 && $stats[$fatalKey] === 1)
                 ->assertViewHas('fatalAlerts', fn ($alerts): bool => $alerts->pluck('id')->sort()->values()->all()
                     === collect([$reports['photo']->id])->all());
         }
@@ -106,7 +108,7 @@ class DescriptionSeverityDashboardTest extends TestCase
             ->assertSee('Restricted audit history');
     }
 
-    public function test_monitoring_recommendation_does_not_treat_provisional_storage_severity_as_assessed(): void
+    public function test_monitoring_feed_does_not_treat_provisional_storage_severity_as_assessed(): void
     {
         $civilian = User::factory()->create(['role' => 'civilian']);
         $report = $this->report($civilian, 'INC-UNASSESSED', [
@@ -117,11 +119,12 @@ class DescriptionSeverityDashboardTest extends TestCase
         $admin = User::factory()->create(['role' => 'admin', 'is_admin' => true]);
 
         $this->actingAs($admin)->get(route('monitoring'))->assertOk()
-            ->assertViewHas('priorityIncident', fn (IncidentReport $priority): bool => $priority->id === $report->id)
-            ->assertViewHas('dispatchRecommendation', function (array $recommendation): bool {
-                return $recommendation['priority'] === 'Needs responder review'
-                    && $recommendation['response_type'] === 'Unassessed description; verify urgency';
-            });
+            ->assertViewHas('reports', fn ($reports): bool => $reports->count() === 1
+                && $reports->first()->id === $report->id
+                && $reports->first()->operational_severity === null)
+            ->assertViewHas('fatalAlerts', fn ($alerts): bool => $alerts->isEmpty())
+            ->assertSee('Admin review required.')
+            ->assertDontSee('Dispatch recommendation');
     }
 
     public function test_civilian_web_and_api_dashboards_keep_other_reports_and_operational_assessments_private(): void

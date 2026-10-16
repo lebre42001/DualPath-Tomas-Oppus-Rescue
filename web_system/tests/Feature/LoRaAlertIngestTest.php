@@ -159,7 +159,7 @@ class LoRaAlertIngestTest extends TestCase
             ->assertOk()
             ->assertSee($report->report_code)
             ->assertSee('LoRa reports')
-            ->assertSee('Gateway');
+            ->assertSee($report->lora_sender_id);
 
         $this->actingAs($admin)
             ->get(route('reports.index', [

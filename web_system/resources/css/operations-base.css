@@ -721,3 +721,13 @@ html[data-theme="dark"],html.dark{color-scheme:dark;--bg:#0b1723;--surface:#1426
         html[data-theme="dark"] :is(.selfie-camera-sheet,.civilian-account-modal-shell,.civilian-account-modal-body .civilian-account-card,.mobile-quick-nav),html.dark :is(.selfie-camera-sheet,.civilian-account-modal-shell,.civilian-account-modal-body .civilian-account-card,.mobile-quick-nav){background:var(--surface)!important;border-color:var(--line)!important;color:var(--ink)}
         html[data-theme="dark"] :is(.latest-incident-row,.monitoring-incident-card),html.dark :is(.latest-incident-row,.monitoring-incident-card){background:var(--surface)!important;border-color:var(--line)!important;color:var(--ink)}
         html[data-theme="dark"] :is(.latest-incident-row.process-pending,.monitoring-incident-card.process-pending),html.dark :is(.latest-incident-row.process-pending,.monitoring-incident-card.process-pending){background:linear-gradient(180deg,#3b311d,#2d2b23)!important;border-color:rgba(240,180,75,.30)!important}
+
+        /* Live Monitoring keeps the latest mixed-source feed in one full-width panel. */
+        .monitoring-latest-only{min-width:0;align-self:start}
+        .monitoring-latest-only .monitoring-card-body{gap:8px}
+        .monitoring-latest-only .monitoring-report-source{justify-self:start}
+        .monitoring-latest-only .monitoring-card-severity .stack{gap:5px}
+        .monitoring-latest-only .monitoring-card-severity .tag-row>strong{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+        .monitoring-latest-only .monitoring-card-severity p{font-size:.74rem;line-height:1.35}
+        .monitoring-latest-only .monitoring-card-description{-webkit-line-clamp:2;line-height:1.4}
+        .monitoring-latest-only .monitoring-card-actions{grid-template-columns:1fr}

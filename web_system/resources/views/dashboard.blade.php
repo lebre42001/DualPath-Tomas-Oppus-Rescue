@@ -195,7 +195,7 @@
 @section('title', $isCivilian ? 'Civilian Sender Dashboard' : 'Admin Receiver Dashboard')
 @section('page_label', $isCivilian ? 'Civilian Dashboard' : 'Operations')
 @section('page_heading', $isCivilian ? 'Civilian Home' : 'Live Monitoring')
-@section('page_subheading', $isCivilian ? 'Direct access to report an emergency and check your latest status.' : 'Latest civilian incident submissions, severity, map pins, and admin review actions.')
+@section('page_subheading', $isCivilian ? 'Direct access to report an emergency and check your latest status.' : 'Latest Online and LoRa reports.')
 
 @section('hero')
     @if ($isCivilian)
@@ -492,13 +492,11 @@
             })();
         </script>
     @else
-        <section class="workspace-grid monitoring-dashboard-grid">
-            <div class="monitoring-main-stack">
+        <section class="monitoring-latest-only">
             <article class="panel monitoring-card-panel">
                 <div class="panel-toolbar">
                     <div class="panel-heading">
-                        <p class="panel-kicker">Latest Incident</p>
-                        <h2 class="panel-title">Live incident monitoring</h2>
+                        <h2 class="panel-title">Latest reports</h2>
                     </div>
                     <div class="action-row">
                         <a href="{{ route('lora-reports.index') }}" class="btn btn-secondary">All LoRa reports</a>
@@ -541,35 +539,23 @@
 
                                 <div class="monitoring-card-body" role="button" tabindex="0" data-report-modal-trigger>
                                     <h3>{{ $report->incident_type }}</h3>
-                                    @include('reports.partials.ai-analysis', ['report' => $report, 'compact' => true])
-                                    <div class="tag-row">
-                                        <span class="tag {{ $tone($report->current_severity_category) }}" data-current-category-for="{{ $report->id }}">{{ $report->current_severity_category }}</span>
-                                        @unless ($isLoRa)<span class="badge {{ $confidenceTone($report->operational_ai_confidence) }}">{{ $report->ai_score_display }}</span>@endunless
-                                        <span class="tag neutral">{{ strtoupper($report->transmission_type ?: 'online') }}</span>
-                                        @if (in_array($report->operational_ai_source, ['python_model', 'image_model'], true))
-                                            <span class="badge neutral">Historical photo assessment</span>
-                                        @endif
+                                    <span class="tag neutral monitoring-report-source">{{ $isLoRa ? 'LoRa · '.($report->lora_sender_id ?: 'Node') : 'Online' }}</span>
+                                    <div class="monitoring-card-severity">
+                                        @include('reports.partials.ai-analysis', ['report' => $report, 'compact' => true])
                                     </div>
-                                    <p>{{ \Illuminate\Support\Str::limit($report->operational_ai_summary ?: $report->description ?: 'No short description provided.', 98) }}</p>
+                                    <p class="monitoring-card-description">{{ \Illuminate\Support\Str::limit(preg_replace('/\s+/u', ' ', trim((string) $report->description)) ?: 'No description provided.', 110) }}</p>
                                 </div>
-
                                 <div class="monitoring-card-map">
                                     @if ($hasCoordinates)
                                         <div class="latest-inline-map dashboard-mini-map" data-incident-map data-map-scope="single" data-report-id="{{ $report->id }}" data-latitude="{{ (float) $report->latitude }}" data-longitude="{{ (float) $report->longitude }}" data-location-text="{{ e($report->location_text) }}" data-points="{{ e(json_encode($inlineMapPayload)) }}"></div>
                                     @else
-                                        <span class="incident-feed-map-empty">No GPS pin</span>
+                                        <span class="incident-feed-map-empty">Location unavailable</span>
                                     @endif
-                                    <small>GPS {{ $hasCoordinates ? number_format((float) $report->latitude, 6).', '.number_format((float) $report->longitude, 6) : $report->location_text }}</small>
+                                    <small>{{ \Illuminate\Support\Str::limit($report->location_text ?: 'Location unavailable', 75) }}</small>
                                 </div>
 
                                 <div class="monitoring-card-actions">
                                     <button type="button" class="action-btn primary" data-report-review-label>Review</button>
-                                    <form method="POST" action="{{ route('reports.destroy', $report) }}" onsubmit="return confirm('Delete this specific incident report and attached files?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="hidden" name="return_to" value="monitoring">
-                                        <button type="submit" class="action-btn danger">Delete</button>
-                                    </form>
                                 </div>
 
                                 @include('reports.partials.admin-report-modal-card', [
@@ -591,146 +577,9 @@
                         @endforelse
                 </div>
 
-                <p class="section-copy">Showing the three latest reports. Older reports remain available in report history.</p>
+                <p class="section-copy">Latest 3 reports. Open report history for older reports.</p>
             </article>
 
-            <article class="panel monitoring-summary-panel">
-                <div class="monitoring-summary-grid">
-                    <section class="monitoring-summary-section monitoring-summary-section-severity">
-                        <div class="panel-heading">
-                            <p class="panel-kicker">Severity Visualization</p>
-                            <h2 class="panel-title">Current load by severity</h2>
-                        </div>
-                        <div class="summary-strip">
-                            @foreach ($severityBreakdown as $label => $count)
-                                <article class="summary-card">
-                                    <span>{{ $label === 'needs_review' ? 'Needs review' : ($label === 'Fatal' ? 'Critical / Fatal' : $label) }}</span>
-                                    <strong>{{ $count }}</strong>
-                                    <p>{{ $label === 'needs_review' ? 'Awaiting responder assessment.' : 'Incidents currently tracked in this severity class.' }}</p>
-                                </article>
-                            @endforeach
-                        </div>
-                    </section>
-
-                    <section class="monitoring-summary-section monitoring-summary-section-transmission">
-                        <div class="panel-heading">
-                            <p class="panel-kicker">Transmission Mix</p>
-                            <h2 class="panel-title">Online and LoRa coverage</h2>
-                        </div>
-                        <div class="summary-strip">
-                            <article class="summary-card">
-                                <span>Online reports</span>
-                                <strong>{{ $transmissionBreakdown['online'] }}</strong>
-                                <p>Full payload reports with picture or video evidence.</p>
-                            </article>
-                            <article class="summary-card">
-                                <span>LoRa reports</span>
-                                <strong>{{ $transmissionBreakdown['lora'] }}</strong>
-                                <p>Compact fallback reports with severity, registered node location, and description.</p>
-                            </article>
-                        </div>
-                    </section>
-                </div>
-            </article>
-            </div>
-
-            <div class="workspace-side monitoring-side-stack">
-                <article class="panel">
-                    <div class="panel-head">
-                        <div class="panel-heading">
-                            <p class="panel-kicker">Priority Incident</p>
-                            <h2 class="panel-title">Dispatch recommendation</h2>
-                        </div>
-                    </div>
-                    @if ($priorityIncident && $dispatchRecommendation)
-                        <div class="detail-card">
-                            <strong>{{ $priorityIncident->incident_type }}</strong>
-                            <p>{{ $priorityIncident->location_text }}</p>
-                            <div class="tag-row">
-                                <span class="tag red">{{ $dispatchRecommendation['priority'] }}</span>
-                                <span class="tag blue">{{ $dispatchRecommendation['timer_label'] }}</span>
-                            </div>
-                            <div class="meta-list">
-                                <div class="meta-row"><strong>Recommended admin</strong><span>{{ $dispatchRecommendation['recommended_responder'] }}</span></div>
-                                <div class="meta-row"><strong>Response type</strong><span>{{ $dispatchRecommendation['response_type'] }}</span></div>
-                            </div>
-                            <a href="{{ route('reports.show', $priorityIncident) }}" class="btn btn-primary">View Priority Incident</a>
-                        </div>
-                    @else
-                        <div class="data-empty">No priority incident is waiting right now.</div>
-                    @endif
-                </article>
-
-                <article class="panel">
-                    <div class="panel-head">
-                        <div class="panel-heading">
-                            <p class="panel-kicker">Alert Queue</p>
-                            <h2 class="panel-title">Latest fatal incidents</h2>
-                        </div>
-                    </div>
-                    <div class="stack">
-                        @forelse ($fatalAlerts as $alert)
-                            <a href="{{ route('reports.show', $alert) }}" class="detail-card">
-                                <strong>{{ $alert->incident_type }}</strong>
-                                <p>{{ $alert->location_text }}</p>
-                                <div class="tag-row">
-                                    <span class="tag red">{{ $alert->severity_display }}</span>
-                                    <span class="tag {{ $statusDisplayTone($alert->status) }}">{{ $statusDisplayLabel($alert->status) }}</span>
-                                    <span class="tag neutral">{{ $priorityTimer($alert) }}</span>
-                                </div>
-                            </a>
-                        @empty
-                            <div class="data-empty">No fatal alerts are active at the moment.</div>
-                        @endforelse
-                    </div>
-                </article>
-
-                <article class="panel">
-                    <div class="panel-head">
-                        <div class="panel-heading">
-                            <p class="panel-kicker">Connectivity Intelligence</p>
-                            <h2 class="panel-title">Field communication snapshot</h2>
-                        </div>
-                    </div>
-                    <div class="meta-list">
-                        <div class="meta-row"><strong>Online</strong><span>{{ $connectivity['online_status'] }}</span></div>
-                        <div class="meta-row"><strong>LoRa fallback</strong><span>{{ $connectivity['lora_status'] }}</span></div>
-                        <div class="meta-row"><strong>Internet condition</strong><span>{{ $connectivity['internet_status'] }}</span></div>
-                        <div class="meta-row"><strong>Gateway</strong><span>{{ $connectivity['gateway_status'] }}</span></div>
-                    </div>
-                </article>
-
-                <article class="panel lora-monitoring-shortcut">
-                    <div class="panel-head">
-                        <div class="panel-heading">
-                            <p class="panel-kicker">LoRa Mesh</p>
-                            <h2 class="panel-title">Node heartbeat monitor</h2>
-                            <p class="section-copy">{{ $loraNodes->where('recently_heard', true)->count() }} of {{ $loraNodes->count() }} registered nodes reported within the last 30 seconds.</p>
-                        </div>
-                        <a href="{{ route('monitoring.lora-mesh') }}" class="btn btn-primary">Open LoRa Mesh</a>
-                    </div>
-                </article>
-
-                <article class="panel">
-                    <div class="panel-head">
-                        <div class="panel-heading">
-                            <p class="panel-kicker">Admin Roster</p>
-                            <h2 class="panel-title">Available admin receivers</h2>
-                        </div>
-                    </div>
-                    <div class="stack">
-                        @forelse ($availableResponders as $responder)
-                            <div class="detail-card">
-                                <strong>{{ $responder->name }}</strong>
-                                <p>{{ $responder->responderProfile?->assigned_station ?? 'Station not set' }}</p>
-                                <span class="tag red">Admin Receiver</span>
-                            </div>
-                        @empty
-                            <div class="data-empty">No admin receiver roster entries are available yet.</div>
-                        @endforelse
-                    </div>
-                </article>
-            </div>
         </section>
     @endif
 @endsection

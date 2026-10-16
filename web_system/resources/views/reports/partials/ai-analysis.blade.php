@@ -5,6 +5,11 @@
     $currentCategory = $report->current_severity_category;
     $categoryTone = match ($currentCategory) { 'Critical' => 'red', 'Serious' => 'amber', 'Minor' => 'green', default => 'blue' };
     $finalCategory = $currentCategory !== 'Unassessed' && ! in_array($report->ai_source, ['manual_only', 'text_review', 'text_model', 'text_model_experimental', 'text_rule_advisory'], true);
+    $compactNote = in_array($report->ai_source, ['human_responder', 'manual_override', 'text_human_override'], true)
+        ? 'Admin reviewed.'
+        : ($report->transmission_type === 'lora'
+            ? 'LoRa intake · admin review required.'
+            : ($topCategory ? 'AI score · admin review required.' : 'Admin review required.'));
 @endphp
 <div class="stack" data-ai-analysis-for="{{ $report->id }}" data-ai-analysis-layout="{{ $compact ? 'compact' : 'full' }}" tabindex="-1">
     @if ($currentCategory !== 'Unassessed')
@@ -12,9 +17,10 @@
             <strong>Current severity category:</strong>
             <span class="tag {{ $categoryTone }}">{{ $currentCategory }}@if (! $finalCategory && $topCategory) — {{ number_format($topCategory['score'], 1) }}%@endif</span>
         </div>
-        <p>{{ ($topCategory['tied'] ?? false) && ! $finalCategory ? 'Highest scores are tied. ' : '' }}{{ $finalCategory ? 'Admin assessment is the current category.' : 'AI top category; provisional model score; admin review required.' }}</p>
+        <p>{{ $compact ? $compactNote : ((($topCategory['tied'] ?? false) && ! $finalCategory ? 'Highest scores are tied. ' : '').($finalCategory ? 'Admin assessment is the current category.' : 'AI top category; provisional model score; admin review required.')) }}</p>
     @elseif ($compact)
-        <p>{{ $report->ai_score_display }}</p>
+        <span class="tag blue">Unassessed</span>
+        <p>{{ $compactNote }}</p>
     @endif
     @unless ($compact)
         @if ($finalCategory && $topCategory)

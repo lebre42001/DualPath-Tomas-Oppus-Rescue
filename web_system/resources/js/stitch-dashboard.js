@@ -758,32 +758,22 @@ function buildIncidentCard(report) {
     const topCategory = report.ai_top_category;
     const currentCategory = report.current_severity_category ?? topCategory?.label;
     const finalCategory = currentCategory && !['manual_only', 'text_review', 'text_model', 'text_model_experimental', 'text_rule_advisory'].includes(aiSource);
-    const topCategoryHtml = currentCategory && currentCategory !== 'Unassessed'
-        ? `<div class="stack" data-ai-analysis-for="${escapeAttribute(report.id)}" data-ai-analysis-layout="compact" tabindex="-1"><strong>Current severity category: ${escapeHtml(currentCategory)}${!finalCategory && topCategory && Number.isFinite(Number(topCategory.score)) ? ` — ${Number(topCategory.score).toFixed(1)}%` : ''}</strong><p>${finalCategory ? 'Admin assessment is the current category.' : 'AI top category; admin review required.'}</p><p data-ai-analysis-feedback role="status" hidden></p></div>`
-        : `<div data-ai-analysis-for="${escapeAttribute(report.id)}" data-ai-analysis-layout="compact"></div>`;
+    const categoryLabel = currentCategory ?? 'Unassessed';
+    const compactNote = ['human_responder', 'manual_override', 'text_human_override'].includes(aiSource)
+        ? 'Admin reviewed.'
+        : (String(report.transmission_type ?? '').toLowerCase() === 'lora'
+            ? 'LoRa intake · admin review required.'
+            : (topCategory ? 'AI score · admin review required.' : 'Admin review required.'));
+    const topCategoryHtml = `<div class="stack" data-ai-analysis-for="${escapeAttribute(report.id)}" data-ai-analysis-layout="compact" tabindex="-1">
+        <div class="tag-row"><strong>Current severity category:</strong><span class="tag ${severityTone[categoryLabel] ?? 'blue'}">${escapeHtml(categoryLabel)}${!finalCategory && topCategory && Number.isFinite(Number(topCategory.score)) ? ` — ${Number(topCategory.score).toFixed(1)}%` : ''}</span></div>
+        <p>${escapeHtml(compactNote)}</p><p data-ai-analysis-feedback role="status" hidden></p></div>`;
     const isProvisional = report.severity_is_provisional || aiSource === 'text_review';
     const severityDisplay = report.current_severity_category ?? report.severity_display ?? (isProvisional || severity === null ? 'Needs review' : severity);
-    const isTextAssessment = aiSource.startsWith('text_');
-    const isHistoricalPhotoAssessment = ['python_model', 'image_model'].includes(aiSource);
-    const aiScoreLabel = report.ai_score_label ?? (isTextAssessment
-        ? (report.ai_confidence != null ? `Model score ${report.ai_confidence}% (uncalibrated)` : 'Model score unavailable')
-        : (report.ai_confidence != null ? `Confidence ${report.ai_confidence}%` : 'Confidence unavailable'));
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '';
     const wrapper = document.createElement('article');
     const mapUrl = mapSearchUrl(report);
     const processState = adminProcessState(report);
     const hasCoordinates = report.latitude != null && report.longitude != null;
     const isLoRa = String(report.transmission_type ?? '').toLowerCase() === 'lora';
-    const reporterMeta = isLoRa
-        ? `Sender node ${report.lora_sender_id ?? 'unknown'}`
-        : (report.reporter_contact ?? 'No contact provided');
-    const analysisCell = isLoRa
-        ? `<span>LoRa Source</span>
-           <strong>Gateway ${escapeHtml(report.lora_gateway_id ?? 'unknown')}</strong>
-           <p>No photo attached. Compact SOS payload from ${escapeHtml(report.lora_sender_id ?? 'sender node')}.</p>`
-        : `<span>${isHistoricalPhotoAssessment ? 'Historical photo assessment' : 'Description assessment'}</span>
-           <strong>${escapeHtml(severityDisplay)} · ${escapeHtml(aiScoreLabel)}</strong>
-           <p>${escapeHtml(truncate(report.ai_summary ?? 'AI analysis is still pending for this civilian report.', 96))}</p>`;
     const inlineMap = hasCoordinates
         ? `<div class="latest-inline-map dashboard-mini-map" data-incident-map data-map-scope="single" data-report-id="${escapeAttribute(report.id ?? '')}" data-latitude="${escapeAttribute(report.latitude)}" data-longitude="${escapeAttribute(report.longitude)}" data-location-text="${escapeAttribute(report.location_text ?? 'Civilian GPS location')}" data-points="${escapeAttribute(JSON.stringify([{
                 id: report.id,
@@ -801,14 +791,6 @@ function buildIncidentCard(report) {
     const reviewButton = report.detail_url
         ? `<a href="${escapeAttribute(report.detail_url)}" class="action-btn primary">Review</a>`
         : '<span class="action-btn secondary">Review pending</span>';
-    const deleteButton = report.destroy_url
-        ? `<form method="POST" action="${escapeAttribute(report.destroy_url)}" onsubmit="return confirm('Delete this specific incident report and attached files?');">
-                <input type="hidden" name="_token" value="${escapeAttribute(csrfToken)}">
-                <input type="hidden" name="_method" value="DELETE">
-                <input type="hidden" name="return_to" value="monitoring">
-                <button type="submit" class="action-btn danger">Delete</button>
-            </form>`
-        : '';
 
     wrapper.className = `monitoring-incident-card latest-incident-row severity-${severity} ${processState.className}`;
     wrapper.dataset.reportId = String(report.id ?? '');
@@ -827,85 +809,16 @@ function buildIncidentCard(report) {
         </div>
         <div class="monitoring-card-body">
             <h3>${escapeHtml(report.incident_type ?? 'New Incident')}</h3>
-            ${topCategoryHtml}
-            <div class="tag-row">
-                <span class="tag ${severityTone[severityDisplay] ?? 'blue'}">${escapeHtml(severityDisplay)}</span>
-                ${isLoRa ? '' : `<span class="badge neutral">${escapeHtml(aiScoreLabel)}</span>`}
-                <span class="tag neutral">${escapeHtml(String(report.transmission_type ?? 'online').toUpperCase())}</span>
-                ${isHistoricalPhotoAssessment ? '<span class="badge neutral">Historical photo assessment</span>' : ''}
-            </div>
-            <p>${escapeHtml(truncate(report.ai_summary ?? report.description ?? 'No short description provided.', 98))}</p>
+            <span class="tag neutral monitoring-report-source">${escapeHtml(isLoRa ? `LoRa · ${report.lora_sender_id ?? 'Node'}` : 'Online')}</span>
+            <div class="monitoring-card-severity">${topCategoryHtml}</div>
+            <p class="monitoring-card-description">${escapeHtml(truncate(String(report.description ?? '').replace(/\s+/gu, ' ').trim() || 'No description provided.', 110))}</p>
         </div>
         <div class="monitoring-card-map">
-            ${inlineMap}
-            <small>${hasCoordinates ? `GPS ${escapeHtml(Number(report.latitude).toFixed(6))}, ${escapeHtml(Number(report.longitude).toFixed(6))}` : escapeHtml(report.location_text ?? 'Manual location only')}</small>
+            ${inlineMap || '<span class="incident-feed-map-empty">Location unavailable</span>'}
+            <small>${escapeHtml(truncate(report.location_text ?? 'Location unavailable', 75))}</small>
         </div>
         <div class="monitoring-card-actions">
             ${reviewButton}
-            ${deleteButton}
-        </div>
-    `;
-
-    return wrapper;
-
-    wrapper.innerHTML = `
-        <div class="latest-cell latest-id">
-            <span>ID</span>
-            <strong>${escapeHtml(report.report_code ?? 'INCIDENT')}</strong>
-            <small>#${escapeHtml(report.id ?? '')} · ${escapeHtml(report.priority_timer_label ?? 'Just received')}</small>
-        </div>
-        <div class="latest-cell">
-            <span>Name</span>
-            <strong>${escapeHtml(report.reporter_name ?? 'Unknown sender')}</strong>
-            <small>${escapeHtml(reporterMeta)}</small>
-        </div>
-        <div class="latest-cell latest-ai-cell">
-            ${analysisCell}
-        </div>
-        <div class="latest-cell latest-location-cell">
-            <span>Location</span>
-            <strong>${escapeHtml(report.location_text ?? 'Unknown location')}</strong>
-            <small>${hasCoordinates ? `Pinpoint: ${escapeHtml(Number(report.latitude).toFixed(5))}, ${escapeHtml(Number(report.longitude).toFixed(5))}` : 'Manual location only'}</small>
-            <a href="${escapeAttribute(mapUrl)}" target="_blank" rel="noopener">Open Map Pin</a>
-            ${inlineMap}
-        </div>
-        <div class="latest-cell">
-            <span>Type</span>
-            <strong>${escapeHtml(report.incident_type ?? 'New Incident')}</strong>
-            <span class="tag ${processState.tone} latest-process-tag">${escapeHtml(processState.label)}</span>
-            <small>${escapeHtml(displayStatusLabel(report.status ?? 'received'))} · ${escapeHtml(String(report.transmission_type ?? 'online').toUpperCase())}</small>
-        </div>
-        <div class="latest-actions">
-            ${reviewButton}
-            ${deleteButton}
-        </div>
-    `;
-
-    return wrapper;
-
-    wrapper.innerHTML = `
-        <div class="incident-rail severity-${escapeHtml(severityDisplay)}"></div>
-        <div class="incident-meta">
-            <span class="incident-code">${escapeHtml(report.report_code ?? 'INCIDENT')}</span>
-            <strong class="incident-time">${escapeHtml(report.priority_timer_label ?? 'Just received')}</strong>
-            <div class="tag-row">
-                <span class="tag ${severityTone[severityDisplay] ?? 'blue'}">${escapeHtml(severityDisplay)}</span>
-                <span class="tag ${statusTone(report.status ?? 'received')}">${escapeHtml(displayStatusLabel(report.status ?? 'received'))}</span>
-            </div>
-        </div>
-        <div class="incident-content">
-            <div class="incident-headline">
-                <div>
-                    <h3 class="incident-title">${escapeHtml(report.incident_type ?? 'New Incident')}</h3>
-                    <p class="detail-copy"><strong>${escapeHtml(report.location_text ?? 'Unknown location')}</strong> • ${escapeHtml(report.assigned_responder_name ?? 'Admin receiver pending')}</p>
-                </div>
-                <div class="tag-row">
-                    <span class="tag neutral">${escapeHtml(String(report.transmission_type ?? 'online').toUpperCase())}</span>
-                    ${report.evidence_available ? `<span class="tag green">${escapeHtml(capitalize(report.evidence_type ?? 'evidence'))} Attached</span>` : ''}
-                    ${report.selfie_available ? '<span class="tag neutral">Selfie Verified</span>' : ''}
-                </div>
-            </div>
-            <p class="incident-summary">${escapeHtml(report.description ?? 'No description provided.')}</p>
         </div>
     `;
 

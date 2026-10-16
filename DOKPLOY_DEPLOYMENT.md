@@ -5,6 +5,15 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Live Monitoring feed
+
+Live Monitoring shows only the three newest reports across Online and LoRa,
+ordered by submission time and ID. Cards show source/node, a brief description,
+location, severity/model score and Review. Detailed AI explanations and admin
+review remain in the report modal; report histories and LoRa Mesh keep their
+dedicated pages. Realtime cards use the same concise layout. Deploy the matching
+Blade and Vite assets together; no database migration or firmware change is needed.
+
 ## Before deploying
 
 1. Push this repository to the Git provider connected to Dokploy.

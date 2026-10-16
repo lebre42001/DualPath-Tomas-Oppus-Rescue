@@ -16,12 +16,18 @@ class LoRaReportHistoryTest extends TestCase
     {
         $admin = $this->admin();
         for ($number = 1; $number <= 7; $number++) {
-            $this->report($number);
+            $this->report($number, $number === 6 ? ['transmission_type' => 'online'] : []);
         }
         $this->actingAs($admin)->get(route('monitoring', ['page' => 2]))
             ->assertOk()->assertViewHas('reports', function ($reports): bool {
                 return $reports->pluck('report_code')->all() === ['LORA-HISTORY-7', 'LORA-HISTORY-6', 'LORA-HISTORY-5'];
-            })->assertSee('All LoRa reports')->assertDontSee('Latest incident pages');
+            })->assertSee('All LoRa reports')->assertSee('Online')
+            ->assertSee('monitoring-latest-only', false)
+            ->assertDontSee('Current load by severity')->assertDontSee('Online and LoRa coverage')
+            ->assertDontSee('Dispatch recommendation')
+            ->assertDontSee('<h2 class="panel-title">Latest fatal incidents</h2>', false)
+            ->assertDontSee('Field communication snapshot')->assertDontSee('Node heartbeat monitor')
+            ->assertDontSee('Available admin receivers')->assertDontSee('Latest incident pages');
         $this->assertDatabaseCount('incident_reports', 7);
     }
 
