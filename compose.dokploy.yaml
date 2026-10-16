@@ -7,6 +7,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      text-ai:
+        condition: service_started
     expose:
       - "10000"
     environment:
@@ -40,8 +42,13 @@ services:
       REVERB_SERVER_HOST: 127.0.0.1
       REVERB_SERVER_PORT: "8080"
       AI_SEVERITY_ENABLED: "false"
-      AI_TEXT_MODE: MANUAL_ONLY
-      AI_TEXT_ENABLED: "false"
+      # Supervised synthetic-trained pilot; every suggestion requires admin confirmation.
+      # Set AI_TEXT_MODE=MANUAL_ONLY in Dokploy to roll back without losing reports.
+      AI_TEXT_MODE: ${AI_TEXT_MODE:-MODEL_ADVISORY}
+      AI_TEXT_ENABLED: ${AI_TEXT_ENABLED:-true}
+      AI_TEXT_SERVICE_URL: http://text-ai:8100
+      AI_TEXT_TEST_SERVICE_URL: http://text-ai:8100
+      AI_TEXT_ALLOW_EXPERIMENTAL: "true"
       LORA_INGEST_TOKEN: ${LORA_INGEST_TOKEN:?Set a unique LORA_INGEST_TOKEN in Dokploy}
       ROUTING_SERVICE_ENABLED: ${ROUTING_SERVICE_ENABLED:-true}
       ROUTING_SERVICE_URL: ${ROUTING_SERVICE_URL:-https://router.project-osrm.org}
@@ -63,6 +70,32 @@ services:
       timeout: 5s
       retries: 3
       start_period: 90s
+
+  text-ai:
+    build:
+      context: ./ai_service
+      dockerfile: deploy/render/Dockerfile
+      args:
+        INSTALL_TEXT_BASELINE: "true"
+    restart: unless-stopped
+    expose:
+      - "8100"
+    environment:
+      AI_OPERATION_MODE: AI_ENABLED
+      AI_TEXT_ENABLED: "true"
+      AI_TEXT_ALLOW_EXPERIMENTAL: "true"
+      AI_TEXT_MODEL_DIR: /app/releases/triage-text-tfidf-20261016
+      AI_SERVICE_PORT: "8100"
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+    mem_limit: 512m
+    cpus: 1.0
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8100/ready/text', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
 
   db:
     image: mariadb:11.4

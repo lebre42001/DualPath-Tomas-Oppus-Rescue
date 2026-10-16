@@ -1,8 +1,9 @@
-"""Opt-in, local-only text classifier loading; no checkpoint is activated by training."""
+"""Opt-in text classifier loading; training alone never activates a checkpoint."""
 
 from __future__ import annotations
 
 import json
+import hashlib
 import math
 import os
 from pathlib import Path
@@ -39,8 +40,12 @@ def read_metadata(directory: Path, allow_experimental: bool = False) -> dict:
         raise TextModelUnavailable("Unsupported text model metadata format.")
     if metadata.get("labels") != list(TEXT_LABELS):
         raise TextModelUnavailable("Text model label mapping does not match the service.")
-    if metadata.get("model_type") != "transformers":
-        raise TextModelUnavailable("This artifact is not a deployable transformer text model.")
+    if metadata.get("model_type") not in {"transformers", "tfidf_logistic"}:
+        raise TextModelUnavailable("Unsupported text model type.")
+    if metadata["model_type"] == "tfidf_logistic" and (
+        not isinstance(metadata.get("artifact_sha256"), str) or len(metadata["artifact_sha256"]) != 64
+    ):
+        raise TextModelUnavailable("Text model artifact fingerprint is missing.")
     threshold = metadata.get("review_threshold")
     max_length = metadata.get("max_length")
     if (isinstance(threshold, bool) or not isinstance(threshold, (int, float))
@@ -92,7 +97,7 @@ def prediction_payload(probabilities: dict[str, float], metadata: dict, *, trunc
         "confidence_calibrated": False,
         "probabilities": {} if truncated else {k: round(v, 6) for k, v in probabilities.items()},
         "responder_review_required": review or experimental,
-        "model_name": metadata.get("base_model", "multilingual_text_classifier"),
+        "model_name": metadata.get("display_name", metadata.get("base_model", "multilingual_text_classifier")),
         "model_version": metadata["version"],
         "status": "needs_review" if review else "complete",
         "summary": summary,
@@ -138,8 +143,57 @@ class TextSeverityPredictor:
         return prediction_payload(dict(zip(TEXT_LABELS, scores, strict=True)), self.metadata)
 
 
+class TfidfSeverityPredictor:
+    """Load the numeric JSON artifact; never unpickle an executable checkpoint."""
+
+    def __init__(self, directory: Path, *, allow_experimental: bool = False):
+        self.metadata = read_metadata(directory, allow_experimental)
+        try:
+            import numpy as np
+            from sklearn.feature_extraction.text import TfidfVectorizer
+
+            path = directory / "baseline.json"
+            if path.stat().st_size > 16_000_000:
+                raise ValueError("Oversized text artifact")
+            content = path.read_bytes()
+            if hashlib.sha256(content).hexdigest() != self.metadata["artifact_sha256"]:
+                raise ValueError("Text artifact checksum mismatch")
+            payload = json.loads(content)
+            vocabulary = payload["vocabulary"]
+            size = len(vocabulary)
+            if (payload.get("schema_version") != 1 or payload.get("labels") != list(TEXT_LABELS)
+                    or not 1 <= size <= 50_000
+                    or not all(isinstance(k, str) and isinstance(v, int) and not isinstance(v, bool)
+                               for k, v in vocabulary.items())
+                    or set(vocabulary.values()) != set(range(size))):
+                raise ValueError("Invalid vocabulary or labels")
+            self.coefficients = np.asarray(payload["coefficients"], dtype=float)
+            self.intercept = np.asarray(payload["intercept"], dtype=float)
+            idf = np.asarray(payload["idf"], dtype=float)
+            if (self.coefficients.shape != (4, size) or self.intercept.shape != (4,) or idf.shape != (size,)
+                    or not all(np.isfinite(a).all() for a in (self.coefficients, self.intercept, idf))
+                    or not (idf > 0).all()):
+                raise ValueError("Invalid numeric model weights")
+            self.np = np
+            self.vectorizer = TfidfVectorizer(analyzer="char_wb", ngram_range=(3, 5),
+                                              sublinear_tf=True, vocabulary=vocabulary)
+            self.vectorizer.fit(["_"])
+            self.vectorizer.idf_ = idf
+        except Exception as exc:
+            raise TextModelUnavailable("Text classifier could not load. Check its artifact and inference dependencies.") from exc
+
+    def predict(self, description: str) -> dict:
+        features = self.vectorizer.transform([description])
+        if features.nnz == 0:
+            return prediction_payload({label: 0.25 for label in TEXT_LABELS}, self.metadata)
+        logits = self.np.asarray(features @ self.coefficients.T + self.intercept)[0]
+        scores = self.np.exp(logits - logits.max())
+        scores /= scores.sum()
+        return prediction_payload(dict(zip(TEXT_LABELS, scores.tolist(), strict=True)), self.metadata)
+
+
 _LOCK = RLock()
-_PREDICTOR: TextSeverityPredictor | None = None
+_PREDICTOR: TextSeverityPredictor | TfidfSeverityPredictor | None = None
 _CACHE_KEY: tuple | None = None
 
 
@@ -172,7 +226,7 @@ def text_status() -> dict:
             "message": "Configuration checked; use /ready/text to verify checkpoint loading."}
 
 
-def get_predictor() -> TextSeverityPredictor:
+def get_predictor() -> TextSeverityPredictor | TfidfSeverityPredictor:
     global _PREDICTOR, _CACHE_KEY
     if not ai_enabled():
         raise TextModelUnavailable("AI inference is disabled by service operation mode.")
@@ -189,7 +243,8 @@ def get_predictor() -> TextSeverityPredictor:
         if current_key != _CACHE_KEY:
             _PREDICTOR = None
             _CACHE_KEY = None
-            _PREDICTOR = TextSeverityPredictor(directory, allow_experimental=allow)
+            predictor_type = TfidfSeverityPredictor if metadata["model_type"] == "tfidf_logistic" else TextSeverityPredictor
+            _PREDICTOR = predictor_type(directory, allow_experimental=allow)
             _CACHE_KEY = current_key
         return _PREDICTOR
 

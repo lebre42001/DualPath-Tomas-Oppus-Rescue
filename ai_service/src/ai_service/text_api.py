@@ -33,7 +33,8 @@ def ready_text() -> dict:
     try:
         predictor = get_predictor()
         return {"status": "ready", "deployment_status": predictor.metadata["deployment_status"],
-                "model_version": predictor.metadata["version"]}
+                "model_version": predictor.metadata["version"],
+                "model_name": predictor.metadata.get("display_name", predictor.metadata.get("base_model"))}
     except TextModelUnavailable as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
 

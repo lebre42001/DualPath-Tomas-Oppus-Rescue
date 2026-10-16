@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "version": "dualpath-tfidf-20261016-v1",
+  "model_type": "tfidf_logistic",
+  "base_model": "tfidf-char-wb-logistic-regression",
+  "labels": [
+    "minor",
+    "serious",
+    "critical",
+    "needs_review"
+  ],
+  "languages": [
+    "en",
+    "tl",
+    "ceb",
+    "mixed"
+  ],
+  "scope": "road_vehicle_accidents",
+  "domain": "road_vehicle_accidents",
+  "observed_languages": [
+    "ceb",
+    "en",
+    "mixed",
+    "tl"
+  ],
+  "language_support_status": "requires_separate_language_evaluation",
+  "max_length": 128,
+  "review_threshold": 0.65,
+  "review_threshold_status": "provisional",
+  "confidence_calibrated": false,
+  "approved_for_deployment": false,
+  "deployment_status": "experimental",
+  "all_data_reviewed": false,
+  "allow_draft": true,
+  "dataset_fingerprint": "970c675133aecbbe479d1ee129c517a94af35ede3b015cab962dc4eb473f0ea4",
+  "dataset_summary": {
+    "rows": 1366,
+    "groups": 1021,
+    "by_label": {
+      "minor": 342,
+      "serious": 343,
+      "critical": 340,
+      "needs_review": 341
+    },
+    "by_language": {
+      "ceb": 416,
+      "en": 390,
+      "mixed": 180,
+      "tl": 380
+    },
+    "by_review_status": {
+      "draft": 516,
+      "approved": 850
+    },
+    "eligible_approved_rows": 850,
+    "dataset_fingerprint": "970c675133aecbbe479d1ee129c517a94af35ede3b015cab962dc4eb473f0ea4"
+  },
+  "seed": 20261016,
+  "validation_fraction": 0.15,
+  "test_fraction": 0.15,
+  "test_evaluated_during_training": false,
+  "fit_all_data": false,
+  "split_source": "group_split",
+  "software_versions": {
+    "torch": "2.13.0",
+    "scikit-learn": "1.9.1"
+  },
+  "limitations": [
+    "No deployment approval is granted by training or metrics",
+    "Confidence and review threshold are not calibrated",
+    "Group IDs require human identification of translations and paraphrases",
+    "Language balance is reported, not guaranteed",
+    "Small or synthetic datasets do not establish clinical or operational safety"
+  ],
+  "regularization_c": 16.0,
+  "analyzer": "char_wb",
+  "ngram_range": [
+    3,
+    5
+  ],
+  "artifact_sha256": "261a324f8ba6b38e694da766520f753e893eb8b31c06dbfc8dd5623c47895b84",
+  "display_name": "DualPath Trilingual TF-IDF Logistic Regression",
+  "pilot_only": true,
+  "pilot_policy": "Experimental suggestion only; every operational severity requires admin confirmation. No claim of independently validated real-report accuracy.",
+  "evaluation_report": "artifacts/reports/text_tfidf_20261016/EVALUATION.md"
+}

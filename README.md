@@ -8,7 +8,7 @@ This workspace now contains the mobile app, web system, database references, AI 
 - Legacy mobile app reference: Flutter (Dart)
 - Web system: Laravel (PHP)
 - Database: MySQL
-- AI service: Python (PyTorch + FastAPI)
+- AI service: Python + FastAPI, experimental TF-IDF/Logistic Regression text pilot; optional PyTorch transformer path
 
 ## Projects
 
@@ -458,7 +458,7 @@ pwsh -File .\tool\run_stitch.ps1 -Target android-phone-wifi -HostIp 192.168.1.5 
 - CSV/Excel exports append the text review label, reviewer ID, time, note, description fingerprint, review method, and original AI label. An edited description or later conflicting assessment invalidates the prior text label in the export. These are review candidates; training and independent release evaluation remain separate steps.
 - New web/API reports use only the submitted emergency description for AI severity suggestions. Photos and verification selfies remain available to responders as evidence.
 - The FastAPI runtime exposes `POST /predict/text` only. Its image `/predict` endpoint and image checkpoint loading were removed. Archived ResNet18 experiments are not part of report inference or deployment dependencies.
-- Text inference is disabled until a reviewed model is ready. Disabled, unavailable, or uncertain text inference accepts the report as **Needs review**, with no fabricated confidence. Explicit responder severity remains authoritative.
+- Dokploy and the local active profile select the experimental **DualPath Trilingual TF-IDF Logistic Regression** text pilot. The [synthetic test report](ai_service/artifacts/reports/text_tfidf_20261016/EVALUATION.md) records 92.7% overall accuracy, English 92.8%, Tagalog 95.1%, Bisaya 87.7%, and 60.5% suggestion coverage; no independent real-report accuracy is claimed. Admin confirmation remains mandatory. Disabled, unavailable, or uncertain inference requires review, with no fabricated confidence. Render's free demo remains manual-only.
 - The current text classifier predicts severity (`Minor`, `Serious`, `Critical`, or `Needs review`). Accident **type** classification would require a separately reviewed label set, dataset, and model; it is not inferred today.
 - Existing file validation and local photo checks remain; there is no remote photo relevance/severity gate. Old queued image-analysis jobs do nothing, and historical photo assessments and evidence are preserved.
 - The initial text model scope is road/vehicle accidents in English, Tagalog, Cebuano, and mixed language. Hardware LoRa priority remains a separate input without photo inference. See [the text AI workflow](ai_service/TEXT_AI_WORKFLOW.md).

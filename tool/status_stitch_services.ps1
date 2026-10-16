@@ -3,6 +3,14 @@ param()
 $ErrorActionPreference = 'Stop'
 
 $runtimeDir = Join-Path $PSScriptRoot 'runtime'
+$textHealthUri = 'http://127.0.0.1:8101/health/text'
+$activeTextPath = Join-Path (Split-Path -Parent $PSScriptRoot) 'ai_service\active_text_config.json'
+if (Test-Path -LiteralPath $activeTextPath) {
+  $activeText = Get-Content -LiteralPath $activeTextPath -Raw | ConvertFrom-Json
+  if ($activeText.mode -eq 'MODEL_ADVISORY') {
+    $textHealthUri = 'http://127.0.0.1:8100/ready/text'
+  }
+}
 New-Item -ItemType Directory -Force -Path $runtimeDir | Out-Null
 
 function Get-LanIpAddress {
@@ -228,7 +236,7 @@ Write-Host '-------------'
 Write-Host ("MySQL   : {0}" -f (Get-TcpStatus -TargetHost '127.0.0.1' -Port 3306))
 Write-Host ("Web     : {0}" -f (Get-HttpStatus -Uri 'http://127.0.0.1:8000'))
 Write-Host ("AI      : {0}" -f (Get-HttpStatus -Uri 'http://127.0.0.1:8100/health'))
-Write-Host ("Text AI : {0}" -f (Get-HttpStatus -Uri 'http://127.0.0.1:8101/health/text'))
+Write-Host ("Text AI : {0}" -f (Get-HttpStatus -Uri $textHealthUri))
 Write-Host ("Reverb  : {0}" -f (Get-TcpStatus -TargetHost '127.0.0.1' -Port 8080))
 Write-Host ''
 Write-Host 'URLs'

@@ -279,6 +279,24 @@ function Set-EnvDefault {
 
 $php = Resolve-PhpPath
 $python = Resolve-PythonPath
+$activeTextPath = Join-Path $root 'ai_service\active_text_config.json'
+if (Test-Path -LiteralPath $activeTextPath) {
+  $activeText = Get-Content -LiteralPath $activeTextPath -Raw | ConvertFrom-Json
+  if ($activeText.mode -eq 'MODEL_ADVISORY') {
+    $textRuntimePython = Join-Path $root 'ai_service\.venv-text\Scripts\python.exe'
+    if (-not (Test-Path -LiteralPath $textRuntimePython)) {
+      throw 'Text advisory runtime missing. Create ai_service/.venv-text and install requirements-advisory.txt.'
+    }
+    $python = $textRuntimePython
+    Set-EnvDefault -Name 'AI_OPERATION_MODE' -Value 'AI_ENABLED'
+    Set-EnvDefault -Name 'AI_TEXT_MODE' -Value 'MODEL_ADVISORY'
+    Set-EnvDefault -Name 'AI_TEXT_ENABLED' -Value 'true'
+    Set-EnvDefault -Name 'AI_TEXT_ALLOW_EXPERIMENTAL' -Value 'true'
+    Set-EnvDefault -Name 'AI_TEXT_MODEL_DIR' -Value (Join-Path (Join-Path $root 'ai_service') $activeText.model_directory)
+    Set-EnvDefault -Name 'AI_TEXT_SERVICE_URL' -Value 'http://127.0.0.1:8100'
+    Set-EnvDefault -Name 'AI_TEXT_TEST_SERVICE_URL' -Value 'http://127.0.0.1:8100'
+  }
+}
 $lanIp = Get-LanIpAddress
 $mysqlRoot = 'C:\laragon\bin\mysql\mysql-8.4.3-winx64'
 $mysqlConfig = Join-Path $mysqlRoot 'my.ini'
@@ -326,7 +344,7 @@ $services = @(
   }
 )
 
-if (Test-Path -LiteralPath $textAiPython) {
+if ((Test-Path -LiteralPath $textAiPython) -and $activeText.mode -ne 'MODEL_ADVISORY') {
   $services += @{
     Name = 'ai-text-test'
     FilePath = $textAiPython
@@ -352,7 +370,9 @@ foreach ($result in $results) {
 if (-not $SkipHealthChecks) {
   $webStatus = Wait-ForHttp -Uri 'http://127.0.0.1:8000'
   $aiStatus = Wait-ForHttp -Uri 'http://127.0.0.1:8100/health' -TimeoutSeconds 120
-  $textAiStatus = if (Test-Path -LiteralPath $textAiPython) {
+  $textAiStatus = if ($activeText.mode -eq 'MODEL_ADVISORY') {
+    Wait-ForHttp -Uri 'http://127.0.0.1:8100/ready/text' -TimeoutSeconds 30
+  } elseif (Test-Path -LiteralPath $textAiPython) {
     Wait-ForHttp -Uri 'http://127.0.0.1:8101/health/text' -TimeoutSeconds 30
   } else {
     $null
@@ -366,7 +386,7 @@ if (-not $SkipHealthChecks) {
   Write-Host ("MySQL   : {0}" -f ($(if ($mysqlReady) { 'Port 3306 ready' } else { 'Port 3306 not reachable yet' })))
   Write-Host ("Web     : {0}" -f ($(if ($webStatus) { "HTTP $webStatus" } else { 'Not reachable yet' })))
   Write-Host ("AI      : {0}" -f ($(if ($aiStatus) { "HTTP $aiStatus" } else { 'Not reachable yet' })))
-  Write-Host ("Text AI : {0}" -f ($(if ($textAiStatus) { "HTTP $textAiStatus (isolated test API)" } elseif (-not (Test-Path -LiteralPath $textAiPython)) { 'Optional environment not installed' } else { 'Not reachable yet' })))
+  Write-Host ("Text AI : {0}" -f ($(if ($textAiStatus) { "HTTP $textAiStatus" } elseif (-not (Test-Path -LiteralPath $textAiPython)) { 'Optional environment not installed' } else { 'Not reachable yet' })))
   Write-Host ("Reverb  : {0}" -f ($(if ($reverbReady) { 'Port 8080 ready' } else { 'Port 8080 not reachable yet' })))
 }
 
@@ -377,7 +397,7 @@ Write-Host 'Web UI     : http://127.0.0.1:8000'
 Write-Host ("LAN Web UI : http://{0}:8000" -f $lanIp)
 Write-Host 'AI Health  : http://127.0.0.1:8100/health'
 Write-Host 'Text AI Lab: http://127.0.0.1:8000/admin/text-ai-test (admin login required)'
-Write-Host 'Text API   : http://127.0.0.1:8101/health/text'
+Write-Host ("Text API   : {0}" -f $(if ($activeText.mode -eq 'MODEL_ADVISORY') { 'http://127.0.0.1:8100/ready/text' } else { 'http://127.0.0.1:8101/health/text' }))
 Write-Host 'Reverb     : http://127.0.0.1:8080'
 Write-Host ''
 Write-Host "Logs are stored in: $runtimeDir"

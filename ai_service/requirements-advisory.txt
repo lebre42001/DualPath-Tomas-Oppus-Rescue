@@ -1,0 +1,6 @@
+# Small CPU runtime for the numeric TF-IDF release; transformer/PyTorch support
+# remains separately available through requirements-text.txt.
+-r requirements.txt
+scikit-learn==1.9.1
+numpy==2.5.2
+scipy==1.18.1

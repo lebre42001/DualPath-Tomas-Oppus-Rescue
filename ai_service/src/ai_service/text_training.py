@@ -394,12 +394,18 @@ def run_baseline(args: argparse.Namespace) -> dict:
     output = _prepare_output(args.output)
     vectorizer = TfidfVectorizer(analyzer="char_wb", ngram_range=(3, 5), sublinear_tf=True, max_features=20000)
     features = vectorizer.fit_transform([row["text"] for row in splits["train"]])
-    classifier = LogisticRegression(max_iter=1000, class_weight="balanced", random_state=args.seed)
+    regularization_c = getattr(args, "regularization_c", 1.0)
+    if not math.isfinite(regularization_c) or regularization_c <= 0:
+        raise ValueError("Regularization C must be finite and positive")
+    classifier = LogisticRegression(C=regularization_c, max_iter=1000, class_weight="balanced", random_state=args.seed)
     classifier.fit(features, [LABELS.index(row["label"]) for row in splits["train"]])
     payload = {"schema_version": 1, "labels": list(LABELS), "vocabulary": {key: int(value) for key, value in vectorizer.vocabulary_.items()},
                "idf": vectorizer.idf_.tolist(), "coefficients": classifier.coef_.tolist(), "intercept": classifier.intercept_.tolist()}
     _write_json(output / "baseline.json", payload)
-    return _save_reports(output, splits, _metadata(rows, args, "tfidf_logistic"), _baseline_predictor(payload))
+    metadata = _metadata(rows, args, "tfidf_logistic")
+    metadata.update({"regularization_c": regularization_c, "analyzer": "char_wb", "ngram_range": [3, 5],
+                     "artifact_sha256": hashlib.sha256((output / "baseline.json").read_bytes()).hexdigest()})
+    return _save_reports(output, splits, metadata, _baseline_predictor(payload))
 
 
 def _transformer_predictor(model, tokenizer, device, max_length: int, batch_size: int):
@@ -713,6 +719,8 @@ def build_parser() -> argparse.ArgumentParser:
         sub.add_argument("--split-manifest", help="Frozen split manifest; rejects changed rows or split leakage")
         sub.add_argument("--evaluate-test", action="store_true", help="Explicit final/diagnostic evaluation; omit during tuning")
         sub.add_argument("--review-threshold", type=float, default=0.65, help="Provisional score cutoff; not calibrated confidence")
+        if command == "baseline":
+            sub.add_argument("--regularization-c", type=float, default=1.0, help="Positive inverse regularization strength; select on validation only")
         if command == "train":
             sub.add_argument("--base-model", default=BASE_MODEL)
             sub.add_argument("--revision", default=None, help="Optional Hugging Face commit SHA for an exactly pinned base model")

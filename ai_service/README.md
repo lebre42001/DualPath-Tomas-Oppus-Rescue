@@ -1,12 +1,20 @@
 # AI Severity Service
 
+## Active experimental text pilot — 2026-10-16
+
+`active_text_config.json` selects **DualPath Trilingual TF-IDF Logistic Regression**, version `dualpath-tfidf-20261016-v1`. The Laragon startup helper and Dokploy Compose profile enable this explicitly experimental, CPU-only suggestion model. Every operational severity still requires admin confirmation. Model files live in `releases/triage-text-tfidf-20261016`; optional transformer/PyTorch inference remains supported separately.
+
+Held-out synthetic benchmark: **92.7% overall**, English 92.8%, Tagalog 95.1%, Cebuano/Bisaya 87.7% (220 test examples). Suggestion coverage is 60.5% at the provisional 0.65 cutoff; other cases require review. This is not independently validated real-report accuracy. See [the experiment report](artifacts/reports/text_tfidf_20261016/EVALUATION.md) for evidence, limitations and commands. No human approval fields were invented or bypassed; explicit experimental opt-in is required.
+
+Install the local runtime with `.venv-text/Scripts/python.exe -m pip install -r requirements-advisory.txt`; then use `tool/start_stitch_services.ps1` from the repo root. `/system/ai-status` on Laravel checks the connected model. Render's separate free demo remains manual-only.
+
 ## Service-wide inference switch
 
 The FastAPI service defaults to `AI_OPERATION_MODE=MANUAL_ONLY`. In this mode, text prediction and readiness are disabled. `/health` reports that inference is disabled without loading model weights; `/ready` returns 503. Deployments that keep the service running in manual-only mode should use `/health` as the liveness check. Enable model work only by explicitly setting `AI_OPERATION_MODE=AI_ENABLED`; text inference still additionally requires `AI_TEXT_ENABLED=true` and a valid reviewed checkpoint. The image prediction route and image checkpoint loader have been removed from the service.
 
 This folder contains the operational text-classifier service and archived image-model experiments for the Stitch emergency system. The runtime has no image prediction endpoint and does not load image checkpoints.
 
-**Current application workflow:** new web/API severity suggestions use the emergency description only. Photos remain supporting evidence for responders. Laravel no longer calls image severity/relevance prediction, and stale image jobs cannot update reports. Text inference remains disabled pending a reviewed model; reports are accepted as **Needs review** meanwhile. Existing model artifacts and historical assessments are preserved.
+**Current application workflow:** new web/API severity suggestions use the emergency description only. Photos remain supporting evidence for responders. Laravel no longer calls image severity/relevance prediction, and stale image jobs cannot update reports. Dokploy and the local active text profile use the experimental pilot above; manual-only deployments continue accepting reports for human review. Existing model artifacts and historical assessments are preserved.
 
 ## Description-only multilingual text AI
 

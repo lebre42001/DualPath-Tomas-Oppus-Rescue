@@ -2,9 +2,11 @@
 
 ## Current workflow
 
+**2026-10-16 pilot:** the owner explicitly requested training, evaluation, online suggestions and admin confirmation. [DualPath Trilingual TF-IDF Logistic Regression](releases/triage-text-tfidf-20261016/README.md) is selected in `active_text_config.json` and the Dokploy profile as an experimental supervised pilot. Its [220-row synthetic test](artifacts/reports/text_tfidf_20261016/EVALUATION.md) scores 92.7% overall (English 92.8%, Tagalog 95.1%, Cebuano 87.7%), with 60.5% suggestion coverage. This does not establish the requested real-report accuracy or grant clinical approval. The validated-release procedure below remains pending; source labels and real review flags have not been changed.
+
 Start with [the working dataset](datasets/emergency_text/working/README.md), not the archive or a previous experiment. Current preparation contains 400 synthetic drafts and zero approved examples. The user confirmed that responder/language reviewers are not yet available. The review workflow is ready; reviewed-data training, independent calibration, responder acceptance and live activation remain dependent on real review.
 
-Scope: road/vehicle accidents in English (`en`), Tagalog (`tl`), Bisaya (`ceb`) and mixed language. Outputs: `minor`, `serious`, `critical`, `needs_review`. Critical is not a declaration of death. Photos remain evidence; severity input is description only. Live text inference remains disabled.
+Scope: road/vehicle accidents in English (`en`), Tagalog (`tl`), Bisaya (`ceb`) and mixed language. Outputs: `minor`, `serious`, `critical`, `needs_review`. Critical is not a declaration of death. Photos remain evidence; severity input is description only. The explicit pilot is enabled only in the local active profile and Dokploy; default/manual-only and free Render profiles remain disabled.
 
 Historical data are preserved under `datasets/emergency_text/experiments/` and `archive/initial_80/`. See [the original 9,000-word run](artifacts/reports/text_synthetic_9000words_20260920/README.md) and [the corrected workflow report](artifacts/reports/text_workflow_20260920/README.md). Past test partitions are diagnostic history, not fresh release holdouts.
 

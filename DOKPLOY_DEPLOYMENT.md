@@ -72,9 +72,12 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 - Laravel Reverb listens privately on `127.0.0.1:8080`; Nginx proxies its
   `/app` and `/apps` WebSocket endpoints. The browser uses the public host,
   `wss`, and port 443 from the runtime environment.
-- Image and text AI inference remain disabled (`AI_SEVERITY_ENABLED=false`,
-  `AI_TEXT_MODE=MANUAL_ONLY`). The deployment runs without the FastAPI/PyTorch
-  service and presents new reports for responder review.
+- Image inference remains disabled. The `text-ai` service runs the explicit
+  experimental TF-IDF/Logistic Regression pilot selected in
+  `ai_service/releases/triage-text-tfidf-20261016`. It is private on port 8100;
+  Laravel connects through `http://text-ai:8100`. The optional PyTorch/transformer
+  path remains available. Every suggestion requires admin confirmation.
+  This synthetic-trained model is not an independently validated triage release.
 - Email defaults to Laravel's `log` mailer. Configure real SMTP variables in
   Dokploy before depending on password reset or account verification emails.
 - The public OSRM routing service is the default route provider. For sustained
@@ -85,6 +88,28 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
 ## Operations
 
+- Text AI pilot (2026-10-16): deploy the root Compose file, AI Dockerfile,
+  `requirements-advisory.txt`, numeric release artifact, inference loader and
+  Laravel changes together. The AI image includes only the small scikit-learn
+  runtime for this model, with a 512 MB container memory limit. No model download
+  or training runs during deployment. Health checks load and checksum the model.
+  Do not replace `APP_KEY`, Google settings, database credentials or named volumes.
+  Compose defaults to `AI_TEXT_MODE=MODEL_ADVISORY` and `AI_TEXT_ENABLED=true`;
+  remove any old Dokploy overrides keeping them manual/false, or explicitly set
+  those two values and save. Both services explicitly permit this experimental
+  pilot; metadata does not pretend it has human release approval.
+  Verify `/system/ai-status` returns ready, the expected model/version,
+  experimental status, and `admin_confirmation_required=true`; check `/login`
+  and the actual admin report UI. Existing unreviewed reports can use **Analyze
+  description with AI**; new descriptions are analyzed on submission. Human
+  severity reviews cannot be overwritten. Use **Text AI Lab** for a nonpersisted
+  trial. Uncertain cases remain Needs review. No fake live reports are needed.
+  For rollback, set `AI_TEXT_MODE=MANUAL_ONLY` and `AI_TEXT_ENABLED=false` in
+  Dokploy, save and redeploy. The separate free Render demo remains disabled.
+  The [evaluation](ai_service/artifacts/reports/text_tfidf_20261016/EVALUATION.md)
+  records 92.7% raw synthetic test accuracy and 60.5% suggestion coverage; these
+  are not independently validated real-report results.
+
 - Severity confirmation (2026-10-16): deploy `IncidentSeverityReviewController`,
   the protected `reports.severity-review` route, shared review form, model review
   accessors, updated report views/export controller, and rebuilt assets together.
@@ -93,8 +118,8 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
   No schema migration is required; review provenance is stored in the existing
   coordination log. Verify admin confirmation/correction, Needs review, an
   unchanged coordination status and civilian response message, and appended CSV
-  review fields on the public app. Current AI flags remain disabled pending a
-  validated text checkpoint; this UI feature does not activate inference.
+  review fields on the public app. This UI feature alone does not activate
+  inference; the separately documented text pilot supplies suggestions.
 
 - LoRa report history (2026-10-15): deploy the new `/lora-reports` controller,
   protected route, views, navigation, and rebuilt CSS/JS with the monitoring

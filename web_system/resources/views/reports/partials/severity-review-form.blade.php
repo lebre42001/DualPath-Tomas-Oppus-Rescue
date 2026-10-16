@@ -24,6 +24,13 @@
     @else
         <p>AI suggestion unavailable. An admin can record an assessment while text AI is unavailable.</p>
     @endif
+    @if (! \App\Models\IncidentReport::manualOnlyMode() && config('services.ai_text.enabled')
+        && ! in_array($report->ai_source, ['human_responder', 'text_human_override', 'manual_override'], true))
+        <form method="POST" action="{{ route('reports.ai-suggestion', $report) }}">
+            @csrf
+            <button type="submit" class="btn btn-secondary">{{ $currentAiSuggestion ? 'Analyze description again' : 'Analyze description with AI' }}</button>
+        </form>
+    @endif
     <p>Review the submitted description, then confirm or correct the severity below. Choose Needs review when the information is insufficient or unclear.</p>
     @if ($textReview)
         <p><strong>Last text review:</strong> {{ $textReview['reviewed_severity'] }} by {{ $textReview['actor_name'] }}

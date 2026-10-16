@@ -1,0 +1,86 @@
+{
+  "source": "datasets/emergency_text/experiments/full_pool_20261011/reports.csv",
+  "source_sha256": "5899ebdb2c5970007f8e11975b439589f8102eaa20270c3bd5e46a7e1f1c8ba5",
+  "dataset_fingerprint": "970c675133aecbbe479d1ee129c517a94af35ede3b015cab962dc4eb473f0ea4",
+  "selected_c": 16,
+  "candidate_cs": [
+    1,
+    4,
+    16
+  ],
+  "selection_rule": "validation Critical recall, then macro-F1; no test tuning",
+  "seed": 20261016,
+  "splits": {
+    "train": {
+      "rows": 947,
+      "groups": 719,
+      "by_label": {
+        "minor": 239,
+        "serious": 227,
+        "critical": 249,
+        "needs_review": 232
+      },
+      "by_language": {
+        "ceb": 293,
+        "en": 272,
+        "mixed": 116,
+        "tl": 266
+      },
+      "by_review_status": {
+        "draft": 348,
+        "approved": 599
+      },
+      "eligible_approved_rows": 599,
+      "dataset_fingerprint": "8abd4b95534e6e100554eb5bd98301a69a5b1f2d05bae91d9cd8b94bf1768b22"
+    },
+    "validation": {
+      "rows": 199,
+      "groups": 151,
+      "by_label": {
+        "minor": 48,
+        "serious": 66,
+        "critical": 40,
+        "needs_review": 45
+      },
+      "by_language": {
+        "ceb": 66,
+        "en": 49,
+        "mixed": 31,
+        "tl": 53
+      },
+      "by_review_status": {
+        "draft": 71,
+        "approved": 128
+      },
+      "eligible_approved_rows": 128,
+      "dataset_fingerprint": "0bf2956735a1f2c88cbd7f4c755d9f216d8479f47d5d493c3d42b64fb0bde9fd"
+    },
+    "test": {
+      "rows": 220,
+      "groups": 151,
+      "by_label": {
+        "critical": 51,
+        "needs_review": 64,
+        "serious": 50,
+        "minor": 55
+      },
+      "by_language": {
+        "ceb": 57,
+        "en": 69,
+        "mixed": 33,
+        "tl": 61
+      },
+      "by_review_status": {
+        "draft": 97,
+        "approved": 123
+      },
+      "eligible_approved_rows": 123,
+      "dataset_fingerprint": "97c49c883bc7ea4bade6136deee65cc5a67d2d5440ffdf1bae3c16de1070f159"
+    }
+  },
+  "artifact_sha256": "261a324f8ba6b38e694da766520f753e893eb8b31c06dbfc8dd5623c47895b84",
+  "release_version": "dualpath-tfidf-20261016-v1",
+  "synthetic_origin": true,
+  "independent_real_report_validation": false,
+  "deployment_policy": "experimental suggestions, mandatory admin confirmation; not approved clinical triage"
+}

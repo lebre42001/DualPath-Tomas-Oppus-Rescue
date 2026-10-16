@@ -1,0 +1,15 @@
+# DualPath Trilingual TF-IDF Logistic Regression
+
+Version: `dualpath-tfidf-20261016-v1`. English, Tagalog, Cebuano/Bisaya and mixed-language road-accident descriptions. Four classifier labels: minor, serious, critical, needs_review.
+
+This is an **experimental supervised pilot**, explicitly requested by the system owner on 2026-10-16. It is enabled to provide suggestions for admin confirmation; it has no independent real-report validation or production approval. Human decisions remain final, and uncertain cases receive no severity suggestion. No responder approval or clinical validation is implied by the pilot configuration.
+
+The existing character TF-IDF + class-balanced multinomial Logistic Regression training path was selected because the local machine has no GPU and approximately 1.6 GB free memory. The FastAPI service and optional transformer/PyTorch path remain available. The numeric JSON artifact loads without executable pickle files and is verified against the metadata SHA256.
+
+Training used 947 synthetic-origin descriptions from 1,366 pooled examples; 199 group-separated validation examples selected C=16 from the predefined C={1,4,16} comparison, prioritizing Critical recall then macro-F1. A separate 220-row test split was evaluated once after selection. Seed: 20261016. Class order and original source labels/review flags were preserved. Threshold 0.65 was fixed before evaluation, not calibrated. The release is the validation-selected training fit; the held-out test was not added to training.
+
+Test raw accuracy: 92.7%. English: 64/69 (92.8%); Tagalog: 58/61 (95.1%); Cebuano: 50/57 (87.7%); mixed: 32/33 (97.0%). Critical recall: 49/51 (96.1%). At the 0.65 threshold, 133/220 (60.5%) receive a severity suggestion; 131/133 suggested labels match the synthetic labels (98.5%). The remaining 87 require review, including actual needs_review examples. There were zero high-risk underclassifications in this particular test; this does not establish a zero real-world error rate.
+
+These are **synthetic benchmark results**, not a guarantee of 80–85% accuracy on real website reports. Source review flags include 516 drafts and 850 historical approval records whose reviewer identity was not independently verified. Scenarios have prior model-development exposure and may share semantic templates beyond the declared grouping. Label quality, negation, unfamiliar language, scope and real incident distribution require further review. Small per-language samples have substantial uncertainty. The model uses lexical patterns and cannot reliably reason about every contradiction or injury context.
+
+Full experiment evidence and reproduction commands: `artifacts/reports/text_tfidf_20261016/EVALUATION.md`. Metadata retains `approved_for_deployment=false`, `all_data_reviewed=false`, `review_threshold_status=provisional`. Only the explicit experimental opt-in enables this pilot. Roll back Laravel with `AI_TEXT_MODE=MANUAL_ONLY` and `AI_TEXT_ENABLED=false`; do not delete database/upload volumes.

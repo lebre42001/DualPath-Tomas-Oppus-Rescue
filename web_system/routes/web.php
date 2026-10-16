@@ -12,6 +12,8 @@ use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\IncidentReportController;
 use App\Http\Controllers\Web\IncidentReportExportController;
 use App\Http\Controllers\Web\IncidentSeverityReviewController;
+use App\Http\Controllers\Web\IncidentTextSuggestionController;
+use App\Http\Controllers\Web\TextAiStatusController;
 use App\Http\Controllers\Web\MonitoringDashboardController;
 use App\Http\Controllers\Web\LoRaReportController;
 use App\Http\Controllers\Web\ProfileController;
@@ -30,6 +32,8 @@ Route::get('/system/version', static function (SystemVersion $systemVersion) {
         'Expires' => '0',
     ]);
 })->name('system.version');
+
+Route::get('/system/ai-status', TextAiStatusController::class)->middleware('throttle:30,1')->name('system.ai-status');
 
 Route::get('/admin', static function (Request $request) {
     return redirect()->route($request->user() ? 'admin.dashboard' : 'admin.login');
@@ -95,6 +99,7 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
             Route::delete('/', [IncidentReportController::class, 'destroyAll'])->name('destroy-all');
             Route::post('/{incidentReport}/coordination', [IncidentReportController::class, 'updateCoordination'])->name('coordination');
             Route::post('/{incidentReport}/severity-review', IncidentSeverityReviewController::class)->name('severity-review');
+            Route::post('/{incidentReport}/ai-suggestion', IncidentTextSuggestionController::class)->name('ai-suggestion');
             Route::delete('/{incidentReport}', [IncidentReportController::class, 'destroy'])->name('destroy');
             Route::get('/{incidentReport}/ai-severity', [IncidentReportController::class, 'severity'])->name('severity');
             Route::get('/{incidentReport}/transmissions', [IncidentReportController::class, 'transmissions'])->name('transmissions');

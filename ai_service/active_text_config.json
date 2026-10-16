@@ -1,0 +1,7 @@
+{
+  "mode": "MODEL_ADVISORY",
+  "model_directory": "releases/triage-text-tfidf-20261016",
+  "allow_experimental": true,
+  "admin_confirmation_required": true,
+  "evaluation_report": "artifacts/reports/text_tfidf_20261016/EVALUATION.md"
+}
