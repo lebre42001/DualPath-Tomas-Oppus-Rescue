@@ -32,6 +32,7 @@ class TextAiDeploymentTest extends TestCase
             ->assertJsonPath('admin_confirmation_required', true)->assertJsonMissingPath('private_path');
         config(['services.ai_text.allow_experimental' => false]);
         $this->getJson('/system/ai-status')->assertStatus(503)->assertJsonPath('status', 'unavailable');
+        $this->getJson('/system/ai-status')->assertStatus(503)->assertJsonPath('connection_status', 'experimental_not_allowed');
     }
 
     public function test_disabled_and_unavailable_health_never_report_a_ready_model(): void
@@ -41,7 +42,8 @@ class TextAiDeploymentTest extends TestCase
         Http::assertNothingSent();
         config(['services.ai_text.mode' => 'MODEL_ADVISORY']);
         Http::fake(['text-ai.test/ready/text' => Http::response(['private_error' => 'secret'], 503)]);
-        $this->getJson('/system/ai-status')->assertStatus(503)->assertDontSee('secret');
+        $this->getJson('/system/ai-status')->assertStatus(503)->assertDontSee('secret')
+            ->assertJsonPath('connection_status', 'service_not_ready')->assertDontSee('text-ai.test');
     }
 
     public function test_existing_pending_report_can_receive_a_suggestion_then_admin_confirms_it(): void
