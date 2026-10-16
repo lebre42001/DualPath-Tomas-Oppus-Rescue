@@ -117,7 +117,7 @@ class IncidentReport extends Model
             return 'Needs review';
         }
 
-        if (in_array($this->ai_source, ['text_model', 'text_model_experimental'], true) && $this->severity === 'Fatal') {
+        if (in_array($this->ai_source, ['text_model', 'text_model_experimental', 'text_rule_advisory'], true) && $this->severity === 'Fatal') {
             return 'Critical';
         }
 
@@ -148,6 +148,10 @@ class IncidentReport extends Model
             }
 
             return 'No AI score; responder-assigned severity';
+        }
+
+        if ($this->ai_source === 'text_rule_advisory') {
+            return 'Word/phrase suggestion; no rule confidence score';
         }
 
         if ($this->ai_source === 'text_review' && $this->ai_status === 'needs_review' && filled($this->ai_model_name)) {
@@ -201,7 +205,7 @@ class IncidentReport extends Model
     public function isLegacyUnreviewedTextSuggestion(): bool
     {
         return self::manualOnlyMode()
-            && in_array($this->ai_source, ['text_model', 'text_model_experimental'], true)
+            && in_array($this->ai_source, ['text_model', 'text_model_experimental', 'text_rule_advisory'], true)
             && (bool) $this->ai_review_required;
     }
 
@@ -214,7 +218,7 @@ class IncidentReport extends Model
 
     public function isAwaitingTextSeverityConfirmation(): bool
     {
-        return in_array($this->ai_source, ['text_model', 'text_model_experimental'], true);
+        return in_array($this->ai_source, ['text_model', 'text_model_experimental', 'text_rule_advisory'], true);
     }
 
     public function getAiSuggestedSeverityAttribute(): ?string
@@ -282,7 +286,7 @@ class IncidentReport extends Model
         $query->whereNotNull('severity')
             ->where(fn (Builder $sourceQuery) => $sourceQuery
                 ->whereNull('ai_source')
-                ->orWhereNotIn('ai_source', ['manual_only', 'text_review', 'text_model', 'text_model_experimental']));
+                ->orWhereNotIn('ai_source', ['manual_only', 'text_review', 'text_model', 'text_model_experimental', 'text_rule_advisory']));
 
         return $query;
     }
@@ -290,7 +294,7 @@ class IncidentReport extends Model
     public function scopeNeedsResponderReview(Builder $query): Builder
     {
         return $query->where(function (Builder $reviewQuery): void {
-            $reviewQuery->whereIn('ai_source', ['manual_only', 'text_review', 'text_model', 'text_model_experimental'])
+            $reviewQuery->whereIn('ai_source', ['manual_only', 'text_review', 'text_model', 'text_model_experimental', 'text_rule_advisory'])
                 ->orWhereNull('severity');
         });
     }

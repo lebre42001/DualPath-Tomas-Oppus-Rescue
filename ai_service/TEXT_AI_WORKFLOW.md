@@ -2,6 +2,8 @@
 
 ## Current workflow
 
+**Description cues and retained results:** [TEXT_CUE_POLICY.md](TEXT_CUE_POLICY.md) documents the explicitly requested multilingual phrase support and original AI-score retention after admin review. New intake is automatic; uncertain classifier scores remain diagnostic and cannot assign a final severity. Phrase suggestions are labeled `text_rule_advisory`, not attributed to learned confidence. Read this policy's separate evaluation rather than treating the original raw-model accuracy as the combined service accuracy.
+
 **2026-10-16 pilot:** the owner explicitly requested training, evaluation, online suggestions and admin confirmation. [DualPath Trilingual TF-IDF Logistic Regression](releases/triage-text-tfidf-20261016/README.md) is selected in `active_text_config.json` and the Dokploy profile as an experimental supervised pilot. Its [220-row synthetic test](artifacts/reports/text_tfidf_20261016/EVALUATION.md) scores 92.7% overall (English 92.8%, Tagalog 95.1%, Cebuano 87.7%), with 60.5% suggestion coverage. This does not establish the requested real-report accuracy or grant clinical approval. The validated-release procedure below remains pending; source labels and real review flags have not been changed.
 
 Start with [the working dataset](datasets/emergency_text/working/README.md), not the archive or a previous experiment. Current preparation contains 400 synthetic drafts and zero approved examples. The user confirmed that responder/language reviewers are not yet available. The review workflow is ready; reviewed-data training, independent calibration, responder acceptance and live activation remain dependent on real review.

@@ -292,6 +292,7 @@ if (Test-Path -LiteralPath $activeTextPath) {
     Set-EnvDefault -Name 'AI_TEXT_MODE' -Value 'MODEL_ADVISORY'
     Set-EnvDefault -Name 'AI_TEXT_ENABLED' -Value 'true'
     Set-EnvDefault -Name 'AI_TEXT_ALLOW_EXPERIMENTAL' -Value 'true'
+    Set-EnvDefault -Name 'AI_TEXT_RULES_ENABLED' -Value $(if ($activeText.text_rules_enabled) { 'true' } else { 'false' })
     Set-EnvDefault -Name 'AI_TEXT_MODEL_DIR' -Value (Join-Path (Join-Path $root 'ai_service') $activeText.model_directory)
     Set-EnvDefault -Name 'AI_TEXT_SERVICE_URL' -Value 'http://127.0.0.1:8100'
     Set-EnvDefault -Name 'AI_TEXT_TEST_SERVICE_URL' -Value 'http://127.0.0.1:8100'

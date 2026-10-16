@@ -32,6 +32,9 @@ class TextAiStatusController extends Controller
                     $status = [...$status, 'status' => 'ready', 'connection_status' => 'ready',
                         'model_name' => $response->json('model_name'),
                         'model_version' => $response->json('model_version'),
+                        'text_rules_enabled' => $response->json('text_rules_enabled') === true,
+                        'text_rules_version' => $response->json('text_rules_enabled') === true
+                            ? $response->json('text_rules_version') : null,
                         'deployment_status' => $response->json('deployment_status')];
                 }
             } catch (\Throwable) {

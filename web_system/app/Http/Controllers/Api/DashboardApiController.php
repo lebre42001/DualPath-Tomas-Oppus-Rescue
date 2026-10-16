@@ -142,6 +142,7 @@ class DashboardApiController extends Controller
             'ai_summary' => $report->operational_ai_summary,
             'ai_confidence' => $report->operational_ai_confidence,
             'ai_suggested_severity' => $report->ai_suggested_severity,
+            'original_ai_assessment' => $report->description_severity_review['ai_suggestion'] ?? null,
             'ai_source' => $report->operational_ai_source,
             'ai_status' => $report->operational_ai_status,
             'ai_model_name' => $report->operational_ai_model_name,

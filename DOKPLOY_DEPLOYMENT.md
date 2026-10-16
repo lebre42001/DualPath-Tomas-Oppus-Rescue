@@ -88,6 +88,21 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
 ## Operations
 
+- Multilingual phrase suggestions and retained scores (2026-10-16): deploy the
+  AI cue module/inference contract and Laravel client, source projections,
+  review snapshot and shared views together. Compose enables
+  `AI_TEXT_RULES_ENABLED=true` on the private AI service. This recognizes explicit
+  condition phrases in English/Tagalog/Bisaya; new reports are analyzed on intake.
+  Rules have no fabricated confidence, and the actual classifier's four scores
+  remain visible with the original suggestion after admin confirmation/correction.
+  No migration is required. Verify `/system/ai-status` includes
+  `text_rules_enabled=true` and `text_rules_version=text-cues-20261016-v1` along
+  with ready model status. Existing reports need reanalysis to obtain newly
+  retained scores; never rewrite a human-confirmed report with automation.
+  Disable only the new phrase layer by setting `AI_TEXT_RULES_ENABLED=false` and
+  redeploying. See `ai_service/TEXT_CUE_POLICY.md` for constraints and the separate
+  already-exposed synthetic diagnostic; no real-report accuracy is certified.
+
 - Text AI pilot (2026-10-16): deploy the root Compose file, AI Dockerfile,
   `requirements-advisory.txt`, numeric release artifact, inference loader and
   Laravel changes together. The AI image includes only the small scikit-learn

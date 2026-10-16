@@ -21,12 +21,14 @@ class IncidentTextSuggestionController extends Controller
         $description = (string) $incidentReport->description;
         $analysis = $client->analyze($description);
         $modelAbstained = $analysis['source'] === 'text_review' && $analysis['model_name'] !== null;
-        if (! in_array($analysis['source'], ['text_model', 'text_model_experimental'], true) && ! $modelAbstained) {
+        if (! in_array($analysis['source'], ['text_model', 'text_model_experimental', 'text_rule_advisory'], true) && ! $modelAbstained) {
             return back()->with('status', 'The text model could not suggest a supported severity. Admin review is required.');
         }
         if ($modelAbstained) {
             $analysis['severity'] = null;
-            $analysis['summary'] = 'The text model could not suggest a supported severity from this description. Admin review is required.';
+            if (! str_starts_with($analysis['summary'], 'Experimental word/phrase rules;')) {
+                $analysis['summary'] = 'The text model could not suggest a supported severity from this description. Admin review is required.';
+            }
         }
 
         $report = DB::transaction(function () use ($incidentReport, $description, $analysis, $request, $humanSources): IncidentReport {

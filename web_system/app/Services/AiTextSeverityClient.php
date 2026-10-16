@@ -92,8 +92,23 @@ class AiTextSeverityClient
                 return $this->needsReview();
             }
 
+            $rules = ($payload['assessment_method'] ?? 'trained_model') === 'text_rules';
+            $modelScores = $rules ? ($payload['model_assessment']['probabilities'] ?? null) : $payload['probabilities'];
+            $modelScores = is_array($modelScores) && count($modelScores) === 4 ? $modelScores : null;
+            $ruleSummary = $payload['summary'];
+            if ($rules && isset($payload['model_assessment'])) {
+                $ruleSummary .= ' Classifier scores are from '.$payload['model_assessment']['model_name']
+                    .' ('.$payload['model_assessment']['model_version'].').';
+            }
+
             if ($payload['status'] === 'needs_review') {
-                return $this->needsReview($payload['model_name'], $payload['model_version']);
+                $review = $this->needsReview($payload['model_name'], $payload['model_version']);
+                $review['probabilities'] = $modelScores;
+                if ($rules) {
+                    $review['summary'] = $ruleSummary;
+                    $review['severity'] = null;
+                }
+                return $review;
             }
 
             $label = ucfirst($payload['severity']);
@@ -101,16 +116,16 @@ class AiTextSeverityClient
 
             return [
                 'severity' => $label,
-                'confidence' => (int) round($payload['confidence'] * 100),
-                'summary' => ($experimental ? 'Experimental text AI' : 'Text AI')
-                    .' suggests '.$label.' based only on the submitted road-accident description. '
+                'confidence' => $rules ? null : (int) round($payload['confidence'] * 100),
+                'summary' => $rules ? $ruleSummary : ($experimental ? 'Experimental text AI' : 'Text AI')
+                    .' suggests '.$label.' based only on the submitted description. '
                     .'The model score is not a calibrated safety probability. Responder verification is required.',
-                'source' => $experimental ? 'text_model_experimental' : 'text_model',
+                'source' => $rules ? 'text_rule_advisory' : ($experimental ? 'text_model_experimental' : 'text_model'),
                 'status' => 'complete',
                 'model_name' => $payload['model_name'],
                 'model_version' => $payload['model_version'],
                 'review_required' => true,
-                'probabilities' => $payload['probabilities'],
+                'probabilities' => $modelScores,
             ];
         } catch (\Throwable) {
             // Receiving the emergency report must not depend on the text service.
@@ -162,6 +177,10 @@ class AiTextSeverityClient
         }
 
         $labels = ['minor', 'serious', 'critical', 'needs_review'];
+        $method = $payload['assessment_method'] ?? 'trained_model';
+        if (! in_array($method, ['trained_model', 'text_rules'], true)) {
+            return false;
+        }
 
         if (! in_array($payload['severity'], ['minor', 'serious', 'critical', null], true)
             || ! in_array($payload['predicted_label'], $labels, true)
@@ -192,6 +211,30 @@ class AiTextSeverityClient
             if (abs(array_sum($payload['probabilities']) - 1) > 0.01) {
                 return false;
             }
+        }
+
+        if ($method === 'text_rules') {
+            $cues = $payload['matched_cues'] ?? null;
+            if ($payload['confidence'] !== null || $payload['probabilities'] !== null
+                || $payload['deployment_status'] !== 'experimental' || ! $payload['responder_review_required']
+                || ! is_array($cues) || count($cues) < 1 || count($cues) > 8) {
+                return false;
+            }
+            foreach ($cues as $cue) {
+                if (! $this->boundedString($cue, 80)) {
+                    return false;
+                }
+            }
+            if (array_key_exists('model_assessment', $payload)) {
+                $model = $payload['model_assessment'];
+                if (! is_array($model) || ($model['assessment_method'] ?? null) !== 'trained_model'
+                    || ! $this->validPayload($model)) {
+                    return false;
+                }
+            }
+            return $payload['status'] === 'needs_review'
+                ? $payload['severity'] === null && $payload['predicted_label'] === 'needs_review'
+                : $payload['severity'] !== null && $payload['severity'] === $payload['predicted_label'];
         }
 
         if ($payload['status'] === 'needs_review') {

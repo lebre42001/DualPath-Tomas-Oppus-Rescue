@@ -1,0 +1,1762 @@
+[
+  {
+    "case_id": "INITIAL80-CEB014",
+    "language": "ceb",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "INITIAL80-CEB017",
+    "language": "ceb",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "INITIAL80-EN007",
+    "language": "en",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "INITIAL80-EN014",
+    "language": "en",
+    "label": "critical",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "INITIAL80-EN019",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "INITIAL80-MIX014",
+    "language": "mixed",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "INITIAL80-MIX019",
+    "language": "mixed",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "INITIAL80-TL002",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "INITIAL80-TL014",
+    "language": "tl",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "INITIAL80-TL019",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-CRITICAL-010",
+    "language": "ceb",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-CRITICAL-012",
+    "language": "ceb",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-CRITICAL-015",
+    "language": "ceb",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-CRITICAL-039",
+    "language": "ceb",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-CRITICAL-042",
+    "language": "ceb",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-CRITICAL-046",
+    "language": "ceb",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-CRITICAL-049",
+    "language": "ceb",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-CRITICAL-055",
+    "language": "ceb",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-CRITICAL-056",
+    "language": "ceb",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-MINOR-001",
+    "language": "ceb",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-MINOR-004",
+    "language": "ceb",
+    "label": "minor",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-MINOR-013",
+    "language": "ceb",
+    "label": "minor",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-MINOR-035",
+    "language": "ceb",
+    "label": "minor",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-MINOR-037",
+    "language": "ceb",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-MINOR-043",
+    "language": "ceb",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-MINOR-049",
+    "language": "ceb",
+    "label": "minor",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-NEEDS_REVIEW-008",
+    "language": "ceb",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-NEEDS_REVIEW-015",
+    "language": "ceb",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-NEEDS_REVIEW-035",
+    "language": "ceb",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-NEEDS_REVIEW-045",
+    "language": "ceb",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-NEEDS_REVIEW-051",
+    "language": "ceb",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-SERIOUS-037",
+    "language": "ceb",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-SERIOUS-043",
+    "language": "ceb",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-SERIOUS-050",
+    "language": "ceb",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-CEB-SERIOUS-055",
+    "language": "ceb",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-003",
+    "language": "en",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-016",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-022",
+    "language": "en",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-024",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-026",
+    "language": "en",
+    "label": "serious",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-033",
+    "language": "en",
+    "label": "minor",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-EN-050",
+    "language": "en",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-051",
+    "language": "en",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-EN-057",
+    "language": "en",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-058",
+    "language": "en",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-062",
+    "language": "en",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-EN-063",
+    "language": "en",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-066",
+    "language": "en",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-082",
+    "language": "en",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-084",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-087",
+    "language": "en",
+    "label": "critical",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-EN-088",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-091",
+    "language": "en",
+    "label": "critical",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-095",
+    "language": "en",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-097",
+    "language": "en",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-130",
+    "language": "en",
+    "label": "serious",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-131",
+    "language": "en",
+    "label": "critical",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-142",
+    "language": "en",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-143",
+    "language": "en",
+    "label": "critical",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-144",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-148",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-149",
+    "language": "en",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-152",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-162",
+    "language": "en",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-180",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-184",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-EN-205",
+    "language": "en",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-211",
+    "language": "en",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-220",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-EN-224",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-225",
+    "language": "en",
+    "label": "minor",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-EN-226",
+    "language": "en",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-229",
+    "language": "en",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-230",
+    "language": "en",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-238",
+    "language": "en",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-EN-243",
+    "language": "en",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-CRITICAL-006",
+    "language": "mixed",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-MX-CRITICAL-008",
+    "language": "mixed",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-MX-CRITICAL-025",
+    "language": "mixed",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-MINOR-003",
+    "language": "mixed",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-MINOR-006",
+    "language": "mixed",
+    "label": "minor",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-MINOR-007",
+    "language": "mixed",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-MINOR-016",
+    "language": "mixed",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-MINOR-019",
+    "language": "mixed",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-MINOR-020",
+    "language": "mixed",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-MINOR-026",
+    "language": "mixed",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-MINOR-027",
+    "language": "mixed",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-MINOR-029",
+    "language": "mixed",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-NEEDS_REVIEW-002",
+    "language": "mixed",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-NEEDS_REVIEW-004",
+    "language": "mixed",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-NEEDS_REVIEW-007",
+    "language": "mixed",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-MX-NEEDS_REVIEW-010",
+    "language": "mixed",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-MX-NEEDS_REVIEW-021",
+    "language": "mixed",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-NEEDS_REVIEW-028",
+    "language": "mixed",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-SERIOUS-002",
+    "language": "mixed",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-SERIOUS-007",
+    "language": "mixed",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-SERIOUS-010",
+    "language": "mixed",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-SERIOUS-023",
+    "language": "mixed",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-SERIOUS-029",
+    "language": "mixed",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-MX-SERIOUS-030",
+    "language": "mixed",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-004",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-006",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-008",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-013",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-023",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-033",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-045",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-046",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-059",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-064",
+    "language": "tl",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-080",
+    "language": "tl",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-086",
+    "language": "tl",
+    "label": "serious",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-092",
+    "language": "tl",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-097",
+    "language": "tl",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-102",
+    "language": "tl",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-103",
+    "language": "tl",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-104",
+    "language": "tl",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-121",
+    "language": "tl",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-TL-122",
+    "language": "tl",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-TL-135",
+    "language": "tl",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-138",
+    "language": "tl",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-152",
+    "language": "tl",
+    "label": "critical",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-153",
+    "language": "tl",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-154",
+    "language": "tl",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-157",
+    "language": "tl",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-158",
+    "language": "tl",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-163",
+    "language": "tl",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-193",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-204",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-TL-205",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "RESPONDER850-TL-232",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-238",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "RESPONDER850-TL-240",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "SOUTHERN_LEYTE36-SLB-DRAFT-009",
+    "language": "ceb",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "SOUTHERN_LEYTE36-SLB-DRAFT-014",
+    "language": "ceb",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "SOUTHERN_LEYTE36-SLB-DRAFT-021",
+    "language": "ceb",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "SOUTHERN_LEYTE36-SLB-DRAFT-026",
+    "language": "ceb",
+    "label": "serious",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "SOUTHERN_LEYTE36-SLB-DRAFT-027",
+    "language": "ceb",
+    "label": "serious",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_CRITICAL_06_CEB",
+    "language": "ceb",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_CRITICAL_06_EN",
+    "language": "en",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_CRITICAL_06_MIXED",
+    "language": "mixed",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_CRITICAL_06_TL",
+    "language": "tl",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_MINOR_07_CEB",
+    "language": "ceb",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_MINOR_07_EN",
+    "language": "en",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_MINOR_07_MIXED",
+    "language": "mixed",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_MINOR_07_TL",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_NEEDS_REVIEW_06_CEB",
+    "language": "ceb",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_NEEDS_REVIEW_06_EN",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_NEEDS_REVIEW_06_MIXED",
+    "language": "mixed",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_NEEDS_REVIEW_06_TL",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_NEEDS_REVIEW_09_CEB",
+    "language": "ceb",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_NEEDS_REVIEW_09_EN",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_NEEDS_REVIEW_09_MIXED",
+    "language": "mixed",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_NEEDS_REVIEW_09_TL",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_SERIOUS_01_CEB",
+    "language": "ceb",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_SERIOUS_01_EN",
+    "language": "en",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_SERIOUS_01_MIXED",
+    "language": "mixed",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_SERIOUS_01_TL",
+    "language": "tl",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_SERIOUS_04_CEB",
+    "language": "ceb",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_SERIOUS_04_EN",
+    "language": "en",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_SERIOUS_04_MIXED",
+    "language": "mixed",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_SERIOUS_04_TL",
+    "language": "tl",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_SERIOUS_07_CEB",
+    "language": "ceb",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_SERIOUS_07_EN",
+    "language": "en",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_SERIOUS_07_MIXED",
+    "language": "mixed",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_A_SERIOUS_07_TL",
+    "language": "tl",
+    "label": "serious",
+    "suggestion": "serious",
+    "routed_label": "serious",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_CRITICALC_06_CEB",
+    "language": "ceb",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_CRITICALC_06_EN",
+    "language": "en",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_CRITICALC_06_TL",
+    "language": "tl",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_CRITICALC_07_CEB",
+    "language": "ceb",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_CRITICALC_07_EN",
+    "language": "en",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_CRITICALC_07_TL",
+    "language": "tl",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_MINORC_07_CEB",
+    "language": "ceb",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_MINORC_07_EN",
+    "language": "en",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_MINORC_07_TL",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_MINORC_08_CEB",
+    "language": "ceb",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_MINORC_08_EN",
+    "language": "en",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_MINORC_08_TL",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_NEEDS_REVIEWC_02_CEB",
+    "language": "ceb",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_NEEDS_REVIEWC_02_EN",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_NEEDS_REVIEWC_02_TL",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_NEEDS_REVIEWC_08_CEB",
+    "language": "ceb",
+    "label": "needs_review",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "WORKING400-SYN_NEEDS_REVIEWC_08_EN",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "WORKING400-SYN_NEEDS_REVIEWC_08_TL",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "WORKING400-SYN_NEEDS_REVIEWC_09_CEB",
+    "language": "ceb",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_NEEDS_REVIEWC_09_EN",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_NEEDS_REVIEWC_09_TL",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_NEEDS_REVIEWC_10_CEB",
+    "language": "ceb",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_NEEDS_REVIEWC_10_EN",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_NEEDS_REVIEWC_10_TL",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_CRITICAL_06_CEB",
+    "language": "ceb",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_CRITICAL_06_EN",
+    "language": "en",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_CRITICAL_06_TL",
+    "language": "tl",
+    "label": "critical",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_MINOR_01_CEB",
+    "language": "ceb",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_MINOR_01_EN",
+    "language": "en",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_MINOR_01_TL",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_MINOR_03_CEB",
+    "language": "ceb",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_MINOR_03_EN",
+    "language": "en",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_MINOR_03_TL",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_MINOR_06_CEB",
+    "language": "ceb",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_MINOR_06_EN",
+    "language": "en",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_MINOR_06_TL",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_MINOR_10_CEB",
+    "language": "ceb",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_MINOR_10_EN",
+    "language": "en",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_MINOR_10_TL",
+    "language": "tl",
+    "label": "minor",
+    "suggestion": "minor",
+    "routed_label": "minor",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_REVIEW_01_CEB",
+    "language": "ceb",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_REVIEW_01_EN",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_REVIEW_01_TL",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_REVIEW_03_CEB",
+    "language": "ceb",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_REVIEW_03_EN",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_REVIEW_03_TL",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_REVIEW_04_CEB",
+    "language": "ceb",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_REVIEW_04_EN",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": "critical",
+    "routed_label": "critical",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_REVIEW_04_TL",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_REVIEW_05_CEB",
+    "language": "ceb",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_REVIEW_05_EN",
+    "language": "en",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_REVIEW_05_TL",
+    "language": "tl",
+    "label": "needs_review",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "trained_model"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_SERIOUS_04_CEB",
+    "language": "ceb",
+    "label": "serious",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_SERIOUS_04_EN",
+    "language": "en",
+    "label": "serious",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  },
+  {
+    "case_id": "WORKING400-SYN_ROAD_B_SERIOUS_04_TL",
+    "language": "tl",
+    "label": "serious",
+    "suggestion": null,
+    "routed_label": "needs_review",
+    "method": "text_rules"
+  }
+]

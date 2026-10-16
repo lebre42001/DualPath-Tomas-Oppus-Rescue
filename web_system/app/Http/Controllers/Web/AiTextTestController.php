@@ -47,6 +47,8 @@ class AiTextTestController extends Controller
                     'model_version' => $payload['model_version'],
                     'summary' => $payload['summary'],
                     'responder_review_required' => $payload['responder_review_required'],
+                    'assessment_method' => $payload['assessment_method'] ?? 'trained_model',
+                    'model_assessment' => $payload['model_assessment'] ?? null,
                 ];
             }
         } catch (\Throwable) {
@@ -72,6 +74,20 @@ class AiTextTestController extends Controller
             || ! is_string($payload['model_version'] ?? null)
             || ! is_string($payload['summary'] ?? null)) {
             return false;
+        }
+
+        if (($payload['assessment_method'] ?? 'trained_model') === 'text_rules') {
+            if (isset($payload['model_assessment']) && (! is_array($payload['model_assessment'])
+                || ($payload['model_assessment']['assessment_method'] ?? null) !== 'trained_model'
+                || ! $this->isUsablePrediction($payload['model_assessment']))) {
+                return false;
+            }
+            return ($payload['confidence'] ?? null) === null && ($payload['probabilities'] ?? null) === null
+                && $payload['deployment_status'] === 'experimental' && $payload['responder_review_required']
+                && is_array($payload['matched_cues'] ?? null) && count($payload['matched_cues']) > 0
+                && (($payload['status'] === 'needs_review' && ($payload['severity'] ?? null) === null && $payload['predicted_label'] === 'needs_review')
+                    || ($payload['status'] === 'complete' && in_array($payload['severity'] ?? null, ['minor', 'serious', 'critical'], true)
+                        && $payload['severity'] === $payload['predicted_label']));
         }
 
         if ($payload['status'] === 'needs_review') {

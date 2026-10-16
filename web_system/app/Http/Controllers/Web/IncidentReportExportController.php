@@ -246,6 +246,7 @@ class IncidentReportExportController extends Controller
             'text_review' => 'Text AI suggestion; responder review required',
             'text_model' => 'Text AI suggestion',
             'text_model_experimental' => 'Experimental text AI suggestion',
+            'text_rule_advisory' => 'Word/phrase severity suggestion',
             'text_human_override' => 'Responder-assigned after text AI review',
             'human_responder', 'manual_override' => 'Responder-assigned',
             'image_model', 'python_model' => 'Historical model source; verify record',

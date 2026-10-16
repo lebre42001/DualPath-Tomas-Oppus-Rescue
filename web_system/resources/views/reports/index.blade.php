@@ -52,6 +52,7 @@
     $aiSourceLabel = static fn (?string $source): string => match ($source) {
         'text_model' => 'Description AI model',
         'text_model_experimental' => 'Experimental description AI',
+        'text_rule_advisory' => 'Word/phrase severity suggestion',
         'text_review' => 'Description awaiting review',
         'text_human_override' => 'Responder severity; text AI advisory',
         'manual_only' => 'Manual responder review required',

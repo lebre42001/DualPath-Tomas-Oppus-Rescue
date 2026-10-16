@@ -93,10 +93,17 @@ class TextAiDeploymentTest extends TestCase
         $this->assertNull($report->operational_severity);
         $this->assertTrue($report->ai_review_required);
         $this->assertSame('fixture-text-model', $report->ai_model_name);
+        $this->assertSame($payload['probabilities'], $report->ai_probabilities);
         $this->assertSame('AI analyzed text; no severity suggested', $report->ai_score_display);
         $this->get(route('reports.show', $report))->assertOk()
             ->assertSee('AI analyzed this description but could not suggest a supported severity.')
             ->assertSee('Analyze description again')->assertDontSee('while text AI is unavailable');
+        $this->post(route('reports.severity-review', $report), ['severity_review_label' => 'needs_review',
+            'severity_review_notes' => 'The reported condition is unclear.'])->assertRedirect();
+        $report->refresh();
+        $this->assertSame('needs_review', $report->description_severity_review['ai_suggestion']['label']);
+        $this->assertSame($payload['probabilities'], $report->description_severity_review['ai_suggestion']['model_probabilities']);
+        $this->get(route('reports.show', $report))->assertOk()->assertSee('Original trained-model scores')->assertSee('94.0%');
     }
 
     public function test_suggestions_cannot_overwrite_human_decisions_or_run_for_non_admins(): void
@@ -122,6 +129,79 @@ class TextAiDeploymentTest extends TestCase
         });
         $this->actingAs($admin)->post(route('reports.ai-suggestion', $report))->assertStatus(409);
         $this->assertSame('Serious', $report->fresh()->severity);
+    }
+
+    public function test_word_phrase_suggestions_have_no_fake_score_and_require_admin_confirmation(): void
+    {
+        $admin = User::factory()->create(['is_admin' => true, 'role' => 'admin']);
+        $report = $this->report();
+        $payload = $this->prediction();
+        $payload['assessment_method'] = 'text_rules';
+        $payload['matched_cues'] = ['unresponsive'];
+        $payload['confidence'] = null;
+        $payload['probabilities'] = null;
+        $payload['model_name'] = 'DualPath Trilingual Severity Rules';
+        $payload['summary'] = 'Experimental word/phrase rules; no model score. Reported phrase: unresponsive.';
+        $payload['model_assessment'] = [...$this->prediction(), 'assessment_method' => 'trained_model'];
+        Http::fake(['text-ai.test/predict/text' => Http::response($payload)]);
+        $this->actingAs($admin)->post(route('reports.ai-suggestion', $report))->assertRedirect();
+        $report->refresh();
+        $this->assertSame('text_rule_advisory', $report->ai_source);
+        $this->assertSame('Critical', $report->ai_suggested_severity);
+        $this->assertNull($report->operational_severity);
+        $this->assertNull($report->ai_confidence);
+        $this->assertSame($payload['model_assessment']['probabilities'], $report->ai_probabilities);
+        $this->assertFalse(IncidentReport::query()->operationallyAssessed()->whereKey($report->id)->exists());
+        $this->assertTrue(IncidentReport::query()->needsResponderReview()->whereKey($report->id)->exists());
+        $this->get(route('reports.show', $report))->assertOk()
+            ->assertSee('Word/phrase suggestion; no rule confidence score')
+            ->assertSee('Suggestion method: multilingual word/phrase rules.')->assertSee('94.0%');
+        $this->post(route('reports.severity-review', $report), ['severity_review_label' => 'critical',
+            'severity_review_notes' => 'Admin reviewed the reported condition.'])->assertRedirect();
+        $report->refresh();
+        $this->assertSame('Critical', $report->operational_severity);
+        $this->assertSame('text_rule_advisory', $report->description_severity_review['ai_suggestion']['source']);
+        $this->assertNull($report->description_severity_review['ai_suggestion']['model_score']);
+        $this->assertSame('confirmed_ai', $report->description_severity_review['review_method']);
+        $this->assertSame($payload['model_assessment']['probabilities'], $report->description_severity_review['ai_suggestion']['model_probabilities']);
+        $this->get(route('reports.show', $report))->assertOk()->assertSee('Original AI suggestion')
+            ->assertSee('Original trained-model scores')->assertSee('Reviewed by admin')->assertSee('94.0%');
+        $this->post(route('reports.severity-review', $report), ['severity_review_label' => 'serious',
+            'severity_review_notes' => 'Updated human assessment.'])->assertRedirect();
+        $report->refresh();
+        $this->assertSame('Serious', $report->operational_severity);
+        $this->assertSame('critical', $report->description_severity_review['ai_suggestion']['label']);
+        $this->assertSame(0.94, $report->description_severity_review['ai_suggestion']['model_probabilities']['critical']);
+    }
+
+    public function test_rule_payloads_cannot_claim_model_confidence_or_validated_status(): void
+    {
+        $payload = $this->prediction();
+        $payload['assessment_method'] = 'text_rules';
+        $payload['matched_cues'] = ['unresponsive'];
+        $client = app(\App\Services\AiTextSeverityClient::class);
+        Http::fake(['text-ai.test/predict/text' => Http::response($payload)]);
+        $this->assertSame('text_review', $client->analyze('A person is unresponsive.')['source']);
+        $payload['confidence'] = null;
+        $payload['probabilities'] = null;
+        $payload['deployment_status'] = 'validated';
+        Http::fake(['text-ai.test/predict/text' => Http::response($payload)]);
+        $this->assertSame('text_review', $client->analyze('A person is unresponsive.')['source']);
+    }
+
+    public function test_admin_lab_accepts_unscored_rule_results_without_creating_reports(): void
+    {
+        $admin = User::factory()->create(['is_admin' => true, 'role' => 'admin']);
+        $payload = $this->prediction();
+        $payload['assessment_method'] = 'text_rules';
+        $payload['matched_cues'] = ['unresponsive'];
+        $payload['confidence'] = null;
+        $payload['probabilities'] = null;
+        config(['services.ai_text.test_url' => 'http://text-ai.test']);
+        Http::fake(['text-ai.test/predict/text' => Http::response($payload)]);
+        $this->actingAs($admin)->post(route('admin.text-ai-test.predict'), ['description' => 'A person is unresponsive.'])
+            ->assertOk()->assertSee('Word/phrase suggestion')->assertDontSee('Model scores (uncalibrated)');
+        $this->assertSame(0, IncidentReport::count());
     }
 
     private function report(): IncidentReport

@@ -3,7 +3,7 @@
 @section('title', 'Text AI Lab')
 @section('page_label', 'Experimental Evaluation')
 @section('page_heading', 'Text AI Lab')
-@section('page_subheading', 'Test road-accident descriptions against the isolated local model.')
+@section('page_subheading', 'Test report descriptions against the connected text-analysis service.')
 
 @section('content')
     <main class="ai-text-lab" aria-labelledby="ai-text-lab-title">
@@ -35,21 +35,25 @@
             <section class="ai-lab-card ai-lab-result" aria-live="polite">
                 <div class="ai-lab-result-head">
                     <div>
-                        <span class="ai-lab-kicker">{{ $result['status'] === 'needs_review' ? 'Provisional top-class suggestion' : 'Model suggestion' }}</span>
+                        <span class="ai-lab-kicker">{{ ($result['assessment_method'] ?? 'trained_model') === 'text_rules' ? 'Word/phrase suggestion' : ($result['status'] === 'needs_review' ? 'Provisional top-class suggestion' : 'Model suggestion') }}</span>
                         <h2>{{ $result['severity'] ? ucwords(str_replace('_', ' ', $result['severity'])) : ($result['predicted_label'] !== 'needs_review' ? ucwords(str_replace('_', ' ', $result['predicted_label'])) : 'Needs responder review') }}</h2>
                     </div>
                     <span class="ai-lab-badge">{{ strtoupper($result['deployment_status']) }}</span>
                 </div>
                 <p>{{ $result['summary'] }}</p>
+                @if (($result['assessment_method'] ?? 'trained_model') === 'text_rules')
+                    <p>Method: multilingual word/phrase rules. No model confidence score is assigned.</p>
+                @endif
                 @if ($result['status'] === 'needs_review')
                     <p><strong>Decision status:</strong> Needs responder review. This suggested class is not an assigned severity.</p>
                 @endif
                 <p><strong>Review:</strong> {{ $result['responder_review_required'] ? 'Human responder review required' : 'Review flag not set' }}</p>
-                @if (is_array($result['probabilities']))
+                @php($scoreProbabilities = $result['model_assessment']['probabilities'] ?? $result['probabilities'])
+                @if (is_array($scoreProbabilities) && count($scoreProbabilities) === 4)
                     <h3>Model scores (uncalibrated)</h3>
                     <dl class="ai-lab-scores">
                         @foreach (['minor' => 'Minor', 'serious' => 'Serious', 'critical' => 'Critical', 'needs_review' => 'Needs review'] as $key => $label)
-                            <div><dt>{{ $label }}</dt><dd>{{ number_format((float) $result['probabilities'][$key] * 100, 1) }}%</dd></div>
+                            <div><dt>{{ $label }}</dt><dd>{{ number_format((float) $scoreProbabilities[$key] * 100, 1) }}%</dd></div>
                         @endforeach
                     </dl>
                 @endif

@@ -9,6 +9,7 @@ This workspace now contains the mobile app, web system, database references, AI 
 - Web system: Laravel (PHP)
 - Database: MySQL
 - AI service: Python + FastAPI, experimental TF-IDF/Logistic Regression text pilot; optional PyTorch transformer path
+- Description analysis: [English/Tagalog/Bisaya condition phrases](ai_service/TEXT_CUE_POLICY.md) support the model; new report analysis is automatic, scores are uncalibrated, and original results remain visible beside the admin review.
 
 ## Projects
 

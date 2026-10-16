@@ -252,6 +252,32 @@ class TextSeverityIntegrationTest extends TestCase
         Http::assertSentCount(1);
     }
 
+    public function test_new_civilian_reports_automatically_receive_rule_suggestions_and_real_model_scores_before_admin_review(): void
+    {
+        config(['services.ai_text.allow_experimental' => true]);
+        $model = [...$this->prediction(), 'assessment_method' => 'trained_model'];
+        $payload = [...$model, 'assessment_method' => 'text_rules', 'matched_cues' => ['fifty-fifty'],
+            'confidence' => null, 'probabilities' => null, 'deployment_status' => 'experimental',
+            'model_name' => 'DualPath Trilingual Severity Rules', 'model_version' => 'text-cues-test',
+            'model_assessment' => $model, 'summary' => 'Experimental word/phrase rules; reported phrase: fifty-fifty.'];
+        Http::fake(['text-ai.test/predict/text' => Http::response($payload)]);
+        $civilian = User::factory()->create(['role' => 'civilian', 'account_verified_at' => now()]);
+        $description = 'Fifty-fifty ang kahimtang sa biktima.';
+        $this->actingAs($civilian)->post(route('reports.store'), $this->reportInput($description) + [
+            'evidence' => UploadedFile::fake()->image('road-scene.jpg', 640, 480),
+            'selfie' => UploadedFile::fake()->image('verification-selfie.jpg', 640, 480),
+        ])->assertSessionHasNoErrors()->assertRedirect();
+        $report = IncidentReport::query()->sole();
+        $this->assertSame('text_rule_advisory', $report->ai_source);
+        $this->assertSame('Critical', $report->ai_suggested_severity);
+        $this->assertNull($report->operational_severity);
+        $this->assertNull($report->ai_confidence);
+        $this->assertSame($model['probabilities'], $report->ai_probabilities);
+        $this->assertTrue($report->ai_review_required);
+        Http::assertSentCount(1);
+        Http::assertSent(fn ($request) => $request->data() === ['description' => $description]);
+    }
+
     public function test_unavailable_text_service_still_accepts_report_without_fabricated_scores(): void
     {
         Http::fake(['text-ai.test/predict/text' => Http::response(['detail' => 'private-path-secret'], 503)]);
@@ -289,7 +315,7 @@ class TextSeverityIntegrationTest extends TestCase
         $this->assertSame('text_review', $result['source']);
         $this->assertSame('Serious', $result['severity']);
         $this->assertNull($result['confidence']);
-        $this->assertNull($result['probabilities']);
+        $this->assertSame($prediction['probabilities'], $result['probabilities']);
     }
 
     public function test_overlength_abstention_accepts_empty_probabilities_without_inventing_a_score(): void

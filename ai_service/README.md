@@ -2,6 +2,8 @@
 
 ## Active experimental text pilot — 2026-10-16
 
+**Description phrase support:** [the trilingual cue policy](TEXT_CUE_POLICY.md) adds explicit English/Tagalog/Bisaya condition phrases, including reported `patay` and `fifty-fifty`, while retaining the trained classifier. Rule suggestions have no fabricated confidence; actual classifier scores are displayed separately. New reports are analyzed automatically. Admin review keeps the original suggestion and all four scores visible. The combined policy's diagnostic results differ from the original raw classifier benchmark below.
+
 `active_text_config.json` selects **DualPath Trilingual TF-IDF Logistic Regression**, version `dualpath-tfidf-20261016-v1`. The Laragon startup helper and Dokploy Compose profile enable this explicitly experimental, CPU-only suggestion model. Every operational severity still requires admin confirmation. Model files live in `releases/triage-text-tfidf-20261016`; optional transformer/PyTorch inference remains supported separately.
 
 Held-out synthetic benchmark: **92.7% overall**, English 92.8%, Tagalog 95.1%, Cebuano/Bisaya 87.7% (220 test examples). Suggestion coverage is 60.5% at the provisional 0.65 cutoff; other cases require review. This is not independently validated real-report accuracy. See [the experiment report](artifacts/reports/text_tfidf_20261016/EVALUATION.md) for evidence, limitations and commands. No human approval fields were invented or bypassed; explicit experimental opt-in is required.

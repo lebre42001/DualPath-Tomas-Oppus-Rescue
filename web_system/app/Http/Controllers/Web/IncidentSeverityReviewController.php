@@ -32,21 +32,23 @@ class IncidentSeverityReviewController extends Controller
             $display = $needsReview ? 'Needs review' : $severity;
             $priorReview = $report->description_severity_review;
             $aiSuggestion = $priorReview['ai_suggestion'] ?? null;
-            if (! IncidentReport::manualOnlyMode()
-                && in_array($report->ai_source, ['text_model', 'text_model_experimental'], true)
-                && $report->ai_status === 'complete'
-                && in_array($report->severity, ['Minor', 'Serious', 'Critical'], true)) {
+            $hasSuggestion = in_array($report->ai_source, ['text_model', 'text_model_experimental', 'text_rule_advisory'], true)
+                && $report->ai_status === 'complete' && in_array($report->severity, ['Minor', 'Serious', 'Critical'], true);
+            $hasAbstention = $report->ai_source === 'text_review' && $report->ai_status === 'needs_review'
+                && filled($report->ai_model_name);
+            if (! IncidentReport::manualOnlyMode() && ($hasSuggestion || $hasAbstention)) {
                 $aiSuggestion = [
-                    'label' => strtolower($report->severity),
+                    'label' => $hasSuggestion ? strtolower($report->severity) : 'needs_review',
                     'model_name' => $report->ai_model_name,
                     'model_version' => $report->ai_model_version,
                     'model_score' => $report->ai_confidence,
+                    'model_probabilities' => $report->ai_probabilities,
                     'source' => $report->ai_source,
                     'summary' => $report->ai_summary,
                     'processed_at' => $report->ai_processed_at?->toIso8601String(),
                 ];
             }
-            $reviewMethod = ! IncidentReport::manualOnlyMode() && $aiSuggestion
+            $reviewMethod = ! IncidentReport::manualOnlyMode() && $aiSuggestion && $aiSuggestion['label'] !== 'needs_review'
                 ? ($label === $aiSuggestion['label'] ? 'confirmed_ai' : 'corrected_ai')
                 : 'human_assessment';
             $log = $report->coordination_log ?? [];

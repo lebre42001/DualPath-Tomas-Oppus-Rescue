@@ -102,6 +102,7 @@ def prediction_payload(probabilities: dict[str, float], metadata: dict, *, trunc
         "status": "needs_review" if review else "complete",
         "summary": summary,
         "deployment_status": metadata["deployment_status"],
+        "assessment_method": "trained_model",
     }
 
 
@@ -251,4 +252,21 @@ def get_predictor() -> TextSeverityPredictor | TfidfSeverityPredictor:
 
 def predict_text(description: str) -> dict:
     with _LOCK:
-        return get_predictor().predict(description)
+        predictor = get_predictor()
+        model_result = predictor.predict(description)
+        if enabled("AI_TEXT_RULES_ENABLED"):
+            from .text_cues import analyze_cues
+            result = analyze_cues(description)
+            return combine_assessments(model_result, result)
+        return model_result
+
+
+def combine_assessments(model_result: dict, rule_result: dict | None) -> dict:
+    if rule_result is None:
+        return model_result
+    use_rules = rule_result["rule_priority"] == "override" or model_result.get("severity") is None
+    # General injury words must not downgrade an uncertain Critical model signal.
+    if (rule_result["rule_priority"] == "fallback" and model_result.get("predicted_label") == "critical"
+            and rule_result["severity"] in {"minor", "serious"}):
+        use_rules = False
+    return {**rule_result, "model_assessment": model_result} if use_rules else model_result

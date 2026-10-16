@@ -3,7 +3,8 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-from .text_inference import TextModelUnavailable, get_predictor, predict_text, text_status
+from .text_inference import TextModelUnavailable, enabled, get_predictor, predict_text, text_status
+from .text_cues import RULE_VERSION
 from .operation_mode import ai_enabled, operation_mode
 
 router = APIRouter(tags=["text severity"])
@@ -34,7 +35,9 @@ def ready_text() -> dict:
         predictor = get_predictor()
         return {"status": "ready", "deployment_status": predictor.metadata["deployment_status"],
                 "model_version": predictor.metadata["version"],
-                "model_name": predictor.metadata.get("display_name", predictor.metadata.get("base_model"))}
+                "model_name": predictor.metadata.get("display_name", predictor.metadata.get("base_model")),
+                "text_rules_enabled": enabled("AI_TEXT_RULES_ENABLED"),
+                "text_rules_version": RULE_VERSION if enabled("AI_TEXT_RULES_ENABLED") else None}
     except TextModelUnavailable as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
 

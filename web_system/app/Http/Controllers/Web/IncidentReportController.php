@@ -792,7 +792,7 @@ class IncidentReportController extends Controller
 
     private function operationalSeverityOrderSql(): string
     {
-        return "case when reported_fatality_flag = 1 then 0 when severity is null or ai_source in ('manual_only', 'text_review', 'text_model', 'text_model_experimental') then 4 "
+        return "case when reported_fatality_flag = 1 then 0 when severity is null or ai_source in ('manual_only', 'text_review', 'text_model', 'text_model_experimental', 'text_rule_advisory') then 4 "
             ."when severity in ('Critical', 'Fatal') then 1 when severity = 'Serious' then 2 "
             ."when severity = 'Minor' then 3 else 4 end";
     }
