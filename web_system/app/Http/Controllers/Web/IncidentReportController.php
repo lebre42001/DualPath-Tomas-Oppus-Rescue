@@ -65,7 +65,7 @@ class IncidentReportController extends Controller
             ->withQueryString();
         $reportItems = $reports->getCollection();
 
-        $priorityIncident = $isCivilian ? null : IncidentReport::query()
+        $priorityIncident = $isCivilian ? null : $this->visibleReportsQuery($user)
             ->with(['assignedResponder'])
             ->whereIn('status', $activeStatuses)
             ->orderByRaw($this->operationalSeverityOrderSql())
@@ -718,11 +718,7 @@ class IncidentReportController extends Controller
 
     private function visibleReportsQuery(?User $user): Builder
     {
-        return IncidentReport::query()
-            ->when(
-                $user?->isCivilian(),
-                fn (Builder $query) => $query->where('reported_by', $user?->id)
-            );
+        return app(IncidentReportFilterQuery::class)->visibleReports($user);
     }
 
     private function redirectUnverifiedCivilian(?User $user): ?RedirectResponse

@@ -112,6 +112,36 @@ class IncidentReportFilterTest extends TestCase
         }
     }
 
+    public function test_admin_history_counts_and_exports_exclude_lora_while_its_own_tab_keeps_it(): void
+    {
+        $admin = User::factory()->create(['is_admin' => true, 'role' => 'admin']);
+        $online = $this->report(['report_code' => 'ONLINE-VISIBLE']);
+        $this->report(['report_code' => 'ONLINE-NORMALIZED', 'transmission_type' => ' Online ']);
+        $lora = $this->report(['report_code' => 'LORA-SEPARATE', 'transmission_type' => 'lora', 'lora_sender_id' => 'NODE_2']);
+
+        $this->actingAs($admin)->get(route('reports.index'))->assertOk()
+            ->assertViewHas('reports', fn ($reports): bool => $reports->total() === 2)
+            ->assertViewHas('stats', fn ($stats): bool => $stats['total'] === 2 && $stats['active'] === 2)
+            ->assertSee($online->report_code)->assertDontSee($lora->report_code)
+            ->assertDontSee('All transports')->assertSee('Online reports. Node reports are available in LoRa Reports.');
+        foreach ([['search' => 'LORA-SEPARATE'], ['transmission' => 'lora'], ['review' => $lora->id]] as $filters) {
+            $page = $this->get(route('reports.index', $filters))->assertOk()
+                ->assertDontSee('id="incident-report-'.$lora->id.'"', false)
+                ->assertViewHas('reports', fn ($reports): bool => ! $reports->contains('id', $lora->id));
+            if (! isset($filters['review'])) {
+                $this->assertSame(0, $page->viewData('reports')->total());
+            }
+        }
+        $window = ['period' => 'custom', 'date_from' => now()->subDay()->toDateString(), 'date_to' => now()->toDateString()];
+        $this->getJson(route('reports.export.preview', $window))->assertOk()->assertJsonPath('count', 2);
+        $csv = $this->get(route('reports.export', $window + ['format' => 'csv']))->assertOk()->streamedContent();
+        $this->assertStringContainsString($online->report_code, $csv);
+        $this->assertStringNotContainsString($lora->report_code, $csv);
+        $this->get(route('lora-reports.index'))->assertOk()->assertSee($lora->report_code)->assertDontSee($online->report_code);
+        $this->get(route('monitoring'))->assertOk()->assertSee($lora->report_code)->assertSee($online->report_code);
+        $this->assertDatabaseCount('incident_reports', 3);
+    }
+
     public function test_search_cannot_expose_another_civilian_report(): void
     {
         $owner = User::factory()->create(['role' => 'civilian', 'is_admin' => false]);

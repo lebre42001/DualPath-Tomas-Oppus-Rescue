@@ -60,10 +60,7 @@ class IncidentReportFilterQuery
     public function build(Request $request, ?User $user): Builder
     {
         $filters = $this->parameters($request, $user);
-        $query = IncidentReport::query();
-        if ($user?->isCivilian()) {
-            $query->where('reported_by', $user->id);
-        }
+        $query = $this->visibleReports($user);
         // Every search word must match at least one report field. Symbols are literal.
         foreach (preg_split('/\s+/u', $filters['search'], -1, PREG_SPLIT_NO_EMPTY) as $term) {
             $pattern = '%'.str_replace(['!', '%', '_'], ['!!', '!%', '!_'], mb_strtolower($term)).'%';
@@ -91,6 +88,16 @@ class IncidentReportFilterQuery
         }
 
         return $query;
+    }
+
+    /** The admin Incident Reports tab and its exports contain online submissions. */
+    public function visibleReports(?User $user): Builder
+    {
+        $query = IncidentReport::query();
+
+        return $user?->isCivilian()
+            ? $query->where('reported_by', $user->id)
+            : $query->whereRaw('LOWER(TRIM(transmission_type)) = ?', ['online']);
     }
 
     /** Match the model's current category in SQL before pagination and exports. */

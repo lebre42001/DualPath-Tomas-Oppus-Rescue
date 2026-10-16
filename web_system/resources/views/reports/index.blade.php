@@ -232,7 +232,7 @@
 @section('title', $isCivilian ? 'Report History' : 'Incident Reports')
 @section('page_label', $isCivilian ? 'Report History' : 'Incident Reports')
 @section('page_heading', $isCivilian ? 'My Submitted Reports' : 'Incident Reports')
-@section('page_subheading', $isCivilian ? 'Review only the emergencies you submitted and their current response status.' : 'Review incidents, check locations, and coordinate a response.')
+@section('page_subheading', $isCivilian ? 'Review only the emergencies you submitted and their current response status.' : 'Online reports. Node reports are available in LoRa Reports.')
 
 @section('hero')
     @if ($isCivilian)
@@ -265,10 +265,9 @@
                 </div>
                 <div class="report-detail-modal-body report-filter-modal-body">
                     <form method="GET" action="{{ route('reports.index') }}" class="form-grid report-filter-modal-grid">
-                        <div class="field"><label for="modal-search">Search</label><input id="modal-search" class="input" type="text" name="search" value="{{ $filters['search'] }}" placeholder="Code, description, location, reporter, node"></div>
+                        <div class="field"><label for="modal-search">Search</label><input id="modal-search" class="input" type="text" name="search" value="{{ $filters['search'] }}" placeholder="Code, description, location, reporter"></div>
                         <div class="field"><label for="modal-severity">Severity</label><select id="modal-severity" name="severity"><option value="">All severities</option>@foreach (['Minor', 'Serious', 'Critical', 'Needs review', 'Unassessed'] as $severity)<option value="{{ $severity }}" @selected($filters['severity'] === $severity)>{{ $severity }}</option>@endforeach</select><small>Current category: admin assessment after review, AI top category while pending.</small></div>
                         <div class="field"><label for="modal-status">Status</label><select id="modal-status" name="status"><option value="">All statuses</option>@foreach (['received', 'acknowledged', 'dispatched', 'responding', 'resolved', 'rejected'] as $status)<option value="{{ $status }}" @selected($filters['status'] === $status)>{{ $statusDisplayLabel($status) }}</option>@endforeach</select></div>
-                        <div class="field"><label for="modal-transmission">Transmission</label><select id="modal-transmission" name="transmission"><option value="">All transports</option><option value="online" @selected($filters['transmission'] === 'online')>Online</option><option value="lora" @selected($filters['transmission'] === 'lora')>LoRa</option></select></div>
                         <div class="field"><label for="modal-sort">Sort</label><select id="modal-sort" name="sort"><option value="newest" @selected($filters['sort'] === 'newest')>Newest first</option><option value="oldest" @selected($filters['sort'] === 'oldest')>Oldest first</option><option value="severity" @selected($filters['sort'] === 'severity')>Severity</option><option value="status" @selected($filters['sort'] === 'status')>Status</option></select></div>
                         <div class="field report-filter-modal-actions">
                             <div class="button-row">
@@ -349,7 +348,7 @@
                                         <input type="hidden" name="{{ $filterName }}" value="{{ $filters[$filterName] }}">
                                     @endif
                                 @endforeach
-                                <p class="report-export-help">Exports every report matching your current search and filters, across all pages. Reporter contact details and media are excluded.</p>
+                                <p class="report-export-help">Exports online reports matching your current search and filters, across all pages. Reporter contact details and media are excluded.</p>
                                 <label class="report-export-sensitive-option" for="report-export-personal-data">
                                     <input type="checkbox" id="report-export-personal-data" name="include_personal_data" value="1">
                                     <span><strong>Include reporter name and contact</strong><small>Sensitive data: include only when needed. This export is recorded in the audit log.</small></span>
@@ -387,10 +386,10 @@
                         <details class="report-manage-menu">
                             <summary class="btn btn-secondary">Manage <span aria-hidden="true">&#9662;</span></summary>
                             <div class="report-manage-actions">
-                                <form method="POST" action="{{ route('reports.destroy-all') }}" onsubmit="return confirm('Delete all incident reports and attached evidence/selfie files? This cannot be undone.');">
+                                <form method="POST" action="{{ route('reports.destroy-all') }}" onsubmit="return confirm('Delete all online incident reports and attached evidence/selfie files? This cannot be undone.');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete All Reports</button>
+                                    <button type="submit" class="btn btn-danger">Delete All Online Reports</button>
                                 </form>
                             </div>
                         </details>

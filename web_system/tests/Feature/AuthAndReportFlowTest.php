@@ -1459,7 +1459,7 @@ class AuthAndReportFlowTest extends TestCase
         $this->assertDatabaseMissing('incident_reports', ['id' => $report->id]);
     }
 
-    public function test_responder_can_delete_all_reports_from_incident_feed(): void
+    public function test_responder_can_delete_all_online_reports_without_removing_lora_history(): void
     {
         Storage::fake();
 
@@ -1507,17 +1507,28 @@ class AuthAndReportFlowTest extends TestCase
             'status_updated_at' => now(),
         ]);
 
+        $loraEvidencePath = UploadedFile::fake()->image('retained-lora-photo.jpg')->store('incident-evidence');
+        $lora = IncidentReport::query()->create([
+            'report_code' => 'LORA-RETAINED-BULK', 'reporter_name' => 'Node sender',
+            'incident_type' => 'Road Accident', 'severity' => 'Serious', 'status' => 'received',
+            'channel' => 'LoRa Mesh', 'transmission_type' => 'lora', 'location_text' => 'Node site',
+            'description' => 'LoRa history must stay available.', 'lora_sender_id' => 'NODE_2',
+            'evidence_type' => 'photo', 'evidence_path' => $loraEvidencePath,
+        ]);
+
         $this->actingAs($responder)
             ->get(route('reports.index'))
             ->assertOk()
-            ->assertSee('Delete All Reports');
+            ->assertSee('Delete All Online Reports');
 
         $this->actingAs($responder)
             ->delete(route('reports.destroy-all'))
             ->assertRedirect(route('reports.index'))
             ->assertSessionHas('status', '2 reports deleted successfully.');
 
-        $this->assertDatabaseCount('incident_reports', 0);
+        $this->assertDatabaseCount('incident_reports', 1);
+        $this->assertDatabaseHas('incident_reports', ['id' => $lora->id]);
+        Storage::assertExists($loraEvidencePath);
         Storage::assertMissing($evidencePath);
         Storage::assertMissing($selfiePath);
     }
@@ -1546,7 +1557,7 @@ class AuthAndReportFlowTest extends TestCase
         $this->actingAs($civilian)
             ->get(route('reports.index'))
             ->assertOk()
-            ->assertDontSee('Delete All Reports');
+            ->assertDontSee('Delete All Online Reports');
 
         $this->actingAs($civilian)
             ->delete(route('reports.destroy-all'))

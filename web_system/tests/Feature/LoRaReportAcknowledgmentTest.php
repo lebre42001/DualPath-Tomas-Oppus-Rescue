@@ -132,7 +132,7 @@ class LoRaReportAcknowledgmentTest extends TestCase
     {
         $admin = User::factory()->create(['role' => 'admin', 'is_admin' => true]);
         $report = $this->report();
-        $this->actingAs($admin)->get(route('reports.index', ['transmission' => 'lora', 'search' => $report->lora_sequence]))
+        $this->actingAs($admin)->get(route('lora-reports.index', ['search' => $report->lora_sequence]))
             ->assertOk()->assertSee($report->report_code)->assertSee('Acknowledge');
     }
 

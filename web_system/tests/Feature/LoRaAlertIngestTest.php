@@ -130,7 +130,7 @@ class LoRaAlertIngestTest extends TestCase
         $this->assertDatabaseCount('incident_reports', 0);
     }
 
-    public function test_lora_report_is_unified_on_admin_pages_but_hidden_from_civilian_history(): void
+    public function test_lora_report_appears_in_monitoring_and_dedicated_history_but_not_online_or_civilian_history(): void
     {
         $this->postJson('/api/v1/lora/alerts', $this->validPayload(), [
             'X-STITCH-LORA-TOKEN' => 'test-lora-token',
@@ -167,11 +167,15 @@ class LoRaAlertIngestTest extends TestCase
                 'review' => $report->id,
             ]))
             ->assertOk()
+            ->assertViewHas('reports', fn ($reports): bool => $reports->isEmpty())
+            ->assertDontSee('id="incident-report-'.$report->id.'"', false);
+
+        $this->get(route('lora-reports.index', ['search' => $report->report_code, 'review' => $report->id]))
+            ->assertOk()
             ->assertSee('id="incident-report-'.$report->id.'"', false)
             ->assertSee('data-report-open-on-load', false)
-            ->assertSee('LoRa compact payload')
-            ->assertSee('Full name')
-            ->assertSee('No photo attached');
+            ->assertSee($report->description)->assertSee('Juan Dela Cruz')
+            ->assertSee('Message ID')->assertSee('Acknowledge');
 
         $this->actingAs($civilian)
             ->get(route('reports.index'))
