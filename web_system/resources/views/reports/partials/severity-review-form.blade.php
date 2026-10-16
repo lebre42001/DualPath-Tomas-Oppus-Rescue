@@ -11,6 +11,9 @@
         'model_score' => $report->ai_confidence,
     ] : $savedAiSuggestion);
     $isSubmittedReview = (string) old('severity_review_report_id') === (string) $report->id;
+    $modelAbstained = ! \App\Models\IncidentReport::manualOnlyMode()
+        && $report->ai_source === 'text_review' && $report->ai_status === 'needs_review'
+        && filled($report->ai_model_name);
     $selectedReview = $isSubmittedReview ? old('severity_review_label', '') : ($textReview['reviewed_label'] ?? $reviewAiSuggestion['label'] ?? '');
 @endphp
 
@@ -21,14 +24,16 @@
             @if ($reviewAiSuggestion['model_name']) — {{ $reviewAiSuggestion['model_name'] }}@endif
             @if ($reviewAiSuggestion['model_score'] !== null) · Model score {{ $reviewAiSuggestion['model_score'] }}% (uncalibrated)@endif
         </p>
+    @elseif ($modelAbstained)
+        <p>AI analyzed this description but could not suggest a supported severity. Review the report or request more information.</p>
     @else
-        <p>AI suggestion unavailable. An admin can record an assessment while text AI is unavailable.</p>
+        <p>AI suggestion unavailable for this report. An admin can record an assessment; reports created before activation can be analyzed with the active text model.</p>
     @endif
     @if (! \App\Models\IncidentReport::manualOnlyMode() && config('services.ai_text.enabled')
         && ! in_array($report->ai_source, ['human_responder', 'text_human_override', 'manual_override'], true))
         <form method="POST" action="{{ route('reports.ai-suggestion', $report) }}">
             @csrf
-            <button type="submit" class="btn btn-secondary">{{ $currentAiSuggestion ? 'Analyze description again' : 'Analyze description with AI' }}</button>
+            <button type="submit" class="btn btn-secondary">{{ $currentAiSuggestion || $modelAbstained ? 'Analyze description again' : 'Analyze description with AI' }}</button>
         </form>
     @endif
     <p>Review the submitted description, then confirm or correct the severity below. Choose Needs review when the information is insufficient or unclear.</p>
@@ -39,7 +44,7 @@
         <p><strong>Decision:</strong> {{ match ($textReview['review_method'] ?? '') {
             'confirmed_ai' => 'Admin confirmed the AI suggestion.',
             'corrected_ai' => 'Admin corrected the AI suggestion.',
-            default => 'Admin assessment recorded while AI was unavailable.',
+            default => 'Admin assessment recorded without an AI severity suggestion.',
         } }}</p>
     @endif
     <form method="POST" action="{{ route('reports.severity-review', $report) }}" class="stack">

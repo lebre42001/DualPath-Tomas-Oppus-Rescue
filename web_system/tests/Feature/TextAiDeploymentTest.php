@@ -93,6 +93,10 @@ class TextAiDeploymentTest extends TestCase
         $this->assertNull($report->operational_severity);
         $this->assertTrue($report->ai_review_required);
         $this->assertSame('fixture-text-model', $report->ai_model_name);
+        $this->assertSame('AI analyzed text; no severity suggested', $report->ai_score_display);
+        $this->get(route('reports.show', $report))->assertOk()
+            ->assertSee('AI analyzed this description but could not suggest a supported severity.')
+            ->assertSee('Analyze description again')->assertDontSee('while text AI is unavailable');
     }
 
     public function test_suggestions_cannot_overwrite_human_decisions_or_run_for_non_admins(): void

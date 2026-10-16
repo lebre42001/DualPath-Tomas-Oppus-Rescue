@@ -150,6 +150,10 @@ class IncidentReport extends Model
             return 'No AI score; responder-assigned severity';
         }
 
+        if ($this->ai_source === 'text_review' && $this->ai_status === 'needs_review' && filled($this->ai_model_name)) {
+            return 'AI analyzed text; no severity suggested';
+        }
+
         if (str_starts_with((string) $this->ai_source, 'text_')) {
             return $this->ai_confidence === null
                 ? 'Model score unavailable'
