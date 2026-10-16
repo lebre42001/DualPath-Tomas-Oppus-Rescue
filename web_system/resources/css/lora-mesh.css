@@ -21,9 +21,6 @@ body.admin-portal .lora-node-details dt { color: var(--muted); font-size: .7rem;
 body.admin-portal .lora-node-details dd { margin: 2px 0 0; overflow-wrap: anywhere; color: var(--ink); font-size: .86rem; line-height: 1.4; }
 body.admin-portal .lora-node-details dd span { color: var(--muted); }
 body.admin-portal .lora-node-filter-empty { margin: 0; padding: 18px; border: 1px dashed var(--line); border-radius: 12px; color: var(--muted); text-align: center; }
-body.admin-portal .lora-node-report { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); overflow-wrap: anywhere; }
-body.admin-portal .lora-node-report .hero-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
-body.admin-portal .lora-node-report form { margin: 0; }
 body.admin-portal .lora-node-empty { grid-column: 1 / -1; }
 body.admin-portal .lora-report-history { display: grid; gap: 18px; min-width: 0; }
 body.admin-portal .lora-report-tabs { display: flex; flex-wrap: wrap; gap: 8px; }

@@ -62,28 +62,6 @@
                     <div><dt>Timing sample</dt><dd>{{ $node['round_trip_measured_at']?->diffForHumans() ?? 'Updated telemetry firmware required' }}</dd></div>
                     <div><dt>Radio signal</dt><dd>RSSI {{ $node['gateway_rssi'] ?? '—' }} dBm<span> · SNR {{ $node['gateway_snr'] ?? '—' }} dB</span></dd></div>
                 </dl>
-                @if ($report = $node['latest_report'])
-                    <div class="lora-node-report">
-                        <p class="panel-kicker">Latest emergency report</p>
-                        <a href="{{ route('reports.show', $report) }}">{{ $report->report_code }}</a>
-                        <p>Message ID: {{ $report->lora_sequence }} · {{ ucfirst($report->status) }}</p>
-                        <div class="hero-actions">
-                            <a class="btn btn-secondary" href="{{ route('reports.show', $report) }}">View report</a>
-                            @if ($report->status === 'received')
-                                <form method="POST" action="{{ route('reports.coordination', $report) }}">
-                                    @csrf
-                                    <input type="hidden" name="status" value="acknowledged">
-                                    <button class="btn btn-primary" type="submit">Acknowledge {{ $node['sender_id'] }}</button>
-                                </form>
-                            @endif
-                        </div>
-                        @if ($report->lora_ack_queued_at)
-                            <p class="section-copy">{{ $report->lora_ack_delivered_at ? 'Acknowledgment broadcast by NODE_1. This does not confirm receipt on the field node.' : 'Acknowledgment queued for NODE_1 to send back to this node.' }}</p>
-                        @endif
-                    </div>
-                @else
-                    <p class="section-copy">No emergency report received from this node.</p>
-                @endif
             </article>
         @empty
             <div class="data-empty lora-node-empty">No LoRa nodes are registered yet.</div>

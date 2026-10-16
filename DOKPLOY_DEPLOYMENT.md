@@ -14,6 +14,10 @@ review remain in the report modal; report histories and LoRa Mesh keep their
 dedicated pages. Realtime cards use the same concise layout. Deploy the matching
 Blade and Vite assets together; no database migration or firmware change is needed.
 
+LoRa Mesh shows node health and telemetry only, including its five-second refresh
+fragment. Report IDs, messages, acknowledgment state and report actions are in
+LoRa Reports, which defaults to newest first.
+
 ## Before deploying
 
 1. Push this repository to the Git provider connected to Dokploy.

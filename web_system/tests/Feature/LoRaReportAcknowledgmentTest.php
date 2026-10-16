@@ -18,7 +18,7 @@ class LoRaReportAcknowledgmentTest extends TestCase
         config(['services.lora_ingest.token' => 'ack-test-token']);
     }
 
-    public function test_node_cards_link_reports_and_allow_manual_acknowledgment_across_the_mesh(): void
+    public function test_mesh_only_shows_node_telemetry_and_report_review_stays_in_lora_history(): void
     {
         $admin = User::factory()->create(['role' => 'admin', 'is_admin' => true]);
         $second = $this->report('NODE_2');
@@ -26,14 +26,21 @@ class LoRaReportAcknowledgmentTest extends TestCase
 
         $this->actingAs($admin)->get(route('monitoring.lora-mesh'))
             ->assertOk()->assertSee('View LoRa reports')
-            ->assertSee($second->report_code)->assertSee($tenth->report_code)
-            ->assertSee(route('reports.show', $second), false)
-            ->assertSee(route('reports.coordination', $tenth), false)
-            ->assertSee('Acknowledge NODE_2')->assertSee('Acknowledge NODE_10')
-            ->assertDontSee('Acknowledge NODE_3');
+            ->assertSee('NODE_2')->assertSee('NODE_10')->assertSee('Radio signal')
+            ->assertDontSee($second->report_code)->assertDontSee($tenth->report_code)
+            ->assertDontSee('Latest emergency report')->assertDontSee('No emergency report received')
+            ->assertDontSee(route('reports.coordination', $tenth), false);
 
         $this->actingAs($admin)->get(route('monitoring.lora-mesh.nodes'))
-            ->assertOk()->assertSee($second->lora_sequence);
+            ->assertOk()->assertSee('NODE_2')->assertSee('Radio signal')
+            ->assertDontSee($second->report_code)->assertDontSee($second->lora_sequence)
+            ->assertDontSee('Latest emergency report')->assertDontSee('View report');
+
+        $this->get(route('lora-reports.index'))
+            ->assertOk()->assertSee($second->report_code)->assertSee($tenth->report_code)
+            ->assertSee($second->lora_sequence)->assertSee('Acknowledge')
+            ->assertSee(route('reports.coordination', $tenth), false)
+            ->assertViewHas('reports', fn ($reports): bool => $reports->first()->id === $tenth->id);
         $this->assertNull($second->fresh()->lora_ack_queued_at);
     }
 
