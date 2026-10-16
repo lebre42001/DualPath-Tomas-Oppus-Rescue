@@ -1,0 +1,2 @@
+# Model fingerprints must match the bytes shipped to Linux and Windows.
+ai_service/releases/**/baseline.json text eol=lf

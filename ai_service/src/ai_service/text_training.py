@@ -197,7 +197,7 @@ def prediction_metrics(rows: list[dict], probabilities: list[list[float] | None]
 
 
 def _write_json(path: Path, payload: dict) -> None:
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    path.write_bytes((json.dumps(payload, ensure_ascii=False, indent=2, allow_nan=False) + "\n").encode("utf-8"))
 
 
 def _prepare_output(path: str | Path) -> Path:

@@ -38,6 +38,11 @@ class TfidfInferenceTests(unittest.TestCase):
         with self.assertRaises(TextModelUnavailable):
             TfidfSeverityPredictor(self.directory)
 
+    def test_release_uses_portable_bytes_for_its_integrity_fingerprint(self):
+        content = (self.directory / 'baseline.json').read_bytes()
+        self.assertNotIn(b'\r', content)
+        self.assertEqual(hashlib.sha256(content).hexdigest(), self.predictor.metadata['artifact_sha256'])
+
     def test_checksum_and_numeric_shapes_are_validated(self):
         with tempfile.TemporaryDirectory() as temp:
             directory = Path(temp)
