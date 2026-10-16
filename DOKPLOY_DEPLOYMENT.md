@@ -22,6 +22,25 @@ The admin Online Report tab lists online submissions only. Its counts, search,
 export preview/download and bulk delete use that same scope; LoRa reports stay
 in their dedicated history. Live Monitoring still combines both sources.
 
+## Overview and report audit history
+
+Overview keeps response summaries, status/severity/source counts, the review queue,
+map and readiness panel. Latest-report and civilian-account lists stay in their
+dedicated tabs. The review queue links to the correct Online Report or LoRa modal.
+
+Deploy with migration `2026_10_17_000001_create_incident_report_audits_table`.
+The normal container startup applies it and imports surviving admin entries from
+report coordination logs. It does not recreate earlier deleted reports or invent
+missing historical actors, times or severity values.
+
+`incident_report_audits` retains admin response/status changes, description
+severity reviews, AI analysis requests and report deletions. Source, node, admin,
+recorded time, notes and available before/after values are saved separately from
+the report. Entries remain after report deletion, are read-only in the application,
+and are searchable/filterable by source, action and report/admin/node. Pagination
+queries all recorded actions, not a sample of the latest reports. Display times
+use Asia/Manila. Reading a report and gateway packets do not fabricate admin actions.
+
 ## Before deploying
 
 1. Push this repository to the Git provider connected to Dokploy.

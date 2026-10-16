@@ -96,7 +96,7 @@ class IncidentReportFilterTest extends TestCase
         $pageTwo = $this->get(route('reports.index', $filters + ['page' => 2]))->assertOk()->viewData('reports');
         $this->assertCount(2, $pageTwo->items());
         $this->assertSame([], array_intersect($response->viewData('reports')->pluck('id')->all(), $pageTwo->pluck('id')->all()));
-        $export = $filters + ['period' => 'custom', 'date_from' => now()->subDay()->toDateString(), 'date_to' => now()->toDateString()];
+        $export = $filters + ['period' => 'custom', 'date_from' => now('Asia/Manila')->subDay()->toDateString(), 'date_to' => now('Asia/Manila')->toDateString()];
         $this->getJson(route('reports.export.preview', $export))->assertOk()->assertJsonPath('count', 5);
         $csv = $this->get(route('reports.export', $export + ['format' => 'csv']))->assertOk()->streamedContent();
         foreach ($matches as $match) { $this->assertStringContainsString($match->report_code, $csv); }
@@ -132,7 +132,7 @@ class IncidentReportFilterTest extends TestCase
                 $this->assertSame(0, $page->viewData('reports')->total());
             }
         }
-        $window = ['period' => 'custom', 'date_from' => now()->subDay()->toDateString(), 'date_to' => now()->toDateString()];
+        $window = ['period' => 'custom', 'date_from' => now('Asia/Manila')->subDay()->toDateString(), 'date_to' => now('Asia/Manila')->toDateString()];
         $this->getJson(route('reports.export.preview', $window))->assertOk()->assertJsonPath('count', 2);
         $csv = $this->get(route('reports.export', $window + ['format' => 'csv']))->assertOk()->streamedContent();
         $this->assertStringContainsString($online->report_code, $csv);

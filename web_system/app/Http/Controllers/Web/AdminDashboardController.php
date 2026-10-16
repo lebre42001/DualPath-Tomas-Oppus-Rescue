@@ -4,28 +4,23 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\IncidentReport;
+use App\Models\IncidentReportAudit;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class AdminDashboardController extends Controller
 {
-    public function __invoke(): View
+    public function __invoke(Request $request): View
     {
         $activeStatuses = ['received', 'acknowledged', 'dispatched', 'responding'];
         $assessedReports = IncidentReport::query()->operationallyAssessed();
         $recentReports = IncidentReport::query()
-            ->with(['assignedResponder', 'reporter'])
             ->latest('status_updated_at')
             ->latest('created_at')
             ->take(12)
-            ->get();
-
-        $recentCivilians = User::query()
-            ->where('role', 'civilian')
-            ->with('responderProfile')
-            ->latest()
-            ->take(3)
             ->get();
 
         $moderationQueue = IncidentReport::query()
@@ -48,6 +43,13 @@ class AdminDashboardController extends Controller
             ->latest('created_at')
             ->take(8)
             ->get();
+
+        $auditFilters = $request->validate([
+            'audit_source' => ['nullable', 'in:online,lora'],
+            'audit_action' => ['nullable', 'in:coordination,severity_review,ai_analysis,deletion'],
+            'audit_search' => ['nullable', 'string', 'max:100'],
+            'audit_page' => ['nullable', 'integer', 'min:1'],
+        ]);
 
         return view('admin.dashboard', [
             'user' => Auth::user(),
@@ -79,7 +81,6 @@ class AdminDashboardController extends Controller
                 'online' => IncidentReport::query()->where('transmission_type', 'online')->count(),
                 'lora' => IncidentReport::query()->where('transmission_type', 'lora')->count(),
             ],
-            'recentReports' => $recentReports,
             'fatalAlerts' => (clone $assessedReports)
                 ->whereIn('severity', ['Critical', 'Fatal'])
                 ->whereIn('status', $activeStatuses)
@@ -90,9 +91,9 @@ class AdminDashboardController extends Controller
             'mapPoints' => $recentReports->filter(
                 fn (IncidentReport $report): bool => $report->latitude !== null && $report->longitude !== null
             ),
-            'recentCivilians' => $recentCivilians,
             'moderationQueue' => $moderationQueue,
-            'auditTrail' => $this->adminAuditTrail(),
+            'auditTrail' => $this->adminAuditTrail($auditFilters),
+            'auditFilters' => $auditFilters,
         ]);
     }
 
@@ -117,76 +118,26 @@ class AdminDashboardController extends Controller
         ];
     }
 
-    private function adminAuditTrail(int $limit = 18): array
+    private function adminAuditTrail(array $filters): LengthAwarePaginator
     {
-        return IncidentReport::query()
-            ->with(['assignedResponder', 'reporter'])
-            ->latest('status_updated_at')
-            ->latest('created_at')
-            ->take(18)
-            ->get()
-            ->flatMap(function (IncidentReport $report) {
-                $entries = collect($report->coordination_log ?? [])
-                    ->filter(fn ($entry): bool => is_array($entry))
-                    ->map(function (array $entry) use ($report) {
-                        return [
-                            'report_id' => $report->id,
-                            'report_code' => $report->report_code,
-                            'incident_type' => $report->incident_type,
-                            'severity' => $report->operational_severity,
-                            'severity_display' => $report->severity_display,
-                            'severity_is_provisional' => $report->operational_severity === null || $report->ai_source === 'text_review',
-                            'ai_score_label' => $report->ai_score_display,
-                            'transmission_type' => $report->transmission_type,
-                            'reporter_name' => $report->reporter_name ?: ($report->reporter?->name ?? 'Reporter'),
-                            'location_text' => $report->location_text ?: ($report->readable_location ?? null),
-                            'coordinates' => $report->latitude !== null && $report->longitude !== null
-                                ? $report->latitude.', '.$report->longitude
-                                : null,
-                            'description' => $report->description,
-                            'actor_name' => $entry['actor_name'] ?? 'System',
-                            'actor_role' => $entry['actor_role'] ?? 'Admin',
-                            'label' => $entry['label'] ?? 'Updated incident coordination',
-                            'status' => $entry['status'] ?? $report->status,
-                            'assigned_responder_name' => $entry['assigned_responder_name'] ?? $report->assignedResponder?->name,
-                            'occurred_at' => $entry['occurred_at'] ?? optional($report->status_updated_at)->toIso8601String(),
-                            'response_notes' => $entry['response_notes'] ?? $report->response_notes,
-                            'detail_url' => route('reports.show', $report),
-                        ];
-                    });
-
-                if ($entries->isNotEmpty()) {
-                    return $entries;
+        $query = IncidentReportAudit::query()->with('report:id,transmission_type');
+        if (filled($filters['audit_source'] ?? null)) {
+            $query->where('transmission_type', $filters['audit_source']);
+        }
+        if (filled($filters['audit_action'] ?? null)) {
+            $query->where('action', $filters['audit_action']);
+        }
+        if ($search = trim($filters['audit_search'] ?? '')) {
+            $pattern = '%'.str_replace(['!', '%', '_'], ['!!', '!%', '!_'], mb_strtolower($search)).'%';
+            $query->where(function ($scoped) use ($pattern): void {
+                foreach (['report_code', 'actor_name', 'node_id'] as $column) {
+                    $scoped->orWhereRaw("LOWER({$column}) LIKE ? ESCAPE '!'", [$pattern]);
                 }
+            });
+        }
 
-                return [[
-                    'report_id' => $report->id,
-                    'report_code' => $report->report_code,
-                    'incident_type' => $report->incident_type,
-                    'severity' => $report->operational_severity,
-                    'severity_display' => $report->severity_display,
-                    'severity_is_provisional' => $report->operational_severity === null || $report->ai_source === 'text_review',
-                    'ai_score_label' => $report->ai_score_display,
-                    'transmission_type' => $report->transmission_type,
-                    'reporter_name' => $report->reporter_name ?: ($report->reporter?->name ?? 'Reporter'),
-                    'location_text' => $report->location_text ?: ($report->readable_location ?? null),
-                    'coordinates' => $report->latitude !== null && $report->longitude !== null
-                        ? $report->latitude.', '.$report->longitude
-                        : null,
-                    'description' => $report->description,
-                    'actor_name' => $report->reporter_name ?: ($report->reporter?->name ?? 'Reporter'),
-                    'actor_role' => 'Civilian',
-                    'label' => 'Submitted incident report',
-                    'status' => $report->status,
-                    'assigned_responder_name' => $report->assignedResponder?->name,
-                    'occurred_at' => optional($report->created_at)->toIso8601String(),
-                    'response_notes' => null,
-                    'detail_url' => route('reports.show', $report),
-                ]];
-            })
-            ->sortByDesc(fn (array $entry): string => (string) ($entry['occurred_at'] ?? ''))
-            ->take($limit)
-            ->values()
-            ->all();
+        return $query->orderByRaw('CASE WHEN occurred_at IS NULL THEN 1 ELSE 0 END')
+            ->orderByDesc('occurred_at')->orderByDesc('id')
+            ->paginate(6, ['*'], 'audit_page')->withQueryString()->fragment('report-audit-history');
     }
 }

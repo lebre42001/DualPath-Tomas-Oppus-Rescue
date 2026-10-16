@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -535,6 +536,7 @@ class IncidentReportController extends Controller
                     previousAssignedResponderName: $previousAssignedResponderName,
                     assignedResponderName: $assignedResponder?->name,
                     responseNotes: $effectiveNotes,
+                    actorId: $actor?->id,
                 ),
             ]),
         ];
@@ -599,7 +601,7 @@ class IncidentReportController extends Controller
             ];
         }
 
-        $incidentReport->update($updates);
+        DB::transaction(fn () => $incidentReport->update($updates));
 
         IncidentFeedBroadcaster::dispatch($incidentReport, 'updated');
 
@@ -632,12 +634,13 @@ class IncidentReportController extends Controller
     {
         $this->ensureReportAccess($request->user(), $incidentReport);
 
-        Storage::delete(array_filter([
+        $paths = array_filter([
             $incidentReport->evidence_path,
             $incidentReport->reporter_selfie_path,
-        ]));
+        ]);
 
-        $incidentReport->delete();
+        DB::transaction(fn () => $incidentReport->delete());
+        Storage::delete($paths);
 
         $redirectRoute = $request->input('return_to') === 'monitoring'
             ? 'monitoring'
@@ -655,22 +658,11 @@ class IncidentReportController extends Controller
         $deletedCount = 0;
 
         $this->visibleReportsQuery($request->user())
-            ->select(['id', 'evidence_path', 'reporter_selfie_path'])
             ->orderBy('id')
             ->chunkById(100, function ($reports) use (&$deletedCount): void {
-                $paths = $reports
-                    ->flatMap(fn (IncidentReport $report): array => [
-                        $report->evidence_path,
-                        $report->reporter_selfie_path,
-                    ])
-                    ->filter()
-                    ->values()
-                    ->all();
-
-                Storage::delete($paths);
-
                 foreach ($reports as $report) {
-                    $report->delete();
+                    DB::transaction(fn () => $report->delete());
+                    Storage::delete(array_filter([$report->evidence_path, $report->reporter_selfie_path]));
                     $deletedCount++;
                 }
             });
@@ -1084,6 +1076,7 @@ class IncidentReportController extends Controller
         ?string $previousAssignedResponderName,
         ?string $assignedResponderName,
         ?string $responseNotes,
+        ?int $actorId = null,
     ): array {
         return [
             'label' => $this->coordinationLabelFor(
@@ -1094,6 +1087,9 @@ class IncidentReportController extends Controller
             ),
             'actor_name' => $actorName,
             'actor_role' => $actorRole,
+            'actor_id' => $actorId,
+            'previous_status' => $previousStatus,
+            'previous_assigned_responder_name' => $previousAssignedResponderName,
             'status' => $newStatus,
             'assigned_responder_name' => $assignedResponderName,
             'response_notes' => $responseNotes,

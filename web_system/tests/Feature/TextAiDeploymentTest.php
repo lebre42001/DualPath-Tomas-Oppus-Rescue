@@ -53,6 +53,9 @@ class TextAiDeploymentTest extends TestCase
         Http::fake(['text-ai.test/predict/text' => Http::response($this->prediction())]);
         $this->actingAs($admin)->get(route('reports.show', $report))->assertOk()->assertSee('Analyze description with AI');
         $this->post(route('reports.ai-suggestion', $report))->assertRedirect();
+        $this->assertDatabaseHas('incident_report_audits', [
+            'incident_report_id' => $report->id, 'actor_id' => $admin->id, 'action' => 'ai_analysis',
+        ]);
         $report->refresh();
         $this->assertSame('Critical', $report->ai_suggested_severity);
         $this->assertNull($report->operational_severity);

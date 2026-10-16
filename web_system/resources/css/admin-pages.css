@@ -28,8 +28,8 @@ body.admin-portal .admin-overview-toolbar {
 }
 
 body.admin-portal .admin-overview-toolbar .button-row {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 8px;
 }
 
@@ -141,6 +141,13 @@ body.admin-portal .command-audit-table { min-width: 0; table-layout: fixed; }
 body.admin-portal .command-audit-table th { font-size: .8125rem; letter-spacing: .02em; padding: 0 12px 4px; }
 body.admin-portal .command-audit-table td { padding: 12px; overflow-wrap: break-word; word-break: break-word; }
 body.admin-portal .command-audit-table td strong { font-size: .875rem; }
+
+body.admin-portal .overview-audit-filters { display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr)) auto; gap: 12px; align-items: end; margin: 16px 0; }
+body.admin-portal .overview-audit-filters label { display: grid; gap: 6px; min-width: 0; font-size: .875rem; }
+body.admin-portal .overview-audit-filters .button-row { flex-wrap: wrap; }
+body.admin-portal #report-audit-history { scroll-margin-top: 16px; }
+@media (max-width: 1180px) { body.admin-portal .overview-audit-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { body.admin-portal .overview-audit-filters { grid-template-columns: minmax(0, 1fr); } }
 
 body.admin-portal .admin-account-filters .panel-head { margin-bottom: 12px; }
 body.admin-portal .admin-account-filter-form { grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 12px; }
