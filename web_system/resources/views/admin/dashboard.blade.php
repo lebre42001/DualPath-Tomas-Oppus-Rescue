@@ -123,7 +123,7 @@
     <div class="admin-overview-toolbar">
         <nav class="button-row" aria-label="Response shortcuts">
             <a href="{{ route('monitoring') }}" class="btn btn-primary">Live Monitoring</a>
-            <a href="{{ route('reports.index') }}" class="btn btn-secondary">Incident Reports</a>
+            <a href="{{ route('reports.index') }}" class="btn btn-secondary">Online Report</a>
         </nav>
         <div class="admin-account-counts" aria-label="Registered accounts">
             <a href="{{ route('civilian-accounts.index') }}"><strong>{{ $stats['civilians'] }}</strong> Civilians</a>

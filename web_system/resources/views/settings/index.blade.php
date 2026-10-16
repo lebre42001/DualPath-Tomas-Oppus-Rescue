@@ -205,7 +205,7 @@
                     <p>{{ $isCivilian ? 'Return to report and status.' : 'Return to live incident monitoring.' }}</p>
                 </a>
                 <a href="{{ route('reports.index') }}" class="detail-card">
-                    <strong>{{ $isCivilian ? 'My Reports' : 'Incident Reports' }}</strong>
+                    <strong>{{ $isCivilian ? 'My Reports' : 'Online Report' }}</strong>
                     <p>{{ $isCivilian ? 'Open your report history.' : 'Open the full report queue.' }}</p>
                 </a>
                 <a href="{{ route('settings.readiness') }}" class="detail-card">

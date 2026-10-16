@@ -500,7 +500,7 @@
                     </div>
                     <div class="action-row">
                         <a href="{{ route('lora-reports.index') }}" class="btn btn-secondary">All LoRa reports</a>
-                        <a href="{{ route('reports.index') }}" class="btn btn-secondary">All incident reports</a>
+                        <a href="{{ route('reports.index') }}" class="btn btn-secondary">All Online Reports</a>
                     </div>
                 </div>
 

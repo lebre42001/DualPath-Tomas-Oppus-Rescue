@@ -166,7 +166,7 @@
                     <h2 class="panel-title">Report activity</h2>
                     <p>Review report activity linked to your admin account.</p>
                     <div class="action-row">
-                        <a href="{{ route('reports.index') }}" class="action-btn secondary">Incident Reports</a>
+                        <a href="{{ route('reports.index') }}" class="action-btn secondary">Online Report</a>
                         <a href="{{ route('reports.create') }}" class="action-btn secondary">Create Report</a>
                     </div>
                 </article>

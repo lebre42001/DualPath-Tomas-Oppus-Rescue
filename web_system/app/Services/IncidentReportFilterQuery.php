@@ -90,7 +90,7 @@ class IncidentReportFilterQuery
         return $query;
     }
 
-    /** The admin Incident Reports tab and its exports contain online submissions. */
+    /** The admin Online Report tab and its exports contain online submissions. */
     public function visibleReports(?User $user): Builder
     {
         $query = IncidentReport::query();

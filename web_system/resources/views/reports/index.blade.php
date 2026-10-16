@@ -229,9 +229,9 @@
     $civilianRecentUpdates = collect($civilianRecentUpdates ?? []);
 @endphp
 
-@section('title', $isCivilian ? 'Report History' : 'Incident Reports')
-@section('page_label', $isCivilian ? 'Report History' : 'Incident Reports')
-@section('page_heading', $isCivilian ? 'My Submitted Reports' : 'Incident Reports')
+@section('title', $isCivilian ? 'Report History' : 'Online Report')
+@section('page_label', $isCivilian ? 'Report History' : 'Online Report')
+@section('page_heading', $isCivilian ? 'My Submitted Reports' : 'Online Report')
 @section('page_subheading', $isCivilian ? 'Review only the emergencies you submitted and their current response status.' : 'Online reports. Node reports are available in LoRa Reports.')
 
 @section('hero')

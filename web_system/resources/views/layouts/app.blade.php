@@ -120,7 +120,7 @@ SVG,
                         <a href="{{ $sendReportUrl }}" class="{{ request()->routeIs('reports.create') || request()->routeIs('account.verify') ? 'active' : '' }}"><span>{{ $isAccountVerified ? 'Send Report' : 'Verify Account' }}</span><small>{{ $isAccountVerified ? 'SR' : 'VA' }}</small></a>
                         <a href="{{ route('reports.index') }}" class="{{ request()->routeIs('reports.index') || request()->routeIs('reports.show') || request()->routeIs('reports.success') ? 'active' : '' }}"><span>Report Status</span><small>{{ isset($stats['total']) ? $stats['total'] : 'RS' }}</small></a>
                     @else
-                        <a href="{{ route('reports.index') }}" class="{{ request()->routeIs('reports.*') ? 'active' : '' }}"><span>Incident Reports</span><small>{{ isset($stats['active']) ? $stats['active'] : $fatalAlertCount }}</small></a>
+                        <a href="{{ route('reports.index') }}" class="{{ request()->routeIs('reports.*') ? 'active' : '' }}"><span>Online Report</span><small>{{ isset($stats['active']) ? $stats['active'] : $fatalAlertCount }}</small></a>
                     @endif
                     @if ($authUser && ! $authUser->isCivilian())
                         <a href="{{ route('civilian-accounts.index') }}" class="{{ request()->routeIs('civilian-accounts.*') ? 'active' : '' }}"><span>Civilian Accounts</span><small>CA</small></a>

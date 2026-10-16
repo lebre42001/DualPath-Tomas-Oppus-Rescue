@@ -18,7 +18,7 @@ LoRa Mesh shows node health and telemetry only, including its five-second refres
 fragment. Report IDs, messages, acknowledgment state and report actions are in
 LoRa Reports, which defaults to newest first.
 
-The admin Incident Reports tab lists online submissions only. Its counts, search,
+The admin Online Report tab lists online submissions only. Its counts, search,
 export preview/download and bulk delete use that same scope; LoRa reports stay
 in their dedicated history. Live Monitoring still combines both sources.
 
