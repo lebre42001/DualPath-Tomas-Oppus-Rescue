@@ -35,6 +35,14 @@ document.addEventListener('submit', async (event) => {
             template.innerHTML = target.dataset.aiAnalysisLayout === 'compact' ? result.compact_html : result.analysis_html;
             target.replaceWith(template.content.cloneNode(true));
         });
+        if (result.current_severity_category) {
+            document.querySelectorAll('[data-current-category-for]').forEach((target) => {
+                if (target.dataset.currentCategoryFor !== reportId) return;
+                target.textContent = result.current_severity_category;
+                target.classList.remove('red', 'amber', 'green', 'blue', 'neutral');
+                target.classList.add(({ Critical: 'red', Serious: 'amber', Minor: 'green' })[result.current_severity_category] ?? 'blue');
+            });
+        }
         const reviewTemplate = document.createElement('template');
         reviewTemplate.innerHTML = result.review_html;
         const updatedReview = reviewTemplate.content.querySelector('[data-severity-review-for]');

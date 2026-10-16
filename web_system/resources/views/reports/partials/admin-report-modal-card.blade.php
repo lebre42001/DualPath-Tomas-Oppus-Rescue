@@ -24,7 +24,7 @@
             @if ($report->reported_fatality_flag)
                 <span class="tag red">POSSIBLE FATALITY · VERIFY NOW</span>
             @endif
-            <span class="tag {{ $tone($report->severity_display) }}">{{ $report->severity_display }}</span>
+            <span class="tag {{ $tone($report->current_severity_category) }}" data-current-category-for="{{ $report->id }}">{{ $report->current_severity_category }}</span>
             <span class="tag {{ $statusDisplayTone($report->status) }}">{{ $statusDisplayLabel($report->status) }}</span>
             <span class="tag neutral">{{ strtoupper($report->transmission_type ?: 'online') }}</span>
         </div>

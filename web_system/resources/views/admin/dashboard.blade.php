@@ -169,7 +169,7 @@
                                     <span class="tag red">POSSIBLE FATALITY · VERIFY NOW</span>
                                 @endif
                                 <span class="tag {{ $report->transmission_type === 'lora' ? 'amber' : 'blue' }}">{{ $report->transmission_type === 'lora' ? 'LoRa' : 'Online' }}</span>
-                                <span class="tag {{ $tone($report->severity_display) }}">{{ $report->severity_display }}</span>
+                                <span class="tag {{ $tone($report->current_severity_category) }}">{{ $report->current_severity_category }}</span>
                                 <span class="tag {{ $statusTone($report->status) }}">{{ ucfirst($report->status) }}</span>
                                 @if ($report->transmission_type === 'lora')
                                     <span class="badge blue">Gateway {{ $report->lora_gateway_id ?: 'unknown' }}</span>

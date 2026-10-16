@@ -248,7 +248,7 @@
         <article class="panel">
             <div class="panel-head"><div class="panel-heading"><p class="panel-kicker">Incident Data</p><h2 class="panel-title">Core details</h2></div></div>
             <div class="stack">
-                <div class="detail-card"><strong>Severity</strong><span class="tag {{ $tone($report->severity_display) }}">{{ $report->severity_display }}</span></div>
+                <div class="detail-card"><strong>Severity</strong><span class="tag {{ $tone($isCivilian ? $report->severity_display : $report->current_severity_category) }}" @unless ($isCivilian) data-current-category-for="{{ $report->id }}" @endunless>{{ $isCivilian ? $report->severity_display : $report->current_severity_category }}</span></div>
                 <div class="detail-card"><strong>Admin response state</strong><span class="tag {{ $adminState['tone'] }}">{{ $adminState['label'] }}</span><p>{{ $report->status === 'received' ? 'No admin has responded or cancelled this report yet.' : 'Current saved coordination status: '.$adminState['label'].'.' }}</p></div>
                 <div class="detail-card"><strong>Description</strong><p>{{ $report->description }}</p></div>
                 <div class="detail-card"><strong>Reporter</strong><p>{{ $report->reporter_name ?: 'Unknown' }}<br>{{ $report->reporter_contact ?: 'No contact provided' }}</p></div>

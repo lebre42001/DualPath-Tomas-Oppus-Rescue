@@ -30,13 +30,14 @@ class IncidentReportController extends Controller
     {
         $user = $request->user();
         $isCivilian = $user?->isCivilian() ?? false;
+        $filters = $filterQuery->parameters($request, $user);
         $requestedReview = $request->integer('review') ?: (int) $request->session()->get('ai_review_report_id', 0);
         $reviewReportId = ! $isCivilian && $requestedReview > 0 ? $requestedReview : null;
         $activeStatuses = ['received', 'acknowledged', 'dispatched', 'responding'];
         $reportsQuery = $filterQuery->build($request, $user)
             ->with(['reporter', 'assignedResponder']);
 
-        $sort = (string) $request->string('sort', 'newest');
+        $sort = $filters['sort'];
 
         if ($isCivilian && $sort === 'severity') {
             $sort = 'newest';
@@ -49,13 +50,15 @@ class IncidentReportController extends Controller
         match ($sort) {
             'oldest' => $reportsQuery->oldest(),
             'severity' => $reportsQuery
-                ->orderByRaw($this->operationalSeverityOrderSql())
+                ->orderByRaw("CASE (".$filterQuery->severityExpression($reportsQuery).") WHEN 'Critical' THEN 1 WHEN 'Serious' THEN 2 WHEN 'Minor' THEN 3 WHEN 'Needs review' THEN 4 ELSE 5 END")
                 ->latest(),
             'status' => $reportsQuery
                 ->orderByRaw("case status when 'received' then 1 when 'acknowledged' then 2 when 'dispatched' then 3 when 'responding' then 4 when 'resolved' then 5 when 'rejected' then 6 else 7 end")
                 ->latest(),
             default => $reportsQuery->latest(),
         };
+
+        $reportsQuery->orderBy('incident_reports.id', $sort === 'oldest' ? 'asc' : 'desc');
 
         $reports = $reportsQuery
             ->paginate($isCivilian ? 5 : 3)
@@ -77,13 +80,7 @@ class IncidentReportController extends Controller
                 ->with('responderProfile')
                 ->orderBy('name')
                 ->get(),
-            'filters' => [
-                'search' => (string) $request->string('search'),
-                'severity' => $isCivilian ? '' : (string) $request->string('severity'),
-                'status' => (string) $request->string('status'),
-                'transmission' => $isCivilian ? '' : (string) $request->string('transmission'),
-                'sort' => $sort,
-            ],
+            'filters' => $filters,
             'reviewReportId' => $reviewReportId,
             'stats' => $isCivilian
                 ? ['total' => $this->visibleReportsQuery($user)->count()]

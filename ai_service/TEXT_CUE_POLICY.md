@@ -29,6 +29,8 @@ Laravel uses `ai_source=text_rule_advisory` for supported phrase suggestions. It
 
 ## Automatic reports and admin review
 
+Report search, cards, severity sorting and exports now share **one current severity category**: the final admin assessment after review; otherwise the AI's top-scoring category, or Needs review for tied model scores. Missing/invalid analysis is Unassessed. This display/filter category does not authorize dispatch. An admin correction supersedes the AI category for current results, while the original AI output remains in review history. No learned scores are rewritten to agree with a human correction.
+
 The shared admin display also shows **AI top category** and its actual highest classifier percentage for all stored text assessments, even when that score is below the acceptance cutoff. `Needs review` and tied scores remain explicit. This is a provisional model ranking, not a newly accepted severity; it never sets final operational severity or overrides a phrase-rule suggestion. After admin review the same ranking is available from the original score snapshot. The Analyze again action updates the open modal in place and preserves pending admin notes; no threshold or model-weight change is made by this UI fix.
 
 New web/API reports call the connected text service automatically on submission. Admins receive the suggestion/scores with review still pending; no Analyze click is needed for new reports. Existing unreviewed records can use Analyze description with AI. Service failure must not prevent report receipt, fabricate scores or assign a final AI severity.

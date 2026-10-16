@@ -61,6 +61,7 @@ class IncidentReportExportController extends Controller
             'incident_reports.ai_source',
             'incident_reports.ai_review_required',
             'incident_reports.ai_status',
+            'incident_reports.ai_probabilities',
             'incident_reports.created_at',
             'incident_reports.reported_fatality_flag',
             'incident_reports.coordination_log',
@@ -119,7 +120,7 @@ class IncidentReportExportController extends Controller
             'date_from' => ['nullable', 'required_if:period,custom', 'date_format:Y-m-d'],
             'date_to' => ['nullable', 'required_if:period,custom', 'date_format:Y-m-d'],
             'search' => ['nullable', 'string', 'max:180'],
-            'severity' => ['nullable', 'in:Minor,Serious,Fatal,Critical'],
+            'severity' => ['nullable', 'in:Minor,Serious,Critical,Needs review,Unassessed'],
             'status' => ['nullable', 'in:received,acknowledged,dispatched,responding,resolved,rejected,queued'],
             'transmission' => ['nullable', 'in:online,lora'],
             'include_personal_data' => ['sometimes', 'boolean'],
@@ -129,7 +130,8 @@ class IncidentReportExportController extends Controller
             $rules['format'] = ['required', 'in:csv,xlsx'];
         }
 
-        $validator = Validator::make($request->query(), $rules);
+        $normalized = app(IncidentReportFilterQuery::class)->parameters($request, $request->user());
+        $validator = Validator::make(array_replace($request->query(), $normalized), $rules);
         $validator->after(function ($validator) use ($request): void {
             if ($request->query('period') !== 'custom') {
                 return;
@@ -213,7 +215,7 @@ class IncidentReportExportController extends Controller
             $report->report_code,
             $report->created_at?->copy()->timezone(self::REPORTING_TIMEZONE)->format('Y-m-d H:i:s'),
             $report->incident_type,
-            $report->severity_display,
+            $report->current_severity_category,
             $this->severitySourceLabel($report),
             $report->operational_ai_review_required ? 'Yes' : 'No',
             $report->status,

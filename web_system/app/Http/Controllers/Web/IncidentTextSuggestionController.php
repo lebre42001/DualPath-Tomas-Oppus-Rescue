@@ -82,6 +82,7 @@ class IncidentTextSuggestionController extends Controller
                 'report_id' => $report->id,
                 'message' => $message,
                 'top_category' => $report->ai_top_category,
+                'current_severity_category' => $report->current_severity_category,
                 'analysis_html' => view('reports.partials.ai-analysis', ['report' => $report])->render(),
                 'compact_html' => view('reports.partials.ai-analysis', ['report' => $report, 'compact' => true])->render(),
                 'review_html' => view('reports.partials.severity-review-form', ['report' => $report])->render(),

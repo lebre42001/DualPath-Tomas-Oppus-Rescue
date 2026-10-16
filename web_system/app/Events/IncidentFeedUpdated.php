@@ -45,6 +45,7 @@ class IncidentFeedUpdated implements ShouldBroadcastNow
                 'incident_type' => $report->incident_type,
                 'severity' => $report->operational_severity,
                 'severity_display' => $report->severity_display,
+                'current_severity_category' => $report->current_severity_category,
                 'reported_fatality_flag' => (bool) $report->reported_fatality_flag,
                 'severity_is_provisional' => $report->operational_severity === null || $report->ai_source === 'text_review',
                 'ai_score_label' => $report->ai_score_display,

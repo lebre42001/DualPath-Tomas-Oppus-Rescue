@@ -265,8 +265,8 @@
                 </div>
                 <div class="report-detail-modal-body report-filter-modal-body">
                     <form method="GET" action="{{ route('reports.index') }}" class="form-grid report-filter-modal-grid">
-                        <div class="field"><label for="modal-search">Search</label><input id="modal-search" class="input" type="text" name="search" value="{{ $filters['search'] }}" placeholder="Code, incident, location, reporter"></div>
-                        <div class="field"><label for="modal-severity">Severity</label><select id="modal-severity" name="severity"><option value="">All severities</option>@foreach (['Minor', 'Serious', 'Fatal'] as $severity)<option value="{{ $severity }}" @selected($filters['severity'] === $severity)>{{ $severity }}</option>@endforeach</select></div>
+                        <div class="field"><label for="modal-search">Search</label><input id="modal-search" class="input" type="text" name="search" value="{{ $filters['search'] }}" placeholder="Code, description, location, reporter, node"></div>
+                        <div class="field"><label for="modal-severity">Severity</label><select id="modal-severity" name="severity"><option value="">All severities</option>@foreach (['Minor', 'Serious', 'Critical', 'Needs review', 'Unassessed'] as $severity)<option value="{{ $severity }}" @selected($filters['severity'] === $severity)>{{ $severity }}</option>@endforeach</select><small>Current category: admin assessment after review, AI top category while pending.</small></div>
                         <div class="field"><label for="modal-status">Status</label><select id="modal-status" name="status"><option value="">All statuses</option>@foreach (['received', 'acknowledged', 'dispatched', 'responding', 'resolved', 'rejected'] as $status)<option value="{{ $status }}" @selected($filters['status'] === $status)>{{ $statusDisplayLabel($status) }}</option>@endforeach</select></div>
                         <div class="field"><label for="modal-transmission">Transmission</label><select id="modal-transmission" name="transmission"><option value="">All transports</option><option value="online" @selected($filters['transmission'] === 'online')>Online</option><option value="lora" @selected($filters['transmission'] === 'lora')>LoRa</option></select></div>
                         <div class="field"><label for="modal-sort">Sort</label><select id="modal-sort" name="sort"><option value="newest" @selected($filters['sort'] === 'newest')>Newest first</option><option value="oldest" @selected($filters['sort'] === 'oldest')>Oldest first</option><option value="severity" @selected($filters['sort'] === 'severity')>Severity</option><option value="status" @selected($filters['sort'] === 'status')>Status</option></select></div>
@@ -560,7 +560,7 @@
                                 <div class="incident-feed-row-type">
                                     <strong>{{ $report->incident_type }}</strong>
                                     <span class="incident-feed-card-badges">
-                                        <span class="tag {{ $tone($report->severity_display) }}">{{ $report->severity_display }}</span>
+                                        <span class="tag {{ $tone($report->current_severity_category) }}" data-current-category-for="{{ $report->id }}">{{ $report->current_severity_category }}</span>
                                         <span class="tag {{ $statusDisplayTone($report->status) }}">{{ $statusDisplayLabel($report->status) }}</span>
                                     </span>
                                     <small>{{ strtoupper($report->transmission_type ?: 'online') }} | {{ $report->status === 'received' ? 'Needs admin review' : 'Admin processed' }}</small>
@@ -609,7 +609,7 @@
                                 <span class="incident-code">{{ $report->report_code }}</span>
                                 <strong class="incident-time">{{ $priorityTimer($report) }}</strong>
                                 <div class="tag-row">
-                                    <span class="tag {{ $tone($report->severity_display) }}">{{ $report->severity_display }}</span>
+                                    <span class="tag {{ $tone($report->current_severity_category) }}" data-current-category-for="{{ $report->id }}">{{ $report->current_severity_category }}</span>
                                     <span class="tag {{ $statusDisplayTone($report->status) }}">{{ $statusDisplayLabel($report->status) }}</span>
                                     <span class="tag neutral">{{ strtoupper($report->transmission_type ?: 'online') }}</span>
                                 </div>

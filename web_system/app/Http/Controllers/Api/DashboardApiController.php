@@ -133,6 +133,7 @@ class DashboardApiController extends Controller
             'reporter_contact' => $report->reporter_contact,
             'severity' => $report->operational_severity,
             'severity_display' => $report->severity_display,
+            'current_severity_category' => $report->current_severity_category,
             'severity_is_provisional' => $report->operational_severity === null || $report->ai_source === 'text_review',
             'ai_score_label' => $report->ai_score_display,
             'channel' => $report->channel,

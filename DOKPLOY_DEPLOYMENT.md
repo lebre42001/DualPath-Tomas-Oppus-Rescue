@@ -88,6 +88,18 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
 ## Operations
 
+- Unified report category and filters (2026-10-16): deploy Laravel and rebuilt
+  assets together. Reports use one current category: the admin assessment after
+  review, or the AI's highest-scoring category while pending. Filters, severity
+  sorting, cards, realtime projections and exports use that same category;
+  original AI scores remain review history. Critical includes legacy Fatal rows
+  and links. Needs review and Unassessed are explicit options. Search requires
+  every word, treats `%`, `_` and `!` literally, and preserves civilian ownership.
+  Invalid filters are rejected instead of becoming Minor/Online. SQL filtering
+  happens before pagination; exports reuse it across all pages. No migration or
+  model change. Dispatch still requires admin confirmation. Verification covers
+  SQLite feature tests and MySQL temporary fixtures without changing real reports.
+
 - Highest model category and in-place analysis (2026-10-16): deploy the web app
   and rebuilt Vite assets together. All report cards and admin review views show
   the actual highest-scoring model category/percentage, including below-cutoff

@@ -543,7 +543,7 @@
                                     <h3>{{ $report->incident_type }}</h3>
                                     @include('reports.partials.ai-analysis', ['report' => $report, 'compact' => true])
                                     <div class="tag-row">
-                                        <span class="tag {{ $tone($report->severity_display) }}">{{ $report->severity_display }}</span>
+                                        <span class="tag {{ $tone($report->current_severity_category) }}" data-current-category-for="{{ $report->id }}">{{ $report->current_severity_category }}</span>
                                         @unless ($isLoRa)<span class="badge {{ $confidenceTone($report->operational_ai_confidence) }}">{{ $report->ai_score_display }}</span>@endunless
                                         <span class="tag neutral">{{ strtoupper($report->transmission_type ?: 'online') }}</span>
                                         @if (in_array($report->operational_ai_source, ['python_model', 'image_model'], true))

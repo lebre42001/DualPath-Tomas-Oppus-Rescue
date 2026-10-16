@@ -756,11 +756,13 @@ function buildIncidentCard(report) {
     const severity = report.severity ?? null;
     const aiSource = String(report.ai_source ?? '');
     const topCategory = report.ai_top_category;
-    const topCategoryHtml = topCategory && Number.isFinite(Number(topCategory.score))
-        ? `<div class="stack" data-ai-analysis-for="${escapeAttribute(report.id)}" data-ai-analysis-layout="compact" tabindex="-1"><strong>${topCategory.original ? 'Original AI top category' : 'AI top category'}: ${escapeHtml(topCategory.label)} — ${Number(topCategory.score).toFixed(1)}%</strong><p>${topCategory.original ? 'Original model score; admin assessment recorded separately.' : 'Provisional model score; admin review required.'}</p><p data-ai-analysis-feedback role="status" hidden></p></div>`
+    const currentCategory = report.current_severity_category ?? topCategory?.label;
+    const finalCategory = currentCategory && !['manual_only', 'text_review', 'text_model', 'text_model_experimental', 'text_rule_advisory'].includes(aiSource);
+    const topCategoryHtml = currentCategory && currentCategory !== 'Unassessed'
+        ? `<div class="stack" data-ai-analysis-for="${escapeAttribute(report.id)}" data-ai-analysis-layout="compact" tabindex="-1"><strong>Current severity category: ${escapeHtml(currentCategory)}${!finalCategory && topCategory && Number.isFinite(Number(topCategory.score)) ? ` — ${Number(topCategory.score).toFixed(1)}%` : ''}</strong><p>${finalCategory ? 'Admin assessment is the current category.' : 'AI top category; admin review required.'}</p><p data-ai-analysis-feedback role="status" hidden></p></div>`
         : `<div data-ai-analysis-for="${escapeAttribute(report.id)}" data-ai-analysis-layout="compact"></div>`;
     const isProvisional = report.severity_is_provisional || aiSource === 'text_review';
-    const severityDisplay = report.severity_display ?? (isProvisional || severity === null ? 'Needs review' : severity);
+    const severityDisplay = report.current_severity_category ?? report.severity_display ?? (isProvisional || severity === null ? 'Needs review' : severity);
     const isTextAssessment = aiSource.startsWith('text_');
     const isHistoricalPhotoAssessment = ['python_model', 'image_model'].includes(aiSource);
     const aiScoreLabel = report.ai_score_label ?? (isTextAssessment

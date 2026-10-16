@@ -157,7 +157,7 @@
                 </div>
             </div>
             <div class="stack">
-                <div class="detail-card"><strong>{{ $assessmentLabel }}</strong><span class="tag {{ $tone($analysis['predicted']) }}">{{ $analysis['predicted'] }}</span></div>
+                <div class="detail-card"><strong>Current severity category</strong><span class="tag {{ $tone($report->current_severity_category) }}">{{ $report->current_severity_category }}</span></div>
                 <div class="detail-card">
                     <strong>{{ $isPendingAssessment || $analysis['source'] === 'human_responder' ? 'Severity assessment' : 'AI quick read' }}</strong>
                     @include('reports.partials.ai-analysis', ['report' => $report, 'compact' => false])

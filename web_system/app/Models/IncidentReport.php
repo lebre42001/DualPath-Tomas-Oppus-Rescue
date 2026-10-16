@@ -233,6 +233,26 @@ class IncidentReport extends Model
         return $this->isOperationalSeveritySuppressed() || $this->isAwaitingTextSeverityConfirmation() ? null : $this->severity;
     }
 
+    /** One category for report cards, search and exports; not dispatch authorization. */
+    public function getCurrentSeverityCategoryAttribute(): string
+    {
+        $pending = ['manual_only', 'text_review', 'text_model', 'text_model_experimental', 'text_rule_advisory'];
+        if ($this->severity === null && in_array($this->ai_source, ['human_responder', 'manual_override', 'text_human_override'], true)) {
+            return 'Needs review';
+        }
+        if ($this->severity !== null && ! in_array($this->ai_source, $pending, true)) {
+            return match (strtolower(trim($this->severity))) {
+                'minor' => 'Minor', 'serious' => 'Serious', 'critical', 'fatal' => 'Critical', default => 'Unassessed',
+            };
+        }
+        if (in_array($this->ai_source, ['text_review', 'text_model', 'text_model_experimental', 'text_rule_advisory'], true)) {
+            $top = $this->ai_top_category;
+            return $top ? ($top['tied'] ? 'Needs review' : $top['label']) : 'Unassessed';
+        }
+
+        return 'Unassessed';
+    }
+
     /** Display the genuine highest classifier score, including below-cutoff results.
      * This ranking never sets operational severity or overrides phrase suggestions.
      */
@@ -257,7 +277,7 @@ class IncidentReport extends Model
             return null;
         }
         $maximum = max($scores);
-        $keys = array_keys(array_filter($scores, fn ($score) => abs($score - $maximum) < 0.000001));
+        $keys = array_keys(array_filter($scores, fn ($score) => round(abs($score - $maximum), 9) < 0.000001));
 
         return [
             'key' => count($keys) === 1 ? $keys[0] : 'needs_review',
