@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "kind": "Counted review subset of existing synthetic descriptions",
+  "words_per_language": 2000,
+  "total_description_words": 8000,
+  "descriptions": 764,
+  "scenario_groups": 751,
+  "by_language": {
+    "en": {
+      "words": 2000,
+      "descriptions": 223,
+      "by_label": {
+        "minor": {
+          "descriptions": 57,
+          "words": 500
+        },
+        "serious": {
+          "descriptions": 56,
+          "words": 500
+        },
+        "critical": {
+          "descriptions": 52,
+          "words": 500
+        },
+        "needs_review": {
+          "descriptions": 58,
+          "words": 500
+        }
+      }
+    },
+    "tl": {
+      "words": 2000,
+      "descriptions": 206,
+      "by_label": {
+        "minor": {
+          "descriptions": 56,
+          "words": 500
+        },
+        "serious": {
+          "descriptions": 50,
+          "words": 500
+        },
+        "critical": {
+          "descriptions": 47,
+          "words": 500
+        },
+        "needs_review": {
+          "descriptions": 53,
+          "words": 500
+        }
+      }
+    },
+    "ceb": {
+      "words": 2000,
+      "descriptions": 204,
+      "by_label": {
+        "minor": {
+          "descriptions": 50,
+          "words": 500
+        },
+        "serious": {
+          "descriptions": 49,
+          "words": 500
+        },
+        "critical": {
+          "descriptions": 47,
+          "words": 500
+        },
+        "needs_review": {
+          "descriptions": 58,
+          "words": 500
+        }
+      }
+    },
+    "mixed": {
+      "words": 2000,
+      "descriptions": 131,
+      "by_label": {
+        "minor": {
+          "descriptions": 31,
+          "words": 500
+        },
+        "serious": {
+          "descriptions": 33,
+          "words": 500
+        },
+        "critical": {
+          "descriptions": 32,
+          "words": 500
+        },
+        "needs_review": {
+          "descriptions": 35,
+          "words": 500
+        }
+      }
+    }
+  },
+  "by_label": {
+    "needs_review": 204,
+    "minor": 194,
+    "serious": 188,
+    "critical": 178
+  },
+  "word_count_rule": "len(text.split()): whitespace-delimited tokens in the text column only; metadata and file copies excluded",
+  "selection": "Deterministic whole-description knapsack per language/label, maximizing description count; no truncation or padding",
+  "seed": 20261016,
+  "source": {
+    "file": "reports.csv",
+    "path_relative_to_output": "../full_pool_20261011/reports.csv",
+    "sha256": "5899ebdb2c5970007f8e11975b439589f8102eaa20270c3bd5e46a7e1f1c8ba5",
+    "dataset_fingerprint": "970c675133aecbbe479d1ee129c517a94af35ede3b015cab962dc4eb473f0ea4",
+    "descriptions": 1366,
+    "words_by_language": {
+      "en": 6753,
+      "tl": 6835,
+      "ceb": 8882,
+      "mixed": 3278
+    }
+  },
+  "dataset_fingerprint": "7cb74f41c54b0323e399da052265de79a2044d644414d7ae7e3dd87b7f799974",
+  "approved_rows": 0,
+  "approved_for_deployment": false,
+  "new_unique_training_examples": 0,
+  "fresh_holdout": false,
+  "active_model_changed": false,
+  "limitations": [
+    "Synthetic-origin, draft labels; neither fluent-speaker nor responder approval is implied.",
+    "This is smaller than the source corpus; do not concatenate it with source data or count browsing copies as new examples.",
+    "Source data was already used in model development. This subset cannot be an independent accuracy test.",
+    "Case IDs and scenario groups are preserved; keep related translations/paraphrases together in any future split.",
+    "Exact word balance does not imply equal row counts, natural incident frequencies, or 80-85% field accuracy.",
+    "Descriptions are selected independently per language; not every translation of a selected group is included."
+  ]
+}

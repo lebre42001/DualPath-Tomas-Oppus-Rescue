@@ -1,9 +1,9 @@
 {
   "mode": "MODEL_ADVISORY",
-  "model_directory": "releases/triage-text-tfidf-20261016",
+  "model_directory": "releases/triage-text-tfidf-20261016-v2",
   "allow_experimental": true,
   "text_rules_enabled": true,
   "text_rules_version": "text-cues-20261016-v1",
   "admin_confirmation_required": true,
-  "evaluation_report": "artifacts/reports/text_tfidf_20261016/EVALUATION.md"
+  "evaluation_report": "artifacts/reports/text_retrain_20261016_v2/EVALUATION.md"
 }

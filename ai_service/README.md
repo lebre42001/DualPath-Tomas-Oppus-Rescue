@@ -4,11 +4,15 @@
 
 **Description phrase support:** [the trilingual cue policy](TEXT_CUE_POLICY.md) adds explicit English/Tagalog/Bisaya condition phrases, including reported `patay` and `fifty-fifty`, while retaining the trained classifier. Rule suggestions have no fabricated confidence; actual classifier scores are displayed separately. New reports are analyzed automatically. Admin review keeps the original suggestion and all four scores visible. The combined policy's diagnostic results differ from the original raw classifier benchmark below.
 
-`active_text_config.json` selects **DualPath Trilingual TF-IDF Logistic Regression**, version `dualpath-tfidf-20261016-v1`. The Laragon startup helper and Dokploy Compose profile enable this explicitly experimental, CPU-only suggestion model. Every operational severity still requires admin confirmation. Model files live in `releases/triage-text-tfidf-20261016`; optional transformer/PyTorch inference remains supported separately.
+`active_text_config.json` selects **DualPath Trilingual TF-IDF Logistic Regression**, version `dualpath-tfidf-20261016-v2`. The Laragon startup helper and Dokploy Compose profile enable this explicitly experimental, CPU-only suggestion model. Every operational severity still requires admin confirmation. Model files live in `releases/triage-text-tfidf-20261016-v2`; optional transformer/PyTorch inference remains supported separately.
+
+**Requested retraining with the counted word pack:** [v2 evidence](artifacts/reports/text_retrain_20261016_v2/EVALUATION.md) records a fresh fit of the full canonical corpus on the unchanged group split. The 764 selected descriptions already occur in that corpus: 537 are training rows, 118 validation and 109 test. No duplicates were added and no validation/test text was fitted. The fit reproduced the same numeric weights and diagnostic results; it does not add information or improve accuracy. Both local and Dokploy selectors use v2; v1 remains available for rollback.
 
 Held-out synthetic benchmark: **92.7% overall**, English 92.8%, Tagalog 95.1%, Cebuano/Bisaya 87.7% (220 test examples). Suggestion coverage is 60.5% at the provisional 0.65 cutoff; other cases require review. This is not independently validated real-report accuracy. See [the experiment report](artifacts/reports/text_tfidf_20261016/EVALUATION.md) for evidence, limitations and commands. No human approval fields were invented or bypassed; explicit experimental opt-in is required.
 
 Install the local runtime with `.venv-text/Scripts/python.exe -m pip install -r requirements-advisory.txt`; then use `tool/start_stitch_services.ps1` from the repo root. `/system/ai-status` on Laravel checks the connected model. Render's separate free demo remains manual-only.
+
+**Counted dataset:** the [2,000-word pack per language](datasets/emergency_text/experiments/counted_2000words_20261016/README.md) selects 8,000 description words across English, Tagalog, Bisaya and mixed from existing synthetic data. It is a draft review subset, not new training data or an independent accuracy evaluation. The separately requested v2 retraining above includes those cases through the canonical source.
 
 ## Service-wide inference switch
 

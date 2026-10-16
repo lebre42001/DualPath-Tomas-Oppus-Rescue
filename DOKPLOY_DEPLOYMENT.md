@@ -74,7 +74,7 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
   `wss`, and port 443 from the runtime environment.
 - Image inference remains disabled. The `text-ai` service runs the explicit
   experimental TF-IDF/Logistic Regression pilot selected in
-  `ai_service/releases/triage-text-tfidf-20261016`. It is private on port 8100;
+  `ai_service/releases/triage-text-tfidf-20261016-v2`. It is private on port 8100;
   Laravel connects through `http://text-ai:8100`. The optional PyTorch/transformer
   path remains available. Every suggestion requires admin confirmation.
   This synthetic-trained model is not an independently validated triage release.
@@ -87,6 +87,17 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
   shared cache/queue backend first.
 
 ## Operations
+
+- Counted-pack retraining v2 (2026-10-16): Compose and local active config select
+  `dualpath-tfidf-20261016-v2`. This re-fit uses the unchanged canonical corpus
+  and frozen train/validation/test split; the 8,000-word pack is already a subset
+  and is not duplicated. Weights and diagnostic results match v1. Deploy the
+  updated Compose profile and numeric release, then check `/system/ai-status`
+  for `ready`, model version v2, phrase rules enabled and admin confirmation
+  required; verify `/login` returns 200. No new environment values or migration
+  are required. No independent real-report accuracy or improvement is claimed.
+  The previous release directory is retained for rollback. See
+  `ai_service/artifacts/reports/text_retrain_20261016_v2/EVALUATION.md`.
 
 - Multilingual phrase suggestions and retained scores (2026-10-16): deploy the
   AI cue module/inference contract and Laravel client, source projections,

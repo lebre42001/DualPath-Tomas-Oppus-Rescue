@@ -21,6 +21,10 @@ The working master starts with **400 draft descriptions / 99 declared scenario f
 
 The 9,000-word count belongs only to the frozen experiment. The working copy is no longer constrained to that word budget. After edits, use `review_text.py audit` for current counts.
 
+## Counted four-language review pack (2026-10-16)
+
+The requested [2,000 words per language pack](experiments/counted_2000words_20261016/README.md) contains exactly **8,000 description words** across English, Tagalog, Bisaya and mixed language. It is a whole-description subset of the existing 1,366-row synthetic corpus, which already exceeds 2,000 words per language. All selected labels remain draft. It adds no new unique training examples and is not a fresh evaluation set. [Separately requested v2 retraining](../../artifacts/reports/text_retrain_20261016_v2/EVALUATION.md) includes its cases through the canonical corpus while preserving the original train/validation/test assignments. Language CSVs are derived copies, not additional rows.
+
 ## Everyday commands
 
 Run from `C:\laragon\www\CAPSTONE-EMERGENCY-SYSTEM-main\ai_service`:

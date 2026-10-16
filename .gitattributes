@@ -1,2 +1,3 @@
 # Model fingerprints must match the bytes shipped to Linux and Windows.
 ai_service/releases/**/baseline.json text eol=lf
+ai_service/datasets/emergency_text/experiments/counted_2000words_20261016/*.csv text eol=lf

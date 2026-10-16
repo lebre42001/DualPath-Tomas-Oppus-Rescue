@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "version": "dualpath-tfidf-20261016-v2",
+  "model_type": "tfidf_logistic",
+  "base_model": "tfidf-char-wb-logistic-regression",
+  "labels": [
+    "minor",
+    "serious",
+    "critical",
+    "needs_review"
+  ],
+  "languages": [
+    "en",
+    "tl",
+    "ceb",
+    "mixed"
+  ],
+  "scope": "road_vehicle_accidents",
+  "domain": "road_vehicle_accidents",
+  "observed_languages": [
+    "ceb",
+    "en",
+    "mixed",
+    "tl"
+  ],
+  "language_support_status": "requires_separate_language_evaluation",
+  "max_length": 128,
+  "review_threshold": 0.65,
+  "review_threshold_status": "provisional",
+  "confidence_calibrated": false,
+  "approved_for_deployment": false,
+  "deployment_status": "experimental",
+  "all_data_reviewed": false,
+  "allow_draft": true,
+  "dataset_fingerprint": "970c675133aecbbe479d1ee129c517a94af35ede3b015cab962dc4eb473f0ea4",
+  "dataset_summary": {
+    "rows": 1366,
+    "groups": 1021,
+    "by_label": {
+      "minor": 342,
+      "serious": 343,
+      "critical": 340,
+      "needs_review": 341
+    },
+    "by_language": {
+      "ceb": 416,
+      "en": 390,
+      "mixed": 180,
+      "tl": 380
+    },
+    "by_review_status": {
+      "draft": 516,
+      "approved": 850
+    },
+    "eligible_approved_rows": 850,
+    "dataset_fingerprint": "970c675133aecbbe479d1ee129c517a94af35ede3b015cab962dc4eb473f0ea4"
+  },
+  "seed": 20261016,
+  "validation_fraction": 0.15,
+  "test_fraction": 0.15,
+  "test_evaluated_during_training": false,
+  "fit_all_data": false,
+  "split_source": "frozen_manifest",
+  "software_versions": {
+    "torch": "2.13.0",
+    "scikit-learn": "1.9.1"
+  },
+  "limitations": [
+    "No deployment approval is granted by training or metrics",
+    "Confidence and review threshold are not calibrated",
+    "Group IDs require human identification of translations and paraphrases",
+    "Language balance is reported, not guaranteed",
+    "Small or synthetic datasets do not establish clinical or operational safety"
+  ],
+  "regularization_c": 16.0,
+  "analyzer": "char_wb",
+  "ngram_range": [
+    3,
+    5
+  ],
+  "artifact_sha256": "58d859a25a01f0fb95dd70576ed1523a9a09051e8d097776afb92b80e4085b90",
+  "training_run_version": "text-20261016T014336787512Z",
+  "display_name": "DualPath Trilingual TF-IDF Logistic Regression",
+  "pilot_only": true,
+  "pilot_policy": "Experimental suggestion only; every operational severity requires admin confirmation. No independently validated real-report accuracy.",
+  "evaluation_report": "artifacts/reports/text_retrain_20261016_v2/EVALUATION.md",
+  "counted_word_pack": {
+    "directory": "datasets/emergency_text/experiments/counted_2000words_20261016",
+    "words_per_language": 2000,
+    "total_words": 8000,
+    "descriptions": 764,
+    "new_unique_examples": 0,
+    "training_rows": 537,
+    "validation_rows": 118,
+    "test_rows": 109
+  },
+  "retraining_note": "Re-fitted canonical 1366-row corpus using original frozen group split. Counted word pack is included once through canonical rows. Historical approval flags are unverified; this is not independent validation."
+}

@@ -1,0 +1,47 @@
+{
+  "release": "dualpath-tfidf-20261016-v2",
+  "requested_at": "2026-10-16",
+  "status": "experimental_admin_supervised_retrain",
+  "source": "datasets\\emergency_text\\experiments\\full_pool_20261011\\reports.csv",
+  "source_sha256": "5899ebdb2c5970007f8e11975b439589f8102eaa20270c3bd5e46a7e1f1c8ba5",
+  "counted_pack": "datasets\\emergency_text\\experiments\\counted_2000words_20261016\\reports.csv",
+  "counted_pack_sha256": "99759ec9fdc738eedaa6d4348381d1682bb1958e7e5fd58277feac7d95dbc55f",
+  "counted_pack_rows": 764,
+  "source_rows": 1366,
+  "new_unique_rows": 0,
+  "counted_pack_assignment": {
+    "train": 537,
+    "validation": 118,
+    "test": 109
+  },
+  "split_counts": {
+    "train": 947,
+    "validation": 199,
+    "test": 220
+  },
+  "split_policy": "Reuse exact original case/group split; validation/test never fitted; count each canonical row once. No changed descriptions or labels.",
+  "settings": {
+    "C": 16,
+    "seed": 20261016,
+    "review_threshold": 0.65,
+    "max_features": 20000,
+    "ngram_range": [
+      3,
+      5
+    ],
+    "class_weight": "balanced"
+  },
+  "selection_policy": "Single preselected C16 reproduction; no hyperparameter or threshold tuning.",
+  "gates": [
+    "Validation Critical recall and macro-F1 must not regress relative to v1.",
+    "Diagnostic test raw per-language accuracy must remain at least 85%; raw overall and combined routed accuracy must not regress relative to v1.",
+    "Combined high-risk underclassification count must not exceed previous 0/101.",
+    "Artifact integrity, text API contract, local Laravel-to-AI connection and public AI readiness must pass."
+  ],
+  "limitations": [
+    "Historical source and diagnostic test already exposed; not fresh independent validation.",
+    "Synthetic labels and historical approved fields not independently verified; no approvals invented.",
+    "The counted word pack is a subset, not added training data. No promised accuracy improvement.",
+    "Every final operational severity requires admin confirmation; rule suggestions stay unscored."
+  ]
+}

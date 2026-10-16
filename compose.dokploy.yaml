@@ -84,7 +84,7 @@ services:
       AI_OPERATION_MODE: AI_ENABLED
       AI_TEXT_ENABLED: "true"
       AI_TEXT_ALLOW_EXPERIMENTAL: "true"
-      AI_TEXT_MODEL_DIR: /app/releases/triage-text-tfidf-20261016
+      AI_TEXT_MODEL_DIR: /app/releases/triage-text-tfidf-20261016-v2
       AI_TEXT_RULES_ENABLED: ${AI_TEXT_RULES_ENABLED:-true}
       AI_SERVICE_PORT: "8100"
       OMP_NUM_THREADS: "1"

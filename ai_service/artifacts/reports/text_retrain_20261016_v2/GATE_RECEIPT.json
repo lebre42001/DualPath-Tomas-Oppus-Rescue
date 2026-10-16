@@ -1,0 +1,17 @@
+{
+  "status": "passed_for_explicitly_requested_experimental_pilot",
+  "raw_accuracy": 0.9272727272727272,
+  "combined_routed_accuracy": 0.8590909090909091,
+  "combined_english_accuracy": 0.7971014492753623,
+  "high_risk_underclassification_count": 0,
+  "raw_accuracy_per_language": {
+    "en": 0.927536231884058,
+    "tl": 0.9508196721311475,
+    "ceb": 0.8771929824561403,
+    "mixed": 0.9696969696969697
+  },
+  "fresh_independent_validation": false,
+  "clinical_approval": false,
+  "all_data_reviewed": false,
+  "note": "Same canonical data, split, settings and artifact bytes as v1; no new information or accuracy improvement. Admin confirmation remains mandatory."
+}
