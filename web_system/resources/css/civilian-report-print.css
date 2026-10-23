@@ -1,0 +1,33 @@
+* { box-sizing: border-box; }
+body { margin: 0; background: #edf2f6; color: #142534; font: 14px/1.5 Arial, sans-serif; }
+.print-toolbar { max-width: 900px; margin: 20px auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.print-toolbar p { margin: 0; font-size: 13px; }
+.print-toolbar button { min-height: 44px; padding: 10px 18px; background: #b91020; color: white; border: 0; border-radius: 8px; cursor: pointer; font-weight: 700; flex-shrink: 0; }
+.print-toolbar button:disabled { opacity: .5; cursor: default; }
+main { max-width: 860px; margin: 0 auto 24px; padding: 32px; background: white; }
+.print-header { border-bottom: 2px solid #142534; padding-bottom: 16px; margin-bottom: 20px; }
+.brand { margin: 0; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+h1 { margin: 6px 0 10px; font-size: 24px; }
+.print-header p { margin: 4px 0; overflow-wrap: anywhere; }
+.print-meta, .print-note { color: #526270; font-size: 12px; }
+.print-report { padding: 0 0 20px; margin: 0 0 20px; border-bottom: 1px solid #bdc8d0; overflow-wrap: anywhere; }
+.print-report header { break-after: avoid; page-break-after: avoid; }
+.print-report h2 { margin: 0; font-size: 16px; }
+.print-report h3 { margin: 12px 0 3px; font-size: 12px; break-after: avoid; page-break-after: avoid; }
+.print-report p { margin: 4px 0; }
+.print-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; margin: 12px 0; }
+.print-facts .wide { grid-column: 1 / -1; }
+.print-facts dt { font-size: 11px; text-transform: uppercase; font-weight: 700; color: #526270; }
+.print-facts dd { margin: 2px 0 0; }
+.print-copy { white-space: pre-wrap; orphans: 3; widows: 3; }
+.print-footer { color: #526270; font-size: 11px; margin-top: 20px; }
+@media (max-width: 600px) { main { padding: 20px; } .print-toolbar { flex-wrap: wrap; } }
+@page { size: A4; margin: 16mm; }
+@media print {
+    body { background: white; color: black; font-size: 10pt; }
+    .print-toolbar { display: none !important; }
+    main { max-width: none; margin: 0; padding: 0; }
+    .print-report { padding-bottom: 12px; margin-bottom: 16px; break-inside: avoid; page-break-inside: avoid; }
+    .print-facts > div, .print-report > p { break-inside: avoid; page-break-inside: avoid; }
+    a { color: black; text-decoration: none; }
+}

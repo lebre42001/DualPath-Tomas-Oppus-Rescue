@@ -23,7 +23,7 @@ export default defineConfig({
             renderLegacyChunks: true,
         }),
         laravel({
-            input: ['resources/css/app.css', 'resources/css/operations.css', 'resources/js/app.js'],
+            input: ['resources/css/app.css', 'resources/css/operations.css', 'resources/js/app.js', 'resources/js/civilian-report-print.js'],
             refresh: true,
         }),
         tailwindcss(),

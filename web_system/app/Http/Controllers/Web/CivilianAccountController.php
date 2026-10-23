@@ -107,6 +107,7 @@ class CivilianAccountController extends Controller
                 'blocked' => $account->isBlocked(),
                 'online' => ! $account->isBlocked() && (bool) ($presence->get($account->id)?->is_online ?? false),
                 'reports' => $account->submitted_reports_count,
+                'reportsUrl' => route('civilian-accounts.reports', $account),
                 'url' => route('civilian-accounts.index', ['search' => $account->email]).'#civilian-account-'.$account->id,
             ])->values(),
             'pagination' => [

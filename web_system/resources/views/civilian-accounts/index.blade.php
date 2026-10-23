@@ -105,7 +105,7 @@
                                     <span class="tag green">Login Allowed</span>
                                 @endif
                                 <span class="tag {{ $hasLiveSession ? 'blue' : 'neutral' }}" data-account-presence="{{ $civilianAccount->id }}" data-presence-badge>{{ $hasLiveSession ? 'Online' : 'Offline' }}</span>
-                                <span class="tag neutral">{{ $civilianAccount->submitted_reports_count }} Reports</span>
+                                <button type="button" class="tag neutral civilian-reports-trigger" data-civilian-reports-url="{{ route('civilian-accounts.reports', $civilianAccount) }}" aria-haspopup="dialog" aria-label="View reports for {{ $civilianAccount->name }}">{{ $civilianAccount->submitted_reports_count }} {{ $civilianAccount->submitted_reports_count === 1 ? 'Report' : 'Reports' }}</button>
                                 <button type="button" class="btn btn-secondary civilian-account-view-button" data-civilian-account-modal-trigger>View</button>
                             </span>
                         </div>
@@ -116,7 +116,7 @@
                                 <span class="incident-code">Civilian Account</span>
                                 <span class="incident-time">{{ $civilianAccount->name }}</span>
                                 <span class="tag {{ $verificationTone }}">{{ $verificationLabel }}</span>
-                                <span class="tag neutral">{{ $civilianAccount->submitted_reports_count }} Reports</span>
+                                <button type="button" class="tag neutral civilian-reports-trigger" data-civilian-reports-url="{{ route('civilian-accounts.reports', $civilianAccount) }}" aria-haspopup="dialog" aria-label="View reports for {{ $civilianAccount->name }}">{{ $civilianAccount->submitted_reports_count }} {{ $civilianAccount->submitted_reports_count === 1 ? 'Report' : 'Reports' }}</button>
                             </div>
                             <div class="incident-content">
                             <div class="incident-headline">
@@ -309,6 +309,35 @@
                     <button type="button" class="btn btn-secondary" data-civilian-directory-previous disabled>&larr; Previous</button>
                     <span data-civilian-directory-page>Page 1</span>
                     <button type="button" class="btn btn-secondary" data-civilian-directory-next disabled>Next &rarr;</button>
+                </nav>
+            </footer>
+        </section>
+    </div>
+
+    <div class="civilian-directory-modal civilian-reports-modal" data-civilian-reports-modal hidden>
+        <section class="civilian-directory-dialog" role="dialog" aria-modal="true" aria-labelledby="civilian-reports-title" aria-describedby="civilian-reports-account" tabindex="-1">
+            <header class="civilian-directory-head">
+                <div>
+                    <h2 id="civilian-reports-title">Civilian reports</h2>
+                    <p id="civilian-reports-account" data-civilian-reports-account>Loading account...</p>
+                </div>
+                <button type="button" class="btn btn-secondary" data-civilian-reports-close aria-label="Close civilian reports">&times;</button>
+            </header>
+            <div class="civilian-reports-toolbar">
+                <p>Open a report for details. Print all includes every page.</p>
+                <a class="btn btn-secondary" data-civilian-reports-print-all target="_blank" rel="noopener" hidden>Print all</a>
+            </div>
+            <div class="civilian-directory-scroll" data-civilian-reports-scroll>
+                <p class="civilian-directory-message" data-civilian-reports-message role="status" aria-live="polite"></p>
+                <button type="button" class="btn btn-secondary" data-civilian-reports-retry hidden>Try again</button>
+                <ul class="civilian-reports-list" data-civilian-reports-list aria-label="Submitted reports"></ul>
+            </div>
+            <footer class="civilian-directory-footer">
+                <p data-civilian-reports-count role="status" aria-live="polite">Loading reports...</p>
+                <nav aria-label="Civilian reports pagination">
+                    <button type="button" class="btn btn-secondary" data-civilian-reports-previous disabled>&larr; Previous</button>
+                    <span data-civilian-reports-page>Page 1</span>
+                    <button type="button" class="btn btn-secondary" data-civilian-reports-next disabled>Next &rarr;</button>
                 </nav>
             </footer>
         </section>

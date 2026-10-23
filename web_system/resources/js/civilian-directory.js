@@ -37,7 +37,12 @@ onDomReady(() => {
         const presence = element('span', `tag ${account.online ? 'blue' : 'neutral'}`, account.online ? 'Online' : 'Offline');
         presence.dataset.accountPresence = account.id;
         presence.dataset.presenceBadge = '';
-        badges.append(presence, element('span', 'tag neutral', `${account.reports} ${account.reports === 1 ? 'report' : 'reports'}`));
+        const reports = element('button', 'tag neutral civilian-reports-trigger', `${account.reports} ${account.reports === 1 ? 'report' : 'reports'}`);
+        reports.type = 'button';
+        reports.dataset.civilianReportsUrl = account.reportsUrl;
+        reports.setAttribute('aria-label', `View reports for ${account.name}`);
+        reports.setAttribute('aria-haspopup', 'dialog');
+        badges.append(presence, reports);
         const view = element('a', 'btn btn-secondary', 'View');
         view.href = account.url;
         view.setAttribute('aria-label', `View ${account.name}`);

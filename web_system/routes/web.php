@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\AccountVerificationController;
 use App\Http\Controllers\Web\AdminDashboardController;
 use App\Http\Controllers\Web\AiTextTestController;
 use App\Http\Controllers\Web\CivilianAccountController;
+use App\Http\Controllers\Web\CivilianReportController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\IncidentReportController;
 use App\Http\Controllers\Web\IncidentReportExportController;
@@ -88,6 +89,8 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
             Route::get('/', [CivilianAccountController::class, 'index'])->name('index');
             Route::get('/all', [CivilianAccountController::class, 'all'])->name('all');
             Route::get('/presence', [CivilianAccountController::class, 'presence'])->name('presence');
+            Route::get('/{civilianAccount}/reports', [CivilianReportController::class, 'index'])->name('reports');
+            Route::get('/{civilianAccount}/reports/print', [CivilianReportController::class, 'print'])->name('reports.print');
             Route::get('/{civilianAccount}/verification-image', [CivilianAccountController::class, 'verificationImage'])->name('verification-image');
             Route::patch('/{civilianAccount}/block', [CivilianAccountController::class, 'block'])->name('block');
             Route::delete('/{civilianAccount}', [CivilianAccountController::class, 'destroy'])->name('destroy');
