@@ -25,7 +25,10 @@ class LoRaReportAcknowledgmentTest extends TestCase
         $tenth = $this->report('NODE_10');
 
         $this->actingAs($admin)->get(route('monitoring.lora-mesh'))
-            ->assertOk()->assertSee('View LoRa reports')
+            ->assertOk()->assertSee('LoRa reports')
+            ->assertSee('Status &amp; telemetry guide', false)
+            ->assertSee('data-node-id="NODE_2"', false)
+            ->assertDontSee('Field network status')
             ->assertSee('NODE_2')->assertSee('NODE_10')->assertSee('Radio signal')
             ->assertDontSee($second->report_code)->assertDontSee($tenth->report_code)
             ->assertDontSee('Latest emergency report')->assertDontSee('No emergency report received')

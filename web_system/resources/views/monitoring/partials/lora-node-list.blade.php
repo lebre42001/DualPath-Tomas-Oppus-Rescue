@@ -5,27 +5,22 @@
 <div class="lora-mesh-live-fragment" data-active-node-count="{{ $activeNodeCount }}" data-total-node-count="{{ $loraNodes->count() }}">
     <div class="summary-strip lora-mesh-summary-strip">
         <article class="summary-card">
-            <span>Active within 30 seconds</span>
+            <span>Active nodes</span>
             <strong>{{ $activeNodeCount }} / {{ $loraNodes->count() }}</strong>
-            <p>Heartbeat or SOS recently received by NODE_1/server</p>
         </article>
         <article class="summary-card">
-            <span>NODE_1 gateway</span>
-            <strong>{{ $gatewayActive ? 'ACTIVE' : (($gatewayNode['last_seen'] ?? null) ? 'UNREACHABLE' : 'AWAITING') }}</strong>
-            <p>{{ $gatewayNode['last_seen']?->timezone(config('app.timezone'))->diffForHumans() ?? 'Waiting for gateway heartbeat' }}</p>
+            <span>Gateway &middot; NODE_1</span>
+            <strong class="lora-gateway-state">{{ $gatewayActive ? 'ACTIVE' : (($gatewayNode['last_seen'] ?? null) ? 'UNREACHABLE' : 'AWAITING') }}</strong>
         </article>
         <article class="summary-card">
-            <span>Latest node update</span>
-            <strong>{{ $latestNodeUpdate?->timezone(config('app.timezone'))->format('g:i:s A') ?? 'No updates yet' }}</strong>
-            <p>{{ $latestNodeUpdate?->timezone(config('app.timezone'))->format('M j, Y') ?? 'Waiting for the first heartbeat or SOS' }}</p>
-        </article>
-        <article class="summary-card">
-            <span>Registered mesh nodes</span>
-            <strong>{{ $loraNodes->count() }}</strong>
-            <p>NODE_1 gateway + NODE_2 through NODE_10</p>
+            <span>Latest packet</span>
+            <strong class="lora-latest-packet" title="{{ $latestNodeUpdate?->timezone(config('app.timezone'))->format('M j, Y g:i:s A') }}">{{ $latestNodeUpdate?->diffForHumans() ?? 'None yet' }}</strong>
         </article>
     </div>
 
+    <div class="lora-node-columns" aria-hidden="true">
+        <span>Node</span><span>Status</span><span>Last seen</span><span>Battery</span><span>Delay (RTT)</span><span>Radio signal</span><span></span>
+    </div>
     <div class="lora-node-grid">
         @forelse ($loraNodes as $node)
             @php
@@ -38,31 +33,53 @@
                     : 'Coordinates not registered';
                 $status = $node['status'] ?? ($node['recently_heard'] ? 'ACTIVE' : ($node['has_report'] ? 'UNREACHABLE' : 'AWAITING'));
                 $tagClass = $status === 'ACTIVE' ? 'green' : ($status === 'UNREACHABLE' ? 'amber' : 'neutral');
+                $customName = ! preg_match('/^(Gateway|Field) Node \d+$/', $node['node_name']);
             @endphp
-            <article class="lora-node-card" data-lora-node-card data-search="{{ $searchText }}">
-                <div class="lora-node-card-head">
-                    <div>
-                        <p class="panel-kicker">{{ $node['sender_id'] }} · {{ $node['role'] ?? 'Field Mesh Node' }}</p>
-                        <h3>{{ $node['node_name'] }}</h3>
-                    </div>
-                    <span class="tag {{ $tagClass }}">{{ $status }}</span>
+            <details class="lora-node-card" data-lora-node-card data-node-id="{{ $node['sender_id'] }}" data-search="{{ $searchText }}">
+                <summary class="lora-node-row">
+                    <span class="lora-node-identity">
+                        <strong>{{ $node['sender_id'] }}</strong>
+                        @if ($customName)<small>{{ $node['node_name'] }}</small>
+                        @elseif ($node['is_gateway'])<small>Gateway</small>@endif
+                    </span>
+                    <span class="lora-node-status"><span class="tag {{ $tagClass }}">{{ $status }}</span></span>
+                    <span class="lora-node-reading" title="{{ $node['last_seen']?->timezone(config('app.timezone'))->format('M j, Y g:i:s A') }}">
+                        <span class="lora-node-cell-label">Last seen</span>{{ $node['last_seen']?->diffForHumans() ?? 'Never' }}
+                    </span>
+                    <span class="lora-node-reading">
+                        <span class="lora-node-cell-label">Battery</span><span title="{{ $node['battery'] ?: 'No voltage reading' }}">{{ $node['battery'] ?: '—' }}</span>
+                    </span>
+                    <span class="lora-node-reading">
+                        <span class="lora-node-cell-label">Delay (RTT)</span>
+                        @if ($node['round_trip_ms'] !== null && $node['round_trip_fresh'])
+                            {{ number_format($node['round_trip_ms']) }} ms
+                        @elseif ($node['round_trip_ms'] !== null)
+                            <span class="lora-node-missing" title="Sample expired">Expired</span>
+                        @else
+                            <span class="lora-node-missing" title="Awaiting timing sample">—</span>
+                        @endif
+                    </span>
+                    <span class="lora-node-reading" title="Last received RSSI">
+                        <span class="lora-node-cell-label">Radio signal</span>{{ $node['gateway_rssi'] !== null ? $node['gateway_rssi'].' dBm' : '—' }}
+                    </span>
+                    <span class="lora-node-expand" aria-hidden="true"></span>
+                </summary>
+
+                <div class="lora-node-expanded">
+                    <dl class="lora-node-details">
+                        <div><dt>Location</dt><dd>{{ $node['location_label'] }}</dd></div>
+                        <div><dt>Last update</dt><dd>{{ $node['last_seen']?->timezone(config('app.timezone'))->format('M j, Y g:i:s A') ?? 'Never received' }}</dd></div>
+                        <div><dt>Route</dt><dd>{{ $node['route'] ?: 'Unknown' }}</dd></div>
+                        <div><dt>Gateway</dt><dd>{{ $node['gateway_id'] ?: ($node['is_gateway'] ? 'NODE_1 (self)' : 'Not reported') }}</dd></div>
+                        <div><dt>Packet &amp; hops</dt><dd>{{ $node['last_packet_type'] ?: 'None' }}{{ $node['hop'] !== null ? ' · '.$node['hop'].' hop(s)' : '' }}@if ($node['ttl'] !== null) &middot; TTL {{ $node['ttl'] }}@endif</dd></div>
+                        <div><dt>Nearby peers</dt><dd>{{ count($node['peers']) ? implode(', ', $node['peers']) : 'Not reported' }}</dd></div>
+                        <div><dt>Fixed coordinates</dt><dd>{{ $coordinates }}</dd></div>
+                        <div><dt>Signal quality (SNR)</dt><dd>{{ $node['gateway_snr'] !== null ? $node['gateway_snr'].' dB' : 'Not reported' }}</dd></div>
+                        <div><dt>Timing sample</dt><dd>{{ $node['round_trip_measured_at']?->timezone(config('app.timezone'))->format('M j, Y g:i:s A') ?? 'Awaiting timing sample' }}</dd></div>
+                        <div><dt>Battery voltage</dt><dd>{{ $node['battery'] ?: 'No voltage reading' }}</dd></div>
+                    </dl>
                 </div>
-
-                <p class="lora-node-location">{{ $node['location_label'] }}</p>
-
-                <dl class="lora-node-details">
-                    <div><dt>Last update</dt><dd>{{ $node['last_seen']?->timezone(config('app.timezone'))->format('M j, g:i:s A') ?? 'Never' }}@if ($node['last_seen']) <span>{{ $node['last_seen']->diffForHumans() }}</span>@endif</dd></div>
-                    <div><dt>Packet</dt><dd>{{ $node['last_packet_type'] ?: 'None' }}{{ $node['hop'] !== null ? ' · '.$node['hop'].' hop(s)' : '' }}</dd></div>
-                    <div><dt>Route</dt><dd>{{ $node['route'] ?: 'Unknown' }}</dd></div>
-                    <div><dt>Gateway</dt><dd>{{ $node['gateway_id'] ?: ($node['is_gateway'] ? 'NODE_1 (self)' : 'Not reported') }}</dd></div>
-                    <div><dt>Nearby peers</dt><dd>{{ count($node['peers']) ? implode(', ', $node['peers']) : 'Not reported' }}</dd></div>
-                    <div><dt>Fixed coordinates</dt><dd>{{ $coordinates }}</dd></div>
-                    <div><dt>Battery voltage</dt><dd>{{ $node['battery'] ?: 'No voltage reading' }}@unless ($node['battery']) <span>Sensor/divider wiring and enabled firmware required.</span>@endunless</dd></div>
-                    <div><dt>Node ↔ website delay (RTT)</dt><dd>@if ($node['round_trip_ms'] !== null && $node['round_trip_fresh']){{ number_format($node['round_trip_ms']) }} ms<span>{{ $node['is_gateway'] ? 'HTTPS request + response' : 'LoRa + HTTPS request + return via LoRa' }}</span>@else{{ $node['round_trip_ms'] !== null ? 'Sample expired' : 'Awaiting timing sample' }}@endif</dd></div>
-                    <div><dt>Timing sample</dt><dd>{{ $node['round_trip_measured_at']?->diffForHumans() ?? 'Updated telemetry firmware required' }}</dd></div>
-                    <div><dt>Radio signal</dt><dd>RSSI {{ $node['gateway_rssi'] ?? '—' }} dBm<span> · SNR {{ $node['gateway_snr'] ?? '—' }} dB</span></dd></div>
-                </dl>
-            </article>
+            </details>
         @empty
             <div class="data-empty lora-node-empty">No LoRa nodes are registered yet.</div>
         @endforelse

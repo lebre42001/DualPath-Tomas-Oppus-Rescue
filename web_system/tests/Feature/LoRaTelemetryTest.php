@@ -95,7 +95,7 @@ class LoRaTelemetryTest extends TestCase
         ]);
         $this->actingAs($admin)->get('/monitoring/lora-mesh')
             ->assertOk()->assertSee('3.96 V')->assertSee('731 ms')
-            ->assertSee('Node ↔ website delay (RTT)')->assertSee('No voltage reading');
+            ->assertSee('Delay (RTT)')->assertSee('No voltage reading');
 
         $this->travel(121)->seconds();
         $this->get('/monitoring/lora-mesh/nodes')->assertOk()

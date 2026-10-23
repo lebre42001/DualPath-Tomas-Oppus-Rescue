@@ -63,6 +63,15 @@ LoRa Mesh shows node health and telemetry only, including its five-second refres
 fragment. Report IDs, messages, acknowledgment state and report actions are in
 LoRa Reports, which defaults to newest first.
 
+The compact mesh monitor shows all ten nodes as rows on desktop and compact
+cards on phones. Status, last seen, measured battery voltage, fresh RTT and last
+RSSI stay visible; expand a node for route, gateway, peers, coordinates, packet,
+SNR and sample times. Search and expanded rows survive the five-second refresh.
+Status/telemetry explanations are in a single expandable guide. Heartbeat
+timeouts, RTT expiry, ingest and acknowledgment behavior are unchanged. Deploy
+the matching Blade templates and rebuilt Vite assets together; no migration or
+firmware update is required for this interface change.
+
 The admin Online Report tab lists online submissions only. Its counts, search,
 export preview/download and bulk delete use that same scope; LoRa reports stay
 in their dedicated history. Live Monitoring still combines both sources.

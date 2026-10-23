@@ -3,45 +3,41 @@
 @section('title', 'LoRa Mesh Monitor')
 @section('page_label', 'Field Network')
 @section('page_heading', 'LoRa Mesh Monitor')
-@section('page_subheading', 'Track node health, battery voltage, website round-trip delay, routes, and radio signal.')
-
-@section('hero')
-    <section class="hero-card lora-mesh-hero">
-        <div class="hero-grid">
-            <div class="hero-copy">
-                <p class="eyebrow">Live node health</p>
-                <h2>Field network status</h2>
-                <p>This page refreshes node telemetry every five seconds. A node is ACTIVE when its latest heartbeat or emergency packet arrived within the last 30 seconds; after that it is UNREACHABLE until a new packet is received.</p>
-                <div class="hero-actions">
-                    <a href="{{ route('lora-reports.index') }}" class="btn btn-primary">View LoRa reports</a>
-                    <a href="{{ route('monitoring') }}" class="btn btn-secondary">Back to Live Monitoring</a>
-                    <button type="button" class="btn btn-primary" data-lora-refresh>Refresh now</button>
-                </div>
-            </div>
-            <div class="hero-metrics lora-mesh-hero-metrics">
-                <article class="metric-card"><span>Live refresh</span><strong>Every 5 sec</strong><p>Pauses while this tab is hidden.</p></article>
-                <article class="metric-card"><span>Last checked</span><strong data-lora-last-checked>Loading…</strong><p data-lora-refresh-state role="status" aria-live="polite">Connecting to the monitor.</p></article>
-            </div>
-        </div>
-    </section>
-@endsection
+@section('page_subheading', 'Live node health and radio telemetry.')
 
 @section('content')
     <section class="panel lora-mesh-panel">
         <div class="panel-head lora-mesh-toolbar">
             <div class="panel-heading">
-                <p class="panel-kicker">Heartbeat and route telemetry</p>
-                <h2 class="panel-title">Registered field nodes</h2>
-                <p class="section-copy">A node with no update for more than 30 seconds is shown as UNREACHABLE, which means it needs connectivity inspection, not that the hardware is automatically defective.</p>
-                <p class="section-copy">Delay is a measured round trip to the website and back, including LoRa relays for field nodes. It is not one-way delivery time or upload speed. Battery voltage requires an installed voltage divider; no battery percentage is inferred.</p>
+                <h2 class="panel-title">Mesh nodes</h2>
+                <div class="lora-mesh-refresh-status">
+                    <span data-lora-refresh-state role="status" aria-live="polite">Connecting</span>
+                    <span>Checked <time data-lora-last-checked>—</time></span>
+                </div>
             </div>
+            <div class="lora-mesh-actions">
+                <a href="{{ route('lora-reports.index') }}" class="btn btn-primary">LoRa reports</a>
+                <a href="{{ route('monitoring') }}" class="btn btn-secondary">Live Monitoring</a>
+                <button type="button" class="btn btn-secondary" data-lora-refresh>Refresh</button>
+            </div>
+        </div>
+        <div class="lora-mesh-tools">
             <label class="lora-node-search">
-                <span>Find a node</span>
-                <input type="search" data-lora-search placeholder="Node, route, or location" autocomplete="off">
+                <span class="sr-only">Find a node</span>
+                <input type="search" data-lora-search placeholder="Search node, status, route or location" autocomplete="off">
             </label>
+            <details class="lora-mesh-guide">
+                <summary>Status &amp; telemetry guide</summary>
+                <div>
+                    <p><strong>Active:</strong> a heartbeat or SOS arrived in the last 30 seconds. <strong>Unreachable:</strong> no update for over 30 seconds. <strong>Awaiting:</strong> no packet received yet. Check connectivity when unreachable.</p>
+                    <p><strong>Delay (RTT):</strong> a measured trip to the website and back, including LoRa relays. Samples expire after 120 seconds. It is not upload speed or one-way delivery time.</p>
+                    <p><strong>Battery:</strong> measured voltage only. A missing reading may need sensor/divider wiring or enabled firmware; no battery percentage is inferred. Signal shows the last received RSSI; SNR and sample times are in each node's details.</p>
+                    <p>Updates run every 5 seconds and pause while this tab is hidden.</p>
+                </div>
+            </details>
         </div>
 
-        <div data-lora-node-list aria-live="polite" aria-busy="true">
+        <div data-lora-node-list aria-busy="true">
             @include('monitoring.partials.lora-node-list', [
                 'loraNodes' => $loraNodes,
                 'activeNodeCount' => $activeNodeCount,
@@ -75,6 +71,7 @@
             const refreshNodes = async () => {
                 if (refreshing || document.hidden || !list) return;
                 refreshing = true;
+                refreshButton.disabled = true;
                 list.setAttribute('aria-busy', 'true');
                 try {
                     const response = await fetch(endpoint, {
@@ -82,15 +79,25 @@
                         cache: 'no-store',
                     });
                     if (!response.ok || response.redirected) throw new Error('Monitor request failed');
-                    list.innerHTML = await response.text();
+                    const markup = await response.text();
+                    const expanded = new Set(Array.from(list.querySelectorAll('[data-lora-node-card][open]'), node => node.dataset.nodeId));
+                    const focusedNode = document.activeElement?.closest('[data-lora-node-card]')?.dataset.nodeId;
+                    list.innerHTML = markup;
+                    list.querySelectorAll('[data-lora-node-card]').forEach((node) => {
+                        node.open = expanded.has(node.dataset.nodeId);
+                        if (node.dataset.nodeId === focusedNode) node.querySelector('summary')?.focus({ preventScroll: true });
+                    });
                     lastChecked.textContent = new Date().toLocaleTimeString();
-                    refreshState.textContent = 'Connected · updates are current';
+                    refreshState.textContent = 'Live · refreshes every 5 sec';
+                    refreshState.dataset.state = 'live';
                     applySearch();
                 } catch (error) {
-                    refreshState.textContent = 'Could not refresh · showing the last received data';
+                    refreshState.textContent = 'Refresh failed · showing previous data';
+                    refreshState.dataset.state = 'error';
                 } finally {
                     list.setAttribute('aria-busy', 'false');
                     refreshing = false;
+                    refreshButton.disabled = false;
                 }
             };
 
