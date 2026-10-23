@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\IncidentReport;
 use App\Models\LoraNodeState;
+use App\Support\LoraMeshNodeDirectory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -12,7 +13,6 @@ use Illuminate\Support\Str;
 class LoRaMeshGatewayController extends Controller
 {
     private const GATEWAY_ID = 'NODE_1';
-    private const NODE_TIMEOUT_SECONDS = 30;
     private const NETWORK_TTL = 12;
 
     public function health(Request $request): JsonResponse
@@ -87,7 +87,7 @@ class LoRaMeshGatewayController extends Controller
         return response()->json([
             'ok' => true,
             'nodeId' => $nodeId,
-            'status' => 'ACTIVE',
+            'status' => 'REACHABLE',
             'serverTime' => now('UTC')->toIso8601String(),
         ]);
     }
@@ -121,7 +121,7 @@ class LoRaMeshGatewayController extends Controller
 
         foreach ($nodeIds as $index => $nodeId) {
             $lastSeenAt = $states->get($nodeId)?->last_seen_at;
-            if ($lastSeenAt !== null && $lastSeenAt->greaterThanOrEqualTo($now->copy()->subSeconds(self::NODE_TIMEOUT_SECONDS))) {
+            if ($lastSeenAt !== null && $lastSeenAt->greaterThanOrEqualTo($now->copy()->subSeconds(LoraMeshNodeDirectory::NODE_TIMEOUT_SECONDS))) {
                 $activeNodeBitmask |= (1 << $index);
             }
         }
@@ -137,7 +137,7 @@ class LoRaMeshGatewayController extends Controller
             'ok' => true,
             'activeCount' => $activeCount,
             'expectedCount' => 10,
-            'nodeTimeoutSeconds' => self::NODE_TIMEOUT_SECONDS,
+            'nodeTimeoutSeconds' => LoraMeshNodeDirectory::NODE_TIMEOUT_SECONDS,
             'activeNodeBitmask' => $activeNodeBitmask,
             'serverTimestamp' => $serverTimestamp,
             'packet' => 'NET|'.$activeCount.'|'.$activeNodeBitmask.'|'.$serverTimestamp,

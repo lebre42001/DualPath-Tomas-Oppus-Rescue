@@ -8,7 +8,8 @@ use Illuminate\Support\Collection;
 
 class LoraMeshNodeDirectory
 {
-    private const NODE_TIMEOUT_SECONDS = 30;
+    public const NODE_TIMEOUT_SECONDS = 30;
+    public const NODE_UNAVAILABLE_SECONDS = 120;
 
     /** @return Collection<int, array<string, mixed>> */
     public function all(): Collection
@@ -40,18 +41,52 @@ class LoraMeshNodeDirectory
             ->get()
             ->keyBy('node_id');
 
+        $now = now();
+        $reachableSince = $now->copy()->subSeconds(self::NODE_TIMEOUT_SECONDS);
+        $unavailableSince = $now->copy()->subSeconds(self::NODE_UNAVAILABLE_SECONDS);
+        $discoveries = [];
+        foreach ($states as $observer) {
+            // Only a fresh heartbeat carries a current discovery snapshot.
+            // An SOS can refresh last_seen_at while retaining an old peer list.
+            if ($observer->last_packet_type !== 'HB' || ! $observer->last_seen_at?->greaterThanOrEqualTo($reachableSince)) {
+                continue;
+            }
+            foreach ($observer->known_peers ?? [] as $peerId) {
+                if ($peerId === $observer->node_id || ! $meshNodeIds->contains($peerId)) {
+                    continue;
+                }
+                $discoveries[$peerId][] = [
+                    'node_id' => $observer->node_id,
+                    'observed_at' => $observer->last_seen_at,
+                ];
+            }
+        }
+
         return $meshNodeIds
-            ->map(function (string $senderId) use ($registry, $latestReports, $states): array {
+            ->map(function (string $senderId) use ($registry, $latestReports, $states, $reachableSince, $unavailableSince, $discoveries): array {
                 /** @var IncidentReport|null $report */
                 $report = $latestReports->get($senderId);
                 $state = $states->get($senderId);
                 $node = $registry[$senderId] ?? [];
                 $lastSeen = $state?->last_seen_at ?? $report?->created_at;
-                $recentlyHeard = $lastSeen?->greaterThanOrEqualTo(now()->subSeconds(self::NODE_TIMEOUT_SECONDS)) ?? false;
+                $recentlyHeard = $lastSeen?->greaterThanOrEqualTo($reachableSince) ?? false;
                 $hasEverBeenSeen = $lastSeen !== null;
-                $status = $recentlyHeard
-                    ? 'ACTIVE'
-                    : ($hasEverBeenSeen ? 'UNREACHABLE' : 'AWAITING');
+                $recentDiscoveries = collect($discoveries[$senderId] ?? [])
+                    ->filter(fn (array $discovery): bool => $lastSeen === null || $discovery['observed_at']->greaterThan($lastSeen));
+                $status = match (true) {
+                    $recentlyHeard => 'REACHABLE',
+                    $recentDiscoveries->isNotEmpty() => 'WAITING',
+                    $lastSeen?->greaterThanOrEqualTo($unavailableSince) ?? false => 'UNREACHABLE',
+                    default => 'UNAVAILABLE',
+                };
+                $statusDetail = match ($status) {
+                    'REACHABLE' => 'Heartbeat or SOS received within 30 seconds.',
+                    'WAITING' => 'Recently detected by '.implode(', ', $recentDiscoveries->pluck('node_id')->all()).'; waiting for this node\'s heartbeat.',
+                    'UNREACHABLE' => 'No heartbeat for over 30 seconds. The connection may be interrupted.',
+                    default => $hasEverBeenSeen
+                        ? 'No heartbeat for over 2 minutes and no recent peer discovery. Power state is unknown.'
+                        : 'No heartbeat or recent peer discovery received. Power state is unknown.',
+                };
 
                 return [
                     'sender_id' => $senderId,
@@ -59,6 +94,7 @@ class LoraMeshNodeDirectory
                     'role' => $senderId === 'NODE_1' ? 'Gateway / Server Bridge' : 'Field Mesh Node',
                     'is_gateway' => $senderId === 'NODE_1',
                     'status' => $status,
+                    'status_detail' => $statusDetail,
                     'location_label' => $node['location_label'] ?? 'Not registered',
                     'gateway_id' => $state?->gateway_id ?? $report?->lora_gateway_id,
                     'last_seen' => $lastSeen,

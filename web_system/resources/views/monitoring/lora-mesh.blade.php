@@ -29,7 +29,7 @@
             <details class="lora-mesh-guide">
                 <summary>Status &amp; telemetry guide</summary>
                 <div>
-                    <p><strong>Active:</strong> a heartbeat or SOS arrived in the last 30 seconds. <strong>Unreachable:</strong> no update for over 30 seconds. <strong>Awaiting:</strong> no packet received yet. Check connectivity when unreachable.</p>
+                    <p><strong>Reachable:</strong> a heartbeat or SOS arrived within 30 seconds. <strong>Unreachable:</strong> no heartbeat for over 30 seconds. <strong>Waiting:</strong> recently detected by a connected peer, awaiting this node's heartbeat. <strong>Unavailable:</strong> no heartbeat yet, or none for over 2 minutes, with no recent discovery. Silence cannot confirm whether a node is powered off.</p>
                     <p><strong>Delay (RTT):</strong> a measured trip to the website and back, including LoRa relays. Samples expire after 120 seconds. It is not upload speed or one-way delivery time.</p>
                     <p><strong>Battery:</strong> measured voltage only. A missing reading may need sensor/divider wiring or enabled firmware; no battery percentage is inferred. Signal shows the last received RSSI; SNR and sample times are in each node's details.</p>
                     <p>Updates run every 5 seconds and pause while this tab is hidden.</p>

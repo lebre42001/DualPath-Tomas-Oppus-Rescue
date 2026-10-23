@@ -34,7 +34,7 @@ class LoRaMeshGatewayTest extends TestCase
         ], $this->gatewayHeaders())
             ->assertOk()
             ->assertJsonPath('nodeId', 'NODE_1')
-            ->assertJsonPath('status', 'ACTIVE');
+            ->assertJsonPath('status', 'REACHABLE');
 
         $state = LoraNodeState::query()->where('node_id', 'NODE_1')->firstOrFail();
         $this->assertSame(['NODE_2', 'NODE_3'], $state->known_peers);
@@ -104,7 +104,98 @@ class LoRaMeshGatewayTest extends TestCase
         $this->assertSame('NODE_1', $nodes->first()['sender_id']);
         $this->assertSame('NODE_10', $nodes->last()['sender_id']);
         $this->assertFalse($nodes->contains(fn (array $node): bool => $node['sender_id'] === 'S01'));
-        $this->assertSame('ACTIVE', $nodes->first()['status']);
+        $this->assertSame('REACHABLE', $nodes->first()['status']);
+    }
+
+    public function test_connection_status_expires_and_recovers_from_actual_heartbeats(): void
+    {
+        $this->travelTo(now()->startOfSecond());
+        $status = fn (): string => app(LoraMeshNodeDirectory::class)->all()->firstWhere('sender_id', 'NODE_2')['status'];
+
+        $this->assertSame('UNAVAILABLE', $status());
+        $heartbeat = ['node_id' => 'NODE_2', 'route' => 'NODE_2>NODE_1'];
+        $this->postJson('/api/v1/lora/heartbeat', $heartbeat, $this->gatewayHeaders())->assertOk();
+        $this->assertSame('REACHABLE', $status());
+        $this->travel(30)->seconds();
+        $this->assertSame('REACHABLE', $status());
+        $this->travel(1)->seconds();
+        $this->assertSame('UNREACHABLE', $status());
+        $this->travel(89)->seconds();
+        $this->assertSame('UNREACHABLE', $status());
+        $this->travel(1)->seconds();
+        $this->assertSame('UNAVAILABLE', $status());
+        $this->postJson('/api/v1/lora/heartbeat', $heartbeat, $this->gatewayHeaders())->assertOk();
+        $this->assertSame('REACHABLE', $status());
+    }
+
+    public function test_recent_gateway_discovery_waits_for_node_heartbeat_without_counting_it_reachable(): void
+    {
+        $this->travelTo(now()->startOfSecond());
+        LoraNodeState::query()->create(['node_id' => 'NODE_2', 'last_seen_at' => now()->subWeek()]);
+        $this->postJson('/api/v1/lora/heartbeat', [
+            'node_id' => 'NODE_1', 'peers' => ['NODE_2', 'NODE_3'],
+        ], $this->gatewayHeaders())->assertOk();
+
+        $nodes = app(LoraMeshNodeDirectory::class)->all()->keyBy('sender_id');
+        $this->assertSame('REACHABLE', $nodes['NODE_1']['status']);
+        $this->assertSame('WAITING', $nodes['NODE_2']['status']);
+        $this->assertSame('WAITING', $nodes['NODE_3']['status']);
+        $this->assertFalse($nodes['NODE_2']['recently_heard']);
+        $this->assertNull($nodes['NODE_3']['last_seen']);
+        $this->assertStringContainsString('NODE_1', $nodes['NODE_2']['status_detail']);
+        $this->getJson('/api/v1/lora/network-summary', $this->gatewayHeaders())
+            ->assertOk()->assertJsonPath('activeCount', 1)->assertJsonPath('activeNodeBitmask', 1);
+
+        $this->postJson('/api/v1/lora/heartbeat', ['node_id' => 'NODE_2'], $this->gatewayHeaders())->assertOk();
+        $this->assertSame('REACHABLE', app(LoraMeshNodeDirectory::class)->all()->firstWhere('sender_id', 'NODE_2')['status']);
+        $this->travel(31)->seconds();
+        $nodes = app(LoraMeshNodeDirectory::class)->all()->keyBy('sender_id');
+        $this->assertSame('UNREACHABLE', $nodes['NODE_2']['status']);
+        $this->assertSame('UNAVAILABLE', $nodes['NODE_3']['status']);
+    }
+
+    public function test_old_peer_lists_and_sos_retained_peers_do_not_invent_reconnection(): void
+    {
+        $this->travelTo(now()->startOfSecond());
+        $observer = LoraNodeState::query()->create([
+            'node_id' => 'NODE_4', 'last_seen_at' => now()->subSeconds(31),
+            'known_peers' => ['NODE_2'], 'last_packet_type' => 'HB',
+        ]);
+        $status = fn (): string => app(LoraMeshNodeDirectory::class)->all()->firstWhere('sender_id', 'NODE_2')['status'];
+        $this->assertSame('UNAVAILABLE', $status());
+        $observer->update(['last_seen_at' => now(), 'last_packet_type' => 'SOS']);
+        $this->assertSame('UNAVAILABLE', $status());
+        $observer->update(['last_packet_type' => 'HB']);
+        $this->assertSame('WAITING', $status());
+    }
+
+    public function test_lost_node_waits_only_after_rediscovery_then_becomes_reachable_on_heartbeat(): void
+    {
+        $this->travelTo(now()->startOfSecond());
+        $status = fn (): string => app(LoraMeshNodeDirectory::class)->all()->firstWhere('sender_id', 'NODE_2')['status'];
+        $this->postJson('/api/v1/lora/heartbeat', ['node_id' => 'NODE_2'], $this->gatewayHeaders())->assertOk();
+        $this->assertSame('REACHABLE', $status());
+        $this->travel(31)->seconds();
+        $this->assertSame('UNREACHABLE', $status());
+        $this->postJson('/api/v1/lora/heartbeat', [
+            'node_id' => 'NODE_1', 'peers' => ['NODE_2'],
+        ], $this->gatewayHeaders())->assertOk();
+        $this->assertSame('WAITING', $status());
+        $this->postJson('/api/v1/lora/heartbeat', ['node_id' => 'NODE_2'], $this->gatewayHeaders())->assertOk();
+        $this->assertSame('REACHABLE', $status());
+    }
+
+    public function test_mesh_view_uses_the_same_connection_status_for_gateway_and_node_rows(): void
+    {
+        $this->travelTo(now()->startOfSecond());
+        $admin = \App\Models\User::factory()->create(['role' => 'admin', 'is_admin' => true]);
+        LoraNodeState::query()->create(['node_id' => 'NODE_1', 'last_seen_at' => now()->subWeek()]);
+        $this->actingAs($admin)->get('/monitoring/lora-mesh')
+            ->assertOk()->assertSee('Reachable nodes')->assertSee('UNAVAILABLE')
+            ->assertDontSee('UNREACHABLE')->assertDontSee('AWAITING')->assertDontSee('>ACTIVE<', false);
+        $this->postJson('/api/v1/lora/heartbeat', ['node_id' => 'NODE_1'], $this->gatewayHeaders())->assertOk();
+        $this->get('/monitoring/lora-mesh/nodes')
+            ->assertOk()->assertSee('REACHABLE')->assertSee('data-active-node-count="1"', false);
     }
 
     public function test_invalid_gateway_token_is_rejected(): void

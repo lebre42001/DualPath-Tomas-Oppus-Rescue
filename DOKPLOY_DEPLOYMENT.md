@@ -67,10 +67,23 @@ The compact mesh monitor shows all ten nodes as rows on desktop and compact
 cards on phones. Status, last seen, measured battery voltage, fresh RTT and last
 RSSI stay visible; expand a node for route, gateway, peers, coordinates, packet,
 SNR and sample times. Search and expanded rows survive the five-second refresh.
-Status/telemetry explanations are in a single expandable guide. Heartbeat
-timeouts, RTT expiry, ingest and acknowledgment behavior are unchanged. Deploy
+Status/telemetry explanations are in a single expandable guide. RTT expiry,
+ingest and acknowledgment behavior are unchanged. Deploy
 the matching Blade templates and rebuilt Vite assets together; no migration or
 firmware update is required for this interface change.
+
+Mesh connection status uses the same 30-second heartbeat window as the gateway's
+NET active bitmask: **Reachable** means a heartbeat/SOS arrived within 30 seconds.
+After 30 seconds without one the node is **Unreachable**, then **Unavailable**
+after 120 seconds (also the default for nodes never heard). **Waiting** requires
+a recent connected peer's heartbeat discovery list naming that node after its
+last heartbeat; it is not a timed animation or proof of a completed connection.
+Peer discoveries do not update the target's last-seen time or active bitmask.
+Old peer lists retained by an SOS are excluded, and discoveries expire with the
+observer's 30-second heartbeat window. The UI explains that silence cannot prove
+the hardware is powered off. Existing HB/HELLO discovery firmware is compatible;
+no new migration or firmware upload is required. The heartbeat API now returns
+`REACHABLE` as its status string; NET packet fields and ACK behavior are unchanged.
 
 The admin Online Report tab lists online submissions only. Its counts, search,
 export preview/download and bulk delete use that same scope; LoRa reports stay

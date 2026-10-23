@@ -1,16 +1,15 @@
 @php
     $gatewayNode = $loraNodes->firstWhere('sender_id', 'NODE_1');
-    $gatewayActive = (bool) ($gatewayNode['recently_heard'] ?? false);
 @endphp
 <div class="lora-mesh-live-fragment" data-active-node-count="{{ $activeNodeCount }}" data-total-node-count="{{ $loraNodes->count() }}">
     <div class="summary-strip lora-mesh-summary-strip">
         <article class="summary-card">
-            <span>Active nodes</span>
+            <span>Reachable nodes</span>
             <strong>{{ $activeNodeCount }} / {{ $loraNodes->count() }}</strong>
         </article>
         <article class="summary-card">
             <span>Gateway &middot; NODE_1</span>
-            <strong class="lora-gateway-state">{{ $gatewayActive ? 'ACTIVE' : (($gatewayNode['last_seen'] ?? null) ? 'UNREACHABLE' : 'AWAITING') }}</strong>
+            <strong class="lora-gateway-state" title="{{ $gatewayNode['status_detail'] ?? '' }}">{{ $gatewayNode['status'] ?? 'UNAVAILABLE' }}</strong>
         </article>
         <article class="summary-card">
             <span>Latest packet</span>
@@ -31,8 +30,13 @@
                 $coordinates = $node['latitude'] !== null && $node['longitude'] !== null
                     ? number_format($node['latitude'], 6).', '.number_format($node['longitude'], 6)
                     : 'Coordinates not registered';
-                $status = $node['status'] ?? ($node['recently_heard'] ? 'ACTIVE' : ($node['has_report'] ? 'UNREACHABLE' : 'AWAITING'));
-                $tagClass = $status === 'ACTIVE' ? 'green' : ($status === 'UNREACHABLE' ? 'amber' : 'neutral');
+                $status = $node['status'] ?? 'UNAVAILABLE';
+                $tagClass = match ($status) {
+                    'REACHABLE' => 'green',
+                    'UNREACHABLE' => 'amber',
+                    'WAITING' => 'blue',
+                    default => 'neutral',
+                };
                 $customName = ! preg_match('/^(Gateway|Field) Node \d+$/', $node['node_name']);
             @endphp
             <details class="lora-node-card" data-lora-node-card data-node-id="{{ $node['sender_id'] }}" data-search="{{ $searchText }}">
@@ -42,7 +46,7 @@
                         @if ($customName)<small>{{ $node['node_name'] }}</small>
                         @elseif ($node['is_gateway'])<small>Gateway</small>@endif
                     </span>
-                    <span class="lora-node-status"><span class="tag {{ $tagClass }}">{{ $status }}</span></span>
+                    <span class="lora-node-status"><span class="tag {{ $tagClass }}" title="{{ $node['status_detail'] ?? '' }}">{{ $status }}</span></span>
                     <span class="lora-node-reading" title="{{ $node['last_seen']?->timezone(config('app.timezone'))->format('M j, Y g:i:s A') }}">
                         <span class="lora-node-cell-label">Last seen</span>{{ $node['last_seen']?->diffForHumans() ?? 'Never' }}
                     </span>
@@ -67,6 +71,7 @@
 
                 <div class="lora-node-expanded">
                     <dl class="lora-node-details">
+                        <div><dt>Connection status</dt><dd>{{ $node['status_detail'] ?? $status }}</dd></div>
                         <div><dt>Location</dt><dd>{{ $node['location_label'] }}</dd></div>
                         <div><dt>Last update</dt><dd>{{ $node['last_seen']?->timezone(config('app.timezone'))->format('M j, Y g:i:s A') ?? 'Never received' }}</dd></div>
                         <div><dt>Route</dt><dd>{{ $node['route'] ?: 'Unknown' }}</dd></div>
