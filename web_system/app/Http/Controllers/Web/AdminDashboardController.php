@@ -18,12 +18,6 @@ class AdminDashboardController extends Controller
     {
         $activeStatuses = ['received', 'acknowledged', 'dispatched', 'responding'];
         $assessedReports = IncidentReport::query()->operationallyAssessed();
-        $recentReports = IncidentReport::query()
-            ->latest('status_updated_at')
-            ->latest('created_at')
-            ->take(12)
-            ->get();
-
         $moderationQueue = IncidentReport::query()
             ->with(['assignedResponder', 'reporter'])
             ->where(function ($query) use ($activeStatuses) {
@@ -90,9 +84,6 @@ class AdminDashboardController extends Controller
                 ->get(),
             'connectivity' => $this->connectivityIntelligence(),
             'nodeMapPoints' => $directory->mapPoints(),
-            'mapPoints' => $recentReports->filter(
-                fn (IncidentReport $report): bool => $report->latitude !== null && $report->longitude !== null
-            ),
             'moderationQueue' => $moderationQueue,
             'auditTrail' => $this->adminAuditTrail($auditFilters),
             'auditFilters' => $auditFilters,

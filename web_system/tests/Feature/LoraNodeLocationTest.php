@@ -130,12 +130,14 @@ class LoraNodeLocationTest extends TestCase
             if (! $element->hasAttribute('data-node-points')) continue;
             $incidents = json_decode($element->getAttribute('data-points'), true, flags: JSON_THROW_ON_ERROR);
             $nodes = json_decode($element->getAttribute('data-node-points'), true, flags: JSON_THROW_ON_ERROR);
-            $this->assertCount(2, $incidents);
+            $this->assertSame('nodes', $element->getAttribute('data-map-scope'));
+            $this->assertCount(0, $incidents);
             $this->assertCount(1, $nodes);
             $this->assertSame('node-NODE_2', $nodes[0]['id']);
+            $this->assertDatabaseCount('incident_reports', 2);
             return;
         }
-        $this->fail('Command map must include incident and node point data.');
+        $this->fail('Command map must show installed node points.');
     }
 
     private function signInAdmin(): void

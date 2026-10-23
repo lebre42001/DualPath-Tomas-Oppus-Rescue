@@ -134,7 +134,8 @@ function initializeMaps() {
         }
 
         const nodePoints = parseJson(element.dataset.nodePoints);
-        const points = [...mapPointsForElement(element), ...(Array.isArray(nodePoints) ? nodePoints : [])];
+        const scope = element.dataset.mapScope ?? 'feed';
+        const points = [...(scope === 'nodes' ? [] : mapPointsForElement(element)), ...(Array.isArray(nodePoints) ? nodePoints : [])];
         const route = parseJson(element.dataset.route);
         const map = L.map(element).setView(bontocCenter, 14);
 
@@ -152,7 +153,7 @@ function initializeMaps() {
             points: new Map(),
             routeLayer: null,
             route,
-            scope: element.dataset.mapScope ?? 'feed',
+            scope,
             reportId: element.dataset.reportId ?? null,
         };
         points.forEach((point) => upsertMarker(state, point));
@@ -734,6 +735,7 @@ function updateMaps(report) {
     };
 
     mapStates.forEach((state) => {
+        if (state.scope === 'nodes') return;
         if (state.scope === 'single' && state.reportId !== String(report.id ?? '')) {
             return;
         }
@@ -923,6 +925,7 @@ async function maybeShowBrowserNotification(message, report) {
 }
 
 function upsertMarker(state, point) {
+    if (state.scope === 'nodes' && point.map_role !== 'lora_node') return;
     const identifier = String(point.id ?? '');
     if (!identifier) {
         return;

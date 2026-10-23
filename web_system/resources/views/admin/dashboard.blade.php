@@ -153,7 +153,7 @@
                 <div class="panel-heading">
                     <p class="panel-kicker">Coverage</p>
                     <h2 class="panel-title">Command map</h2>
-                    <p class="section-copy">Incidents and installed LoRa nodes.</p>
+                    <p class="section-copy">Installed LoRa node locations.</p>
                 </div>
                 <div class="command-map-actions">
                     <a href="{{ route('admin.node-locations.index') }}" class="btn btn-secondary">Node locations</a>
@@ -164,17 +164,10 @@
                 <div
                     class="map-canvas"
                     data-incident-map
+                    data-map-scope="nodes"
                     data-node-points="{{ $nodeMapPoints->toJson() }}"
                     data-node-points-url="{{ route('admin.node-locations.points') }}"
-                    data-points="{{ json_encode($mapPoints->values()->map(fn ($point) => [
-                        'id' => $point->id,
-                        'incident_type' => $point->incident_type,
-                        'location_text' => $point->location_text,
-                        'severity' => $point->operational_severity,
-                        'severity_display' => $point->severity_display,
-                        'latitude' => $point->latitude !== null ? (float) $point->latitude : null,
-                        'longitude' => $point->longitude !== null ? (float) $point->longitude : null,
-                    ])->all()) }}"
+                    data-points="[]"
                 ></div>
             </div>
             <div class="node-map-caption">

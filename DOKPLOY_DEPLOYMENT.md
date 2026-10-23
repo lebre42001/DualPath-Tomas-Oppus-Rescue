@@ -106,7 +106,9 @@ Radio payload coordinates remain ignored. No firmware upload is required.
 Square map pins show Node ID, location, connection status, coordinates and last
 seen in their popup, including offline nodes. Nodes with no coordinate pair stay
 unmapped. Node status and saved positions refresh every five seconds, pausing in
-hidden tabs, while preserving incident pins and the current map viewport. A
+hidden tabs, while preserving the current map viewport. The Command map shows
+installed node pins only; incident pins are excluded from initial data and live
+report updates. Incident records and their report maps remain available. A
 refresh failure retains previous pins and displays an update warning. Node pins
 represent installation points, not measured radio coverage or GPS tracking.
 
