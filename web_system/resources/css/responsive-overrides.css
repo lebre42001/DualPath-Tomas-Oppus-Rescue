@@ -824,12 +824,30 @@ body.civilian-report-page .capture-action-card .tag {
     padding: 5px 8px;
 }
 
-body.civilian-report-page [data-capture-card="gps"] {
+body.civilian-report-page .civilian-three-button-grid [data-capture-card="gps"] {
     grid-column: 1 / -1;
     min-height: 44px !important;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
+}
+
+body.civilian-report-page [data-capture-card="gps"] strong {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+body.civilian-report-page [data-capture-card="gps"] .tag {
+    flex: 0 0 auto;
+}
+
+body.civilian-report-page [data-capture-card="gps"][data-capture-state="ready"]::after {
+    position: static;
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    align-self: center;
 }
 
 body.civilian-report-page .civilian-mobile-status-card {
