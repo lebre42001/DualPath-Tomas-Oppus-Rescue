@@ -143,7 +143,6 @@ SVG,
                     @endif
                     @if ($authUser?->is_admin)
                         <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard', 'admin.node-locations.*') ? 'active' : '' }}"><span>Overview</span><small>AD</small></a>
-                        <a href="{{ route('admin.text-ai-test') }}" class="{{ request()->routeIs('admin.text-ai-test*') ? 'active' : '' }}"><span>Text AI Lab</span><small>AI</small></a>
                     @endif
                     <a href="{{ route('profile.show') }}" class="{{ request()->routeIs('profile.*') ? 'active' : '' }}"><span>{{ $isCivilian ? 'Civilian Profile' : 'Profile' }}</span><small>{{ $isCivilian ? 'CP' : 'AP' }}</small></a>
                     <a href="{{ route('settings.index') }}" class="{{ request()->routeIs('settings.*') ? 'active' : '' }}"><span>{{ $isCivilian ? 'App Settings' : 'Settings' }}</span><small>ST</small></a>
