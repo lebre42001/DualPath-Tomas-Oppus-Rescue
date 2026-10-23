@@ -40,6 +40,7 @@ class AuthAndReportFlowTest extends TestCase
             ->assertSee('Civilian Account Registration')
             ->assertSee('This public registration creates a civilian sender account only.')
             ->assertSee('Install App')
+            ->assertSee('pwa-install.js?v=', false)
             ->assertDontSee('name="role"', false)
             ->assertDontSee('Monitor live reports')
             ->assertSee('AI-Powered LoRa Emergency Response and Severity Detection System with Intelligent Location Monitoring');
@@ -57,6 +58,7 @@ class AuthAndReportFlowTest extends TestCase
             ->assertSee('Civilian Sender')
             ->assertSee('Install App')
             ->assertSee('manifest.webmanifest?v=', false)
+            ->assertSeeInOrder(['pwa-install.js?v=', 'data-open-pwa-helper', 'pwa-helper.js?v='], false)
             ->assertSee('pwa-helper.js?v=', false);
 
         $this->get('/login')
@@ -69,6 +71,7 @@ class AuthAndReportFlowTest extends TestCase
             ->assertSee('Register Civilian Account')
             ->assertSee('Install App')
             ->assertSee('manifest.webmanifest?v=', false)
+            ->assertSee('pwa-install.js?v=', false)
             ->assertSee('pwa-helper.js?v=', false)
             ->assertSee('New civilian reporter? Register first to create your emergency reporting account.')
             ->assertSee('Sign in with Google account')

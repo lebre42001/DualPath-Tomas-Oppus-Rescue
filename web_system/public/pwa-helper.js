@@ -3,12 +3,24 @@
     const versionEndpoint = '/system/version';
     const versionPollInterval = 15000;
     const updateReloadQueryKey = 'system_update';
-    let deferredPrompt = null;
+    let installRequested = false;
+    let installPreparationTimer = null;
     let serviceWorkerRegistration = null;
     let refreshingForUpdate = false;
     let activeAppVersion = null;
     let versionPollHandle = null;
     let reloadHandle = null;
+
+    const setDismissed = function (dismissed) {
+        try {
+            if (dismissed) localStorage.setItem(dismissedKey, '1');
+            else localStorage.removeItem(dismissedKey);
+        } catch { /* Installation also works when browser storage is restricted. */ }
+    };
+    const clearInstallPreparation = function () {
+        window.clearTimeout(installPreparationTimer);
+        installPreparationTimer = null;
+    };
 
     const standalone = function () {
         return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
@@ -19,9 +31,13 @@
             (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
     };
 
-    const isSafariBrowser = function () {
-        return /Safari/i.test(window.navigator.userAgent) &&
-            !/CriOS|FxiOS|EdgiOS|OPiOS|Android/i.test(window.navigator.userAgent);
+    const isEmbeddedBrowser = function () {
+        return window.self !== window.top || /FBAN|FBAV|Instagram|; wv\)/i.test(navigator.userAgent);
+    };
+
+    const canWaitForPrompt = function () {
+        return isSecureInstallContext() && supportsServiceWorker() && !isIOSDevice() &&
+            !isEmbeddedBrowser() && /Chrome|Chromium|Edg\//i.test(navigator.userAgent);
     };
 
     const supportsServiceWorker = function () {
@@ -46,6 +62,12 @@
                 right: 16px;
                 bottom: calc(16px + env(safe-area-inset-bottom, 0px));
                 z-index: 1600;
+                max-width: 440px;
+                max-height: calc(100dvh - 32px);
+                overflow-y: auto;
+                left: auto;
+                width: calc(100% - 32px);
+                box-sizing: border-box;
                 display: grid;
                 gap: 12px;
                 padding: 16px 18px;
@@ -120,6 +142,7 @@
                 border-color: rgba(255,255,255,0.16);
                 color: #fff;
             }
+            .bontoc-pwa-helper__btn:disabled { opacity: .65; cursor: wait; }
             @media (max-width: 640px) {
                 .bontoc-pwa-helper__actions {
                     flex-direction: column;
@@ -214,7 +237,7 @@
                 <span class="bontoc-pwa-helper__status" data-bontoc-pwa-status>Online Ready</span>
                 <strong class="bontoc-pwa-helper__title" data-bontoc-pwa-title>Install Tomas Oppus Rescue</strong>
             </div>
-            <p class="bontoc-pwa-helper__copy" data-bontoc-pwa-copy>Install the civilian sender app for faster emergency reporting and quick access to your report status.</p>
+            <p class="bontoc-pwa-helper__copy" data-bontoc-pwa-copy role="status" aria-live="polite">Install the civilian sender app for faster emergency reporting and quick access to your report status.</p>
             <div class="bontoc-pwa-helper__actions">
                 <button type="button" class="bontoc-pwa-helper__btn bontoc-pwa-helper__btn--primary" data-bontoc-pwa-install data-install-mode="install">Install App</button>
                 <button type="button" class="bontoc-pwa-helper__btn bontoc-pwa-helper__btn--ghost" data-bontoc-pwa-dismiss>Later</button>
@@ -237,18 +260,20 @@
             }
 
             if (installMode !== 'install') {
-                localStorage.setItem(dismissedKey, '1');
+                setDismissed(true);
+                installRequested = false;
+                clearInstallPreparation();
                 helper.hidden = true;
                 return;
             }
 
-            if (!await launchInstallPrompt()) {
-                showHelper({ forceManualPrompt: true });
-            }
+            void requestInstallation();
         });
 
         helper.querySelector('[data-bontoc-pwa-dismiss]').addEventListener('click', function () {
-            localStorage.setItem(dismissedKey, '1');
+            setDismissed(true);
+            installRequested = false;
+            clearInstallPreparation();
             helper.hidden = true;
         });
 
@@ -273,9 +298,14 @@
         const copy = helper.querySelector('[data-bontoc-pwa-copy]');
         const install = helper.querySelector('[data-bontoc-pwa-install]');
         const forceManualPrompt = options.forceManualPrompt === true;
+        install.disabled = false;
+        install.hidden = false;
 
         if (standalone()) {
-            helper.hidden = true;
+            title.textContent = 'App already installed';
+            copy.textContent = 'You are using Tomas Oppus Rescue as an installed app.';
+            install.textContent = 'Done';
+            install.setAttribute('data-install-mode', 'installed');
             return helper;
         }
 
@@ -287,10 +317,18 @@
             return helper;
         }
 
-        if (isIOSDevice() && isSafariBrowser()) {
+        if (isEmbeddedBrowser()) {
+            title.textContent = 'Open in your phone browser';
+            copy.textContent = 'Open this link in Chrome on Android or Safari on iPhone using this browser\'s menu. Then tap Install App again. Installation is unavailable inside a preview, Messenger, or Facebook browser.';
+            install.textContent = 'Close';
+            install.setAttribute('data-install-mode', 'embedded-guide');
+            return helper;
+        }
+
+        if (isIOSDevice()) {
             title.textContent = 'Install on iPhone or iPad';
-            copy.textContent = 'Tap Share in Safari, then choose Add to Home Screen. After that, open Tomas Oppus Rescue from your home screen like a normal app.';
-            install.textContent = 'I Understand';
+            copy.textContent = 'Open this website in Safari. Tap Share, choose Add to Home Screen, then tap Add. Open Tomas Oppus Rescue from your home screen.';
+            install.textContent = 'Done';
             install.setAttribute('data-install-mode', 'ios-guide');
             return helper;
         }
@@ -303,11 +341,22 @@
             return helper;
         }
 
-        if (!deferredPrompt && forceManualPrompt) {
-            title.textContent = 'Install from your browser menu';
-            copy.textContent = 'If the automatic install prompt is not ready yet, open your browser menu and choose Install app or Add to Home Screen. After that, launch Tomas Oppus Rescue like a normal app.';
-            install.textContent = 'I Understand';
-            install.setAttribute('data-install-mode', 'browser-install-help');
+        if (!window.RescueInstall?.available && options.preparing) {
+            title.textContent = 'Preparing app installation';
+            copy.textContent = 'Keep this page open while Chrome prepares installation. You can also tap the browser menu (\u22ee), then Add to Home screen or Install app, and confirm Install. Use a normal tab, not Incognito.';
+            install.textContent = 'Preparing installation\u2026';
+            install.disabled = true;
+            install.setAttribute('data-install-mode', 'install');
+            return helper;
+        }
+
+        if (!window.RescueInstall?.available && forceManualPrompt) {
+            title.textContent = /Android/i.test(navigator.userAgent) ? 'Install on Android' : 'Install in your browser';
+            copy.textContent = /Android/i.test(navigator.userAgent)
+                ? 'In Chrome, tap the menu (\u22ee) at the top right, choose Add to Home screen or Install app, then confirm Install. Use a normal tab. If it is already installed, open Tomas Oppus Rescue from your apps.'
+                : 'Use the install icon in the address bar or open the browser menu and choose Install app. On Edge, choose Apps, then Install this site as an app. If the app is already installed, open it from your apps.';
+            install.textContent = canWaitForPrompt() ? 'Try Install Again' : 'Done';
+            install.setAttribute('data-install-mode', canWaitForPrompt() ? 'install' : 'browser-install-help');
             return helper;
         }
 
@@ -319,33 +368,44 @@
     };
 
     const launchInstallPrompt = async function () {
-        if (!deferredPrompt || !isSecureInstallContext()) {
+        if (!window.RescueInstall?.available || !isSecureInstallContext()) {
             return false;
         }
 
-        const helper = document.querySelector('[data-bontoc-pwa-helper]');
-
-        const promptEvent = deferredPrompt;
-        deferredPrompt = null;
-        let choice;
-        try {
-            await promptEvent.prompt();
-            choice = await promptEvent.userChoice;
-        } catch {
+        clearInstallPreparation();
+        const outcome = await window.RescueInstall.request();
+        installRequested = false;
+        if (outcome === 'error' || outcome === 'unavailable') {
             return false;
         }
 
-        if (choice.outcome === 'accepted') {
-            localStorage.removeItem(dismissedKey);
+        if (outcome === 'accepted') {
+            setDismissed(false);
+            const helper = showHelper();
+            helper.querySelector('[data-bontoc-pwa-title]').textContent = 'Complete installation';
+            helper.querySelector('[data-bontoc-pwa-copy]').textContent = 'Finish any confirmation shown by Chrome. When installation completes, open Tomas Oppus Rescue from your home screen or apps.';
+            helper.querySelector('[data-bontoc-pwa-install]').hidden = true;
+        } else if (outcome === 'dismissed') {
+            const helper = showHelper({ forceManualPrompt: true });
+            helper.querySelector('[data-bontoc-pwa-title]').textContent = 'Installation cancelled';
         }
-
-        deferredPrompt = null;
-
-        if (helper) {
-            helper.hidden = true;
-        }
-
         return true;
+    };
+
+    const requestInstallation = async function () {
+        setDismissed(false);
+        installRequested = true;
+        if (await launchInstallPrompt()) return;
+
+        const preparing = canWaitForPrompt() && !standalone();
+        showHelper({ forceManualPrompt: true, preparing: preparing });
+        void window.RescueInstall?.prepare();
+        clearInstallPreparation();
+        if (preparing) {
+            installPreparationTimer = window.setTimeout(function () {
+                if (installRequested) showHelper({ forceManualPrompt: true });
+            }, 8000);
+        }
     };
 
     const showHelper = function (options = {}) {
@@ -357,14 +417,8 @@
 
     const bindManualTriggers = function () {
         document.querySelectorAll('[data-open-pwa-helper]').forEach(function (trigger) {
-            trigger.addEventListener('click', async function () {
-                localStorage.removeItem(dismissedKey);
-
-                if (await launchInstallPrompt()) {
-                    return;
-                }
-
-                showHelper({ forceManualPrompt: true });
+            trigger.addEventListener('click', function () {
+                void requestInstallation();
             });
         });
     };
@@ -493,29 +547,24 @@
             });
         }
 
-        if (!standalone() && localStorage.getItem(dismissedKey) !== '1' && ((isIOSDevice() && isSafariBrowser()) || !supportsServiceWorker())) {
-            const helper = configureHelperCopy();
-            updateStatus();
-            helper.hidden = false;
-        }
     });
 
-    window.addEventListener('beforeinstallprompt', function (event) {
-        event.preventDefault();
-        deferredPrompt = event;
-
-        if (standalone() || localStorage.getItem(dismissedKey) === '1') {
+    window.addEventListener('rescue:install-ready', function () {
+        clearInstallPreparation();
+        if (standalone() || !installRequested) {
             return;
         }
 
-        const helper = configureHelperCopy();
-        updateStatus();
-        helper.hidden = false;
+        showHelper();
+        if (installRequested && navigator.userActivation?.isActive) {
+            void requestInstallation();
+        }
     });
 
     window.addEventListener('appinstalled', function () {
-        deferredPrompt = null;
-        localStorage.removeItem(dismissedKey);
+        installRequested = false;
+        clearInstallPreparation();
+        setDismissed(false);
         const helper = document.querySelector('[data-bontoc-pwa-helper]');
         if (helper) {
             helper.hidden = true;

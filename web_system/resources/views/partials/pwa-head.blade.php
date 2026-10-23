@@ -9,3 +9,4 @@
 <link rel="manifest" href="{{ asset('manifest.webmanifest') }}?v={{ $pwaAssetVersion }}">
 <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('icons/icon-180.png') }}?v={{ $pwaAssetVersion }}">
 <link rel="icon" type="image/png" sizes="64x64" href="{{ asset('icons/icon-64.png') }}?v={{ $pwaAssetVersion }}">
+<script src="{{ asset('pwa-install.js') }}?v={{ $pwaAssetVersion }}"></script>

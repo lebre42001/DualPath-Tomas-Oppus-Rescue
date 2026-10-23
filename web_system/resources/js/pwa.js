@@ -3,12 +3,18 @@ const PWA_DISMISS_KEY = 'bontoc-rescue-pwa-dismissed';
 const APP_VERSION_ENDPOINT = '/system/version';
 const APP_VERSION_POLL_INTERVAL = 15000;
 const UPDATE_RELOAD_QUERY_KEY = 'system_update';
-let deferredInstallPrompt = null;
 let serviceWorkerRegistration = null;
 let refreshingForUpdate = false;
 let activeAppVersion = null;
 let appVersionPollHandle = null;
 let updateReloadHandle = null;
+
+const setInstallDismissed = (dismissed) => {
+    try {
+        if (dismissed) window.localStorage.setItem(PWA_DISMISS_KEY, '1');
+        else window.localStorage.removeItem(PWA_DISMISS_KEY);
+    } catch { /* Restricted storage must not block installation. */ }
+};
 
 const isIOSDevice = () =>
     /iPad|iPhone|iPod/.test(window.navigator.userAgent) ||
@@ -120,9 +126,9 @@ const setInstallCardContent = () => {
         return;
     }
 
-    if (isIOSDevice() && isSafariBrowser() && !inStandaloneMode()) {
+    if (isIOSDevice() && !inStandaloneMode()) {
         title.textContent = 'Install Tomas Oppus Rescue on iPhone or iPad';
-        copy.textContent = 'On iOS Safari, tap Share then choose Add to Home Screen. After that, launch Tomas Oppus Rescue from your home screen like a normal app.';
+        copy.textContent = 'Open this website in Safari. Tap Share, choose Add to Home Screen, then tap Add. Launch Tomas Oppus Rescue from your home screen.';
         primary.textContent = 'I Understand';
         primary.dataset.installMode = 'ios-instructions';
         dismiss.textContent = 'Later';
@@ -139,8 +145,10 @@ const setInstallCardContent = () => {
     }
 
     title.textContent = 'Install the civilian sender app.';
-    copy.textContent = 'Add Tomas Oppus Rescue to your phone for faster emergency reporting and quick access to your report status.';
-    primary.textContent = 'Install App';
+    copy.textContent = window.RescueInstall?.available
+        ? 'Add Tomas Oppus Rescue to your phone for faster emergency reporting and quick access to your report status.'
+        : 'In Chrome, open the browser menu (\u22ee), choose Add to Home screen or Install app, then confirm Install. In Edge, choose Apps, then Install this site as an app. Use a normal tab. If already installed, open it from your apps.';
+    primary.textContent = window.RescueInstall?.available ? 'Install App' : 'Check Install Availability';
     primary.dataset.installMode = 'install';
     dismiss.textContent = 'Later';
 };
@@ -150,7 +158,7 @@ const shouldShowInstallCard = () => {
         return false;
     }
 
-    return window.localStorage.getItem(PWA_DISMISS_KEY) !== '1';
+    try { return window.localStorage.getItem(PWA_DISMISS_KEY) !== '1'; } catch { return true; }
 };
 
 const clearPendingReload = () => {
@@ -326,25 +334,30 @@ const installApp = async () => {
     const installMode = installButton?.dataset.installMode ?? 'install';
 
     if (installMode !== 'install') {
-        window.localStorage.setItem(PWA_DISMISS_KEY, '1');
+        setInstallDismissed(true);
         toggleInstallCard(false);
         return;
     }
 
-    if (!deferredInstallPrompt) {
+    if (!window.RescueInstall?.available) {
+        void window.RescueInstall?.prepare();
         setInstallCardContent();
         toggleInstallCard(true);
         return;
     }
 
-    deferredInstallPrompt.prompt();
-    const { outcome } = await deferredInstallPrompt.userChoice;
+    const outcome = await window.RescueInstall.request();
 
-    if (outcome === 'accepted') {
-        window.localStorage.removeItem(PWA_DISMISS_KEY);
+    if (outcome === 'unavailable' || outcome === 'error' || outcome === 'dismissed') {
+        setInstallCardContent();
+        toggleInstallCard(true);
+        return;
     }
 
-    deferredInstallPrompt = null;
+    if (outcome === 'accepted') {
+        setInstallDismissed(false);
+    }
+
     toggleInstallCard(false);
     updateDisplayMode();
 };
@@ -368,24 +381,21 @@ onDomReady( () => {
     });
 
     dismissButton?.addEventListener('click', () => {
-        window.localStorage.setItem(PWA_DISMISS_KEY, '1');
+        setInstallDismissed(true);
         toggleInstallCard(false);
     });
 
-    if ((isIOSDevice() && isSafariBrowser() && shouldShowInstallCard()) || (!supportsServiceWorker() && shouldShowInstallCard())) {
+    if (shouldShowInstallCard() && (window.RescueInstall?.available || (isIOSDevice() && isSafariBrowser()) || !supportsServiceWorker())) {
         toggleInstallCard(true);
     }
 });
 
-window.addEventListener('beforeinstallprompt', (event) => {
-    event.preventDefault();
-    deferredInstallPrompt = event;
+window.addEventListener('rescue:install-ready', () => {
     setInstallCardContent();
     toggleInstallCard(shouldShowInstallCard());
 });
 
 window.addEventListener('appinstalled', () => {
-    deferredInstallPrompt = null;
     toggleInstallCard(false);
     updateDisplayMode();
 });

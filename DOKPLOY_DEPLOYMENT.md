@@ -11,7 +11,7 @@ Deploy the compact civilian Home, Report, Profile, Settings and Device Check
 views together with the rebuilt Vite assets. The public Home/Login/Register
 pages share the updated branding; Home places Help, About, Developer and Privacy
 in a footer at the bottom. The installed PWA uses the new logo and service worker
-cache version v7, while keeping its existing manifest identity and start URL.
+cache version v8, while keeping its existing manifest identity and start URL.
 
 This release requires no new environment values or database migrations. Keep the
 existing Dokploy service, credentials and named volumes. Report photo/location,
@@ -25,6 +25,15 @@ the existing Compose service if automatic deployment is not enabled. Verify the
 running revision in Dokploy, the changed `/system/version`, successful public
 routes, the new logo and compiled assets, then check signed-in civilian and admin
 pages. A successful Git push alone does not confirm a live deployment.
+
+The shared `pwa-install.js` script must deploy with `pwa-helper.js`, the Blade
+head partial and rebuilt assets. It captures Chrome's single-use install prompt
+before page scripts load and starts service worker registration early. A pending
+install request switches to the native prompt when Chrome makes it available
+within the user's active gesture, or exposes a fresh Install button when another
+tap is required. Browser-specific instructions remain available when installation
+is unavailable, dismissed or blocked. Safari uses Share > Add to Home Screen;
+browser permissions and install confirmation cannot be bypassed by website code.
 
 ## Live Monitoring feed
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bontoc-rescue-pwa-v7';
+const CACHE_NAME = 'bontoc-rescue-pwa-v8';
 const OFFLINE_URL = '/offline.html';
 const APP_SHELL_URLS = [
     OFFLINE_URL,
@@ -13,6 +13,7 @@ const NEVER_CACHE_PATHS = new Set([
     '/sw.js',
     '/auth-password.js',
     '/pwa-helper.js',
+    '/pwa-install.js',
     '/manifest.webmanifest',
 ]);
 

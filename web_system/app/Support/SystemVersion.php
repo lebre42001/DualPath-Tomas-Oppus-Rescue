@@ -25,6 +25,7 @@ class SystemVersion
         'public/offline.html',
         'public/auth-password.js',
         'public/pwa-helper.js',
+        'public/pwa-install.js',
         'public/sw.js',
         'resources/css',
         'resources/js',
