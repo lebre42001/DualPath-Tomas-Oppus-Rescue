@@ -148,20 +148,25 @@
                 </div>
             </article>
         </aside>
-        <article class="panel command-compact-panel command-map-panel">
+        <article class="panel command-compact-panel command-map-panel" id="command-map">
             <div class="panel-head command-panel-head">
                 <div class="panel-heading">
                     <p class="panel-kicker">Coverage</p>
                     <h2 class="panel-title">Command map</h2>
-                    <p class="section-copy">Incident locations at a glance.</p>
+                    <p class="section-copy">Incidents and installed LoRa nodes.</p>
                 </div>
-                <a href="{{ route('monitoring') }}" class="btn btn-secondary">Live Monitoring</a>
+                <div class="command-map-actions">
+                    <a href="{{ route('admin.node-locations.index') }}" class="btn btn-secondary">Node locations</a>
+                    <a href="{{ route('monitoring') }}" class="btn btn-secondary">Live Monitoring</a>
+                </div>
             </div>
             <div class="map-shell command-map-shell">
                 <div
                     class="map-canvas"
                     data-incident-map
-                    data-points="{{ e(json_encode($mapPoints->values()->map(fn ($point) => [
+                    data-node-points="{{ $nodeMapPoints->toJson() }}"
+                    data-node-points-url="{{ route('admin.node-locations.points') }}"
+                    data-points="{{ json_encode($mapPoints->values()->map(fn ($point) => [
                         'id' => $point->id,
                         'incident_type' => $point->incident_type,
                         'location_text' => $point->location_text,
@@ -169,8 +174,12 @@
                         'severity_display' => $point->severity_display,
                         'latitude' => $point->latitude !== null ? (float) $point->latitude : null,
                         'longitude' => $point->longitude !== null ? (float) $point->longitude : null,
-                    ])->all())) }}"
+                    ])->all()) }}"
                 ></div>
+            </div>
+            <div class="node-map-caption">
+                <p data-node-map-status role="status">{{ $nodeMapPoints->count() }} of 10 node locations set.</p>
+                <p>Square pins mark installed nodes, including offline nodes.</p>
             </div>
         </article>
 

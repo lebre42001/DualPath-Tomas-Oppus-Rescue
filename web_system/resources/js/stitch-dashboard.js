@@ -133,7 +133,8 @@ function initializeMaps() {
             return;
         }
 
-        const points = mapPointsForElement(element);
+        const nodePoints = parseJson(element.dataset.nodePoints);
+        const points = [...mapPointsForElement(element), ...(Array.isArray(nodePoints) ? nodePoints : [])];
         const route = parseJson(element.dataset.route);
         const map = L.map(element).setView(bontocCenter, 14);
 
@@ -162,7 +163,54 @@ function initializeMaps() {
             fitMap(state);
         }, 180);
         mapStates.push(state);
+        if (element.dataset.nodePointsUrl) initializeNodeMapRefresh(state);
     });
+}
+
+function initializeNodeMapRefresh(state) {
+    let refreshing = false;
+    const status = state.element.closest('.command-map-panel')?.querySelector('[data-node-map-status]');
+    const refresh = async () => {
+        if (refreshing || document.hidden || !state.element.isConnected) return;
+        refreshing = true;
+        try {
+            const response = await fetch(state.element.dataset.nodePointsUrl, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest', Accept: 'application/json' },
+                cache: 'no-store',
+            });
+            if (!response.ok || response.redirected) throw new Error('Node map refresh failed');
+            const payload = await response.json();
+            if (!Array.isArray(payload.points)) throw new Error('Invalid node map data');
+            const currentIds = new Set(payload.points.map(point => String(point.id)));
+            for (const [id, point] of state.points) {
+                if (point.map_role !== 'lora_node' || currentIds.has(id)) continue;
+                const marker = state.markers.get(id);
+                if (marker) state.map.removeLayer(marker);
+                state.markers.delete(id);
+                state.points.delete(id);
+            }
+            const wasEmpty = state.markers.size === 0;
+            payload.points.forEach(point => upsertMarker(state, point));
+            if (wasEmpty && payload.points.length) fitMap(state);
+            if (status) {
+                status.textContent = `${payload.points.length} of ${payload.totalNodes} node locations set · status updates every 5 sec`;
+                status.dataset.state = 'live';
+            }
+        } catch {
+            if (status) {
+                status.textContent = 'Node updates unavailable · showing last received positions';
+                status.dataset.state = 'error';
+            }
+        } finally {
+            refreshing = false;
+        }
+    };
+    const interval = window.setInterval(() => {
+        if (!state.element.isConnected) return window.clearInterval(interval);
+        refresh();
+    }, 5000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
+    refresh();
 }
 
 function ensureMapDecorations() {
@@ -182,6 +230,9 @@ function ensureMapDecorations() {
         .stitch-map-label,.stitch-map-route-label{background:rgba(15,31,47,.92);border:0;border-radius:999px;color:#fff;font:700 12px/1.2 "Trebuchet MS",sans-serif;letter-spacing:.04em;padding:8px 12px;box-shadow:0 10px 24px rgba(15,31,47,.18)}
         .stitch-map-label-command{background:rgba(32,104,174,.96)}
         .stitch-map-label-sender{background:rgba(199,38,38,.94)}
+        .stitch-map-node-icon{background:transparent;border:0}
+        .stitch-map-node{display:flex;align-items:center;justify-content:center;width:32px;height:32px;box-sizing:border-box;border:3px solid #fff;border-radius:9px;color:#fff;background:var(--node-color);font:800 11px/1 Arial,sans-serif;box-shadow:0 2px 8px rgba(15,31,47,.3)}
+        .stitch-map-label-node{font-size:10px;padding:4px 7px;border-radius:6px}
         .stitch-map-route-label{background:rgba(255,255,255,.96);color:#0f1f2f;border:1px solid rgba(32,104,174,.14);border-radius:18px;padding:10px 12px;box-shadow:0 10px 20px rgba(15,31,47,.12)}
         @keyframes stitch-map-pulse{
             0%{transform:scale(.65);opacity:.70}
@@ -895,6 +946,7 @@ function upsertMarker(state, point) {
             .unbindTooltip();
 
         applyMarkerTooltip(existing, point);
+        if (point.map_role === 'lora_node') existing.getElement()?.setAttribute('aria-label', `${point.node_id}: ${point.connection_status}`);
         upsertLocationRing(state, identifier, coordinates, point, popup);
         return;
     }
@@ -907,11 +959,19 @@ function upsertMarker(state, point) {
     applyMarkerTooltip(marker, point);
 
     marker.addTo(state.map);
+    if (point.map_role === 'lora_node') marker.getElement()?.setAttribute('aria-label', `${point.node_id}: ${point.connection_status}`);
     state.markers.set(identifier, marker);
     upsertLocationRing(state, identifier, coordinates, point, popup);
 }
 
 function applyMarkerTooltip(marker, point) {
+    if (point.map_role === 'lora_node') {
+        marker.bindTooltip(escapeHtml(point.node_id), {
+            permanent: true, direction: 'top', offset: [0, -18],
+            className: 'stitch-map-label stitch-map-label-node',
+        });
+        return;
+    }
     if ((point.map_role ?? '') === 'command_center') {
         marker.bindTooltip('Command Center', {
             permanent: true,
@@ -934,6 +994,7 @@ function applyMarkerTooltip(marker, point) {
 
 function upsertLocationRing(state, identifier, coordinates, point, popup) {
     const role = point.map_role ?? 'incident';
+    if (role === 'lora_node') return;
     const color = role === 'command_center'
         ? '#2068ae'
         : role === 'sender'
@@ -966,6 +1027,14 @@ function upsertLocationRing(state, identifier, coordinates, point, popup) {
 
 function createIncidentIcon(point) {
     const role = point.map_role ?? 'incident';
+    if (role === 'lora_node') {
+        const color = ({ REACHABLE: '#1f9d68', UNREACHABLE: '#a8690c', WAITING: '#2068ae', UNAVAILABLE: '#64748b' })[point.connection_status] ?? '#64748b';
+        return L.divIcon({
+            className: 'stitch-map-node-icon',
+            html: `<span class="stitch-map-node" style="--node-color:${color}">${escapeHtml(String(point.node_id ?? '').replace('NODE_', 'N'))}</span>`,
+            iconSize: [32, 32], iconAnchor: [16, 16], popupAnchor: [0, -18],
+        });
+    }
     const color = role === 'command_center'
         ? '#2068ae'
         : role === 'sender'
@@ -999,6 +1068,14 @@ function createIncidentIcon(point) {
 
 function createPopupMarkup(point) {
     const role = point.map_role ?? 'incident';
+    if (role === 'lora_node') {
+        return `<strong>${escapeHtml(point.node_id)} · ${escapeHtml(point.incident_type)}</strong>
+            <br>${escapeHtml(point.location_text)}
+            <br><strong>Status:</strong> ${escapeHtml(point.connection_status)}
+            <br>${escapeHtml(point.status_detail)}
+            <br><strong>Installed coordinates:</strong> ${Number(point.latitude).toFixed(6)}, ${Number(point.longitude).toFixed(6)}
+            <br><strong>Last seen:</strong> ${escapeHtml(point.last_seen)}`;
+    }
     const locationLabel = point.readable_location ?? point.location_text ?? 'Unknown location';
     const roleLabel = role === 'command_center'
         ? 'Command Center'

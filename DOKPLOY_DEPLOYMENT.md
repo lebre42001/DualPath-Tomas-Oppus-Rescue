@@ -85,6 +85,31 @@ the hardware is powered off. Existing HB/HELLO discovery firmware is compatible;
 no new migration or firmware upload is required. The heartbeat API now returns
 `REACHABLE` as its status string; NET packet fields and ACK behavior are unchanged.
 
+## Admin node locations and Command map
+
+In **Overview > Command map > Node locations**, open NODE_1 through NODE_10,
+enter a location name, latitude and longitude, then choose **Save location**.
+**View Command map** returns to the map. The same editor is linked from LoRa Mesh.
+Use actual installation coordinates in decimal format; latitude comes first.
+Both coordinates must be supplied together, or both cleared to remove a pin.
+Only admin receiver accounts can read or update this editor and its map endpoint.
+
+Deploy migration `2026_10_23_000001_create_lora_node_locations_table.php` together
+with the controllers, registry resolver, Blade views and rebuilt assets. The web
+startup runs `php artisan migrate --force`. Saved locations live in the existing
+database volume and survive redeployments; do not seed invented coordinates.
+The file `web_system/config/lora_nodes.php` supplies defaults; admin-saved values
+override them for mesh details, installed node pins and **new** LoRa reports.
+Existing reports retain their recorded coordinates, including duplicate retries.
+Radio payload coordinates remain ignored. No firmware upload is required.
+
+Square map pins show Node ID, location, connection status, coordinates and last
+seen in their popup, including offline nodes. Nodes with no coordinate pair stay
+unmapped. Node status and saved positions refresh every five seconds, pausing in
+hidden tabs, while preserving incident pins and the current map viewport. A
+refresh failure retains previous pins and displays an update warning. Node pins
+represent installation points, not measured radio coverage or GPS tracking.
+
 The admin Online Report tab lists online submissions only. Its counts, search,
 export preview/download and bulk delete use that same scope; LoRa reports stay
 in their dedicated history. Live Monitoring still combines both sources.

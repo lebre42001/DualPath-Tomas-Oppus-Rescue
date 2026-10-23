@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\IncidentReport;
 use App\Models\IncidentReportAudit;
 use App\Models\User;
+use App\Support\LoraMeshNodeDirectory;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ use Illuminate\View\View;
 
 class AdminDashboardController extends Controller
 {
-    public function __invoke(Request $request): View
+    public function __invoke(Request $request, LoraMeshNodeDirectory $directory): View
     {
         $activeStatuses = ['received', 'acknowledged', 'dispatched', 'responding'];
         $assessedReports = IncidentReport::query()->operationallyAssessed();
@@ -88,6 +89,7 @@ class AdminDashboardController extends Controller
                 ->take(5)
                 ->get(),
             'connectivity' => $this->connectivityIntelligence(),
+            'nodeMapPoints' => $directory->mapPoints(),
             'mapPoints' => $recentReports->filter(
                 fn (IncidentReport $report): bool => $report->latitude !== null && $report->longitude !== null
             ),

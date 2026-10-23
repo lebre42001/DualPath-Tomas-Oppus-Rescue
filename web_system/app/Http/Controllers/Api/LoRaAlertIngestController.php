@@ -7,6 +7,7 @@ use App\Models\IncidentReport;
 use App\Models\LoraNodeState;
 use App\Support\IncidentFeedBroadcaster;
 use App\Support\IncidentReportIngestor;
+use App\Support\LoraNodeRegistry;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -51,7 +52,7 @@ class LoRaAlertIngestController extends Controller
             422,
             'Unknown registered LoRa node.'
         );
-        $node = config('lora_nodes')[$senderId] ?? [];
+        $node = app(LoraNodeRegistry::class)->all()[$senderId] ?? [];
         $reporterName = $reporterName !== '' ? $reporterName : (string) ($node['node_name'] ?? $senderId);
 
         $ingestKey = $ingestor->loraKey($senderId, $sequence);

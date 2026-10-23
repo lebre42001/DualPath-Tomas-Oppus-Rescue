@@ -1,0 +1,36 @@
+body.admin-portal .node-locations-panel { display: grid; gap: 14px; }
+body.admin-portal .node-locations-panel .panel-head { margin: 0; align-items: center; }
+body.admin-portal .node-location-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+body.admin-portal .node-location-actions .btn { width: auto; font-size: .8rem; }
+body.admin-portal .node-location-help { color: var(--muted); font-size: .83rem; }
+body.admin-portal .node-location-help summary { cursor: pointer; font-weight: 700; padding: 8px 0; color: var(--blue); }
+body.admin-portal .node-location-help ol { margin: 8px 0; padding-left: 24px; }
+body.admin-portal .node-location-help p { margin: 8px 0; }
+body.admin-portal .node-location-list { border: 1px solid var(--line); border-radius: 12px; }
+body.admin-portal .node-location-card { border-top: 1px solid var(--line); scroll-margin-top: 16px; }
+body.admin-portal .node-location-card:first-child { border-top: 0; }
+body.admin-portal .node-location-card > summary { display: grid; grid-template-columns: minmax(140px,.8fr) minmax(0,1fr) minmax(175px,1fr) 16px; align-items: center; gap: 12px; padding: 12px 14px; list-style: none; cursor: pointer; font-size: .85rem; }
+body.admin-portal .node-location-card > summary::-webkit-details-marker { display: none; }
+body.admin-portal .node-location-card > summary > span:first-child { display: grid; gap: 2px; }
+body.admin-portal .node-location-card small, body.admin-portal .node-location-coordinate { color: var(--muted); font-size: .78rem; }
+body.admin-portal .node-location-current { overflow-wrap: anywhere; }
+body.admin-portal .node-location-chevron { width: 8px; height: 8px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); }
+body.admin-portal .node-location-card[open] .node-location-chevron { transform: rotate(225deg); }
+body.admin-portal .node-location-form { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 12px; padding: 14px; border-top: 1px solid var(--line); background: var(--surface-alt); border-radius: 0 0 12px 12px; }
+body.admin-portal .node-location-name, body.admin-portal .node-location-save { grid-column: 1 / -1; }
+body.admin-portal .node-location-form .input { width: 100%; box-sizing: border-box; background: var(--surface); color: var(--ink); border-color: var(--line); }
+body.admin-portal .node-location-save { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+body.admin-portal .node-location-save p { margin: 0; color: var(--muted); font-size: .78rem; }
+body.admin-portal .node-location-save .btn { flex-shrink: 0; width: auto; }
+body.admin-portal .command-map-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+body.admin-portal .command-map-actions .btn { width: auto; font-size: .8rem; }
+body.admin-portal .node-map-caption { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: .76rem; color: var(--muted); }
+body.admin-portal .node-map-caption p { margin: 0; }
+body.admin-portal .node-map-caption [data-state="error"] { color: var(--danger); }
+@media (max-width: 700px) {
+    body.admin-portal .node-location-card > summary { grid-template-columns: minmax(0,1fr) 16px; gap: 4px 10px; padding: 12px; }
+    body.admin-portal .node-location-current, body.admin-portal .node-location-coordinate { grid-column: 1; }
+    body.admin-portal .node-location-chevron { grid-column: 2; grid-row: 1; }
+    body.admin-portal .node-location-save { flex-wrap: wrap; }
+    body.admin-portal .node-location-save .btn { width: 100%; }
+}

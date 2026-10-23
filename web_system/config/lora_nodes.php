@@ -3,8 +3,8 @@
 /*
 | Static field-node registry.
 | Add each sender ID and set its installed coordinates here. These values are
-| the source of truth for LoRa report locations; coordinates from the radio
-| payload are ignored.
+| the defaults for LoRa report locations. Locations saved in Admin > Overview >
+| Node locations override them; coordinates from radio payloads are ignored.
 */
 return [
     'NODE_1' => [

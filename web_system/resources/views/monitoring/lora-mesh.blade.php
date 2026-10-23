@@ -16,6 +16,9 @@
                 </div>
             </div>
             <div class="lora-mesh-actions">
+                @if (auth()->user()?->is_admin)
+                    <a href="{{ route('admin.node-locations.index') }}" class="btn btn-secondary">Node locations</a>
+                @endif
                 <a href="{{ route('lora-reports.index') }}" class="btn btn-primary">LoRa reports</a>
                 <a href="{{ route('monitoring') }}" class="btn btn-secondary">Live Monitoring</a>
                 <button type="button" class="btn btn-secondary" data-lora-refresh>Refresh</button>

@@ -35,7 +35,7 @@ class LoraMeshNodeDirectory
             ->unique('lora_sender_id')
             ->keyBy('lora_sender_id');
 
-        $registry = config('lora_nodes', []);
+        $registry = app(LoraNodeRegistry::class)->all();
         $states = LoraNodeState::query()
             ->whereIn('node_id', $meshNodeIds)
             ->get()
@@ -118,5 +118,25 @@ class LoraMeshNodeDirectory
                     'receiver_snr' => $report?->lora_receiver_snr,
                 ];
             });
+    }
+
+    /** @return Collection<int, array<string, mixed>> */
+    public function mapPoints(): Collection
+    {
+        return $this->all()->filter(fn (array $node): bool =>
+            $node['latitude'] !== null && $node['longitude'] !== null
+            && abs($node['latitude']) <= 90 && abs($node['longitude']) <= 180
+        )->map(fn (array $node): array => [
+            'id' => 'node-'.$node['sender_id'],
+            'map_role' => 'lora_node',
+            'node_id' => $node['sender_id'],
+            'incident_type' => $node['node_name'],
+            'location_text' => $node['location_label'],
+            'latitude' => $node['latitude'],
+            'longitude' => $node['longitude'],
+            'connection_status' => $node['status'],
+            'status_detail' => $node['status_detail'],
+            'last_seen' => $node['last_seen']?->timezone(config('app.timezone'))->format('M j, Y g:i:s A') ?? 'Never received',
+        ])->values();
     }
 }

@@ -15,6 +15,7 @@ use App\Http\Controllers\Web\IncidentSeverityReviewController;
 use App\Http\Controllers\Web\IncidentTextSuggestionController;
 use App\Http\Controllers\Web\TextAiStatusController;
 use App\Http\Controllers\Web\MonitoringDashboardController;
+use App\Http\Controllers\Web\LoraNodeLocationController;
 use App\Http\Controllers\Web\LoRaReportController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\SettingsController;
@@ -68,6 +69,9 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
 
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function (): void {
         Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
+        Route::get('/node-locations', [LoraNodeLocationController::class, 'index'])->name('node-locations.index');
+        Route::get('/node-locations/points', [LoraNodeLocationController::class, 'points'])->name('node-locations.points');
+        Route::put('/node-locations/{nodeId}', [LoraNodeLocationController::class, 'update'])->name('node-locations.update');
         Route::get('/text-ai-test', [AiTextTestController::class, 'index'])->name('text-ai-test');
         Route::post('/text-ai-test', [AiTextTestController::class, 'predict'])->name('text-ai-test.predict');
     });
