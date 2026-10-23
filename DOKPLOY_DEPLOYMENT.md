@@ -387,6 +387,13 @@ available through the browser. Verify these actions after admin login; signed
 out users must not be able to view report lists or printable records. Existing
 incident history is read without updates or deletion.
 
+Print alignment update (2026-10-24): rebuild the dedicated print assets. Modern
+Chrome uses CSS page margin boxes for a left-aligned organization name,
+right-aligned report heading, and page numbering on every sheet, replacing the
+browser's automatic title/date/URL. Verify single and multiple-page output with
+the browser's Headers and footers option both enabled and disabled. Older
+browsers without page margin box support retain their native print headers.
+
 ## Local Compose check
 
 After Docker Desktop is installed, create an untracked `.env` from

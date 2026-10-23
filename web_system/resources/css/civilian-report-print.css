@@ -22,10 +22,21 @@ h1 { margin: 6px 0 10px; font-size: 24px; }
 .print-copy { white-space: pre-wrap; orphans: 3; widows: 3; }
 .print-footer { color: #526270; font-size: 11px; margin-top: 20px; }
 @media (max-width: 600px) { main { padding: 20px; } .print-toolbar { flex-wrap: wrap; } }
-@page { size: A4; margin: 16mm; }
+/* Author-defined margin boxes replace Chrome's automatic title/date/URL. */
+@page {
+    size: A4;
+    margin: 16mm;
+    @top-left { content: 'Tomas Oppus Rescue'; font: 8pt Arial, sans-serif; color: #526270; text-align: left; vertical-align: middle; }
+    @top-center { content: none; }
+    @top-right { content: 'Civilian report record'; font: 8pt Arial, sans-serif; color: #526270; text-align: right; vertical-align: middle; }
+    @bottom-left { content: 'Account report history'; font: 8pt Arial, sans-serif; color: #526270; text-align: left; vertical-align: middle; }
+    @bottom-center { content: none; }
+    @bottom-right { content: 'Page ' counter(page) ' of ' counter(pages); font: 8pt Arial, sans-serif; color: #526270; text-align: right; vertical-align: middle; }
+}
 @media print {
     body { background: white; color: black; font-size: 10pt; }
     .print-toolbar { display: none !important; }
+    .print-footer { display: none; }
     main { max-width: none; margin: 0; padding: 0; }
     .print-report { padding-bottom: 12px; margin-bottom: 16px; break-inside: avoid; page-break-inside: avoid; }
     .print-facts > div, .print-report > p { break-inside: avoid; page-break-inside: avoid; }
