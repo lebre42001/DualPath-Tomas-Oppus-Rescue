@@ -148,8 +148,8 @@ const setInstallCardContent = () => {
     copy.textContent = window.RescueInstall?.available
         ? 'Add Tomas Oppus Rescue to your phone for faster emergency reporting and quick access to your report status.'
         : 'In Chrome, open the browser menu (\u22ee), choose Add to Home screen or Install app, then confirm Install. In Edge, choose Apps, then Install this site as an app. Use a normal tab. If already installed, open it from your apps.';
-    primary.textContent = window.RescueInstall?.available ? 'Install App' : 'Check Install Availability';
-    primary.dataset.installMode = 'install';
+    primary.textContent = window.RescueInstall?.available ? 'Install App' : 'Close Instructions';
+    primary.dataset.installMode = window.RescueInstall?.available ? 'install' : 'browser-install-help';
     dismiss.textContent = 'Later';
 };
 

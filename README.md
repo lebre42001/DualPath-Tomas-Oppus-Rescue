@@ -5,6 +5,7 @@ This workspace now contains the mobile app, web system, database references, AI 
 ## Stack
 
 - Mobile experience: Progressive Web App on top of Laravel
+- Android download: signed APK launcher for the same online PWA, using Trusted Web Activity
 - Legacy mobile app reference: Flutter (Dart)
 - Web system: Laravel (PHP)
 - Database: MySQL
@@ -13,6 +14,7 @@ This workspace now contains the mobile app, web system, database references, AI 
 
 ## Projects
 
+- `android_app/` contains the Android APK source and [build/release instructions](android_app/README.md); `tool/build_android_apk.ps1` builds and verifies it
 - `mobile_app/` contains the legacy Flutter mobile starter kept for reference while the system shifts to PWA delivery
 - `web_system/` contains the Laravel web system with working auth, dashboard, reports, profile, and settings
 - `database/` contains the MySQL setup reference

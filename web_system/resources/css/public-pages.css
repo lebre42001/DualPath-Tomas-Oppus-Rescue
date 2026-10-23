@@ -5,6 +5,16 @@
     font-family: 'Aptos', 'Segoe UI', sans-serif;
 }
 
+.public-download-platform {
+    font-size: 10px;
+    font-weight: 600;
+    opacity: .75;
+}
+
+[data-android-app-download][hidden] {
+    display: none !important;
+}
+
 .public-landing {
     display: flex;
     flex-direction: column;

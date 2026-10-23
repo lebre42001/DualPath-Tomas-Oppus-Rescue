@@ -7,6 +7,18 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
 ## Civilian interface release (2026-10-23)
 
+The Android APK source is in `android_app/`; it opens this same deployed PWA in a
+Trusted Web Activity. Publish the signed `android-v1.0.0` GitHub release asset
+before deploying the **Download App** links. `/download/android` redirects to
+the fixed versioned APK URL in `web_system/config/android-app.php`. Verify that
+the APK downloads, its checksum/signature match, and
+`/.well-known/assetlinks.json` is publicly served as JSON with the APK's signing
+certificate fingerprint. Keep this file when deploying: it establishes trust
+between this domain and Android package `tech.bsit4bdevs.dualpath.rescue`.
+No signing key or password belongs in Docker or Git. Build instructions and
+device-testing limits are in `android_app/README.md`. iPhone uses the existing
+Safari/PWA installation path.
+
 Deploy the compact civilian Home, Report, Profile, Settings and Device Check
 views together with the rebuilt Vite assets. The public Home/Login/Register
 pages share the updated branding; Home places Help, About, Developer and Privacy
@@ -34,6 +46,9 @@ within the user's active gesture, or exposes a fresh Install button when another
 tap is required. Browser-specific instructions remain available when installation
 is unavailable, dismissed or blocked. Safari uses Share > Add to Home Screen;
 browser permissions and install confirmation cannot be bypassed by website code.
+When Chrome has not provided a native prompt, show browser menu instructions
+immediately. Do not display a retry or preparation loop, and do not claim that
+the user's device has installed the app based on simulated prompt tests.
 
 ## Live Monitoring feed
 

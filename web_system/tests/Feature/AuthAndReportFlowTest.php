@@ -39,7 +39,8 @@ class AuthAndReportFlowTest extends TestCase
             ->assertSee('Tomas Oppus Rescue')
             ->assertSee('Civilian Account Registration')
             ->assertSee('This public registration creates a civilian sender account only.')
-            ->assertSee('Install App')
+            ->assertSee('Download App')
+            ->assertSee(route('app.android.download'), false)
             ->assertSee('pwa-install.js?v=', false)
             ->assertDontSee('name="role"', false)
             ->assertDontSee('Monitor live reports')
@@ -56,9 +57,9 @@ class AuthAndReportFlowTest extends TestCase
             ->assertSee($shortBrand)
             ->assertSee($branding)
             ->assertSee('Civilian Sender')
-            ->assertSee('Install App')
+            ->assertSee('Download App')
             ->assertSee('manifest.webmanifest?v=', false)
-            ->assertSeeInOrder(['pwa-install.js?v=', 'data-open-pwa-helper', 'pwa-helper.js?v='], false)
+            ->assertSeeInOrder(['pwa-install.js?v=', 'data-android-app-download', 'pwa-helper.js?v='], false)
             ->assertSee('pwa-helper.js?v=', false);
 
         $this->get('/login')
@@ -69,7 +70,7 @@ class AuthAndReportFlowTest extends TestCase
             ->assertSee('Minimum of 6 characters.')
             ->assertSee('auth-password.js?v=', false)
             ->assertSee('Register Civilian Account')
-            ->assertSee('Install App')
+            ->assertSee('Download App')
             ->assertSee('manifest.webmanifest?v=', false)
             ->assertSee('pwa-install.js?v=', false)
             ->assertSee('pwa-helper.js?v=', false)
@@ -88,6 +89,17 @@ class AuthAndReportFlowTest extends TestCase
             ->assertDontSee('Sign in with Google account')
             ->assertDontSee(route('auth.google.redirect'), false)
             ->assertDontSee('Register Civilian Account');
+    }
+
+    public function test_android_download_is_public_and_targets_the_fixed_release_asset(): void
+    {
+        $this->get(route('app.android.download'))
+            ->assertRedirect(config('android-app.download_url'))
+            ->assertHeader('Cache-Control', 'no-store, private');
+
+        $assetLinks = json_decode(file_get_contents(public_path('.well-known/assetlinks.json')), true, 512, JSON_THROW_ON_ERROR);
+        $this->assertSame(config('android-app.package'), $assetLinks[0]['target']['package_name']);
+        $this->assertContains('delegate_permission/common.handle_all_urls', $assetLinks[0]['relation']);
     }
 
     public function test_civilian_google_sign_in_redirects_to_google_authorization(): void

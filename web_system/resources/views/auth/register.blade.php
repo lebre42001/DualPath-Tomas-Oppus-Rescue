@@ -185,9 +185,10 @@
                 <a href="{{ route('login') }}" class="inline-flex min-h-[48px] items-center justify-center rounded-md border border-outline-variant bg-white px-5 py-3 text-sm font-black text-primary transition hover:bg-primary-fixed">
                     Log in
                 </a>
-                <button type="button" data-open-pwa-helper class="inline-flex min-h-[48px] items-center justify-center rounded-md border border-secondary/20 bg-secondary-fixed px-5 py-3 text-sm font-black text-secondary transition hover:bg-secondary hover:text-on-secondary">
-                    Install App
-                </button>
+                <a href="{{ route('app.android.download') }}" data-android-app-download aria-label="Download Tomas Oppus Rescue Android APK" class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md border border-secondary/20 bg-secondary-fixed px-5 py-3 text-sm font-black text-secondary transition hover:bg-secondary hover:text-on-secondary">
+                    <span data-app-download-label>Download App</span>
+                    <small data-app-download-platform>Android APK</small>
+                </a>
             </div>
         </section>
     </main>

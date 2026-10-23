@@ -14,7 +14,7 @@
                     <h3>Camera, location, or sign-in trouble?</h3>
                     <p>Open the app in your phone's Chrome or Safari browser and allow camera and location access. Google sign-in may be blocked inside an embedded preview browser. You can check device access in Settings after logging in.</p>
                     <h3>Install the app</h3>
-                    <p>Choose Install App, then follow the browser instructions. On iPhone, use Safari's Share menu and Add to Home Screen.</p>
+                    <p>On Android, choose Download App, open the downloaded APK, and confirm Install. If Android asks, allow Chrome to install this app. On iPhone, use Install App and Safari's Share menu, then Add to Home Screen. The app connects to this online system for reports and updates.</p>
                     <p>A report is received only after submission is confirmed. If you cannot connect during an emergency, contact your local emergency services directly.</p>
                     <a class="public-text-link" href="{{ route('login') }}">Go to Login</a>
                 </div>

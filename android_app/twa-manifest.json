@@ -1,0 +1,52 @@
+{
+  "packageId": "tech.bsit4bdevs.dualpath.rescue",
+  "host": "dualpath.bsit4bdevs.tech",
+  "name": "Tomas Oppus Rescue",
+  "launcherName": "Tomas Oppus Rescue",
+  "display": "standalone",
+  "themeColor": "#C91C21",
+  "themeColorDark": "#000000",
+  "navigationColor": "#000000",
+  "navigationColorDark": "#000000",
+  "navigationDividerColor": "#000000",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#EEF5FB",
+  "enableNotifications": true,
+  "startUrl": "/login?source=android-apk",
+  "iconUrl": "https://dualpath.bsit4bdevs.tech/icons/icon-512.png?v=2",
+  "maskableIconUrl": "https://dualpath.bsit4bdevs.tech/icons/icon-512.png?v=2",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "../tool/runtime/android-signing/release.jks",
+    "alias": "tomas-oppus-rescue"
+  },
+  "appVersionName": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://dualpath.bsit4bdevs.tech/manifest.webmanifest",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://dualpath.bsit4bdevs.tech/",
+  "minSdkVersion": 24,
+  "orientation": "portrait-primary",
+  "fingerprints": [
+    {
+      "name": "Direct Android APK release",
+      "value": "70:76:D9:F3:EF:7B:E3:27:54:C6:D3:41:65:58:5C:60:F4:34:67:67:6A:31:9E:41:AA:30:30:21:A0:0C:C9:22"
+    }
+  ],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "protocolHandlers": [],
+  "fileHandlers": [],
+  "launchHandlerClientMode": "",
+  "displayOverride": [],
+  "appVersion": "1.0.0"
+}

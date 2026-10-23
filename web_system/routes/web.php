@@ -35,6 +35,11 @@ Route::get('/system/version', static function (SystemVersion $systemVersion) {
 
 Route::get('/system/ai-status', TextAiStatusController::class)->middleware('throttle:30,1')->name('system.ai-status');
 
+Route::get('/download/android', static function () {
+    return redirect()->away(config('android-app.download_url'))
+        ->withHeaders(['Cache-Control' => 'no-store']);
+})->name('app.android.download');
+
 Route::get('/admin', static function (Request $request) {
     return redirect()->route($request->user() ? 'admin.dashboard' : 'admin.login');
 })->name('admin.index');
