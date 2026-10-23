@@ -20,6 +20,7 @@ use App\Http\Controllers\Web\LoRaReportController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\SettingsController;
 use App\Support\SystemVersion;
+use App\Http\Controllers\CivilianPresenceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +62,7 @@ Route::middleware('guest')->group(function (): void {
 
 Route::middleware(['auth', 'account.active'])->group(function (): void {
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    Route::post('/account/presence', CivilianPresenceController::class)->middleware('throttle:120,1')->name('account.presence');
 
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::redirect('/home', '/dashboard');
@@ -84,6 +86,7 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
 
         Route::prefix('civilian-accounts')->name('civilian-accounts.')->group(function (): void {
             Route::get('/', [CivilianAccountController::class, 'index'])->name('index');
+            Route::get('/presence', [CivilianAccountController::class, 'presence'])->name('presence');
             Route::get('/{civilianAccount}/verification-image', [CivilianAccountController::class, 'verificationImage'])->name('verification-image');
             Route::patch('/{civilianAccount}/block', [CivilianAccountController::class, 'block'])->name('block');
             Route::delete('/{civilianAccount}', [CivilianAccountController::class, 'destroy'])->name('destroy');

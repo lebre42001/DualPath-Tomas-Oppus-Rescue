@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\CivilianAccountAudit;
 use App\Models\IncidentReport;
 use App\Models\User;
+use App\Support\CivilianPresence;
+use Illuminate\Http\JsonResponse;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Http\RedirectResponse;
@@ -103,6 +105,22 @@ class CivilianAccountController extends Controller
         );
     }
 
+    public function presence(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'ids' => ['required', 'array', 'min:1', 'max:50'],
+            'ids.*' => ['required', 'integer', 'distinct'],
+        ]);
+        $accounts = User::query()->where('role', 'civilian')->whereIn('id', $validated['ids'])->get();
+        $this->attachAccessMetadata($accounts);
+
+        return response()->json(['accounts' => $accounts->map(function (User $account): array {
+            return ['id' => $account->id, 'online' => (bool) $account->has_live_session,
+                'lastSeenHuman' => $account->access_last_seen_human ?? 'No app activity yet',
+                'lastSeenExact' => $account->access_last_seen_exact ?? 'Not available'];
+        })->values()])->header('Cache-Control', 'private, no-store');
+    }
+
     public function block(Request $request, User $civilianAccount): RedirectResponse
     {
         if ($redirect = $this->redirectIfCivilian($request->user())) {
@@ -132,6 +150,7 @@ class CivilianAccountController extends Controller
             if (Schema::hasTable('sessions')) {
                 DB::table('sessions')->where('user_id', $civilianAccount->id)->delete();
             }
+            app(CivilianPresence::class)->endUser($civilianAccount);
 
             $this->logAudit(
                 $request,
@@ -198,6 +217,7 @@ class CivilianAccountController extends Controller
     private function attachAccessMetadata(EloquentCollection $civilianAccounts): void
     {
         $latestSessions = $this->latestSessionSnapshots($civilianAccounts->modelKeys());
+        $presences = app(CivilianPresence::class)->snapshots($civilianAccounts->modelKeys());
 
         foreach ($civilianAccounts as $civilianAccount) {
             $sessionSnapshot = $latestSessions->get($civilianAccount->id);
@@ -206,13 +226,18 @@ class CivilianAccountController extends Controller
             $lastSeenAt = isset($sessionSnapshot->last_activity)
                 ? Carbon::createFromTimestamp((int) $sessionSnapshot->last_activity)
                 : $civilianAccount->last_login_at;
+            $presence = $presences->get($civilianAccount->id);
+            if ($presence?->last_seen_at) {
+                $presenceSeen = Carbon::parse($presence->last_seen_at);
+                if ($lastSeenAt === null || $presenceSeen->greaterThan($lastSeenAt)) $lastSeenAt = $presenceSeen;
+            }
 
             $civilianAccount->setAttribute('access_device_label', $this->deviceLabel($userAgent));
             $civilianAccount->setAttribute('access_ip_address', $ipAddress);
             $civilianAccount->setAttribute('access_user_agent', $userAgent);
             $civilianAccount->setAttribute('access_last_seen_human', $lastSeenAt?->diffForHumans());
             $civilianAccount->setAttribute('access_last_seen_exact', $lastSeenAt?->format('M d, Y h:i A'));
-            $civilianAccount->setAttribute('has_live_session', $sessionSnapshot !== null);
+            $civilianAccount->setAttribute('has_live_session', ! $civilianAccount->isBlocked() && (bool) ($presence?->is_online ?? false));
         }
     }
 
@@ -324,6 +349,8 @@ class CivilianAccountController extends Controller
             'unverified' => ! $civilian->hasVerifiedAccount(),
             'missing-phone' => blank($civilian->responderProfile?->phone),
             'live-session' => (bool) ($civilian->has_live_session ?? false),
+            'online' => (bool) ($civilian->has_live_session ?? false),
+            'offline' => ! (bool) ($civilian->has_live_session ?? false),
             default => true,
         };
     }

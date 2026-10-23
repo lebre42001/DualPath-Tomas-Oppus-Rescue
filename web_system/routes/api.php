@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\LoRaMeshGatewayController;
 use App\Http\Controllers\Api\ProfileApiController;
 use App\Http\Controllers\Api\SettingsApiController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CivilianPresenceController;
 
 Route::prefix('v1')->group(function (): void {
     Route::post('/auth/register', [AuthApiController::class, 'register']);
@@ -25,6 +26,7 @@ Route::prefix('v1')->group(function (): void {
     });
 
     Route::middleware('api.token')->group(function (): void {
+        Route::post('/account/presence', CivilianPresenceController::class)->middleware('throttle:120,1');
         Route::get('/auth/me', [AuthApiController::class, 'me']);
         Route::post('/auth/logout', [AuthApiController::class, 'logout']);
 

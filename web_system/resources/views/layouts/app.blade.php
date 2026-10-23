@@ -337,6 +337,7 @@ SVG,
         </div>
     @endif
     @if ($isCivilian)
+    <span hidden data-presence-url="{{ route('account.presence') }}" data-presence-interval="{{ \App\Support\CivilianPresence::HEARTBEAT_SECONDS }}"></span>
     <section class="pwa-install-card" data-pwa-install-card hidden>
         <div class="pwa-install-copy">
             <p class="eyebrow">Install Tomas Oppus Rescue</p>

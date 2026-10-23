@@ -2546,7 +2546,7 @@ class AuthAndReportFlowTest extends TestCase
             ->assertSee('Verified')
             ->assertSee('Not Verified')
             ->assertSee('Offline')
-            ->assertSee('This account is saved in the database and remains visible even without an active session.')
+            ->assertSee('No current app connection detected.')
             ->assertSee('No verification image yet')
             ->assertDontSee('Filtered View')
             ->assertDontSee('Audit Today')

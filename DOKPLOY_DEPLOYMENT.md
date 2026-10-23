@@ -85,6 +85,33 @@ the hardware is powered off. Existing HB/HELLO discovery firmware is compatible;
 no new migration or firmware upload is required. The heartbeat API now returns
 `REACHABLE` as its status string; NET packet fields and ACK behavior are unchanged.
 
+## Civilian account presence
+
+Civilian Accounts now shows authenticated app presence, independent of saved
+login sessions. A visible civilian browser/PWA/Android TWA sends a heartbeat
+every 20 seconds. A pagehide, hidden tab, network-offline event or logout ends
+that page's connection where delivery is possible. Missing heartbeats expire
+after 60 seconds; abrupt device/network loss can take up to 65 seconds to appear
+offline with the admin's five-second polling interval. Backgrounded/suspended
+apps are treated as inactive. This detects contact with this server, not whether
+the phone has general internet access.
+
+Connections are separated by authenticated session/token and random page ID;
+one closing tab/device cannot mark another connected device offline. Sequence
+numbers reject delayed beacons; logout revokes that context and blocking revokes
+all presence for the account. Browser callbacks and the open account details
+update without replacing forms. A failed admin refresh shows a stale-data warning.
+The API also supports authenticated `POST /api/v1/account/presence` using
+`client_id`, increasing `sequence`, and `state` (`online` or `offline`). Existing
+API clients need to send this heartbeat to participate; holding a token alone
+does not mark an account online.
+
+Deploy migration `2026_10_23_000002_create_civilian_presences_table.php` with the
+routes/controllers and rebuilt Vite assets. The existing web startup applies it
+before serving requests. No Android APK rebuild or new environment values are
+required. Presence stores hashed connection identifiers; obsolete rows for an
+account are pruned after 24 hours on its next heartbeat.
+
 ## Admin node locations and Command map
 
 In **Overview > Command map > Node locations**, open NODE_1 through NODE_10,

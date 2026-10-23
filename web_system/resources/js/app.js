@@ -7,6 +7,7 @@ import './report-form';
 import './report-drafts';
 import './account-verification';
 import './civilian-accounts';
+import './account-presence';
 import './shell-dialogs';
 import './report-index';
 import './report-ai-analysis';

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Support\CivilianPresence;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -122,6 +123,7 @@ class AuthApiController extends Controller
     {
         /** @var User $user */
         $user = $request->user();
+        app(CivilianPresence::class)->endContext($request);
         $user->forceFill(['api_token' => null])->save();
 
         return response()->json([

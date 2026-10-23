@@ -35,7 +35,8 @@
                         <option value="verified" @selected($filters['status'] === 'verified')>Verified only</option>
                         <option value="unverified" @selected($filters['status'] === 'unverified')>Unverified only</option>
                         <option value="missing-phone" @selected($filters['status'] === 'missing-phone')>Missing contact number</option>
-                        <option value="live-session" @selected($filters['status'] === 'live-session')>With live session</option>
+                        <option value="online" @selected(in_array($filters['status'], ['online', 'live-session'], true))>Online now</option>
+                        <option value="offline" @selected($filters['status'] === 'offline')>Offline now</option>
                     </select>
                 </div>
                 <div class="field">
@@ -55,11 +56,11 @@
         </form>
     </section>
 
-    <section class="panel admin-account-directory">
+    <section class="panel admin-account-directory" data-civilian-presence-url="{{ route('civilian-accounts.presence') }}">
         <div class="panel-head">
             <div>
                 <h2 class="panel-title">Civilian directory</h2>
-                <p class="section-copy">Select View to review details and manage account access.</p>
+                <p class="section-copy">Select View to review details and manage account access. <span data-presence-refresh-status role="status">Checking presence…</span></p>
             </div>
         </div>
 
@@ -80,13 +81,13 @@
                         $deviceLabel = $civilianAccount->access_device_label ?? 'No device captured yet';
                         $ipAddress = $civilianAccount->access_ip_address ?: 'No IP captured yet';
                         $userAgent = $civilianAccount->access_user_agent ?: 'No browser or device signature captured yet.';
-                        $lastSeenHuman = $civilianAccount->access_last_seen_human ?: 'No sign-in activity yet';
+                        $lastSeenHuman = $civilianAccount->access_last_seen_human ?: 'No app activity yet';
                         $lastSeenExact = $civilianAccount->access_last_seen_exact ?: 'Not available';
                         $blockReasonValue = old('block_form_id') == $civilianAccount->id
                             ? old('block_reason', $civilianAccount->blocked_reason)
                             : $civilianAccount->blocked_reason;
                     @endphp
-                    <article class="civilian-account-row" id="civilian-account-{{ $civilianAccount->id }}" data-civilian-account-row data-civilian-account-title="{{ e($civilianAccount->name.' - '.$civilianAccount->email) }}">
+                    <article class="civilian-account-row" id="civilian-account-{{ $civilianAccount->id }}" data-civilian-account-row data-civilian-account-id="{{ $civilianAccount->id }}" data-civilian-account-title="{{ e($civilianAccount->name.' - '.$civilianAccount->email) }}">
                         <div class="civilian-account-row-summary">
                             <span class="civilian-account-row-main">
                                 <span class="civilian-account-status-dot {{ $verificationTone }}"></span>
@@ -102,7 +103,7 @@
                                 @else
                                     <span class="tag green">Login Allowed</span>
                                 @endif
-                                <span class="tag {{ $hasLiveSession ? 'blue' : 'neutral' }}">{{ $hasLiveSession ? 'Online' : 'Offline' }}</span>
+                                <span class="tag {{ $hasLiveSession ? 'blue' : 'neutral' }}" data-account-presence="{{ $civilianAccount->id }}" data-presence-badge>{{ $hasLiveSession ? 'Online' : 'Offline' }}</span>
                                 <span class="tag neutral">{{ $civilianAccount->submitted_reports_count }} Reports</span>
                                 <button type="button" class="btn btn-secondary civilian-account-view-button" data-civilian-account-modal-trigger>View</button>
                             </span>
@@ -124,12 +125,12 @@
                                         Email: {{ $civilianAccount->email }}<br>
                                         Phone: {{ $civilianAccount->responderProfile?->phone ?? 'No contact saved' }}<br>
                                         Verification: {{ $isVerified ? 'Verified on '.optional($civilianAccount->account_verified_at)->format('M d, Y h:i A') : 'Not verified yet' }}<br>
-                                        Last seen: {{ $lastSeenHuman }}<br>
+                                        Last seen: <span data-presence-last-seen="{{ $civilianAccount->id }}">{{ $lastSeenHuman }}</span><br>
                                         Updated: {{ optional($civilianAccount->updated_at)->format('M d, Y h:i A') ?? 'Not available' }}
                                     </p>
                                 </div>
                                 <div class="tag-row">
-                                    <span class="tag {{ $hasLiveSession ? 'blue' : 'neutral' }}">{{ $hasLiveSession ? 'Online Now' : 'Offline' }}</span>
+                                    <span class="tag {{ $hasLiveSession ? 'blue' : 'neutral' }}" data-account-presence="{{ $civilianAccount->id }}" data-presence-badge>{{ $hasLiveSession ? 'Online' : 'Offline' }}</span>
                                     <span class="tag {{ $verificationTone }}">{{ $verificationLabel }}</span>
                                     <span class="tag {{ $isBlocked ? 'red' : 'green' }}">{{ $isBlocked ? 'Login Blocked' : 'Login Allowed' }}</span>
                                 </div>
@@ -148,8 +149,8 @@
                                 </article>
                                 <article class="detail-card">
                                     <span class="incident-code">Connection Status</span>
-                                    <strong>{{ $hasLiveSession ? 'Online now' : 'Offline' }}</strong>
-                                    <p>{{ $hasLiveSession ? 'This account has an active browser session.' : 'This account is saved in the database and remains visible even without an active session.' }}</p>
+                                    <strong data-account-presence="{{ $civilianAccount->id }}">{{ $hasLiveSession ? 'Online' : 'Offline' }}</strong>
+                                    <p data-presence-description="{{ $civilianAccount->id }}">{{ $hasLiveSession ? 'An active app connection was detected within the last 60 seconds.' : 'No current app connection detected.' }}</p>
                                 </article>
                                 <article class="detail-card">
                                     <span class="incident-code">Last Device Used</span>
@@ -159,12 +160,12 @@
                                 <article class="detail-card">
                                     <span class="incident-code">Last IP Address</span>
                                     <strong>{{ $ipAddress }}</strong>
-                                    <p>{{ $civilianAccount->has_live_session ? 'Captured from the latest active session.' : 'Captured from the latest successful login.' }}</p>
+                                    <p>Captured from account access activity.</p>
                                 </article>
                                 <article class="detail-card">
-                                    <span class="incident-code">Last Sign-in</span>
-                                    <strong>{{ $lastSeenHuman }}</strong>
-                                    <p>{{ $lastSeenExact }}</p>
+                                    <span class="incident-code">Last activity</span>
+                                    <strong data-presence-last-seen="{{ $civilianAccount->id }}">{{ $lastSeenHuman }}</strong>
+                                    <p data-presence-last-seen-exact="{{ $civilianAccount->id }}">{{ $lastSeenExact }}</p>
                                 </article>
                                 <article class="detail-card">
                                     <span class="incident-code">Block Status</span>
