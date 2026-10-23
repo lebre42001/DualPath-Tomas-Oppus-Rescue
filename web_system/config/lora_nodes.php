@@ -67,10 +67,4 @@ return [
         'latitude' => null,
         'longitude' => null,
     ],
-    'S01' => [
-        'node_name' => 'Sender S01',
-        'location_label' => 'Set the installed node location',
-        'latitude' => null,
-        'longitude' => null,
-    ],
 ];

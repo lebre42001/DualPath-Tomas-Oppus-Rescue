@@ -15,7 +15,7 @@ class LoraMeshNodeDirectory
     public function all(): Collection
     {
         // The live monitor represents the deployed NODE_1 ... NODE_10 mesh.
-        // Legacy sender IDs may stay in the location registry for old reports.
+        // Historical reports from retired sender IDs remain outside this monitor.
         $meshNodeIds = collect(range(1, 10))
             ->map(fn (int $number): string => 'NODE_'.$number);
 
