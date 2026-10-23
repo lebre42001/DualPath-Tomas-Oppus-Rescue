@@ -1,0 +1,35 @@
+body.admin-portal .admin-account-directory > .panel-head { align-items: center; gap: 12px; flex-wrap: wrap; }
+body.admin-portal [data-civilian-directory-open] { width: auto; flex-shrink: 0; }
+body.admin-portal .civilian-directory-modal { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 1500; display: grid; place-items: center; padding: 20px; background: rgb(8 20 32 / 60%); }
+body.admin-portal .civilian-directory-dialog { display: flex; flex-direction: column; width: min(100%, 1000px); max-height: calc(100vh - 40px); max-height: calc(100dvh - 40px); min-height: 0; overflow: hidden; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 20px 70px rgb(0 0 0 / 24%); }
+body.admin-portal .civilian-directory-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+body.admin-portal .civilian-directory-head h2 { font-size: 1.1rem; margin: 0; }
+body.admin-portal .civilian-directory-head p { color: var(--muted); font-size: .8rem; margin: 4px 0 0; }
+body.admin-portal .civilian-directory-head .btn { flex-shrink: 0; width: 44px; min-height: 44px; padding: 0; font-size: 1.4rem; }
+body.admin-portal .civilian-directory-scroll { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 0 20px; }
+body.admin-portal .civilian-directory-message { color: var(--muted); margin: 16px 0; font-size: .85rem; }
+body.admin-portal .civilian-directory-list { list-style: none; padding: 0; margin: 0; }
+body.admin-portal .civilian-directory-item { display: flex; align-items: center; gap: 10px 16px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+body.admin-portal .civilian-directory-item:last-child { border-bottom: 0; }
+body.admin-portal .civilian-directory-identity { flex: 1; min-width: 0; display: grid; gap: 3px; font-size: .88rem; overflow-wrap: anywhere; }
+body.admin-portal .civilian-directory-identity small { color: var(--muted); font-size: .78rem; }
+body.admin-portal .civilian-directory-badges { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 5px; }
+body.admin-portal .civilian-directory-badges .tag { font-size: .64rem; padding: 5px 8px; }
+body.admin-portal .civilian-directory-item .btn { width: auto; flex-shrink: 0; min-height: 44px; padding: 8px 12px; font-size: .8rem; }
+body.admin-portal .civilian-directory-footer { flex-shrink: 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 12px 20px; border-top: 1px solid var(--line); background: var(--surface); }
+body.admin-portal .civilian-directory-footer p { margin: 0; font-size: .8rem; color: var(--muted); }
+body.admin-portal .civilian-directory-footer nav { display: flex; align-items: center; gap: 10px; }
+body.admin-portal .civilian-directory-footer nav span { font-size: .78rem; white-space: nowrap; }
+body.admin-portal .civilian-directory-footer .btn { min-height: 44px; padding: 8px 12px; width: auto; font-size: .8rem; }
+body.admin-portal .civilian-directory-dialog button:disabled { opacity: .45; cursor: default; }
+body.admin-portal .civilian-directory-dialog :focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+@media (max-width: 650px) {
+    body.admin-portal .civilian-directory-modal { padding: 10px; }
+    body.admin-portal .civilian-directory-dialog { max-height: calc(100vh - 20px); max-height: calc(100dvh - 20px); }
+    body.admin-portal .civilian-directory-head, body.admin-portal .civilian-directory-footer { padding: 12px; }
+    body.admin-portal .civilian-directory-scroll { padding: 0 12px; }
+    body.admin-portal .civilian-directory-item { flex-wrap: wrap; gap: 6px 10px; }
+    body.admin-portal .civilian-directory-identity { flex-basis: calc(100% - 70px); }
+    body.admin-portal .civilian-directory-badges { justify-content: flex-start; order: 3; flex-basis: 100%; }
+    body.admin-portal .civilian-directory-footer nav { width: 100%; justify-content: space-between; gap: 6px; }
+}

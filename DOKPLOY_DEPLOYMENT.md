@@ -363,6 +363,17 @@ use Asia/Manila. Reading a report and gateway packets do not fabricate admin act
 - Use Dokploy's container logs to inspect Laravel output. Nginx and PHP startup
   failures also appear in the `web` service logs.
 
+## Civilian directory modal (2026-10-23)
+
+Deploy the Civilian Accounts controller, protected `/civilian-accounts/all`
+route, Blade view, and rebuilt Vite assets together. No schema migration is
+needed. **View all** opens an independent list of all civilian accounts, with
+15 accounts per page and Previous/Next controls. Presence polling includes the
+currently loaded modal page. Verify pagination with more than 15 accounts,
+Online/Offline updates, account detail links, and mobile/dark layouts after
+admin login. The main directory filters and three-account preview remain
+available. Rebuild and verify the hosted release after pushing to `main`.
+
 ## Local Compose check
 
 After Docker Desktop is installed, create an untracked `.env` from

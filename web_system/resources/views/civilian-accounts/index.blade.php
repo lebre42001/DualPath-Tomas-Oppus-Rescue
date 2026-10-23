@@ -62,6 +62,7 @@
                 <h2 class="panel-title">Civilian directory</h2>
                 <p class="section-copy">Select View to review details and manage account access. <span data-presence-refresh-status role="status">Checking presence…</span></p>
             </div>
+            <button type="button" class="btn btn-secondary" data-civilian-directory-open aria-haspopup="dialog" aria-controls="civilian-directory-dialog">View all</button>
         </div>
 
         @if ($civilianAccounts->count() === 0)
@@ -287,6 +288,31 @@
             </div>
         @endif
     </section>
+
+    <div class="civilian-directory-modal" data-civilian-directory-modal data-accounts-url="{{ route('civilian-accounts.all') }}" hidden>
+        <section class="civilian-directory-dialog" id="civilian-directory-dialog" role="dialog" aria-modal="true" aria-labelledby="civilian-directory-title" aria-describedby="civilian-directory-description" tabindex="-1">
+            <header class="civilian-directory-head">
+                <div>
+                    <h2 id="civilian-directory-title">All civilian accounts</h2>
+                    <p id="civilian-directory-description">15 accounts per page. Select View for account details.</p>
+                </div>
+                <button type="button" class="btn btn-secondary" data-civilian-directory-close aria-label="Close all civilian accounts">&times;</button>
+            </header>
+            <div class="civilian-directory-scroll" data-civilian-directory-scroll>
+                <p class="civilian-directory-message" data-civilian-directory-message role="status" aria-live="polite"></p>
+                <button type="button" class="btn btn-secondary" data-civilian-directory-retry hidden>Try again</button>
+                <ul class="civilian-directory-list" data-civilian-directory-list aria-label="Civilian accounts"></ul>
+            </div>
+            <footer class="civilian-directory-footer">
+                <p data-civilian-directory-count role="status" aria-live="polite">Loading accounts...</p>
+                <nav aria-label="All civilian accounts pagination">
+                    <button type="button" class="btn btn-secondary" data-civilian-directory-previous disabled>&larr; Previous</button>
+                    <span data-civilian-directory-page>Page 1</span>
+                    <button type="button" class="btn btn-secondary" data-civilian-directory-next disabled>Next &rarr;</button>
+                </nav>
+            </footer>
+        </section>
+    </div>
 
     <div class="civilian-account-modal" data-civilian-account-modal hidden>
         <div class="civilian-account-modal-shell" role="dialog" aria-modal="true" aria-labelledby="civilian-account-modal-title">

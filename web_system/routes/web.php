@@ -86,6 +86,7 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
 
         Route::prefix('civilian-accounts')->name('civilian-accounts.')->group(function (): void {
             Route::get('/', [CivilianAccountController::class, 'index'])->name('index');
+            Route::get('/all', [CivilianAccountController::class, 'all'])->name('all');
             Route::get('/presence', [CivilianAccountController::class, 'presence'])->name('presence');
             Route::get('/{civilianAccount}/verification-image', [CivilianAccountController::class, 'verificationImage'])->name('verification-image');
             Route::patch('/{civilianAccount}/block', [CivilianAccountController::class, 'block'])->name('block');

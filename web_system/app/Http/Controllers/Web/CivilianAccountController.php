@@ -90,6 +90,32 @@ class CivilianAccountController extends Controller
         ]);
     }
 
+    public function all(Request $request): JsonResponse
+    {
+        $validated = $request->validate(['page' => ['sometimes', 'integer', 'min:1']]);
+        $accounts = User::query()->where('role', 'civilian')
+            ->withCount('submittedReports')->latest('created_at')->latest('id')
+            ->paginate(15, ['*'], 'page', $validated['page'] ?? 1);
+        $presence = app(CivilianPresence::class)->snapshots($accounts->getCollection()->modelKeys());
+
+        return response()->json([
+            'accounts' => $accounts->getCollection()->map(static fn (User $account): array => [
+                'id' => $account->id,
+                'name' => $account->name,
+                'email' => $account->email,
+                'verified' => $account->hasVerifiedAccount(),
+                'blocked' => $account->isBlocked(),
+                'online' => ! $account->isBlocked() && (bool) ($presence->get($account->id)?->is_online ?? false),
+                'reports' => $account->submitted_reports_count,
+                'url' => route('civilian-accounts.index', ['search' => $account->email]).'#civilian-account-'.$account->id,
+            ])->values(),
+            'pagination' => [
+                'page' => $accounts->currentPage(), 'lastPage' => $accounts->lastPage(),
+                'total' => $accounts->total(), 'from' => $accounts->firstItem(), 'to' => $accounts->lastItem(),
+            ],
+        ])->header('Cache-Control', 'private, no-store');
+    }
+
     public function verificationImage(Request $request, User $civilianAccount): StreamedResponse
     {
         if ($request->user()?->isCivilian()) {

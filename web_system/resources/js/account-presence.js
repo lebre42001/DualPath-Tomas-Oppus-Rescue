@@ -65,16 +65,18 @@ onDomReady(() => {
     const directory = document.querySelector('[data-civilian-presence-url]');
     if (!directory) return;
     const status = directory.querySelector('[data-presence-refresh-status]');
-    const ids = [...new Set(Array.from(directory.querySelectorAll('[data-civilian-account-id]'), row => row.dataset.civilianAccountId))];
-    if (!ids.length) {
-        if (status) status.textContent = 'No accounts in this view.';
-        return;
-    }
-    const endpoint = new URL(directory.dataset.civilianPresenceUrl, location.href);
-    ids.forEach(id => endpoint.searchParams.append('ids[]', id));
     let busy = false;
+    let queued = false;
     const refresh = async () => {
-        if (busy || document.hidden) return;
+        if (document.hidden) return;
+        if (busy) { queued = true; return; }
+        const ids = [...new Set(Array.from(document.querySelectorAll('[data-civilian-account-id]'), row => row.dataset.civilianAccountId))];
+        if (!ids.length) {
+            if (status) status.textContent = 'No accounts in this view.';
+            return;
+        }
+        const endpoint = new URL(directory.dataset.civilianPresenceUrl, location.href);
+        ids.forEach(id => endpoint.searchParams.append('ids[]', id));
         busy = true;
         const abort = typeof AbortController === 'undefined' ? null : new AbortController();
         const timeout = abort ? window.setTimeout(() => abort.abort(), 10000) : null;
@@ -113,10 +115,12 @@ onDomReady(() => {
         } finally {
             window.clearTimeout(timeout);
             busy = false;
+            if (queued) { queued = false; void refresh(); }
         }
     };
     window.setInterval(refresh, 5000);
     document.addEventListener('visibilitychange', () => { if (!document.hidden) void refresh(); });
     window.addEventListener('online', refresh);
+    document.addEventListener('civilian-presence:refresh', refresh);
     void refresh();
 });
