@@ -1,5 +1,5 @@
 @php
-    $shortBrand = 'Bontoc Rescue';
+    $shortBrand = 'Tomas Oppus Rescue';
     $systemName = 'AI-Powered LoRa Emergency Response and Severity Detection System with Intelligent Location Monitoring';
     $pwaAssetVersion = app(\App\Support\SystemVersion::class)->current();
     $manifestPath = public_path('build/manifest.json');
@@ -17,24 +17,8 @@
         <link rel="stylesheet" href="{{ asset('build/'.$appCss) }}">
     @endif
 </head>
-<body class="min-h-screen overflow-x-hidden bg-surface text-on-surface antialiased">
-    <header class="border-b border-primary-container/40 text-white shadow-sm" style="background-color: #af101a;">
-        <div class="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-4 sm:px-8 lg:flex-row lg:items-center lg:justify-between">
-            <a href="{{ route('welcome') }}" class="flex w-full min-w-0 max-w-full items-center gap-3 lg:w-auto">
-                <img src="{{ asset('icons/icon-192.png') }}" alt="{{ $shortBrand }} app icon" class="h-11 w-11 shrink-0 rounded-md bg-white p-1">
-                <span class="min-w-0 flex-1">
-                    <span class="inline-flex rounded-sm bg-white px-2 py-1 text-base font-black uppercase text-[#af101a]" style="color: #af101a;">{{ $shortBrand }}</span>
-                    <span class="mt-1 block max-w-[250px] break-words text-[11px] font-semibold uppercase leading-relaxed text-white/90 sm:max-w-2xl sm:text-xs">{{ $systemName }}</span>
-                </span>
-            </a>
-
-            <nav class="flex flex-wrap items-center gap-2 text-sm font-bold">
-                <a href="{{ route('welcome') }}" class="rounded-md px-4 py-2 text-white transition hover:bg-white/15">Home</a>
-                <a href="{{ route('login') }}" class="rounded-md px-4 py-2 text-white transition hover:bg-white/15">Login</a>
-                <a href="{{ route('register') }}" class="rounded-md bg-white px-4 py-2 text-primary">Register</a>
-            </nav>
-        </div>
-    </header>
+<body class="public-page min-h-screen overflow-x-hidden bg-surface text-on-surface antialiased">
+    @include('partials.public-header', ['activePublicPage' => 'register'])
 
     <main class="mx-auto grid w-full min-w-0 max-w-7xl gap-8 px-5 py-8 sm:px-8 lg:grid-cols-[minmax(320px,0.78fr)_minmax(0,1fr)] lg:py-12">
         <section class="min-w-0 lg:sticky lg:top-8 lg:self-start">
@@ -207,6 +191,7 @@
             </div>
         </section>
     </main>
+    @include('partials.public-footer')
 
     <script src="{{ asset('pwa-helper.js') }}?v={{ $pwaAssetVersion }}"></script>
     <script src="{{ asset('auth-password.js') }}?v={{ $pwaAssetVersion }}"></script>

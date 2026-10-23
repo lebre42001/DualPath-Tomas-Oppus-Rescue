@@ -1,5 +1,5 @@
 @php
-    $shortBrand = 'Bontoc Rescue';
+    $shortBrand = 'Tomas Oppus Rescue';
     $systemName = 'AI-Powered LoRa Emergency Response and Severity Detection System with Intelligent Location Monitoring';
     $isResponderPortal = in_array(($portal ?? 'civilian'), ['admin', 'responder'], true);
     $pwaAssetVersion = app(\App\Support\SystemVersion::class)->current();
@@ -18,26 +18,8 @@
         <link rel="stylesheet" href="{{ asset('build/'.$appCss) }}">
     @endif
 </head>
-<body class="min-h-screen overflow-x-hidden bg-surface text-on-surface antialiased">
-    <header class="border-b border-primary-container/40 text-white shadow-sm" style="background-color: #af101a;">
-        <div class="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-4 sm:px-8 lg:flex-row lg:items-center lg:justify-between">
-            <a href="{{ route('welcome') }}" class="flex w-full min-w-0 max-w-full items-center gap-3 lg:w-auto">
-                <img src="{{ asset('icons/icon-192.png') }}" alt="{{ $shortBrand }} app icon" class="h-11 w-11 shrink-0 rounded-md bg-white p-1">
-                <span class="min-w-0 flex-1">
-                    <span class="inline-flex rounded-sm bg-white px-2 py-1 text-base font-black uppercase text-[#af101a]" style="color: #af101a;">{{ $shortBrand }}</span>
-                    <span class="mt-1 block max-w-[250px] break-words text-[11px] font-semibold uppercase leading-relaxed text-white/90 sm:max-w-2xl sm:text-xs">{{ $systemName }}</span>
-                </span>
-            </a>
-
-            <nav class="flex flex-wrap items-center gap-2 text-sm font-bold">
-                <a href="{{ route('welcome') }}" class="rounded-md px-4 py-2 text-white transition hover:bg-white/15">Home</a>
-                <a href="{{ $isResponderPortal ? route('admin.login') : route('login') }}" class="rounded-md bg-white px-4 py-2 text-primary">{{ $isResponderPortal ? 'Admin Login' : 'Login' }}</a>
-                @unless ($isResponderPortal)
-                    <a href="{{ route('register') }}" class="rounded-md px-4 py-2 text-white transition hover:bg-white/15">Register</a>
-                @endunless
-            </nav>
-        </div>
-    </header>
+<body class="public-page min-h-screen overflow-x-hidden bg-surface text-on-surface antialiased">
+    @include('partials.public-header', ['activePublicPage' => 'login'])
 
     <main class="mx-auto grid min-h-[calc(100vh-89px)] max-w-7xl items-center gap-8 px-5 py-8 sm:px-8 lg:grid-cols-[minmax(0,0.88fr)_minmax(380px,1fr)] lg:py-12">
         <section class="order-2 lg:order-1">
@@ -193,6 +175,7 @@
             </p>
         </section>
     </main>
+    @include('partials.public-footer')
 
     @unless ($isResponderPortal)
         <script src="{{ asset('pwa-helper.js') }}?v={{ $pwaAssetVersion }}"></script>

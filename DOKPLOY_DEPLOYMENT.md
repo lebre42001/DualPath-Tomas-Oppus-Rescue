@@ -5,6 +5,27 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Civilian interface release (2026-10-23)
+
+Deploy the compact civilian Home, Report, Profile, Settings and Device Check
+views together with the rebuilt Vite assets. The public Home/Login/Register
+pages share the updated branding; Home places Help, About, Developer and Privacy
+in a footer at the bottom. The installed PWA uses the new logo and service worker
+cache version v7, while keeping its existing manifest identity and start URL.
+
+This release requires no new environment values or database migrations. Keep the
+existing Dokploy service, credentials and named volumes. Report photo/location,
+description and verification-selfie requirements, profile persistence and admin
+access remain in place. Only Road Accident is available; other incident types
+remain locked. SMS backup remains a saved preference without a configured SMS
+delivery service.
+
+Push the release commit to the connected `main` branch and deploy that commit in
+the existing Compose service if automatic deployment is not enabled. Verify the
+running revision in Dokploy, the changed `/system/version`, successful public
+routes, the new logo and compiled assets, then check signed-in civilian and admin
+pages. A successful Git push alone does not confirm a live deployment.
+
 ## Live Monitoring feed
 
 Live Monitoring shows only the three newest reports across Online and LoRa,

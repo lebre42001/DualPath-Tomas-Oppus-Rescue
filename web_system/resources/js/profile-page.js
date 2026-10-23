@@ -18,6 +18,27 @@ function initializeProfilePage() {
     const profileEditorPanel = document.querySelector('[data-profile-editor-panel]');
     const profileEditorToggles = Array.from(document.querySelectorAll('[data-profile-editor-toggle]'));
     const profileEditorClose = document.querySelector('[data-profile-editor-close]');
+    const sectionNav = root.querySelector('[data-profile-sections]');
+    const sections = Array.from(root.querySelectorAll('[data-profile-section]'));
+    const sectionButtons = Array.from(root.querySelectorAll('[data-profile-section-button]'));
+    const showSection = (name) => {
+        sections.forEach((section) => { section.hidden = section.dataset.profileSection !== name; });
+        sectionButtons.forEach((button) => {
+            button.setAttribute('aria-pressed', String(button.dataset.profileSectionButton === name));
+        });
+        const identityGroup = root.querySelector('.capture-helper-grid');
+        if (identityGroup) identityGroup.hidden = !['identity', 'contacts'].includes(name);
+        if (profileEditorPanel) profileEditorPanel.scrollTop = 0;
+    };
+    if (sectionNav && sections.length) {
+        sectionNav.hidden = false;
+        showSection(sections.find((section) => section.dataset.profileSectionError === 'true')?.dataset.profileSection ?? 'identity');
+        sectionButtons.forEach((button) => button.addEventListener('click', () => showSection(button.dataset.profileSectionButton)));
+        root.addEventListener('invalid', (event) => {
+            const section = event.target.closest('[data-profile-section]');
+            if (section?.hidden) showSection(section.dataset.profileSection);
+        }, true);
+    }
     let lastProfileEditorTrigger = null;
 
     const clearProfileHash = () => {

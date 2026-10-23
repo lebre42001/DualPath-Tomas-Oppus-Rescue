@@ -212,7 +212,7 @@
         helper.innerHTML = `
             <div class="bontoc-pwa-helper__top">
                 <span class="bontoc-pwa-helper__status" data-bontoc-pwa-status>Online Ready</span>
-                <strong class="bontoc-pwa-helper__title" data-bontoc-pwa-title>Install Bontoc Rescue Sender</strong>
+                <strong class="bontoc-pwa-helper__title" data-bontoc-pwa-title>Install Tomas Oppus Rescue</strong>
             </div>
             <p class="bontoc-pwa-helper__copy" data-bontoc-pwa-copy>Install the civilian sender app for faster emergency reporting and quick access to your report status.</p>
             <div class="bontoc-pwa-helper__actions">
@@ -281,7 +281,7 @@
 
         if (!isSecureInstallContext()) {
             title.textContent = 'Use HTTPS to install the app';
-            copy.textContent = 'This Wi-Fi test link can open Bontoc Rescue Sender, but Android and iPhone installation needs HTTPS. Use the online secure link to install it, then launch it from the home screen.';
+            copy.textContent = 'This Wi-Fi test link can open Tomas Oppus Rescue, but Android and iPhone installation needs HTTPS. Use the online secure link to install it, then launch it from the home screen.';
             install.textContent = 'Use Browser Mode';
             install.setAttribute('data-install-mode', 'insecure-context');
             return helper;
@@ -289,7 +289,7 @@
 
         if (isIOSDevice() && isSafariBrowser()) {
             title.textContent = 'Install on iPhone or iPad';
-            copy.textContent = 'Tap Share in Safari, then choose Add to Home Screen. After that, open Bontoc Rescue Sender from your home screen like a normal app.';
+            copy.textContent = 'Tap Share in Safari, then choose Add to Home Screen. After that, open Tomas Oppus Rescue from your home screen like a normal app.';
             install.textContent = 'I Understand';
             install.setAttribute('data-install-mode', 'ios-guide');
             return helper;
@@ -305,13 +305,13 @@
 
         if (!deferredPrompt && forceManualPrompt) {
             title.textContent = 'Install from your browser menu';
-            copy.textContent = 'If the automatic install prompt is not ready yet, open your browser menu and choose Install app or Add to Home Screen. After that, launch Bontoc Rescue Sender like a normal app.';
+            copy.textContent = 'If the automatic install prompt is not ready yet, open your browser menu and choose Install app or Add to Home Screen. After that, launch Tomas Oppus Rescue like a normal app.';
             install.textContent = 'I Understand';
             install.setAttribute('data-install-mode', 'browser-install-help');
             return helper;
         }
 
-        title.textContent = 'Install Bontoc Rescue Sender';
+        title.textContent = 'Install Tomas Oppus Rescue';
         copy.textContent = 'Install the civilian sender app for faster emergency reporting and quick access to your report status.';
         install.textContent = 'Install App';
         install.setAttribute('data-install-mode', 'install');
@@ -325,8 +325,15 @@
 
         const helper = document.querySelector('[data-bontoc-pwa-helper]');
 
-        deferredPrompt.prompt();
-        const choice = await deferredPrompt.userChoice;
+        const promptEvent = deferredPrompt;
+        deferredPrompt = null;
+        let choice;
+        try {
+            await promptEvent.prompt();
+            choice = await promptEvent.userChoice;
+        } catch {
+            return false;
+        }
 
         if (choice.outcome === 'accepted') {
             localStorage.removeItem(dismissedKey);
@@ -443,6 +450,12 @@
             checkForApplicationUpdates();
         }, versionPollInterval);
     };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindManualTriggers, { once: true });
+    } else {
+        bindManualTriggers();
+    }
 
     window.addEventListener('load', function () {
         if (supportsServiceWorker()) {

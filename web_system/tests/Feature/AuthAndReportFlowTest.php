@@ -36,7 +36,7 @@ class AuthAndReportFlowTest extends TestCase
             ->assertSee('data-auth-toggle-target="password_confirmation"', false)
             ->assertSee('auth-password.js?v=', false)
             ->assertSee('Min. 6 characters required')
-            ->assertSee('Bontoc Rescue')
+            ->assertSee('Tomas Oppus Rescue')
             ->assertSee('Civilian Account Registration')
             ->assertSee('This public registration creates a civilian sender account only.')
             ->assertSee('Install App')
@@ -48,7 +48,7 @@ class AuthAndReportFlowTest extends TestCase
     public function test_login_and_welcome_pages_show_updated_system_branding(): void
     {
         $branding = 'AI-Powered LoRa Emergency Response and Severity Detection System with Intelligent Location Monitoring';
-        $shortBrand = 'Bontoc Rescue';
+        $shortBrand = 'Tomas Oppus Rescue';
 
         $this->get('/')
             ->assertOk()
@@ -390,26 +390,25 @@ class AuthAndReportFlowTest extends TestCase
             'updated_at' => now()->subMinutes(30),
         ]);
 
-        $response = $this->actingAs($civilian)
+        $this->actingAs($civilian)
             ->get(route('dashboard'))
             ->assertOk()
             ->assertSee('Civilian Home')
-            ->assertSee('Report or check status.')
-            ->assertSee('What do you need?')
+            ->assertSee('Report or check status')
             ->assertSee('Report Emergency')
-            ->assertSee('My Reports')
-            ->assertSee('Check Status')
+            ->assertSee('My Reports &amp; Status', false)
             ->assertSee('Latest Status')
-            ->assertSee('Your latest reports')
-            ->assertSee('Open History')
+            ->assertSee('Your latest report')
+            ->assertSee('View All')
             ->assertSee('data-civilian-report-modal', false)
             ->assertSee('data-civilian-report-modal-trigger', false)
             ->assertDontSee(route('reports.show', $latestReports->first()), false)
+            ->assertSee($latestReports->first()->report_code)
+            ->assertDontSee($latestReports->get(1)->report_code)
+            ->assertDontSee($latestReports->get(2)->report_code)
             ->assertDontSee($olderReport->report_code)
             ->assertDontSee('Admin Receiver Deck')
             ->assertDontSee('Open Full Incident Feed');
-
-        $latestReports->each(fn (IncidentReport $report) => $response->assertSee($report->report_code));
     }
 
     public function test_unverified_civilian_must_verify_account_before_sending_report(): void
@@ -426,7 +425,7 @@ class AuthAndReportFlowTest extends TestCase
             ->get(route('dashboard'))
             ->assertOk()
             ->assertSee('Verify Account')
-            ->assertSee('Account Verification Required')
+            ->assertSee('Verify your account first to send an emergency report.')
             ->assertDontSee('Send My First Report');
 
         $this->actingAs($civilian)
@@ -763,6 +762,14 @@ class AuthAndReportFlowTest extends TestCase
         $this->actingAs($civilian)
             ->get(route('profile.photo'))
             ->assertOk();
+
+        $admin = User::factory()->create(['role' => 'admin', 'is_admin' => true]);
+        $this->actingAs($admin)
+            ->get(route('civilian-accounts.index', ['search' => 'updated.civilian@example.com']))
+            ->assertOk()
+            ->assertSee('Updated Civilian')
+            ->assertSee('updated.civilian@example.com')
+            ->assertSee('09178889999');
     }
 
     public function test_civilian_can_remove_existing_profile_photo(): void
@@ -808,25 +815,27 @@ class AuthAndReportFlowTest extends TestCase
         $this->actingAs($civilian)
             ->get(route('reports.create'))
             ->assertOk()
-            ->assertSee('Emergency Report')
-            ->assertSee('Field actions')
-            ->assertSee('Use these field actions.')
+            ->assertSee('Report emergency')
             ->assertSee('Type of incident')
             ->assertSee('Road Accident')
-            ->assertSee('Available for this version.')
+            ->assertSee('Road Accident is available for this version.')
             ->assertSee('Fire Incident')
             ->assertSee('Flood / Landslide')
             ->assertSee('Medical Emergency')
             ->assertSee('Coming soon.')
             ->assertSee('value="Road Accident"', false)
+            ->assertSee('value="Road Accident" checked', false)
+            ->assertSee('value="Fire Incident" disabled', false)
+            ->assertSee('value="Flood / Landslide" disabled', false)
+            ->assertSee('value="Medical Emergency" disabled', false)
             ->assertSee('Send Report')
             ->assertSee('Capture Photo')
             ->assertSee('Upload Photo')
             ->assertSee('Lock GPS')
             ->assertSee('Short Description')
-            ->assertSee('Use Capture Photo for real scenes or Upload Photo for downloaded test images.')
+            ->assertSee('Use a real scene photo.')
             ->assertSee('Front-camera selfie verification')
-            ->assertSee('Tap Send Report after a captured or uploaded scene photo, GPS or manual location, and a short description.')
+            ->assertSee('A verification selfie opens before the report is sent.')
             ->assertSee('data-report-draft-form', false)
             ->assertSee('data-capture-trigger="photo"', false)
             ->assertSee('data-capture-trigger="upload"', false)
@@ -847,9 +856,7 @@ class AuthAndReportFlowTest extends TestCase
             ->assertSee('Android Chrome')
             ->assertDontSee('iOS GPS fallback')
             ->assertSee('Short description (required)')
-            ->assertSee('When available, AI uses only this description to propose severity.')
-            ->assertSee('Otherwise a responder assesses the report.')
-            ->assertSee('Photos remain evidence for responder review.')
+            ->assertSee('A responder reviews your report.')
             ->assertDontSee('Manual Report Entry')
             ->assertDontSee('Offline draft queue')
             ->assertDontSee('Save Draft Now')
@@ -932,6 +939,16 @@ class AuthAndReportFlowTest extends TestCase
         Storage::assertExists($report->evidence_path);
         Storage::assertExists($report->reporter_selfie_path);
         Event::assertDispatched(IncidentFeedUpdated::class);
+
+        $admin = User::factory()->create(['role' => 'admin', 'is_admin' => true]);
+        $this->actingAs($admin)
+            ->get(route('reports.show', $report))
+            ->assertOk()
+            ->assertSee($report->report_code)
+            ->assertSee($report->description)
+            ->assertSee($report->location_text)
+            ->assertSee(route('reports.evidence', $report), false)
+            ->assertSee(route('reports.selfie', $report), false);
     }
 
     public function test_civilian_web_report_submission_accepts_ios_manual_location_fallback(): void
@@ -1143,8 +1160,8 @@ class AuthAndReportFlowTest extends TestCase
         $this->actingAs($civilian)
             ->get(route('settings.readiness'))
             ->assertOk()
-            ->assertSee('Permission Readiness Check')
-            ->assertSee('Run Full Check')
+            ->assertSee('Device Check')
+            ->assertSee('Refresh Status')
             ->assertSee('Camera access')
             ->assertSee('Location access')
             ->assertSee('Notifications')
@@ -1160,6 +1177,11 @@ class AuthAndReportFlowTest extends TestCase
             ->get(route('settings.index'))
             ->assertOk()
             ->assertSee('Permission Readiness Check');
+
+        $admin = User::factory()->create(['role' => 'admin', 'is_admin' => true]);
+        $this->actingAs($admin)->get(route('settings.readiness'))->assertOk()
+            ->assertSee('Permission Readiness Check')
+            ->assertSee('Run Full Check');
     }
 
     public function test_civilian_success_page_is_status_only_and_ai_page_is_blocked(): void
@@ -2126,6 +2148,41 @@ class AuthAndReportFlowTest extends TestCase
         $this->assertNotNull($report->status_updated_at);
     }
 
+    public function test_civilian_settings_persist_without_changing_admin_preferences(): void
+    {
+        $civilian = User::factory()->create(['role' => 'civilian']);
+        $admin = User::factory()->create(['role' => 'admin', 'is_admin' => true]);
+        $admin->responderProfile()->create([
+            'assigned_station' => 'Command Center',
+            'connectivity_mode' => 'lora_fallback',
+            'notification_profile' => 'critical_alerts,push_notifications',
+        ]);
+
+        $this->actingAs($civilian)->get(route('settings.index'))->assertOk();
+        foreach ([true, false] as $enabled) {
+            $this->actingAs($civilian)->postJson(route('settings.update'), [
+                'critical_alerts' => $enabled,
+                'push_notifications' => $enabled,
+                'sms_backup' => $enabled,
+                'connectivity_mode' => 'lora_fallback',
+            ])->assertOk()->assertJsonPath('saved', true)->assertJsonPath('connectivity_mode', 'auto_select');
+
+            $this->actingAs($civilian->fresh())->get(route('settings.index'))->assertOk()
+                ->assertViewHas('settings', fn (array $settings): bool =>
+                    $settings['critical_alerts'] === $enabled
+                    && $settings['push_notifications'] === $enabled
+                    && $settings['sms_backup'] === $enabled
+                );
+        }
+        $this->assertSame('', $civilian->fresh()->responderProfile->notification_profile);
+        $this->assertSame('critical_alerts,push_notifications', $admin->fresh()->responderProfile->notification_profile);
+        $this->assertSame('lora_fallback', $admin->responderProfile->connectivity_mode);
+
+        $this->actingAs($admin)->get(route('settings.index'))->assertOk()
+            ->assertSee('System Settings')
+            ->assertSee('data-connectivity-mode="lora_fallback"', false);
+    }
+
     public function test_authenticated_user_can_save_settings_preferences(): void
     {
         $user = User::factory()->create();
@@ -2324,7 +2381,7 @@ class AuthAndReportFlowTest extends TestCase
             ->assertDontSee('Manage Civilian Accounts');
     }
 
-    public function test_admin_board_renders_ai_quick_read_badges_in_moderation_cards(): void
+    public function test_admin_board_renders_current_category_and_review_link_in_compact_moderation_cards(): void
     {
         $admin = User::factory()->create([
             'role' => 'admin',
@@ -2357,12 +2414,14 @@ class AuthAndReportFlowTest extends TestCase
         $this->actingAs($admin)
             ->get(route('admin.dashboard'))
             ->assertOk()
-            ->assertSee('Confidence 100%')
-            ->assertSee('Historical photo assessment')
-            ->assertSee('Ready for triage')
-            ->assertSee('Historical photo relevance: Related')
-            ->assertSee('Saved relevance 98%')
-            ->assertSee('AI image analysis predicted Fatal severity');
+            ->assertSee('INC-ADMIN-AI-0001')
+            ->assertSee('Current severity category:')
+            ->assertSee('Critical')
+            ->assertSee('Admin review required.')
+            ->assertSee('data-ai-analysis-layout="compact"', false)
+            ->assertSee('Review')
+            ->assertDontSee('Historical photo assessment')
+            ->assertDontSee('AI image analysis predicted Fatal severity');
     }
 
     public function test_responder_monitoring_page_renders_ai_quick_read_badges(): void

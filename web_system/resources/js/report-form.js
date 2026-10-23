@@ -20,6 +20,10 @@ onDomReady( () => {
 
     const form = root.querySelector('[data-report-draft-form]');
     const isCivilian = form?.dataset.reportRole === 'civilian';
+    root.querySelector('[data-incident-selected]')?.addEventListener('click', () => {
+        const picker = root.querySelector('[data-incident-picker]');
+        if (picker instanceof HTMLDetailsElement) picker.open = false;
+    });
     const geoButton = root.querySelector('[data-geo-fill-button]');
     const latitudeInput = root.querySelector('[data-geo-latitude]');
     const longitudeInput = root.querySelector('[data-geo-longitude]');
@@ -462,7 +466,7 @@ onDomReady( () => {
                 ? 'Verification selfie is ready. Sending can continue.'
                 : readyForSelfieGate
                     ? 'Tap Send Report to open selfie verification before final submit.'
-                    : 'Complete the real scene photo, GPS or manual location, and short description first. Screenshots, app UI, and unrelated dummy photos are not accepted.';
+                    : 'Add a scene photo, location, and short description to continue.';
         }
 
         return readyForSelfieGate;

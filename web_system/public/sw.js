@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bontoc-rescue-pwa-v6';
+const CACHE_NAME = 'bontoc-rescue-pwa-v7';
 const OFFLINE_URL = '/offline.html';
 const APP_SHELL_URLS = [
     OFFLINE_URL,

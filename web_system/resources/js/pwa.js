@@ -113,7 +113,7 @@ const setInstallCardContent = () => {
 
     if (!isSecureInstallContext()) {
         title.textContent = 'Use HTTPS to install the app';
-        copy.textContent = 'This Wi-Fi test link can open Bontoc Rescue Sender, but Android and iPhone installation needs HTTPS. Use the online secure link to install it, then launch it from the home screen.';
+        copy.textContent = 'This Wi-Fi test link can open Tomas Oppus Rescue, but Android and iPhone installation needs HTTPS. Use the online secure link to install it, then launch it from the home screen.';
         primary.textContent = 'Use Browser Mode';
         primary.dataset.installMode = 'insecure-context';
         dismiss.textContent = 'Later';
@@ -121,8 +121,8 @@ const setInstallCardContent = () => {
     }
 
     if (isIOSDevice() && isSafariBrowser() && !inStandaloneMode()) {
-        title.textContent = 'Install Bontoc Rescue Sender on iPhone or iPad';
-        copy.textContent = 'On iOS Safari, tap Share then choose Add to Home Screen. After that, launch Bontoc Rescue Sender from your home screen like a normal app.';
+        title.textContent = 'Install Tomas Oppus Rescue on iPhone or iPad';
+        copy.textContent = 'On iOS Safari, tap Share then choose Add to Home Screen. After that, launch Tomas Oppus Rescue from your home screen like a normal app.';
         primary.textContent = 'I Understand';
         primary.dataset.installMode = 'ios-instructions';
         dismiss.textContent = 'Later';
@@ -139,7 +139,7 @@ const setInstallCardContent = () => {
     }
 
     title.textContent = 'Install the civilian sender app.';
-    copy.textContent = 'Add Bontoc Rescue Sender to your phone for faster emergency reporting and quick access to your report status.';
+    copy.textContent = 'Add Tomas Oppus Rescue to your phone for faster emergency reporting and quick access to your report status.';
     primary.textContent = 'Install App';
     primary.dataset.installMode = 'install';
     dismiss.textContent = 'Later';

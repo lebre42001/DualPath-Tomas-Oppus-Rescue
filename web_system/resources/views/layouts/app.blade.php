@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('partials.pwa-head')
-    <title>@yield('title', 'Emergency App') | Bontoc Rescue</title>
+    <title>@yield('title', 'Emergency App') | Tomas Oppus Rescue</title>
     @include('partials.theme-preference')
     @include('partials.legacy-assets')
     @vite(['resources/css/app.css', 'resources/css/operations.css', 'resources/js/app.js'])
@@ -13,7 +13,7 @@
 
 
 </head>
-<body data-pwa-shell class="{{ auth()->user()?->isCivilian() ? 'civilian-portal' : 'admin-portal' }}">
+<body data-pwa-shell class="{{ auth()->user()?->isCivilian() ? 'civilian-portal' : 'admin-portal' }} {{ auth()->user()?->isCivilian() && request()->routeIs('dashboard') ? 'civilian-home-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('reports.create') ? 'civilian-report-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('profile.show') ? 'civilian-profile-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('settings.index') ? 'civilian-settings-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('settings.readiness') ? 'civilian-readiness-page' : '' }}">
     @php
         $authUser = auth()->user();
         $isCivilian = $authUser?->isCivilian() ?? false;
@@ -96,7 +96,23 @@ SVG,
     <div class="ops-shell">
         <aside id="primary-navigation" class="ops-sidebar" data-sidebar>
             <div class="sidebar-mobile-head">
-                <span class="sidebar-label">{{ $isCivilian ? 'Client Menu' : 'Operations Menu' }}</span>
+                @if ($isCivilian)
+                    <div class="sidebar-account-heading">
+                        <div class="avatar">
+                            @if ($authProfilePhotoUrl)
+                                <img src="{{ $authProfilePhotoUrl }}" alt="">
+                            @else
+                                {{ $initials }}
+                            @endif
+                        </div>
+                        <div class="sidebar-account-copy">
+                            <strong data-civilian-menu-name>{{ $authUser->name }}</strong>
+                            <small>Civilian account</small>
+                        </div>
+                    </div>
+                @else
+                    <span class="sidebar-label">Operations Menu</span>
+                @endif
                 <button type="button" class="pill-btn sidebar-close" data-sidebar-close>Close</button>
             </div>
             <button type="button" class="sidebar-collapse-toggle" data-sidebar-collapse-toggle aria-expanded="true" aria-label="Collapse sidebar">
@@ -105,13 +121,13 @@ SVG,
             </button>
             <a href="{{ $dashboardUrl }}" class="brand-lockup">
                 <span style="color: #ff3b3f;">Tomas Oppus Rescue</span>
-                <strong>LoRa Rescue Command</strong>
+                <strong>{{ $isCivilian ? $authUser->name : 'LoRa Rescue Command' }}</strong>
             </a>
 
             <div class="sidebar-cluster">
-                <div class="sidebar-label">{{ $isCivilian ? 'Client App' : 'Operations' }}<br><strong>{{ $stationLabel }}</strong></div>
+                <div class="sidebar-label">{{ $isCivilian ? 'Your navigation' : 'Operations' }}<br><strong>{{ $stationLabel }}</strong></div>
                 <nav class="sidebar-nav" aria-label="Main navigation">
-                    <a href="{{ $monitoringUrl }}" class="{{ $isCivilian ? (request()->routeIs('dashboard') ? 'active' : '') : ((request()->routeIs('monitoring') || (request()->routeIs('dashboard') && ! $authUser?->is_admin)) ? 'active' : '') }}"><span>{{ $isCivilian ? 'Dashboard' : 'Live Monitoring' }}</span><small aria-hidden="true">LM</small></a>
+                    <a href="{{ $monitoringUrl }}" class="{{ $isCivilian ? (request()->routeIs('dashboard') ? 'active' : '') : ((request()->routeIs('monitoring') || (request()->routeIs('dashboard') && ! $authUser?->is_admin)) ? 'active' : '') }}"><span>{{ $isCivilian ? 'Dashboard' : 'Live Monitoring' }}</span><small aria-hidden="true">{{ $isCivilian ? 'HM' : 'LM' }}</small></a>
                     @if ($authUser?->is_admin)
                         <a href="{{ route('monitoring.lora-mesh') }}" class="{{ request()->routeIs('monitoring.lora-mesh*') ? 'active' : '' }}"><span>LoRa Mesh</span><small aria-hidden="true">LR</small></a>
                         <a href="{{ route('lora-reports.index') }}" class="{{ request()->routeIs('lora-reports.*') ? 'active' : '' }}"><span>LoRa Reports</span><small aria-hidden="true">LP</small></a>
@@ -162,7 +178,7 @@ SVG,
                         @endif
                     </div>
                     <div class="topbar-actions">
-                        <button type="button" class="pill-btn sidebar-toggle" data-sidebar-toggle aria-controls="primary-navigation" aria-expanded="false">{{ $isCivilian ? 'Client Menu' : 'Menu' }}</button>
+                        <button type="button" class="pill-btn sidebar-toggle" data-sidebar-toggle aria-controls="primary-navigation" aria-expanded="false">{{ $isCivilian ? $authUser->name : 'Menu' }}</button>
                         <div class="pwa-shell-pill" data-pwa-status-pill><span data-pwa-status-label>Online Ready</span><strong data-pwa-display-mode>Browser</strong></div>
                         @unless ($isCivilian)
                             <button type="button" class="pill-btn" data-alert-center-toggle aria-expanded="false"><span>Alerts</span><strong data-alert-count>{{ $fatalAlertCount }}</strong></button>
@@ -323,9 +339,9 @@ SVG,
     @if ($isCivilian)
     <section class="pwa-install-card" data-pwa-install-card hidden>
         <div class="pwa-install-copy">
-            <p class="eyebrow">Install Bontoc Rescue Sender</p>
+            <p class="eyebrow">Install Tomas Oppus Rescue</p>
             <strong data-pwa-install-title>Install the civilian sender app.</strong>
-            <p data-pwa-install-copy>Add Bontoc Rescue Sender to your phone for faster emergency reporting and quick access to your report status.</p>
+            <p data-pwa-install-copy>Add Tomas Oppus Rescue to your phone for faster emergency reporting and quick access to your report status.</p>
         </div>
         <div class="pwa-install-actions">
             <button type="button" class="btn btn-primary" data-pwa-install-action>Install App</button>

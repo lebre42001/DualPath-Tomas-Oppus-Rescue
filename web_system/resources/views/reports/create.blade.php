@@ -44,8 +44,10 @@
         <div class="panel-head">
             <div class="panel-heading">
                 <p class="panel-kicker">{{ $isCivilian ? 'Emergency Form' : 'Incident Form' }}</p>
-                <h2 class="panel-title">{{ $isCivilian ? 'Field actions' : 'Emergency details' }}</h2>
-                <p class="section-copy">{{ $isCivilian ? 'Capture or upload a scene photo, add your location, and describe the emergency. If text AI is unavailable, a responder assesses severity. Photos remain supporting evidence.' : 'Provide a description for severity review. When available, text AI can suggest severity; otherwise a responder assesses it. Photos and video remain supporting evidence.' }}</p>
+                <h2 class="panel-title">{{ $isCivilian ? 'Report emergency' : 'Emergency details' }}</h2>
+                @unless ($isCivilian)
+                    <p class="section-copy">Provide a description for severity review. When available, text AI can suggest severity; otherwise a responder assesses it. Photos and video remain supporting evidence.</p>
+                @endunless
             </div>
         </div>
 
@@ -60,73 +62,49 @@
             @if ($isCivilian)
                 <div class="civilian-report-mobile-flow">
                     <section class="form-step-card civilian-capture-panel">
-                        <span class="form-step-label">Emergency Report</span>
-                        <strong>Use these field actions.</strong>
-                        <p class="civilian-mobile-hint">Use Capture Photo for real scenes or Upload Photo for downloaded test images. GPS or manual location and a short description are required before sending.</p>
+                        <details class="civilian-report-type" data-incident-picker>
+                            <summary><span>Type of incident</span><strong>Road Accident</strong></summary>
+                            <div class="civilian-incident-options" role="group" aria-label="Type of incident">
+                                <label class="civilian-incident-option">
+                                    <input type="radio" name="incident_type" value="Road Accident" checked data-incident-selected>
+                                    <span>Road Accident</span><small>Selected</small>
+                                </label>
+                                @foreach (['Fire Incident', 'Flood / Landslide', 'Medical Emergency'] as $incidentType)
+                                    <label class="civilian-incident-option is-locked">
+                                        <input type="radio" name="incident_type" value="{{ $incidentType }}" disabled>
+                                        <span>{{ $incidentType }}</span><small>Locked</small>
+                                    </label>
+                                @endforeach
+                                <p>Other incident types are coming soon.</p>
+                            </div>
+                        </details>
+                        <span class="form-step-label">1. Scene photo &amp; location</span>
 
                         <input type="file" name="evidence_photo_capture" accept="image/*" capture="environment" hidden data-capture-photo-input>
                         <input type="file" name="selfie_capture" accept="image/*" capture="user" hidden data-capture-selfie-input>
                         <input id="evidence" type="file" name="evidence" accept=".jpg,.jpeg,.png,.webp" hidden>
                         <input id="selfie" type="file" name="selfie" accept=".jpg,.jpeg,.png,.webp" hidden>
-                        <input type="hidden" name="incident_type" value="Road Accident">
                         <input id="latitude" type="hidden" name="latitude" value="{{ old('latitude') }}" data-geo-latitude>
                         <input id="longitude" type="hidden" name="longitude" value="{{ old('longitude') }}" data-geo-longitude>
                         <input type="hidden" name="gps_fallback_used" value="{{ old('gps_fallback_used', '0') }}" data-gps-fallback-used>
                         <button type="button" class="visually-hidden-control" data-geo-fill-button>Get Current Latitude and Longitude</button>
 
-                        <div class="civilian-incident-type-panel">
-                            <span class="incident-code">Type of incident</span>
-                            <div class="capture-action-grid civilian-incident-type-grid">
-                                <button type="button" class="setting-card capture-action-card incident-type-option selected" aria-pressed="true">
-                                    <span class="capture-action-icon">01</span>
-                                    <strong>Road Accident</strong>
-                                    <p>Available for this version.</p>
-                                    <span class="tag green">Selected</span>
-                                </button>
-                                <button type="button" class="setting-card capture-action-card incident-type-option locked" disabled aria-disabled="true">
-                                    <span class="capture-action-icon">02</span>
-                                    <strong>Fire Incident</strong>
-                                    <p>Coming soon.</p>
-                                    <span class="tag neutral">Locked</span>
-                                </button>
-                                <button type="button" class="setting-card capture-action-card incident-type-option locked" disabled aria-disabled="true">
-                                    <span class="capture-action-icon">03</span>
-                                    <strong>Flood / Landslide</strong>
-                                    <p>Coming soon.</p>
-                                    <span class="tag neutral">Locked</span>
-                                </button>
-                                <button type="button" class="setting-card capture-action-card incident-type-option locked" disabled aria-disabled="true">
-                                    <span class="capture-action-icon">04</span>
-                                    <strong>Medical Emergency</strong>
-                                    <p>Coming soon.</p>
-                                    <span class="tag neutral">Locked</span>
-                                </button>
-                            </div>
-                        </div>
-
                         <div class="capture-action-grid civilian-three-button-grid">
                             <button type="button" class="setting-card capture-action-card" data-capture-trigger="photo" data-capture-card="photo" data-capture-state="pending" aria-pressed="false">
-                                <span class="capture-action-icon">01</span>
                                 <strong>Capture Photo</strong>
-                                <p>Scene photo.</p>
                                 <span class="tag neutral" data-capture-badge="evidence" aria-live="polite">Photo pending</span>
                             </button>
                             <button type="button" class="setting-card capture-action-card" data-capture-trigger="upload" data-capture-card="upload" data-capture-state="pending" aria-pressed="false">
-                                <span class="capture-action-icon">02</span>
                                 <strong>Upload Photo</strong>
-                                <p>Downloaded test image.</p>
                                 <span class="tag neutral" data-capture-badge="upload" aria-live="polite">Upload pending</span>
                             </button>
                             <button type="button" class="setting-card capture-action-card" data-capture-trigger="gps" data-capture-card="gps" data-capture-state="pending" aria-pressed="false">
-                                <span class="capture-action-icon">03</span>
                                 <strong>Lock GPS</strong>
-                                <p>Use location.</p>
                                 <span class="tag neutral" data-capture-badge="gps" aria-live="polite">GPS pending</span>
                             </button>
                         </div>
 
                         <div class="civilian-mobile-status-card">
-                            <p data-capture-submit-status>Required first: photo, GPS or manual location, and short description for severity review.</p>
                             <p data-geo-status>GPS not locked yet.</p>
                             <div class="visually-hidden-control" aria-hidden="true">
                                 <span data-requirement-status="photo">Still required</span>
@@ -141,17 +119,20 @@
 
                         <div class="civilian-gps-fallback-panel" data-gps-fallback-panel hidden>
                             <span class="tag amber">GPS fallback</span>
-                            <strong>Type your barangay, road, or landmark.</strong>
-                            <p>If your phone browser blocks GPS or the location signal is weak, type the nearest location so admins still receive a usable report.</p>
                             <div class="field">
                                 <label for="location_text">Barangay / road / landmark</label>
                                 <input id="location_text" class="input" type="text" name="location_text" value="{{ old('location_text') }}" placeholder="Example: Poblacion near Bontoc Public Market" data-manual-location-input>
                             </div>
-                            <p class="section-copy">Best fix: open this link in Android Chrome or iPhone Safari, then allow Location permission.</p>
                         </div>
 
                         <details class="civilian-compact-details">
-                            <summary>Preview selected photo</summary>
+                            <summary>Photo preview &amp; reporting help</summary>
+                            <div class="civilian-report-help">
+                                <p>Use a real scene photo. GPS or a nearby landmark and a short description are required.</p>
+                                <p>A responder reviews your report. Any available AI suggestion uses only your description; photos remain evidence.</p>
+                                <p>Road Accident is available for this version. Fire Incident, Flood / Landslide, and Medical Emergency: Coming soon.</p>
+                                <p>If device access is blocked, open in Android Chrome or iPhone Safari and allow camera and location.</p>
+                            </div>
                             <div class="preview-grid">
                                 <article class="preview-card">
                                     <strong>Scene photo preview</strong>
@@ -202,9 +183,7 @@
                     </section>
 
                     <section class="form-step-card civilian-description-panel">
-                        <span class="form-step-label">Short Description</span>
-                        <strong>Describe injuries, hazards, and what happened.</strong>
-                        <p>When available, AI uses only this description to propose severity. Otherwise a responder assesses the report. Photos remain evidence for responder review.</p>
+                        <span class="form-step-label">2. Short Description</span>
                         <div class="field">
                             <label for="description">Short description (required)</label>
                             <textarea id="description" class="textarea" name="description" required placeholder="Example: Motorcycle crash near the barangay road, one injured person, road partially blocked." data-required-description>{{ old('description') }}</textarea>
@@ -212,9 +191,9 @@
                     </section>
 
                     <section class="form-step-card report-submit-card civilian-send-card">
-                        <strong>Send when complete.</strong>
-                        <p>Tap Send Report after a captured or uploaded scene photo, GPS or manual location, and a short description. The system will request a front-camera verification selfie before final submit.</p>
+                        <p data-capture-submit-status role="status" aria-live="polite">Add a scene photo, location, and short description.</p>
                         <button class="btn btn-primary" type="submit" data-draft-submit data-report-submit>Send Report</button>
+                        <p class="civilian-selfie-note">A verification selfie opens before the report is sent.</p>
                     </section>
                 </div>
             @else

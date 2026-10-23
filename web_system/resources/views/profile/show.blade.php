@@ -21,106 +21,44 @@
 @section('page_label', $profileTitle)
 @section('page_heading', $profileTitle)
 @section('page_subheading', $isCivilian ? 'Update your name, contact number, photo, and password in one place.' : 'Update admin details, profile photo, and account security in one place.')
-
-@section('hero')
-    @if ($isCivilian)
-    <section class="hero-card civilian-profile-hero" style="background:rgba(255,255,255,.96);border-color:rgba(15,31,47,.10);">
-        <div class="hero-grid">
-            <div class="hero-copy">
-                <p class="eyebrow">Account Identity</p>
-                <h2>Keep your account clear.</h2>
-                <p>Keep only the important details updated so admins can identify your report and contact you fast.</p>
-            </div>
-                <div class="hero-metrics civilian-profile-hero-metrics">
-                    <article class="metric-card"><span>Total reports</span><strong>{{ $reportStats['total'] }}</strong><p>Reports submitted.</p></article>
-                    <article class="metric-card"><span>Active</span><strong>{{ $reportStats['active'] }}</strong><p>Under admin handling.</p></article>
-                    <article class="metric-card"><span>Completed</span><strong>{{ $reportStats['completed'] }}</strong><p>Marked completed.</p></article>
-                    <article class="metric-card"><span>Callsign</span><strong>{{ $callsign }}</strong><p>{{ $stationLabel }}</p></article>
-                </div>
-        </div>
-    </section>
-    @endif
-@endsection
+@section('hide_topbar', $isCivilian ? 'true' : 'false')
 
 @section('content')
     @if ($isCivilian)
-        <section class="civilian-shell civilian-profile-shell">
-            <section class="summary-strip civilian-profile-shortcuts">
-                <a href="#profile-form" class="summary-card" data-profile-editor-toggle>
-                    <span>Details</span>
-                    <strong>Account</strong>
-                    <p>Name, email, and phone number.</p>
-                </a>
-                <a href="#profile-form" class="summary-card" data-profile-editor-toggle>
-                    <span>Photo</span>
-                    <strong>Picture</strong>
-                    <p>Upload or capture a clear photo.</p>
-                </a>
-                <a href="{{ route('settings.index') }}" class="summary-card">
-                    <span>Settings</span>
-                    <strong>Preferences</strong>
-                    <p>Alerts, device check, and display.</p>
-                </a>
+        <section class="panel civilian-profile-compact">
+            <div class="panel-heading">
+                <p class="panel-kicker">Your account</p>
+                <h1 class="panel-title">Civilian Profile</h1>
+            </div>
+            <div class="civilian-profile-compact-identity">
+                @if ($profilePhotoUrl)
+                    <img src="{{ $profilePhotoUrl }}" alt="{{ $user->name }} profile picture" class="civilian-profile-compact-avatar">
+                @else
+                    <div class="civilian-profile-compact-avatar civilian-profile-avatar-fallback">{{ $initials }}</div>
+                @endif
+                <div class="civilian-profile-compact-copy">
+                    <strong>{{ $user->name }}</strong>
+                    <p>{{ $user->email }}</p>
+                    <small>{{ $roleLabel }} &middot; {{ $callsign }}</small>
+                    <small>{{ $stationLabel }}</small>
+                </div>
+            </div>
+            <dl class="civilian-profile-compact-stats" aria-label="Your report activity">
+                <div><dt>Total reports</dt><dd>{{ $reportStats['total'] }}</dd></div>
+                <div><dt>Active</dt><dd>{{ $reportStats['active'] }}</dd></div>
+                <div><dt>Completed</dt><dd>{{ $reportStats['completed'] }}</dd></div>
+            </dl>
+            <section class="civilian-profile-compact-contact" aria-labelledby="profile-contact-heading">
+                <h2 id="profile-contact-heading">Contact details</h2>
+                <dl>
+                    <div><dt>Phone</dt><dd>{{ $phone !== '' ? $phone : 'Not yet configured' }}</dd></div>
+                    <div><dt>Emergency contact</dt><dd>{{ $emergencyContactName !== '' ? $emergencyContactName : 'Not yet configured' }}</dd></div>
+                    <div><dt>Emergency phone</dt><dd>{{ $emergencyContactPhone !== '' ? $emergencyContactPhone : 'Not yet configured' }}</dd></div>
+                </dl>
             </section>
-
-            <section class="civilian-profile-grid">
-                <article class="panel civilian-profile-overview-panel">
-                    <div class="panel-head">
-                        <div class="panel-heading">
-                            <p class="panel-kicker">Profile Snapshot</p>
-                            <h2 class="panel-title">Account overview</h2>
-                            <p class="section-copy">Quickly check your saved identity before changing anything.</p>
-                        </div>
-                    </div>
-                    <div class="civilian-profile-overview-layout">
-                        <div class="civilian-profile-identity-card">
-                            @if ($profilePhotoUrl)
-                                <img src="{{ $profilePhotoUrl }}" alt="{{ $user->name }} profile picture" class="civilian-profile-avatar">
-                            @else
-                                <div class="civilian-profile-avatar civilian-profile-avatar-fallback">{{ $initials }}</div>
-                            @endif
-                            <div class="civilian-profile-identity-copy">
-                                <span class="tag blue">{{ $roleLabel }}</span>
-                                <strong>{{ $user->name }}</strong>
-                                <p>{{ $user->email }}</p>
-                                <div class="civilian-pill-list">
-                                    <span class="civilian-pill">{{ $callsign }}</span>
-                                    <span class="civilian-pill">{{ $stationLabel }}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <article class="civilian-profile-mini-card">
-                            <strong>Contact details</strong>
-                            <div class="civilian-profile-detail-grid">
-                                <article class="civilian-stat-card">
-                                    <span>Email</span>
-                                    <strong>{{ $user->email }}</strong>
-                                </article>
-                                <article class="civilian-stat-card">
-                                    <span>Phone</span>
-                                    <strong>{{ $phone !== '' ? $phone : 'Not yet configured' }}</strong>
-                                </article>
-                                <article class="civilian-stat-card">
-                                    <span>Emergency contact</span>
-                                    <strong>{{ $emergencyContactName !== '' ? $emergencyContactName : 'Not yet configured' }}</strong>
-                                </article>
-                                <article class="civilian-stat-card">
-                                    <span>Emergency phone</span>
-                                    <strong>{{ $emergencyContactPhone !== '' ? $emergencyContactPhone : 'Not yet configured' }}</strong>
-                                </article>
-                            </div>
-                        </article>
-
-                        <a href="#profile-form" class="civilian-action-card primary civilian-profile-update-card" data-profile-editor-toggle>
-                            <span class="civilian-kicker">Update</span>
-                            <strong>Update Profile</strong>
-                            <p>Edit account details, contacts, photo, and password in one modal.</p>
-                        </a>
-                    </div>
-                </article>
-            </section>
-
+            <p class="section-copy">Keep your contact details updated so admins can reach you.</p>
+            <a href="#profile-form" class="btn btn-primary" data-profile-editor-toggle>Update Profile</a>
+            <a href="{{ route('settings.index') }}" class="btn btn-secondary">Preferences &amp; Device Check</a>
         </section>
     @else
         <section class="dual-grid profile-shell-grid admin-profile-layout">
@@ -179,9 +117,9 @@
         <article id="profile-form" class="panel profile-editor-panel profile-editor-modal-shell" data-profile-editor-panel role="dialog" aria-modal="true" aria-labelledby="profile-editor-title">
             <div class="panel-head">
                 <div class="panel-heading">
-                    <p class="panel-kicker">Edit Profile</p>
+                    @unless ($isCivilian)<p class="panel-kicker">Edit Profile</p>@endunless
                     <h2 class="panel-title" id="profile-editor-title">Update Profile</h2>
-                    <p class="section-copy">Change only what needs updating.</p>
+                    @unless ($isCivilian)<p class="section-copy">Change only what needs updating.</p>@endunless
                 </div>
                 <button type="button" class="btn btn-secondary" data-profile-editor-close>Close</button>
             </div>
@@ -190,8 +128,18 @@
                 @csrf
                 @method('PUT')
 
+                @if ($isCivilian)
+                    <nav class="civilian-profile-editor-nav" aria-label="Profile sections" data-profile-sections hidden>
+                        @foreach (['identity' => 'Identity', 'contacts' => 'Contacts', 'photo' => 'Photo', 'security' => 'Security'] as $section => $label)
+                            <button type="button" class="btn btn-secondary" data-profile-section-button="{{ $section }}" aria-controls="profile-section-{{ $section }}" aria-pressed="false">{{ $label }}</button>
+                        @endforeach
+                    </nav>
+                    @if ($errors->any())
+                        <div class="flash error" role="alert">{{ $errors->first() }}</div>
+                    @endif
+                @endif
                 <div class="capture-helper-grid">
-                    <div class="form-step-card">
+                    <div class="form-step-card" @if ($isCivilian) id="profile-section-identity" data-profile-section="identity" data-profile-section-error="{{ $errors->hasAny(['name', 'email', 'assigned_station']) ? 'true' : 'false' }}" @endif>
                         <span class="form-step-label">Identity</span>
                         <strong>Identity details</strong>
                         <div class="form-grid">
@@ -210,7 +158,7 @@
                         </div>
                     </div>
 
-                    <div class="form-step-card">
+                    <div class="form-step-card" @if ($isCivilian) id="profile-section-contacts" data-profile-section="contacts" data-profile-section-error="{{ $errors->hasAny(['phone', 'emergency_contact_name', 'emergency_contact_phone']) ? 'true' : 'false' }}" @endif>
                         <span class="form-step-label">Contacts</span>
                         <strong>Contact details</strong>
                         <div class="form-grid">
@@ -230,13 +178,13 @@
                     </div>
                 </div>
 
-                <div class="form-step-card">
+                <div class="form-step-card" @if ($isCivilian) id="profile-section-photo" data-profile-section="photo" data-profile-section-error="{{ $errors->hasAny(['profile_photo', 'remove_profile_photo']) ? 'true' : 'false' }}" @endif>
                     <span class="form-step-label">Photo</span>
                     <strong>Change profile picture</strong>
-                    <p>Upload or capture a clear profile photo. JPG, PNG, and WEBP are accepted up to 4 MB.</p>
+                    <p>{{ $isCivilian ? 'JPG, PNG or WEBP, up to 4 MB.' : 'Upload or capture a clear profile photo. JPG, PNG, and WEBP are accepted up to 4 MB.' }}</p>
                     <div class="preview-grid profile-photo-grid">
                         <div class="detail-card" style="justify-items:center;text-align:center;">
-                            <strong>Live photo preview</strong>
+                            @unless ($isCivilian)<strong>Live photo preview</strong>@endunless
                             @if ($profilePhotoUrl)
                                 <img
                                     src="{{ $profilePhotoUrl }}"
@@ -279,10 +227,10 @@
                     </div>
                 </div>
 
-                <div class="form-step-card">
+                <div class="form-step-card" @if ($isCivilian) id="profile-section-security" data-profile-section="security" data-profile-section-error="{{ $errors->hasAny(['password', 'password_confirmation']) ? 'true' : 'false' }}" @endif>
                     <span class="form-step-label">Security</span>
                     <strong>Change password</strong>
-                    <p>Leave both fields blank if you do not want to change your password. Minimum length is 6 characters.</p>
+                    <p>{{ $isCivilian ? 'Optional. Use at least 6 characters and confirm below.' : 'Leave both fields blank if you do not want to change your password. Minimum length is 6 characters.' }}</p>
                     <div class="button-row">
                         <button type="button" class="btn btn-secondary" data-password-toggle>Show passwords</button>
                     </div>
@@ -295,10 +243,12 @@
                             <label for="password_confirmation">Confirm new password</label>
                             <input id="password_confirmation" class="input" type="password" name="password_confirmation" autocomplete="new-password" placeholder="Confirm new password" data-password-field>
                         </div>
-                        <div class="field">
-                            <label>Password reminder</label>
-                            <div class="detail-card" style="min-height:50px;">Use a strong password that you can remember and keep private.</div>
-                        </div>
+                        @unless ($isCivilian)
+                            <div class="field">
+                                <label>Password reminder</label>
+                                <div class="detail-card" style="min-height:50px;">Use a strong password that you can remember and keep private.</div>
+                            </div>
+                        @endunless
                     </div>
                 </div>
 

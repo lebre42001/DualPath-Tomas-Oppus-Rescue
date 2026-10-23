@@ -196,45 +196,25 @@
 @section('page_label', $isCivilian ? 'Civilian Dashboard' : 'Operations')
 @section('page_heading', $isCivilian ? 'Civilian Home' : 'Live Monitoring')
 @section('page_subheading', $isCivilian ? 'Direct access to report an emergency and check your latest status.' : 'Latest Online and LoRa reports.')
-
-@section('hero')
-    @if ($isCivilian)
-        <section class="hero-card civilian-simple-hero">
-            <div class="civilian-simple-hero-grid">
-                <div class="hero-copy civilian-simple-copy">
-                    <p class="eyebrow">Civilian Home</p>
-                    <h2>Report or check status.</h2>
-                    <p>
-                        Signed in as <strong>{{ $user?->name }}</strong>.
-                        {{ $isAccountVerified ? 'Use the main action first during an emergency.' : 'Verify your account with live facial verification before sending an emergency report.' }}
-                    </p>
-                    <div class="hero-actions civilian-simple-actions">
-                        <a href="{{ $isAccountVerified ? route('reports.create') : route('account.verify') }}" class="btn btn-primary">{{ $isAccountVerified ? 'Report Emergency' : 'Verify Account First' }}</a>
-                        <a href="{{ route('reports.index') }}" class="btn btn-secondary">My Reports</a>
-                    </div>
-                </div>
-                <div class="civilian-simple-stats" aria-label="Your report summary">
-                    <article><span>Total</span><strong>{{ $stats['total'] }}</strong></article>
-                    <article><span>Active</span><strong>{{ $stats['active'] }}</strong></article>
-                    <article><span>Today</span><strong>{{ $stats['today'] }}</strong></article>
-                </div>
-            </div>
-        </section>
-    @endif
-@endsection
+@section('hide_topbar', $isCivilian ? 'true' : 'false')
 
 @section('content')
     @if ($isCivilian)
         <section class="civilian-shell civilian-home-compact">
             <section class="civilian-home-card">
                 <div class="civilian-home-card-copy">
-                    <p class="panel-kicker">Main actions</p>
-                    <h2>What do you need?</h2>
-                    <p>{{ $isAccountVerified ? 'Use one clear path. Report a new emergency, or check the status of a report you already sent.' : 'Your Send Report button is locked until your civilian account passes live facial verification.' }}</p>
+                    <p class="panel-kicker">Civilian Home</p>
+                    <h1>Report or check status</h1>
+                    <p>Hi, <strong>{{ $user?->name }}</strong>. {{ $isAccountVerified ? 'Send an emergency report or check your latest update.' : 'Verify your account first to send an emergency report.' }}</p>
                 </div>
                 <div class="civilian-home-primary-actions">
                     <a href="{{ $isAccountVerified ? route('reports.create') : route('account.verify') }}" class="btn btn-primary">{{ $isAccountVerified ? 'Report Emergency' : 'Verify Account' }}</a>
-                    <a href="{{ route('reports.index') }}" class="btn btn-secondary">Check Status</a>
+                    <a href="{{ route('reports.index') }}" class="btn btn-secondary">My Reports &amp; Status</a>
+                </div>
+                <div class="civilian-home-status-row" aria-label="Report summary">
+                    <article><span>Total</span><strong>{{ $stats['total'] }}</strong></article>
+                    <article><span>Active</span><strong>{{ $stats['active'] }}</strong></article>
+                    <article><span>Resolved</span><strong>{{ $stats['resolved'] }}</strong></article>
                 </div>
                 <div class="civilian-home-mini-actions">
                     <a href="{{ route('profile.show') }}">Profile</a>
@@ -242,36 +222,17 @@
                 </div>
             </section>
 
-            <section class="civilian-home-status-row" aria-label="Report summary">
-                <article><span>Total Reports</span><strong>{{ $stats['total'] }}</strong></article>
-                <article><span>Active</span><strong>{{ $stats['active'] }}</strong></article>
-                <article><span>Resolved</span><strong>{{ $stats['resolved'] }}</strong></article>
-            </section>
-
-            @unless ($isAccountVerified)
-                <section class="panel">
-                    <div class="panel-head">
-                        <div class="panel-heading">
-                            <p class="panel-kicker">Account Verification Required</p>
-                            <h2 class="panel-title">Unlock Send Report with live facial verification.</h2>
-                            <p class="section-copy">This helps prevent prank reports from new accounts. Capture a real-time front-camera selfie once, then emergency reporting unlocks for this civilian account.</p>
-                        </div>
-                        <a href="{{ route('account.verify') }}" class="btn btn-primary">Verify Account</a>
-                    </div>
-                </section>
-            @endunless
-
             <section class="panel civilian-latest-panel">
                 <div class="panel-head">
                     <div class="panel-heading">
                         <p class="panel-kicker">Latest Status</p>
-                        <h2 class="panel-title">Your latest reports</h2>
+                        <h2 class="panel-title">Your latest report</h2>
                     </div>
-                    <a href="{{ route('reports.index') }}" class="btn btn-secondary">Open History</a>
+                    <a href="{{ route('reports.index') }}" class="btn btn-secondary">View All</a>
                 </div>
 
                 <div class="civilian-latest-list">
-                    @forelse ($reports->take(3) as $report)
+                    @forelse ($reports->take(1) as $report)
                         @php
                             $statusSummary = match ($report->status) {
                                 'resolved' => 'Completed',
@@ -405,8 +366,7 @@
                     @empty
                         <div class="civilian-empty-state">
                             <strong>No reports yet</strong>
-                            <p>{{ $isAccountVerified ? 'Tap Send Emergency Report when you need to submit one.' : 'Verify your account first to unlock emergency reporting.' }}</p>
-                            <a href="{{ $isAccountVerified ? route('reports.create') : route('account.verify') }}" class="btn btn-primary">{{ $isAccountVerified ? 'Send My First Report' : 'Verify Account First' }}</a>
+                            <p>{{ $isAccountVerified ? 'Your report updates will appear here after you send one.' : 'Verify your account to start reporting.' }}</p>
                         </div>
                     @endforelse
                 </div>

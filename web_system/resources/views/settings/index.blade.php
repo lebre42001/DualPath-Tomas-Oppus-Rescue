@@ -8,46 +8,48 @@
 @section('page_label', $isCivilian ? 'App Settings' : 'System Settings')
 @section('page_heading', $isCivilian ? 'Civilian App Settings' : 'System Settings')
 @section('page_subheading', $isCivilian ? 'Set report-status notifications and device display from one simple page.' : 'Manage alerts, connection preferences, and display settings.')
-
-@section('hero')
-    @if ($isCivilian)
-    <section class="hero-card civilian-settings-hero" style="background:rgba(255,255,255,.96);border-color:rgba(15,31,47,.10);">
-        <div class="hero-grid">
-            <div class="hero-copy">
-                <p class="eyebrow">Settings Center</p>
-                <h2>Settings that matter.</h2>
-                <p>
-                    Choose how this account receives report-status updates and displays on this device.
-                    Changes save automatically.
-                </p>
-                <div class="hero-actions">
-                    <a href="{{ route('dashboard') }}" class="btn btn-primary">Home</a>
-                    <a href="{{ route('profile.show') }}" class="btn btn-secondary">Profile</a>
-                </div>
-            </div>
-            <div class="hero-metrics civilian-settings-metrics">
-                <article class="metric-card">
-                    <span>Status alerts</span>
-                    <strong>{{ $settings['critical_alerts'] ? 'On' : 'Off' }}</strong>
-                    <p>Updates about your reports.</p>
-                </article>
-                <article class="metric-card">
-                    <span>Push notifications</span>
-                    <strong>{{ $settings['push_notifications'] ? 'On' : 'Off' }}</strong>
-                    <p>Browser or device alerts.</p>
-                </article>
-                <article class="metric-card">
-                    <span>SMS backup</span>
-                    <strong>{{ $settings['sms_backup'] ? 'On' : 'Off' }}</strong>
-                    <p>Backup alert path.</p>
-                </article>
-            </div>
-        </div>
-    </section>
-    @endif
-@endsection
+@section('hide_topbar', $isCivilian ? 'true' : 'false')
 
 @section('content')
+    @if ($isCivilian)
+        <section class="panel civilian-settings-compact">
+            <div class="panel-heading">
+                <p class="panel-kicker">Your preferences</p>
+                <h1 class="panel-title">App Settings</h1>
+            </div>
+            <section aria-labelledby="settings-alerts-heading">
+                <h2 id="settings-alerts-heading">Alert preferences</h2>
+                <div class="toggle-stack" data-settings-root data-settings-endpoint="{{ route('settings.update') }}" data-connectivity-initial="{{ $settings['connectivity_mode'] }}">
+                    @foreach (['critical_alerts' => ['Report status alerts', 'Updates about your reports.'], 'push_notifications' => ['Push notifications', 'Requires browser notification permission.'], 'sms_backup' => ['SMS backup', 'Preference only; SMS delivery not configured.']] as $key => [$label, $description])
+                        <div class="toggle-item">
+                            <div class="toggle-copy"><strong>{{ $label }}</strong><p>{{ $description }}</p></div>
+                            <label class="switch">
+                                <input type="checkbox" aria-label="{{ $label }}" data-setting-input="{{ $key }}" @checked($settings[$key])>
+                                <span class="switch-track"></span>
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+            </section>
+            <section aria-labelledby="settings-display-heading">
+                <h2 id="settings-display-heading">Display mode</h2>
+                <div class="civilian-theme-options" role="group" aria-label="Display mode">
+                    @foreach (['system' => 'System', 'light' => 'Light', 'dark' => 'Dark'] as $value => $label)
+                        <button type="button" class="btn btn-secondary" data-theme-choice="{{ $value }}" aria-pressed="false">{{ $label }}</button>
+                    @endforeach
+                </div>
+                <p class="subtle" data-theme-status role="status" aria-live="polite">Choose a display mode for this device.</p>
+            </section>
+            <div class="civilian-settings-save" role="status" aria-live="polite">
+                <strong data-settings-status>Ready</strong>
+                <p data-settings-message>Alert preferences save automatically.</p>
+            </div>
+            <div class="civilian-settings-compact-links">
+                <a href="{{ route('settings.readiness') }}" class="btn btn-secondary" aria-label="Permission Readiness Check">Device Check</a>
+                <a href="{{ route('reports.index') }}" class="btn btn-secondary">My Reports</a>
+            </div>
+        </section>
+    @else
     @unless ($isCivilian)
         <div class="admin-settings-save-status" role="status" aria-live="polite">
             <strong data-settings-status>Ready</strong>
@@ -221,4 +223,5 @@
     </section>
 
 
+    @endif
 @endsection

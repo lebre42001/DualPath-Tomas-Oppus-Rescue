@@ -5,7 +5,10 @@
 @section('page_heading', 'Permission Readiness Check')
 @section('page_subheading', $isCivilian ? 'Check device access before sending an emergency report so photo, GPS, notifications, and connectivity are ready.' : 'Check browser access before field operations so photo capture, GPS, notifications, and connectivity are ready for admin use.')
 
+@section('hide_topbar', $isCivilian ? 'true' : 'false')
+
 @section('hero')
+    @unless ($isCivilian)
     <section class="hero-card" style="background:linear-gradient(135deg,rgba(255,255,255,.97),rgba(232,244,255,.96));border-color:rgba(32,104,174,.16);">
         <div class="hero-grid">
             <div class="hero-copy">
@@ -44,9 +47,52 @@
             </div>
         </div>
     </section>
+    @endunless
 @endsection
 
 @section('content')
+    @if ($isCivilian)
+        <section class="panel civilian-readiness-compact" data-permission-readiness-root data-readiness-role="civilian">
+            <div class="civilian-readiness-heading">
+                <h1 class="panel-title">Device Check</h1>
+                <button type="button" class="btn btn-secondary" data-readiness-refresh aria-label="Refresh Status">Refresh Status</button>
+            </div>
+            <div class="civilian-readiness-summary" role="status" aria-live="polite">
+                <strong><span data-readiness-score>0 / 3</span> core checks ready</strong>
+                <p data-readiness-summary>Checking browser permissions...</p>
+            </div>
+            <div class="civilian-readiness-checks">
+                @foreach (['camera' => 'Camera access', 'location' => 'Location access', 'notifications' => 'Notifications', 'network' => 'Online and offline state', 'app' => 'App install mode'] as $key => $label)
+                    <details class="civilian-readiness-check" data-readiness-card="{{ $key }}">
+                        <summary><strong>{{ $label }}@if (in_array($key, ['notifications', 'app'])) <small>(optional)</small>@endif</strong><span class="tag neutral" data-readiness-badge="{{ $key }}">Not checked</span></summary>
+                        <div class="civilian-readiness-check-body">
+                            <p data-readiness-copy="{{ $key }}">Checking access...</p>
+                            @if ($key === 'location')<p data-readiness-location-result>Coordinates appear after a successful test.</p>@endif
+                            @if ($key === 'network')<strong data-readiness-network-value>Unknown</strong>@endif
+                            @if ($key === 'app')<strong data-readiness-app-mode>Browser</strong>@endif
+                            <div class="button-row">
+                                <button type="button" class="btn btn-secondary" data-readiness-action="{{ $key }}">{{ ['camera' => 'Test camera', 'location' => 'Test location', 'notifications' => 'Allow notifications', 'network' => 'Refresh network check', 'app' => 'Refresh app check'][$key] }}</button>
+                                @if ($key === 'camera')<button type="button" class="btn btn-secondary" data-readiness-stop-camera hidden>Stop camera</button>@endif
+                            </div>
+                            @if ($key === 'camera')<video class="detail-media" data-readiness-camera-preview autoplay muted playsinline hidden></video>@endif
+                        </div>
+                    </details>
+                @endforeach
+            </div>
+            <details class="civilian-readiness-help">
+                <summary>Blocked in Mobile Preview?</summary>
+                <div>
+                    <p>Open the app in Chrome or Safari on your phone. Allow camera and location in the browser site settings, then test again. VS Code Mobile Preview has its own permissions.</p>
+                    <p>If GPS is unavailable, enter your barangay, road, or landmark in the report form. Notifications and installing the app are optional.</p>
+                    <p>This check stays on this device. A location test does not send a report or share your location with admins.</p>
+                </div>
+            </details>
+            <div class="civilian-readiness-links">
+                <a href="{{ route('reports.create') }}" class="btn btn-primary">Open Report Form</a>
+                <a href="{{ route('settings.index') }}" class="btn btn-secondary">Back To Settings</a>
+            </div>
+        </section>
+    @else
     <section class="workspace-grid" data-permission-readiness-root>
         <article class="panel">
             <div class="panel-head">
@@ -181,4 +227,5 @@
             </article>
         </div>
     </section>
+    @endif
 @endsection

@@ -20,6 +20,8 @@ class SystemVersion
         'database/migrations',
         'public/build',
         'public/manifest.webmanifest',
+        'public/icons',
+        'public/favicon.ico',
         'public/offline.html',
         'public/auth-password.js',
         'public/pwa-helper.js',
