@@ -13,16 +13,12 @@ onDomReady( () => {
     let activeTrigger = null;
 
     const closeModal = () => {
-        modal.hidden = true;
-        document.body.style.overflow = '';
+        document.dispatchEvent(new CustomEvent('stitch:dialog-close', { detail: { modal } }));
 
         if (modalBody) {
             modalBody.innerHTML = '';
         }
 
-        if (activeTrigger instanceof HTMLElement) {
-            activeTrigger.focus({ preventScroll: true });
-        }
     };
 
     const openModal = (row, trigger = null) => {
@@ -47,8 +43,7 @@ onDomReady( () => {
 
         modalBody.innerHTML = '';
         modalBody.appendChild(clone);
-        modal.hidden = false;
-        document.body.style.overflow = 'hidden';
+        document.dispatchEvent(new CustomEvent('stitch:dialog-open', { detail: { modal, close: closeModal, opener: activeTrigger } }));
 
         const firstFocusable = modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
 
@@ -93,12 +88,6 @@ onDomReady( () => {
 
         event.preventDefault();
         openModal(row, trigger);
-    });
-
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && !modal.hidden) {
-            closeModal();
-        }
     });
 
     if (window.location.hash?.startsWith('#civilian-account-')) {

@@ -314,6 +314,11 @@
         </section>
     </div>
 
+    @if ($reviewReport ?? null)
+        <template data-civilian-report-review-on-load data-reports-url="{{ route('civilian-accounts.reports', $reviewReport->reported_by) }}" data-report-id="{{ $reviewReport->id }}" data-report-title="{{ $reviewReport->report_code.' - '.$reviewReport->incident_type }}">
+            @include('reports.partials.online-detail', ['report' => $reviewReport, 'printUrl' => route('civilian-accounts.reports.print', ['civilianAccount' => $reviewReport->reported_by, 'report' => $reviewReport->id])])
+        </template>
+    @endif
     <div class="civilian-directory-modal civilian-reports-modal" data-civilian-reports-modal hidden>
         <section class="civilian-directory-dialog" role="dialog" aria-modal="true" aria-labelledby="civilian-reports-title" aria-describedby="civilian-reports-account" tabindex="-1">
             <header class="civilian-directory-head">

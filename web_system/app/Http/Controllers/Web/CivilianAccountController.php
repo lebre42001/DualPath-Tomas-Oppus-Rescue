@@ -62,8 +62,14 @@ class CivilianAccountController extends Controller
         );
 
         $auditLogs = $this->auditLogs($search);
+        $reviewReportId = (int) $request->old('severity_review_report_id', $request->old('review_report_id', $request->session()->get('ai_review_report_id', 0)));
+        $reviewReport = $reviewReportId > 0
+            ? IncidentReport::query()->with(['reporter', 'assignedResponder'])->whereKey($reviewReportId)
+                ->whereHas('reporter', fn ($query) => $query->where('role', 'civilian'))->first()
+            : null;
 
         return view('civilian-accounts.index', [
+            'reviewReport' => $reviewReport,
             'civilianAccounts' => $civilianAccounts,
             'filters' => [
                 'search' => $search,

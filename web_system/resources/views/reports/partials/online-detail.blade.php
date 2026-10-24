@@ -14,7 +14,7 @@
         <div class="online-report-overview-actions">
             <span class="tag neutral">{{ $statusLabel }}</span>
             <span class="tag {{ $categoryTone }}" data-current-category-for="{{ $report->id }}">{{ $category }}</span>
-            <a class="btn btn-secondary" href="{{ route('reports.print', $report) }}" target="_blank" rel="noopener">Print report</a>
+            <a class="btn btn-secondary" href="{{ $printUrl ?? route('reports.print', $report) }}" target="_blank" rel="noopener">Print report</a>
         </div>
     </header>
     <section class="online-report-section"><h3>Description</h3><p class="online-report-copy">{{ $report->description ?: 'No description provided.' }}</p></section>

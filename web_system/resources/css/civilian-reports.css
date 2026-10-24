@@ -11,24 +11,19 @@ body.admin-portal .civilian-reports-toolbar { display: flex; align-items: center
 body.admin-portal .civilian-reports-toolbar p { color: var(--muted); font-size: .8rem; margin: 0; }
 body.admin-portal .civilian-reports-toolbar .btn { flex-shrink: 0; width: auto; font-size: .8rem; }
 body.admin-portal .civilian-reports-list { list-style: none; margin: 0; padding: 0; }
-body.admin-portal .civilian-reports-item { display: flex; align-items: flex-start; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+body.admin-portal .civilian-reports-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
 body.admin-portal .civilian-reports-item:last-child { border-bottom: 0; }
 body.admin-portal .civilian-reports-item > .btn { width: auto; min-height: 44px; flex-shrink: 0; font-size: .8rem; }
-body.admin-portal .civilian-report-details { flex: 1; min-width: 0; }
-body.admin-portal .civilian-report-details > summary { display: flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; list-style: none; }
-body.admin-portal .civilian-report-details > summary::-webkit-details-marker { display: none; }
-body.admin-portal .civilian-report-details > summary::after { content: '+'; font-size: 1.2rem; color: var(--muted); }
-body.admin-portal .civilian-report-details[open] > summary::after { content: '\2212'; }
+body.admin-portal .civilian-report-open { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; padding: 6px; border: 0; border-radius: 6px; background: var(--surface); color: var(--ink); text-align: left; cursor: pointer; }
+body.admin-portal .civilian-report-open:hover { background: var(--surface-alt); }
+body.admin-portal .civilian-report-open:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+body.admin-portal .civilian-report-open:disabled { opacity: .6; cursor: wait; }
 body.admin-portal .civilian-report-identity { flex: 1; min-width: 0; display: grid; gap: 2px; font-size: .85rem; overflow-wrap: anywhere; }
 body.admin-portal .civilian-report-identity small { color: var(--muted); font-size: .76rem; }
-body.admin-portal .civilian-report-details .tag { font-size: .65rem; padding: 5px 8px; }
-body.admin-portal .civilian-report-fields { margin: 12px 0 0; padding: 12px; border-radius: 8px; background: var(--surface-alt); font-size: .83rem; }
-body.admin-portal .civilian-report-fields > div + div { margin-top: 10px; }
-body.admin-portal .civilian-report-fields dt { font-weight: 700; color: var(--muted); font-size: .73rem; }
-body.admin-portal .civilian-report-fields dd { margin: 3px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+body.admin-portal .civilian-report-badges { display: flex; flex-wrap: wrap; justify-content: end; gap: 5px; }
+body.admin-portal .civilian-report-badges .tag { font-size: .65rem; padding: 5px 8px; }
 @media (max-width: 650px) {
     body.admin-portal .civilian-reports-toolbar { padding: 10px 12px; }
-    body.admin-portal .civilian-report-details > summary { flex-wrap: wrap; gap: 5px; }
-    body.admin-portal .civilian-report-identity { flex-basis: 100%; }
+    body.admin-portal .civilian-report-open { flex-direction: column; align-items: flex-start; gap: 8px; }
     body.admin-portal .civilian-reports-item { gap: 8px; }
 }

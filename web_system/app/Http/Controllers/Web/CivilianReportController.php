@@ -29,19 +29,43 @@ class CivilianReportController extends Controller
         ])->header('Cache-Control', 'private, no-store');
     }
 
+    public function details(User $civilianAccount, IncidentReport $incidentReport): JsonResponse
+    {
+        abort_unless($civilianAccount->isCivilian(), 404);
+        $report = $civilianAccount->submittedReports()->with(['reporter', 'assignedResponder'])
+            ->whereKey($incidentReport->id)->firstOrFail();
+
+        return response()->json([
+            'title' => $report->report_code.' - '.$report->incident_type,
+            'html' => view('reports.partials.online-detail', [
+                'report' => $report,
+                'printUrl' => route('civilian-accounts.reports.print', ['civilianAccount' => $civilianAccount, 'report' => $report->id]),
+            ])->render(),
+        ])->header('Cache-Control', 'private, no-store');
+    }
+
     public function print(Request $request, User $civilianAccount): Response
     {
         abort_unless($civilianAccount->isCivilian(), 404);
-        $validated = $request->validate(['report' => ['sometimes', 'integer', 'min:1']]);
+        $validated = $request->validate([
+            'report' => ['sometimes', 'integer', 'min:1'],
+            'include_photo' => ['sometimes', 'boolean'], 'include_location' => ['sometimes', 'boolean'],
+            'include_contact' => ['sometimes', 'boolean'], 'print' => ['sometimes', 'boolean'],
+        ]);
         // Always scope the selection to this account, including single-report printing.
-        $query = $civilianAccount->submittedReports()->with('assignedResponder:id,name')->latest('created_at')->latest('id');
+        $query = $civilianAccount->submittedReports()->with(['reporter:id,name', 'assignedResponder:id,name'])->latest('created_at')->latest('id');
         $reports = isset($validated['report'])
             ? collect([$query->whereKey($validated['report'])->firstOrFail()])
             : $query->get();
 
         return response()->view('civilian-accounts.reports-print', [
             'civilianAccount' => $civilianAccount,
-            'reports' => $reports->map(fn (IncidentReport $report): array => $this->record($report, $civilianAccount)),
+            'reports' => $reports,
+            'accountName' => $civilianAccount->name,
+            'selectedReportId' => $validated['report'] ?? null,
+            'printAction' => route('civilian-accounts.reports.print', $civilianAccount),
+            'includePhoto' => $request->boolean('include_photo'), 'includeLocation' => $request->boolean('include_location'),
+            'includeContact' => $request->boolean('include_contact'), 'autoPrint' => $request->boolean('print'),
             'printedAt' => now()->timezone('Asia/Manila')->format('M d, Y h:i A'),
         ])->header('Cache-Control', 'private, no-store');
     }
@@ -61,13 +85,7 @@ class CivilianReportController extends Controller
             'statusTone' => match ($report->status) { 'received' => 'amber', 'resolved' => 'green', 'rejected' => 'red', default => 'blue' },
             'severity' => $report->current_severity_category,
             'reviewRequired' => (bool) $report->ai_review_required || $report->operational_severity === null,
-            'reportedFatality' => (bool) $report->reported_fatality_flag,
-            'location' => $report->location_text ?: 'Not recorded',
-            'coordinates' => $report->latitude !== null && $report->longitude !== null ? $report->latitude.', '.$report->longitude : null,
-            'description' => $report->description ?: 'No description provided.',
-            'responder' => $report->assignedResponder?->name,
-            'responseNotes' => $report->response_notes,
-            'resolvedAt' => $report->resolved_at?->timezone('Asia/Manila')->format('M d, Y h:i A'),
+            'detailsUrl' => route('civilian-accounts.reports.details', ['civilianAccount' => $account, 'incidentReport' => $report]),
             'printUrl' => route('civilian-accounts.reports.print', ['civilianAccount' => $account, 'report' => $report->id]),
         ];
     }

@@ -92,6 +92,7 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
             Route::get('/presence', [CivilianAccountController::class, 'presence'])->name('presence');
             Route::get('/{civilianAccount}/reports', [CivilianReportController::class, 'index'])->name('reports');
             Route::get('/{civilianAccount}/reports/print', [CivilianReportController::class, 'print'])->name('reports.print');
+            Route::get('/{civilianAccount}/reports/{incidentReport}/details', [CivilianReportController::class, 'details'])->name('reports.details');
             Route::get('/{civilianAccount}/verification-image', [CivilianAccountController::class, 'verificationImage'])->name('verification-image');
             Route::patch('/{civilianAccount}/block', [CivilianAccountController::class, 'block'])->name('block');
             Route::delete('/{civilianAccount}', [CivilianAccountController::class, 'destroy'])->name('destroy');

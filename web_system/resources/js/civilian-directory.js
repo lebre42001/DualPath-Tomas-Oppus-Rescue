@@ -18,7 +18,6 @@ onDomReady(() => {
     let pendingPage = 1;
     let controller;
     let loading = false;
-    let savedOverflow = '';
 
     const element = (tag, className, text) => {
         const node = document.createElement(tag);
@@ -105,15 +104,11 @@ onDomReady(() => {
         if (modal.hidden) return;
         controller?.abort();
         controller = null;
-        modal.hidden = true;
+        document.dispatchEvent(new CustomEvent('stitch:dialog-close', { detail: { modal } }));
         list.replaceChildren();
-        document.body.style.overflow = savedOverflow;
-        opener.focus({ preventScroll: true });
     };
     opener.addEventListener('click', () => {
-        savedOverflow = document.body.style.overflow;
-        modal.hidden = false;
-        document.body.style.overflow = 'hidden';
+        document.dispatchEvent(new CustomEvent('stitch:dialog-open', { detail: { modal, close, opener } }));
         page = 1;
         lastPage = 1;
         count.textContent = 'Loading accounts...';
@@ -126,17 +121,4 @@ onDomReady(() => {
     previous.addEventListener('click', () => { if (!loading && page > 1) void loadPage(page - 1); });
     next.addEventListener('click', () => { if (!loading && page < lastPage) void loadPage(page + 1); });
     retry.addEventListener('click', () => void loadPage(pendingPage));
-    document.addEventListener('keydown', event => {
-        if (modal.hidden) return;
-        if (event.key === 'Escape') { event.preventDefault(); close(); }
-        if (event.key !== 'Tab') return;
-        const targets = [...dialog.querySelectorAll('button:not(:disabled), a[href], [tabindex="0"]')].filter(node => node.getClientRects().length);
-        const first = targets[0];
-        const last = targets.at(-1);
-        if (event.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement))) {
-            event.preventDefault(); last?.focus();
-        } else if (!event.shiftKey && (document.activeElement === last || !dialog.contains(document.activeElement))) {
-            event.preventDefault(); first?.focus();
-        }
-    });
 });

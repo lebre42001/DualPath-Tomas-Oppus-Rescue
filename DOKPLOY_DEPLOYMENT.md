@@ -424,6 +424,26 @@ User-entered descriptions and response notes remain unchanged, so review them
 before distributing a printed copy. Keep access to reports and media restricted
 to their existing authorized roles. No schema migration or APK rebuild is needed.
 
+## Shared account and online report views (2026-10-24)
+
+Deploy the CivilianReportController, CivilianAccountController, account-scoped
+details route, shared report/print Blade views and rebuilt assets together.
+Civilian Accounts report rows now open the same review dialog as Online Report:
+map, attachments, AI assessment and admin actions. The new detail endpoint checks
+the selected account owns the report. Report lists remain 15 per page.
+
+Single-report printing and Print all use the same preview/options/record template
+as Online Report. Exact GPS, contact and scene photos remain off by default;
+verification selfies and internal model diagnostics remain excluded. The selected
+report ID is preserved when updating or printing a preview. Print all covers all
+pages of the selected account. There is no schema migration or APK rebuild.
+
+Account, directory, report list and review dialogs share the existing dialog
+stack so Escape closes the top dialog and preserves focus and unsaved drafts.
+After a severity/response form redirect, the account page reopens that report,
+including validation errors and entered notes. Verify these paths after admin
+login; protected endpoints must reject guest/civilian/non-admin responder access.
+
 ## Local Compose check
 
 After Docker Desktop is installed, create an untracked `.env` from

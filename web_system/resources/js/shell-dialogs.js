@@ -7,8 +7,15 @@ function initializeShellDialogs() {
     const activateDialog = (modal, close, opener = document.activeElement) => {
         if (dialogStack.some((entry) => entry.modal === modal)) return;
         if (!dialogStack.length) previousOverflow = document.body.style.overflow;
-        if (dialogStack.length) dialogStack[dialogStack.length - 1].modal.inert = true;
-        dialogStack.push({ modal, close, opener });
+        const previousZIndex = modal.style.zIndex;
+        if (dialogStack.length) {
+            const parent = dialogStack[dialogStack.length - 1].modal;
+            parent.inert = true;
+            const parentZ = Number.parseInt(getComputedStyle(parent).zIndex, 10) || 0;
+            const ownZ = Number.parseInt(getComputedStyle(modal).zIndex, 10) || 0;
+            if (ownZ <= parentZ) modal.style.zIndex = String(parentZ + 10);
+        }
+        dialogStack.push({ modal, close, opener, previousZIndex });
         modal.hidden = false;
         document.body.style.overflow = 'hidden';
         const target = focusableElements(modal)[0] || modal;
@@ -21,6 +28,7 @@ function initializeShellDialogs() {
         const entry = dialogStack.splice(index, 1)[0];
         modal.hidden = true;
         modal.inert = false;
+        modal.style.zIndex = entry.previousZIndex;
         if (dialogStack.length) dialogStack[dialogStack.length - 1].modal.inert = false;
         document.body.style.overflow = dialogStack.length ? 'hidden' : previousOverflow;
         if (entry.opener && entry.opener.isConnected && entry.opener.getClientRects().length) entry.opener.focus();
