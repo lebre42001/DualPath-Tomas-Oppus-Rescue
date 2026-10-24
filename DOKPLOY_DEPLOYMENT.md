@@ -498,6 +498,10 @@ There is no schema migration or APK rebuild for this web interface change.
 - Deploy the Laravel validation, Blade form, and rebuilt Vite JavaScript together through the existing Dokploy pipeline. No migration or environment change is needed. Historical reports without coordinates remain unchanged; the LoRa gateway intake retains its registered-node location behavior.
 - Verify locally with the location validation feature tests and mobile browser checks: denied/unavailable/timeout, no GPS with a typed landmark, stale draft coordinates, permission revoked after lock, location lost before final send, successful fresh fix, and retry with retained photos/selfie. Repeat the device permission checks on the deployed PWA after refreshing to the latest bundle.
 
+## Owner admin access recovery (2026-10-24)
+
+The owner's existing online admin account was recovered through an explicitly authorized, one-time CLI deployment task. The server generated the replacement password and returned only an encrypted receipt for the owner's locally held private key. The private key and plaintext credentials were never committed. Real online admin login and protected Dashboard, Reports, and Profile access were verified, then the temporary task, deployment hook, and ciphertext export configuration were removed. The normal admin authentication flow remains in place; Git pushes do not provision or reset admin accounts.
+
 ## Local Compose check
 
 After Docker Desktop is installed, create an untracked `.env` from

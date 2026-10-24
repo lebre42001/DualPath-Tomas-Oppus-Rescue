@@ -31,12 +31,6 @@ server {
         try_files $uri $uri/ /index.php?$query_string;
     }
 
-    location = /owner-access-c98fdff0830c8cd8a783bb22.json {
-        default_type application/json;
-        add_header Cache-Control "no-store" always;
-        try_files $uri =404;
-    }
-
     location = /favicon.ico {
         access_log off;
         log_not_found off;

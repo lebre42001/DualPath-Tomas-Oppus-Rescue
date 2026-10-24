@@ -33,8 +33,6 @@ if [ "${RUN_DEMO_SEEDERS:-false}" = "true" ]; then
     php artisan db:seed --force
 fi
 
-php deploy/ops/recover-admin-access.php || echo 'Owner access recovery did not complete; web startup continues.'
-
 php artisan config:cache
 
 php-fpm -D
