@@ -264,7 +264,7 @@
                         @include('reports.partials.photo-relevance-badges', ['report' => $report])
                     </div>
                     <p>
-                        {{ $report->operational_ai_summary ?: 'No AI summary generated.' }}
+                        {{ \App\Support\ReportAssessmentSummary::forReport($report) }}
                     </p>
                     @if ($report->isLegacyUnreviewedTextSuggestion() && ! $isCivilian)
                         <p class="panel-note">The prior AI prediction is excluded from live severity, alert counts, queues, and dispatch. <a href="{{ route('reports.severity', $report) }}">Open restricted audit history</a> to inspect the saved non-operational suggestion.</p>
@@ -277,10 +277,6 @@
                         <div class="meta-row">
                             <span>{{ in_array($report->operational_ai_source, ['manual_only', 'human_responder'], true) ? 'Severity source' : 'AI source' }}</span>
                             <strong>{{ $aiSourceLabel($report->operational_ai_source) }}</strong>
-                        </div>
-                        <div class="meta-row">
-                            <span>AI model</span>
-                            <strong>{{ $report->operational_ai_model_name ? $report->operational_ai_model_name.($report->operational_ai_model_version ? ' v'.$report->operational_ai_model_version : '') : 'Model unavailable' }}</strong>
                         </div>
                         @if ($report->photo_relevance_label !== null || $report->photo_relevance_confidence !== null)
                             <div class="meta-row">
@@ -531,7 +527,6 @@
                             @endif
                             @if (!empty($entry['ai_suggestion']['label']))
                                 <p><strong>Original AI suggestion:</strong> {{ ucfirst($entry['ai_suggestion']['label']) }}
-                                    @if (!empty($entry['ai_suggestion']['model_name'])) ({{ $entry['ai_suggestion']['model_name'] }})@endif
                                 </p>
                             @endif
                         </div>

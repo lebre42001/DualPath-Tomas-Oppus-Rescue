@@ -115,6 +115,60 @@ class OnlineReportHistoryTest extends TestCase
         $this->assertStringContainsString('&lt;img src=x onerror=alert(1)&gt;', $html);
     }
 
+    public function test_date_filters_use_inclusive_manila_days_before_pagination_and_combine_with_severity(): void
+    {
+        $dates = ['2026-10-23 15:59:59', '2026-10-23 16:00:00', '2026-10-24 15:59:59', '2026-10-24 16:00:00'];
+        $reports = collect($dates)->map(function ($date, $index) {
+            $report = $this->report('BOUND-'.$index, ['severity' => $index === 1 ? 'Serious' : 'Minor']);
+            $report->forceFill(['created_at' => $date])->save();
+            return $report;
+        });
+        $this->actingAs($this->admin());
+        $filters = ['search' => 'BOUND', 'date_from' => '2026-10-24', 'date_to' => '2026-10-24'];
+        $this->getJson(route('reports.all', $filters))->assertOk()->assertJsonCount(2, 'reports')->assertJsonPath('pagination.total', 2);
+        $this->getJson(route('reports.all', $filters + ['severity' => 'Serious']))->assertOk()->assertJsonCount(1, 'reports')->assertJsonPath('reports.0.id', $reports[1]->id);
+        $this->getJson(route('reports.all', ['date_to' => '2026-10-24']))->assertOk()->assertJsonCount(3, 'reports');
+        $this->getJson(route('reports.all', ['date_from' => '2026-10-24']))->assertOk()->assertJsonCount(3, 'reports');
+        foreach ([['date_from' => 'bad'], ['date_from' => '2026-02-31'], ['date_from' => '2026-10-25', 'date_to' => '2026-10-24']] as $invalid) $this->getJson(route('reports.all', $invalid))->assertUnprocessable();
+    }
+
+    public function test_print_defaults_exclude_sensitive_options_and_report_views_exclude_internal_model_metadata(): void
+    {
+        $report = $this->report('PRIVATE-OUTPUT', ['reporter_contact' => '09990001111', 'location_text' => 'GPS 10.300000, 124.900000',
+            'ai_source' => 'text_rule_advisory', 'severity' => 'Serious', 'ai_review_required' => true,
+            'ai_model_name' => 'INTERNAL_MODEL_MARKER', 'ai_model_version' => 'internal-private-version',
+            'ai_summary' => 'INTERNAL_MODEL_MARKER internal-private-version /srv/private/model.bin DIAGNOSTIC_ONLY',
+            'ai_probabilities' => ['minor' => .1, 'serious' => .7, 'critical' => .15, 'needs_review' => .05],
+            'evidence_type' => 'photo', 'evidence_path' => 'secret-photo.jpg', 'reporter_selfie_path' => 'secret-selfie.jpg']);
+        $this->actingAs($this->admin());
+        foreach ([route('reports.index'), route('reports.show', $report), route('reports.success', $report), route('reports.print', $report)] as $url) {
+            $this->get($url)->assertOk()->assertDontSee('INTERNAL_MODEL_MARKER')->assertDontSee('internal-private-version')
+                ->assertDontSee('DIAGNOSTIC_ONLY')->assertDontSee('/srv/private/model.bin');
+        }
+        $html = $this->getJson(route('reports.online-details', $report))->assertOk()->json('html');
+        $this->assertStringNotContainsString('INTERNAL_MODEL_MARKER', $html);
+        $this->assertStringNotContainsString('DIAGNOSTIC_ONLY', $html);
+        $this->assertStringContainsString('online-report-map-preview', $html);
+        $this->assertStringContainsString('View map', $html);
+        $this->get(route('reports.print', $report))->assertOk()->assertSee('Omitted from this copy.')
+            ->assertDontSee('09990001111')->assertDontSee('10.300000')->assertDontSee('124.900000')
+            ->assertDontSee(route('reports.evidence', $report), false)->assertDontSee(route('reports.selfie', $report), false)
+            ->assertSee('Serious')->assertSee('70.0%')->assertSee('Choose print details');
+        $selected = $this->get(route('reports.print', [$report, 'include_photo' => 1, 'include_location' => 1, 'include_contact' => 1, 'include_selfie' => 1, 'print' => 1]))->assertOk()
+            ->assertSee('09990001111')->assertSee('10.300000, 124.900000')->assertSee(route('reports.evidence', $report), false)
+            ->assertDontSee(route('reports.selfie', $report), false)->assertDontSee('INTERNAL_MODEL_MARKER')->assertDontSee('secret-selfie.jpg')
+            ->assertSee('data-auto-print="true"', false);
+        $this->assertSame(1, substr_count($selected->getContent(), '10.300000, 124.900000'));
+        $this->getJson(route('reports.print', [$report, 'include_photo' => 'invalid']))->assertUnprocessable();
+    }
+
+    public function test_video_and_selfie_cannot_be_selected_as_a_printable_scene_photo(): void
+    {
+        $report = $this->report('VIDEO-ONLY', ['evidence_type' => 'video', 'evidence_path' => 'private-video.mp4', 'reporter_selfie_path' => 'private-selfie.jpg']);
+        $this->actingAs($this->admin())->get(route('reports.print', [$report, 'include_photo' => 1, 'include_selfie' => 1]))
+            ->assertOk()->assertDontSee('data-print-scene-photo', false)->assertDontSee(route('reports.selfie', $report), false);
+    }
+
     private function admin(): User { return User::factory()->create(['role' => 'admin', 'is_admin' => true]); }
 
     private function report(string $code, array $attributes = []): IncidentReport

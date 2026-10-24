@@ -406,6 +406,24 @@ validation, printing, and mobile/dark layouts after admin login. LoRa reports
 remain in their own tab; civilian history retains its existing pagination.
 No schema migration or APK rebuild is required.
 
+## Report filters, map preview and print privacy (2026-10-24)
+
+Rebuild and deploy the updated controllers, Blade views, support helper and Vite
+assets together. The report list supports search, severity and inclusive date
+ranges in Asia/Manila. Pagination retains the applied filters; Reset clears them.
+Report details include a pinned map preview and the full View map dialog.
+
+The Online Report print page opens a preview with optional exact location/GPS,
+contact number and scene photo. These options are off by default. Update preview
+reloads the selected copy; Print selected details opens the browser print dialog
+after images load. A failed photo load requires retrying or clearing that option.
+Verification selfies are never included. Report-facing summaries use controlled
+copy rather than raw service diagnostics or internal model identifiers. Stored AI
+results and the restricted severity audit remain available for internal review.
+User-entered descriptions and response notes remain unchanged, so review them
+before distributing a printed copy. Keep access to reports and media restricted
+to their existing authorized roles. No schema migration or APK rebuild is needed.
+
 ## Local Compose check
 
 After Docker Desktop is installed, create an untracked `.env` from

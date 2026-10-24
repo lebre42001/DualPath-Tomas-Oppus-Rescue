@@ -7,7 +7,9 @@ onDomReady(() => {
     const field = name => modal.querySelector(`[data-online-reports-${name}]`);
     const list = field('list'), message = field('message'), retry = field('retry');
     const previous = field('previous'), next = field('next');
-    const search = modal.querySelector('[name="search"]');
+    const form = field('search');
+    let baseUrl = new URL(modal.dataset.reportsUrl, location.href);
+    let appliedFilters = Object.fromEntries(new FormData(form));
     let page = 1, lastPage = 1, pendingPage = 1, loading = false;
     let controller, detailController;
     const element = (tag, className, text) => {
@@ -64,13 +66,13 @@ onDomReady(() => {
         message.hidden = false; message.textContent = 'Loading reports...'; retry.hidden = true;
         const timeout = window.setTimeout(() => request.abort(), 15000);
         try {
-            const url = new URL(modal.dataset.reportsUrl, location.href);
+            const url = new URL(baseUrl);
             url.searchParams.set('page', requestedPage);
-            url.searchParams.set('search', search.value.trim());
+            Object.entries(appliedFilters).forEach(([name, value]) => url.searchParams.set(name, value.trim()));
             const response = await fetch(url, { signal: request.signal, cache: 'no-store', headers: { Accept: 'application/json' } });
-            if (!response.ok || response.redirected) throw new Error('Reports unavailable');
-            const payload = await response.json();
-            if (!Array.isArray(payload.reports) || !payload.pagination) throw new Error('Invalid reports');
+            const payload = await response.json().catch(() => ({}));
+            if (!response.ok || response.redirected) throw new Error(Object.values(payload.errors || {}).flat()[0] || 'Unable to load reports. Please sign in again or retry.');
+            if (!Array.isArray(payload.reports) || !payload.pagination) throw new Error('Unable to load reports. Please try again.');
             if (controller !== request || modal.hidden) return;
             if (payload.pagination.page > payload.pagination.lastPage) { void load(payload.pagination.lastPage); return; }
             page = payload.pagination.page; lastPage = payload.pagination.lastPage;
@@ -80,9 +82,9 @@ onDomReady(() => {
             field('count').textContent = payload.pagination.total ? `${payload.pagination.from}-${payload.pagination.to} of ${payload.pagination.total} reports` : '0 reports';
             field('page').textContent = `Page ${page} of ${lastPage}`;
             field('scroll').scrollTop = 0;
-        } catch {
+        } catch (error) {
             if (controller !== request || modal.hidden) return;
-            message.textContent = 'Unable to load reports. Please try again.';
+            message.textContent = error.name === 'AbortError' ? 'Loading timed out. Please try again.' : (error.message || 'Unable to load reports. Please try again.');
             field('count').textContent = list.children.length ? 'Showing the last loaded page.' : 'Reports unavailable';
             retry.hidden = false;
         } finally {
@@ -107,7 +109,13 @@ onDomReady(() => {
     });
     field('close').addEventListener('click', close);
     modal.addEventListener('click', event => { if (event.target === modal) close(); });
-    field('search').addEventListener('submit', event => { event.preventDefault(); void load(1); });
+    form.addEventListener('submit', event => { event.preventDefault(); appliedFilters = Object.fromEntries(new FormData(form)); void load(1); });
+    field('reset').addEventListener('click', () => {
+        form.querySelectorAll('input, select').forEach(input => { input.value = ''; });
+        baseUrl.search = '';
+        appliedFilters = Object.fromEntries(new FormData(form));
+        void load(1);
+    });
     previous.addEventListener('click', () => { if (!loading && page > 1) void load(page - 1); });
     next.addEventListener('click', () => { if (!loading && page < lastPage) void load(page + 1); });
     retry.addEventListener('click', () => void load(pendingPage));

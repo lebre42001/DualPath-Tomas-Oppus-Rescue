@@ -138,7 +138,7 @@
                 @if ($report->photo_relevance_label !== null || $report->photo_relevance_confidence !== null)
                     <div class="detail-card"><strong>Historical photo relevance</strong><p>{{ $report->photo_relevance_label ? ucwords(str_replace('_', ' ', $report->photo_relevance_label)) : 'Not checked' }}{{ $report->photo_relevance_confidence !== null ? ' - '.$report->photo_relevance_confidence.'%' : '' }}</p></div>
                 @endif
-                <div class="detail-card"><strong>{{ in_array($report->ai_source, ['python_model', 'image_model'], true) ? 'Historical photo assessment' : 'Severity assessment' }}</strong><p>{{ $report->operational_ai_summary ?: 'No AI summary available.' }}</p></div>
+                <div class="detail-card"><strong>{{ in_array($report->ai_source, ['python_model', 'image_model'], true) ? 'Historical photo assessment' : 'Severity assessment' }}</strong><p>{{ \App\Support\ReportAssessmentSummary::forReport($report) }}</p></div>
             </div>
         </article>
 

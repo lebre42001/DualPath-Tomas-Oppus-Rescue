@@ -3,6 +3,10 @@
     $categoryTone = match ($category) { 'Critical' => 'red', 'Serious', 'Needs review' => 'amber', 'Minor' => 'green', default => 'blue' };
     $statusLabel = match ($report->status) { 'received' => 'Pending', 'acknowledged' => 'Under review', 'dispatched' => 'Response started', 'responding' => 'Responded', 'resolved' => 'Resolved', 'rejected' => 'Cancelled', default => ucfirst($report->status) };
     $hasCoordinates = $report->latitude !== null && $report->longitude !== null;
+    $coordinateLabel = $hasCoordinates ? $report->latitude.', '.$report->longitude : null;
+    $locationLabel = trim((string) $report->location_text);
+    $coordinateOnly = $hasCoordinates && preg_match('/^(?:GPS\s*)?[+-]?\d+(?:\.\d+)?\s*,\s*[+-]?\d+(?:\.\d+)?$/i', $locationLabel);
+    $mapPoints = $hasCoordinates ? [['id' => $report->id, 'latitude' => (float) $report->latitude, 'longitude' => (float) $report->longitude, 'location_text' => $locationLabel, 'map_role' => 'sender', 'incident_type' => $report->incident_type]] : [];
 @endphp
 <article class="online-report-detail">
     <header class="online-report-overview">
@@ -15,7 +19,8 @@
     </header>
     <section class="online-report-section"><h3>Description</h3><p class="online-report-copy">{{ $report->description ?: 'No description provided.' }}</p></section>
     <section class="online-report-section"><h3>Location &amp; contact</h3>
-        <p>{{ $report->location_text ?: 'Location not recorded.' }}</p>
+        @if (! $coordinateOnly)<p>{{ $locationLabel ?: 'Location not recorded.' }}</p>@endif
+        @if ($hasCoordinates)<div class="latest-inline-map online-report-map-preview" data-incident-map data-map-scope="single" data-report-id="{{ $report->id }}" data-latitude="{{ $report->latitude }}" data-longitude="{{ $report->longitude }}" data-location-text="{{ $locationLabel }}" data-points="{{ json_encode($mapPoints) }}" aria-label="Report location map preview"></div>@endif
         @if ($hasCoordinates)<p>GPS {{ $report->latitude }}, {{ $report->longitude }} <button type="button" class="btn btn-secondary" data-report-map-trigger data-report-id="{{ $report->id }}" data-map-title="{{ $report->report_code }} — Location" data-latitude="{{ $report->latitude }}" data-longitude="{{ $report->longitude }}" data-location-text="{{ $report->location_text }}">View map</button></p>@endif
         @if ($report->reporter_contact)<p>Reporter contact: {{ $report->reporter_contact }}</p>@endif
         @if ($report->assignedResponder)<p>Assigned responder: {{ $report->assignedResponder->name }}</p>@endif

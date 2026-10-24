@@ -40,12 +40,7 @@
         @if ($reviewedText)
             <p><strong>Reviewed by admin:</strong> {{ $reviewedText['reviewed_severity'] }}.</p>
         @endif
-        <p>{{ $topCategory && ! $reviewedText && $report->ai_source === 'text_review'
-            ? 'Text analyzed. Confirm or correct the category after reviewing the description.'
-            : ($report->operational_ai_summary ?: 'No text analysis available yet.') }}</p>
-        @if ($report->operational_ai_model_name)
-            <p><strong>Model:</strong> {{ $report->operational_ai_model_name }} v{{ $report->operational_ai_model_version }}</p>
-        @endif
+        <p>{{ \App\Support\ReportAssessmentSummary::forReport($report) }}</p>
         @if ($topCategory)<p>Model scores are uncalibrated, not accuracy or certainty. Word/phrase suggestions can differ from the top model category.</p>@endif
     @endunless
     <p role="status" data-ai-analysis-feedback hidden></p>

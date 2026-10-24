@@ -1354,8 +1354,8 @@ class AuthAndReportFlowTest extends TestCase
             ->assertSee('Ready for triage')
             ->assertSee('Historical photo relevance: Related')
             ->assertSee('Saved relevance 98%')
-            ->assertSee('AI model')
-            ->assertSee('bontoc_southern_leyte_production_candidate_external v0.2.0');
+            ->assertDontSee('bontoc_southern_leyte_production_candidate_external')
+            ->assertDontSee('v0.2.0');
     }
 
     public function test_civilian_cannot_open_transmission_operations(): void
@@ -2007,7 +2007,7 @@ class AuthAndReportFlowTest extends TestCase
             ->assertSee('Ready for triage')
             ->assertSee('Historical photo relevance: Related')
             ->assertSee('Saved relevance 98%')
-            ->assertSee('bontoc_southern_leyte_production_candidate_external v0.2.0');
+            ->assertDontSee('bontoc_southern_leyte_production_candidate_external v0.2.0');
     }
 
     public function test_report_feed_can_expand_review_and_update_status_without_assignment_controls(): void
@@ -2378,7 +2378,8 @@ class AuthAndReportFlowTest extends TestCase
             ->assertSee('data-longitude="124.97002"', false)
             ->assertSee('INC-ADMIN-MONITOR-1')
             ->assertSee('Civilian Reporter')
-            ->assertSee('AI analysis detected serious terrain collapse indicators.')
+            ->assertSee('No confirmed automated assessment is available. Admin review is required.')
+            ->assertDontSee('AI analysis detected serious terrain collapse indicators.')
             ->assertSee('latest-inline-map')
             ->assertDontSee('Alert Queue')
             ->assertDontSee('Admin Receiver Deck')
@@ -2480,7 +2481,8 @@ class AuthAndReportFlowTest extends TestCase
             ->assertSee('Civilian AI Sender')
             ->assertSee('Road Traffic Collision')
             ->assertSee('Confidence 100%')
-            ->assertSee('AI image analysis predicted Fatal severity from the uploaded photo evidence.')
+            ->assertSee('No confirmed automated assessment is available. Admin review is required.')
+            ->assertDontSee('AI image analysis predicted Fatal severity from the uploaded photo evidence.')
             ->assertSee('Review')
             ->assertSee('Open Map Pin');
     }

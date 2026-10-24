@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\IncidentReport;
 use App\Services\IncidentReportFilterQuery;
+use Carbon\CarbonImmutable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -13,9 +14,19 @@ class OnlineReportController extends Controller
 {
     public function index(Request $request, IncidentReportFilterQuery $filters): JsonResponse
     {
-        $validated = $request->validate(['page' => ['sometimes', 'integer', 'min:1']]);
+        $validated = $request->validate([
+            'page' => ['sometimes', 'integer', 'min:1'],
+            'date_from' => ['nullable', 'date_format:Y-m-d'],
+            'date_to' => array_merge(['nullable', 'date_format:Y-m-d'], $request->filled('date_from') ? ['after_or_equal:date_from'] : []),
+        ]);
         $parameters = $filters->parameters($request, $request->user());
         $query = $filters->build($request, $request->user())->with('reporter:id,name');
+        if (! empty($validated['date_from'])) {
+            $query->where('created_at', '>=', CarbonImmutable::createFromFormat('!Y-m-d', $validated['date_from'], 'Asia/Manila')->utc());
+        }
+        if (! empty($validated['date_to'])) {
+            $query->where('created_at', '<', CarbonImmutable::createFromFormat('!Y-m-d', $validated['date_to'], 'Asia/Manila')->addDay()->utc());
+        }
         match ($parameters['sort']) {
             'oldest' => $query->oldest('created_at')->oldest('id'),
             'severity' => $query->orderByRaw("CASE (".$filters->severityExpression($query).") WHEN 'Critical' THEN 1 WHEN 'Serious' THEN 2 WHEN 'Minor' THEN 3 WHEN 'Needs review' THEN 4 ELSE 5 END")->latest('created_at')->latest('id'),
@@ -55,12 +66,19 @@ class OnlineReportController extends Controller
         ])->header('Cache-Control', 'private, no-store');
     }
 
-    public function print(IncidentReport $incidentReport): Response
+    public function print(Request $request, IncidentReport $incidentReport): Response
     {
         $this->onlineOnly($incidentReport);
         $incidentReport->load(['reporter', 'assignedResponder']);
+        $request->validate([
+            'include_photo' => ['sometimes', 'boolean'], 'include_location' => ['sometimes', 'boolean'],
+            'include_contact' => ['sometimes', 'boolean'], 'print' => ['sometimes', 'boolean'],
+        ]);
 
         return response()->view('reports.online-print', ['report' => $incidentReport,
+            'includePhoto' => $request->boolean('include_photo') && $incidentReport->evidence_type === 'photo' && filled($incidentReport->evidence_path),
+            'includeLocation' => $request->boolean('include_location'), 'includeContact' => $request->boolean('include_contact'),
+            'autoPrint' => $request->boolean('print'),
             'printedAt' => now()->timezone('Asia/Manila')->format('M d, Y h:i A')])
             ->header('Cache-Control', 'private, no-store');
     }

@@ -2,10 +2,11 @@ body.admin-portal .online-reports-footer { display: flex; align-items: center; j
 body.admin-portal .online-reports-footer p { margin: 0; font-size: .8rem; color: var(--muted); }
 body.admin-portal .online-reports-footer .btn { width: auto; }
 body.admin-portal .online-reports-list-modal { z-index: 1500; }
-body.admin-portal .online-reports-search { padding: 12px 20px; border-bottom: 1px solid var(--line); }
+body.admin-portal .online-reports-search { padding: 12px 20px; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: minmax(0,1.7fr) minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr) auto; align-items: end; gap: 10px; }
 body.admin-portal .online-reports-search label { display: block; margin-bottom: 5px; font-size: .78rem; font-weight: 700; }
-body.admin-portal .online-reports-search > div { display: flex; gap: 8px; }
-body.admin-portal .online-reports-search .input { min-width: 0; flex: 1; background: var(--surface); color: var(--ink); }
+body.admin-portal .online-reports-filter-field { min-width: 0; }
+body.admin-portal .online-reports-filter-actions { display: flex; gap: 6px; }
+body.admin-portal .online-reports-search .input { min-width: 0; width: 100%; background: var(--surface); color: var(--ink); font-size: .83rem; padding: 8px; }
 body.admin-portal .online-reports-search .btn { width: auto; }
 body.admin-portal .online-reports-list { list-style: none; margin: 0; padding: 0; }
 body.admin-portal .online-reports-columns, body.admin-portal .online-reports-row { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.25fr) minmax(0,1.3fr) minmax(0,1fr); align-items: center; gap: 12px; text-align: left; }
@@ -29,13 +30,18 @@ body.admin-portal .online-report-section { border: 1px solid var(--line); backgr
 body.admin-portal .online-report-section h3 { font-size: .9rem; margin: 0 0 8px; }
 body.admin-portal .online-report-section p { font-size: .86rem; margin: 5px 0; }
 body.admin-portal .online-report-copy { white-space: pre-wrap; overflow-wrap: anywhere; }
+body.admin-portal .online-report-map-preview { height: 220px; margin: 10px 0; }
 body.admin-portal .online-report-section > summary { cursor: pointer; min-height: 32px; font-size: .86rem; font-weight: 700; }
 body.admin-portal .online-report-attachments { display: flex; flex-wrap: wrap; gap: 12px; }
 body.admin-portal .online-report-attachments img { max-height: 180px; width: auto; max-width: 100%; object-fit: contain; }
 body.admin-portal .online-report-admin-actions[open] { display: grid; gap: 16px; }
 body.admin-portal .online-report-section .btn { width: auto; margin: 4px; }
 @media (max-width: 650px) {
-    body.admin-portal .online-reports-search { padding: 10px 12px; }
+    body.admin-portal .online-reports-search { padding: 10px 12px; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 8px 10px; }
+    body.admin-portal .online-reports-search-field { grid-column: 1 / -1; }
+    body.admin-portal .online-reports-filter-actions { align-self: end; }
+    body.admin-portal .online-reports-search .input { font-size: 16px; }
+    body.admin-portal .online-report-map-preview { height: 180px; }
     body.admin-portal .online-reports-columns { display: none; }
     body.admin-portal .online-reports-row { grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 6px 10px; }
     body.admin-portal .online-reports-row time { align-self: end; }

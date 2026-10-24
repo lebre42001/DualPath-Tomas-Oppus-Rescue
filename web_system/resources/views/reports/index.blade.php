@@ -482,7 +482,7 @@
                                                 <span class="badge {{ $confidenceTone($report->operational_ai_confidence) }}">{{ $report->ai_score_display }}</span>
                                                 <span class="badge {{ $aiQueueStatusTone($report) }}">{{ $aiQueueStatusLabel($report) }}</span>
                                             </div>
-                                            <p>{{ $report->operational_ai_summary ?: 'AI review is still pending or no summary was generated.' }}</p>
+                                            <p>{{ \App\Support\ReportAssessmentSummary::forReport($report) }}</p>
                                         </div>
                                         <div class="detail-card civilian-report-modal-wide">
                                             <strong>Description</strong>
@@ -581,7 +581,7 @@
                                     @else
                                         <span>{{ $aiSourceLabel($report->operational_ai_source) }}</span>
                                         @include('reports.partials.ai-analysis', ['report' => $report, 'compact' => true])
-                                        <small>{{ \Illuminate\Support\Str::limit($report->operational_ai_summary ?: 'AI analysis is still pending for this civilian report.', 86) }}</small>
+                                        <small>{{ \Illuminate\Support\Str::limit(\App\Support\ReportAssessmentSummary::forReport($report), 86) }}</small>
                                     @endif
                                 </div>
                                 <div class="incident-feed-row-main">

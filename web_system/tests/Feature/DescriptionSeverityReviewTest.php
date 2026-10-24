@@ -86,7 +86,7 @@ class DescriptionSeverityReviewTest extends TestCase
         $this->assertSame('Needs responder review', $broadcast['report']['dispatch_recommendation']['priority']);
 
         $this->actingAs($admin)->get(route('reports.show', $report))->assertOk()
-            ->assertSee('AI suggestion')->assertSee('Confirm severity')->assertSee('fixture-text-model');
+            ->assertSee('AI suggestion')->assertSee('Confirm severity')->assertDontSee('fixture-text-model');
         $this->post(route('reports.severity-review', $report), [
             'severity_review_label' => 'serious', 'severity_review_notes' => 'Correction after reviewing the submitted text.',
         ])->assertSessionHasNoErrors();
@@ -98,7 +98,7 @@ class DescriptionSeverityReviewTest extends TestCase
         $this->assertSame('corrected_ai', $report->description_severity_review['review_method']);
         $this->assertSame('critical', $report->description_severity_review['ai_suggestion']['label']);
         $this->assertSame(89, $report->description_severity_review['ai_suggestion']['model_score']);
-        $this->get(route('reports.show', $report))->assertOk()->assertSee('Original AI suggestion')->assertSee('fixture-text-model');
+        $this->get(route('reports.show', $report))->assertOk()->assertSee('Original AI suggestion')->assertDontSee('fixture-text-model');
 
         $this->post(route('reports.severity-review', $report), [
             'severity_review_label' => 'critical', 'severity_review_notes' => 'Confirmed the original suggestion after follow-up review.',

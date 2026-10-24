@@ -25,10 +25,9 @@
     <strong>Confirm or correct severity</strong>
     @if ($reviewAiSuggestion)
         <p><strong>{{ $currentAiSuggestion ? 'AI suggestion' : 'Original AI suggestion' }}:</strong> {{ ucwords(str_replace('_', ' ', $reviewAiSuggestion['label'])) }}
-            @if ($reviewAiSuggestion['model_name']) — {{ $reviewAiSuggestion['model_name'] }}@endif
             @if ($reviewAiSuggestion['model_score'] !== null) · Model score {{ $reviewAiSuggestion['model_score'] }}% (uncalibrated)@endif
         </p>
-        @if (! empty($reviewAiSuggestion['summary']))<p>{{ $reviewAiSuggestion['summary'] }}</p>@endif
+        <p>{{ \App\Support\ReportAssessmentSummary::forReport($report) }}</p>
         @if ($report->ai_source === 'text_rule_advisory' || ($savedAiSuggestion['source'] ?? null) === 'text_rule_advisory')
             <p>Suggestion method: multilingual word/phrase rules. The rule has no confidence score; trained-model scores are shown separately when available.</p>
         @endif
