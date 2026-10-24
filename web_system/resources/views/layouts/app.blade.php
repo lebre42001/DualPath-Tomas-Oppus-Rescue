@@ -13,7 +13,7 @@
 
 
 </head>
-<body data-pwa-shell class="{{ auth()->user()?->isCivilian() ? 'civilian-portal' : 'admin-portal' }} {{ auth()->user()?->isCivilian() && request()->routeIs('dashboard') ? 'civilian-home-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('reports.create') ? 'civilian-report-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('profile.show') ? 'civilian-profile-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('settings.index') ? 'civilian-settings-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('settings.readiness') ? 'civilian-readiness-page' : '' }}">
+<body data-pwa-shell class="{{ auth()->user()?->isCivilian() ? 'civilian-portal' : 'admin-portal' }} {{ auth()->user()?->isCivilian() && request()->routeIs('dashboard') ? 'civilian-home-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('account.verify') ? 'civilian-verification-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('reports.create') ? 'civilian-report-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('profile.show') ? 'civilian-profile-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('settings.index') ? 'civilian-settings-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('settings.readiness') ? 'civilian-readiness-page' : '' }}">
     @php
         $pwaAssetVersion = app(\App\Support\SystemVersion::class)->current();
         $authUser = auth()->user();

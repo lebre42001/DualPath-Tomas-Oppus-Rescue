@@ -515,6 +515,12 @@ ResQMesh is now the visible application name throughout the admin/civilian UI, p
 
 Android 1.0.2 (version code 3) changes the launcher/application label to ResQMesh and is distributed as `resqmesh-1.0.2.apk`. The package, signing identity, verified domain, and PWA identity remain compatible with existing installations. The Compose session cookie is explicitly pinned to the existing deployed cookie name so changing `APP_NAME` does not invalidate active web logins. Existing APK installations need the new APK for the new label; refresh the PWA for its manifest/name update. Service worker v10 refreshes the renamed web content. Publish `android-v1.0.2` and verify the updated Download App route before describing the release as live.
 
+## Compact civilian account verification (2026-10-24)
+
+The verification page now shows a single heading, a bounded camera preview, and the current action: Open Front Camera, Capture Face, then Verify Account. Retake and the native phone camera fallback remain available. Rules and account details are in expandable help. Page-specific styles remove the repeated workspace header and reserve space for mobile navigation. Camera readiness, retry, file-type/size checks, and submission state are handled in the existing verification module. The server upload route, private selfie storage, verified-account gate, and admin image access are unchanged.
+
+Deploy the normal web build and clear Laravel caches. Refresh the PWA to load the new assets; no APK rebuild or database migration is needed. Validate a mobile preview/capture/retake/verify flow and admin verification-image access. Browser automation uses synthetic camera frames and unsaved fixture accounts; real phone camera permissions still need a device check.
+
 ## Local Compose check
 
 After Docker Desktop is installed, create an untracked `.env` from

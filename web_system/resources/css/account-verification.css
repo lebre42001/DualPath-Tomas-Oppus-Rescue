@@ -1,0 +1,48 @@
+﻿/* Compact verification only; report capture and admin layouts keep their own styles. */
+body.civilian-verification-page .account-verification-panel {
+    width: 100%;
+    max-width: 480px;
+    padding: 20px;
+    gap: 14px;
+}
+body.civilian-verification-page .verification-heading { padding: 0 42px; text-align: center; }
+body.civilian-verification-page .verification-heading h1 { margin: 4px 0 6px; font-size: 1.5rem; line-height: 1.2; }
+body.civilian-verification-page .verification-heading p { margin: 0; line-height: 1.45; }
+body.civilian-verification-page .verification-heading p:last-child { color: var(--muted); font-size: .88rem; }
+body.civilian-verification-page .verification-heading .panel-kicker { font-size: .65rem; }
+body.civilian-verification-page [data-account-verification-form] { gap: 10px; }
+body.civilian-verification-page .account-face-frame {
+    width: 255px;
+    max-width: 100%;
+    height: 340px;
+    aspect-ratio: auto;
+    border-radius: 20px;
+    box-shadow: none;
+}
+body.civilian-verification-page .account-face-frame video,
+body.civilian-verification-page .account-face-frame .detail-media { object-position: center; }
+body.civilian-verification-page .account-face-frame .detail-media { transform: scaleX(-1); border-radius: 0; }
+body.civilian-verification-page .account-face-frame::after { inset: 10%; box-shadow: none; }
+body.civilian-verification-page [data-verification-state="captured"] .account-face-frame::after { display: none; }
+body.civilian-verification-page .verification-camera-placeholder { height: 100%; display: grid; align-content: center; justify-items: center; gap: 14px; padding: 28px; color: #fff; text-align: center; font-size: .8rem; }
+body.civilian-verification-page .verification-camera-placeholder svg { width: 54px; height: 54px; }
+body.civilian-verification-page .verification-status { margin: 0; min-height: 2.8em; text-align: center; font-size: .85rem; line-height: 1.4; color: var(--ink); }
+body.civilian-verification-page .account-verification-actions { display: grid; grid-template-columns: minmax(0,1fr); gap: 8px; width: 100%; }
+body.civilian-verification-page [data-verification-state="captured"] .account-verification-actions { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+body.civilian-verification-page .account-verification-actions .btn { min-height: 46px; font-size: .88rem; }
+body.civilian-verification-page [data-account-verification-submit] { grid-column: 2; grid-row: 1; }
+body.civilian-verification-page .verification-camera-alternative { justify-self: center; background: transparent; border: 0; padding: 6px 10px; min-height: 36px; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; font: inherit; font-size: .8rem; cursor: pointer; }
+body.civilian-verification-page .verification-camera-alternative:disabled { opacity: .5; cursor: wait; }
+body.civilian-verification-page .verification-help { border-top: 1px solid var(--line); padding-top: 10px; font-size: .8rem; line-height: 1.5; overflow-wrap: anywhere; }
+body.civilian-verification-page .verification-help summary { cursor: pointer; min-height: 30px; color: var(--muted); }
+body.civilian-verification-page .verification-help p { margin: 8px 0; }
+body.civilian-verification-page [data-account-verification-root] [hidden] { display: none !important; }
+body.civilian-verification-page :is(.verification-camera-alternative, .verification-help summary):focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media (max-width: 1220px) {
+    body.civilian-verification-page .ops-main { padding: 12px 12px calc(122px + env(safe-area-inset-bottom, 0px)); }
+    body.civilian-verification-page .account-verification-panel { padding: 14px; gap: 10px; }
+    body.civilian-verification-page .account-face-frame { height: clamp(170px, 36dvh, 310px); width: min(100%, calc(clamp(170px, 36dvh, 310px) * .75)); }
+    body.civilian-verification-page .verification-heading { padding: 0 34px; }
+    body.civilian-verification-page .verification-heading h1 { font-size: 1.3rem; }
+    body.civilian-verification-page .verification-heading p:last-child { font-size: .82rem; }
+}

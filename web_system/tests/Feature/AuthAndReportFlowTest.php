@@ -502,6 +502,30 @@ class AuthAndReportFlowTest extends TestCase
             ->assertSee('Send Report');
     }
 
+    public function test_account_verification_rejects_missing_or_invalid_selfie_and_keeps_reporting_locked(): void
+    {
+        Storage::fake();
+        $civilian = User::factory()->create([
+            'role' => 'civilian',
+            'account_verified_at' => null,
+            'account_verification_selfie_path' => null,
+            'account_verification_method' => null,
+        ]);
+
+        foreach ([[], ['verification_selfie' => UploadedFile::fake()->create('not-a-selfie.txt', 1, 'text/plain')]] as $payload) {
+            $this->actingAs($civilian)
+                ->from(route('account.verify'))
+                ->post(route('account.verify.store'), $payload)
+                ->assertRedirect(route('account.verify'))
+                ->assertSessionHasErrors('verification_selfie');
+            $this->assertNull($civilian->fresh()->account_verified_at);
+            $this->assertNull($civilian->fresh()->account_verification_selfie_path);
+        }
+
+        $this->assertSame([], Storage::allFiles('account-verifications'));
+        $this->actingAs($civilian)->get(route('reports.create'))->assertRedirect(route('account.verify'));
+    }
+
     public function test_civilian_report_history_only_shows_own_reports_and_hides_responder_controls(): void
     {
         Storage::fake();
