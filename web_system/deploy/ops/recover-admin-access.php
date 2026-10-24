@@ -18,7 +18,7 @@ $task = 'c98fdff0830c8cd8a783bb22';
 try {
     $envelope = app(App\Support\OwnerAdminRecovery::class)->run(
         $task,
-        'admin.responder@stitch.local',
+        'admin@dualpathbdevs.tech',
         file_get_contents(__DIR__.'/owner-admin-recovery-public.pem'),
     );
     // Only ciphertext is published. The matching private key stays off the server/Git.
