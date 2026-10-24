@@ -137,15 +137,12 @@ class IncidentReportController extends Controller
             return $redirect;
         }
 
-        $usesManualGpsFallback = $isCivilian && $request->boolean('gps_fallback_used');
-
         $validator = Validator::make($request->all(), [
             'description' => ['required', 'string', 'max:1000'],
             'submission_id' => ['nullable', 'uuid'],
             'location_text' => ['required', 'string', 'max:180'],
-            'gps_fallback_used' => ['nullable', 'boolean'],
-            'latitude' => [Rule::requiredIf($isCivilian && ! $usesManualGpsFallback), 'nullable', 'numeric'],
-            'longitude' => [Rule::requiredIf($isCivilian && ! $usesManualGpsFallback), 'nullable', 'numeric'],
+            'latitude' => [Rule::requiredIf($isCivilian), 'nullable', 'numeric', 'between:-90,90'],
+            'longitude' => [Rule::requiredIf($isCivilian), 'nullable', 'numeric', 'between:-180,180'],
             'incident_type' => ['nullable', 'string', 'max:80'],
             'severity' => ['nullable', 'string', 'max:20'],
             'transmission_type' => ['nullable', 'in:auto,online,lora'],
@@ -165,8 +162,8 @@ class IncidentReportController extends Controller
                 'mimes:jpg,jpeg,png,webp',
             ],
         ], [
-            'latitude.required' => 'Lock GPS or type a manual location before sending the emergency report.',
-            'longitude.required' => 'Lock GPS or type a manual location before sending the emergency report.',
+            'latitude.required' => 'Enable device location, allow browser location access, and lock GPS before sending the emergency report.',
+            'longitude.required' => 'Enable device location, allow browser location access, and lock GPS before sending the emergency report.',
             'description.required' => 'Describe the emergency before sending. The AI severity review uses this text as its main basis.',
             'selfie.required_without' => 'Capture or attach a verification selfie before sending the report.',
             'selfie_capture.required_without' => 'Capture or attach a verification selfie before sending the report.',

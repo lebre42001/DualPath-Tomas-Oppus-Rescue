@@ -489,6 +489,15 @@ Later on short screens, mobile navigation clearance, cross-page dismissal and
 manual reopening. The native browser/OS still completes actual installation.
 There is no schema migration or APK rebuild for this web interface change.
 
+## Required civilian GPS (2026-10-24)
+
+- Civilian web and API intake now require both latitude and longitude within valid ranges. The retired `gps_fallback_used` flag cannot bypass this requirement. Validation happens before AI calls, file storage, database writes, or broadcasts.
+- The PWA requires a current device location from **Lock GPS** and checks it again after selfie verification immediately before final submission (`maximumAge: 0`, 15 second timeout). Denied permission, unavailable location, timeout, and stale readings clear the GPS lock and block sending. A landmark is supplementary only.
+- Restored civilian drafts and browser back/forward navigation require a new GPS lock; old coordinates are not reused. Draft photos and descriptions stay available for retry.
+- Web browsers expose location readings and permission state, not independent proof of the phone's GPS switch. The server validates submitted coordinates; it cannot attest device settings or prevent a modified client from forging coordinates.
+- Deploy the Laravel validation, Blade form, and rebuilt Vite JavaScript together through the existing Dokploy pipeline. No migration or environment change is needed. Historical reports without coordinates remain unchanged; the LoRa gateway intake retains its registered-node location behavior.
+- Verify locally with the location validation feature tests and mobile browser checks: denied/unavailable/timeout, no GPS with a typed landmark, stale draft coordinates, permission revoked after lock, location lost before final send, successful fresh fix, and retry with retained photos/selfie. Repeat the device permission checks on the deployed PWA after refreshing to the latest bundle.
+
 ## Local Compose check
 
 After Docker Desktop is installed, create an untracked `.env` from

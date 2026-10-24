@@ -84,9 +84,8 @@
                         <input type="file" name="selfie_capture" accept="image/*" capture="user" hidden data-capture-selfie-input>
                         <input id="evidence" type="file" name="evidence" accept=".jpg,.jpeg,.png,.webp" hidden>
                         <input id="selfie" type="file" name="selfie" accept=".jpg,.jpeg,.png,.webp" hidden>
-                        <input id="latitude" type="hidden" name="latitude" value="{{ old('latitude') }}" data-geo-latitude>
-                        <input id="longitude" type="hidden" name="longitude" value="{{ old('longitude') }}" data-geo-longitude>
-                        <input type="hidden" name="gps_fallback_used" value="{{ old('gps_fallback_used', '0') }}" data-gps-fallback-used>
+                        <input id="latitude" type="hidden" name="latitude" value="" data-geo-latitude>
+                        <input id="longitude" type="hidden" name="longitude" value="" data-geo-longitude>
                         <button type="button" class="visually-hidden-control" data-geo-fill-button>Get Current Latitude and Longitude</button>
 
                         <div class="capture-action-grid civilian-three-button-grid">
@@ -105,7 +104,7 @@
                         </div>
 
                         <div class="civilian-mobile-status-card">
-                            <p data-geo-status>GPS not locked yet.</p>
+                            <p data-geo-status role="status">Enable device location and tap Lock GPS. Location access is required to send.</p>
                             <div class="visually-hidden-control" aria-hidden="true">
                                 <span data-requirement-status="photo">Still required</span>
                                 <span data-requirement-status="selfie">Selfie opens on send</span>
@@ -117,10 +116,9 @@
                             </div>
                         </div>
 
-                        <div class="civilian-gps-fallback-panel" data-gps-fallback-panel hidden>
-                            <span class="tag amber">GPS fallback</span>
+                        <div class="civilian-gps-fallback-panel">
                             <div class="field">
-                                <label for="location_text">Barangay / road / landmark</label>
+                                <label for="location_text">Barangay / road / landmark (optional)</label>
                                 <input id="location_text" class="input" type="text" name="location_text" value="{{ old('location_text') }}" placeholder="Example: Poblacion near Bontoc Public Market" data-manual-location-input>
                             </div>
                         </div>
@@ -128,7 +126,7 @@
                         <details class="civilian-compact-details">
                             <summary>Photo preview &amp; reporting help</summary>
                             <div class="civilian-report-help">
-                                <p>Use a real scene photo. GPS or a nearby landmark and a short description are required.</p>
+                                <p>Use a real scene photo. GPS and a short description are required. A landmark can help responders but does not replace GPS.</p>
                                 <p>A responder reviews your report. Any available AI suggestion uses only your description; photos remain evidence.</p>
                                 <p>Road Accident is available for this version. Fire Incident, Flood / Landslide, and Medical Emergency: Coming soon.</p>
                                 <p>If device access is blocked, open in Android Chrome or iPhone Safari and allow camera and location.</p>

@@ -7,7 +7,7 @@
                     <h2>How to report</h2>
                     <ol>
                         <li>Register or log in to your civilian account. Complete account verification if prompted.</li>
-                        <li>For a Road Accident, add a scene photo, GPS or a nearby landmark, and a short description.</li>
+                        <li>For a Road Accident, add a scene photo, lock GPS, and enter a short description. A nearby landmark is optional.</li>
                         <li>Capture the verification selfie when sending. Wait for confirmation and keep your reference code.</li>
                         <li>Open My Reports to follow the response status.</li>
                     </ol>

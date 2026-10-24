@@ -262,7 +262,8 @@ const restoreDraftFile = (input, file, emptyMessage, manualMessage) => {
 };
 
 const getDraftFields = (form) => {
-    const fieldNames = ['incident_type', 'transmission_type', 'severity', 'description', 'location_text', 'latitude', 'longitude', 'gps_fallback_used'];
+    const fieldNames = ['incident_type', 'transmission_type', 'severity', 'description', 'location_text'];
+    if (form.dataset.reportRole !== 'civilian') fieldNames.push('latitude', 'longitude');
 
     return fieldNames.reduce((fields, name) => {
         const element = form.elements.namedItem(name);
@@ -409,6 +410,8 @@ onDomReady( () => {
         }
 
         Object.entries(record.fields ?? {}).forEach(([name, value]) => {
+            if (form.dataset.reportRole === 'civilian'
+                && ['latitude', 'longitude', 'gps_fallback_used'].includes(name)) return;
             const element = form.elements.namedItem(name);
 
             if (element && 'value' in element) {
@@ -417,6 +420,8 @@ onDomReady( () => {
                 element.dispatchEvent(new Event('change', { bubbles: true }));
             }
         });
+
+        form.dispatchEvent(new Event('stitch:report-draft-restored'));
 
         const restoreMessages = [
             restoreDraftFile(

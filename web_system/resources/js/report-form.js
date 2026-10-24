@@ -63,8 +63,6 @@ onDomReady( () => {
     const photoActionCard = root.querySelector('[data-capture-card="photo"]');
     const uploadActionCard = root.querySelector('[data-capture-card="upload"]');
     const gpsActionCard = root.querySelector('[data-capture-card="gps"]');
-    const gpsFallbackInput = root.querySelector('[data-gps-fallback-used]');
-    const gpsFallbackPanel = root.querySelector('[data-gps-fallback-panel]');
     const manualLocationInput = root.querySelector('[data-manual-location-input]');
     const photoRequirement = root.querySelector('[data-requirement-status="photo"]');
     const selfieRequirement = root.querySelector('[data-requirement-status="selfie"]');
@@ -78,6 +76,9 @@ onDomReady( () => {
     let selfieCameraStream = null;
     let evidenceInspectionToken = 0;
     let pendingSubmitAfterSelfie = false;
+    let gpsLocked = false;
+    let gpsRequestPending = false;
+    let allowVerifiedGpsSubmit = false;
 
     if (!(form instanceof HTMLFormElement)) {
         return;
@@ -180,18 +181,8 @@ onDomReady( () => {
         latitudeInput instanceof HTMLInputElement
         && longitudeInput instanceof HTMLInputElement
         && latitudeInput.value.trim() !== ''
-        && longitudeInput.value.trim() !== '';
-
-    const isGpsFallbackActive = () =>
-        gpsFallbackInput instanceof HTMLInputElement
-        && gpsFallbackInput.value === '1';
-
-    const hasManualLocationFallback = () =>
-        isGpsFallbackActive()
-        && locationInput instanceof HTMLInputElement
-        && locationInput.value.trim().length >= 4;
-
-    const hasRequiredGps = () => hasExactGps() || hasManualLocationFallback();
+        && longitudeInput.value.trim() !== ''
+        && (!isCivilian || gpsLocked);
 
     const updateGpsActionCard = () => {
         if (hasExactGps()) {
@@ -200,42 +191,15 @@ onDomReady( () => {
             return;
         }
 
-        if (hasManualLocationFallback()) {
-            setCaptureActionState(gpsActionCard, 'ready');
-            setBadgeState(gpsBadge, 'green', 'Manual ready');
-            return;
-        }
-
-        if (isGpsFallbackActive()) {
-            setCaptureActionState(gpsActionCard, 'working');
-            setBadgeState(gpsBadge, 'amber', 'Type location');
-            return;
-        }
-
         setCaptureActionState(gpsActionCard, 'pending');
         setBadgeState(gpsBadge, 'neutral', 'GPS pending');
     };
 
-    const setGpsFallbackActive = (active) => {
-        if (gpsFallbackInput instanceof HTMLInputElement) {
-            gpsFallbackInput.value = active ? '1' : '0';
-        }
-
-        if (gpsFallbackPanel instanceof HTMLElement) {
-            gpsFallbackPanel.hidden = !active;
-        }
-
-        updateGpsActionCard();
-    };
-
-    const showGpsFallback = (message) => {
-        setGpsFallbackActive(true);
-        setGeoStatus(message);
-        updateCivilianReadiness();
-
-        if (manualLocationInput instanceof HTMLInputElement) {
-            manualLocationInput.focus();
-        }
+    const clearGps = () => {
+        gpsLocked = false;
+        allowVerifiedGpsSubmit = false;
+        if (latitudeInput instanceof HTMLInputElement) latitudeInput.value = '';
+        if (longitudeInput instanceof HTMLInputElement) longitudeInput.value = '';
     };
 
     const hasRequiredDescription = () =>
@@ -441,9 +405,7 @@ onDomReady( () => {
         }
 
         const photoReady = hasRequiredPhoto();
-        const exactGpsReady = hasExactGps();
-        const manualGpsReady = hasManualLocationFallback();
-        const gpsReady = exactGpsReady || manualGpsReady;
+        const gpsReady = hasExactGps();
         const descriptionReady = hasRequiredDescription();
         const selfieReady = hasRequiredSelfie();
         const readyForSelfieGate = photoReady && gpsReady && descriptionReady;
@@ -451,14 +413,14 @@ onDomReady( () => {
 
         setBadgeState(photoRequirement, photoReady ? 'green' : 'red', photoReady ? 'Ready' : 'Still required');
         setBadgeState(selfieRequirement, selfieReady ? 'green' : 'blue', selfieReady ? 'Ready' : 'Opens on send');
-        setBadgeState(gpsRequirement, gpsReady ? 'green' : 'red', gpsReady ? (manualGpsReady && !exactGpsReady ? 'Manual ready' : 'Ready') : 'Still required');
+        setBadgeState(gpsRequirement, gpsReady ? 'green' : 'red', gpsReady ? 'Ready' : 'Still required');
         setBadgeState(descriptionRequirement, descriptionReady ? 'green' : 'red', descriptionReady ? 'Ready' : 'Still required');
 
         updateGpsActionCard();
 
         if (submitButton instanceof HTMLButtonElement) {
-            submitButton.disabled = !readyForSelfieGate;
-            submitButton.setAttribute('aria-disabled', readyForSelfieGate ? 'false' : 'true');
+            submitButton.disabled = !readyForSelfieGate || gpsRequestPending;
+            submitButton.setAttribute('aria-disabled', submitButton.disabled ? 'true' : 'false');
         }
 
         if (submitStatus) {
@@ -466,7 +428,7 @@ onDomReady( () => {
                 ? 'Verification selfie is ready. Sending can continue.'
                 : readyForSelfieGate
                     ? 'Tap Send Report to open selfie verification before final submit.'
-                    : 'Add a scene photo, location, and short description to continue.';
+                    : 'Add a scene photo, lock GPS, and enter a short description to continue.';
         }
 
         return readyForSelfieGate;
@@ -783,7 +745,7 @@ onDomReady( () => {
             return;
         }
 
-        form.submit();
+        // Direct form.submit() would skip the GPS and selfie gates.
     };
 
     const updateEvidencePreview = (file) => {
@@ -900,86 +862,92 @@ onDomReady( () => {
         updateCivilianReadiness();
     };
 
-    geoButton?.addEventListener('click', () => {
-        if (!navigator.geolocation) {
-            showGpsFallback('Browser GPS is not available on this device. Type the nearest barangay, road, or landmark instead.');
-            return;
-        }
-
-        const host = window.location.hostname;
-        const isLocalhost = ['localhost', '127.0.0.1'].includes(host);
-        if (!window.isSecureContext && !isLocalhost) {
-            showGpsFallback('Browser GPS is blocked on this non-secure page. Use HTTPS, localhost, or type the nearest barangay/landmark instead.');
-            return;
-        }
-
-        if (geoButton instanceof HTMLButtonElement) {
-            geoButton.disabled = true;
-        }
-
+    // Require a fresh device reading again immediately before sending.
+    const lockCurrentGps = async () => {
+        if (gpsRequestPending) return false;
+        gpsRequestPending = true;
+        clearGps();
+        updateCivilianReadiness();
+        if (geoButton instanceof HTMLButtonElement) geoButton.disabled = true;
+        if (gpsFocusButton instanceof HTMLButtonElement) gpsFocusButton.disabled = true;
         setGeoStatus('Getting your current GPS coordinates...');
         setBadgeState(gpsBadge, 'amber', 'Locking GPS');
         setCaptureActionState(gpsActionCard, 'working');
-
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const latitude = position.coords.latitude.toFixed(6);
-                const longitude = position.coords.longitude.toFixed(6);
-
-                if (latitudeInput instanceof HTMLInputElement) {
-                    latitudeInput.value = latitude;
-                    latitudeInput.dispatchEvent(new Event('input', { bubbles: true }));
-                    latitudeInput.dispatchEvent(new Event('change', { bubbles: true }));
-                }
-
-                if (longitudeInput instanceof HTMLInputElement) {
-                    longitudeInput.value = longitude;
-                    longitudeInput.dispatchEvent(new Event('input', { bubbles: true }));
-                    longitudeInput.dispatchEvent(new Event('change', { bubbles: true }));
-                }
-
-                if (locationInput instanceof HTMLInputElement && !locationInput.value.trim()) {
-                    locationInput.value = `GPS ${latitude}, ${longitude}`;
-                    locationInput.dispatchEvent(new Event('input', { bubbles: true }));
-                    locationInput.dispatchEvent(new Event('change', { bubbles: true }));
-                }
-
-                setGpsFallbackActive(false);
-                setGeoStatus(`GPS coordinates loaded: ${latitude}, ${longitude}`);
-                updateCivilianReadiness();
-
-                if (geoButton instanceof HTMLButtonElement) {
-                    geoButton.disabled = false;
-                }
-            },
-            (error) => {
-                let deniedMessage = 'Location permission was denied. Allow location access and try again, or type the nearest barangay/landmark below.';
-
-                if (isIOSLike) {
-                    deniedMessage = 'The browser blocked GPS. Open in Safari/PWA and allow Location, or type your barangay/landmark below.';
-                } else if (isEmbeddedBrowser) {
-                    deniedMessage = 'The in-app browser blocked GPS. Open in Android Chrome or your phone browser, then allow Location.';
-                }
-
-                const messageMap = {
-                    1: deniedMessage,
-                    2: 'GPS is unavailable right now. Type the nearest barangay/landmark below, or retry in an open area.',
-                    3: 'GPS request timed out. Type the nearest barangay/landmark below, or retry when signal improves.',
-                };
-
-                showGpsFallback(messageMap[error.code] ?? 'Unable to get GPS coordinates from the browser. Type the nearest barangay/landmark below.');
-
-                if (geoButton instanceof HTMLButtonElement) {
-                    geoButton.disabled = false;
-                }
-            },
-            {
-                enableHighAccuracy: true,
-                timeout: 15000,
-                maximumAge: 0,
+        try {
+            if (!window.isSecureContext || !navigator.geolocation) {
+                throw new Error('GPS requires a supported browser on HTTPS. Open this page in Chrome or Safari, enable device location, then tap Lock GPS.');
             }
-        );
-    });
+            const position = await new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(resolve, reject, {
+                    enableHighAccuracy: true,
+                    timeout: 15000,
+                    maximumAge: 0,
+                });
+            });
+            const { latitude, longitude } = position.coords;
+            if (!Number.isFinite(latitude) || !Number.isFinite(longitude)
+                || Math.abs(latitude) > 90 || Math.abs(longitude) > 180
+                || !Number.isFinite(position.timestamp)
+                || Math.abs(Date.now() - position.timestamp) > 30000) {
+                throw new Error('A current GPS reading could not be obtained. Enable device location and tap Lock GPS again.');
+            }
+            latitudeInput.value = latitude.toFixed(6);
+            longitudeInput.value = longitude.toFixed(6);
+            gpsLocked = true;
+            if (locationInput instanceof HTMLInputElement
+                && (!locationInput.value.trim() || /^GPS [-\d., ]+$/.test(locationInput.value))) {
+                locationInput.value = `GPS ${latitudeInput.value}, ${longitudeInput.value}`;
+            }
+            [latitudeInput, longitudeInput, locationInput].forEach((input) => {
+                input?.dispatchEvent(new Event('input', { bubbles: true }));
+                input?.dispatchEvent(new Event('change', { bubbles: true }));
+            });
+            setGeoStatus(`GPS locked: ${latitudeInput.value}, ${longitudeInput.value}. Location will be checked again before sending.`);
+            return true;
+        } catch (error) {
+            clearGps();
+            const messageMap = {
+                1: isEmbeddedBrowser
+                    ? 'Location was blocked. Open this page in Chrome or Safari, enable device location, and allow location access before sending.'
+                    : 'Location permission was denied. Enable device location and allow location access in your browser settings, then tap Lock GPS.',
+                2: 'Location is unavailable. Enable device location, move to an open area, and tap Lock GPS again. The report has not been sent.',
+                3: 'GPS timed out. Keep device location enabled and tap Lock GPS to retry. The report has not been sent.',
+            };
+            setGeoStatus(messageMap[error.code] ?? error.message ?? 'Unable to get GPS. Enable device location and tap Lock GPS again.');
+            return false;
+        } finally {
+            gpsRequestPending = false;
+            if (geoButton instanceof HTMLButtonElement) geoButton.disabled = false;
+            if (gpsFocusButton instanceof HTMLButtonElement) gpsFocusButton.disabled = false;
+            updateCivilianReadiness();
+        }
+    };
+
+    geoButton?.addEventListener('click', () => { void lockCurrentGps(); });
+
+    if (isCivilian) {
+        // Never trust restored hidden values or old offline drafts as a current GPS lock.
+        clearGps();
+        window.addEventListener('pageshow', (event) => {
+            if (!event.persisted) return;
+            clearGps();
+            setGeoStatus('Tap Lock GPS to get your current location before sending.');
+            updateCivilianReadiness();
+        });
+        form.addEventListener('stitch:report-draft-restored', () => {
+            clearGps();
+            setGeoStatus('Draft restored. Tap Lock GPS to get your current location before sending.');
+            updateCivilianReadiness();
+        });
+        navigator.permissions?.query({ name: 'geolocation' }).then((permission) => {
+            permission.addEventListener('change', () => {
+                if (permission.state === 'granted') return;
+                clearGps();
+                setGeoStatus('Location access is required. Allow location and tap Lock GPS before sending.');
+                updateCivilianReadiness();
+            });
+        }).catch(() => { /* Fresh GPS on submit also covers browsers without Permissions API. */ });
+    }
 
     triggerButtons.forEach((button) => {
         button.addEventListener('click', () => {
@@ -1051,22 +1019,11 @@ onDomReady( () => {
     updateEvidencePreview(getActiveEvidenceFile());
     updateSelfiePreview(getActiveSelfieFile());
 
-    if (hasExactGps()) {
-        setGpsFallbackActive(false);
-    } else if (isGpsFallbackActive()) {
-        setGpsFallbackActive(true);
-    }
-
     updateGpsActionCard();
 
-    [latitudeInput, longitudeInput, descriptionInput, manualLocationInput, gpsFallbackInput].forEach((element) => {
+    [latitudeInput, longitudeInput, descriptionInput, manualLocationInput].forEach((element) => {
         element?.addEventListener('input', () => {
-            if (element === gpsFallbackInput) {
-                setGpsFallbackActive(isGpsFallbackActive());
-            }
-
             updateGpsActionCard();
-
             updateCivilianReadiness();
         });
     });
@@ -1078,14 +1035,36 @@ onDomReady( () => {
 
         if (!updateCivilianReadiness()) {
             event.preventDefault();
-            setGeoStatus('Complete the scene photo, GPS or manual location, and short description before sending.');
+            setGeoStatus('Complete the scene photo, locked GPS, and short description before sending.');
             return;
         }
 
         if (!hasRequiredSelfie()) {
             event.preventDefault();
             void openSelfieVerification();
+            return;
         }
+
+        if (allowVerifiedGpsSubmit) {
+            allowVerifiedGpsSubmit = false;
+            return;
+        }
+
+        event.preventDefault();
+        if (!navigator.onLine) return; // Offline submissions stay in the local draft queue.
+        void lockCurrentGps().then((locked) => {
+            if (!locked || !updateCivilianReadiness() || !hasRequiredSelfie()) return;
+            allowVerifiedGpsSubmit = true;
+            try {
+                if (typeof form.requestSubmit === 'function') {
+                    form.requestSubmit(submitButton instanceof HTMLButtonElement ? submitButton : undefined);
+                } else {
+                    submitButton?.click();
+                }
+            } finally {
+                allowVerifiedGpsSubmit = false;
+            }
+        });
     });
 
     updateCivilianReadiness();
