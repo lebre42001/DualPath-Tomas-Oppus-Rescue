@@ -460,6 +460,16 @@ Verify admin authorization, filters, empty/error/retry states, older/deleted
 actions and both report links after login. No audit records are changed by
 viewing these screens. No schema migration or APK rebuild is required.
 
+## Admin sidebar styling (2026-10-24)
+
+Rebuild operations assets to include `admin-sidebar.css`. The admin sidebar uses
+the civilian navigation typography, rounded links, soft active state and pill
+controls. Labels, badge values, routes and actions are unchanged. Admin desktop
+navigation uses 248px expanded / 88px collapsed; its existing 1024px drawer
+breakpoint remains. Styling is scoped to admin sidebars. Verify light/dark,
+collapse/expand, mobile drawer closing and access to Log Out. No schema migration
+or APK rebuild is required.
+
 ## Local Compose check
 
 After Docker Desktop is installed, create an untracked `.env` from
