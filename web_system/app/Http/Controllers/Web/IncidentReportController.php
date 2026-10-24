@@ -32,7 +32,8 @@ class IncidentReportController extends Controller
         $user = $request->user();
         $isCivilian = $user?->isCivilian() ?? false;
         $filters = $filterQuery->parameters($request, $user);
-        $requestedReview = $request->integer('review') ?: (int) $request->session()->get('ai_review_report_id', 0);
+        $requestedReview = $request->integer('review') ?: (int) $request->session()->get('ai_review_report_id', 0)
+            ?: (int) $request->old('severity_review_report_id', $request->old('review_report_id', 0));
         $reviewReportId = ! $isCivilian && $requestedReview > 0 ? $requestedReview : null;
         $activeStatuses = ['received', 'acknowledged', 'dispatched', 'responding'];
         $reportsQuery = $filterQuery->build($request, $user)
@@ -42,10 +43,6 @@ class IncidentReportController extends Controller
 
         if ($isCivilian && $sort === 'severity') {
             $sort = 'newest';
-        }
-
-        if ($reviewReportId) {
-            $reportsQuery->orderByRaw('case when incident_reports.id = ? then 0 else 1 end', [$reviewReportId]);
         }
 
         match ($sort) {
@@ -60,9 +57,12 @@ class IncidentReportController extends Controller
         };
 
         $reportsQuery->orderBy('incident_reports.id', $sort === 'oldest' ? 'asc' : 'desc');
+        if (! $isCivilian) {
+            $reportsQuery->reorder()->latest('incident_reports.created_at')->latest('incident_reports.id');
+        }
 
         $reports = $reportsQuery
-            ->paginate($isCivilian ? 5 : 3)
+            ->paginate($isCivilian ? 5 : 3, ['*'], 'page', $isCivilian ? null : 1)
             ->withQueryString();
         $reportItems = $reports->getCollection();
 
@@ -83,6 +83,8 @@ class IncidentReportController extends Controller
                 ->get(),
             'filters' => $filters,
             'reviewReportId' => $reviewReportId,
+            'reviewReport' => ! $isCivilian && $reviewReportId
+                ? $filterQuery->visibleReports($user)->with(['reporter', 'assignedResponder'])->find($reviewReportId) : null,
             'stats' => $isCivilian
                 ? ['total' => $this->visibleReportsQuery($user)->count()]
                 : [
@@ -605,7 +607,7 @@ class IncidentReportController extends Controller
 
         IncidentFeedBroadcaster::dispatch($incidentReport, 'updated');
 
-        return back()->with('status', 'Incident coordination updated.');
+        return back()->with('status', 'Incident coordination updated.')->with('ai_review_report_id', $incidentReport->id);
     }
 
     public function evidence(Request $request, IncidentReport $incidentReport): StreamedResponse

@@ -100,6 +100,6 @@ class IncidentSeverityReviewController extends Controller
 
         IncidentFeedBroadcaster::dispatch($report, 'severity_reviewed');
 
-        return back()->with('status', 'Description severity review saved.');
+        return back()->with('status', 'Description severity review saved.')->with('ai_review_report_id', $report->id);
     }
 }

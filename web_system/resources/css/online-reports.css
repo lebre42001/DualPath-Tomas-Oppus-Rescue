@@ -1,0 +1,43 @@
+body.admin-portal .online-reports-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+body.admin-portal .online-reports-footer p { margin: 0; font-size: .8rem; color: var(--muted); }
+body.admin-portal .online-reports-footer .btn { width: auto; }
+body.admin-portal .online-reports-list-modal { z-index: 1500; }
+body.admin-portal .online-reports-search { padding: 12px 20px; border-bottom: 1px solid var(--line); }
+body.admin-portal .online-reports-search label { display: block; margin-bottom: 5px; font-size: .78rem; font-weight: 700; }
+body.admin-portal .online-reports-search > div { display: flex; gap: 8px; }
+body.admin-portal .online-reports-search .input { min-width: 0; flex: 1; background: var(--surface); color: var(--ink); }
+body.admin-portal .online-reports-search .btn { width: auto; }
+body.admin-portal .online-reports-list { list-style: none; margin: 0; padding: 0; }
+body.admin-portal .online-reports-columns, body.admin-portal .online-reports-row { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.25fr) minmax(0,1.3fr) minmax(0,1fr); align-items: center; gap: 12px; text-align: left; }
+body.admin-portal .online-reports-columns { padding: 12px 10px; color: var(--muted); font-size: .7rem; font-weight: 700; border-bottom: 1px solid var(--line); }
+body.admin-portal .online-reports-row { width: 100%; border: 0; border-bottom: 1px solid var(--line); padding: 12px 10px; background: var(--surface); color: var(--ink); cursor: pointer; font-size: .82rem; min-height: 60px; }
+body.admin-portal .online-reports-row > * { min-width: 0; overflow-wrap: anywhere; }
+body.admin-portal .online-reports-row:hover { background: var(--surface-alt); }
+body.admin-portal .online-reports-row:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+body.admin-portal .online-reports-row:disabled { opacity: .6; cursor: wait; }
+body.admin-portal .online-reports-category { display: grid; justify-items: start; gap: 4px; }
+body.admin-portal .online-reports-category .tag { font-size: .65rem; padding: 4px 8px; }
+body.admin-portal .online-reports-category small, body.admin-portal .online-reports-row time { color: var(--muted); font-size: .75rem; }
+body.admin-portal .online-report-detail { display: grid; gap: 14px; color: var(--ink); }
+body.admin-portal .online-report-overview { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
+body.admin-portal .online-report-overview h2 { margin: 0; font-size: 1.2rem; }
+body.admin-portal .online-report-overview p { margin: 4px 0; }
+body.admin-portal .online-report-overview small { color: var(--muted); }
+body.admin-portal .online-report-overview-actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+body.admin-portal .online-report-overview-actions .btn { width: auto; }
+body.admin-portal .online-report-section { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 14px; }
+body.admin-portal .online-report-section h3 { font-size: .9rem; margin: 0 0 8px; }
+body.admin-portal .online-report-section p { font-size: .86rem; margin: 5px 0; }
+body.admin-portal .online-report-copy { white-space: pre-wrap; overflow-wrap: anywhere; }
+body.admin-portal .online-report-section > summary { cursor: pointer; min-height: 32px; font-size: .86rem; font-weight: 700; }
+body.admin-portal .online-report-attachments { display: flex; flex-wrap: wrap; gap: 12px; }
+body.admin-portal .online-report-attachments img { max-height: 180px; width: auto; max-width: 100%; object-fit: contain; }
+body.admin-portal .online-report-admin-actions[open] { display: grid; gap: 16px; }
+body.admin-portal .online-report-section .btn { width: auto; margin: 4px; }
+@media (max-width: 650px) {
+    body.admin-portal .online-reports-search { padding: 10px 12px; }
+    body.admin-portal .online-reports-columns { display: none; }
+    body.admin-portal .online-reports-row { grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 6px 10px; }
+    body.admin-portal .online-reports-row time { align-self: end; }
+    body.admin-portal .online-report-section { padding: 12px; }
+}

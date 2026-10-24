@@ -94,8 +94,9 @@ class IncidentReportFilterTest extends TestCase
         $this->assertSame(5, $response->viewData('reports')->total());
         $this->assertSame('Critical', $response->viewData('filters')['severity']);
         $pageTwo = $this->get(route('reports.index', $filters + ['page' => 2]))->assertOk()->viewData('reports');
-        $this->assertCount(2, $pageTwo->items());
-        $this->assertSame([], array_intersect($response->viewData('reports')->pluck('id')->all(), $pageTwo->pluck('id')->all()));
+        $this->assertCount(3, $pageTwo->items());
+        $this->assertSame($response->viewData('reports')->pluck('id')->all(), $pageTwo->pluck('id')->all());
+        $this->getJson(route('reports.all', $filters))->assertOk()->assertJsonCount(5, 'reports');
         $export = $filters + ['period' => 'custom', 'date_from' => now('Asia/Manila')->subDay()->toDateString(), 'date_to' => now('Asia/Manila')->toDateString()];
         $this->getJson(route('reports.export.preview', $export))->assertOk()->assertJsonPath('count', 5);
         $csv = $this->get(route('reports.export', $export + ['format' => 'csv']))->assertOk()->streamedContent();

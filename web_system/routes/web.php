@@ -11,6 +11,7 @@ use App\Http\Controllers\Web\CivilianAccountController;
 use App\Http\Controllers\Web\CivilianReportController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\IncidentReportController;
+use App\Http\Controllers\Web\OnlineReportController;
 use App\Http\Controllers\Web\IncidentReportExportController;
 use App\Http\Controllers\Web\IncidentSeverityReviewController;
 use App\Http\Controllers\Web\IncidentTextSuggestionController;
@@ -100,6 +101,9 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
     Route::middleware('responder')->prefix('reports')->name('reports.')->group(function (): void {
         Route::get('/export/preview', [IncidentReportExportController::class, 'preview'])->name('export.preview');
         Route::get('/export', [IncidentReportExportController::class, 'download'])->name('export');
+        Route::get('/all', [OnlineReportController::class, 'index'])->name('all');
+        Route::get('/{incidentReport}/details', [OnlineReportController::class, 'details'])->name('online-details');
+        Route::get('/{incidentReport}/print', [OnlineReportController::class, 'print'])->name('print');
     });
 
     Route::prefix('reports')->name('reports.')->group(function (): void {

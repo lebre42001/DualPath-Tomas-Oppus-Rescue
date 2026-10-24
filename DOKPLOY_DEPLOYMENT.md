@@ -394,6 +394,18 @@ browser's automatic title/date/URL. Verify single and multiple-page output with
 the browser's Headers and footers option both enabled and disabled. Older
 browsers without page margin box support retain their native print headers.
 
+## Online Report history (2026-10-24)
+
+Online Report history update (2026-10-24): deploy the report controllers, routes,
+Blade views and rebuilt assets together. The admin main feed always shows the
+latest three matching online reports; old `page` links no longer change it.
+View all reports opens a compact list with 15 rows per page and search. Report
+details, maps and media use nested dialogs; each report has a protected Print
+page. Verify older and unlinked-account reports, AI/admin review, response
+validation, printing, and mobile/dark layouts after admin login. LoRa reports
+remain in their own tab; civilian history retains its existing pagination.
+No schema migration or APK rebuild is required.
+
 ## Local Compose check
 
 After Docker Desktop is installed, create an untracked `.env` from

@@ -331,7 +331,7 @@
         <div class="panel-head">
             <div class="panel-heading">
                 <p class="panel-kicker">{{ $isCivilian ? 'Report History' : 'Incident Feed' }}</p>
-                <h2 class="panel-title">{{ $isCivilian ? 'My current and past reports' : 'Current reports' }}</h2>
+                <h2 class="panel-title">{{ $isCivilian ? 'My current and past reports' : 'Latest reports' }}</h2>
                 @if ($isCivilian)
                     <p class="section-copy">Review your submitted emergency details and current response status.</p>
                 @endif
@@ -540,7 +540,6 @@
                         @php
                             $hasCoordinates = $report->latitude !== null && $report->longitude !== null;
                             $isLoRa = $report->transmission_type === 'lora';
-                            $openForReview = (int) ($reviewReportId ?? 0) === (int) $report->id;
                             $inlineMapPayload = $hasCoordinates ? [[
                                 'id' => 'feed-sender-'.$report->id,
                                 'incident_type' => $report->incident_type,
@@ -554,7 +553,7 @@
                                 'google_maps_url' => $mapSearchUrl($report),
                             ]] : [];
                         @endphp
-                        <details class="incident-feed-row {{ $report->status === 'received' ? 'process-pending' : 'process-active' }}" id="incident-report-{{ $report->id }}" data-report-modal-row data-report-title="{{ e($report->report_code.' - '.$report->incident_type) }}"{{ $openForReview ? ' data-report-open-on-load' : '' }}>
+                        <details class="incident-feed-row {{ $report->status === 'received' ? 'process-pending' : 'process-active' }}" id="incident-report-{{ $report->id }}" data-report-modal-row data-report-title="{{ e($report->report_code.' - '.$report->incident_type) }}">
                             <summary class="incident-feed-row-summary" role="button" tabindex="0" aria-label="Open full details for {{ $report->report_code }}">
                                 <div class="incident-feed-row-type">
                                     <strong>{{ $report->incident_type }}</strong>
@@ -606,6 +605,7 @@
                             <div class="incident-rail severity-{{ $report->operational_severity }}"></div>
                             <div class="incident-meta">
                                 <span class="incident-code">{{ $report->report_code }}</span>
+                                <a class="btn btn-secondary" href="{{ route('reports.print', $report) }}" target="_blank" rel="noopener">Print report</a>
                                 <strong class="incident-time">{{ $priorityTimer($report) }}</strong>
                                 <div class="tag-row">
                                     <span class="tag {{ $tone($report->current_severity_category) }}" data-current-category-for="{{ $report->id }}">{{ $report->current_severity_category }}</span>
@@ -732,6 +732,7 @@
                                         <p>{{ $dispatchSummary($report->severity_display) }} Respond or cancel actions require a message so the civilian sender receives a clear update.</p>
                                         <form method="POST" action="{{ route('reports.coordination', $report) }}" class="stack">
                                             @csrf
+                                            <input type="hidden" name="review_report_id" value="{{ $report->id }}">
                                             <textarea name="response_notes" class="textarea" placeholder="Required message for Respond or Cancel">{{ old('response_notes', $report->response_notes) }}</textarea>
                                             <div class="action-row">
                                                 @if ($report->transmission_type === 'lora' && $report->status === 'received')
@@ -793,7 +794,7 @@
 
             </div>
 
-            @if (method_exists($reports, 'hasPages') && $reports->hasPages())
+            @if ($isCivilian && method_exists($reports, 'hasPages') && $reports->hasPages())
                 @php
                     $currentPage = $reports->currentPage();
                     $lastPage = $reports->lastPage();
@@ -820,7 +821,20 @@
                 </nav>
             @endif
         </div>
+        @unless ($isCivilian)
+        <div class="online-reports-footer">
+            <p>Showing {{ $reports->count() }} latest {{ $filters['search'] || $filters['severity'] || $filters['status'] ? 'matching ' : '' }}reports · {{ $reports->total() }} total</p>
+            <button type="button" class="btn btn-secondary" data-online-reports-open aria-haspopup="dialog">View all reports</button>
+        </div>
+        @endunless
     </section>
+
+    @unless ($isCivilian)
+        @include('reports.partials.online-list-modal')
+        @if (isset($reviewReport))
+            <template data-online-review-on-load data-report-title="{{ $reviewReport->report_code }} - {{ $reviewReport->incident_type }}">@include('reports.partials.online-detail', ['report' => $reviewReport])</template>
+        @endif
+    @endunless
 
     @if ($isCivilian)
         <div class="report-detail-modal civilian-report-modal" data-civilian-report-modal hidden>

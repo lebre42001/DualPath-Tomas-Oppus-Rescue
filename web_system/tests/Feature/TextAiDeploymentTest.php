@@ -264,7 +264,7 @@ class TextAiDeploymentTest extends TestCase
         Http::fake(['text-ai.test/predict/text' => Http::response($this->prediction())]);
         $this->actingAs($admin)->from(route('reports.index'))->post(route('reports.ai-suggestion', $report))
             ->assertRedirect(route('reports.index'))->assertSessionHas('ai_review_report_id', $report->id);
-        $this->get(route('reports.index'))->assertOk()->assertSee('data-report-open-on-load', false)
+        $this->get(route('reports.index'))->assertOk()->assertSee('data-online-review-on-load', false)
             ->assertSee('AI top category')->assertSee('94.0%');
     }
 

@@ -2,11 +2,12 @@
 function initializeShellDialogs() {
     const dialogStack = [];
     let previousOverflow = '';
-    const focusableElements = (modal) => Array.from(modal.querySelectorAll('a[href], button, input, select, textarea, video[controls], [tabindex]:not([tabindex="-1"])'))
+    const focusableElements = (modal) => Array.from(modal.querySelectorAll('a[href], button, input, select, textarea, summary, video[controls], [tabindex]:not([tabindex="-1"])'))
         .filter((element) => !element.disabled && element.getClientRects().length && getComputedStyle(element).visibility !== 'hidden');
     const activateDialog = (modal, close, opener = document.activeElement) => {
         if (dialogStack.some((entry) => entry.modal === modal)) return;
         if (!dialogStack.length) previousOverflow = document.body.style.overflow;
+        if (dialogStack.length) dialogStack[dialogStack.length - 1].modal.inert = true;
         dialogStack.push({ modal, close, opener });
         modal.hidden = false;
         document.body.style.overflow = 'hidden';
@@ -19,9 +20,18 @@ function initializeShellDialogs() {
         if (index < 0) return;
         const entry = dialogStack.splice(index, 1)[0];
         modal.hidden = true;
+        modal.inert = false;
+        if (dialogStack.length) dialogStack[dialogStack.length - 1].modal.inert = false;
         document.body.style.overflow = dialogStack.length ? 'hidden' : previousOverflow;
         if (entry.opener && entry.opener.isConnected && entry.opener.getClientRects().length) entry.opener.focus();
     };
+    document.addEventListener('stitch:dialog-open', event => {
+        const { modal, close, opener } = event.detail || {};
+        if (modal instanceof HTMLElement && typeof close === 'function') activateDialog(modal, close, opener);
+    });
+    document.addEventListener('stitch:dialog-close', event => {
+        if (event.detail?.modal instanceof HTMLElement) deactivateDialog(event.detail.modal);
+    });
     // A nested map or evidence viewer closes first; the report stays open.
     document.addEventListener('keydown', (event) => {
         const top = dialogStack[dialogStack.length - 1];
@@ -87,6 +97,14 @@ function initializeShellDialogs() {
                 window.StitchRefreshMaps?.();
             }, 80);
         };
+        document.addEventListener('stitch:report-open', event => {
+            const { html, title, opener } = event.detail || {};
+            if (typeof html !== 'string') return;
+            modalTitle.textContent = title || 'Report details';
+            modalBody.innerHTML = html;
+            activateDialog(modal, closeModal, opener);
+            window.setTimeout(() => window.StitchRefreshMaps?.(), 80);
+        });
 
         document.addEventListener('click', (event) => {
             if (event.target.matches('[data-report-detail-modal-close]') || event.target === modal) {

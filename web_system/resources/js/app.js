@@ -11,6 +11,7 @@ import './civilian-directory';
 import './civilian-reports';
 import './account-presence';
 import './shell-dialogs';
+import './online-reports';
 import './report-index';
 import './report-ai-analysis';
 import './profile-page';
