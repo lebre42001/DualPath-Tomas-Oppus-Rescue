@@ -1,7 +1,7 @@
 {
-    "name": "Tomas Oppus Rescue",
-    "short_name": "Oppus Rescue",
-    "description": "Civilian emergency reporting and response-status tracking for Tomas Oppus Rescue.",
+    "name": "ResQMesh",
+    "short_name": "ResQMesh",
+    "description": "Civilian emergency reporting and response-status tracking for ResQMesh.",
     "id": "/?app=bontoc-rescue-sender",
     "start_url": "/login?source=pwa",
     "scope": "/",

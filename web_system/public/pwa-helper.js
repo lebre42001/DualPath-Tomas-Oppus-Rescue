@@ -228,7 +228,7 @@
         helper.innerHTML = `
             <div class="bontoc-pwa-helper__top">
                 <span class="bontoc-pwa-helper__status" data-bontoc-pwa-status>Online Ready</span>
-                <strong class="bontoc-pwa-helper__title" data-bontoc-pwa-title>Install Tomas Oppus Rescue</strong>
+                <strong class="bontoc-pwa-helper__title" data-bontoc-pwa-title>Install ResQMesh</strong>
             </div>
             <p class="bontoc-pwa-helper__copy" data-bontoc-pwa-copy role="status" aria-live="polite">Install the civilian sender app for faster emergency reporting and quick access to your report status.</p>
             <ol class="bontoc-pwa-helper__steps" data-bontoc-pwa-steps hidden>
@@ -302,7 +302,7 @@
 
         if (standalone()) {
             title.textContent = 'App already installed';
-            copy.textContent = 'You are using Tomas Oppus Rescue as an installed app.';
+            copy.textContent = 'You are using ResQMesh as an installed app.';
             install.textContent = 'Done';
             install.setAttribute('data-install-mode', 'installed');
             return helper;
@@ -310,7 +310,7 @@
 
         if (!isSecureInstallContext()) {
             title.textContent = 'Use HTTPS to install the app';
-            copy.textContent = 'This Wi-Fi test link can open Tomas Oppus Rescue, but Android and iPhone installation needs HTTPS. Use the online secure link to install it, then launch it from the home screen.';
+            copy.textContent = 'This Wi-Fi test link can open ResQMesh, but Android and iPhone installation needs HTTPS. Use the online secure link to install it, then launch it from the home screen.';
             install.textContent = 'Use Browser Mode';
             install.setAttribute('data-install-mode', 'insecure-context');
             return helper;
@@ -326,7 +326,7 @@
 
         if (isIOSDevice()) {
             title.textContent = 'Install on iPhone or iPad';
-            copy.textContent = 'Open this website in Safari. Tap Share, choose Add to Home Screen, then tap Add. Open Tomas Oppus Rescue from your home screen.';
+            copy.textContent = 'Open this website in Safari. Tap Share, choose Add to Home Screen, then tap Add. Open ResQMesh from your home screen.';
             install.textContent = 'Done';
             install.setAttribute('data-install-mode', 'ios-guide');
             return helper;
@@ -352,7 +352,7 @@
             return helper;
         }
 
-        title.textContent = 'Install Tomas Oppus Rescue';
+        title.textContent = 'Install ResQMesh';
         copy.textContent = 'Install the civilian sender app for faster emergency reporting and quick access to your report status.';
         install.textContent = 'Install App';
         install.setAttribute('data-install-mode', 'install');
@@ -374,7 +374,7 @@
             setDismissed(false);
             const helper = showHelper();
             helper.querySelector('[data-bontoc-pwa-title]').textContent = 'Complete installation';
-            helper.querySelector('[data-bontoc-pwa-copy]').textContent = 'Finish any confirmation shown by Chrome. When installation completes, open Tomas Oppus Rescue from your home screen or apps.';
+            helper.querySelector('[data-bontoc-pwa-copy]').textContent = 'Finish any confirmation shown by Chrome. When installation completes, open ResQMesh from your home screen or apps.';
             helper.querySelector('[data-bontoc-pwa-install]').hidden = true;
         } else if (outcome === 'dismissed') {
             const helper = showHelper({ forceManualPrompt: true });
@@ -406,7 +406,7 @@
             if (androidDownload && isIOSDevice()) {
                 trigger.querySelector('[data-app-download-label]').textContent = 'Install App';
                 trigger.querySelector('[data-app-download-platform]').textContent = 'iPhone / iPad';
-                trigger.setAttribute('aria-label', 'Install Tomas Oppus Rescue on iPhone or iPad');
+                trigger.setAttribute('aria-label', 'Install ResQMesh on iPhone or iPad');
             }
             if (androidDownload && standalone()) trigger.hidden = true;
             trigger.addEventListener('click', function (event) {

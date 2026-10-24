@@ -1,8 +1,8 @@
 @php($pwaAssetVersion = app(\App\Support\SystemVersion::class)->current())
-<meta name="application-name" content="Tomas Oppus Rescue">
+<meta name="application-name" content="ResQMesh">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Oppus Rescue">
+<meta name="apple-mobile-web-app-title" content="ResQMesh">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#c91c21">
 <meta name="format-detection" content="telephone=no">

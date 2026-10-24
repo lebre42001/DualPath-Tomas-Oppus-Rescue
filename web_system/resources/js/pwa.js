@@ -139,7 +139,7 @@ const setInstallCardContent = () => {
 
     if (!isSecureInstallContext()) {
         title.textContent = 'Use HTTPS to install the app';
-        copy.textContent = 'This Wi-Fi test link can open Tomas Oppus Rescue, but Android and iPhone installation needs HTTPS. Use the online secure link to install it, then launch it from the home screen.';
+        copy.textContent = 'This Wi-Fi test link can open ResQMesh, but Android and iPhone installation needs HTTPS. Use the online secure link to install it, then launch it from the home screen.';
         primary.textContent = 'Use Browser Mode';
         primary.dataset.installMode = 'insecure-context';
         dismiss.textContent = 'Later';
@@ -147,8 +147,8 @@ const setInstallCardContent = () => {
     }
 
     if (isIOSDevice() && !inStandaloneMode()) {
-        title.textContent = 'Install Tomas Oppus Rescue on iPhone or iPad';
-        copy.textContent = 'Open this website in Safari. Tap Share, choose Add to Home Screen, then tap Add. Launch Tomas Oppus Rescue from your home screen.';
+        title.textContent = 'Install ResQMesh on iPhone or iPad';
+        copy.textContent = 'Open this website in Safari. Tap Share, choose Add to Home Screen, then tap Add. Launch ResQMesh from your home screen.';
         primary.textContent = 'I Understand';
         primary.dataset.installMode = 'ios-instructions';
         dismiss.textContent = 'Later';
@@ -166,7 +166,7 @@ const setInstallCardContent = () => {
 
     title.textContent = 'Install the civilian sender app.';
     copy.textContent = window.RescueInstall?.available
-        ? 'Add Tomas Oppus Rescue to your phone for faster emergency reporting and quick access to your report status.'
+        ? 'Add ResQMesh to your phone for faster emergency reporting and quick access to your report status.'
         : 'In Chrome, open the browser menu (\u22ee), choose Add to Home screen or Install app, then confirm Install. In Edge, choose Apps, then Install this site as an app. Use a normal tab. If already installed, open it from your apps.';
     primary.textContent = window.RescueInstall?.available ? 'Install App' : 'Close Instructions';
     primary.dataset.installMode = window.RescueInstall?.available ? 'install' : 'browser-install-help';

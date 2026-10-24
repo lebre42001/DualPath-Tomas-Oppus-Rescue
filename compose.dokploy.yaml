@@ -12,7 +12,7 @@ services:
     expose:
       - "10000"
     environment:
-      APP_NAME: ${APP_NAME:-Tomas Oppus Rescue}
+      APP_NAME: ResQMesh
       APP_ENV: production
       APP_DEBUG: "false"
       APP_KEY: ${APP_KEY:?Set APP_KEY in Dokploy}
@@ -28,6 +28,7 @@ services:
       DB_USERNAME: ${DB_USERNAME:?Set DB_USERNAME in Dokploy}
       DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in Dokploy}
       SESSION_DRIVER: database
+      SESSION_COOKIE: stitch-rescue-web-session
       SESSION_SECURE_COOKIE: "true"
       CACHE_STORE: file
       QUEUE_CONNECTION: sync
@@ -61,7 +62,7 @@ services:
       MAIL_USERNAME: ${MAIL_USERNAME:-null}
       MAIL_PASSWORD: ${MAIL_PASSWORD:-null}
       MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS:-hello@example.com}
-      MAIL_FROM_NAME: ${MAIL_FROM_NAME:-Tomas Oppus Rescue}
+      MAIL_FROM_NAME: ResQMesh
     volumes:
       - app-storage:/var/www/html/storage/app
     healthcheck:

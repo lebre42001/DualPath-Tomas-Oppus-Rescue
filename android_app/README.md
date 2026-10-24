@@ -1,4 +1,4 @@
-# Tomas Oppus Rescue Android APK
+# ResQMesh Android APK
 
 This Android launcher opens the existing Laravel PWA at
 `https://dualpath.bsit4bdevs.tech/login?source=android-apk` using a Trusted Web
@@ -7,7 +7,7 @@ settings and admin backend are used. Web updates arrive from the server without
 rebuilding the APK. The legacy Flutter project in `mobile_app/` is separate.
 
 - Package: `tech.bsit4bdevs.dualpath.rescue`
-- Version: `1.0.1`, version code `2`
+- Version: `1.0.2`, version code `3`
 - Minimum Android API: `24` (Android 7); a compatible, updated browser is required.
 - Source generated with Google Bubblewrap `1.27.0` and Android Browser Helper
   `2.7.4`. Gradle and Android dependency versions are pinned in this project.
@@ -17,7 +17,7 @@ rebuilding the APK. The legacy Flutter project in `mobile_app/` is separate.
 
 ## Build and sign on this Laragon workspace
 
-The official ResQMesh artwork is preserved in `web_system/resources/branding/resqmesh-emblem.png`. Run `php tool/generate_brand_assets.php` from the repository root to reproduce the website, PWA, favicon, Android launcher, maskable, splash, and store images. Resizing preserves the complete artwork on white; maskable variants include safe padding. Both admin and civilian interfaces use the same logo. Android 1.0.1 updates the existing application's icon and splash with the same signing identity; users with 1.0.0 must install the newer APK to update their launcher icon.
+The official ResQMesh artwork is preserved in `web_system/resources/branding/resqmesh-emblem.png`. Run `php tool/generate_brand_assets.php` from the repository root to reproduce the website, PWA, favicon, Android launcher, maskable, splash, and store images. Resizing preserves the complete artwork on white; maskable variants include safe padding. Both admin and civilian interfaces use the same logo. Android 1.0.2 uses ResQMesh as the application and launcher name, with the official icon/splash artwork and the existing signing identity. Install the newer APK to update the name on an existing installation.
 
 Requirements: JDK 17, Android platform 36, Android Build Tools 36.0.0. The first
 build also downloads the pinned Gradle and Maven dependencies.

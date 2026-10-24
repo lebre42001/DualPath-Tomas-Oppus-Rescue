@@ -8,9 +8,9 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 ## Civilian interface release (2026-10-23)
 
 The Android APK source is in `android_app/`; it opens this same deployed PWA in a
-Trusted Web Activity. Publish the signed `android-v1.0.1` GitHub release asset
-before deploying the **Download App** links. This release adds the official
-ResQMesh logo. `/download/android` redirects to
+Trusted Web Activity. Publish the signed `android-v1.0.2` GitHub release asset
+before deploying the **Download App** links. This release applies the
+ResQMesh app name and official logo. `/download/android` redirects to
 the fixed versioned APK URL in `web_system/config/android-app.php`. Verify that
 the APK downloads, its checksum/signature match, and
 `/.well-known/assetlinks.json` is publicly served as JSON with the APK's signing
@@ -508,6 +508,12 @@ The owner's existing online admin account was recovered through an explicitly au
 The owner's supplied ResQMesh emblem is the official system logo. The original PNG is preserved in `web_system/resources/branding/resqmesh-emblem.png`; `php tool/generate_brand_assets.php` reproduces the resized assets without redesigning or cropping the artwork. Public Home/Login/Register, the admin and civilian sidebars, offline screen, favicon, and PWA/Apple icons share this source. Maskable icons have separate padded assets; the manifest identity and existing application/account names remain unchanged. Service worker cache v9 and versioned image URLs refresh the web assets.
 
 Android 1.0.1 (version code 2) includes the same launcher, adaptive, store, and splash artwork, signed with the existing release certificate. Publish the APK and checksum under `android-v1.0.1` before the updated Download App link is used. Existing APK installations need the new APK for their launcher/splash images; their accounts and server-side reports remain available. Check public logo/icon bytes, the manifest, a real admin route, and the APK download/signature after deployment.
+
+## ResQMesh application name (2026-10-24)
+
+ResQMesh is now the visible application name throughout the admin/civilian UI, public pages, browser titles, install guidance, PWA manifest, offline screen, and shared report print headers/margins. Dokploy fixes `APP_NAME` and the mail sender display name to ResQMesh so stale external environment labels cannot restore the previous name. Local and example configurations use the same display name. Migration `2026_10_24_160000_rename_command_center_brand_to_resqmesh` renames the former exact default station label to ResQMesh Command Center; it does not rewrite incident geography or historical report text.
+
+Android 1.0.2 (version code 3) changes the launcher/application label to ResQMesh and is distributed as `resqmesh-1.0.2.apk`. The package, signing identity, verified domain, and PWA identity remain compatible with existing installations. The Compose session cookie is explicitly pinned to the existing deployed cookie name so changing `APP_NAME` does not invalidate active web logins. Existing APK installations need the new APK for the new label; refresh the PWA for its manifest/name update. Service worker v10 refreshes the renamed web content. Publish `android-v1.0.2` and verify the updated Download App route before describing the release as live.
 
 ## Local Compose check
 

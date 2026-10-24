@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('partials.pwa-head')
-    <title>@yield('title', 'Emergency App') | Tomas Oppus Rescue</title>
+    <title>@yield('title', 'Emergency App') | ResQMesh</title>
     @include('partials.theme-preference')
     @include('partials.legacy-assets')
     @vite(['resources/css/app.css', 'resources/css/operations.css', 'resources/js/app.js'])
@@ -25,7 +25,7 @@
         $roleLabel = $authUser?->is_admin ? 'Admin Receiver' : ($authUser?->role === 'civilian' ? 'Civilian Sender' : 'Admin Receiver');
         $stationLabel = $isCivilian
             ? ($authUser?->responderProfile?->assigned_station ?? 'Civilian Mobile')
-            : 'Tomas Oppus Command Center';
+            : 'ResQMesh Command Center';
         $pageLabel = trim($__env->yieldContent('page_label')) ?: ($isCivilian ? 'Civilian App' : 'Dashboard');
         $pageHeading = trim($__env->yieldContent('page_heading')) ?: (trim($__env->yieldContent('title')) ?: 'Operations Center');
         $pageSubheadingContent = trim($__env->yieldContent('page_subheading'));
@@ -122,7 +122,7 @@ SVG,
             </button>
             <a href="{{ $dashboardUrl }}" class="brand-lockup">
                 <img class="system-brand-logo" src="{{ asset('icons/resqmesh-logo.png') }}?v={{ $pwaAssetVersion }}" width="120" height="120" alt="ResQMesh official logo">
-                <span style="color: #ff3b3f;">Tomas Oppus Rescue</span>
+                <span style="color: #ff3b3f;">ResQMesh</span>
                 <strong>{{ $isCivilian ? $authUser->name : 'LoRa Rescue Command' }}</strong>
             </a>
 
@@ -339,15 +339,15 @@ SVG,
     @endif
     @if ($isCivilian)
     <span hidden data-presence-url="{{ route('account.presence') }}" data-presence-interval="{{ \App\Support\CivilianPresence::HEARTBEAT_SECONDS }}"></span>
-    <button type="button" class="pwa-install-indicator" data-pwa-install-toggle aria-controls="civilian-install-options" aria-expanded="false" aria-label="Install or download Tomas Oppus Rescue" title="Install or download the app" hidden>
+    <button type="button" class="pwa-install-indicator" data-pwa-install-toggle aria-controls="civilian-install-options" aria-expanded="false" aria-label="Install or download ResQMesh" title="Install or download the app" hidden>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 17v4h14v-4"/></svg>
         <span>App</span>
     </button>
     <section id="civilian-install-options" class="pwa-install-card" data-pwa-install-card role="region" aria-labelledby="civilian-install-heading" hidden>
-        <header class="pwa-install-head"><p class="eyebrow" id="civilian-install-heading">Install Tomas Oppus Rescue</p><button type="button" class="btn btn-secondary" data-pwa-dismiss-action>Later</button></header>
+        <header class="pwa-install-head"><p class="eyebrow" id="civilian-install-heading">Install ResQMesh</p><button type="button" class="btn btn-secondary" data-pwa-dismiss-action>Later</button></header>
         <div class="pwa-install-copy">
             <strong data-pwa-install-title>Install the civilian sender app.</strong>
-            <p data-pwa-install-copy>Add Tomas Oppus Rescue to your phone for faster emergency reporting and quick access to your report status.</p>
+            <p data-pwa-install-copy>Add ResQMesh to your phone for faster emergency reporting and quick access to your report status.</p>
         </div>
         <div class="pwa-install-actions">
             <button type="button" class="btn btn-primary" data-pwa-install-action>Install App</button>

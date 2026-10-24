@@ -1,5 +1,5 @@
 @php
-    $shortBrand = 'Tomas Oppus Rescue';
+    $shortBrand = 'ResQMesh';
     $systemName = 'AI-Powered LoRa Emergency Response and Severity Detection System with Intelligent Location Monitoring';
     $pwaAssetVersion = app(\App\Support\SystemVersion::class)->current();
     $manifestPath = public_path('build/manifest.json');
@@ -185,7 +185,7 @@
                 <a href="{{ route('login') }}" class="inline-flex min-h-[48px] items-center justify-center rounded-md border border-outline-variant bg-white px-5 py-3 text-sm font-black text-primary transition hover:bg-primary-fixed">
                     Log in
                 </a>
-                <a href="{{ route('app.android.download') }}" data-android-app-download aria-label="Download Tomas Oppus Rescue Android APK" class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md border border-secondary/20 bg-secondary-fixed px-5 py-3 text-sm font-black text-secondary transition hover:bg-secondary hover:text-on-secondary">
+                <a href="{{ route('app.android.download') }}" data-android-app-download aria-label="Download ResQMesh Android APK" class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md border border-secondary/20 bg-secondary-fixed px-5 py-3 text-sm font-black text-secondary transition hover:bg-secondary hover:text-on-secondary">
                     <span data-app-download-label>Download App</span>
                     <small data-app-download-platform>Android APK</small>
                 </a>

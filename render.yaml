@@ -10,7 +10,7 @@ services:
     healthCheckPath: /system/version
     envVars:
       - key: APP_NAME
-        value: Stitch Rescue Web
+        value: ResQMesh
       - key: APP_ENV
         value: production
       - key: APP_DEBUG

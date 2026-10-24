@@ -24,7 +24,7 @@
         <p data-print-feedback role="status" hidden></p>
     </form>
     <main>
-        <header class="print-header"><p class="brand">Tomas Oppus Rescue</p><h1>Online report record</h1>
+        <header class="print-header"><p class="brand">ResQMesh</p><h1>Online report record</h1>
             @if (isset($accountName))<p>{{ $accountName }} · {{ $reports->count() }} {{ $reports->count() === 1 ? 'report' : 'reports' }}</p>@endif
             <p class="print-meta">Generated {{ $printedAt }} · Philippines time (Asia/Manila)</p>
         </header>

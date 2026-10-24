@@ -1,8 +1,8 @@
 {
   "packageId": "tech.bsit4bdevs.dualpath.rescue",
   "host": "dualpath.bsit4bdevs.tech",
-  "name": "Tomas Oppus Rescue",
-  "launcherName": "Tomas Oppus Rescue",
+  "name": "ResQMesh",
+  "launcherName": "ResQMesh",
   "display": "standalone",
   "themeColor": "#C91C21",
   "themeColorDark": "#000000",
@@ -20,8 +20,8 @@
     "path": "../tool/runtime/android-signing/release.jks",
     "alias": "tomas-oppus-rescue"
   },
-  "appVersionName": "1.0.1",
-  "appVersionCode": 2,
+  "appVersionName": "1.0.2",
+  "appVersionCode": 3,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
   "webManifestUrl": "https://dualpath.bsit4bdevs.tech/manifest.webmanifest",
@@ -48,5 +48,5 @@
   "fileHandlers": [],
   "launchHandlerClientMode": "",
   "displayOverride": [],
-  "appVersion": "1.0.1"
+  "appVersion": "1.0.2"
 }
