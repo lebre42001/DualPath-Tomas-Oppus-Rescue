@@ -8,8 +8,9 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 ## Civilian interface release (2026-10-23)
 
 The Android APK source is in `android_app/`; it opens this same deployed PWA in a
-Trusted Web Activity. Publish the signed `android-v1.0.0` GitHub release asset
-before deploying the **Download App** links. `/download/android` redirects to
+Trusted Web Activity. Publish the signed `android-v1.0.1` GitHub release asset
+before deploying the **Download App** links. This release adds the official
+ResQMesh logo. `/download/android` redirects to
 the fixed versioned APK URL in `web_system/config/android-app.php`. Verify that
 the APK downloads, its checksum/signature match, and
 `/.well-known/assetlinks.json` is publicly served as JSON with the APK's signing
@@ -501,6 +502,12 @@ There is no schema migration or APK rebuild for this web interface change.
 ## Owner admin access recovery (2026-10-24)
 
 The owner's existing online admin account was recovered through an explicitly authorized, one-time CLI deployment task. The server generated the replacement password and returned only an encrypted receipt for the owner's locally held private key. The private key and plaintext credentials were never committed. Real online admin login and protected Dashboard, Reports, and Profile access were verified, then the temporary task, deployment hook, and ciphertext export configuration were removed. The normal admin authentication flow remains in place; Git pushes do not provision or reset admin accounts.
+
+## Official ResQMesh logo (2026-10-24)
+
+The owner's supplied ResQMesh emblem is the official system logo. The original PNG is preserved in `web_system/resources/branding/resqmesh-emblem.png`; `php tool/generate_brand_assets.php` reproduces the resized assets without redesigning or cropping the artwork. Public Home/Login/Register, the admin and civilian sidebars, offline screen, favicon, and PWA/Apple icons share this source. Maskable icons have separate padded assets; the manifest identity and existing application/account names remain unchanged. Service worker cache v9 and versioned image URLs refresh the web assets.
+
+Android 1.0.1 (version code 2) includes the same launcher, adaptive, store, and splash artwork, signed with the existing release certificate. Publish the APK and checksum under `android-v1.0.1` before the updated Download App link is used. Existing APK installations need the new APK for their launcher/splash images; their accounts and server-side reports remain available. Check public logo/icon bytes, the manifest, a real admin route, and the APK download/signature after deployment.
 
 ## Local Compose check
 

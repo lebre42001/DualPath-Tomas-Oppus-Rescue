@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './public-pages.css';
+@import './brand.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -85,8 +86,7 @@
         content: "";
     }
 
-    .auth-local-hero,
-    img[src*="/icons/icon-512.png"] {
+    .auth-local-hero {
         background: linear-gradient(135deg, #fff2f0 0%, #e7f6ff 100%);
         object-fit: contain;
         padding: 0.75rem;

@@ -5,7 +5,7 @@
 <header class="public-header">
     <div class="public-header-inner">
         <a href="{{ route('welcome') }}" class="public-brand" title="{{ $systemName }}" aria-label="Tomas Oppus Rescue home">
-            <img src="{{ asset('icons/rescue-logo.svg') }}?v={{ $pwaAssetVersion }}" width="48" height="48" alt="Tomas Oppus Rescue app logo">
+            <img src="{{ asset('icons/resqmesh-logo.png') }}?v={{ $pwaAssetVersion }}" width="56" height="56" alt="ResQMesh official logo">
             <span><strong>Tomas Oppus Rescue</strong><small>Emergency reporting</small></span>
         </a>
         <nav aria-label="Public navigation">

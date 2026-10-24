@@ -34,7 +34,7 @@
 
             <div class="mt-8 min-w-0 max-w-full rounded-md border border-outline-variant/50 bg-white p-5">
                 <div class="flex items-center gap-4 border-b border-outline-variant/40 pb-4">
-                    <img src="{{ asset('icons/icon-512.png') }}" alt="{{ $shortBrand }} app icon" class="h-16 w-16 rounded-md bg-primary-fixed p-2">
+                    <img src="{{ asset('icons/resqmesh-logo.png') }}?v={{ $pwaAssetVersion }}" alt="ResQMesh official logo" width="88" height="88" class="auth-brand-logo">
                     <div class="min-w-0">
                         <p class="text-xs font-black uppercase text-outline">After registration</p>
                         <h2 class="mt-1 break-words text-xl font-black">You go straight to the sender app</h2>

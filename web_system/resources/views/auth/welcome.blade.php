@@ -19,6 +19,7 @@
     @include('partials.public-header', ['activePublicPage' => 'home'])
     <main class="public-home" id="main-content">
         <section class="public-home-hero">
+            <img class="public-home-logo" src="{{ asset('icons/resqmesh-logo.png') }}?v={{ $pwaAssetVersion }}" width="144" height="144" alt="ResQMesh official logo">
             <h1>Report an emergency. Track the response.</h1>
             <p class="public-home-intro">Send a scene photo, verification selfie, location, and a short description. Keep your reference code to follow your report.</p>
             <div class="public-home-actions">

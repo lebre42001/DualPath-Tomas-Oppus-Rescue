@@ -15,6 +15,7 @@
 </head>
 <body data-pwa-shell class="{{ auth()->user()?->isCivilian() ? 'civilian-portal' : 'admin-portal' }} {{ auth()->user()?->isCivilian() && request()->routeIs('dashboard') ? 'civilian-home-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('reports.create') ? 'civilian-report-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('profile.show') ? 'civilian-profile-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('settings.index') ? 'civilian-settings-page' : '' }} {{ auth()->user()?->isCivilian() && request()->routeIs('settings.readiness') ? 'civilian-readiness-page' : '' }}">
     @php
+        $pwaAssetVersion = app(\App\Support\SystemVersion::class)->current();
         $authUser = auth()->user();
         $isCivilian = $authUser?->isCivilian() ?? false;
         $isAccountVerified = ! $isCivilian || ($authUser?->hasVerifiedAccount() ?? false);
@@ -120,6 +121,7 @@ SVG,
                 <strong aria-hidden="true">&larr;</strong>
             </button>
             <a href="{{ $dashboardUrl }}" class="brand-lockup">
+                <img class="system-brand-logo" src="{{ asset('icons/resqmesh-logo.png') }}?v={{ $pwaAssetVersion }}" width="120" height="120" alt="ResQMesh official logo">
                 <span style="color: #ff3b3f;">Tomas Oppus Rescue</span>
                 <strong>{{ $isCivilian ? $authUser->name : 'LoRa Rescue Command' }}</strong>
             </a>

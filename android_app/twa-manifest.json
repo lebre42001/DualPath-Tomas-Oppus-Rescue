@@ -13,15 +13,15 @@
   "backgroundColor": "#EEF5FB",
   "enableNotifications": true,
   "startUrl": "/login?source=android-apk",
-  "iconUrl": "https://dualpath.bsit4bdevs.tech/icons/icon-512.png?v=2",
-  "maskableIconUrl": "https://dualpath.bsit4bdevs.tech/icons/icon-512.png?v=2",
+  "iconUrl": "https://dualpath.bsit4bdevs.tech/icons/icon-512.png?v=3",
+  "maskableIconUrl": "https://dualpath.bsit4bdevs.tech/icons/icon-maskable-512.png?v=3",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "../tool/runtime/android-signing/release.jks",
     "alias": "tomas-oppus-rescue"
   },
-  "appVersionName": "1.0.0",
-  "appVersionCode": 1,
+  "appVersionName": "1.0.1",
+  "appVersionCode": 2,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
   "webManifestUrl": "https://dualpath.bsit4bdevs.tech/manifest.webmanifest",
@@ -48,5 +48,5 @@
   "fileHandlers": [],
   "launchHandlerClientMode": "",
   "displayOverride": [],
-  "appVersion": "1.0.0"
+  "appVersion": "1.0.1"
 }

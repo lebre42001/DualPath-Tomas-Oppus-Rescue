@@ -1,0 +1,18 @@
+/* The official artwork keeps its proportions, wording, colors, and white canvas. */
+.public-brand img { flex: 0 0 56px; width: 56px; height: 56px; object-fit: contain; background: #fff; border-radius: 10px; }
+.auth-brand-logo { flex: 0 0 88px; width: 88px; height: 88px; object-fit: contain; background: #fff; border-radius: 10px; }
+.public-home-logo { display: block; width: 144px; height: 144px; margin: 0 auto 18px; object-fit: contain; background: #fff; border-radius: 16px; }
+body .ops-sidebar .brand-lockup .system-brand-logo { display: block; width: 120px; max-width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; background: #fff; border-radius: 12px; }
+body.civilian-portal .ops-sidebar .brand-lockup { gap: 8px; }
+@media (min-width: 1025px) {
+    body.admin-portal.sidebar-collapsed .ops-sidebar .brand-lockup { display: grid; justify-items: center; padding: 0 0 12px; }
+    body.admin-portal.sidebar-collapsed .ops-sidebar .brand-lockup .system-brand-logo { width: 52px; }
+    body.admin-portal.sidebar-collapsed .ops-sidebar .brand-lockup span,
+    body.admin-portal.sidebar-collapsed .ops-sidebar .brand-lockup strong { display: none; }
+}
+@media (max-width: 480px) {
+    .public-brand img { flex-basis: 44px; width: 44px; height: 44px; }
+    .auth-brand-logo { flex-basis: 72px; width: 72px; height: 72px; }
+    .public-home-logo { width: 128px; height: 128px; }
+    body .ops-sidebar .brand-lockup .system-brand-logo { width: 100px; }
+}
