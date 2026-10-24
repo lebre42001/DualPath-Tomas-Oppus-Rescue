@@ -1,0 +1,53 @@
+/* Keep install choices above the civilian navigation and easy to dismiss. */
+body.civilian-portal { --pwa-install-offset: 16px; }
+body.civilian-portal .pwa-install-card {
+    left: auto;
+    right: 12px;
+    bottom: var(--pwa-install-offset);
+    width: calc(100% - 24px);
+    max-width: 440px;
+    max-height: calc(100vh - var(--pwa-install-offset) - 24px);
+    max-height: calc(100dvh - var(--pwa-install-offset) - 24px);
+    margin: 0;
+    padding: 14px;
+    grid-template-columns: minmax(0,1fr);
+    gap: 12px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-radius: 20px;
+    background: #142534;
+}
+body.civilian-portal .pwa-install-head { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #142534; }
+body.civilian-portal .pwa-install-head .eyebrow { margin: 0; font-size: .68rem; line-height: 1.5; color: #fff; }
+body.civilian-portal .pwa-install-head .btn { flex: 0 0 auto; width: auto; min-height: 44px; padding: 8px 16px; }
+body.civilian-portal .pwa-install-copy strong { font-size: .95rem; }
+body.civilian-portal .pwa-install-copy p { font-size: .85rem; line-height: 1.5; }
+body.civilian-portal .pwa-install-actions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+body.civilian-portal .pwa-install-actions .btn { min-width: 0; width: 100%; min-height: 44px; padding: 10px 12px; font-size: .82rem; line-height: 1.4; text-align: center; }
+body.civilian-portal .pwa-install-indicator {
+    position: fixed;
+    z-index: 1340;
+    right: 10px;
+    bottom: var(--pwa-install-offset);
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    gap: 2px;
+    width: 48px;
+    min-height: 52px;
+    padding: 6px;
+    border: 1px solid var(--line-strong);
+    border-radius: 16px;
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: var(--shadow-soft);
+    cursor: pointer;
+}
+body.civilian-portal .pwa-install-indicator svg { width: 20px; height: 20px; }
+body.civilian-portal .pwa-install-indicator span { font-size: .65rem; font-weight: 800; line-height: 1.2; }
+body.civilian-portal .pwa-install-indicator:focus-visible, body.civilian-portal .pwa-install-card .btn:focus-visible { outline: 2px solid #68b9f7; outline-offset: 2px; }
+body.civilian-portal .pwa-install-indicator[hidden], body.civilian-portal .pwa-install-card [hidden] { display: none !important; }
+@media (max-width: 1220px) {
+    body.civilian-portal { --pwa-install-offset: calc(112px + env(safe-area-inset-bottom, 0px)); }
+    body.civilian-portal.has-pwa-install-offer .ops-main { padding-bottom: calc(var(--pwa-install-offset) + 72px); }
+}

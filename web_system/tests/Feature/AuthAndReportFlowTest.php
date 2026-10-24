@@ -475,6 +475,9 @@ class AuthAndReportFlowTest extends TestCase
             ->assertOk()
             ->assertSee('Live facial verification required.')
             ->assertSee('data-account-verification-root', false)
+            ->assertSee('data-pwa-install-toggle', false)
+            ->assertSee('data-pwa-dismiss-action>Later', false)
+            ->assertSee('data-pwa-android-download', false)
             ->assertSee('data-account-verification-preview', false)
             ->assertSee('Capture Face')
             ->assertSee('Verify Account');

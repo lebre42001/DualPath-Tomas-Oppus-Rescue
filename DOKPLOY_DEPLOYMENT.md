@@ -470,6 +470,25 @@ breakpoint remains. Styling is scoped to admin sidebars. Verify light/dark,
 collapse/expand, mobile drawer closing and access to Log Out. No schema migration
 or APK rebuild is required.
 
+## Dismissible civilian install offer (2026-10-24)
+
+Deploy the civilian shell, `pwa.js`, and rebuilt operations assets together.
+Later is now in the install card header and remains visible while scrolling.
+The card sits above the measured bottom navigation with a viewport height limit.
+Verification and report forms never open it automatically, including when Chrome
+offers installation after the camera has started. A small App button at the side
+opens the choices when needed. Later retains the existing dismissal preference;
+the side button remains usable afterward. A session fallback also respects Later
+when browser storage is restricted.
+
+Android users can choose the existing fixed APK download route or the browser
+install flow; iPhone users retain Safari guidance.
+Installed/standalone sessions hide the offer. No install dialog or APK download is
+started by the side indicator alone. Verify camera capture, selfie/form retention,
+Later on short screens, mobile navigation clearance, cross-page dismissal and
+manual reopening. The native browser/OS still completes actual installation.
+There is no schema migration or APK rebuild for this web interface change.
+
 ## Local Compose check
 
 After Docker Desktop is installed, create an untracked `.env` from

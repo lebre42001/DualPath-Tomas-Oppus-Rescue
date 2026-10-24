@@ -337,15 +337,19 @@ SVG,
     @endif
     @if ($isCivilian)
     <span hidden data-presence-url="{{ route('account.presence') }}" data-presence-interval="{{ \App\Support\CivilianPresence::HEARTBEAT_SECONDS }}"></span>
-    <section class="pwa-install-card" data-pwa-install-card hidden>
+    <button type="button" class="pwa-install-indicator" data-pwa-install-toggle aria-controls="civilian-install-options" aria-expanded="false" aria-label="Install or download Tomas Oppus Rescue" title="Install or download the app" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 17v4h14v-4"/></svg>
+        <span>App</span>
+    </button>
+    <section id="civilian-install-options" class="pwa-install-card" data-pwa-install-card role="region" aria-labelledby="civilian-install-heading" hidden>
+        <header class="pwa-install-head"><p class="eyebrow" id="civilian-install-heading">Install Tomas Oppus Rescue</p><button type="button" class="btn btn-secondary" data-pwa-dismiss-action>Later</button></header>
         <div class="pwa-install-copy">
-            <p class="eyebrow">Install Tomas Oppus Rescue</p>
             <strong data-pwa-install-title>Install the civilian sender app.</strong>
             <p data-pwa-install-copy>Add Tomas Oppus Rescue to your phone for faster emergency reporting and quick access to your report status.</p>
         </div>
         <div class="pwa-install-actions">
             <button type="button" class="btn btn-primary" data-pwa-install-action>Install App</button>
-            <button type="button" class="btn btn-secondary" data-pwa-dismiss-action>Later</button>
+            <a class="btn btn-secondary" href="{{ route('app.android.download') }}" data-pwa-android-download hidden>Download APK</a>
         </div>
     </section>
     @endif

@@ -8,8 +8,11 @@ let refreshingForUpdate = false;
 let activeAppVersion = null;
 let appVersionPollHandle = null;
 let updateReloadHandle = null;
+let installDismissedThisVisit = false;
+let installedThisVisit = false;
 
 const setInstallDismissed = (dismissed) => {
+    installDismissedThisVisit = dismissed;
     try {
         if (dismissed) window.localStorage.setItem(PWA_DISMISS_KEY, '1');
         else window.localStorage.removeItem(PWA_DISMISS_KEY);
@@ -59,6 +62,19 @@ const updateNetworkStatus = () => {
     label.textContent = isOnline ? 'Online Ready' : 'Offline Mode';
 };
 
+const canOfferInstall = () => !installedThisVisit && !inStandaloneMode();
+
+const updateInstallIndicator = () => {
+    const indicator = document.querySelector('[data-pwa-install-toggle]');
+    const visible = document.querySelector('[data-pwa-install-card]')?.hidden === false;
+    const offer = canOfferInstall() && !!indicator;
+    if (indicator) {
+        indicator.hidden = !offer || visible;
+        indicator.setAttribute('aria-expanded', String(visible));
+    }
+    document.body?.classList.toggle('has-pwa-install-offer', offer);
+};
+
 const toggleInstallCard = (visible) => {
     const card = document.querySelector('[data-pwa-install-card]');
 
@@ -66,7 +82,11 @@ const toggleInstallCard = (visible) => {
         return;
     }
 
-    card.hidden = !visible;
+    const restoreFocus = card.contains(document.activeElement);
+    card.hidden = !(visible && canOfferInstall());
+    if (!card.hidden) card.scrollTop = 0;
+    updateInstallIndicator();
+    if (card.hidden && restoreFocus) document.querySelector('[data-pwa-install-toggle]:not([hidden])')?.focus({ preventScroll: true });
 };
 
 const toggleUpdateCard = (visible) => {
@@ -154,7 +174,8 @@ const setInstallCardContent = () => {
 };
 
 const shouldShowInstallCard = () => {
-    if (inStandaloneMode()) {
+    if (!canOfferInstall() || installDismissedThisVisit
+        || document.querySelector('[data-account-verification-root], [data-report-form-root]')) {
         return false;
     }
 
@@ -375,6 +396,28 @@ onDomReady( () => {
 
     const installButton = document.querySelector('[data-pwa-install-action]');
     const dismissButton = document.querySelector('[data-pwa-dismiss-action]');
+    const installToggle = document.querySelector('[data-pwa-install-toggle]');
+    const download = document.querySelector('[data-pwa-android-download]');
+    if (download) download.hidden = !/Android/i.test(navigator.userAgent);
+    installToggle?.addEventListener('click', () => {
+        setInstallCardContent();
+        toggleInstallCard(true);
+        dismissButton?.focus({ preventScroll: true });
+    });
+    const syncInstallOffset = () => {
+        const nav = document.querySelector('.mobile-quick-nav');
+        const bounds = nav?.getBoundingClientRect();
+        const offset = bounds?.height ? Math.max(16, window.innerHeight - bounds.top + 12) : 16;
+        document.body.style.setProperty('--pwa-install-offset', `${Math.ceil(offset)}px`);
+    };
+    syncInstallOffset();
+    window.addEventListener('resize', syncInstallOffset);
+    window.visualViewport?.addEventListener('resize', syncInstallOffset);
+    const nav = document.querySelector('.mobile-quick-nav');
+    if (nav && 'ResizeObserver' in window) new ResizeObserver(syncInstallOffset).observe(nav);
+    document.querySelector('[data-pwa-install-card]')?.addEventListener('keydown', event => {
+        if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); setInstallDismissed(true); toggleInstallCard(false); }
+    });
 
     installButton?.addEventListener('click', () => {
         void installApp();
@@ -388,14 +431,17 @@ onDomReady( () => {
     if (shouldShowInstallCard() && (window.RescueInstall?.available || (isIOSDevice() && isSafariBrowser()) || !supportsServiceWorker())) {
         toggleInstallCard(true);
     }
+    updateInstallIndicator();
 });
 
 window.addEventListener('rescue:install-ready', () => {
     setInstallCardContent();
-    toggleInstallCard(shouldShowInstallCard());
+    const card = document.querySelector('[data-pwa-install-card]');
+    toggleInstallCard(card?.hidden === false || shouldShowInstallCard());
 });
 
 window.addEventListener('appinstalled', () => {
+    installedThisVisit = true;
     toggleInstallCard(false);
     updateDisplayMode();
 });
