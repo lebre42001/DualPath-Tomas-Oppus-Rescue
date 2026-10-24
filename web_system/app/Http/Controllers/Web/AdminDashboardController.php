@@ -7,8 +7,10 @@ use App\Models\IncidentReport;
 use App\Models\IncidentReportAudit;
 use App\Models\User;
 use App\Support\LoraMeshNodeDirectory;
+use Carbon\CarbonImmutable;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -39,12 +41,7 @@ class AdminDashboardController extends Controller
             ->take(8)
             ->get();
 
-        $auditFilters = $request->validate([
-            'audit_source' => ['nullable', 'in:online,lora'],
-            'audit_action' => ['nullable', 'in:coordination,severity_review,ai_analysis,deletion'],
-            'audit_search' => ['nullable', 'string', 'max:100'],
-            'audit_page' => ['nullable', 'integer', 'min:1'],
-        ]);
+        $auditFilters = $this->auditFilters($request);
 
         return view('admin.dashboard', [
             'user' => Auth::user(),
@@ -85,7 +82,7 @@ class AdminDashboardController extends Controller
             'connectivity' => $this->connectivityIntelligence(),
             'nodeMapPoints' => $directory->mapPoints(),
             'moderationQueue' => $moderationQueue,
-            'auditTrail' => $this->adminAuditTrail($auditFilters),
+            'auditTrail' => $this->auditQuery([])->paginate(6, ['*'], 'audit_page', 1),
             'auditFilters' => $auditFilters,
         ]);
     }
@@ -111,7 +108,31 @@ class AdminDashboardController extends Controller
         ];
     }
 
-    private function adminAuditTrail(array $filters): LengthAwarePaginator
+    public function history(Request $request): JsonResponse
+    {
+        $filters = $this->auditFilters($request);
+        $entries = $this->auditQuery($filters)->paginate(10, ['*'], 'audit_page', $filters['audit_page'] ?? 1);
+
+        return response()->json([
+            'html' => view('admin.partials.report-audit-rows', ['auditTrail' => $entries])->render(),
+            'pagination' => ['page' => $entries->currentPage(), 'lastPage' => $entries->lastPage(),
+                'total' => $entries->total(), 'from' => $entries->firstItem(), 'to' => $entries->lastItem()],
+        ])->header('Cache-Control', 'private, no-store');
+    }
+
+    private function auditFilters(Request $request): array
+    {
+        return $request->validate([
+            'audit_source' => ['nullable', 'in:online,lora'],
+            'audit_action' => ['nullable', 'in:coordination,severity_review,ai_analysis,deletion'],
+            'audit_search' => ['nullable', 'string', 'max:100'],
+            'audit_page' => ['nullable', 'integer', 'min:1'],
+            'audit_from' => ['nullable', 'date_format:Y-m-d'],
+            'audit_to' => array_merge(['nullable', 'date_format:Y-m-d'], $request->filled('audit_from') ? ['after_or_equal:audit_from'] : []),
+        ]);
+    }
+
+    private function auditQuery(array $filters): Builder
     {
         $query = IncidentReportAudit::query()->with('report:id,transmission_type');
         if (filled($filters['audit_source'] ?? null)) {
@@ -123,14 +144,19 @@ class AdminDashboardController extends Controller
         if ($search = trim($filters['audit_search'] ?? '')) {
             $pattern = '%'.str_replace(['!', '%', '_'], ['!!', '!%', '!_'], mb_strtolower($search)).'%';
             $query->where(function ($scoped) use ($pattern): void {
-                foreach (['report_code', 'actor_name', 'node_id'] as $column) {
+                foreach (['report_code', 'actor_name', 'node_id', 'incident_type', 'notes'] as $column) {
                     $scoped->orWhereRaw("LOWER({$column}) LIKE ? ESCAPE '!'", [$pattern]);
                 }
             });
         }
+        if (! empty($filters['audit_from'])) {
+            $query->where('occurred_at', '>=', CarbonImmutable::createFromFormat('!Y-m-d', $filters['audit_from'], 'Asia/Manila')->utc());
+        }
+        if (! empty($filters['audit_to'])) {
+            $query->where('occurred_at', '<', CarbonImmutable::createFromFormat('!Y-m-d', $filters['audit_to'], 'Asia/Manila')->addDay()->utc());
+        }
 
         return $query->orderByRaw('CASE WHEN occurred_at IS NULL THEN 1 ELSE 0 END')
-            ->orderByDesc('occurred_at')->orderByDesc('id')
-            ->paginate(6, ['*'], 'audit_page')->withQueryString()->fragment('report-audit-history');
+            ->orderByDesc('occurred_at')->orderByDesc('id');
     }
 }

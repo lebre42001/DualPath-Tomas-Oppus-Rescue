@@ -552,16 +552,12 @@ function initializeCommandAuditModal() {
     let activeRow = null;
 
     const closeModal = () => {
-        modal.hidden = true;
-        document.body.style.overflow = '';
+        document.dispatchEvent(new CustomEvent('stitch:dialog-close', { detail: { modal } }));
 
         if (body) {
             body.innerHTML = '';
         }
 
-        if (activeRow instanceof HTMLElement) {
-            activeRow.focus({ preventScroll: true });
-        }
     };
 
     const openModal = (row) => {
@@ -583,8 +579,7 @@ function initializeCommandAuditModal() {
 
         body.innerHTML = '';
         body.appendChild(template.content.cloneNode(true));
-        modal.hidden = false;
-        document.body.style.overflow = 'hidden';
+        document.dispatchEvent(new CustomEvent('stitch:dialog-open', { detail: { modal, close: closeModal, opener: activeRow } }));
 
         const firstFocusable = modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
 
@@ -616,11 +611,6 @@ function initializeCommandAuditModal() {
     });
 
     document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && !modal.hidden) {
-            closeModal();
-            return;
-        }
-
         if (!['Enter', ' '].includes(event.key)) {
             return;
         }

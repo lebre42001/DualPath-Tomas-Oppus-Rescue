@@ -444,6 +444,22 @@ After a severity/response form redirect, the account page reopens that report,
 including validation errors and entered notes. Verify these paths after admin
 login; protected endpoints must reject guest/civilian/non-admin responder access.
 
+## Overview audit history modal (2026-10-24)
+
+Deploy AdminDashboardController, the protected `/admin/report-audit` route,
+shared audit-row/list views and rebuilt Vite assets together. Overview shows the
+six latest actions without page controls. View all loads 10 actions per page
+with search, source, action and inclusive Asia/Manila date filters; pagination
+uses applied filters. Reset clears every modal filter. Existing `audit_*` links
+open the filtered modal while Overview retains the six latest actions.
+
+The original action-details dialog and Online/LoRa report links are reused from
+one row template, including retained deleted-report history. The list and detail
+dialogs share the application dialog stack for Escape, focus and scroll handling.
+Verify admin authorization, filters, empty/error/retry states, older/deleted
+actions and both report links after login. No audit records are changed by
+viewing these screens. No schema migration or APK rebuild is required.
+
 ## Local Compose check
 
 After Docker Desktop is installed, create an untracked `.env` from

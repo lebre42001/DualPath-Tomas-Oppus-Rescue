@@ -73,6 +73,7 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
 
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function (): void {
         Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
+        Route::get('/report-audit', [AdminDashboardController::class, 'history'])->name('report-audit');
         Route::get('/node-locations', [LoraNodeLocationController::class, 'index'])->name('node-locations.index');
         Route::get('/node-locations/points', [LoraNodeLocationController::class, 'points'])->name('node-locations.points');
         Route::put('/node-locations/{nodeId}', [LoraNodeLocationController::class, 'update'])->name('node-locations.update');

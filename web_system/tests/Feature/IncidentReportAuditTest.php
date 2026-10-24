@@ -102,13 +102,78 @@ class IncidentReportAuditTest extends TestCase
         $page = $this->get(route('admin.dashboard'))->assertOk();
         $this->assertSame(21, $page->viewData('auditTrail')->total());
         $this->assertCount(6, $page->viewData('auditTrail'));
-        $filtered = $this->get(route('admin.dashboard', ['audit_source' => 'lora', 'audit_action' => 'coordination', 'audit_search' => 'LORA-OLD']))->assertOk();
-        $this->assertSame(1, $filtered->viewData('auditTrail')->total());
-        $filtered->assertSee('LORA-OLD-HISTORY')->assertSee(route('lora-reports.index', ['review' => $oldest->id]), false);
+        $page->assertSee('data-audit-history-open', false)->assertDontSee('Admin report audit pagination');
+        $filtered = $this->getJson(route('admin.report-audit', ['audit_source' => 'lora', 'audit_action' => 'coordination', 'audit_search' => 'LORA-OLD']))->assertOk()
+            ->assertJsonPath('pagination.total', 1);
+        $this->assertStringContainsString('LORA-OLD-HISTORY', $filtered->json('html'));
+        $this->assertStringContainsString(route('lora-reports.index', ['review' => $oldest->id]), $filtered->json('html'));
         $this->get(route('admin.dashboard', ['audit_source' => 'online', 'audit_page' => 2]))->assertOk()
-            ->assertViewHas('auditTrail', fn ($entries): bool => $entries->total() === 20 && $entries->currentPage() === 2);
-        $this->get(route('admin.dashboard', ['audit_search' => '%']))->assertOk()
-            ->assertViewHas('auditTrail', fn ($entries): bool => $entries->isEmpty());
+            ->assertViewHas('auditTrail', fn ($entries): bool => $entries->total() === 21 && $entries->currentPage() === 1 && $entries->count() === 6)
+            ->assertSee('data-audit-history-auto-open', false);
+        $this->getJson(route('admin.report-audit', ['audit_source' => 'online', 'audit_page' => 2]))->assertOk()
+            ->assertJsonPath('pagination.total', 20)->assertJsonPath('pagination.page', 2);
+        $this->getJson(route('admin.report-audit', ['audit_search' => '%']))->assertOk()->assertJsonPath('pagination.total', 0);
+    }
+
+    public function test_all_actions_use_ten_per_page_in_stable_order_and_preserve_deleted_history(): void
+    {
+        $this->actingAs($this->admin());
+        $report = $this->report('online');
+        for ($i = 0; $i < 22; $i++) {
+            IncidentReportAudit::query()->create(['incident_report_id' => $i === 0 ? $report->id : null,
+                'entry_key' => hash('sha256', 'list-'.$i), 'incident_type' => 'Road Accident',
+                'report_code' => 'AUDIT-LIST-'.$i, 'transmission_type' => 'online', 'action' => 'coordination',
+                'label' => 'Action '.$i, 'actor_name' => 'Admin <script>alert(1)</script>', 'actor_role' => 'Admin',
+                'notes' => '<img src=x onerror=alert(1)>', 'occurred_at' => '2026-10-24 09:00:00']);
+        }
+        $first = $this->getJson(route('admin.report-audit'))->assertOk()->assertJsonPath('pagination.total', 22)
+            ->assertJsonPath('pagination.lastPage', 3)->assertJsonPath('pagination.from', 1)->assertJsonPath('pagination.to', 10);
+        $this->assertSame(10, substr_count($first->json('html'), 'data-command-audit-row'));
+        $this->assertStringContainsString('AUDIT-LIST-21', $first->json('html'));
+        $this->assertStringNotContainsString('AUDIT-LIST-11<', $first->json('html'));
+        $this->assertStringNotContainsString('<img src=x onerror=alert(1)>', $first->json('html'));
+        $this->assertStringContainsString('&lt;img src=x onerror=alert(1)&gt;', $first->json('html'));
+        $this->assertStringContainsString('Report deleted', $first->json('html'));
+        $this->assertStringContainsString('no-store', $first->headers->get('Cache-Control'));
+        $last = $this->getJson(route('admin.report-audit', ['audit_page' => 3]))->assertOk()
+            ->assertJsonPath('pagination.from', 21)->assertJsonPath('pagination.to', 22);
+        $this->assertSame(2, substr_count($last->json('html'), 'data-command-audit-row'));
+        $this->assertStringContainsString(route('reports.index', ['review' => $report->id]), $last->json('html'));
+        $this->get(route('admin.dashboard', ['audit_page' => 3]))->assertOk()
+            ->assertViewHas('auditTrail', fn ($entries) => $entries->pluck('report_code')->all() === ['AUDIT-LIST-21', 'AUDIT-LIST-20', 'AUDIT-LIST-19', 'AUDIT-LIST-18', 'AUDIT-LIST-17', 'AUDIT-LIST-16']);
+    }
+
+    public function test_history_dates_are_inclusive_manila_days_and_combine_with_source_action_and_search(): void
+    {
+        $this->actingAs($this->admin());
+        foreach (['2026-10-23 15:59:59', '2026-10-23 16:00:00', '2026-10-24 15:59:59', '2026-10-24 16:00:00', null] as $i => $date) {
+            IncidentReportAudit::query()->create(['entry_key' => hash('sha256', 'date-'.$i), 'incident_type' => 'Road Accident',
+                'report_code' => 'DATE-'.$i, 'transmission_type' => $i === 1 ? 'lora' : 'online',
+                'node_id' => $i === 1 ? 'NODE_2' : null, 'action' => 'coordination', 'label' => 'Response recorded',
+                'actor_name' => 'Date Admin', 'actor_role' => 'Admin', 'notes' => $i === 1 ? 'Specific response note' : null, 'occurred_at' => $date]);
+        }
+        $range = ['audit_from' => '2026-10-24', 'audit_to' => '2026-10-24'];
+        $this->getJson(route('admin.report-audit', $range))->assertOk()->assertJsonPath('pagination.total', 2);
+        $matched = $this->getJson(route('admin.report-audit', $range + ['audit_source' => 'lora', 'audit_action' => 'coordination', 'audit_search' => 'specific response']))
+            ->assertOk()->assertJsonPath('pagination.total', 1);
+        $this->assertStringContainsString('DATE-1', $matched->json('html'));
+        $this->getJson(route('admin.report-audit', ['audit_to' => '2026-10-24']))->assertOk()->assertJsonPath('pagination.total', 3);
+        $this->getJson(route('admin.report-audit', ['audit_from' => '2026-10-24']))->assertOk()->assertJsonPath('pagination.total', 3);
+        $this->getJson(route('admin.report-audit', ['audit_search' => 'NODE_2']))->assertOk()->assertJsonPath('pagination.total', 1);
+        foreach ([['audit_page' => 0], ['audit_source' => 'other'], ['audit_action' => 'other'], ['audit_search' => str_repeat('a', 101)], ['audit_from' => '2026-02-31'], ['audit_from' => '2026-10-25', 'audit_to' => '2026-10-24']] as $invalid) {
+            $this->getJson(route('admin.report-audit', $invalid))->assertUnprocessable();
+        }
+    }
+
+    public function test_history_endpoint_requires_admin_access(): void
+    {
+        $this->getJson(route('admin.report-audit'))->assertUnauthorized();
+        foreach (['civilian', 'responder'] as $role) {
+            $user = User::factory()->create(['role' => $role, 'is_admin' => false]);
+            $this->actingAs($user)->getJson(route('admin.report-audit'))->assertRedirect(route('dashboard'));
+        }
+        $this->actingAs($this->admin())->getJson(route('admin.report-audit'))->assertOk()->assertJsonPath('pagination.total', 0);
+        $this->assertDatabaseCount('incident_report_audits', 0);
     }
 
     public function test_opening_pages_or_receiving_a_report_does_not_fabricate_an_admin_action(): void
