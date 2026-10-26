@@ -2,8 +2,8 @@
 
 // Technical resizing only: keep the owner's official artwork and white background intact.
 $root = dirname(__DIR__);
-$source = $argv[1] ?? $root.'/web_system/resources/branding/resqmesh-emblem.png';
-$canonical = $root.'/web_system/resources/branding/resqmesh-emblem.png';
+$source = $argv[1] ?? $root.'/web_system/resources/branding/aksyres-emblem.png';
+$canonical = $root.'/web_system/resources/branding/aksyres-emblem.png';
 if (! is_file($source)) throw new RuntimeException('Official logo source not found.');
 if (! is_dir(dirname($canonical))) mkdir(dirname($canonical), 0755, true);
 if (realpath($source) !== realpath($canonical) && ! copy($source, $canonical)) {
@@ -26,6 +26,8 @@ function logoPng(GdImage $source, int $size, float $coverage = 1.0): string
 
 $icons = $root.'/web_system/public/icons';
 foreach ([64, 180, 192, 512] as $size) file_put_contents($icons.'/icon-'.$size.'.png', logoPng($original, $size));
+file_put_contents($icons.'/aksyres-logo.png', logoPng($original, 512));
+// Cached older pages can still request this path during an update.
 file_put_contents($icons.'/resqmesh-logo.png', logoPng($original, 512));
 // A square at 56% fits completely inside the maskable icon's central safe circle.
 foreach ([192, 512] as $size) file_put_contents($icons.'/icon-maskable-'.$size.'.png', logoPng($original, $size, 0.56));
@@ -48,4 +50,4 @@ foreach ($densities as $density => [$launcher, $maskable, $splash]) {
 }
 file_put_contents($root.'/android_app/store_icon.png', logoPng($original, 512));
 imagedestroy($original);
-echo "Generated official ResQMesh web, favicon, PWA, Android launcher and splash assets.\n";
+echo "Generated official AksyRes web, favicon, PWA, Android launcher and splash assets.\n";

@@ -58,7 +58,7 @@ try {
 
     $unsignedApk = Join-Path $projectDirectory 'app/build/outputs/apk/release/app-release-unsigned.apk'
     $alignedApk = Join-Path $outputDirectory 'app-release-aligned.apk'
-    $apkName = 'resqmesh-' + $manifest.appVersionName + '.apk'
+    $apkName = 'aksyres-' + $manifest.appVersionName + '.apk'
     $signedApk = Join-Path $outputDirectory $apkName
     Invoke-AndroidTool -Executable (Join-Path $buildToolsDirectory 'zipalign.exe') -ToolArguments @('-p', '-f', '4', $unsignedApk, $alignedApk)
     Invoke-AndroidTool -Executable (Join-Path $buildToolsDirectory 'apksigner.bat') -ToolArguments @('sign', '--ks', $keyFile, '--ks-key-alias', $manifest.signingKey.alias,

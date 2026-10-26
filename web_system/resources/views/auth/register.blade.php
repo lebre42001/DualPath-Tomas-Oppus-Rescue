@@ -1,5 +1,5 @@
 @php
-    $shortBrand = 'ResQMesh';
+    $shortBrand = 'AksyRes';
     $systemName = 'AI-Powered LoRa Emergency Response and Severity Detection System with Intelligent Location Monitoring';
     $pwaAssetVersion = app(\App\Support\SystemVersion::class)->current();
     $manifestPath = public_path('build/manifest.json');
@@ -34,7 +34,7 @@
 
             <div class="mt-8 min-w-0 max-w-full rounded-md border border-outline-variant/50 bg-white p-5">
                 <div class="flex items-center gap-4 border-b border-outline-variant/40 pb-4">
-                    <img src="{{ asset('icons/resqmesh-logo.png') }}?v={{ $pwaAssetVersion }}" alt="ResQMesh official logo" width="88" height="88" class="auth-brand-logo">
+                    <img src="{{ asset('icons/aksyres-logo.png') }}?v={{ $pwaAssetVersion }}" alt="AksyRes official logo" width="88" height="88" class="auth-brand-logo">
                     <div class="min-w-0">
                         <p class="text-xs font-black uppercase text-outline">After registration</p>
                         <h2 class="mt-1 break-words text-xl font-black">You go straight to the sender app</h2>
@@ -185,7 +185,7 @@
                 <a href="{{ route('login') }}" class="inline-flex min-h-[48px] items-center justify-center rounded-md border border-outline-variant bg-white px-5 py-3 text-sm font-black text-primary transition hover:bg-primary-fixed">
                     Log in
                 </a>
-                <a href="{{ route('app.android.download') }}" data-android-app-download aria-label="Download ResQMesh Android APK" class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md border border-secondary/20 bg-secondary-fixed px-5 py-3 text-sm font-black text-secondary transition hover:bg-secondary hover:text-on-secondary">
+                <a href="{{ route('app.android.download') }}" data-android-app-download aria-label="Download AksyRes Android APK" class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md border border-secondary/20 bg-secondary-fixed px-5 py-3 text-sm font-black text-secondary transition hover:bg-secondary hover:text-on-secondary">
                     <span data-app-download-label>Download App</span>
                     <small data-app-download-platform>Android APK</small>
                 </a>

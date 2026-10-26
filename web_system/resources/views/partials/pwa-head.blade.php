@@ -1,8 +1,8 @@
 @php($pwaAssetVersion = app(\App\Support\SystemVersion::class)->current())
-<meta name="application-name" content="ResQMesh">
+<meta name="application-name" content="AksyRes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ResQMesh">
+<meta name="apple-mobile-web-app-title" content="AksyRes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#c91c21">
 <meta name="format-detection" content="telephone=no">

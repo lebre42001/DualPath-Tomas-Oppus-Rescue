@@ -1,4 +1,4 @@
-# ResQMesh
+# AksyRes
 
 This workspace now contains the mobile app, web system, database references, AI training service, plus the original UI references.
 

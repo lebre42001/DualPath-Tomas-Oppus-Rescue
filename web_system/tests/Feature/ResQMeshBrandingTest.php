@@ -29,6 +29,16 @@ class ResQMeshBrandingTest extends TestCase
         $migration->up();
 
         $this->assertSame('ResQMesh Command Center', $default->fresh()->assigned_station);
+
+        $previous = User::factory()->create()->responderProfile()->create(['assigned_station' => 'RESQMESH COMMAND CENTER']);
+        $custom = User::factory()->create()->responderProfile()->create(['assigned_station' => 'ResQMesh roadside station']);
+        $aksyres = require database_path('migrations/2026_10_27_000001_rename_command_center_brand_to_aksyres.php');
+        $aksyres->up();
+        $aksyres->up();
+
+        $this->assertSame('AksyRes Command Center', $default->fresh()->assigned_station);
+        $this->assertSame('AksyRes Command Center', $previous->fresh()->assigned_station);
+        $this->assertSame('ResQMesh roadside station', $custom->fresh()->assigned_station);
         $this->assertSame('Tomas Oppus roadside station', $other->fresh()->assigned_station);
         $this->assertSame('Bogo, Tomas Oppus, Southern Leyte', $report->fresh()->location_text);
         $this->assertSame('Road collision in Tomas Oppus.', $report->fresh()->description);

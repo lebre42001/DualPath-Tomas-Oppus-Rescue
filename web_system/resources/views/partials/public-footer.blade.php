@@ -22,7 +22,7 @@
             <details id="about" name="public-information">
                 <summary>About</summary>
                 <div class="public-information-copy">
-                    <h2>About ResQMesh</h2>
+                    <h2>About AksyRes</h2>
                     <p>{{ $systemName }}</p>
                     <p>The Civilian Sender app lets you submit an online emergency report, receive a reference code, and follow updates from authorized responders. Road Accident reporting is available; other incident types remain locked.</p>
                     <p>Responders review the emergency description, evidence, and location. Any available AI severity suggestion supports responder review.</p>
@@ -32,7 +32,7 @@
                 <summary>Developer</summary>
                 <div class="public-information-copy">
                     <h2>Development Team</h2>
-                    <p>The ResQMesh development team maintains the civilian reporting app and admin response portal.</p>
+                    <p>The AksyRes development team maintains the civilian reporting app and admin response portal.</p>
                     <p>For account or technical assistance, contact your system administrator. Include the page, the error message, and your report reference code when relevant. Do not share your password.</p>
                 </div>
             </details>
@@ -46,6 +46,6 @@
                 </div>
             </details>
         </div>
-        <p class="public-copyright">&copy; {{ now()->year }} ResQMesh &middot; Civilian Sender</p>
+        <p class="public-copyright">&copy; {{ now()->year }} AksyRes &middot; Civilian Sender</p>
     </div>
 </footer>

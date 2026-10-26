@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bontoc-rescue-pwa-v10';
+const CACHE_NAME = 'bontoc-rescue-pwa-v11';
 const OFFLINE_URL = '/offline.html';
 const APP_SHELL_URLS = [
     OFFLINE_URL,
@@ -7,7 +7,7 @@ const APP_SHELL_URLS = [
     '/icons/icon-180.png',
     '/icons/icon-192.png',
     '/icons/icon-512.png',
-    '/icons/resqmesh-logo.png',
+    '/icons/aksyres-logo.png',
     '/icons/icon-maskable-192.png',
     '/icons/icon-maskable-512.png',
 ];

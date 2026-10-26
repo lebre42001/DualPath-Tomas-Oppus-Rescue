@@ -5,12 +5,12 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
-## Civilian interface release (2026-10-23)
+## Current civilian interface release (2026-10-27)
 
 The Android APK source is in `android_app/`; it opens this same deployed PWA in a
-Trusted Web Activity. Publish the signed `android-v1.0.2` GitHub release asset
+Trusted Web Activity. Publish the signed `android-v1.0.3` GitHub release asset
 before deploying the **Download App** links. This release applies the
-ResQMesh app name and official logo. `/download/android` redirects to
+AksyRes app name and official logo. `/download/android` redirects to
 the fixed versioned APK URL in `web_system/config/android-app.php`. Verify that
 the APK downloads, its checksum/signature match, and
 `/.well-known/assetlinks.json` is publicly served as JSON with the APK's signing
@@ -24,9 +24,9 @@ Deploy the compact civilian Home, Report, Profile, Settings and Device Check
 views together with the rebuilt Vite assets. The public Home/Login/Register
 pages share the updated branding; Home places Help, About, Developer and Privacy
 in a footer at the bottom. The installed PWA uses the new logo and service worker
-cache version v8, while keeping its existing manifest identity and start URL.
+cache version v11, while keeping its existing manifest identity and start URL.
 
-This release requires no new environment values or database migrations. Keep the
+Apply the included station-brand migration during the normal startup. Keep the
 existing Dokploy service, credentials and named volumes. Report photo/location,
 description and verification-selfie requirements, profile persistence and admin
 access remain in place. Only Road Accident is available; other incident types
@@ -524,6 +524,12 @@ Deploy the normal web build and clear Laravel caches. Refresh the PWA to load th
 ## Required civilian location description (2026-10-25)
 
 Civilian emergency reports require both a current GPS lock and a barangay, road, or nearby landmark. The location description is marked required, is included in the Send Report readiness gate, and is no longer filled with raw coordinates by civilian GPS capture. The web and API validators require the description and return a rescue-specific error when it is missing; missing/blank text is rejected even with valid coordinates. Admin manual entry keeps its existing GPS helper. Deploy the normal web build, clear Laravel caches, and refresh the PWA. Verify missing GPS, missing description with valid GPS, and the complete photo/location/description/selfie flow.
+
+## Official AksyRes name and artwork (2026-10-27)
+
+The owner's uploaded AksyRes image is the current official logo for the public website, admin/civilian portals, printed reports, PWA, and Android app. Its unchanged original is stored in `web_system/resources/branding/aksyres-emblem.png`. Run `php tool/generate_brand_assets.php` to generate the resized web/favicon/PWA/Android assets. The whole image is preserved on white, with safe padding for maskable icons. The previous public logo URL serves the same new artwork for cached pages during the update.
+
+Android 1.0.3 (version code 4) displays AksyRes and includes the new launcher/splash artwork. Its APK and checksum are distributed under `android-v1.0.3` as `aksyres-1.0.3.apk`. Existing APK installations need that update to change their native name/icon; the PWA uses service worker v11 and versioned icons to refresh the web assets. Keep the package ID, signing key, manifest identity, and existing session cookie stable. Dokploy pins `APP_NAME` and `MAIL_FROM_NAME` to AksyRes. Migration `2026_10_27_000001_rename_command_center_brand_to_aksyres` updates only the previous exact default station label. Deploy the web assets/migration and verify the public pages, manifest/icons, download, and APK signature/checksum.
 
 ## Local Compose check
 

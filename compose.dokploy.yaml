@@ -12,7 +12,7 @@ services:
     expose:
       - "10000"
     environment:
-      APP_NAME: ResQMesh
+      APP_NAME: AksyRes
       APP_ENV: production
       APP_DEBUG: "false"
       APP_KEY: ${APP_KEY:?Set APP_KEY in Dokploy}
@@ -62,7 +62,7 @@ services:
       MAIL_USERNAME: ${MAIL_USERNAME:-null}
       MAIL_PASSWORD: ${MAIL_PASSWORD:-null}
       MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS:-hello@example.com}
-      MAIL_FROM_NAME: ResQMesh
+      MAIL_FROM_NAME: AksyRes
     volumes:
       - app-storage:/var/www/html/storage/app
     healthcheck:

@@ -36,7 +36,7 @@ class AuthAndReportFlowTest extends TestCase
             ->assertSee('data-auth-toggle-target="password_confirmation"', false)
             ->assertSee('auth-password.js?v=', false)
             ->assertSee('Min. 6 characters required')
-            ->assertSee('ResQMesh')
+            ->assertSee('AksyRes')
             ->assertSee('Civilian Account Registration')
             ->assertSee('This public registration creates a civilian sender account only.')
             ->assertSee('Download App')
@@ -50,7 +50,7 @@ class AuthAndReportFlowTest extends TestCase
     public function test_login_and_welcome_pages_show_updated_system_branding(): void
     {
         $branding = 'AI-Powered LoRa Emergency Response and Severity Detection System with Intelligent Location Monitoring';
-        $shortBrand = 'ResQMesh';
+        $shortBrand = 'AksyRes';
 
         $this->get('/')
             ->assertOk()
