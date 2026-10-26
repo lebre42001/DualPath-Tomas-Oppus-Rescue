@@ -25,6 +25,8 @@ class RequiredReportLocationTest extends TestCase
             'partial longitude' => [['longitude' => 124.970400], ['latitude']],
             'invalid coordinates' => [['latitude' => 'not-a-coordinate', 'longitude' => 'unknown'], ['latitude', 'longitude']],
             'outside bounds' => [['latitude' => 91, 'longitude' => 181], ['latitude', 'longitude']],
+            'missing landmark with GPS' => [['latitude' => 10.354270, 'longitude' => 124.970400, 'location_text' => null], ['location_text']],
+            'blank landmark with GPS' => [['latitude' => 10.354270, 'longitude' => 124.970400, 'location_text' => '   '], ['location_text']],
         ];
     }
 

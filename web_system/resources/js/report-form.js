@@ -206,6 +206,10 @@ onDomReady( () => {
         descriptionInput instanceof HTMLTextAreaElement
         && descriptionInput.value.trim().length > 0;
 
+    const hasRequiredLocation = () =>
+        locationInput instanceof HTMLInputElement
+        && locationInput.value.trim().length > 0;
+
     const revokePreviewUrl = (value) => {
         if (value) {
             URL.revokeObjectURL(value);
@@ -406,9 +410,10 @@ onDomReady( () => {
 
         const photoReady = hasRequiredPhoto();
         const gpsReady = hasExactGps();
+        const locationReady = hasRequiredLocation();
         const descriptionReady = hasRequiredDescription();
         const selfieReady = hasRequiredSelfie();
-        const readyForSelfieGate = photoReady && gpsReady && descriptionReady;
+        const readyForSelfieGate = photoReady && gpsReady && locationReady && descriptionReady;
         const allReady = readyForSelfieGate && selfieReady;
 
         setBadgeState(photoRequirement, photoReady ? 'green' : 'red', photoReady ? 'Ready' : 'Still required');
@@ -428,7 +433,9 @@ onDomReady( () => {
                 ? 'Verification selfie is ready. Sending can continue.'
                 : readyForSelfieGate
                     ? 'Tap Send Report to open selfie verification before final submit.'
-                    : 'Add a scene photo, lock GPS, and enter a short description to continue.';
+                    : !locationReady
+                        ? 'Enter a barangay, road, or nearby landmark. GPS is also required.'
+                        : 'Add a scene photo, lock GPS, and enter a short description to continue.';
         }
 
         return readyForSelfieGate;
@@ -894,7 +901,7 @@ onDomReady( () => {
             latitudeInput.value = latitude.toFixed(6);
             longitudeInput.value = longitude.toFixed(6);
             gpsLocked = true;
-            if (locationInput instanceof HTMLInputElement
+            if (!isCivilian && locationInput instanceof HTMLInputElement
                 && (!locationInput.value.trim() || /^GPS [-\d., ]+$/.test(locationInput.value))) {
                 locationInput.value = `GPS ${latitudeInput.value}, ${longitudeInput.value}`;
             }
@@ -1035,7 +1042,7 @@ onDomReady( () => {
 
         if (!updateCivilianReadiness()) {
             event.preventDefault();
-            setGeoStatus('Complete the scene photo, locked GPS, and short description before sending.');
+            setGeoStatus('Complete the scene photo, locked GPS, barangay/road/landmark, and short description before sending.');
             return;
         }
 

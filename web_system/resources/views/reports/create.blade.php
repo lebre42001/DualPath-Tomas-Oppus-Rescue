@@ -118,15 +118,16 @@
 
                         <div class="civilian-gps-fallback-panel">
                             <div class="field">
-                                <label for="location_text">Barangay / road / landmark (optional)</label>
-                                <input id="location_text" class="input" type="text" name="location_text" value="{{ old('location_text') }}" placeholder="Example: Poblacion near Bontoc Public Market" data-manual-location-input>
+                                <label for="location_text">Barangay / road / landmark (required)</label>
+                                <input id="location_text" class="input" type="text" name="location_text" value="{{ old('location_text') }}" placeholder="Example: Poblacion near Bontoc Public Market" maxlength="180" required aria-describedby="location-text-help" data-manual-location-input>
+                                <small id="location-text-help">Enter a barangay, road, or nearby landmark to help rescuers find you. GPS is also required.</small>
                             </div>
                         </div>
 
                         <details class="civilian-compact-details">
                             <summary>Photo preview &amp; reporting help</summary>
                             <div class="civilian-report-help">
-                                <p>Use a real scene photo. GPS and a short description are required. A landmark can help responders but does not replace GPS.</p>
+                                <p>Use a real scene photo. GPS, a barangay/road/landmark, and a short description are required.</p>
                                 <p>A responder reviews your report. Any available AI suggestion uses only your description; photos remain evidence.</p>
                                 <p>Road Accident is available for this version. Fire Incident, Flood / Landslide, and Medical Emergency: Coming soon.</p>
                                 <p>If device access is blocked, open in Android Chrome or iPhone Safari and allow camera and location.</p>

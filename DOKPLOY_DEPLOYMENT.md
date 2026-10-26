@@ -521,6 +521,10 @@ The verification page now shows a single heading, a bounded camera preview, and 
 
 Deploy the normal web build and clear Laravel caches. Refresh the PWA to load the new assets; no APK rebuild or database migration is needed. Validate a mobile preview/capture/retake/verify flow and admin verification-image access. Browser automation uses synthetic camera frames and unsaved fixture accounts; real phone camera permissions still need a device check.
 
+## Required civilian location description (2026-10-25)
+
+Civilian emergency reports require both a current GPS lock and a barangay, road, or nearby landmark. The location description is marked required, is included in the Send Report readiness gate, and is no longer filled with raw coordinates by civilian GPS capture. The web and API validators require the description and return a rescue-specific error when it is missing; missing/blank text is rejected even with valid coordinates. Admin manual entry keeps its existing GPS helper. Deploy the normal web build, clear Laravel caches, and refresh the PWA. Verify missing GPS, missing description with valid GPS, and the complete photo/location/description/selfie flow.
+
 ## Local Compose check
 
 After Docker Desktop is installed, create an untracked `.env` from

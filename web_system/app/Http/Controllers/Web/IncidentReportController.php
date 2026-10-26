@@ -162,6 +162,7 @@ class IncidentReportController extends Controller
                 'mimes:jpg,jpeg,png,webp',
             ],
         ], [
+            'location_text.required' => 'Enter the barangay, road, or nearby landmark so rescuers can find the incident. GPS is also required.',
             'latitude.required' => 'Enable device location, allow browser location access, and lock GPS before sending the emergency report.',
             'longitude.required' => 'Enable device location, allow browser location access, and lock GPS before sending the emergency report.',
             'description.required' => 'Describe the emergency before sending. The AI severity review uses this text as its main basis.',
