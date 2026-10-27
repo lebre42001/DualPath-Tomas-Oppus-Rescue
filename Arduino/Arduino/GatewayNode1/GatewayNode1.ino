@@ -7,6 +7,9 @@
 
   Copy arduino_secrets.example.h to arduino_secrets.h, then configure Wi-Fi,
   server URL, gateway token, and (for HTTPS) the server root CA certificate.
+
+  Active-high LEDs: green GPIO25 = direct LoRa peer, yellow GPIO32 = Laravel
+  route / LoRa activity, red GPIO33 = local report awaiting responder ACK.
 */
 
 #include <WiFi.h>
@@ -41,6 +44,14 @@ const int LORA_MISO = 19;
 const int LORA_MOSI = 23;
 const int LORA_RST = 27;
 const int LORA_DIO0 = 26;
+const int GREEN_LED_PIN = 25;          // Fresh direct LoRa peer
+const int YELLOW_STATUS_LED_PIN = 32;  // Laravel API availability / LoRa traffic
+const int RED_EMERGENCY_LED_PIN = 33;  // NODE_1's own pending report only
+
+static_assert(!BATTERY_MONITOR_ENABLED ||
+  (BATTERY_ADC_PIN != GREEN_LED_PIN && BATTERY_ADC_PIN != YELLOW_STATUS_LED_PIN &&
+   BATTERY_ADC_PIN != RED_EMERGENCY_LED_PIN),
+  "Battery ADC conflicts with an active gateway LED GPIO. Check battery_config.h.");
 
 const unsigned long SERVER_CHECK_INTERVAL_MS = 10000;
 const unsigned long HEARTBEAT_INTERVAL_MS = 10000;
@@ -49,6 +60,9 @@ const unsigned long NETWORK_POLL_INTERVAL_MS = 10000;
 const unsigned long ACK_POLL_INTERVAL_MS = 2000;
 const unsigned long SERVER_ROUTE_TIMEOUT_MS = 30000;
 const unsigned long LOCAL_REPORT_RETRY_INTERVAL_MS = 15000;
+const unsigned long LED_ACTIVITY_MS = 700;
+const unsigned long LED_FAST_TOGGLE_MS = 125;
+const unsigned long LED_SLOW_TOGGLE_MS = 600;
 
 WiFiClient plainClient;
 WiFiClientSecure secureClient;
@@ -65,6 +79,14 @@ unsigned long lastNetworkPollMs = 0;
 unsigned long lastAckPollMs = 0;
 unsigned long lastWifiReconnectMs = 0;
 unsigned long lastLocalReportRetryMs = 0;
+unsigned long lastLedActivityMs = 0;
+unsigned long lastLedToggleMs = 0;
+bool ledActivityPending = false;
+bool ledActivityActive = false;
+bool ledBlinkState = false;
+unsigned long lastEmergencyLedToggleMs = 0;
+bool emergencyLedBlinkState = false;
+bool emergencyLedWasPending = false;
 unsigned long gatewaySequence = 0;
 String gatewayStatus = "Starting";
 String lastForwardedMessage = "None";
@@ -223,6 +245,14 @@ void updatePeer(const String& nodeId, int rssi) {
   }
 }
 
+bool hasFreshLoRaPeer() {
+  const unsigned long now = millis();
+  for (int index = 0; index < MAX_PEERS; index++) {
+    if (peers[index].nodeId.length() > 0 && now - peers[index].lastSeenMs <= PEER_TIMEOUT_MS) return true;
+  }
+  return false;
+}
+
 String peerList() {
   String result;
   const unsigned long now = millis();
@@ -311,6 +341,10 @@ bool requestApi(const String& method, const String& path, const String& body, St
     }
     lastServerSuccessMs = millis();
     gatewayStatus = "Laravel server connected";
+    // Show confirmation and advertise any due beacon before the next blocking
+    // HTTPS request. A chain of API calls must not starve field-node routes.
+    updateLedIndicators();
+    sendGatewayBeaconIfNeeded();
     return true;
   }
   gatewayStatus = "Laravel server unavailable (HTTP " + String(statusCode) + ")";
@@ -318,7 +352,69 @@ bool requestApi(const String& method, const String& path, const String& body, St
 }
 
 bool serverRouteAvailable() {
-  return lastServerSuccessMs > 0 && millis() - lastServerSuccessMs <= SERVER_ROUTE_TIMEOUT_MS;
+  return WiFi.status() == WL_CONNECTED && lastServerSuccessMs > 0 &&
+    millis() - lastServerSuccessMs <= SERVER_ROUTE_TIMEOUT_MS;
+}
+
+bool hasConfirmedServerRoute() {
+  // requestApi records only HTTP 2xx, so Wi-Fi association alone cannot light solid.
+  return serverRouteAvailable();
+}
+
+bool hasPendingLocalEmergency() {
+  // Forwarded field-node reports never populate this local persistent queue.
+  return pendingLocalPacket.length() > 0;
+}
+
+void initializeLedIndicators() {
+  pinMode(GREEN_LED_PIN, OUTPUT);
+  pinMode(YELLOW_STATUS_LED_PIN, OUTPUT);
+  pinMode(RED_EMERGENCY_LED_PIN, OUTPUT);
+  digitalWrite(GREEN_LED_PIN, LOW);
+  digitalWrite(YELLOW_STATUS_LED_PIN, LOW);
+  digitalWrite(RED_EMERGENCY_LED_PIN, LOW);
+}
+
+void updateLedIndicators() {
+  const unsigned long now = millis();
+  if (ledActivityPending) {
+    lastLedActivityMs = now;
+    ledActivityActive = true;
+    ledActivityPending = false;
+  }
+
+  // Green reports radio reachability independently of Wi-Fi or Laravel.
+  digitalWrite(GREEN_LED_PIN, hasFreshLoRaPeer() ? HIGH : LOW);
+
+  // Confirmed server access takes priority: routine radio traffic must never
+  // make a working server connection look unavailable.
+  const bool activityFresh = ledActivityActive && now - lastLedActivityMs < LED_ACTIVITY_MS;
+  if (!activityFresh) ledActivityActive = false;
+  if (hasConfirmedServerRoute()) {
+    ledBlinkState = true;
+  } else {
+    const unsigned long interval = activityFresh ? LED_FAST_TOGGLE_MS : LED_SLOW_TOGGLE_MS;
+    if (now - lastLedToggleMs >= interval) {
+      lastLedToggleMs = now;
+      ledBlinkState = !ledBlinkState;
+    }
+  }
+  digitalWrite(YELLOW_STATUS_LED_PIN, ledBlinkState ? HIGH : LOW);
+
+  // Independent red timer follows only the established local pending state.
+  // Server submission alone does not clear it; the matching responder ACK does.
+  const bool pending = hasPendingLocalEmergency();
+  if (!pending) {
+    emergencyLedBlinkState = false;
+  } else if (!emergencyLedWasPending) {
+    emergencyLedBlinkState = true;
+    lastEmergencyLedToggleMs = now;
+  } else if (now - lastEmergencyLedToggleMs >= LED_SLOW_TOGGLE_MS) {
+    lastEmergencyLedToggleMs = now;
+    emergencyLedBlinkState = !emergencyLedBlinkState;
+  }
+  emergencyLedWasPending = pending;
+  digitalWrite(RED_EMERGENCY_LED_PIN, emergencyLedBlinkState ? HIGH : LOW);
 }
 
 String utcTimestamp() {
@@ -329,6 +425,11 @@ String utcTimestamp() {
   char timestamp[25];
   strftime(timestamp, sizeof(timestamp), "%Y-%m-%dT%H:%M:%SZ", &utcTime);
   return String(timestamp);
+}
+
+void markLoRaActivity() {
+  // Defer the animation until loop resumes after any blocking API request.
+  ledActivityPending = true;
 }
 
 bool sendLoRaPacket(const String& payload) {
@@ -342,6 +443,7 @@ bool sendLoRaPacket(const String& payload) {
   LoRa.print(payload);
   const int result = LoRa.endPacket();
   LoRa.receive();
+  if (result == 1) markLoRaActivity();
   Serial.println("[LORA TX] " + payload);
   return result == 1;
 }
@@ -719,6 +821,7 @@ bool forwardHeartbeatToLaravel(const String& packet, int rssi, float snr) {
 void handleIncomingLoRa() {
   const int packetSize = LoRa.parsePacket();
   if (!packetSize) return;
+  markLoRaActivity();
 
   String packet;
   while (LoRa.available()) packet += (char) LoRa.read();
@@ -775,6 +878,7 @@ void connectRouter() {
 }
 
 void setup() {
+  initializeLedIndicators();
   Serial.begin(115200);
   delay(500);
   randomSeed(esp_random());
@@ -787,6 +891,7 @@ void setup() {
   latestAckAt = prefs.getString("latest_ack_at", "");
   pendingLocalPacket = prefs.getString("pending_packet", "");
   pendingLocalMsgId = prefs.getString("pending_msg", "");
+  updateLedIndicators();  // Restore the pending indicator after a reboot.
 
   WiFi.mode(WIFI_AP_STA);
   WiFi.softAP(LOCAL_AP_SSID, LOCAL_AP_PASSWORD);
@@ -798,7 +903,10 @@ void setup() {
   LoRa.setPins(LORA_SS, LORA_RST, LORA_DIO0);
   if (!LoRa.begin(LORA_FREQUENCY)) {
     Serial.println("LoRa init failed. Check wiring and radio settings.");
-    while (true) delay(1000);
+    while (true) {
+      updateLedIndicators();
+      delay(2);
+    }
   }
 
   LoRa.setSyncWord(LORA_SYNC_WORD);
@@ -826,5 +934,6 @@ void loop() {
   pollNetworkSummaryIfNeeded();
   pollPendingAcknowledgmentIfNeeded();
   retryLocalReportIfNeeded();
+  updateLedIndicators();
   delay(2);
 }

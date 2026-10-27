@@ -1,6 +1,7 @@
 /*
   STITCH ESP32 LoRa FIELD NODE firmware for NODE_2 ... NODE_10
-  NO LED, NO SWITCH LOGIC, NO GPS; optional battery voltage ADC
+  NODE_2..10: green/yellow/red LEDs with the same status algorithm
+  No switch or GPS; existing optional battery voltage ADC
 
   Hardware:
   - ESP32
@@ -9,7 +10,7 @@
   - TPS63020 buck-boost verified at ~3.3 V
 
   Each field node can:
-  1. Create its own local Wi-Fi AP and emergency dashboard.
+  1. Create its own open (no-password) Wi-Fi AP and emergency dashboard.
   2. Originate an emergency report while preserving the original button-press time.
   3. Queue one emergency report if no route to NODE_1/server is available.
   4. Send periodic heartbeat/status packets.
@@ -39,12 +40,6 @@
 #include <esp_system.h>
 #include "battery_monitor.h"
 
-#if __has_include("field_node_secrets.h")
-#include "field_node_secrets.h"
-#else
-#error "Copy field_node_secrets.example.h to field_node_secrets.h and configure the local AP password before compiling."
-#endif
-
 // =====================================================
 // CHANGE ONLY THIS FOR EACH FIELD NODE
 // Valid values: 2 ... 10
@@ -67,6 +62,19 @@ const int LORA_MOSI = 23;
 const int LORA_RST  = 27;  // RST / REST
 const int LORA_DIO0 = 26;
 
+// All field nodes NODE_2..NODE_10 use the same active-high three-LED wiring.
+const bool HAS_THREE_STATUS_LEDS = NODE_NUMBER >= 2 && NODE_NUMBER <= 10;
+const int GREEN_LED_PIN = 25;          // Fresh direct LoRa peer
+const int YELLOW_STATUS_LED_PIN = 32;  // Mesh route / radio activity
+const int RED_EMERGENCY_LED_PIN = 33;  // This node's pending report
+const int MESH_STATUS_LED_PIN = HAS_THREE_STATUS_LEDS ? YELLOW_STATUS_LED_PIN : GREEN_LED_PIN;
+
+static_assert(!BATTERY_MONITOR_ENABLED ||
+  (BATTERY_ADC_PIN != MESH_STATUS_LED_PIN &&
+   (!HAS_THREE_STATUS_LEDS ||
+    (BATTERY_ADC_PIN != GREEN_LED_PIN && BATTERY_ADC_PIN != RED_EMERGENCY_LED_PIN))),
+  "Battery ADC conflicts with an active LED GPIO. Check this board's battery_config.h.");
+
 // =====================================================
 // TIMING
 // =====================================================
@@ -76,9 +84,14 @@ const int LORA_DIO0 = 26;
 const unsigned long HELLO_INTERVAL_MS         = 15000;
 const unsigned long HEARTBEAT_INTERVAL_MS     = 10000;
 const unsigned long PEER_TIMEOUT_MS           = 40000;
-const unsigned long SERVER_ROUTE_TIMEOUT_MS   = 16000;
+// Allow missed 5-second beacons while NODE_1 completes synchronous HTTPS work.
+// Confirmation still expires after 30 seconds without a new gateway beacon.
+const unsigned long SERVER_ROUTE_TIMEOUT_MS   = 30000;
 const unsigned long NETWORK_SUMMARY_TIMEOUT_MS = 30000;
 const unsigned long SOS_RETRY_INTERVAL_MS     = 30000;
+const unsigned long LED_ACTIVITY_MS           = 700;
+const unsigned long LED_FAST_TOGGLE_MS        = 125;
+const unsigned long LED_SLOW_TOGGLE_MS        = 600;
 
 // A repeated flooded packet is ignored for this period.
 // Source nodes retry SOS later than this, so legitimate retries can pass.
@@ -99,6 +112,14 @@ unsigned long lastHeartbeatMs = 0;
 unsigned long lastGatewaySeenMs = 0;
 unsigned long lastNetworkSummarySeenMs = 0;
 unsigned long lastSosAttemptMs = 0;
+unsigned long lastLedActivityMs = 0;
+unsigned long lastLedToggleMs = 0;
+bool ledActivityPending = false;
+bool ledActivityActive = false;
+bool ledBlinkState = false;
+unsigned long lastEmergencyLedToggleMs = 0;
+bool emergencyLedBlinkState = false;
+bool emergencyLedWasPending = false;
 
 uint32_t heartbeatSequence = 0;
 const unsigned long PROBE_INTERVAL_MS = 60000;
@@ -384,6 +405,11 @@ int activePeerCount() {
   return count;
 }
 
+bool hasFreshLoRaPeer() {
+  // Only direct radio discoveries count; the server's active-node total does not.
+  return activePeerCount() > 0;
+}
+
 String peerCsv(bool includeRssi = false) {
   String result = "";
   unsigned long now = millis();
@@ -403,6 +429,12 @@ String peerCsv(bool includeRssi = false) {
 // LORA TRANSMISSION
 // =====================================================
 
+void markLoRaActivity() {
+  // Start the short animation on the next loop pass, after any blocking
+  // server work triggered by this packet has returned.
+  ledActivityPending = true;
+}
+
 bool sendLoRaPacket(String payload) {
   // Packet formats are intentionally kept short enough for this test firmware.
   if (payload.length() > 245) {
@@ -415,6 +447,7 @@ bool sendLoRaPacket(String payload) {
   LoRa.print(payload);
   int result = LoRa.endPacket();
   LoRa.receive();
+  if (result == 1) markLoRaActivity();
 
   Serial.println("[LORA TX] " + payload);
   return result == 1;
@@ -426,6 +459,78 @@ bool sendLoRaPacket(String payload) {
 
 bool serverRouteAvailable() {
   return lastGatewaySeenMs > 0 && (millis() - lastGatewaySeenMs <= SERVER_ROUTE_TIMEOUT_MS);
+}
+
+bool hasConfirmedServerRoute() {
+  return serverRouteAvailable();
+}
+
+bool hasPendingLocalEmergency() {
+  // Only locally originated reports enter this persistent queue. Relaying an
+  // SOS does not populate it; the existing matching responder ACK clears it.
+  return pendingPacket.length() > 0;
+}
+
+void initializeLedIndicators() {
+  pinMode(MESH_STATUS_LED_PIN, OUTPUT);
+  digitalWrite(MESH_STATUS_LED_PIN, LOW);
+  if (HAS_THREE_STATUS_LEDS) {
+    pinMode(GREEN_LED_PIN, OUTPUT);
+    pinMode(RED_EMERGENCY_LED_PIN, OUTPUT);
+    digitalWrite(GREEN_LED_PIN, LOW);
+    digitalWrite(RED_EMERGENCY_LED_PIN, LOW);
+  }
+}
+
+void updateLedIndicators() {
+  const unsigned long now = millis();
+  if (ledActivityPending) {
+    lastLedActivityMs = now;
+    ledActivityActive = true;
+    ledActivityPending = false;
+  }
+
+  // Confirmed routes stay solid even during radio traffic. Activity only
+  // animates yellow while a peer exists but no server route is confirmed.
+  const bool activityFresh = ledActivityActive && now - lastLedActivityMs < LED_ACTIVITY_MS;
+  if (!activityFresh) ledActivityActive = false;
+  const bool hasPeer = hasFreshLoRaPeer();
+  // No peer means both green and yellow stay OFF on every valid field node,
+  // including unanswered HELLOs.
+  const bool solid = hasPeer && hasConfirmedServerRoute();
+  const bool fastBlink = activityFresh && hasPeer && !solid;
+  const bool slowBlink = hasPeer && !solid;
+
+  if (!fastBlink && !slowBlink) {
+    ledBlinkState = solid;
+  } else {
+    const unsigned long interval = fastBlink ? LED_FAST_TOGGLE_MS : LED_SLOW_TOGGLE_MS;
+    if (now - lastLedToggleMs >= interval) {
+      lastLedToggleMs = now;
+      ledBlinkState = !ledBlinkState;
+    }
+  }
+  digitalWrite(MESH_STATUS_LED_PIN, ledBlinkState ? HIGH : LOW);
+
+  if (HAS_THREE_STATUS_LEDS) {
+    // GPIO25 is physically green: received peer evidence lights it, and peer
+    // expiry turns it off. Transmitting alone never establishes a peer.
+    digitalWrite(GREEN_LED_PIN, hasPeer ? HIGH : LOW);
+
+    // Independent timer: mesh traffic cannot reset or suppress pending SOS.
+    const bool pending = hasPendingLocalEmergency();
+    if (!pending) {
+      emergencyLedBlinkState = false;
+    } else if (!emergencyLedWasPending) {
+      emergencyLedBlinkState = true;
+      lastEmergencyLedToggleMs = now;
+    } else if (now - lastEmergencyLedToggleMs >= LED_SLOW_TOGGLE_MS) {
+      lastEmergencyLedToggleMs = now;
+      emergencyLedBlinkState = !emergencyLedBlinkState;
+    }
+    emergencyLedWasPending = pending;
+    digitalWrite(RED_EMERGENCY_LED_PIN, emergencyLedBlinkState ? HIGH : LOW);
+  }
 }
 
 bool networkSummaryFresh() {
@@ -716,7 +821,11 @@ void handleAck(String packet) {
   if (msgId.length() == 0 || origin.length() == 0) return;
 
   if (origin == NODE_ID) {
-    if (latestMsgId == msgId || pendingMsgId == msgId) {
+    // Only a matching final response from the established gateway may clear
+    // the local queue (and consequently its emergency LED).
+    if ((latestMsgId == msgId || pendingMsgId == msgId) &&
+        gateway == "NODE_1" && acknowledgedAt.length() > 0 &&
+        (status == "ACKNOWLEDGED" || status == "REJECTED")) {
       saveAcknowledgedState(
         status.length() ? status : "ACKNOWLEDGED",
         acknowledgedAt,
@@ -754,6 +863,7 @@ void handleAck(String packet) {
 void handleIncomingLoRa() {
   int packetSize = LoRa.parsePacket();
   if (!packetSize) return;
+  markLoRaActivity();
 
   String packet = "";
   while (LoRa.available()) packet += (char)LoRa.read();
@@ -906,10 +1016,15 @@ void handleLocalStatus() {
 
 void startLocalWiFi() {
   WiFi.mode(WIFI_AP);
-  WiFi.softAP(LOCAL_AP_SSID.c_str(), LOCAL_AP_PASSWORD);
+  // Omitting the passphrase creates an open AP for civilian emergency access.
+  if (!WiFi.softAP(LOCAL_AP_SSID.c_str())) {
+    Serial.println("ERROR: Could not start the open local Wi-Fi access point.");
+    return;
+  }
 
   Serial.print("Local Wi-Fi: ");
   Serial.println(LOCAL_AP_SSID);
+  Serial.println("Wi-Fi access: OPEN (no password required)");
   Serial.print("Local dashboard: http://");
   Serial.println(WiFi.softAPIP());
 }
@@ -943,6 +1058,7 @@ void loadPersistentState() {
 // =====================================================
 
 void setup() {
+  initializeLedIndicators();
   Serial.begin(115200);
   delay(1000);
 
@@ -955,6 +1071,7 @@ void setup() {
   LOCAL_AP_SSID = "Node " + String(NODE_NUMBER) + " Emergency";
 
   loadPersistentState();
+  updateLedIndicators();  // Restore pending-report indication after reboot.
 
   randomSeed(esp_random());
   probeBootId = String(esp_random(), HEX);
@@ -980,7 +1097,10 @@ void setup() {
 
   if (!LoRa.begin(LORA_FREQUENCY)) {
     Serial.println("ERROR: LoRa initialization failed. Check 3.3 V power and NSS/SCK/MISO/MOSI/REST/DIO0 wiring.");
-    while (true) delay(1000);
+    while (true) {
+      updateLedIndicators();
+      delay(2);
+    }
   }
 
   LoRa.setSyncWord(LORA_SYNC_WORD);
@@ -1006,6 +1126,8 @@ void loop() {
   sendHelloIfNeeded();
   trySendPending(false);
   sendTimingProbeIfNeeded();
+
+  updateLedIndicators();
 
   delay(2);
 }

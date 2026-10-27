@@ -838,7 +838,7 @@ void handleLoRaPacket(String message, int rssi, float snr) {
     gatewayRssi = String(rssi);
     gatewaySnr = String(snr, 1);
   } else if (command == "GW" && getField(message, '|', 4) == "ALERT") {
-    // Retained for the later mesh phase. Gateway1/Gateway2 wrap the ALERT packet.
+    // Retained for the legacy relay packet format used by the old prototypes.
     lastPacketWasRelayed = true;
     String relayGatewayId = getField(message, '|', 1);
     lastRelayGateway = relayGatewayId;

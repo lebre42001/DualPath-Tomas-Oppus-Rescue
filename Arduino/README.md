@@ -1,6 +1,6 @@
 # Arduino LoRa Hardware Integration
 
-The active mesh uses `GatewayNode1/GatewayNode1.ino` for NODE_1 and the configurable `FieldNode/FieldNode.ino` sketch for NODE_2 through NODE_10. The older `Sender_GPS`, `Reciever`, `Gateway1`, and `Gateway2` sketches are legacy prototypes and do not use the active mesh protocol.
+The active mesh uses `GatewayNode1/GatewayNode1.ino` for NODE_1 and the configurable `FieldNode/FieldNode.ino` sketch for NODE_2 through NODE_10. `GatewayNode1` is the only gateway sketch to use for the active mesh. The older `Sender_GPS`, `Reciever`, and `sketch_may21a` sketches are legacy prototypes and do not use the active mesh protocol.
 
 ## Active Mesh Flow
 
@@ -48,7 +48,9 @@ GPS is not required. Battery voltage sensing is optional and requires the divide
 
 Ready-to-upload sketches are generated in `Arduino/Arduino/FieldNodes/` for NODE_2 through NODE_10. Open the sketch whose folder and filename match the physical board, verify its `NODE_NUMBER`, and upload it. The shared source template remains `Arduino/Arduino/FieldNode/FieldNode.ino`.
 
-Before generating the field-node sketches, copy `Arduino/Arduino/FieldNode/field_node_secrets.example.h` to `field_node_secrets.h` in the same folder and replace the placeholder local-dashboard password. The configured file is ignored by Git. The generator copies that local header beside each generated sketch for hardware upload while only the safe example header is published.
+NODE_2 through NODE_10 expose open Wi-Fi access points: users connect without
+entering a password. No field-node secrets header or password setup is needed.
+The shared source calls `WiFi.softAP(LOCAL_AP_SSID.c_str())` without a passphrase.
 
 If the shared field-node template changes, regenerate all nine sketches from the repository root:
 
@@ -56,7 +58,23 @@ If the shared field-node template changes, regenerate all nine sketches from the
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Arduino\generate_field_node_sketches.ps1
 ```
 
-Each node exposes a local AP named `Node 2 Emergency` through `Node 10 Emergency`. Change `LOCAL_AP_PASSWORD` in the ignored `FieldNode/field_node_secrets.h` before regeneration if a different local dashboard password is required.
+Each node exposes a local AP named `Node 2 Emergency` through `Node 10 Emergency`.
+Join the matching open network, stay connected if the phone reports no internet,
+and open `http://192.168.4.1` to submit an emergency. The Serial Monitor confirms
+`Wi-Fi access: OPEN (no password required)` after the access point starts.
+Upload each matching regenerated sketch to its physical board to apply this
+change. If a phone retains an old saved password, forget that network and join it
+again after the firmware upload.
+
+Open the matching `.ino` file in Arduino IDE; the `.h` tabs are configuration
+and supporting files. Keep the complete firmware in the `.ino` tab.
+The generator removes the retired `field_node_secrets.h` and
+`field_node_secrets.example.h` files from the template and generated field-node
+folders. It still validates include guards, local include cycles, and accidental
+`setup()`/`loop()` code in the remaining headers. Close and reopen the sketch
+after regeneration; discard an old unsaved header buffer rather than saving it
+over the current files. NODE_1/Gateway keeps its existing protected local Wi-Fi,
+router credentials, gateway token, and HTTPS configuration in its own headers.
 
 ## NODE_1 Gateway Setup
 
@@ -177,6 +195,78 @@ Coding rate: 4/5
 
 Use a 3.3 V supply for the SX1278/Ra-02/XL1278 and attach the antenna before transmitting.
 
+## LoRa and emergency status LEDs
+
+Each LED is active high: wire its GPIO through a separate 1 kOhm resistor to
+the LED anode, with the cathode connected to common GND.
+
+| Nodes | GPIO25 | GPIO32 | GPIO33 |
+| --- | --- | --- | --- |
+| NODE_1 | Green direct LoRa peer | Yellow Laravel / radio status | Red local emergency pending |
+| NODE_2 through NODE_10 | Green direct LoRa peer | Yellow mesh status | Red local emergency pending |
+
+On NODE_2 through NODE_10, green is solid when at least one direct peer is fresh
+and off when none is fresh. GPIO25 is physically green on these boards. An
+isolated board with no local pending report therefore has all three LEDs off.
+Sending HELLO or receiving an unrecognized frame does not establish a peer;
+green requires the existing direct peer discovery evidence and respects peer
+expiry. Yellow stays off without a peer, including
+unanswered HELLO transmissions; with a peer it slowly blinks at 600 ms on/off
+without a fresh gateway route, or stays solid with a route. Confirmed routes
+keep yellow solid during LoRa TX/RX. A 125 ms activity blink is used only while
+a peer exists but server-route confirmation is unavailable.
+
+The separate emergency red LED blinks at 600 ms on/off while this node has a
+local report queued or awaiting responder acknowledgment. Its independent timer
+is unaffected by mesh traffic. Relaying another node's SOS never sets the local
+pending queue. A matching final `ACKNOWLEDGED` or `REJECTED` response from NODE_1
+clears that queue and turns the indicator off; the existing dashboard popup and
+latest response remain available. A pending report restored from NVS also
+restores its indicator after reboot.
+
+NODE_1 has three independent indicators. Green is solid only while at least one
+direct LoRa peer is fresh, and off otherwise. Yellow is solid while a recent
+authenticated Laravel API request succeeded with HTTP 2xx, or slowly blinks at
+600 ms on/off when server availability is unconfirmed. Confirmed API access
+keeps yellow solid during LoRa TX/RX; the 125 ms activity blink is used only
+while API availability is unconfirmed.
+Thus green plus solid yellow means both the radio peer and server connection
+are confirmed; green alone does not confirm Laravel access. Router association
+alone cannot make yellow solid. Red independently blinks at 600 ms on/off while
+NODE_1's own local report awaits responder ACK, and stops when the established
+ACK handler clears that pending queue. Forwarding field-node SOS/ACK packets
+does not create a NODE_1 local pending report. The saved local pending report
+also restores the red indicator after a reboot.
+
+NODE_6 through NODE_10 use exactly the same green/yellow/red algorithm as
+NODE_2 through NODE_5, including the independent local-emergency indicator.
+Field nodes use a fresh gateway beacon for route confirmation. Sending HELLO
+alone never establishes a peer, and server-reported node counts do not establish
+direct reachability. Upload the matching regenerated sketch to each upgraded
+board; its existing single-green firmware cannot drive the added yellow/red LEDs.
+
+NODE_1 requires router association and an authenticated API success within the
+last 30 seconds to confirm its server route. It publishes any due 5-second
+gateway beacon immediately after each successful API request, before another
+synchronous request can delay it. Field nodes retain route confirmation for
+30 seconds after a gateway beacon, allowing short HTTPS delays or missed
+beacons without false offline blinking. Confirmation expires if beacons stop;
+peer presence alone cannot keep yellow solid.
+
+All LED timing uses `millis()` subtraction across rollover and writes no LED
+state to flash. The existing battery input is GPIO34; firmware builds reject an
+enabled battery ADC configuration that conflicts with an active LED pin.
+Run the clock/GPIO simulation checks with:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Arduino\test_led_indicators.ps1
+```
+
+These checks exercise the source LED functions without physical boards. Compile
+and upload the matching sketch to every board whose LEDs have changed; verify
+the real SOS/ACK round trip separately. Reopen Arduino IDE sketches after
+regeneration so an old editor buffer cannot overwrite the updated firmware.
+
 ## Battery voltage: 3.7 V lithium cell and TPS63020
 
 Measure the single-cell battery before the TPS63020, not its regulated 3.3 V
@@ -286,4 +376,4 @@ php artisan migrate
 
 ## Legacy Sketches
 
-`Sender_GPS`, `Reciever`, `Gateway1`, `Gateway2`, and `sketch_may21a` are kept as historical references. Their older `ALERT|...` packet format and radio pin configuration do not interoperate with the active NODE_1–NODE_10 mesh firmware. Do not mix those boards into the active mesh.
+`Sender_GPS`, `Reciever`, and `sketch_may21a` are kept as historical references. Their older `ALERT|...` packet format and radio pin configuration do not interoperate with the active NODE_1–NODE_10 mesh firmware. Do not mix those boards into the active mesh.
