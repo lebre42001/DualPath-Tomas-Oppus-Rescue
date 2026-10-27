@@ -1,10 +1,14 @@
 /* Shared by account verification and the report camera overlay. */
 body .selfie-camera-frame[data-face-guide]::after { display: none; }
 body .selfie-camera-frame[data-face-guide] video,
-body .selfie-camera-frame[data-face-guide] .detail-media { object-fit: contain; object-position: center; }
+body .selfie-camera-frame[data-face-guide] .detail-media { object-fit: cover; object-position: center; }
+body .selfie-camera-frame[data-face-guide][data-camera-fitted] {
+    width: var(--camera-preview-width); height: var(--camera-preview-height);
+    max-width: 100%; flex: none; align-self: center; margin-inline: auto;
+}
 .live-face-outline {
     position: absolute;
-    left: 50%; top: 50%; transform: translate(-50%, -50%);
+    left: var(--face-guide-left, 50%); top: var(--face-guide-top, 50%); transform: translate(-50%, -50%);
     width: var(--face-guide-width, 75%); height: var(--face-guide-height, 80%);
     border: 3px dashed rgba(255,255,255,.75);
     border-radius: 46%; pointer-events: none;

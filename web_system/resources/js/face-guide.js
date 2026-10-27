@@ -1,4 +1,27 @@
-import { guideBounds, judgeFace } from './face-guide-quality';
+import { guideBounds, judgeFace, previewSize } from './face-guide-quality';
+
+function fitCameraPreview(video, frame) {
+    if (!video.videoWidth || !video.videoHeight) return;
+    const parent = frame.parentElement, style = getComputedStyle(parent);
+    const number = value => parseFloat(value) || 0;
+    const maxWidth = parent.clientWidth-number(style.paddingLeft)-number(style.paddingRight);
+    const viewportHeight = Math.min(innerHeight, window.visualViewport?.height || innerHeight);
+    const sheet = frame.closest('.selfie-camera-sheet');
+    let maxHeight = Math.max(120, Math.min(340, viewportHeight*.38));
+    if (sheet) {
+        const modalStyle = getComputedStyle(sheet.parentElement);
+        const copyHeight = sheet.querySelector('.selfie-camera-copy')?.getBoundingClientRect().height || 0;
+        const actionsHeight = sheet.querySelector('.selfie-camera-actions')?.getBoundingClientRect().height || 0;
+        const available = viewportHeight-number(modalStyle.paddingTop)-number(modalStyle.paddingBottom)
+            -number(style.paddingTop)-number(style.paddingBottom)-number(style.borderTopWidth)-number(style.borderBottomWidth)
+            -copyHeight-actionsHeight-number(style.gap)*2;
+        maxHeight = Math.max(40, Math.min(430, viewportHeight*.48, available));
+    }
+    const size = previewSize(video.videoWidth, video.videoHeight, Math.max(40,maxWidth), maxHeight);
+    frame.style.setProperty('--camera-preview-width', `${size.width.toFixed(2)}px`);
+    frame.style.setProperty('--camera-preview-height', `${size.height.toFixed(2)}px`);
+    frame.dataset.cameraFitted = 'true';
+}
 
 export function showVerifiedFace(frame) {
     if (!frame) return;
@@ -17,6 +40,24 @@ export function watchFaceGuide({ video, frame, onChange, onAutoCapture }) {
         try { current?.close(); } catch { /* Camera cleanup must still complete. */ }
     };
     const label = frame.querySelector('[data-face-guide-label]'), outline = frame.querySelector('.live-face-outline');
+    const fit = () => fitCameraPreview(video, frame);
+    fit();
+    window.addEventListener('resize', fit);
+    window.visualViewport?.addEventListener('resize', fit);
+    video.addEventListener('resize', fit);
+    const paintGuide = (box, bounds) => {
+        const w = frame.clientWidth, h = frame.clientHeight;
+        const ovalWidth = box ? Math.min(w*.94, box.w*w*1.20) : bounds.width;
+        const ovalHeight = box ? Math.min(h*.94, box.h*h*1.35) : bounds.height;
+        const clamp = (value, size, total) => Math.max(size/2+2, Math.min(total-size/2-2, value));
+        // The front-camera video is mirrored; detector coordinates are not.
+        const left = box ? clamp((1-box.cx)*w, ovalWidth, w) : w/2;
+        const top = box ? clamp(box.cy*h, ovalHeight, h) : h/2;
+        frame.style.setProperty('--face-guide-width', `${ovalWidth}px`);
+        frame.style.setProperty('--face-guide-height', `${ovalHeight}px`);
+        frame.style.setProperty('--face-guide-left', `${left}px`);
+        frame.style.setProperty('--face-guide-top', `${top}px`);
+    };
     const emit = (kind, message, isReady = false) => {
         if (stopped) return;
         ready = isReady;
@@ -52,15 +93,15 @@ export function watchFaceGuide({ video, frame, onChange, onAutoCapture }) {
                 const scale = Math.min(1, 320 / Math.max(video.videoWidth, video.videoHeight));
                 const w = Math.round(video.videoWidth*scale), h = Math.round(video.videoHeight*scale);
                 if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+                fit();
                 const bounds = guideBounds(w, h, frame.clientWidth, frame.clientHeight);
-                frame.style.setProperty('--face-guide-width', `${bounds.width}px`);
-                frame.style.setProperty('--face-guide-height', `${bounds.height}px`);
                 context.drawImage(video, 0, 0, w, h);
-                const result = judgeFace(detector.detectForVideo(canvas, now).detections, w, h, bounds);
+                const result = judgeFace(detector.detectForVideo(canvas, now).detections, w, h);
+                paintGuide(result.box, bounds);
                 if (!result.ready) { clearStability(); emit(result.kind, result.message); }
                 else {
                     const box = result.box;
-                    if (!anchor || Math.abs(box.cx-anchor.cx) > .035 || Math.abs(box.cy-anchor.cy) > .035 || Math.abs(box.w-anchor.w) > .05) {
+                    if (!anchor || Math.abs(box.cx-anchor.cx) > .05 || Math.abs(box.cy-anchor.cy) > .05 || Math.abs(box.w-anchor.w) > .08) {
                         anchor = box; stableSince = now;
                     }
                     const stable = now-stableSince;
@@ -91,6 +132,9 @@ export function watchFaceGuide({ video, frame, onChange, onAutoCapture }) {
             stopped = true; ready = false;
             clearTimeout(timer); clearTimeout(loadTimeout);
             document.removeEventListener('visibilitychange', hidden);
+            window.removeEventListener('resize', fit);
+            window.visualViewport?.removeEventListener('resize', fit);
+            video.removeEventListener('resize', fit);
             closeDetector();
             frame.dataset.faceState = 'idle';
             if (label) label.hidden = true;

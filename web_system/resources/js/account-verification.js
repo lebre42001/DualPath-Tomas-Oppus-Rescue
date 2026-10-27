@@ -76,7 +76,7 @@ onDomReady(() => {
             image.src = previewUrl;
             stopCamera();
             state = 'captured';
-            setStatus('3 of 3 · Check your selfie, then tap Verify Account.');
+            setStatus('Face and blink check passed. Preparing verification...');
             return true;
         } catch {
             setStatus('Could not prepare this selfie. Try an updated Chrome or Safari browser.');
@@ -137,7 +137,7 @@ onDomReady(() => {
                     return true;
                 },
             });
-            setStatus('Center your face inside the guide. Capture starts when it turns green.');
+            setStatus('Look at the camera. Hold still until the guide turns green.');
         } catch {
             if (request !== cameraRequest) return;
             stopCamera();
@@ -161,11 +161,14 @@ onDomReady(() => {
             if (setSelectedFile(result.file)) {
                 applyLiveness(form, result);
                 showVerifiedFace(guideFrame);
-                setStatus('3 of 3 · Face and blink check passed. Tap Verify Account.');
+                busy = false;
+                render();
+                if (typeof form.requestSubmit === 'function') form.requestSubmit(submitButton);
+                else submitButton.click();
             }
         } catch (error) {
             if (!controller.signal.aborted) setStatus(error.message || 'Live check failed. Please retry.');
-        } finally { busy = false; render(); }
+        } finally { if (!submitting) busy = false; render(); }
     };
 
     startButton.addEventListener('click', () => { void openCamera(); });
@@ -185,7 +188,7 @@ onDomReady(() => {
         render();
     });
     form.addEventListener('submit', (event) => {
-        if (busy || state !== 'captured' || !hasFile() || !hasLiveness(form)) {
+        if (submitting || busy || state !== 'captured' || !hasFile() || !hasLiveness(form)) {
             event.preventDefault();
             if (!busy) setStatus('Complete a new live face and blink check before verifying your account.');
             return;

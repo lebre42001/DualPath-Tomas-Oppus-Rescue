@@ -47,6 +47,7 @@ export async function captureLiveness({ video, form, purpose, onStatus, signal }
     const challenge = await request(form.dataset.livenessChallengeUrl, { purpose }, signal);
     if (![1,2].includes(challenge.blink_count) || ![6000,8000].includes(challenge.duration_ms)) throw new Error('Start a new live check.');
     const canvas = document.createElement('canvas');
+    const sourceWidth = video.videoWidth, sourceHeight = video.videoHeight;
     const scale = Math.min(1, 480 / Math.max(video.videoWidth, video.videoHeight));
     canvas.width = Math.round(video.videoWidth * scale);
     canvas.height = Math.round(video.videoHeight * scale);
@@ -58,6 +59,7 @@ export async function captureLiveness({ video, form, purpose, onStatus, signal }
     try {
         while (performance.now() - started < challenge.duration_ms) {
             if (signal?.aborted || document.hidden || video.readyState < 2 || !video.srcObject?.active) throw new Error('Keep the live camera and this page open, then retry.');
+            if (video.videoWidth !== sourceWidth || video.videoHeight !== sourceHeight) throw new Error('Camera orientation changed. Hold your phone steady and try the blink check again.');
             const ms = Math.round(performance.now() - started);
             const second = Math.ceil((challenge.duration_ms - ms) / 1000);
             if (second !== lastSecond) {

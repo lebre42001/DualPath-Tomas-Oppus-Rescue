@@ -630,7 +630,7 @@ onDomReady( () => {
                     return true;
                 },
             });
-            setSelfieCameraStatus('Center your face inside the guide. Capture starts when it turns green.');
+            setSelfieCameraStatus('Look at the camera. Hold still until the guide turns green.');
 
             return true;
         } catch {

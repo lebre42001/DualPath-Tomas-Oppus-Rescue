@@ -44,7 +44,7 @@
 
             <details class="verification-help">
                 <summary>Why a selfie? &amp; account details</summary>
-                <p>Live facial verification required. Center one face until the guide turns green. Capture starts automatically; blink slowly when asked. Preview detection stays on your device. The server checks the blink sequence, then discards it. Only the verified selfie is saved as the account verification record.</p>
+                <p>Live facial verification required. Look at the camera until the guide turns green. Capture starts automatically; blink slowly when asked. After the server approves the blink check, your verification is saved automatically. Preview detection stays on your device. The blink sequence is discarded; only the verified selfie is saved.</p>
                 <p><strong>{{ $user->name }}</strong><br>{{ $user->email }}</p>
                 <p>Emergency reporting stays locked until verification is complete.</p>
             </details>

@@ -569,9 +569,13 @@ report submission. Preview detection runs locally, using the pinned Apache-2.0
 BlazeFace asset in `web_system/resources/face-guide/` and reviewed browser SDK
 `@mediapipe/tasks-vision@0.10.32`. Vite serves the lazy JS/model/WASM assets from
 the same origin; no preview images go to a CDN or face-preview endpoint. The
-complete camera image is contained in the preview so the oval and saved selfie
-refer to the same visible frame in portrait/landscape. Unsupported or failed
-detector loading leaves capture disabled and exposes camera retry guidance.
+preview adopts the camera's actual aspect ratio within the available space,
+removing letterbox bars without zooming away the face. The oval follows the
+detected face; visible eyes, nose and mouth are checked instead of requiring an
+exact fixed-oval center. Account verification saves automatically after the
+server approves the blink sequence; duplicate submissions remain blocked.
+Unsupported or failed detector loading leaves capture disabled and exposes
+camera retry guidance.
 
 The web container compresses the hashed `/build/assets/` JS/CSS/WASM/model files
 and caches them immutably. This reduces the face runtime's first download and
