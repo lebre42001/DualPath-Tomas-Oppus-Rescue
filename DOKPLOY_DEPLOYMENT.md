@@ -573,6 +573,11 @@ complete camera image is contained in the preview so the oval and saved selfie
 refer to the same visible frame in portrait/landscape. Unsupported or failed
 detector loading leaves capture disabled and exposes camera retry guidance.
 
+The web container compresses the hashed `/build/assets/` JS/CSS/WASM/model files
+and caches them immutably. This reduces the face runtime's first download and
+avoids repeated downloads. The manifest, application pages and verification
+requests do not receive that immutable cache policy.
+
 Deploy the normal web build and clear Laravel caches. No migration, severity
 model change, worker rebuild, or APK rebuild is needed. Verify the deployed
 manifest, detector JS, model and both WASM variants as well as a real app route.

@@ -7,6 +7,18 @@ server {
 
     client_max_body_size 25m;
 
+    # Hashed Vite assets include the face guide's WASM/model. Compress these
+    # public files and reuse them across camera openings/app updates.
+    location /build/assets/ {
+        try_files $uri =404;
+        gzip on;
+        gzip_vary on;
+        gzip_min_length 1024;
+        gzip_comp_level 5;
+        gzip_types application/javascript text/css application/wasm application/octet-stream;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+    }
+
     location /app {
         proxy_pass http://127.0.0.1:8080;
         proxy_http_version 1.1;
