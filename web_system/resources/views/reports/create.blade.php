@@ -154,9 +154,11 @@
                                     <h3 id="selfieVerificationTitle">Front-camera selfie verification</h3>
                                     <p data-selfie-camera-status>Show one face and blink slowly when asked. A live check is required before sending.</p>
                                 </div>
-                                <div class="selfie-camera-frame">
+                                <div class="selfie-camera-frame" data-face-guide>
                                     <video data-selfie-camera-preview autoplay muted playsinline></video>
                                     <canvas data-selfie-camera-canvas hidden></canvas>
+                                    <span class="live-face-outline" hidden aria-hidden="true"></span>
+                                    <span class="live-face-label" data-face-guide-label hidden aria-hidden="true"></span>
                                 </div>
                                 <div class="button-row selfie-camera-actions">
                                     <button type="button" class="btn btn-primary" data-selfie-camera-capture>Check Face &amp; Blink</button>

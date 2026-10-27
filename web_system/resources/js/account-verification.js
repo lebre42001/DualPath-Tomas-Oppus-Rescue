@@ -1,5 +1,6 @@
 import { onDomReady } from './dom-ready';
 import { captureLiveness, applyLiveness, clearLiveness, hasLiveness } from './face-liveness';
+import { watchFaceGuide, showVerifiedFace } from './face-guide';
 
 onDomReady(() => {
     const root = document.querySelector('[data-account-verification-root]');
@@ -25,19 +26,22 @@ onDomReady(() => {
     let submitting = false;
     let cameraRequest = 0;
     let liveController = null;
+    let faceGuide = null;
+    let guideFailed = false;
+    const guideFrame = preview.closest('[data-face-guide]');
 
     const setStatus = (message) => { status.textContent = message; };
     const hasFile = () => Boolean(input.files?.length);
     const render = () => {
         root.dataset.verificationState = state;
         form.setAttribute('aria-busy', String(busy));
-        startButton.hidden = state === 'live';
+        startButton.hidden = state === 'live' && !guideFailed;
         startButton.disabled = busy;
-        startButton.textContent = busy && !submitting && state !== 'live' ? 'Opening camera…' : (state === 'captured' ? 'Retake' : 'Open Front Camera');
+        startButton.textContent = busy && !submitting && state !== 'live' ? 'Opening camera…' : (guideFailed ? 'Retry Camera' : state === 'captured' ? 'Retake' : 'Open Front Camera');
         startButton.classList.toggle('btn-primary', state !== 'captured');
         startButton.classList.toggle('btn-secondary', state === 'captured');
         captureButton.hidden = state !== 'live';
-        captureButton.disabled = busy || state !== 'live';
+        captureButton.disabled = busy || state !== 'live' || !faceGuide?.ready;
         captureButton.textContent = busy ? 'Checking...' : 'Check Face & Blink';
         submitButton.hidden = state !== 'captured';
         submitButton.disabled = busy || !hasFile() || !hasLiveness(form);
@@ -48,6 +52,9 @@ onDomReady(() => {
         placeholder.hidden = state !== 'idle';
     };
     const stopCamera = () => {
+        faceGuide?.stop();
+        faceGuide = null;
+        guideFailed = false;
         stream?.getTracks().forEach((track) => track.stop());
         stream = null;
         preview.srcObject = null;
@@ -110,13 +117,27 @@ onDomReady(() => {
             if (request !== cameraRequest) return;
             state = 'live';
             stream.getVideoTracks()[0]?.addEventListener('ended', () => {
+                liveController?.abort();
                 stopCamera();
                 state = hasFile() ? 'captured' : 'idle';
                 busy = false;
                 setStatus('Camera stopped. Open it again to complete the blink check.');
                 render();
             }, { once: true });
-            setStatus('2 of 3 · Center your face in good lighting, then tap Check Face & Blink.');
+            faceGuide = watchFaceGuide({
+                video: preview, frame: guideFrame,
+                onChange: (result) => {
+                    guideFailed = result.kind === 'unavailable';
+                    if (!busy && state === 'live') setStatus(result.message);
+                    render();
+                },
+                onAutoCapture: () => {
+                    if (busy || state !== 'live') return false;
+                    void captureFace();
+                    return true;
+                },
+            });
+            setStatus('Center your face inside the guide. Capture starts when it turns green.');
         } catch {
             if (request !== cameraRequest) return;
             stopCamera();
@@ -127,7 +148,8 @@ onDomReady(() => {
         }
     };
     const captureFace = async () => {
-        if (busy || state !== 'live') return;
+        if (busy || state !== 'live' || !faceGuide?.ready) return;
+        faceGuide.markAttempted();
         busy = true;
         clearLiveness(form);
         liveController = new AbortController();
@@ -138,6 +160,7 @@ onDomReady(() => {
             if (controller.signal.aborted) return;
             if (setSelectedFile(result.file)) {
                 applyLiveness(form, result);
+                showVerifiedFace(guideFrame);
                 setStatus('3 of 3 · Face and blink check passed. Tap Verify Account.');
             }
         } catch (error) {

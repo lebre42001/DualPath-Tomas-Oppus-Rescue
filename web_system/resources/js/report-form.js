@@ -1,5 +1,6 @@
 import { onDomReady } from './dom-ready';
 import { captureLiveness, applyLiveness, clearLiveness, hasLiveness } from './face-liveness';
+import { watchFaceGuide, showVerifiedFace } from './face-guide';
 const createPreviewUrl = (file) => {
     if (!(file instanceof File)) {
         return null;
@@ -80,6 +81,8 @@ onDomReady( () => {
     let pendingSubmitAfterSelfie = false;
     let livenessController = null;
     let livenessBusy = false;
+    let selfieFaceGuide = null;
+    const selfieGuideFrame = selfieCameraPreview?.closest('[data-face-guide]');
     let gpsLocked = false;
     let gpsRequestPending = false;
     let allowVerifiedGpsSubmit = false;
@@ -465,6 +468,8 @@ onDomReady( () => {
 
     const stopSelfieCamera = () => {
         selfieCameraRequest += 1;
+        selfieFaceGuide?.stop();
+        selfieFaceGuide = null;
         if (selfieCameraStream) {
             selfieCameraStream.getTracks().forEach((track) => track.stop());
             selfieCameraStream = null;
@@ -612,11 +617,20 @@ onDomReady( () => {
                 throw new Error('front-camera-preview-not-ready');
             }
 
-            setSelfieCameraStatus('Show one face in good lighting, then tap Check Face & Blink.');
-
-            if (selfieCameraCaptureButton instanceof HTMLButtonElement) {
-                selfieCameraCaptureButton.disabled = false;
-            }
+            selfieFaceGuide = watchFaceGuide({
+                video: selfieCameraPreview, frame: selfieGuideFrame,
+                onChange: (result) => {
+                    selfieCameraCaptureButton.disabled = livenessBusy || !result.ready;
+                    if (!livenessBusy) setSelfieCameraStatus(result.message);
+                    if (selfieCameraRetryButton && !livenessBusy) selfieCameraRetryButton.hidden = result.kind !== 'unavailable';
+                },
+                onAutoCapture: () => {
+                    if (livenessBusy || selfieCameraModal.hidden) return false;
+                    void captureFrontSelfie();
+                    return true;
+                },
+            });
+            setSelfieCameraStatus('Center your face inside the guide. Capture starts when it turns green.');
 
             return true;
         } catch {
@@ -637,7 +651,8 @@ onDomReady( () => {
     };
 
     const captureFrontSelfie = async () => {
-        if (livenessBusy || !selfieCameraStream?.active) return;
+        if (livenessBusy || !selfieCameraStream?.active || !selfieFaceGuide?.ready) return;
+        selfieFaceGuide.markAttempted();
         livenessBusy = true;
         clearLiveness(form);
         livenessController = new AbortController();
@@ -653,13 +668,14 @@ onDomReady( () => {
             applyLiveness(form, result);
             updateSelfiePreview(getActiveSelfieFile());
             stopSelfieCamera();
+            showVerifiedFace(selfieGuideFrame);
             hideSelfieCameraModal();
             submitAfterSelfieVerification();
         } catch (error) {
             if (!controller.signal.aborted) setSelfieCameraStatus(error.message || 'The live check failed. Please retry.');
         } finally {
             livenessBusy = false;
-            selfieCameraCaptureButton.disabled = !selfieCameraStream?.active;
+            selfieCameraCaptureButton.disabled = !selfieCameraStream?.active || !selfieFaceGuide?.ready;
             selfieCameraCaptureButton.textContent = 'Check Face & Blink';
             if (selfieCameraRetryButton) { selfieCameraRetryButton.disabled = false; if (!selfieCameraStream?.active) selfieCameraRetryButton.hidden = false; }
             if (selfieCameraFallbackButton) selfieCameraFallbackButton.disabled = false;

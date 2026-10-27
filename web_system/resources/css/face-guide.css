@@ -1,0 +1,26 @@
+/* Shared by account verification and the report camera overlay. */
+body .selfie-camera-frame[data-face-guide]::after { display: none; }
+body .selfie-camera-frame[data-face-guide] video,
+body .selfie-camera-frame[data-face-guide] .detail-media { object-fit: contain; object-position: center; }
+.live-face-outline {
+    position: absolute;
+    left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: var(--face-guide-width, 75%); height: var(--face-guide-height, 80%);
+    border: 3px dashed rgba(255,255,255,.75);
+    border-radius: 46%; pointer-events: none;
+    transition: border-color .18s, box-shadow .18s;
+}
+.live-face-label {
+    position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+    max-width: calc(100% - 16px); padding: 5px 10px; border-radius: 999px;
+    color: #fff; background: #142a3d; font-size: .66rem; font-weight: 700;
+    line-height: 1.25; text-align: center; pointer-events: none;
+}
+[data-face-state="aligning"] .live-face-outline { border-color: #f5bf57; }
+[data-face-state="ready"] .live-face-outline { border: 3px solid #25d18a; box-shadow: 0 0 0 3px rgba(37,209,138,.18); }
+[data-face-state="ready"] .live-face-label,
+[data-face-state="verified"] .live-face-label { background: #08784a; }
+[data-face-state="unavailable"] .live-face-outline,
+[data-face-state="multiple"] .live-face-outline { border-color: #ff8791; }
+.selfie-camera-frame[data-face-state="verified"] { border-color: #08784a; }
+.live-face-outline[hidden], .live-face-label[hidden] { display: none; }

@@ -553,6 +553,34 @@ For Laragon, create `ai_service/.venv-liveness` using the existing Python 3.13 a
 
 This is a basic face/blink gesture check, not identity matching or certified presentation-attack detection. A replayed video, virtual camera, or generated face can defeat it. Tests cover gate/proof security, absent/static/multiple faces, blink sequences, browser cancellation and failure paths. Licensed research/example clips are local QA fixtures only and are not shipped or used to train/promote a model. Physical-phone lighting/camera tests remain necessary.
 
+## Live green face guide and automatic capture (2026-10-27)
+
+Account verification and the report camera now load a small browser face detector
+when the camera opens. The gray/amber guide turns green only after one sufficiently
+large, centered, upright face stays steady. The capture button is enabled at that
+point; after about two seconds of stable positioning the blink capture starts
+automatically. Each camera opening makes at most one automatic attempt. A failed
+server check requires an explicit retry, and Cancel/Retake stops detection and
+clears the pending verification. Losing the face removes green readiness.
+
+This is positioning feedback, not face identity matching or liveness approval.
+The existing signed server blink proof remains mandatory for both account and
+report submission. Preview detection runs locally, using the pinned Apache-2.0
+BlazeFace asset in `web_system/resources/face-guide/` and reviewed browser SDK
+`@mediapipe/tasks-vision@0.10.32`. Vite serves the lazy JS/model/WASM assets from
+the same origin; no preview images go to a CDN or face-preview endpoint. The
+complete camera image is contained in the preview so the oval and saved selfie
+refer to the same visible frame in portrait/landscape. Unsupported or failed
+detector loading leaves capture disabled and exposes camera retry guidance.
+
+Deploy the normal web build and clear Laravel caches. No migration, severity
+model change, worker rebuild, or APK rebuild is needed. Verify the deployed
+manifest, detector JS, model and both WASM variants as well as a real app route.
+Run `npm run test:face-guide`, `npm run build`, and `php artisan test`. Browser QA
+uses the actual detector with licensed local research frames for positioning and
+mocks the independent server verdict; it does not certify physical-camera
+liveness or replay resistance. Verify blink capture on the user's phone too.
+
 ## Local Compose check
 
 After Docker Desktop is installed, create an untracked `.env` from
