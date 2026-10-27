@@ -35,11 +35,12 @@
         <section class="public-how-it-works" aria-labelledby="how-it-works-title">
             <h2 id="how-it-works-title">How it works</h2>
             <ol>
+                <li>Register &amp; verify your account</li>
                 <li>Send emergency details</li>
-                <li>Keep your reference code</li>
-                <li>Follow response updates</li>
+                <li>Keep your code &amp; follow updates</li>
             </ol>
         </section>
+        @include('partials.system-flow')
     </main>
     @include('partials.public-footer')
     <script src="{{ asset('pwa-helper.js') }}?v={{ $pwaAssetVersion }}"></script>

@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import './public-pages.css';
 @import './brand.css';
+@import './system-flow.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';

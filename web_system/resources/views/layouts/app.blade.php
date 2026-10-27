@@ -157,7 +157,7 @@ SVG,
                 @if ($authUser)
                     <form method="POST" action="{{ route('logout') }}" class="sidebar-logout">
                         @csrf
-                        <button type="submit" class="btn btn-danger">
+                        <button type="submit" class="btn btn-danger" aria-label="Log Out">
                             <span>Log Out</span>
                             <strong>Exit</strong>
                         </button>

@@ -1,0 +1,34 @@
+/* Public connection diagram: ordered steps remain readable without JavaScript. */
+.system-flow { grid-column: 1 / -1; min-width: 0; padding-top: 24px; margin-top: 8px; border-top: 1px solid #dce4ea; }
+.system-flow-heading { margin-bottom: 22px; }
+.system-flow-eyebrow { color: #a31222; font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+.system-flow-heading h2 { margin: 6px 0 8px; font-size: clamp(1.35rem, 2.5vw, 1.8rem); line-height: 1.2; font-weight: 800; letter-spacing: -.025em; }
+.system-flow-heading > p:last-child { margin: 0; color: #506574; font-size: .9rem; line-height: 1.5; }
+.system-flow-route { --flow-accent: #a31222; --flow-tint: #fff0f1; display: grid; grid-template-columns: 170px minmax(0,1fr); align-items: start; gap: 20px; padding: 22px 0; border-top: 1px solid #e4ebf0; }
+.system-flow-route--mesh { --flow-accent: #006779; --flow-tint: #e8f6f8; }
+.system-flow-label { min-width: 0; }
+.system-flow-label > span { display: inline-block; padding: 5px 8px; border-radius: 6px; color: var(--flow-accent); background: var(--flow-tint); font-size: .65rem; font-weight: 800; line-height: 1.4; }
+.system-flow-label h3 { margin: 10px 0 8px; font-size: 1rem; font-weight: 800; line-height: 1.3; }
+.system-flow-label p { margin: 0; color: #506574; font-size: .8rem; line-height: 1.5; }
+.system-flow-steps { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
+.system-flow-step { position: relative; min-width: 0; padding: 14px 12px; border: 1px solid #dce4ea; border-radius: 14px; background: #fff; }
+.system-flow-step:not(:last-child)::after { content: '\2192'; position: absolute; top: 50%; right: -16px; width: 16px; color: var(--flow-accent); font-size: 1rem; text-align: center; transform: translateY(-50%); }
+.system-flow-icon { display: grid; place-items: center; width: 34px; height: 34px; margin-bottom: 12px; border-radius: 10px; color: var(--flow-accent); background: var(--flow-tint); }
+.system-flow-icon svg { width: 21px; height: 21px; }
+.system-flow-step h4 { margin: 0 0 8px; font-size: .85rem; font-weight: 800; line-height: 1.4; overflow-wrap: break-word; }
+.system-flow-number { color: var(--flow-accent); }
+.system-flow-step p { margin: 0; color: #506574; font-size: .76rem; line-height: 1.5; overflow-wrap: break-word; }
+.system-flow-note { margin: 0; padding: 12px 14px; border-left: 3px solid #006779; border-radius: 0 8px 8px 0; background: #f3f8fa; color: #506574; font-size: .8rem; line-height: 1.5; }
+.system-flow-note strong { color: #132c3b; }
+@media (max-width: 1050px) {
+    .system-flow-route { grid-template-columns: minmax(0,1fr); gap: 14px; }
+    .system-flow-label h3 { margin-top: 8px; }
+}
+@media (max-width: 600px) {
+    .system-flow { padding-top: 20px; }
+    .system-flow-steps { grid-template-columns: minmax(0,1fr); gap: 18px; }
+    .system-flow-step { display: grid; grid-template-columns: 34px minmax(0,1fr); align-items: start; gap: 12px; padding: 12px; }
+    .system-flow-icon { margin-bottom: 0; }
+    .system-flow-step h4 { margin-bottom: 4px; }
+    .system-flow-step:not(:last-child)::after { content: '\2193'; top: auto; bottom: -18px; left: 20px; right: auto; height: 18px; transform: none; line-height: 18px; }
+}

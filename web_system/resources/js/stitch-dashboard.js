@@ -52,12 +52,14 @@ function initializeSidebar() {
     if (!sidebar || !backdrop) return;
 
     // Must match admin-shell.css; civilian navigation keeps its existing threshold.
-    const mobileBreakpoint = document.body.classList.contains('admin-portal') ? 1024 : 1380;
-    const storageKey = 'stitch-sidebar-collapsed';
+    const isAdmin = document.body.classList.contains('admin-portal');
+    const mobileBreakpoint = isAdmin ? 1024 : 1380;
+    const drawerMedia = window.matchMedia(`(max-width: ${mobileBreakpoint}px)`);
+    const storageKey = isAdmin ? 'stitch-sidebar-collapsed' : 'stitch-civilian-sidebar-collapsed';
     let collapsed = false;
     let opener = null;
     try { collapsed = localStorage.getItem(storageKey) === 'true'; } catch (_) { /* Storage is optional. */ }
-    const isDrawer = () => window.innerWidth <= mobileBreakpoint;
+    const isDrawer = () => drawerMedia.matches;
     const setExpanded = (expanded) => {
         [toggle, reopen].forEach((button) => button?.setAttribute('aria-expanded', String(expanded)));
     };

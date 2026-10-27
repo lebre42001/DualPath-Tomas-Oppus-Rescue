@@ -531,6 +531,12 @@ The owner's uploaded AksyRes image is the current official logo for the public w
 
 Android 1.0.3 (version code 4) displays AksyRes and includes the new launcher/splash artwork. Its APK and checksum are distributed under `android-v1.0.3` as `aksyres-1.0.3.apk`. Existing APK installations need that update to change their native name/icon; the PWA uses service worker v11 and versioned icons to refresh the web assets. Keep the package ID, signing key, manifest identity, and existing session cookie stable. Dokploy pins `APP_NAME` and `MAIL_FROM_NAME` to AksyRes. Migration `2026_10_27_000001_rename_command_center_brand_to_aksyres` updates only the previous exact default station label. Deploy the web assets/migration and verify the public pages, manifest/icons, download, and APK signature/checksum.
 
+## Homepage connection flow and civilian navigation (2026-10-27)
+
+The public homepage includes separate online and node-dashboard/LoRa flows. Online reports use account verification, scene photo, GPS/landmark, description and selfie, then server storage, admin severity review, and account status updates. LoRa reporting starts on the node's local Wi-Fi dashboard; NODE_1 forwards to Laravel when its server route is available, and the response returns to the originating node. Pending node reports remain queued when that route is unavailable. This diagram does not imply automatic PWA-to-LoRa switching.
+
+Civilian and admin desktop collapse preferences now use separate storage keys. Civilian desktop navigation above 1380 CSS pixels keeps the account header out of the collapsed rail and resizes the logo to fit. At 1380 pixels and below it uses a full drawer, including installed tablet mode, with full navigation labels, a menu button, and bottom navigation where applicable. Closed drawers are hidden from keyboard focus. Deploy the Blade/CSS/JS build together and clear Laravel caches. Verify desktop expand/collapse, breakpoint/orientation changes, installed tablet mode, and the camera/capture/retake/verify flow. The existing Android APK loads these web changes; no new binary or migration is needed.
+
 ## Local Compose check
 
 After Docker Desktop is installed, create an untracked `.env` from
