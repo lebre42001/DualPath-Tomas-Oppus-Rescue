@@ -83,7 +83,7 @@ def get_landmarker():
             if hashlib.sha256(model_path.read_bytes()).hexdigest() != metadata['sha256']:
                 raise RuntimeError('Face task checksum mismatch')
             _model = mp.tasks.vision.FaceLandmarker.create_from_options(mp.tasks.vision.FaceLandmarkerOptions(
-                base_options=mp.tasks.BaseOptions(model_asset_path=str(model_path)),
+                base_options=mp.tasks.BaseOptions(model_asset_path=str(model_path), delegate=mp.tasks.BaseOptions.Delegate.CPU),
                 running_mode=mp.tasks.vision.RunningMode.IMAGE,
                 num_faces=2, output_face_blendshapes=True,
                 min_face_detection_confidence=.6, min_face_presence_confidence=.6,

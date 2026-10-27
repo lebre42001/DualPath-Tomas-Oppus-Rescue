@@ -13,7 +13,7 @@ ARG INSTALL_TEXT_AI=false
 ARG INSTALL_TEXT_BASELINE=false
 ARG INSTALL_FACE_LIVENESS=false
 
-RUN if [ "$INSTALL_FACE_LIVENESS" = "true" ]; then apt-get update && apt-get install -y --no-install-recommends libgl1 libglib2.0-0 libportaudio2 && rm -rf /var/lib/apt/lists/*; fi
+RUN if [ "$INSTALL_FACE_LIVENESS" = "true" ]; then apt-get update && apt-get install -y --no-install-recommends libgl1 libegl1 libgles2 libglib2.0-0 libportaudio2 && rm -rf /var/lib/apt/lists/*; fi
 
 RUN pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt \
