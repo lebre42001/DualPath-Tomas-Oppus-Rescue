@@ -216,7 +216,9 @@
         .visually-hidden-control{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
         .selfie-camera-modal[hidden]{display:none}
         .selfie-camera-modal{position:fixed;inset:0;z-index:1700;display:flex;align-items:center;justify-content:center;padding:max(10px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left));background:rgba(15,31,47,.82);backdrop-filter:blur(16px);overflow:hidden}
-        .selfie-camera-sheet{width:min(560px,calc(100vw - 20px));max-height:calc(100vh - 20px);max-height:calc(100dvh - 20px);overflow:hidden;padding:16px;border-radius:24px;background:#fff;border:1px solid rgba(255,255,255,.24);box-shadow:var(--shadow);display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:12px}
+        .selfie-camera-sheet{width:min(560px,calc(100vw - 20px));max-height:calc(100vh - 20px);max-height:calc(100dvh - 20px);overflow:hidden;padding:16px;border-radius:24px;background:#fff;border:1px solid rgba(255,255,255,.24);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px}
+        .selfie-camera-sheet > .selfie-camera-copy,.selfie-camera-sheet > .selfie-camera-actions{flex-shrink:0}
+        .selfie-camera-sheet > .selfie-camera-frame{flex-shrink:1}
         .selfie-camera-copy{display:grid;gap:6px;min-height:0}
         .selfie-camera-copy h3{margin:0;font-family:"Bahnschrift","Trebuchet MS",sans-serif;font-size:clamp(1.18rem,2.6vh,1.48rem);line-height:1.05;letter-spacing:-.03em}
         .selfie-camera-copy p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.35}

@@ -88,6 +88,10 @@ onDomReady( () => {
         return;
     }
 
+    // Filters/transforms on the report panel create a fixed-position containing
+    // block. Keep the camera overlay attached to the viewport, even after scroll.
+    if (selfieCameraModal instanceof HTMLElement) document.body.append(selfieCameraModal);
+
     const setGeoStatus = (message) => {
         if (geoStatus) {
             geoStatus.textContent = message;
