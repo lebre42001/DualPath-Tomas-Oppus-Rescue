@@ -12,12 +12,13 @@
             <header class="verification-heading">
                 <p class="panel-kicker">Account verification</p>
                 <h1>Verify your account</h1>
-                <p>Take one clear selfie to unlock emergency reporting.</p>
+                <p>Complete a face and blink check to unlock emergency reporting.</p>
             </header>
 
-            <form method="POST" action="{{ route('account.verify.store') }}" enctype="multipart/form-data" class="stack" data-account-verification-form>
+            <form method="POST" action="{{ route('account.verify.store') }}" enctype="multipart/form-data" class="stack" data-account-verification-form data-liveness-challenge-url="{{ route('face-liveness.challenge') }}" data-liveness-verify-url="{{ route('face-liveness.verify') }}">
                 @csrf
-                <input type="file" name="verification_selfie" accept="image/jpeg,image/png,image/webp" capture="user" hidden data-account-verification-input>
+                <input type="hidden" name="liveness_proof" value="" data-liveness-proof>
+                <input type="file" name="verification_selfie" accept="image/jpeg,image/png,image/webp" hidden data-account-verification-input>
 
                 <div class="selfie-camera-frame account-face-frame">
                     <div class="verification-camera-placeholder" data-account-verification-placeholder>
@@ -33,15 +34,15 @@
 
                 <div class="button-row selfie-camera-actions account-verification-actions">
                     <button type="button" class="btn btn-primary" data-account-verification-start>Open Front Camera</button>
-                    <button type="button" class="btn btn-primary" data-account-verification-capture disabled hidden>Capture Face</button>
+                    <button type="button" class="btn btn-primary" data-account-verification-capture disabled hidden>Check Face &amp; Blink</button>
                     <button type="submit" class="btn btn-primary" data-account-verification-submit disabled hidden>Verify Account</button>
                 </div>
-                <button type="button" class="verification-camera-alternative" data-account-verification-fallback>Use Phone Camera instead</button>
+                <button type="button" class="verification-camera-alternative" data-account-verification-fallback>Camera help</button>
             </form>
 
             <details class="verification-help">
                 <summary>Why a selfie? &amp; account details</summary>
-                <p>Live facial verification required. Use your real face, good lighting, and one clear selfie. Your selfie is saved as the account verification record to help prevent prank reports.</p>
+                <p>Live facial verification required. Show one face in good lighting and blink slowly when asked. Your camera sequence is checked, then discarded. Only the verified selfie is saved as the account verification record.</p>
                 <p><strong>{{ $user->name }}</strong><br>{{ $user->email }}</p>
                 <p>Emergency reporting stays locked until verification is complete.</p>
             </details>

@@ -58,6 +58,7 @@ class IncidentReportApiController extends Controller
 
         $validator = Validator::make($request->all(), [
             'submission_id' => ['nullable', 'string', 'max:100'],
+            'liveness_proof' => [$isCivilian ? 'required' : 'nullable', 'string', 'size:64'],
             'incident_type' => ['required', 'string', 'max:80'],
             'severity' => ['nullable', 'string', 'max:20'],
             'location_text' => ['required', 'string', 'max:180'],
@@ -75,6 +76,7 @@ class IncidentReportApiController extends Controller
             ],
         ], [
             'location_text.required' => 'Enter the barangay, road, or nearby landmark so rescuers can find the incident. GPS is also required.',
+            'liveness_proof.required' => 'Complete the live face and blink check before sending.',
             'latitude.required' => 'Enable device location, allow browser location access, and lock GPS before sending the emergency report.',
             'longitude.required' => 'Enable device location, allow browser location access, and lock GPS before sending the emergency report.',
             'description.required' => 'Describe the emergency before sending. The AI severity review uses this text as its main basis.',
@@ -106,6 +108,9 @@ class IncidentReportApiController extends Controller
         }
 
         $description = trim((string) ($validated['description'] ?? ''));
+        if ($isCivilian) {
+            app(\App\Services\FaceLivenessProof::class)->assertValid($user, 'report', $validated['liveness_proof'] ?? null, $request->file('selfie'));
+        }
         $descriptionForStorage = $description !== '' ? $description : 'No short description provided.';
 
         $preferredSeverity = $isCivilian ? null : ($validated['severity'] ?? null);
@@ -153,6 +158,9 @@ class IncidentReportApiController extends Controller
         }
 
         if ($request->hasFile('selfie')) {
+            if ($isCivilian) {
+                app(\App\Services\FaceLivenessProof::class)->consume($user, 'report', $validated['liveness_proof'] ?? null, $request->file('selfie'));
+            }
             $selfiePath = $request->file('selfie')->store('incident-selfies');
         }
 

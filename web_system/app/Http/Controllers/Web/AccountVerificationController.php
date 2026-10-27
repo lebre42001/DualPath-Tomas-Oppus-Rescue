@@ -38,10 +38,14 @@ class AccountVerificationController extends Controller
         }
 
         $validated = $request->validate([
+            'liveness_proof' => ['required', 'string', 'size:64'],
             'verification_selfie' => ['required', 'file', 'max:10240', 'mimes:jpg,jpeg,png,webp'],
         ], [
+            'liveness_proof.required' => 'Complete the live face and blink check before verifying your account.',
             'verification_selfie.required' => 'Capture a live front-camera selfie before verifying your account.',
         ]);
+
+        app(\App\Services\FaceLivenessProof::class)->consume($user, 'account', $validated['liveness_proof'], $request->file('verification_selfie'));
 
         if ($user->account_verification_selfie_path) {
             Storage::delete($user->account_verification_selfie_path);
@@ -52,7 +56,7 @@ class AccountVerificationController extends Controller
         $user->forceFill([
             'account_verified_at' => now(),
             'account_verification_selfie_path' => $path,
-            'account_verification_method' => 'live_front_camera_selfie',
+            'account_verification_method' => 'face_blink_challenge_v1',
         ])->save();
 
         return redirect()

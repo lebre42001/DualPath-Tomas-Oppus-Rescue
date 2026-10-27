@@ -55,7 +55,7 @@
             <div class="flash error">{{ $errors->first() }}</div>
         @endif
 
-        <form method="POST" action="{{ route('reports.store') }}" enctype="multipart/form-data" class="stack" data-report-draft-form data-report-role="{{ $isCivilian ? 'civilian' : 'admin' }}">
+        <form method="POST" action="{{ route('reports.store') }}" enctype="multipart/form-data" class="stack" data-report-draft-form data-report-role="{{ $isCivilian ? 'civilian' : 'admin' }}" data-liveness-challenge-url="{{ route('face-liveness.challenge') }}" data-liveness-verify-url="{{ route('face-liveness.verify') }}">
             @csrf
             <input type="hidden" name="submission_id" value="{{ old('submission_id', $submissionId) }}">
 
@@ -81,7 +81,8 @@
                         <span class="form-step-label">1. Scene photo &amp; location</span>
 
                         <input type="file" name="evidence_photo_capture" accept="image/*" capture="environment" hidden data-capture-photo-input>
-                        <input type="file" name="selfie_capture" accept="image/*" capture="user" hidden data-capture-selfie-input>
+                        <input type="file" name="selfie_capture" accept="image/jpeg" hidden data-capture-selfie-input>
+                        <input type="hidden" name="liveness_proof" value="" data-liveness-proof>
                         <input id="evidence" type="file" name="evidence" accept=".jpg,.jpeg,.png,.webp" hidden>
                         <input id="selfie" type="file" name="selfie" accept=".jpg,.jpeg,.png,.webp" hidden>
                         <input id="latitude" type="hidden" name="latitude" value="" data-geo-latitude>
@@ -149,18 +150,18 @@
                         <div class="selfie-camera-modal" data-selfie-camera-modal role="dialog" aria-modal="true" aria-labelledby="selfieVerificationTitle" hidden>
                             <div class="selfie-camera-sheet">
                                 <div class="selfie-camera-copy">
-                                    <span class="tag blue">Identity check</span>
+                                    <span class="tag blue">Live face check</span>
                                     <h3 id="selfieVerificationTitle">Front-camera selfie verification</h3>
-                                    <p data-selfie-camera-status>Opening the front camera so admins can verify who sent the report.</p>
+                                    <p data-selfie-camera-status>Show one face and blink slowly when asked. A live check is required before sending.</p>
                                 </div>
                                 <div class="selfie-camera-frame">
                                     <video data-selfie-camera-preview autoplay muted playsinline></video>
                                     <canvas data-selfie-camera-canvas hidden></canvas>
                                 </div>
                                 <div class="button-row selfie-camera-actions">
-                                    <button type="button" class="btn btn-primary" data-selfie-camera-capture>Capture Verification Selfie</button>
+                                    <button type="button" class="btn btn-primary" data-selfie-camera-capture>Check Face &amp; Blink</button>
                                     <button type="button" class="btn btn-secondary" data-selfie-camera-retry hidden>Retry Front Camera</button>
-                                    <button type="button" class="btn btn-secondary" data-selfie-camera-fallback>Open Phone Camera Instead</button>
+                                    <button type="button" class="btn btn-secondary" data-selfie-camera-fallback>Camera help</button>
                                     <button type="button" class="btn btn-danger" data-selfie-camera-cancel>Cancel</button>
                                 </div>
                             </div>

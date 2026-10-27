@@ -1,5 +1,13 @@
 # AI Severity Service
 
+## Independent live face/blink gate — 2026-10-27
+
+`/liveness/verify` checks a live camera sequence for one face and the requested one or two open/closed/open eye transitions. It is a separate CPU task with a pinned Apache-2.0 model under `assets/liveness/`; the active severity config/checkpoint is not involved. Requests must carry an HMAC of the exact body using `FACE_LIVENESS_KEY`. The final selfie SHA-256 is returned to Laravel, which binds a short-lived, single-use proof to the account and purpose. The service processes capture frames transiently and does not store or train on them. `/ready/liveness` verifies SDK/model readiness.
+
+Local setup: `python -m venv .venv-liveness`, then `.venv-liveness/Scripts/python.exe -m pip install -r requirements-liveness.txt`. The Laragon helper supplies the local app key without printing it and starts `serve_liveness.py` on port 8102. Dokploy installs this capability in the existing private service using `INSTALL_FACE_LIVENESS=true`; it uses the existing private app key and the web client calls port 8100. Missing SDK/model/key or failed detection blocks the check. Run `python -m unittest discover -s tests -p test_face_liveness.py` for sequence decisions.
+
+This is basic face/blink gesture checking, not identity matching or certified anti-spoofing. A video replay, virtual camera, or generated face can pass it. The model is not used to make medical or severity decisions. Camera/lighting validation on physical phones is still required. See `DOKPLOY_DEPLOYMENT.md` for the gate, proof, deployment, and privacy behavior.
+
 ## Active experimental text pilot — 2026-10-16
 
 **Description phrase support:** [the trilingual cue policy](TEXT_CUE_POLICY.md) adds explicit English/Tagalog/Bisaya condition phrases, including reported `patay` and `fifty-fifty`, while retaining the trained classifier. Rule suggestions have no fabricated confidence; actual classifier scores are displayed separately. New reports are analyzed automatically. Admin review keeps the original suggestion and all four scores visible. The combined policy's diagnostic results differ from the original raw classifier benchmark below.
@@ -18,7 +26,7 @@ Install the local runtime with `.venv-text/Scripts/python.exe -m pip install -r 
 
 The FastAPI service defaults to `AI_OPERATION_MODE=MANUAL_ONLY`. In this mode, text prediction and readiness are disabled. `/health` reports that inference is disabled without loading model weights; `/ready` returns 503. Deployments that keep the service running in manual-only mode should use `/health` as the liveness check. Enable model work only by explicitly setting `AI_OPERATION_MODE=AI_ENABLED`; text inference still additionally requires `AI_TEXT_ENABLED=true` and a valid reviewed checkpoint. The image prediction route and image checkpoint loader have been removed from the service.
 
-This folder contains the operational text-classifier service and archived image-model experiments for the Stitch emergency system. The runtime has no image prediction endpoint and does not load image checkpoints.
+This folder contains the operational text-classifier service, the independent face/blink gate, and archived image-model experiments. The runtime has no image-severity prediction endpoint and does not load severity image checkpoints.
 
 **Current application workflow:** new web/API severity suggestions use the emergency description only. Photos remain supporting evidence for responders. Laravel no longer calls image severity/relevance prediction, and stale image jobs cannot update reports. Dokploy and the local active text profile use the experimental pilot above; manual-only deployments continue accepting reports for human review. Existing model artifacts and historical assessments are preserved.
 

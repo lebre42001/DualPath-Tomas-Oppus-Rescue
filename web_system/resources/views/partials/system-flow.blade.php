@@ -4,7 +4,7 @@
             'id' => 'online', 'label' => 'With internet', 'title' => 'Online reporting',
             'copy' => 'Use the AksyRes app or website after verifying your account.',
             'steps' => [
-                ['title' => 'Send a report', 'copy' => 'Add a scene photo, GPS, landmark, description, and selfie.', 'icon' => 'M8 3h8v18H8zM11 18h2'],
+                ['title' => 'Send a report', 'copy' => 'Add a photo, GPS, landmark and description, then pass the live blink check.', 'icon' => 'M8 3h8v18H8zM11 18h2'],
                 ['title' => 'Saved securely', 'copy' => 'The server saves your report and gives you a reference code.', 'icon' => 'M4 4h16v6H4zM4 14h16v6H4zM7 7h1M7 17h1'],
                 ['title' => 'Admin reviews', 'copy' => 'AI assists severity review. An admin confirms the assessment.', 'icon' => 'M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6zM8 12l3 3 5-6'],
                 ['title' => 'Follow updates', 'copy' => 'Check the response and report status in your account.', 'icon' => 'M4 5h16v12H8l-4 4zM8 9h8M8 13h5'],

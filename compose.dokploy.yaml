@@ -8,7 +8,7 @@ services:
       db:
         condition: service_healthy
       text-ai:
-        condition: service_started
+        condition: service_healthy
     expose:
       - "10000"
     environment:
@@ -49,6 +49,7 @@ services:
       AI_TEXT_ENABLED: ${AI_TEXT_ENABLED:-true}
       AI_TEXT_SERVICE_URL: http://text-ai:8100
       AI_TEXT_TEST_SERVICE_URL: http://text-ai:8100
+      FACE_LIVENESS_SERVICE_URL: http://text-ai:8100
       AI_TEXT_ALLOW_EXPERIMENTAL: "true"
       LORA_INGEST_TOKEN: ${LORA_INGEST_TOKEN:?Set a unique LORA_INGEST_TOKEN in Dokploy}
       ROUTING_SERVICE_ENABLED: ${ROUTING_SERVICE_ENABLED:-true}
@@ -78,6 +79,7 @@ services:
       dockerfile: deploy/render/Dockerfile
       args:
         INSTALL_TEXT_BASELINE: "true"
+        INSTALL_FACE_LIVENESS: "true"
     restart: unless-stopped
     expose:
       - "8100"
@@ -88,14 +90,15 @@ services:
       AI_TEXT_MODEL_DIR: /app/releases/triage-text-tfidf-20261016-v2
       AI_TEXT_RULES_ENABLED: ${AI_TEXT_RULES_ENABLED:-true}
       AI_SERVICE_PORT: "8100"
+      FACE_LIVENESS_KEY: ${APP_KEY:?Set APP_KEY in Dokploy}
       OMP_NUM_THREADS: "1"
       OPENBLAS_NUM_THREADS: "1"
-    mem_limit: 512m
+    mem_limit: 768m
     cpus: 1.0
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8100/ready/text', timeout=5)"]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8100/ready/text', timeout=5); urllib.request.urlopen('http://127.0.0.1:8100/ready/liveness', timeout=10)"]
       interval: 30s
-      timeout: 10s
+      timeout: 20s
       retries: 3
       start_period: 120s
 

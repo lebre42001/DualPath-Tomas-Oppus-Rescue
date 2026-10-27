@@ -26,6 +26,8 @@ Route::prefix('v1')->group(function (): void {
     });
 
     Route::middleware('api.token')->group(function (): void {
+        Route::post('/face-liveness/challenge', [\App\Http\Controllers\FaceLivenessController::class, 'challenge'])->middleware('throttle:12,1');
+        Route::post('/face-liveness/verify', [\App\Http\Controllers\FaceLivenessController::class, 'verify'])->middleware('throttle:12,1');
         Route::post('/account/presence', CivilianPresenceController::class)->middleware('throttle:120,1');
         Route::get('/auth/me', [AuthApiController::class, 'me']);
         Route::post('/auth/logout', [AuthApiController::class, 'logout']);

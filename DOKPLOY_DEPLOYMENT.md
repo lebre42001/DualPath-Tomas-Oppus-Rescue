@@ -537,6 +537,18 @@ The public homepage includes separate online and node-dashboard/LoRa flows. Onli
 
 Civilian and admin desktop collapse preferences now use separate storage keys. Civilian desktop navigation above 1380 CSS pixels keeps the account header out of the collapsed rail and resizes the logo to fit. At 1380 pixels and below it uses a full drawer, including installed tablet mode, with full navigation labels, a menu button, and bottom navigation where applicable. Closed drawers are hidden from keyboard focus. Deploy the Blade/CSS/JS build together and clear Laravel caches. Verify desktop expand/collapse, breakpoint/orientation changes, installed tablet mode, and the camera/capture/retake/verify flow. The existing Android APK loads these web changes; no new binary or migration is needed.
 
+## Required live face and blink check (2026-10-27)
+
+Civilian account verification and each new web/API report require a signed, server-verified live camera sequence. The browser requests a short-lived challenge, prompts one or two slow blinks, and captures six to eight seconds from the active camera. The private CPU worker independently checks one visible face, open/closed/open eye transitions, continuity, and the final open-eyed selfie. A detector failure, unavailable service, missing face, multiple faces, or missing blink cannot issue a proof. Gallery/native still-image selection does not satisfy this check.
+
+The proof is bound to the user, account/report purpose, and SHA-256 of the exact saved selfie. It expires after two minutes and is consumed atomically once. Validation and the proof gate run on both web and bearer-token report intake. The `face_liveness_challenges` migration stores hashes and timestamps; expired metadata is cleaned up. Raw frame sequences are not saved as application records, flashed into sessions, or used for training. Only the final verified selfie uses the existing private storage/admin access path. Draft restoration and camera cancellation require a new live check.
+
+Dokploy installs `requirements-liveness.txt` in the existing private FastAPI service with the pinned Apache-2.0 Face Landmarker asset and a build-time CPU/checksum check. `FACE_LIVENESS_KEY` uses the existing private `APP_KEY`; Laravel signs the exact worker request body. Keep this service private. The worker memory budget is 768 MB with one concurrent face analysis. The severity model, active configs, and severity mappings are unchanged. Apply migrations and deploy web/worker together. The existing APK loads the web update; no native rebuild is needed. The free Render manual-only demo needs a separately configured face-enabled worker before civilian reporting can pass this gate.
+
+For Laragon, create `ai_service/.venv-liveness` using the existing Python 3.13 and install `ai_service/requirements-liveness.txt`. `tool/start_stitch_services.ps1` starts `serve_liveness.py` on port 8102 and passes the local app key without printing it. Set `FACE_LIVENESS_SERVICE_URL=http://127.0.0.1:8102` locally; Dokploy uses `http://text-ai:8100`. Status/stop helpers include this worker. Check `/ready/liveness`, real camera permission/capture, and retry behavior on the user's phone.
+
+This is a basic face/blink gesture check, not identity matching or certified presentation-attack detection. A replayed video, virtual camera, or generated face can defeat it. Tests cover gate/proof security, absent/static/multiple faces, blink sequences, browser cancellation and failure paths. Licensed research/example clips are local QA fixtures only and are not shipped or used to train/promote a model. Physical-phone lighting/camera tests remain necessary.
+
 ## Local Compose check
 
 After Docker Desktop is installed, create an untracked `.env` from

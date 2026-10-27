@@ -47,7 +47,7 @@ class TextSeverityIntegrationTest extends TestCase
         $input = $this->reportInput('A driver is unresponsive after a collision.') + [
             'submission_id' => '1e0fe3ba-37b9-4b02-9d8d-8c4f61d82aab',
             'evidence' => UploadedFile::fake()->image('road-scene.jpg', 640, 480),
-            'selfie' => UploadedFile::fake()->image('verification-selfie.jpg', 640, 480),
+            ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg', 640, 480), $civilian),
         ];
 
         $this->actingAs($civilian)->post(route('reports.store'), $input)->assertSessionHasNoErrors()->assertRedirect();
@@ -206,7 +206,7 @@ class TextSeverityIntegrationTest extends TestCase
 
         $this->actingAs($civilian)->post(route('reports.store'), $this->reportInput($description) + [
             'evidence' => UploadedFile::fake()->image('road-scene.jpg', 640, 480),
-            'selfie' => UploadedFile::fake()->image('verification-selfie.jpg', 640, 480),
+            ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg', 640, 480), $civilian),
         ])->assertSessionHasNoErrors()->assertRedirect();
 
         $report = IncidentReport::query()->sole();
@@ -265,7 +265,7 @@ class TextSeverityIntegrationTest extends TestCase
         $description = 'Fifty-fifty ang kahimtang sa biktima.';
         $this->actingAs($civilian)->post(route('reports.store'), $this->reportInput($description) + [
             'evidence' => UploadedFile::fake()->image('road-scene.jpg', 640, 480),
-            'selfie' => UploadedFile::fake()->image('verification-selfie.jpg', 640, 480),
+            ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg', 640, 480), $civilian),
         ])->assertSessionHasNoErrors()->assertRedirect();
         $report = IncidentReport::query()->sole();
         $this->assertSame('text_rule_advisory', $report->ai_source);
@@ -418,7 +418,7 @@ class TextSeverityIntegrationTest extends TestCase
 
         $this->actingAs($civilian)->post(route('reports.store'), $this->reportInput('Small dent on a parked car.') + [
             'evidence' => UploadedFile::fake()->image('road-scene.jpg', 640, 480),
-            'selfie' => UploadedFile::fake()->image('verification-selfie.jpg', 640, 480),
+            ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg', 640, 480), $civilian),
         ])->assertSessionHasNoErrors()->assertRedirect();
 
         $report = IncidentReport::query()->sole();
@@ -474,7 +474,7 @@ class TextSeverityIntegrationTest extends TestCase
         foreach (['road-scene-a.jpg', 'road-scene-b.png'] as $index => $filename) {
             $this->actingAs($civilian)->post(route('reports.store'), $this->reportInput($description) + [
                 'evidence' => UploadedFile::fake()->image($filename, 640 + $index * 160, 480),
-                'selfie' => UploadedFile::fake()->image('verification-selfie.jpg', 640, 480),
+                ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg', 640, 480), $civilian),
             ])->assertSessionHasNoErrors()->assertRedirect();
         }
 

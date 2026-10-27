@@ -49,6 +49,10 @@ return [
         'test_timeout' => (int) env('AI_TEXT_TEST_TIMEOUT', 90),
     ],
 
+    'face_liveness' => [
+        'url' => env('FACE_LIVENESS_SERVICE_URL', env('AI_TEXT_SERVICE_URL', 'http://127.0.0.1:8102')),
+    ],
+
     'lora_ingest' => [
         'token' => env('LORA_INGEST_TOKEN'),
     ],

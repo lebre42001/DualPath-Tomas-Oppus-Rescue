@@ -1,4 +1,4 @@
-"""FastAPI entry point for description-only severity inference."""
+"""Description-only severity inference and an independent live-face check."""
 
 from __future__ import annotations
 
@@ -6,10 +6,12 @@ from fastapi import FastAPI, HTTPException
 
 from .operation_mode import ai_enabled, operation_mode
 from .text_api import router as text_router
+from .liveness_api import router as liveness_router
 from .text_inference import TextModelUnavailable, get_predictor, text_status
 
 app = FastAPI(title="Stitch Text Severity Service", version="0.4.0")
 app.include_router(text_router)
+app.include_router(liveness_router)
 
 
 @app.get("/health")

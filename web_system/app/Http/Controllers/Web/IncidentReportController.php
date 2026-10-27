@@ -140,6 +140,7 @@ class IncidentReportController extends Controller
         $validator = Validator::make($request->all(), [
             'description' => ['required', 'string', 'max:1000'],
             'submission_id' => ['nullable', 'uuid'],
+            'liveness_proof' => [$isCivilian ? 'required' : 'nullable', 'string', 'size:64'],
             'location_text' => ['required', 'string', 'max:180'],
             'latitude' => [Rule::requiredIf($isCivilian), 'nullable', 'numeric', 'between:-90,90'],
             'longitude' => [Rule::requiredIf($isCivilian), 'nullable', 'numeric', 'between:-180,180'],
@@ -163,6 +164,7 @@ class IncidentReportController extends Controller
             ],
         ], [
             'location_text.required' => 'Enter the barangay, road, or nearby landmark so rescuers can find the incident. GPS is also required.',
+            'liveness_proof.required' => 'Complete the live face and blink check before sending.',
             'latitude.required' => 'Enable device location, allow browser location access, and lock GPS before sending the emergency report.',
             'longitude.required' => 'Enable device location, allow browser location access, and lock GPS before sending the emergency report.',
             'description.required' => 'Describe the emergency before sending. The AI severity review uses this text as its main basis.',
@@ -200,6 +202,9 @@ class IncidentReportController extends Controller
         }
 
         $description = trim((string) ($validated['description'] ?? ''));
+        if ($isCivilian) {
+            app(\App\Services\FaceLivenessProof::class)->assertValid($request->user(), 'report', $validated['liveness_proof'] ?? null, $request->file('selfie_capture') ?: $request->file('selfie'));
+        }
         $descriptionForStorage = $description !== '' ? $description : 'No short description provided.';
 
         $preferredSeverity = $isCivilian ? null : ($validated['severity'] ?? null);
@@ -257,6 +262,9 @@ class IncidentReportController extends Controller
         }
 
         if ($selfieUpload) {
+            if ($isCivilian) {
+                app(\App\Services\FaceLivenessProof::class)->consume($request->user(), 'report', $validated['liveness_proof'] ?? null, $selfieUpload);
+            }
             $selfiePath = $selfieUpload->store('incident-selfies');
         }
 

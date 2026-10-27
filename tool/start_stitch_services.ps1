@@ -279,6 +279,12 @@ function Set-EnvDefault {
 
 $php = Resolve-PhpPath
 $python = Resolve-PythonPath
+$livenessPython = Join-Path $root 'ai_service\.venv-liveness\Scripts\python.exe'
+if (Test-Path -LiteralPath $livenessPython) {
+  $faceEnvLine = Get-Content -LiteralPath (Join-Path $root 'web_system\.env') | Where-Object { $_ -match '^APP_KEY=' } | Select-Object -First 1
+  $faceKey = ($faceEnvLine -replace '^APP_KEY=', '').Trim().Trim([char]34).Trim([char]39)
+  if ($faceKey.Length -ge 40) { Set-EnvDefault -Name 'FACE_LIVENESS_KEY' -Value $faceKey }
+}
 $activeTextPath = Join-Path $root 'ai_service\active_text_config.json'
 if (Test-Path -LiteralPath $activeTextPath) {
   $activeText = Get-Content -LiteralPath $activeTextPath -Raw | ConvertFrom-Json
@@ -357,6 +363,18 @@ if ((Test-Path -LiteralPath $textAiPython) -and $activeText.mode -ne 'MODEL_ADVI
   }
 }
 
+if (Test-Path -LiteralPath $livenessPython) {
+  $services += @{
+    Name = 'face-liveness'
+    FilePath = $livenessPython
+    Arguments = @('serve_liveness.py')
+    Port = 8102
+    WorkingDirectory = Join-Path $root 'ai_service'
+    CommandFragments = @('serve_liveness.py')
+    ProcessName = 'python.exe'
+  }
+}
+
 $results = foreach ($service in $services) {
   Start-ManagedProcess @service
 }
@@ -379,10 +397,12 @@ if (-not $SkipHealthChecks) {
     $null
   }
   $mysqlReady = Wait-ForTcpPort -TargetHost '127.0.0.1' -Port 3306
+  $faceReady = if (Test-Path -LiteralPath $livenessPython) { Wait-ForHttp -Uri 'http://127.0.0.1:8102/ready/liveness' -TimeoutSeconds 30 } else { $null }
   $reverbReady = Wait-ForTcpPort -TargetHost '127.0.0.1' -Port 8080
 
   Write-Host ''
   Write-Host 'Health checks'
+  Write-Host ("Live face: {0}" -f $(if ($faceReady -eq 200) { 'Ready on port 8102' } else { 'Unavailable; civilian verification stays locked' }))
   Write-Host '-------------'
   Write-Host ("MySQL   : {0}" -f ($(if ($mysqlReady) { 'Port 3306 ready' } else { 'Port 3306 not reachable yet' })))
   Write-Host ("Web     : {0}" -f ($(if ($webStatus) { "HTTP $webStatus" } else { 'Not reachable yet' })))

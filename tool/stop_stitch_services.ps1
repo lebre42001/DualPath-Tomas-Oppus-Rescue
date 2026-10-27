@@ -36,6 +36,12 @@ $serviceDefinitions = @(
     Port = 8101
     CommandFragments = @('serve_text_test.py')
     ProcessName = 'python.exe'
+  },
+  @{
+    Name = 'face-liveness'
+    Port = 8102
+    CommandFragments = @('serve_liveness.py')
+    ProcessName = 'python.exe'
   }
 )
 

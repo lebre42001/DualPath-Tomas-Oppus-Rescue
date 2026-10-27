@@ -1,4 +1,5 @@
 import { onDomReady } from './dom-ready';
+import { captureLiveness, applyLiveness, clearLiveness, hasLiveness } from './face-liveness';
 const createPreviewUrl = (file) => {
     if (!(file instanceof File)) {
         return null;
@@ -74,8 +75,11 @@ onDomReady( () => {
     let evidencePreviewUrl = null;
     let selfiePreviewUrl = null;
     let selfieCameraStream = null;
+    let selfieCameraRequest = 0;
     let evidenceInspectionToken = 0;
     let pendingSubmitAfterSelfie = false;
+    let livenessController = null;
+    let livenessBusy = false;
     let gpsLocked = false;
     let gpsRequestPending = false;
     let allowVerifiedGpsSubmit = false;
@@ -109,11 +113,7 @@ onDomReady( () => {
     };
 
     const userAgent = navigator.userAgent || '';
-    const platform = navigator.platform || '';
-    const isIOSLike = /iPad|iPhone|iPod/i.test(userAgent)
-        || (platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     const isEmbeddedBrowser = /FBAN|FBAV|FBIOS|FB_IAB|Messenger|Instagram|Line|Twitter|TikTok/i.test(userAgent);
-    const shouldUseNativeSelfieCapture = () => isIOSLike || isEmbeddedBrowser;
 
     const clearInputFile = (input) => {
         if (input instanceof HTMLInputElement) {
@@ -175,7 +175,7 @@ onDomReady( () => {
         setBadgeState(uploadBadge, 'neutral', 'Upload optional');
     };
 
-    const hasRequiredSelfie = () => getActiveSelfieFile() instanceof File;
+    const hasRequiredSelfie = () => getActiveSelfieFile() instanceof File && (!isCivilian || hasLiveness(form));
 
     const hasExactGps = () =>
         latitudeInput instanceof HTMLInputElement
@@ -460,6 +460,7 @@ onDomReady( () => {
     };
 
     const stopSelfieCamera = () => {
+        selfieCameraRequest += 1;
         if (selfieCameraStream) {
             selfieCameraStream.getTracks().forEach((track) => track.stop());
             selfieCameraStream = null;
@@ -561,36 +562,10 @@ onDomReady( () => {
         }
     };
 
-    const canvasToJpegBlob = (canvas) => new Promise((resolve) => {
-        if (typeof canvas.toBlob === 'function') {
-            canvas.toBlob(resolve, 'image/jpeg', 0.88);
-            return;
-        }
-
-        try {
-            fetch(canvas.toDataURL('image/jpeg', 0.88))
-                .then((response) => response.blob())
-                .then(resolve)
-                .catch(() => resolve(null));
-        } catch {
-            resolve(null);
-        }
-    });
-
-    const openPhoneSelfieFallback = (message = 'Opening phone camera for selfie verification.') => {
-        stopSelfieCamera();
-        hideSelfieCameraModal();
-
-        if (submitStatus) {
-            submitStatus.textContent = message;
-        }
-
-        if (selfieCaptureInput instanceof HTMLInputElement) {
-            selfieCaptureInput.click();
-            return;
-        }
-
-        selfieInput?.click();
+    const showSelfieCameraHelp = () => {
+        const message = 'A live blink check requires camera access. Open this page in an updated Chrome or Safari browser and allow camera permission, then retry.';
+        setSelfieCameraStatus(message);
+        if (submitStatus) submitStatus.textContent = message;
     };
 
     const startFrontSelfieCamera = async () => {
@@ -599,12 +574,13 @@ onDomReady( () => {
         }
 
         if (!canUseDirectCamera()) {
-            setSelfieCameraStatus('This browser requires HTTPS for direct front-camera preview. Opening the phone camera instead.');
+            setSelfieCameraStatus('Live camera access requires HTTPS. Open the secure site in Chrome or Safari and allow the camera.');
             return false;
         }
 
         showSelfieCameraModal();
         stopSelfieCamera();
+        const cameraRequest = ++selfieCameraRequest;
         setSelfieCameraStatus('Requesting the front camera. Please allow camera access if the browser asks.');
 
         if (selfieCameraCaptureButton instanceof HTMLButtonElement) {
@@ -616,7 +592,9 @@ onDomReady( () => {
         }
 
         try {
-            selfieCameraStream = await requestFrontCameraStream();
+            const openedStream = await requestFrontCameraStream();
+            if (cameraRequest !== selfieCameraRequest) { openedStream.getTracks().forEach((track) => track.stop()); return true; }
+            selfieCameraStream = openedStream;
             selfieCameraPreview.srcObject = selfieCameraStream;
 
             const playAttempt = selfieCameraPreview.play();
@@ -625,11 +603,12 @@ onDomReady( () => {
             }
 
             const videoReady = await waitForVideoReady(selfieCameraPreview);
+            if (cameraRequest !== selfieCameraRequest) return true;
             if (!videoReady) {
                 throw new Error('front-camera-preview-not-ready');
             }
 
-            setSelfieCameraStatus('Front camera is ready. Center your face, then capture the verification selfie.');
+            setSelfieCameraStatus('Show one face in good lighting, then tap Check Face & Blink.');
 
             if (selfieCameraCaptureButton instanceof HTMLButtonElement) {
                 selfieCameraCaptureButton.disabled = false;
@@ -637,8 +616,9 @@ onDomReady( () => {
 
             return true;
         } catch {
+            if (cameraRequest !== selfieCameraRequest) return true;
             stopSelfieCamera();
-            setSelfieCameraStatus('The browser could not open the front camera directly. You can retry or use the phone camera fallback.');
+            setSelfieCameraStatus('The camera could not be opened. Allow camera permission in Chrome or Safari, then retry.');
 
             if (selfieCameraRetryButton instanceof HTMLButtonElement) {
                 selfieCameraRetryButton.hidden = false;
@@ -653,93 +633,47 @@ onDomReady( () => {
     };
 
     const captureFrontSelfie = async () => {
-        if (!(selfieCameraPreview instanceof HTMLVideoElement) || !(selfieCameraCanvas instanceof HTMLCanvasElement)) {
-            openPhoneSelfieFallback();
-            return;
-        }
-
-        const width = selfieCameraPreview.videoWidth;
-        const height = selfieCameraPreview.videoHeight;
-
-        if (!width || !height) {
-            setSelfieCameraStatus('The front camera preview is still blank. Use the phone camera fallback to avoid delay.');
-            if (selfieCameraRetryButton instanceof HTMLButtonElement) {
-                selfieCameraRetryButton.hidden = false;
-            }
-
-            if (selfieCameraCaptureButton instanceof HTMLButtonElement) {
-                selfieCameraCaptureButton.disabled = true;
-            }
-            return;
-        }
-
-        selfieCameraCanvas.width = width;
-        selfieCameraCanvas.height = height;
-
-        const context = selfieCameraCanvas.getContext('2d');
-        if (!context) {
-            openPhoneSelfieFallback();
-            return;
-        }
-
-        context.save();
-        context.translate(width, 0);
-        context.scale(-1, 1);
-        context.drawImage(selfieCameraPreview, 0, 0, width, height);
-        context.restore();
-
-        const blob = await canvasToJpegBlob(selfieCameraCanvas);
-
-        if (!(blob instanceof Blob)) {
-            openPhoneSelfieFallback();
-            return;
-        }
-
-        let selfieFile = null;
+        if (livenessBusy || !selfieCameraStream?.active) return;
+        livenessBusy = true;
+        clearLiveness(form);
+        livenessController = new AbortController();
+        const controller = livenessController;
+        selfieCameraCaptureButton.disabled = true;
+        selfieCameraCaptureButton.textContent = 'Checking...';
+        if (selfieCameraRetryButton) selfieCameraRetryButton.disabled = true;
+        if (selfieCameraFallbackButton) selfieCameraFallbackButton.disabled = true;
         try {
-            selfieFile = new File([blob], `verification-selfie-${Date.now()}.jpg`, {
-                type: 'image/jpeg',
-                lastModified: Date.now(),
-            });
-        } catch {
-            openPhoneSelfieFallback();
-            return;
+            const result = await captureLiveness({ video: selfieCameraPreview, form, purpose: 'report', onStatus: setSelfieCameraStatus, signal: controller.signal });
+            if (controller.signal.aborted) return;
+            if (!assignSelfieFile(result.file)) throw new Error('This browser could not prepare the verified selfie. Try an updated Chrome or Safari browser.');
+            applyLiveness(form, result);
+            updateSelfiePreview(getActiveSelfieFile());
+            stopSelfieCamera();
+            hideSelfieCameraModal();
+            submitAfterSelfieVerification();
+        } catch (error) {
+            if (!controller.signal.aborted) setSelfieCameraStatus(error.message || 'The live check failed. Please retry.');
+        } finally {
+            livenessBusy = false;
+            selfieCameraCaptureButton.disabled = !selfieCameraStream?.active;
+            selfieCameraCaptureButton.textContent = 'Check Face & Blink';
+            if (selfieCameraRetryButton) { selfieCameraRetryButton.disabled = false; if (!selfieCameraStream?.active) selfieCameraRetryButton.hidden = false; }
+            if (selfieCameraFallbackButton) selfieCameraFallbackButton.disabled = false;
         }
-
-        if (!assignSelfieFile(selfieFile)) {
-            openPhoneSelfieFallback();
-            return;
-        }
-
-        updateSelfiePreview(selfieFile);
-        stopSelfieCamera();
-        hideSelfieCameraModal();
-        submitAfterSelfieVerification();
     };
 
     const openSelfieVerification = async () => {
         pendingSubmitAfterSelfie = true;
-
-        if (submitStatus) {
-            submitStatus.textContent = 'Opening front-camera selfie verification. Capture your face clearly to submit the report.';
-        }
-
-        if (shouldUseNativeSelfieCapture()) {
-            openPhoneSelfieFallback('Opening iPhone front camera for selfie verification. If Messenger blocks it, open the site in Safari or the installed PWA.');
-            return;
-        }
-
-        if (await startFrontSelfieCamera()) {
-            return;
-        }
-
-        openPhoneSelfieFallback();
+        clearLiveness(form);
+        showSelfieCameraModal();
+        if (submitStatus) submitStatus.textContent = 'Complete the live face and blink check before sending.';
+        if (!await startFrontSelfieCamera()) showSelfieCameraHelp();
     };
 
     const submitAfterSelfieVerification = () => {
         pendingSubmitAfterSelfie = false;
         if (submitStatus) {
-            submitStatus.textContent = 'Selfie verified. Sending report now...';
+            submitStatus.textContent = 'Face and blink check passed. Checking location before sending...';
         }
 
         if (typeof form.requestSubmit === 'function') {
@@ -865,7 +799,7 @@ onDomReady( () => {
             selfiePreviewName.textContent = file.name;
         }
 
-        setBadgeState(selfieBadge, 'green', 'Selfie ready');
+        setBadgeState(selfieBadge, hasRequiredSelfie() ? 'green' : 'amber', hasRequiredSelfie() ? 'Live checked' : 'Blink check required');
         updateCivilianReadiness();
     };
 
@@ -982,10 +916,12 @@ onDomReady( () => {
     });
 
     selfieCameraFallbackButton?.addEventListener('click', () => {
-        openPhoneSelfieFallback();
+        showSelfieCameraHelp();
     });
 
     selfieCameraCancelButton?.addEventListener('click', () => {
+        livenessController?.abort();
+        clearLiveness(form);
         pendingSubmitAfterSelfie = false;
         stopSelfieCamera();
         hideSelfieCameraModal();
@@ -1001,6 +937,7 @@ onDomReady( () => {
     });
 
     selfieCaptureInput?.addEventListener('change', () => {
+        if (isCivilian) clearLiveness(form);
         clearInputFile(selfieInput);
         updateSelfiePreview(getActiveSelfieFile());
 
@@ -1015,6 +952,7 @@ onDomReady( () => {
     });
 
     selfieInput?.addEventListener('change', () => {
+        if (isCivilian) clearLiveness(form);
         clearInputFile(selfieCaptureInput);
         updateSelfiePreview(getActiveSelfieFile());
 
@@ -1075,6 +1013,22 @@ onDomReady( () => {
     });
 
     updateCivilianReadiness();
+
+    form.addEventListener('liveness:expired', () => {
+        updateCivilianReadiness();
+        if (submitStatus) submitStatus.textContent = 'The live check expired. Tap Send Report for a new blink check.';
+    });
+    form.addEventListener('stitch:report-draft-restored', () => {
+        clearLiveness(form);
+        updateCivilianReadiness();
+    });
+    window.addEventListener('pagehide', () => {
+        livenessController?.abort();
+        clearLiveness(form);
+        pendingSubmitAfterSelfie = false;
+        stopSelfieCamera();
+        hideSelfieCameraModal();
+    });
 
     window.addEventListener('beforeunload', () => {
         stopSelfieCamera();

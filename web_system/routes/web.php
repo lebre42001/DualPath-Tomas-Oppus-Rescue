@@ -70,6 +70,8 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
     Route::redirect('/home', '/dashboard');
     Route::get('/account/verify', [AccountVerificationController::class, 'create'])->name('account.verify');
     Route::post('/account/verify', [AccountVerificationController::class, 'store'])->name('account.verify.store');
+    Route::post('/face-liveness/challenge', [\App\Http\Controllers\FaceLivenessController::class, 'challenge'])->middleware('throttle:12,1')->name('face-liveness.challenge');
+    Route::post('/face-liveness/verify', [\App\Http\Controllers\FaceLivenessController::class, 'verify'])->middleware('throttle:12,1')->name('face-liveness.verify');
 
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function (): void {
         Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');

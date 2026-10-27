@@ -1,4 +1,5 @@
-﻿import { onDomReady } from './dom-ready';
+import { onDomReady } from './dom-ready';
+import { captureLiveness, applyLiveness, clearLiveness, hasLiveness } from './face-liveness';
 
 onDomReady(() => {
     const root = document.querySelector('[data-account-verification-root]');
@@ -23,10 +24,7 @@ onDomReady(() => {
     let busy = false;
     let submitting = false;
     let cameraRequest = 0;
-    let faceDetector = null;
-    try {
-        if (window.FaceDetector) faceDetector = new window.FaceDetector({ fastMode: true, maxDetectedFaces: 1 });
-    } catch { /* Some browsers expose the API without supporting it. */ }
+    let liveController = null;
 
     const setStatus = (message) => { status.textContent = message; };
     const hasFile = () => Boolean(input.files?.length);
@@ -40,9 +38,9 @@ onDomReady(() => {
         startButton.classList.toggle('btn-secondary', state === 'captured');
         captureButton.hidden = state !== 'live';
         captureButton.disabled = busy || state !== 'live';
-        captureButton.textContent = busy ? 'Capturing…' : 'Capture Face';
+        captureButton.textContent = busy ? 'Checking...' : 'Check Face & Blink';
         submitButton.hidden = state !== 'captured';
-        submitButton.disabled = busy || !hasFile();
+        submitButton.disabled = busy || !hasFile() || !hasLiveness(form);
         submitButton.textContent = submitting ? 'Verifying…' : 'Verify Account';
         fallbackButton.disabled = busy;
         preview.hidden = state !== 'live';
@@ -60,7 +58,7 @@ onDomReady(() => {
             return false;
         }
         try {
-            // Native camera selection is already attached; only captured blobs need a transfer.
+            // Attach only the final frame approved by the server.
             if (input.files?.[0] !== file) {
                 const transfer = new DataTransfer();
                 transfer.items.add(file);
@@ -74,7 +72,7 @@ onDomReady(() => {
             setStatus('3 of 3 · Check your selfie, then tap Verify Account.');
             return true;
         } catch {
-            setStatus('Could not prepare this selfie. Use Phone Camera instead.');
+            setStatus('Could not prepare this selfie. Try an updated Chrome or Safari browser.');
             return false;
         }
     };
@@ -88,9 +86,13 @@ onDomReady(() => {
     const openCamera = async () => {
         if (busy) return;
         if (!navigator.mediaDevices?.getUserMedia) {
-            setStatus('Camera preview is unavailable here. Tap Use Phone Camera instead.');
+            setStatus('Live camera access is required. Open in Chrome or Safari and allow the camera.');
             return;
         }
+        liveController?.abort();
+        clearLiveness(form);
+        input.value = '';
+        state = 'idle';
         const request = ++cameraRequest;
         busy = true;
         render();
@@ -111,15 +113,15 @@ onDomReady(() => {
                 stopCamera();
                 state = hasFile() ? 'captured' : 'idle';
                 busy = false;
-                setStatus('Camera stopped. Open it again, or use Phone Camera.');
+                setStatus('Camera stopped. Open it again to complete the blink check.');
                 render();
             }, { once: true });
-            setStatus('2 of 3 · Center your face in good lighting, then tap Capture Face.');
+            setStatus('2 of 3 · Center your face in good lighting, then tap Check Face & Blink.');
         } catch {
             if (request !== cameraRequest) return;
             stopCamera();
             state = hasFile() ? 'captured' : 'idle';
-            setStatus('Camera access was denied or unavailable. Allow it in browser settings, or use Phone Camera.');
+            setStatus('Allow camera access in your browser settings, then retry in Chrome or Safari.');
         } finally {
             if (request === cameraRequest) { busy = false; render(); }
         }
@@ -127,50 +129,42 @@ onDomReady(() => {
     const captureFace = async () => {
         if (busy || state !== 'live') return;
         busy = true;
+        clearLiveness(form);
+        liveController = new AbortController();
+        const controller = liveController;
         render();
         try {
-            if (!stream?.active || preview.readyState < 2 || !preview.videoWidth) throw new Error('Camera not ready');
-            const { width, height } = preview.getBoundingClientRect();
-            const ratio = width / height;
-            let sw = preview.videoWidth;
-            let sh = preview.videoHeight;
-            if (sw / sh > ratio) sw = sh * ratio;
-            else sh = sw / ratio;
-            canvas.width = 720;
-            canvas.height = Math.round(720 / ratio);
-            const context = canvas.getContext('2d');
-            if (!context) throw new Error('Canvas unavailable');
-            context.drawImage(preview, (preview.videoWidth - sw) / 2, (preview.videoHeight - sh) / 2, sw, sh, 0, 0, canvas.width, canvas.height);
-            if (faceDetector) {
-                let faces = null;
-                try { faces = await faceDetector.detect(canvas); } catch { /* Native camera fallback remains available. */ }
-                if (faces && !faces.length) {
-                    setStatus('No face detected. Center your face in good lighting, then capture again.');
-                    return;
-                }
+            const result = await captureLiveness({ video: preview, form, purpose: 'account', onStatus: setStatus, signal: controller.signal });
+            if (controller.signal.aborted) return;
+            if (setSelectedFile(result.file)) {
+                applyLiveness(form, result);
+                setStatus('3 of 3 · Face and blink check passed. Tap Verify Account.');
             }
-            const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', .92));
-            if (!blob) throw new Error('Image unavailable');
-            setSelectedFile(new File([blob], `account-face-${Date.now()}.jpg`, { type: 'image/jpeg' }));
-        } catch {
-            setStatus('Could not capture your selfie. Try again, or use Phone Camera.');
+        } catch (error) {
+            if (!controller.signal.aborted) setStatus(error.message || 'Live check failed. Please retry.');
         } finally { busy = false; render(); }
     };
 
     startButton.addEventListener('click', () => { void openCamera(); });
     captureButton.addEventListener('click', () => { void captureFace(); });
-    fallbackButton.addEventListener('click', () => { if (!busy) input.click(); });
+    fallbackButton.addEventListener('click', () => {
+        setStatus('Blink verification needs live camera access. Allow camera permission and open this page in an updated Chrome or Safari browser.');
+    });
     input.addEventListener('change', () => {
-        const file = input.files?.[0];
-        if (file) {
-            if (!setSelectedFile(file)) { input.value = ''; state = stream?.active ? 'live' : 'idle'; }
-        } else if (state === 'captured') { state = 'idle'; }
+        clearLiveness(form);
+        input.value = '';
+        state = stream?.active ? 'live' : 'idle';
+        setStatus('Complete the live camera blink check to continue.');
+        render();
+    });
+    form.addEventListener('liveness:expired', () => {
+        setStatus('Live verification expired. Tap Retake for a new blink check.');
         render();
     });
     form.addEventListener('submit', (event) => {
-        if (busy || state !== 'captured' || !hasFile()) {
+        if (busy || state !== 'captured' || !hasFile() || !hasLiveness(form)) {
             event.preventDefault();
-            if (!busy) setStatus('Take a clear selfie before verifying your account.');
+            if (!busy) setStatus('Complete a new live face and blink check before verifying your account.');
             return;
         }
         busy = true;
@@ -178,12 +172,12 @@ onDomReady(() => {
         render();
         setStatus('Saving your verification. Please wait…');
     });
-    window.addEventListener('pagehide', () => { ++cameraRequest; stopCamera(); });
+    window.addEventListener('pagehide', () => { ++cameraRequest; liveController?.abort(); clearLiveness(form); stopCamera(); });
     window.addEventListener('pageshow', () => {
         busy = false;
         submitting = false;
-        state = hasFile() ? 'captured' : 'idle';
-        setStatus(hasFile() ? '3 of 3 · Check your selfie, then tap Verify Account.' : '1 of 3 · Open the front camera to begin.');
+        state = hasFile() && hasLiveness(form) ? 'captured' : 'idle';
+        setStatus(hasFile() && hasLiveness(form) ? '3 of 3 · Check your selfie, then tap Verify Account.' : '1 of 3 · Open the front camera to begin.');
         render();
     });
     render();

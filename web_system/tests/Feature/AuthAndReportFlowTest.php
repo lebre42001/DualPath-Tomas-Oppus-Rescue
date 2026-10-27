@@ -479,19 +479,19 @@ class AuthAndReportFlowTest extends TestCase
             ->assertSee('data-pwa-dismiss-action>Later', false)
             ->assertSee('data-pwa-android-download', false)
             ->assertSee('data-account-verification-preview', false)
-            ->assertSee('Capture Face')
+            ->assertSee('Check Face &amp; Blink', false)
             ->assertSee('Verify Account');
 
         $this->actingAs($civilian)
             ->post(route('account.verify.store'), [
-                'verification_selfie' => UploadedFile::fake()->image('face-verification.jpg'),
+                ...$this->verifiedSelfie(UploadedFile::fake()->image('face-verification.jpg'), $civilian, 'account', 'verification_selfie'),
             ])
             ->assertRedirect(route('dashboard'));
 
         $civilian->refresh();
 
         $this->assertNotNull($civilian->account_verified_at);
-        $this->assertSame('live_front_camera_selfie', $civilian->account_verification_method);
+        $this->assertSame('face_blink_challenge_v1', $civilian->account_verification_method);
         $this->assertNotNull($civilian->account_verification_selfie_path);
         Storage::assertExists($civilian->account_verification_selfie_path);
 
@@ -960,7 +960,7 @@ class AuthAndReportFlowTest extends TestCase
                 'longitude' => '124.970400',
                 'description' => 'Motorcycle and tricycle collision near the main road.',
                 'evidence' => UploadedFile::fake()->image('scene-photo.jpg'),
-                'selfie' => UploadedFile::fake()->image('verification-selfie.jpg'),
+                ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg')),
             ])
             ->assertRedirect();
 
@@ -1014,7 +1014,7 @@ class AuthAndReportFlowTest extends TestCase
                 'longitude' => '124.970400',
                 'description' => 'Attempted report using a screenshot instead of a real scene photo.',
                 'evidence' => UploadedFile::fake()->image('dashboard-screenshot.png', 576, 1280),
-                'selfie' => UploadedFile::fake()->image('verification-selfie.jpg'),
+                ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg')),
             ])
             ->assertRedirect(route('reports.create'))
             ->assertSessionHasErrors(['evidence']);
@@ -1052,7 +1052,7 @@ class AuthAndReportFlowTest extends TestCase
                 'longitude' => '124.970400',
                 'description' => 'Vehicle crash near the highway.',
                 'evidence' => UploadedFile::fake()->image('road-scene.jpg', 640, 480),
-                'selfie' => UploadedFile::fake()->image('verification-selfie.jpg'),
+                ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg')),
             ]);
 
         $report = IncidentReport::query()->latest('id')->firstOrFail();
@@ -1129,7 +1129,7 @@ class AuthAndReportFlowTest extends TestCase
                 'longitude' => '124.970400',
                 'description' => '',
                 'evidence' => UploadedFile::fake()->image('scene-photo.jpg'),
-                'selfie' => UploadedFile::fake()->image('verification-selfie.jpg'),
+                ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg')),
             ])
             ->assertRedirect(route('reports.create'))
             ->assertSessionHasErrors(['description']);

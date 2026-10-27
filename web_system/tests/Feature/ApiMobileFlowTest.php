@@ -74,7 +74,7 @@ class ApiMobileFlowTest extends TestCase
             'transmission_type' => 'lora',
             'evidence_type' => 'photo',
             'evidence' => UploadedFile::fake()->image('landslide-scene.jpg'),
-            'selfie' => UploadedFile::fake()->image('field-reporter-selfie.jpg'),
+            ...$this->verifiedSelfie(UploadedFile::fake()->image('field-reporter-selfie.jpg')),
         ]);
 
         $reportResponse->assertCreated()
@@ -227,7 +227,7 @@ class ApiMobileFlowTest extends TestCase
             'transmission_type' => 'online',
             'evidence_type' => 'photo',
             'evidence' => $evidence,
-            'selfie' => $selfie,
+            ...$this->verifiedSelfie($selfie),
         ]);
 
         $reportResponse->assertCreated()
@@ -311,7 +311,7 @@ class ApiMobileFlowTest extends TestCase
             'location_text' => 'National Road Junction',
             'description' => 'Attempted emergency submission without GPS and scene photo.',
             'transmission_type' => 'online',
-            'selfie' => UploadedFile::fake()->image('verification-selfie.jpg'),
+            ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg')),
         ])->assertStatus(422)
             ->assertInvalid(['latitude', 'longitude', 'evidence']);
 
@@ -394,7 +394,7 @@ class ApiMobileFlowTest extends TestCase
             'transmission_type' => 'online',
             'evidence_type' => 'photo',
             'evidence' => UploadedFile::fake()->image('crash-scene.jpg', 640, 480),
-            'selfie' => UploadedFile::fake()->image('verification-selfie.jpg'),
+            ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg')),
         ]);
 
         $reportResponse->assertCreated()
@@ -488,7 +488,7 @@ class ApiMobileFlowTest extends TestCase
             'transmission_type' => 'online',
             'evidence_type' => 'photo',
             'evidence' => UploadedFile::fake()->image('road-scene.jpg', 640, 480),
-            'selfie' => UploadedFile::fake()->image('verification-selfie.jpg'),
+            ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg')),
         ])->assertCreated()
             ->assertJsonPath('data.evidence_available', true)
             ->assertJsonPath('data.selfie_available', true)
@@ -539,7 +539,7 @@ class ApiMobileFlowTest extends TestCase
             'transmission_type' => 'online',
             'evidence_type' => 'photo',
             'evidence' => UploadedFile::fake()->image('profile-screenshot.png', 576, 1280),
-            'selfie' => UploadedFile::fake()->image('verification-selfie.jpg'),
+            ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg')),
         ])->assertStatus(422)
             ->assertInvalid(['evidence']);
 
@@ -586,7 +586,7 @@ class ApiMobileFlowTest extends TestCase
             'transmission_type' => 'online',
             'evidence_type' => 'photo',
             'evidence' => UploadedFile::fake()->image('road-scene.jpg', 640, 480),
-            'selfie' => UploadedFile::fake()->image('verification-selfie.jpg'),
+            ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg')),
         ]);
 
         $reportResponse->assertCreated()
@@ -651,7 +651,7 @@ class ApiMobileFlowTest extends TestCase
             'transmission_type' => 'online',
             'evidence_type' => 'photo',
             'evidence' => UploadedFile::fake()->image('fallback-scene.jpg'),
-            'selfie' => UploadedFile::fake()->image('verification-selfie.jpg'),
+            ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg')),
         ]);
 
         $reportResponse->assertCreated()
@@ -789,7 +789,7 @@ class ApiMobileFlowTest extends TestCase
             'transmission_type' => 'online',
             'evidence_type' => 'photo',
             'evidence' => UploadedFile::fake()->image('crash-scene.jpg'),
-            'selfie' => UploadedFile::fake()->image('verification-selfie.jpg'),
+            ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg')),
         ])->assertForbidden()
             ->assertJsonPath('verification_required', true);
 
@@ -825,7 +825,7 @@ class ApiMobileFlowTest extends TestCase
             'transmission_type' => 'online',
             'evidence_type' => 'photo',
             'evidence' => UploadedFile::fake()->image('crash-scene.jpg'),
-            'selfie' => UploadedFile::fake()->image('verification-selfie.jpg'),
+            ...$this->verifiedSelfie(UploadedFile::fake()->image('verification-selfie.jpg')),
         ])->assertUnprocessable()
             ->assertJsonValidationErrors('description');
 

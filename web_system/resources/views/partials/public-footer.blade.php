@@ -41,7 +41,8 @@
                 <div class="public-information-copy">
                     <h2>Your account and reports</h2>
                     <p>Reporting uses your account information, scene photo, verification selfie, emergency description, and submitted location. Authorized responders use these details to review and respond to your report.</p>
-                    <p>Your civilian report history shows your own submissions. The location attached to a report is the GPS reading or manual landmark you provide when reporting.</p>
+                    <p>A short camera sequence is checked for a visible face and blinks, then discarded. The verified selfie is kept in the private account or report record.</p>
+                    <p>Your civilian report history shows your own submissions. Online civilian reports include your GPS reading and the barangay, road, or landmark you provide.</p>
                     <p>Camera and location checks request access on your current device. Running Device Check does not submit a report. Keep your password private and log out on shared devices.</p>
                 </div>
             </details>

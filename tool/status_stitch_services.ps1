@@ -67,6 +67,12 @@ $serviceDefinitions = @(
     Port = 8101
     CommandFragments = @('serve_text_test.py')
     ProcessName = 'python.exe'
+  },
+  @{
+    Name = 'face-liveness'
+    Port = 8102
+    CommandFragments = @('serve_liveness.py')
+    ProcessName = 'python.exe'
   }
 )
 
@@ -237,6 +243,7 @@ Write-Host ("MySQL   : {0}" -f (Get-TcpStatus -TargetHost '127.0.0.1' -Port 3306
 Write-Host ("Web     : {0}" -f (Get-HttpStatus -Uri 'http://127.0.0.1:8000'))
 Write-Host ("AI      : {0}" -f (Get-HttpStatus -Uri 'http://127.0.0.1:8100/health'))
 Write-Host ("Text AI : {0}" -f (Get-HttpStatus -Uri $textHealthUri))
+Write-Host ("Live face: {0}" -f (Get-HttpStatus -Uri 'http://127.0.0.1:8102/ready/liveness'))
 Write-Host ("Reverb  : {0}" -f (Get-TcpStatus -TargetHost '127.0.0.1' -Port 8080))
 Write-Host ''
 Write-Host 'URLs'
