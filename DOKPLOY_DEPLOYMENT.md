@@ -43,12 +43,19 @@ and the existing-account login path separately. Confirm the deployed commit/buil
 `/system/version` fingerprints include modification times and are not Git SHAs.
 Do not claim online/local parity from a health response alone.
 
-The hosted `/privacy-policy` returned HTTP 404 during preparation of this release;
-the updated routes were verified on localhost. Online deployment remains pending
-until the new commit is deployed and the public routes/flows are checked. A browser
+The hosted `/privacy-policy` returned HTTP 404 before this release was uploaded;
+the updated routes were first verified on localhost. The existing main-branch
+pipeline deploys pushed commits automatically; wait for its rebuild and check the
+public routes/flows before calling a release live. A browser
 connection was unavailable for local visual QA; HTTP and automated checks do not
 replace a final mobile/browser review. No LoRa firmware change or hardware reflash
 is included in this web release.
+
+The Nginx Reverb proxies must match `/app/` and `/apps/` with a trailing slash.
+A broad `/app` prefix also intercepts Laravel's `/app-license`, causing an
+online-only 404 even when the page works under `artisan serve`. Deploy the path
+boundary fix with this release; verify all three legal documents, plus Reverb's
+normal `/app/{key}` WebSocket and `/apps/{id}/events` API paths.
 
 Local validation uses the isolated SQLite test configuration in
 `web_system/phpunit.xml`. On this workstation, the PATH-selected PHP has no MySQL

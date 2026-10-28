@@ -19,7 +19,9 @@ server {
         add_header Cache-Control "public, max-age=31536000, immutable";
     }
 
-    location /app {
+    # Reverb endpoints have a path separator after app/apps. Keep ordinary
+    # Laravel pages such as /app-license outside the WebSocket proxy.
+    location /app/ {
         proxy_pass http://127.0.0.1:8080;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
@@ -29,7 +31,7 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    location /apps {
+    location /apps/ {
         proxy_pass http://127.0.0.1:8080;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
