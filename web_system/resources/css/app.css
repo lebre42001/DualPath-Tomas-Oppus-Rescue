@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './public-pages.css';
+@import './legal.css';
 @import './brand.css';
 @import './system-flow.css';
 

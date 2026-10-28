@@ -31,6 +31,9 @@ use Illuminate\Notifications\Notifiable;
     'last_login_at',
     'last_login_ip_address',
     'last_login_user_agent',
+    'legal_documents_version',
+    'terms_accepted_at',
+    'privacy_acknowledged_at',
 ])]
 #[Hidden(['password', 'remember_token', 'api_token'])]
 class User extends Authenticatable
@@ -48,6 +51,8 @@ class User extends Authenticatable
             'password' => 'hashed',
             'last_login_at' => 'datetime',
             'blocked_at' => 'datetime',
+            'terms_accepted_at' => 'datetime',
+            'privacy_acknowledged_at' => 'datetime',
         ];
     }
 

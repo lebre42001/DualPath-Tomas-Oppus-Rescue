@@ -176,6 +176,8 @@
                     </div>
                 </div>
 
+                @include('partials.legal-acknowledgment')
+
                 <button type="submit" class="inline-flex min-h-[52px] items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-black text-on-primary shadow-lg shadow-primary/20 transition hover:bg-primary-container">
                     Create Account
                 </button>

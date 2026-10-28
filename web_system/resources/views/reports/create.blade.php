@@ -60,6 +60,7 @@
             <input type="hidden" name="submission_id" value="{{ old('submission_id', $submissionId) }}">
 
             @if ($isCivilian)
+                <p class="legal-small">Your location, scene photo, verification selfie, and description are shared with authorized reviewers. Only the description is used for severity AI. <a href="{{ route('legal.privacy') }}">Privacy Policy</a>.</p>
                 <div class="civilian-report-mobile-flow">
                     <section class="form-step-card civilian-capture-panel">
                         <details class="civilian-report-type" data-incident-picker>

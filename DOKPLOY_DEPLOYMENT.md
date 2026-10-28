@@ -5,6 +5,68 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Privacy and app terms release (2026-10-28)
+
+Deploy the public `/privacy-policy`, `/terms-and-conditions`, and `/app-license`
+routes, their Blade views, the registration controllers, and rebuilt Vite assets
+together. The same documents are linked from public Home/Login/Register, Settings,
+account verification, and the report form. Reading them never requires login.
+Existing password-based logins are not blocked by a new agreement modal.
+
+Apply migration `2026_10_28_000001_add_legal_acknowledgment_to_users_table` before
+accepting new registrations. The existing container startup runs migrations before
+serving requests. New web/API registrations require `terms_accepted=true`,
+`privacy_acknowledged=true`, and the current `legal_version` from
+`web_system/config/legal.php` (`2026-10-28` for this release). Direct API clients
+must display the documents and collect these actions; do not silently insert true
+in a client. The PWA/Android TWA uses the updated website without an APK rebuild.
+
+Google sign-in first shows the document acknowledgment page, then a CSRF-protected
+POST starts OAuth. New Google accounts require a current acknowledgment recorded
+in the same session within 30 minutes. Existing accounts are not retroactively
+assigned acceptance merely by migration or ordinary sign-in. The database stores
+the acknowledged document version and timestamps, not blanket data-use consent.
+
+Set `LEGAL_OPERATOR_NAME`, `LEGAL_CONTACT_EMAIL`, and optionally
+`LEGAL_CONTACT_ADDRESS` in Dokploy's Compose environment using the actual operator
+and monitored contact. Compose passes these to Laravel. The default operator label
+is **AksyRes project administrators**; no contact email/address is invented. If an
+email is absent, the published page explicitly says a contact is not yet provided.
+The operator still needs to confirm its identity/contact, processing basis for
+sensitive information, retention schedule, and any separately required consent;
+publishing pages/recording acknowledgment does not certify legal compliance.
+
+After redeploying the same commit, verify `/login` and all three public documents
+return HTTP 200 over HTTPS, inspect their footer/form links, and test rejected and
+accepted registrations with designated test accounts. Verify Google acknowledgment
+and the existing-account login path separately. Confirm the deployed commit/build;
+`/system/version` fingerprints include modification times and are not Git SHAs.
+Do not claim online/local parity from a health response alone.
+
+The hosted `/privacy-policy` returned HTTP 404 during preparation of this release;
+the updated routes were verified on localhost. Online deployment remains pending
+until the new commit is deployed and the public routes/flows are checked. A browser
+connection was unavailable for local visual QA; HTTP and automated checks do not
+replace a final mobile/browser review. No LoRa firmware change or hardware reflash
+is included in this web release.
+
+Local validation uses the isolated SQLite test configuration in
+`web_system/phpunit.xml`. On this workstation, the PATH-selected PHP has no MySQL
+driver and the Laragon CLI does not enable Zip by default. Use the installed
+Laragon runtime for migrations and enable its existing Zip extension for the full
+test suite (including XLSX export), without changing global PHP configuration:
+
+```powershell
+cd C:\laragon\www\TomasOppusRescue-main\web_system
+& 'C:\laragon\bin\php\php\php.exe' -d extension=zip vendor/phpunit/phpunit/phpunit --colors=never
+npm.cmd run build
+```
+
+Local verification on 2026-10-28: 292 tests passed (3,053 assertions), Vite build
+passed, Blade views compiled, and Home/Login/Register plus all three public legal
+routes returned HTTP 200. These checks do not include an interactive Google
+provider sign-in, a physical-phone visual review, or a successful online redeploy.
+
 ## Current civilian interface release (2026-10-27)
 
 The Android APK source is in `android_app/`; it opens this same deployed PWA in a

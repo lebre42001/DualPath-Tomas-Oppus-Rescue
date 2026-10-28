@@ -224,4 +224,10 @@
 
 
     @endif
+
+    <section class="panel legal-settings" aria-labelledby="legal-settings-heading">
+        <h2 id="legal-settings-heading">Privacy &amp; app terms</h2>
+        <p>Read how your information is handled and the rules for using AksyRes.</p>
+        @include('partials.legal-links')
+    </section>
 @endsection

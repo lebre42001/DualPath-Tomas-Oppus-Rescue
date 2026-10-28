@@ -17,6 +17,9 @@ services:
       APP_DEBUG: "false"
       APP_KEY: ${APP_KEY:?Set APP_KEY in Dokploy}
       APP_URL: ${APP_URL:?Set APP_URL to the public HTTPS URL}
+      LEGAL_OPERATOR_NAME: ${LEGAL_OPERATOR_NAME:-AksyRes project administrators}
+      LEGAL_CONTACT_EMAIL: ${LEGAL_CONTACT_EMAIL:-}
+      LEGAL_CONTACT_ADDRESS: ${LEGAL_CONTACT_ADDRESS:-}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
       LOG_CHANNEL: stderr

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\ResponderProfile;
 use App\Models\User;
+use App\Support\LegalDocuments;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,7 +29,8 @@ class RegisteredUserController extends Controller
             'phone' => ['required', 'string', 'max:40'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Password::min(6)],
-        ]);
+            ...LegalDocuments::registrationRules(),
+        ], LegalDocuments::registrationMessages());
 
         $user = DB::transaction(function () use ($validated): User {
             $user = User::create([
@@ -37,6 +39,7 @@ class RegisteredUserController extends Controller
                 'password' => $validated['password'],
                 'role' => 'civilian',
                 'is_admin' => false,
+                ...LegalDocuments::acceptanceAttributes(),
             ]);
 
             ResponderProfile::create([

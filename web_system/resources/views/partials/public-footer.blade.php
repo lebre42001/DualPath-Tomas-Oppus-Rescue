@@ -7,7 +7,7 @@
                     <h2>How to report</h2>
                     <ol>
                         <li>Register or log in to your civilian account. Complete account verification if prompted.</li>
-                        <li>For a Road Accident, add a scene photo, lock GPS, and enter a short description. A nearby landmark is optional.</li>
+                        <li>For a Road Accident, add a scene photo, lock GPS, and enter a short description plus the barangay, road, or nearby landmark.</li>
                         <li>Capture the verification selfie when sending. Wait for confirmation and keep your reference code.</li>
                         <li>Open My Reports to follow the response status.</li>
                     </ol>
@@ -44,9 +44,11 @@
                     <p>A short camera sequence is checked for a visible face and blinks, then discarded. The verified selfie is kept in the private account or report record.</p>
                     <p>Your civilian report history shows your own submissions. Online civilian reports include your GPS reading and the barangay, road, or landmark you provide.</p>
                     <p>Camera and location checks request access on your current device. Running Device Check does not submit a report. Keep your password private and log out on shared devices.</p>
+                    <a class="public-text-link" href="{{ route('legal.privacy') }}">Read the full Privacy Policy</a>
                 </div>
             </details>
         </div>
+        @include('partials.legal-links')
         <p class="public-copyright">&copy; {{ now()->year }} AksyRes &middot; Civilian Sender</p>
     </div>
 </footer>

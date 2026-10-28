@@ -23,8 +23,13 @@ use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\SettingsController;
 use App\Support\SystemVersion;
 use App\Http\Controllers\CivilianPresenceController;
+use App\Http\Controllers\LegalDocumentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/privacy-policy', LegalDocumentController::class)->defaults('document', 'privacy')->name('legal.privacy');
+Route::get('/terms-and-conditions', LegalDocumentController::class)->defaults('document', 'terms')->name('legal.terms');
+Route::get('/app-license', LegalDocumentController::class)->defaults('document', 'license')->name('legal.license');
 
 Route::get('/system/version', static function (SystemVersion $systemVersion) {
     return response()->json([
@@ -53,6 +58,7 @@ Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('/login', [AuthenticatedSessionController::class, 'store']);
     Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('auth.google.redirect');
+    Route::post('/auth/google', [GoogleAuthController::class, 'authorize'])->middleware('throttle:12,1')->name('auth.google.authorize');
     Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
     Route::get('/admin/login', [AuthenticatedSessionController::class, 'createAdmin'])->name('admin.login');
     Route::post('/admin/login', [AuthenticatedSessionController::class, 'storeAdmin'])->name('admin.login.store');

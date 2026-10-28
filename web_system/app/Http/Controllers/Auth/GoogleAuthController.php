@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\ResponderProfile;
 use App\Models\User;
+use App\Support\LegalDocuments;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class GoogleAuthController extends Controller
 {
@@ -21,7 +23,7 @@ class GoogleAuthController extends Controller
 
     private const USERINFO_URL = 'https://www.googleapis.com/oauth2/v3/userinfo';
 
-    public function redirect(Request $request): RedirectResponse
+    public function redirect(Request $request): RedirectResponse|View
     {
         $config = $this->googleConfig();
 
@@ -29,6 +31,21 @@ class GoogleAuthController extends Controller
             return $this->loginError('Google sign-in is not configured yet. Add the Google Client ID and Secret first.');
         }
 
+        return view('auth.google-agreement');
+    }
+
+    public function authorize(Request $request): RedirectResponse
+    {
+        $request->validate(LegalDocuments::registrationRules(), LegalDocuments::registrationMessages());
+        $config = $this->googleConfig();
+        if (! $this->googleIsConfigured($config)) {
+            return $this->loginError('Google sign-in is not configured yet. Add the Google Client ID and Secret first.');
+        }
+
+        $request->session()->put('google_legal_acknowledgment', [
+            'version' => config('legal.version'),
+            'recorded_at' => now()->timestamp,
+        ]);
         $state = Str::random(48);
         $request->session()->put('google_oauth_state', $state);
 
@@ -116,7 +133,17 @@ class GoogleAuthController extends Controller
             return $this->loginError('This civilian account has been blocked by an admin. Please contact Bontoc Rescue for assistance.');
         }
 
-        $user = DB::transaction(function () use ($user, $googleId, $email, $name, $avatarUrl): User {
+        $acknowledgment = $request->session()->pull('google_legal_acknowledgment');
+        if (! $user && (! is_array($acknowledgment)
+            || ($acknowledgment['version'] ?? null) !== config('legal.version')
+            || ! is_int($acknowledgment['recorded_at'] ?? null)
+            || $acknowledgment['recorded_at'] > now()->timestamp
+            || now()->timestamp - $acknowledgment['recorded_at'] > 1800)) {
+            return redirect()->route('auth.google.redirect')
+                ->with('status', 'Review the current documents, then continue with Google to create your account.');
+        }
+
+        $user = DB::transaction(function () use ($user, $googleId, $email, $name, $avatarUrl, $acknowledgment): User {
             if (! $user) {
                 $user = User::create([
                     'name' => $name !== '' ? $name : Str::before($email, '@'),
@@ -128,6 +155,9 @@ class GoogleAuthController extends Controller
                     'google_linked_at' => now(),
                     'role' => 'civilian',
                     'is_admin' => false,
+                    ...LegalDocuments::acceptanceAttributes(),
+                    'terms_accepted_at' => \Illuminate\Support\Carbon::createFromTimestamp($acknowledgment['recorded_at']),
+                    'privacy_acknowledged_at' => \Illuminate\Support\Carbon::createFromTimestamp($acknowledgment['recorded_at']),
                 ]);
             } else {
                 $emailInUseByAnotherAccount = User::query()

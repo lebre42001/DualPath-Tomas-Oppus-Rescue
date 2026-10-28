@@ -13,6 +13,7 @@
                 <p class="panel-kicker">Account verification</p>
                 <h1>Verify your account</h1>
                 <p>Complete a face and blink check to unlock emergency reporting.</p>
+                <p class="legal-small">A short camera sequence is sent for face/blink verification. The verified selfie is saved; the sequence is not retained as a video. <a href="{{ route('legal.privacy') }}">Read the Privacy Policy</a>.</p>
             </header>
 
             <form method="POST" action="{{ route('account.verify.store') }}" enctype="multipart/form-data" class="stack" data-account-verification-form data-liveness-challenge-url="{{ route('face-liveness.challenge') }}" data-liveness-verify-url="{{ route('face-liveness.verify') }}">

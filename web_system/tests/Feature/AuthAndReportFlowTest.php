@@ -110,7 +110,13 @@ class AuthAndReportFlowTest extends TestCase
             'services.google.redirect' => route('auth.google.callback'),
         ]);
 
-        $response = $this->get(route('auth.google.redirect'))
+        $this->get(route('auth.google.redirect'))->assertOk()->assertSee('Before Google sign-in');
+
+        $response = $this->post(route('auth.google.authorize'), [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
+        ])
             ->assertRedirect()
             ->assertSessionHas('google_oauth_state');
 
@@ -150,7 +156,10 @@ class AuthAndReportFlowTest extends TestCase
             ]),
         ]);
 
-        $this->withSession(['google_oauth_state' => 'valid-state'])
+        $this->withSession([
+            'google_oauth_state' => 'valid-state',
+            'google_legal_acknowledgment' => ['version' => config('legal.version'), 'recorded_at' => now()->timestamp],
+        ])
             ->get(route('auth.google.callback', [
                 'state' => 'valid-state',
                 'code' => 'valid-code',
@@ -272,6 +281,9 @@ class AuthAndReportFlowTest extends TestCase
     public function test_mobile_api_registration_accepts_civilian_role_selection(): void
     {
         $this->postJson('/api/v1/auth/register', [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
             'name' => 'Civilian Reporter',
             'phone' => '09171234567',
             'email' => 'civilian@example.com',
@@ -294,6 +306,9 @@ class AuthAndReportFlowTest extends TestCase
     public function test_web_registration_accepts_civilian_role_selection(): void
     {
         $this->post('/register', [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
             'name' => 'Civilian Reporter',
             'phone' => '09179990000',
             'email' => 'civilian.web@example.com',
@@ -313,6 +328,9 @@ class AuthAndReportFlowTest extends TestCase
     public function test_public_registration_cannot_create_a_responder_account(): void
     {
         $this->post('/register', [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
             'name' => 'Spoofed Responder',
             'phone' => '09170000000',
             'email' => 'spoofed.responder@example.com',

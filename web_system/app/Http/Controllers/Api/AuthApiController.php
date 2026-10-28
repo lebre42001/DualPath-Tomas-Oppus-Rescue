@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Support\CivilianPresence;
+use App\Support\LegalDocuments;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -20,7 +21,8 @@ class AuthApiController extends Controller
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'role' => ['nullable', 'in:civilian'],
-        ]);
+            ...LegalDocuments::registrationRules(),
+        ], LegalDocuments::registrationMessages());
 
         $user = User::create([
             'name' => $validated['name'],
@@ -28,6 +30,7 @@ class AuthApiController extends Controller
             'password' => $validated['password'],
             'role' => 'civilian',
             'is_admin' => false,
+            ...LegalDocuments::acceptanceAttributes(),
         ]);
 
         $user->responderProfile()->create([

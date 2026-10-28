@@ -28,6 +28,9 @@ class ApiMobileFlowTest extends TestCase
         config()->set('services.ai_severity.enabled', false);
 
         $registerResponse = $this->postJson('/api/v1/auth/register', [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
             'name' => 'Field Reporter',
             'phone' => '09170001111',
             'email' => 'operator@example.com',
@@ -122,6 +125,9 @@ class ApiMobileFlowTest extends TestCase
     public function test_public_api_registration_rejects_responder_role_selection(): void
     {
         $this->postJson('/api/v1/auth/register', [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
             'name' => 'Unauthorized Responder',
             'phone' => '09170002222',
             'email' => 'unauthorized.responder@example.com',
@@ -201,6 +207,9 @@ class ApiMobileFlowTest extends TestCase
         config()->set('services.ai_severity.enabled', false);
 
         $registerResponse = $this->postJson('/api/v1/auth/register', [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
             'name' => 'Civilian Reporter',
             'phone' => '09179991111',
             'email' => 'civilian.evidence@example.com',
@@ -263,6 +272,9 @@ class ApiMobileFlowTest extends TestCase
         Storage::fake();
 
         $registerResponse = $this->postJson('/api/v1/auth/register', [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
             'name' => 'Civilian Reporter',
             'phone' => '09179992222',
             'email' => 'civilian.selfie@example.com',
@@ -292,6 +304,9 @@ class ApiMobileFlowTest extends TestCase
         Storage::fake();
 
         $registerResponse = $this->postJson('/api/v1/auth/register', [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
             'name' => 'Civilian Missing Evidence',
             'phone' => '09179992223',
             'email' => 'civilian.missing.evidence@example.com',
@@ -323,6 +338,9 @@ class ApiMobileFlowTest extends TestCase
     public function test_mobile_api_rejects_blocked_civilian_login_and_existing_token_access(): void
     {
         $registerResponse = $this->postJson('/api/v1/auth/register', [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
             'name' => 'Blocked Civilian',
             'phone' => '09179994444',
             'email' => 'blocked.api@example.com',
@@ -370,6 +388,9 @@ class ApiMobileFlowTest extends TestCase
         config()->set('services.ai_severity.require_civilian_photo_gate', true);
 
         $registerResponse = $this->postJson('/api/v1/auth/register', [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
             'name' => 'Civilian Reporter',
             'phone' => '09179993333',
             'email' => 'civilian.ai.photo@example.com',
@@ -464,6 +485,9 @@ class ApiMobileFlowTest extends TestCase
         config()->set('services.ai_severity.retry_attempts', 1);
 
         $registerResponse = $this->postJson('/api/v1/auth/register', [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
             'name' => 'Civilian Reporter',
             'phone' => '09179995555',
             'email' => 'civilian.ai.reject@example.com',
@@ -516,6 +540,9 @@ class ApiMobileFlowTest extends TestCase
         Http::fake();
 
         $registerResponse = $this->postJson('/api/v1/auth/register', [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
             'name' => 'Civilian Reporter',
             'phone' => '09179996666',
             'email' => 'civilian.api.prescreen@example.com',
@@ -563,6 +590,9 @@ class ApiMobileFlowTest extends TestCase
         config()->set('services.ai_severity.retry_attempts', 1);
 
         $registerResponse = $this->postJson('/api/v1/auth/register', [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
             'name' => 'Strict AI Civilian',
             'phone' => '09179997777',
             'email' => 'civilian.ai.strict@example.com',
@@ -628,6 +658,9 @@ class ApiMobileFlowTest extends TestCase
         config()->set('services.ai_severity.retry_attempts', 1);
 
         $registerResponse = $this->postJson('/api/v1/auth/register', [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
             'name' => 'Fallback Civilian',
             'phone' => '09179994444',
             'email' => 'civilian.ai.fallback@example.com',
@@ -767,6 +800,9 @@ class ApiMobileFlowTest extends TestCase
         Storage::fake();
 
         $registerResponse = $this->postJson('/api/v1/auth/register', [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
             'name' => 'Locked API Civilian',
             'phone' => '09179998888',
             'email' => 'civilian.locked.api@example.com',
@@ -802,6 +838,9 @@ class ApiMobileFlowTest extends TestCase
         config()->set('services.ai_severity.enabled', false);
 
         $registerResponse = $this->postJson('/api/v1/auth/register', [
+            'terms_accepted' => true,
+            'privacy_acknowledged' => true,
+            'legal_version' => config('legal.version'),
             'name' => 'Required Description Civilian',
             'phone' => '09179997770',
             'email' => 'civilian.no.description@example.com',
