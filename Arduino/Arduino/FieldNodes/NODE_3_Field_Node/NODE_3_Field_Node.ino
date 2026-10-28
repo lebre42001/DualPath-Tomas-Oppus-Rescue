@@ -243,8 +243,8 @@ textarea{min-height:80px}button{background:#116530;color:white;border:0;font-wei
 </main>
 <div id="reviewModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="reviewTitle">
   <div class="modal-box">
-    <h2 id="reviewTitle">Report Review Completed</h2>
-    <p id="reviewSummary">The emergency team reviewed your report.</p>
+    <h2 id="reviewTitle">Report update</h2>
+    <p id="reviewSummary">The emergency team sent an update.</p>
     <div class="review-details">
       <div class="label">Message ID</div><b id="modalMsgId">-</b>
       <div class="label">Review Result</div><b id="modalStatus">-</b>
@@ -258,7 +258,7 @@ textarea{min-height:80px}button{background:#116530;color:white;border:0;font-wei
 function pad(n){return String(n).padStart(2,'0')}
 function buttonTime(){const d=new Date();const o=-d.getTimezoneOffset();const s=o>=0?'+':'-';const h=pad(Math.floor(Math.abs(o)/60));const m=pad(Math.abs(o)%60);return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())+s+h+':'+m}
 const messageBox=document.getElementById('message');messageBox.addEventListener('input',()=>{document.getElementById('remaining').textContent=70-messageBox.value.length});
-const statusLabels={'QUEUED - WAITING FOR ROUTE':'Saved locally - waiting for LoRa route','SUBMITTED - UNDER ADMIN REVIEW':'Submitted - under admin review','ACKNOWLEDGED':'Review completed','REJECTED':'Review completed - report cancelled'};
+const statusLabels={'QUEUED - WAITING FOR ROUTE':'Saved locally - waiting for LoRa route','SUBMITTED - UNDER ADMIN REVIEW':'Submitted - under admin review','ACKNOWLEDGED':'Responder update received','REJECTED':'Report cancelled by admin'};
 let shownReview='';
 function closeReview(){if(shownReview)localStorage.setItem('field_review_seen_'+shownReview,'1');document.getElementById('reviewModal').classList.remove('show')}
 function showReviewIfNeeded(x){
@@ -266,7 +266,7 @@ function showReviewIfNeeded(x){
   const key='field_review_seen_'+x.message_id;
   if(shownReview===x.message_id||localStorage.getItem(key))return;
   shownReview=x.message_id;
-  document.getElementById('reviewSummary').textContent=x.report_status==='REJECTED'?'The admin reviewed and cancelled this report.':'The emergency team reviewed your report and sent an update.';
+  document.getElementById('reviewSummary').textContent=x.report_status==='REJECTED'?'The admin cancelled this report. Read the message below.':'The emergency team sent an update. Read the verification result and message below.';
   document.getElementById('modalMsgId').textContent=x.message_id;
   document.getElementById('modalStatus').textContent=statusLabels[x.report_status]||x.report_status;
   document.getElementById('modalMessage').textContent=x.ack_message||'Your emergency report has been reviewed.';

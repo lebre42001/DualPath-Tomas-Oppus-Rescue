@@ -505,6 +505,7 @@ void pollPendingAcknowledgmentIfNeeded() {
       latestAckAt = getField(packet, 5);
       latestAckMessage = getField(packet, 8);
       if (latestAckMessage.length() == 0) latestAckMessage = "Your emergency report has been acknowledged.";
+      if (getField(packet, 9).length()) latestAckMessage = getField(packet, 9) + ": " + latestAckMessage;
       pendingLocalPacket = "";
       pendingLocalMsgId = "";
       prefs.putString("latest_status", latestReportStatus);

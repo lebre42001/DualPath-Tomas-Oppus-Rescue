@@ -144,7 +144,11 @@ class LoRaAntiPrankTest extends TestCase
                 'lora_verification' => 'needs_clarification', 'lora_verification_notes' => $notes,
                 'lora_verified_at' => now(), 'lora_ack_queued_at' => now(),
             ]);
-            $packet = $this->getJson('/api/v1/lora/acks/pending?gatewayId=NODE_1', $headers)->assertOk()->json('packet');
+            $response = $this->getJson('/api/v1/lora/acks/pending?gatewayId=NODE_1', $headers)->assertOk();
+            // Firmware reads raw UTF-8 from this compact JSON field; avoid
+            // silently changing Unicode into literal uXXXX radio text.
+            $this->assertStringNotContainsString('\\u2705', $response->getContent());
+            $packet = $response->json('packet');
             $parts = explode('|', $packet);
             $this->assertCount(10, $parts);
             $this->assertTrue(mb_check_encoding($parts[8], 'UTF-8'));

@@ -228,7 +228,7 @@ class LoRaMeshGatewayController extends Controller
             'pending' => true,
             'msgId' => $report->lora_sequence,
             'packet' => $packet,
-        ]);
+        ], 200, [], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     public function acknowledgmentDelivered(Request $request, string $msgId): JsonResponse
