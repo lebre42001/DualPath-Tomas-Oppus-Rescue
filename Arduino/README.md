@@ -345,6 +345,26 @@ first beacon/probe exchange and next 10-second heartbeat. The admin monitor
 refreshes every five seconds. Firmware and physically wired measurements must
 both be present before the corresponding values can appear.
 
+## Website telemetry legend
+
+The LoRa Mesh page shows approximate display bands, defined centrally in
+`web_system/app/Support/LoraTelemetryGuide.php`:
+
+- RTT: **Fast** up to 1,000 ms; **Moderate** 1,001–3,000 ms; **Slow** above 3,000 ms.
+- RSSI: **Strong** at least -90 dBm; **Fair** -110 to below -90 dBm; **Weak** below -110 dBm.
+
+These are project UI guides to refine using field measurements, not measured
+test results or guaranteed delivery thresholds. Higher/less-negative RSSI means
+stronger received power; link assessment also needs SNR and route conditions
+([Semtech guidance](https://www.semtech.com/design-support/faq/faq-lora/P20)).
+RSSI is measured at the gateway's last received radio hop, not every hop of an
+originating node's route. Only recent measured values receive colored ratings.
+Historical readings stay neutral as **Last reading**; RTT samples older than
+120 seconds show **Expired**. A fresh heartbeat without an RSSI value does not
+refresh the age of an older fallback report RSSI. Missing readings show a dash.
+
+This display update does not change radio settings, reporting, retries, or ACKs.
+
 ## Laravel Gateway Endpoints
 
 NODE_1 uses the shared `X-STITCH-LORA-TOKEN` header with these `/api/v1/lora` endpoints:

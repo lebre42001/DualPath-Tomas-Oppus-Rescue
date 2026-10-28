@@ -17,6 +17,8 @@
         </article>
     </div>
 
+    @include('monitoring.partials.lora-telemetry-legend')
+
     <div class="lora-node-columns" aria-hidden="true">
         <span>Node</span><span>Status</span><span>Last seen</span><span>Battery</span><span>Delay (RTT)</span><span>Radio signal</span><span></span>
     </div>
@@ -38,6 +40,10 @@
                     default => 'neutral',
                 };
                 $customName = ! preg_match('/^(Gateway|Field) Node \d+$/', $node['node_name']);
+                $rttBand = $node['round_trip_fresh'] && $node['recently_heard']
+                    ? \App\Support\LoraTelemetryGuide::rtt($node['round_trip_ms']) : null;
+                $signalBand = ($node['radio_signal_fresh'] ?? false)
+                    ? \App\Support\LoraTelemetryGuide::rssi($node['gateway_rssi']) : null;
             @endphp
             <details class="lora-node-card" data-lora-node-card data-node-id="{{ $node['sender_id'] }}" data-search="{{ $searchText }}">
                 <summary class="lora-node-row">
@@ -57,14 +63,18 @@
                         <span class="lora-node-cell-label">Delay (RTT)</span>
                         @if ($node['round_trip_ms'] !== null && $node['round_trip_fresh'])
                             {{ number_format($node['round_trip_ms']) }} ms
+                            @if ($rttBand)<span class="tag {{ $rttBand['tone'] }} lora-telemetry-badge" data-rtt-quality="{{ $rttBand['label'] }}">{{ $rttBand['label'] }}</span>
+                            @else<small class="lora-telemetry-old">Last reading</small>@endif
                         @elseif ($node['round_trip_ms'] !== null)
                             <span class="lora-node-missing" title="Sample expired">Expired</span>
                         @else
                             <span class="lora-node-missing" title="Awaiting timing sample">—</span>
                         @endif
                     </span>
-                    <span class="lora-node-reading" title="Last received RSSI">
+                    <span class="lora-node-reading" title="Last received RSSI{{ ($node['radio_signal_measured_at'] ?? null) ? ' · '.$node['radio_signal_measured_at']->timezone(config('app.timezone'))->format('M j, Y g:i:s A') : '' }}">
                         <span class="lora-node-cell-label">Radio signal</span>{{ $node['gateway_rssi'] !== null ? $node['gateway_rssi'].' dBm' : '—' }}
+                        @if ($signalBand)<span class="tag {{ $signalBand['tone'] }} lora-telemetry-badge" data-signal-quality="{{ $signalBand['label'] }}">{{ $signalBand['label'] }}</span>
+                        @elseif ($node['gateway_rssi'] !== null)<small class="lora-telemetry-old">{{ ($node['radio_signal_fresh'] ?? false) ? 'Not rated' : 'Last reading' }}</small>@endif
                     </span>
                     <span class="lora-node-expand" aria-hidden="true"></span>
                 </summary>

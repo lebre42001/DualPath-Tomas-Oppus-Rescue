@@ -18,6 +18,20 @@ body.admin-portal .lora-mesh-guide > div { position: absolute; z-index: 30; top:
 body.admin-portal .lora-mesh-guide p { margin: 0 0 10px; }
 body.admin-portal .lora-mesh-guide p:last-child { margin: 0; }
 body.admin-portal .lora-mesh-live-fragment { display: grid; gap: 12px; }
+body.admin-portal .lora-telemetry-legend { min-width: 0; border: 1px solid var(--line); border-radius: 10px; padding: 12px; background: var(--surface-alt); }
+body.admin-portal .lora-telemetry-legend-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px 22px; }
+body.admin-portal .lora-telemetry-legend h3 { display: flex; flex-wrap: wrap; gap: 3px 10px; align-items: baseline; margin: 0 0 8px; font-size: .8rem; color: var(--ink); }
+body.admin-portal .lora-telemetry-legend h3 > span { font-size: .72rem; font-weight: 400; color: var(--muted); }
+body.admin-portal .lora-telemetry-legend ul { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 0; padding: 0; list-style: none; }
+body.admin-portal .lora-telemetry-legend li { display: flex; align-items: center; gap: 5px; font-size: .72rem; color: var(--ink); }
+body.admin-portal .lora-telemetry-legend .tag { font-size: .62rem; padding: 4px 7px; letter-spacing: .02em; }
+body.admin-portal .lora-telemetry-legend p { margin: 7px 0 0; font-size: .71rem; line-height: 1.5; color: var(--muted); }
+body.admin-portal .lora-telemetry-legend-note { border-top: 1px solid var(--line); padding-top: 8px; }
+body.admin-portal .lora-telemetry-badge { display: table; margin-top: 4px; padding: 3px 6px; font-size: .6rem; line-height: 1.25; letter-spacing: .02em; }
+body.admin-portal .lora-telemetry-old { display: block; margin-top: 3px; color: var(--muted); font-size: .66rem; }
+@media (max-width: 700px) {
+    body.admin-portal .lora-telemetry-legend-grid { grid-template-columns: minmax(0,1fr); gap: 12px; }
+}
 body.admin-portal .lora-mesh-summary-strip { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; }
 body.admin-portal .lora-mesh-summary-strip .summary-card { padding: 10px 12px; gap: 4px; border-radius: 10px; background: var(--surface-alt); }
 body.admin-portal .lora-mesh-summary-strip .summary-card > span { font-size: .74rem; color: var(--muted); }

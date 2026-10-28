@@ -71,6 +71,11 @@ class LoraMeshNodeDirectory
                 $lastSeen = $state?->last_seen_at ?? $report?->created_at;
                 $recentlyHeard = $lastSeen?->greaterThanOrEqualTo($reachableSince) ?? false;
                 $hasEverBeenSeen = $lastSeen !== null;
+                // An old report RSSI must not become fresh merely because a
+                // newer heartbeat arrived without a radio measurement.
+                $signalMeasuredAt = $state?->rssi !== null ? $state->last_seen_at : (
+                    $report?->lora_gateway_rssi !== null ? $report->created_at : null
+                );
                 $recentDiscoveries = collect($discoveries[$senderId] ?? [])
                     ->filter(fn (array $discovery): bool => $lastSeen === null || $discovery['observed_at']->greaterThan($lastSeen));
                 $status = match (true) {
@@ -118,6 +123,8 @@ class LoraMeshNodeDirectory
                     'latitude' => is_numeric($node['latitude'] ?? null) ? (float) $node['latitude'] : null,
                     'longitude' => is_numeric($node['longitude'] ?? null) ? (float) $node['longitude'] : null,
                     'gateway_rssi' => $state?->rssi ?? $report?->lora_gateway_rssi,
+                    'radio_signal_measured_at' => $signalMeasuredAt,
+                    'radio_signal_fresh' => $recentlyHeard && ($signalMeasuredAt?->greaterThanOrEqualTo($reachableSince) ?? false),
                     'gateway_snr' => $state?->snr ?? $report?->lora_gateway_snr,
                     'receiver_rssi' => $report?->lora_receiver_rssi,
                     'receiver_snr' => $report?->lora_receiver_snr,

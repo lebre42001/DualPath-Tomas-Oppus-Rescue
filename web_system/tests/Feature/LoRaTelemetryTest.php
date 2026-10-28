@@ -106,4 +106,40 @@ class LoRaTelemetryTest extends TestCase
     {
         return ['X-STITCH-LORA-TOKEN' => 'telemetry-test-token'];
     }
+
+    public function test_monitor_legend_and_live_quality_labels_do_not_classify_disconnected_readings_as_current(): void
+    {
+        $this->travelTo(now()->startOfSecond());
+        $admin = User::factory()->create(['role' => 'admin', 'is_admin' => true]);
+        foreach ([['NODE_2', 731, -47], ['NODE_3', 2100, -100], ['NODE_4', 5100, -120]] as [$id, $rtt, $rssi]) {
+            LoraNodeState::query()->create([
+                'node_id' => $id, 'last_seen_at' => now(), 'rssi' => $rssi,
+                'round_trip_ms' => $rtt, 'round_trip_measured_at' => now(),
+            ]);
+        }
+        $this->actingAs($admin)->get('/monitoring/lora-mesh')->assertOk()
+            ->assertSee('RTT and radio signal legend')->assertSee('Less negative dBm = stronger')
+            ->assertSee('data-rtt-quality="Fast"', false)->assertSee('data-rtt-quality="Moderate"', false)
+            ->assertSee('data-rtt-quality="Slow"', false)->assertSee('data-signal-quality="Strong"', false)
+            ->assertSee('data-signal-quality="Fair"', false)->assertSee('data-signal-quality="Weak"', false);
+
+        $this->travel(31)->seconds();
+        $this->get('/monitoring/lora-mesh/nodes')->assertOk()
+            ->assertSee('RTT and radio signal legend')->assertSee('731 ms')->assertSee('-47 dBm')
+            ->assertSee('Last reading')->assertDontSee('data-rtt-quality=', false)->assertDontSee('data-signal-quality=', false);
+        $this->travel(90)->seconds();
+        $this->get('/monitoring/lora-mesh/nodes')->assertOk()->assertSee('Sample expired')->assertDontSee('731 ms');
+    }
+
+    public function test_new_heartbeat_without_rssi_does_not_refresh_an_old_report_signal(): void
+    {
+        $this->postJson('/api/v1/lora/alerts', [
+            'sender_id' => 'NODE_4', 'sequence' => 'NODE_4-1', 'description' => 'QA test incident.', 'rssi' => -45,
+        ], $this->headers())->assertCreated();
+        IncidentReport::query()->firstOrFail()->forceFill(['created_at' => now()->subWeek()])->save();
+        LoraNodeState::query()->where('node_id', 'NODE_4')->update(['last_seen_at' => now(), 'rssi' => null]);
+        $admin = User::factory()->create(['role' => 'admin', 'is_admin' => true]);
+        $this->actingAs($admin)->get('/monitoring/lora-mesh/nodes')->assertOk()
+            ->assertSee('-45 dBm')->assertSee('Last reading')->assertDontSee('data-signal-quality=', false);
+    }
 }
