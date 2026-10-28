@@ -114,6 +114,14 @@ class LegalDocumentsTest extends TestCase
             ->assertRedirect()->assertSessionHas('google_legal_acknowledgment');
     }
 
+    public function test_civilian_login_places_the_acknowledgment_in_the_google_form(): void
+    {
+        $this->get('/login')->assertOk()->assertSee('data-legal-gate', false)
+            ->assertSee('auth-legal.js?v=', false)
+            ->assertSeeInOrder(['data-legal-gate', 'name="terms_accepted"', 'name="privacy_acknowledged"', 'data-legal-gate-submit', 'Sign in with Google account'], false);
+        $this->get('/admin/login')->assertOk()->assertDontSee('data-legal-gate', false);
+    }
+
     public function test_new_google_account_cannot_be_created_without_a_current_recent_acknowledgment(): void
     {
         config(['services.google.client_id' => 'test-id', 'services.google.client_secret' => 'test-secret',

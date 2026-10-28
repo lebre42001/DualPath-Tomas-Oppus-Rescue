@@ -19,6 +19,7 @@
     <div class="incident-rail severity-{{ $report->operational_severity }}"></div>
     <div class="incident-meta">
         <span class="incident-code">{{ $report->report_code }}</span>
+        <a class="btn btn-secondary" href="{{ $isLoRa ? route('lora-reports.print', $report) : route('reports.print', $report) }}" target="_blank" rel="noopener">Print report</a>
         <strong class="incident-time">{{ $priorityTimer($report) }}</strong>
         <div class="tag-row">
             @if ($report->reported_fatality_flag)

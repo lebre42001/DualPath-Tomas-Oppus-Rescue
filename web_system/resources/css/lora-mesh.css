@@ -108,6 +108,8 @@ body.admin-portal .lora-report-open-label { font-weight: 800; }
 body.admin-portal .lora-report-pagination { flex-wrap: wrap; gap: 12px; }
 body.admin-portal .lora-report-page-jump { display: flex; gap: 7px; align-items: center; margin: 0; }
 body.admin-portal .lora-review-detail { gap: 16px; }
+body.admin-portal .lora-review-heading { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+body.admin-portal .lora-review-heading-copy { flex: 1 1 250px; min-width: 0; overflow-wrap: anywhere; }
 body.admin-portal .lora-review-description { white-space: pre-wrap; overflow-wrap: anywhere; }
 body.admin-portal .lora-review-metadata { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px 20px; margin: 0; }
 body.admin-portal .lora-review-metadata > div { min-width: 0; padding-bottom: 10px; border-bottom: 1px solid var(--line); }

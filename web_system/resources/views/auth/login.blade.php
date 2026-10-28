@@ -151,10 +151,15 @@
                     <span class="h-px flex-1 bg-outline-variant/60"></span>
                 </div>
 
-                <a href="{{ route('auth.google.redirect') }}" class="inline-flex min-h-[52px] w-full items-center justify-center gap-3 rounded-md border border-outline-variant bg-white px-6 py-3 text-sm font-black text-on-surface shadow-sm transition hover:bg-primary-fixed">
-                    <span class="inline-flex h-7 w-7 items-center justify-center rounded-full border border-outline-variant bg-white text-base font-black text-primary">G</span>
-                    <span>Sign in with Google account</span>
-                </a>
+                <form action="{{ route('auth.google.authorize') }}" method="POST" class="google-signin-form" data-legal-gate>
+                    @csrf
+                    @include('partials.legal-acknowledgment')
+                    <button type="submit" data-legal-gate-submit class="google-signin-button inline-flex min-h-[52px] w-full items-center justify-center gap-3 rounded-md border border-outline-variant bg-white px-6 py-3 text-sm font-black text-on-surface shadow-sm transition hover:bg-primary-fixed">
+                        <span class="inline-flex h-7 w-7 items-center justify-center rounded-full border border-outline-variant bg-white text-base font-black text-primary" aria-hidden="true">G</span>
+                        <span>Sign in with Google account</span>
+                    </button>
+                    <p class="legal-small" data-legal-gate-status role="status" aria-live="polite">Agree to the terms and acknowledge the Privacy Policy to continue with Google.</p>
+                </form>
 
                 <div class="mt-6 grid gap-3 sm:grid-cols-2">
                     <a href="{{ route('register') }}" class="inline-flex min-h-[48px] items-center justify-center rounded-md border border-outline-variant bg-white px-5 py-3 text-sm font-black text-primary transition hover:bg-primary-fixed">
@@ -176,10 +181,11 @@
             </p>
         </section>
     </main>
-    @include('partials.public-footer')
+    @include('partials.public-footer', ['showLegalLinks' => $isResponderPortal])
 
     @unless ($isResponderPortal)
         <script src="{{ asset('pwa-helper.js') }}?v={{ $pwaAssetVersion }}"></script>
+        <script src="{{ asset('auth-legal.js') }}?v={{ $pwaAssetVersion }}"></script>
     @endunless
     <script src="{{ asset('auth-password.js') }}?v={{ $pwaAssetVersion }}"></script>
 </body>

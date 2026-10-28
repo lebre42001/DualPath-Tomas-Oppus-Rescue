@@ -39,6 +39,10 @@
 .legal-check input[type='checkbox'] { appearance: auto; width: 20px; height: 20px; min-height: 20px; margin: 3px 0 0; padding: 0; accent-color: #af101a; }
 .legal-small { margin: 0; font-size: .82rem; line-height: 1.65; overflow-wrap: anywhere; }
 .legal-error { color: var(--color-error, #ba1a1a); font-size: .85rem; font-weight: 700; line-height: 1.5; }
+.google-signin-form { display: grid; gap: 14px; }
+.google-signin-form .legal-acknowledgment { background: #f8fafc; }
+.google-signin-button { cursor: pointer; }
+.google-signin-button:disabled, [data-legal-gate-submit]:disabled { opacity: .55; cursor: not-allowed; box-shadow: none; }
 .legal-settings { margin-top: 20px; }
 .legal-settings h2 { font-size: 1.1rem; font-weight: 800; }
 .legal-settings > p { margin-top: 8px; font-size: .9rem; }

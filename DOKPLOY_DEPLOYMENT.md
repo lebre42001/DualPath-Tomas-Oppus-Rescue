@@ -5,6 +5,43 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Google sign-in placement and LoRa print preview (2026-10-28)
+
+The civilian login now displays the terms agreement and privacy acknowledgment
+immediately above **Sign in with Google account**. The button is enabled only when
+both are checked; browser-required fields and the existing server validation still
+reject an incomplete/stale submission. The login form posts directly to the
+existing Google authorization endpoint, without an extra agreement page. The
+standalone GET `/auth/google` page remains available for old bookmarks. The triple
+legal-link footer row is omitted on civilian login; the linked documents remain
+available in the Google form and on the other public/settings pages.
+
+Deploy `public/auth-legal.js`, its version-watch entry, the Blade views, and rebuilt
+Vite assets together. No policy wording/version change, migration, or APK rebuild
+is needed. The Google form is separate from ordinary password sign-in and is not
+shown in the admin portal.
+
+LoRa report review now has **Print report**, opening the same preview/options and
+A4 print mechanism as Online Report at `/lora-reports/{incidentReport}/print`.
+The route retains the existing admin-receiver authorization and rejects online
+records. It prints one selected LoRa record, original node/message identity,
+route/hops, available radio/battery values, recorded response and acknowledgment
+timestamps. Registered location and contact details are opt-in; verification
+selfies and scene media are excluded. Printing never acknowledges a report or
+queues a radio response. Website display/print times use Asia/Manila while the
+original node timestamp remains exactly as supplied. The shared print styles
+provide LoRa-specific headings and page furniture without relabeling fixed node
+positions as measured GPS fixes.
+
+Verify the live login form, unchecked/checked gate behavior, rejected incomplete
+POSTs, and an authorized LoRa preview after automatic deployment from `main`.
+Browser visual/print-dialog QA still requires a connected browser or physical
+device; HTTP and automated tests do not claim to verify paper output.
+
+Local checks for this update: 297 tests passed (3,110 assertions), Vite build
+passed, `auth-legal.js` passed the JavaScript syntax check, and Blade views
+compiled. No report state or acknowledgment is changed by the print request.
+
 ## Privacy and app terms release (2026-10-28)
 
 Deploy the public `/privacy-policy`, `/terms-and-conditions`, and `/app-license`

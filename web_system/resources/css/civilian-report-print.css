@@ -44,6 +44,8 @@ h1 { margin: 6px 0 10px; font-size: 24px; }
 }
 @media print {
     .online-report-print { page: online-report; }
+    .lora-report-print { page: lora-report; }
+    .lora-report-print .print-report { break-inside: auto; page-break-inside: auto; }
     body { background: white; color: black; font-size: 10pt; }
     .print-toolbar { display: none !important; }
     .print-footer { display: none; }
@@ -55,4 +57,8 @@ h1 { margin: 6px 0 10px; font-size: 24px; }
 @page online-report {
     @top-right { content: 'Online report record'; }
     @bottom-left { content: 'Online report history'; }
+}
+@page lora-report {
+    @top-right { content: 'LoRa report record'; }
+    @bottom-left { content: 'LoRa report history'; }
 }

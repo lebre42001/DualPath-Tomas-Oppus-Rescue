@@ -5,11 +5,34 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\IncidentReport;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class LoRaReportController extends Controller
 {
+    public function print(Request $request, IncidentReport $incidentReport): Response
+    {
+        abort_unless(strtolower(trim((string) $incidentReport->transmission_type)) === 'lora', 404);
+        $request->validate([
+            'include_location' => ['sometimes', 'boolean'],
+            'include_contact' => ['sometimes', 'boolean'],
+            'print' => ['sometimes', 'boolean'],
+        ]);
+        $incidentReport->load(['reporter', 'assignedResponder']);
+
+        return response()->view('reports.print', [
+            'reports' => collect([$incidentReport]),
+            'reportTypeLabel' => 'LoRa',
+            'printAction' => route('lora-reports.print', $incidentReport),
+            'includePhoto' => false,
+            'includeLocation' => $request->boolean('include_location'),
+            'includeContact' => $request->boolean('include_contact'),
+            'autoPrint' => $request->boolean('print'),
+            'printedAt' => now()->timezone('Asia/Manila')->format('M d, Y h:i A'),
+        ])->header('Cache-Control', 'private, no-store');
+    }
+
     public function index(Request $request): View
     {
         $filters = $request->validate([

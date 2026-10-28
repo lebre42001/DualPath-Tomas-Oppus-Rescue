@@ -48,7 +48,9 @@
                 </div>
             </details>
         </div>
-        @include('partials.legal-links')
+        @if ($showLegalLinks ?? true)
+            @include('partials.legal-links')
+        @endif
         <p class="public-copyright">&copy; {{ now()->year }} AksyRes &middot; Civilian Sender</p>
     </div>
 </footer>

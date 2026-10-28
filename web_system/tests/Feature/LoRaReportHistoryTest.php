@@ -83,6 +83,7 @@ class LoRaReportHistoryTest extends TestCase
             ->assertOk()->assertViewHas('reports', fn ($reports) => $reports->first()->id === $oldest->id)
             ->assertSee('data-report-open-on-load', false)->assertSee('Original submitted time')
             ->assertSee('2026-10-15T15:13:08+08:00')->assertSee('Acknowledge')
+            ->assertSee(route('lora-reports.print', $oldest), false)->assertSee('Print report')
             ->assertSee(route('reports.coordination', $oldest), false)
             ->assertDontSee('<script>alert("unsafe")</script>', false);
     }

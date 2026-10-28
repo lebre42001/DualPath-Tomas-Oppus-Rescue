@@ -1,13 +1,17 @@
 @php
     $labels = ['received' => 'Pending review', 'acknowledged' => 'Under review', 'dispatched' => 'Dispatched', 'responding' => 'Responding', 'resolved' => 'Done', 'rejected' => 'Cancelled'];
     $ingest = collect($report->coordination_log ?? [])->firstWhere('event', 'lora_alert_ingested') ?? [];
-    $formatTime = static fn ($value) => $value?->timezone(config('app.timezone'))->format('M d, Y H:i:s T') ?? 'Not available';
+    $formatTime = static fn ($value) => $value?->timezone('Asia/Manila')->format('M d, Y h:i:s A') ?? 'Not available';
 @endphp
 <div class="incident-feed-expanded dashboard-modal-source lora-review-detail">
     <div class="lora-review-heading">
-        <p class="panel-kicker">{{ $report->lora_sender_id ?: 'LoRa node' }} · {{ $report->report_code }}</p>
-        <h2>{{ $report->incident_type }}</h2>
-        <div class="tag-row"><span class="tag blue">{{ $labels[$report->status] ?? ucfirst($report->status) }}</span><span class="tag neutral">{{ $report->severity_display }}</span></div>
+        <div class="lora-review-heading-copy">
+            <p class="panel-kicker">{{ $report->lora_sender_id ?: 'LoRa node' }} · {{ $report->report_code }}</p>
+            <h2>{{ $report->incident_type }}</h2>
+            <div class="tag-row"><span class="tag blue">{{ $labels[$report->status] ?? ucfirst($report->status) }}</span><span class="tag neutral">{{ $report->severity_display }}</span></div>
+            <p class="section-copy">Website times use Philippines time (Asia/Manila). The original node timestamp is shown as supplied.</p>
+        </div>
+        <a class="btn btn-secondary" href="{{ route('lora-reports.print', $report) }}" target="_blank" rel="noopener">Print report</a>
     </div>
     <section class="detail-card">
         <h3>Emergency description</h3>

@@ -23,13 +23,15 @@
             <p>Google shares your verified email, name, account identifier, and available profile image. If this is your first sign-in, AksyRes creates a civilian account.</p>
         </header>
         @if (session('status'))<p class="legal-notice" role="status">{{ session('status') }}</p>@endif
-        <form action="{{ route('auth.google.authorize') }}" method="POST" class="legal-document">
+        <form action="{{ route('auth.google.authorize') }}" method="POST" class="legal-document" data-legal-gate>
             @csrf
             @include('partials.legal-acknowledgment')
-            <button type="submit" class="btn btn-primary">Continue with Google</button>
+            <button type="submit" class="btn btn-primary" data-legal-gate-submit>Continue with Google</button>
+            <p class="legal-small" data-legal-gate-status role="status" aria-live="polite">Agree to the terms and acknowledge the Privacy Policy to continue with Google.</p>
             <a class="public-text-link" href="{{ route('login') }}">Back to Login</a>
         </form>
     </main>
     @include('partials.public-footer')
+    <script src="{{ asset('auth-legal.js') }}?v={{ $pwaAssetVersion }}"></script>
 </body>
 </html>

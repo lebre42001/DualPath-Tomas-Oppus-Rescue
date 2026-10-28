@@ -1,4 +1,8 @@
 @php
+    $isLoRaReport = strtolower(trim((string) $report->transmission_type)) === 'lora';
+    $ingest = $isLoRaReport ? (collect($report->coordination_log ?? [])->firstWhere('event', 'lora_alert_ingested') ?? []) : [];
+    $coordinateName = $isLoRaReport ? 'Registered coordinates' : 'GPS';
+    $formatTime = static fn ($value) => $value?->timezone('Asia/Manila')->format('M d, Y h:i:s A') ?? 'Not recorded';
     $coordinateOnly = $report->latitude !== null && $report->longitude !== null && preg_match('/^(?:GPS\s*)?[+-]?\d+(?:\.\d+)?\s*,\s*[+-]?\d+(?:\.\d+)?$/i', trim((string) $report->location_text));
 @endphp
         <article class="print-report">
@@ -12,10 +16,26 @@
                     @if (! $includeLocation)Omitted from this copy.
                     @else
                         @if (! $coordinateOnly){{ $report->location_text ?: 'Location not recorded.' }}@endif
-                        @if ($report->latitude !== null && $report->longitude !== null){{ $coordinateOnly ? 'GPS: ' : '(GPS: ' }}{{ $report->latitude }}, {{ $report->longitude }}{{ $coordinateOnly ? '' : ')' }}@endif
+                        @if ($report->latitude !== null && $report->longitude !== null){{ $coordinateOnly ? $coordinateName.': ' : '('.$coordinateName.': ' }}{{ $report->latitude }}, {{ $report->longitude }}{{ $coordinateOnly ? '' : ')' }}@endif
                     @endif
                 </dd></div>
+                @if ($isLoRaReport)
+                    <div><dt>Message ID</dt><dd>{{ $report->lora_sequence ?: 'Not recorded' }}</dd></div>
+                    <div><dt>Origin node</dt><dd>{{ $report->lora_sender_id ?: 'Not recorded' }}</dd></div>
+                    <div><dt>Gateway</dt><dd>{{ $report->lora_gateway_id ?: 'Not recorded' }}</dd></div>
+                    <div><dt>Original node timestamp</dt><dd>{{ $ingest['created_at'] ?? 'Not supplied by node' }}</dd></div>
+                    <div class="wide"><dt>Route / hops</dt><dd>{{ $ingest['route'] ?? 'Not supplied' }} / {{ $ingest['hop'] ?? 'Unknown' }}</dd></div>
+                    <div><dt>Battery at submission</dt><dd>{{ ($ingest['battery'] ?? null) && ! in_array(strtoupper($ingest['battery']), ['NA', 'N/A']) ? $ingest['battery'] : 'No voltage reading' }}</dd></div>
+                    <div><dt>Gateway radio signal</dt><dd>@if ($report->lora_gateway_rssi !== null)RSSI {{ $report->lora_gateway_rssi }} dBm @else RSSI not recorded @endif · @if ($report->lora_gateway_snr !== null)SNR {{ $report->lora_gateway_snr }} dB @else SNR not recorded @endif</dd></div>
+                    <div><dt>Status updated</dt><dd>{{ $formatTime($report->status_updated_at) }}</dd></div>
+                    <div><dt>Acknowledgment queued</dt><dd>{{ $report->lora_ack_queued_at ? $formatTime($report->lora_ack_queued_at) : 'Awaiting admin action' }}</dd></div>
+                    <div><dt>Gateway broadcast</dt><dd>{{ $report->lora_ack_delivered_at ? $formatTime($report->lora_ack_delivered_at) : 'Not broadcast yet' }}</dd></div>
+                @endif
             </dl>
+            @if ($isLoRaReport)
+                <p class="print-note">LoRa intake does not run automatic severity AI. A gateway broadcast does not confirm acknowledgment receipt by the originating node.</p>
+                @unless (in_array($report->ai_source, ['human_responder', 'manual_override', 'text_human_override'], true))<p class="print-note">The intake severity category is not a confirmed medical assessment.</p>@endunless
+            @endif
             <section><h3>Description</h3><p class="print-copy">{{ $report->description ?: 'No description provided.' }}</p></section>
             @if ($report->ai_top_category)<p><strong>{{ in_array($report->ai_source, ['human_responder', 'manual_override', 'text_human_override'], true) ? 'Original AI analysis' : 'AI analysis' }}:</strong> {{ $report->ai_top_category['label'] }} — model score {{ number_format($report->ai_top_category['score'], 1) }}% (uncalibrated). @if ($report->isAwaitingTextSeverityConfirmation() || $report->operational_severity === null)Admin confirmation required.@endif</p>@endif
             <section><h3>Assessment</h3><p>{{ \App\Support\ReportAssessmentSummary::forReport($report) }}</p></section>

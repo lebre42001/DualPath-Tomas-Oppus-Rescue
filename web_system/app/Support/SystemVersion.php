@@ -24,6 +24,7 @@ class SystemVersion
         'public/favicon.ico',
         'public/offline.html',
         'public/auth-password.js',
+        'public/auth-legal.js',
         'public/pwa-helper.js',
         'public/pwa-install.js',
         'public/.well-known/assetlinks.json',
