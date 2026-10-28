@@ -39,6 +39,9 @@
 #include <LoRa.h>
 #include <esp_system.h>
 #include "battery_monitor.h"
+#include "mesh_security.h"
+#include "report_guard.h"
+#include "report_dashboard.h"
 
 // =====================================================
 // CHANGE ONLY THIS FOR EACH FIELD NODE
@@ -292,8 +295,7 @@ async function refresh(){try{
   }
   showReviewIfNeeded(x);
 }catch(e){}}
-async function sendReport(){const message=messageBox.value.trim();if(!message){alert('Enter a short emergency message.');return}const p=new URLSearchParams();p.append('type',document.getElementById('type').value);p.append('message',message);p.append('created_at',buttonTime());const r=await fetch('/send',{method:'POST',body:p});alert(await r.text());if(r.ok){messageBox.value='';document.getElementById('remaining').textContent='70'}refresh()}
-setInterval(refresh,1500);refresh();
+
 </script>
 </body>
 </html>
@@ -436,21 +438,10 @@ void markLoRaActivity() {
 }
 
 bool sendLoRaPacket(String payload) {
-  // Packet formats are intentionally kept short enough for this test firmware.
-  if (payload.length() > 245) {
-    Serial.println("[WARN] Packet too long; not transmitted to avoid truncating protocol fields.");
-    return false;
-  }
-
-  LoRa.idle();
-  LoRa.beginPacket();
-  LoRa.print(payload);
-  int result = LoRa.endPacket();
-  LoRa.receive();
-  if (result == 1) markLoRaActivity();
-
-  Serial.println("[LORA TX] " + payload);
-  return result == 1;
+  const bool sent = meshWriteFrame(payload);
+  if (sent) markLoRaActivity();
+  else Serial.println("[LORA] Authenticated transmission failed or packet exceeds radio budget.");
+  return sent;
 }
 
 // =====================================================
@@ -587,6 +578,8 @@ void sendHeartbeatIfNeeded() {
       "|" + String(millis() - lastRoundTripAtMs);
   }
 
+  if (!getField(packet, 10).length()) packet += "|NA|NA|NA";
+  packet += reportGuardHeartbeat();
   sendLoRaPacket(packet);
 }
 
@@ -615,9 +608,8 @@ void handleHeartbeat(String packet) {
     "|" + originPeers +
     "|" + sequence;
 
-  if (getField(packet, 8).length() && getField(packet, 9).length() && getField(packet, 10).length()) {
-    forwarded += "|" + getField(packet, 8) + "|" + getField(packet, 9) + "|" + getField(packet, 10);
-  }
+  forwarded += "|" + getField(packet, 8) + "|" + getField(packet, 9) + "|" + getField(packet, 10);
+  if (getField(packet, 13).length()) forwarded += "|" + getField(packet, 11) + "|" + getField(packet, 12) + "|" + getField(packet, 13);
 
   relayJitter();
   sendLoRaPacket(forwarded);
@@ -780,7 +772,8 @@ void handleSos(String packet) {
     "|" + (battery.length() ? battery : "NA") +
     "|" + String(hop + 1) +
     "|" + String(ttl - 1) +
-    "|" + appendRoute(route, NODE_ID);
+    "|" + appendRoute(route, NODE_ID) +
+    "|" + getField(packet, 10) + "|" + getField(packet, 11);
 
   relayJitter();
   sendLoRaPacket(forwarded);
@@ -821,6 +814,8 @@ void handleAck(String packet) {
   if (msgId.length() == 0 || origin.length() == 0) return;
 
   if (origin == NODE_ID) {
+    if (!meshVerifyOrigin(packet, true, NODE_NUMBER)) { ++meshInvalidFrames; return; }
+    if (latestAckAt.length() && acknowledgedAt.compareTo(latestAckAt) < 0) return;
     // Only a matching final response from the established gateway may clear
     // the local queue (and consequently its emergency LED).
     if ((latestMsgId == msgId || pendingMsgId == msgId) &&
@@ -829,7 +824,7 @@ void handleAck(String packet) {
       saveAcknowledgedState(
         status.length() ? status : "ACKNOWLEDGED",
         acknowledgedAt,
-        shortMessage.length() ? shortMessage : "Your emergency report has been acknowledged."
+        getField(packet, 9) + ": " + (shortMessage.length() ? shortMessage : "Your emergency report has been acknowledged.")
       );
 
       Serial.println("[ACK] Report " + msgId + " acknowledged by server via " + gateway);
@@ -850,7 +845,7 @@ void handleAck(String packet) {
     "|" + acknowledgedAt +
     "|" + String(ttl - 1) +
     "|" + appendRoute(route, NODE_ID) +
-    "|" + shortMessage;
+    "|" + shortMessage + "|" + getField(packet, 9) + "|" + getField(packet, 10);
 
   relayJitter();
   sendLoRaPacket(forwarded);
@@ -865,9 +860,8 @@ void handleIncomingLoRa() {
   if (!packetSize) return;
   markLoRaActivity();
 
-  String packet = "";
-  while (LoRa.available()) packet += (char)LoRa.read();
-  packet.trim();
+  String packet = meshReadFrame(packetSize);
+  if (!packet.length()) return;
 
   int rssi = LoRa.packetRssi();
 
@@ -934,23 +928,42 @@ void trySendPending(bool forceNow = false) {
 }
 
 void handleLocalSend() {
-  String type = cleanField(localServer.arg("type"), 30);
-  String message = cleanField(localServer.arg("message"), 70);
-  String createdAt = cleanField(localServer.arg("created_at"), 60);
-
-  if (message.length() == 0 || createdAt.length() == 0) {
-    localServer.send(400, "text/plain", "Message and original button-press time are required.");
-    return;
+  String message = localServer.arg("message"), landmark = localServer.arg("landmark");
+  String type = localServer.arg("type"), createdAt = localServer.arg("created_at");
+  message.trim(); landmark.trim(); createdAt.trim();
+  if (!meshSecurityReady || localServer.arg("confirmed") != "1" || type != "ROAD_ACCIDENT" ||
+      !message.length() || message.length() > 70 || !landmark.length() || landmark.length() > 32 ||
+      message.indexOf('|') >= 0 || landmark.indexOf('|') >= 0 || message.indexOf('\n') >= 0 ||
+      landmark.indexOf('\n') >= 0 || message.indexOf('\r') >= 0 || landmark.indexOf('\r') >= 0 ||
+      message.indexOf('\t') >= 0 || landmark.indexOf('\t') >= 0 || createdAt.length() != 10) {
+    localServer.send(400, "text/plain", "Confirm a Road Accident report with description and actual location/landmark. Limits: 70 and 32 UTF-8 bytes."); return;
   }
-
-  // User cannot create a second report until the first is manually acknowledged.
+  for (size_t i = 0; i < createdAt.length(); ++i) if (!isDigit(createdAt[i])) {
+    localServer.send(400, "text/plain", "Invalid report time."); return;
+  }
+  if (!meshReportFits(message, landmark, measuredBatteryVoltage())) {
+    localServer.send(400, "text/plain", "Shorten the description or landmark so the complete report fits the radio route."); return;
+  }
+  const uint32_t clientAddress = (uint32_t)localServer.client().remoteIP();
+  const uint32_t retry = reportRetrySeconds(clientAddress, millis());
+  if (retry) {
+    reportRecordBlocked(); localServer.sendHeader("Retry-After", String(retry));
+    localServer.send(429, "text/plain", "Anti-spam protection: wait " + String(retry) + " seconds. Your saved report continues retrying automatically."); return;
+  }
   if (pendingPacket.length() > 0) {
-    localServer.send(409, "text/plain", "A previous emergency report is still waiting for responder acknowledgment.");
-    return;
+    reportRecordBlocked(); localServer.send(409, "text/plain", "This node already has a report waiting for admin acknowledgment. Check Latest Report."); return;
   }
-
+  if (!reportConsumeConfirmation(clientAddress, reportConfirmationBody(message, landmark, type, createdAt), localServer.arg("confirmation"))) {
+    localServer.send(400, "text/plain", "Confirmation expired, already used, or report details changed. Review the report again."); return;
+  }
+  if (prefs.getUInt("seq", 0) == UINT32_MAX || !reportGuardAccept(clientAddress, millis())) {
+    reportRecordBlocked(); localServer.sendHeader("Retry-After", "60");
+    localServer.send(429, "text/plain", "Submission protection active. Wait 60 seconds or contact the emergency team."); return;
+  }
   uint32_t sequence = prefs.getUInt("seq", 0) + 1;
-  prefs.putUInt("seq", sequence);
+  if (prefs.putUInt("seq", sequence) != 4) {
+    localServer.send(503, "text/plain", "Could not save the report ID. Report was not submitted."); return;
+  }
 
   latestMsgId = NODE_ID + "-" + String(sequence);
   latestCreatedAt = createdAt;
@@ -964,9 +977,9 @@ void handleLocalSend() {
     "SOS|" + latestMsgId +
     "|" + NODE_ID +
     "|" + createdAt +
-    "|" + type +
-    "|" + message +
-    "|" + measuredBatteryVoltage() + "|0|12|" + NODE_ID;
+    "|R|" + message +
+    "|" + measuredBatteryVoltage() + "|0|12|" + NODE_ID + "|" + landmark;
+  pendingPacket = meshSignOrigin(pendingPacket, false, NODE_NUMBER);
 
   pendingMsgId = latestMsgId;
   savePendingState();
@@ -990,6 +1003,7 @@ void handleLocalStatus() {
   int displayActiveCount = networkSummaryFresh() ? activeNodeCount : -1;
 
   String json = "{";
+  json += reportGuardStatus((uint32_t)localServer.client().remoteIP());
   json += "\"battery\":\"" + measuredBatteryVoltage() + "\",";
   json += "\"round_trip_ms\":" + (lastRoundTripMs < 0 ? String("null") : String(lastRoundTripMs)) + ",";
   json += "\"node_id\":\"" + jsonEscape(NODE_ID) + "\",";
@@ -1071,6 +1085,10 @@ void setup() {
   LOCAL_AP_SSID = "Node " + String(NODE_NUMBER) + " Emergency";
 
   loadPersistentState();
+  if (MESH_THIS_NODE != NODE_NUMBER || !meshSecurityBegin()) {
+    Serial.println("ERROR: Mesh keys do not match node identity or security storage failed.");
+    while (true) delay(1000);
+  }
   updateLedIndicators();  // Restore pending-report indication after reboot.
 
   randomSeed(esp_random());
@@ -1086,9 +1104,25 @@ void setup() {
   startLocalWiFi();
 
   localServer.on("/", HTTP_GET, []() {
-    localServer.send(200, "text/html", FPSTR(LOCAL_DASHBOARD));
+    String page = FPSTR(LOCAL_DASHBOARD);
+    page.replace("</body>", String(FPSTR(REPORT_GUARD_SCRIPT)) + "</body>");
+    localServer.sendHeader("Cache-Control", "no-store");
+    localServer.send(200, "text/html", page);
   });
   localServer.on("/status", HTTP_GET, handleLocalStatus);
+  localServer.on("/prepare", HTTP_POST, []() {
+    if (localServer.arg("message").length() > 70 || localServer.arg("landmark").length() > 32) {
+      localServer.send(400, "text/plain", "Report exceeds description or location limit."); return;
+    }
+    if (!meshReportFits(localServer.arg("message"), localServer.arg("landmark"), measuredBatteryVoltage())) {
+      localServer.send(400, "text/plain", "Shorten the description or landmark so the complete report fits the radio route."); return;
+    }
+    const String token = reportPrepare((uint32_t)localServer.client().remoteIP(), reportConfirmationBody(
+      localServer.arg("message"), localServer.arg("landmark"), localServer.arg("type"), localServer.arg("created_at")));
+    localServer.sendHeader("Cache-Control", "no-store");
+    if (!token.length()) { localServer.send(429, "text/plain", "Too many report confirmations. Try again shortly."); return; }
+    localServer.send(200, "application/json", "{\"confirmation\":\"" + token + "\"}");
+  });
   localServer.on("/send", HTTP_POST, handleLocalSend);
   localServer.begin();
 

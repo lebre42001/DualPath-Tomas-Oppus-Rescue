@@ -550,7 +550,7 @@ class IncidentReportController extends Controller
         ];
 
         if ($incidentReport->transmission_type === 'lora') {
-            if ($status === 'received') {
+            if ($status === 'received' && ($incidentReport->lora_verification ?? 'unverified') === 'unverified') {
                 $updates['lora_ack_queued_at'] = null;
                 $updates['lora_ack_delivered_at'] = null;
             } elseif ($status !== $incidentReport->status

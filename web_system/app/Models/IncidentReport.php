@@ -64,6 +64,12 @@ class IncidentReport extends Model
         'lora_satellites',
         'lora_ack_queued_at',
         'lora_ack_delivered_at',
+        'lora_verification',
+        'lora_verification_notes',
+        'lora_verified_by',
+        'lora_verified_at',
+        'lora_incident_landmark',
+        'lora_radio_auth',
     ];
 
     protected function casts(): array
@@ -91,6 +97,7 @@ class IncidentReport extends Model
             'lora_satellites' => 'integer',
             'lora_ack_queued_at' => 'datetime',
             'lora_ack_delivered_at' => 'datetime',
+            'lora_verified_at' => 'datetime',
         ];
     }
 

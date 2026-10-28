@@ -45,6 +45,10 @@ class LoRaMeshGatewayController extends Controller
             'round_trip_sample' => ['nullable', 'required_with:round_trip_ms', 'string', 'max:40', 'regex:/^[A-Za-z0-9_-]+$/'],
             'round_trip_age_ms' => ['nullable', 'integer', 'between:0,120000'],
             'packet_type' => ['nullable', 'in:HB,SOS'],
+            'blocked_submissions' => ['nullable', 'integer', 'between:0,4294967295'],
+            'radio_rejections' => ['nullable', 'integer', 'between:0,4294967295'],
+            'guard_boot' => ['nullable', 'string', 'max:16', 'regex:/^[a-f0-9]+$/'],
+            'radio_auth' => ['nullable', 'in:hmac-sha256-v2'],
         ]);
 
         $nodeId = strtoupper(trim($validated['node_id']));
@@ -81,6 +85,11 @@ class LoRaMeshGatewayController extends Controller
                 'round_trip_sample' => $sample,
                 'round_trip_measured_at' => $measuredAt,
                 'last_packet_type' => $validated['packet_type'] ?? 'HB',
+                'blocked_submissions' => $validated['blocked_submissions'] ?? null,
+                'radio_rejections' => $validated['radio_rejections'] ?? null,
+                'guard_boot' => $validated['guard_boot'] ?? null,
+                'radio_auth' => $validated['radio_auth'] ?? null,
+                'guard_reported_at' => isset($validated['radio_auth']) ? now() : null,
             ]
         );
 
@@ -151,7 +160,7 @@ class LoRaMeshGatewayController extends Controller
 
         $report = IncidentReport::query()
             ->where('transmission_type', 'lora')
-            ->where('status', '!=', 'received')
+            ->where(fn ($query) => $query->where('status', '!=', 'received')->orWhere('lora_verification', '!=', 'unverified'))
             ->whereNotNull('lora_ack_queued_at')
             ->whereNull('lora_ack_delivered_at')
             ->whereNotNull('lora_sequence')
@@ -170,7 +179,9 @@ class LoRaMeshGatewayController extends Controller
             'dispatched', 'responding' => 'The emergency team is responding to your report.',
             default => 'Your emergency report has been reviewed by the emergency team.',
         };
-        $message = Str::of((string) ($report->response_notes ?: $defaultMessage))
+        $reviewIsNewest = $report->lora_verified_at !== null
+            && ($report->status_updated_at === null || $report->lora_verified_at->greaterThanOrEqualTo($report->status_updated_at));
+        $message = Str::of((string) ($reviewIsNewest ? $report->lora_verification_notes : ($report->response_notes ?: $defaultMessage)))
             ->replace(['|', "\r", "\n"], ' ')
             ->squish();
         // Radio payload limits count UTF-8 bytes, including relay route growth.
@@ -187,6 +198,30 @@ class LoRaMeshGatewayController extends Controller
             self::GATEWAY_ID,
             (string) $message,
         ]);
+        // Legacy reports keep their original 9-field response. V2 gateways
+        // append an origin-specific ACK authentication tag before transmission.
+        if ($report->lora_radio_auth === 'hmac-sha256-v2') {
+            $verificationLabel = match ($report->lora_verification) {
+                'confirmed' => 'Confirmed',
+                'needs_clarification' => 'Needs clarification',
+                'false_report' => 'False report',
+                default => 'Unverified',
+            };
+            $parts = explode('|', $packet);
+            $parts[] = $verificationLabel;
+            // Reserve the gateway's 22-character origin tag and full 10-node
+            // relay route, including the transport's reversible escaping.
+            do {
+                $worst = $parts;
+                $worst[7] = implode('>', array_map(fn ($n) => 'NODE_'.$n, range(1, 10)));
+                $compact = str_replace('NODE_', '~N', str_replace('~', '~~', implode('|', $worst)));
+                if (strlen($compact) + 34 + 23 <= 255) {
+                    break;
+                }
+                $parts[8] = mb_strcut($parts[8], 0, max(0, strlen($parts[8]) - 1), 'UTF-8');
+            } while ($parts[8] !== '');
+            $packet = implode('|', $parts);
+        }
 
         return response()->json([
             'ok' => true,

@@ -21,6 +21,11 @@ class LoraNodeState extends Model
         'round_trip_ms',
         'round_trip_sample',
         'round_trip_measured_at',
+        'blocked_submissions',
+        'radio_rejections',
+        'guard_boot',
+        'radio_auth',
+        'guard_reported_at',
     ];
 
     protected function casts(): array
@@ -31,6 +36,9 @@ class LoraNodeState extends Model
             'snr' => 'float',
             'round_trip_ms' => 'integer',
             'round_trip_measured_at' => 'datetime',
+            'blocked_submissions' => 'integer',
+            'radio_rejections' => 'integer',
+            'guard_reported_at' => 'datetime',
         ];
     }
 }

@@ -92,6 +92,7 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
     Route::middleware('responder')->group(function (): void {
         Route::get('/lora-reports', [LoRaReportController::class, 'index'])->name('lora-reports.index');
         Route::get('/lora-reports/{incidentReport}/print', [LoRaReportController::class, 'print'])->name('lora-reports.print');
+        Route::post('/lora-reports/{incidentReport}/verification', [LoRaReportController::class, 'verify'])->name('lora-reports.verification');
         Route::get('/monitoring', MonitoringDashboardController::class)->name('monitoring');
         Route::get('/monitoring/lora-mesh', [MonitoringDashboardController::class, 'loraMesh'])->name('monitoring.lora-mesh');
         Route::get('/monitoring/lora-mesh/nodes', [MonitoringDashboardController::class, 'loraMeshNodes'])->name('monitoring.lora-mesh.nodes');

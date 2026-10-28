@@ -6,11 +6,59 @@ use App\Http\Controllers\Controller;
 use App\Models\IncidentReport;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
+use App\Support\IncidentFeedBroadcaster;
+use App\Models\LoraNodeState;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class LoRaReportController extends Controller
 {
+    public function verify(Request $request, IncidentReport $incidentReport): RedirectResponse
+    {
+        abort_unless($request->user()?->is_admin && $incidentReport->transmission_type === 'lora', 403);
+        $validated = $request->validate([
+            'verification' => ['required', Rule::in(['confirmed', 'needs_clarification', 'false_report'])],
+            'verification_notes' => ['required', 'string', 'max:500'],
+        ]);
+        DB::transaction(function () use ($incidentReport, $validated, $request): void {
+            $report = IncidentReport::query()->lockForUpdate()->findOrFail($incidentReport->id);
+            // Identical resubmission does not add another log or radio ACK.
+            if ($report->lora_verification === $validated['verification']
+                && $report->lora_verification_notes === $validated['verification_notes']) {
+                return;
+            }
+            $previous = $report->lora_verification ?? 'unverified';
+            $report->forceFill([
+                'lora_verification' => $validated['verification'],
+                'lora_verification_notes' => $validated['verification_notes'],
+                'lora_verified_by' => $request->user()->id,
+                'lora_verified_at' => now(),
+                // Veracity and rescue progress are separate decisions. Saving
+                // this review does not silently dispatch or cancel responders.
+                'lora_ack_queued_at' => now(),
+                'lora_ack_delivered_at' => null,
+                'coordination_log' => [
+                    ...($report->coordination_log ?? []),
+                    [
+                        'event' => 'lora_verification',
+                        'label' => 'Report verification: '.str_replace('_', ' ', $validated['verification']),
+                        'previous_verification' => $previous,
+                        'verification' => $validated['verification'],
+                        'actor_id' => $request->user()->id,
+                        'actor_name' => $request->user()->name,
+                        'at' => now()->toIso8601String(),
+                        'response_notes' => $validated['verification_notes'],
+                    ],
+                ],
+            ])->save();
+        });
+        IncidentFeedBroadcaster::dispatch($incidentReport->fresh(), 'updated');
+
+        return back()->with('status', 'LoRa report verification saved.');
+    }
+
     public function print(Request $request, IncidentReport $incidentReport): Response
     {
         abort_unless(strtolower(trim((string) $incidentReport->transmission_type)) === 'lora', 404);
@@ -77,6 +125,7 @@ class LoRaReportController extends Controller
             ->paginate((int) $filters['per_page'])->withQueryString();
 
         return view('lora-reports.index', [
+            'guardStates' => LoraNodeState::query()->whereNotNull('guard_reported_at')->orderBy('node_id')->get(),
             'reports' => $reports,
             'filters' => $filters,
             'reviewReportId' => (int) old('review_report_id', $reviewId),

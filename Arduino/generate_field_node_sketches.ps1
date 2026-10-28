@@ -78,7 +78,9 @@ $hardwareDirectories = @($templateDirectory, (Join-Path $PSScriptRoot 'Arduino\G
 $hardwareDirectories += 2..10 | ForEach-Object { Join-Path $OutputRoot "NODE_$($_)_Field_Node" }
 foreach ($hardwareDirectory in $hardwareDirectories) {
     New-Item -ItemType Directory -Force -Path $hardwareDirectory | Out-Null
-    Copy-Item -LiteralPath (Join-Path $sharedDirectory 'battery_monitor.h') -Destination (Join-Path $hardwareDirectory 'battery_monitor.h') -Force
+    foreach ($sharedHeader in @('battery_monitor.h', 'mesh_security.h', 'report_guard.h', 'report_dashboard.h')) {
+        Copy-Item -LiteralPath (Join-Path $sharedDirectory $sharedHeader) -Destination (Join-Path $hardwareDirectory $sharedHeader) -Force
+    }
     $hardwareConfig = Join-Path $hardwareDirectory 'battery_config.h'
     if (-not (Test-Path -LiteralPath $hardwareConfig)) {
         Copy-Item -LiteralPath (Join-Path $sharedDirectory 'battery_config.example.h') -Destination $hardwareConfig

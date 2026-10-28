@@ -42,6 +42,14 @@
         </form>
 
         <div class="lora-report-list">
+            @if ($guardStates->isNotEmpty())
+                <details class="detail-card"><summary>Node protection indicators <span class="tag {{ $guardStates->sum('blocked_submissions') > 0 ? 'amber' : 'neutral' }}">{{ number_format($guardStates->sum('blocked_submissions')) }} reported blocked submission(s)</span></summary>
+                    <p class="section-copy">Counts are since each node restarted. Blocked repeats and rejected radio frames are signals to review, not proof of a prank.</p>
+                    @foreach ($guardStates as $guard)
+                        <p><strong>{{ $guard->node_id }}</strong>: {{ number_format($guard->blocked_submissions ?? 0) }} blocked submission(s), {{ number_format($guard->radio_rejections ?? 0) }} rejected radio frame(s). Updated {{ $guard->guard_reported_at->diffForHumans() }}@if (! $guard->last_seen_at?->greaterThanOrEqualTo(now()->subSeconds(30))) — stale @endif.</p>
+                    @endforeach
+                </details>
+            @endif
             <div class="lora-report-columns" aria-hidden="true"><span>Report / incident</span><span>Node</span><span>Sender</span><span>Received</span><span>Status</span><span></span></div>
             @forelse ($reports as $report)
                 <article id="incident-report-{{ $report->id }}" class="lora-report-row" data-report-modal-row data-report-id="{{ $report->id }}"
@@ -51,7 +59,7 @@
                         <span><span class="lora-report-mobile-label">Node</span>{{ $report->lora_sender_id ?: 'Unknown' }}</span>
                         <span><span class="lora-report-mobile-label">Sender</span>{{ $report->reporter_name ?: 'Unknown sender' }}</span>
                         <span><span class="lora-report-mobile-label">Received</span><time datetime="{{ $report->created_at?->toIso8601String() }}">{{ $report->created_at?->timezone(config('app.timezone'))->format('M d, Y H:i') }}</time></span>
-                        <span class="tag {{ $statusTones[$report->status] ?? 'neutral' }}">{{ $statusLabels[$report->status] ?? ucfirst($report->status) }}</span>
+                        <span><span class="tag {{ $statusTones[$report->status] ?? 'neutral' }}">{{ $statusLabels[$report->status] ?? ucfirst($report->status) }}</span><small style="display:block">{{ ['confirmed' => 'Confirmed', 'needs_clarification' => 'Needs clarification', 'false_report' => 'False report'][$report->lora_verification] ?? 'Unverified' }}</small></span>
                         <span class="lora-report-open-label">Review &rarr;</span>
                     </button>
                     @include('lora-reports.partials.review', ['report' => $report])

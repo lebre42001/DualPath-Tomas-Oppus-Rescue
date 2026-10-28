@@ -25,6 +25,9 @@
 #include <esp_system.h>
 #include "server_root_ca.h"
 #include "battery_monitor.h"
+#include "mesh_security.h"
+#include "report_guard.h"
+#include "report_dashboard.h"
 
 #if __has_include("arduino_secrets.h")
 #include "arduino_secrets.h"
@@ -130,8 +133,7 @@ const $=id=>document.getElementById(id);let shownAck='';$('message').addEventLis
 function localTime(){const d=new Date(),p=n=>String(n).padStart(2,'0'),off=-d.getTimezoneOffset(),sign=off>=0?'+':'-';return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'T'+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())+sign+p(Math.floor(Math.abs(off)/60))+':'+p(Math.abs(off)%60)}
 function closeAck(){localStorage.setItem('node1_ack_seen_'+shownAck,'1');$('ackModal').classList.remove('show')}
 async function refresh(){try{const r=await fetch('/status',{cache:'no-store'}),x=await r.json();$('server').innerHTML=x.server_online?'<span class="ok">Connected</span>':'<span class="warn">Unavailable</span>';$('peers').textContent=x.peer_list||'None detected';$('active').textContent=(x.active_nodes<0?'--':x.active_nodes)+' / 10';$('msgid').textContent=x.message_id||'None';$('created').textContent=x.created_at||'None';$('status').textContent=x.report_status||'None';$('ack').textContent=x.ack_message||'None';$('send').disabled=x.pending;$('send').textContent=x.pending?'WAITING FOR RESPONDER':'SEND EMERGENCY';$('hint').textContent=x.pending?'This report is saved until a responder acknowledgment arrives.':(x.server_online?'Server available.':'Server unavailable; NODE 1 will retry the saved report.');if((x.report_status==='ACKNOWLEDGED'||x.report_status==='REJECTED')&&x.message_id&&x.message_id!==shownAck&&!localStorage.getItem('node1_ack_seen_'+x.message_id)){shownAck=x.message_id;$('modalId').textContent=x.message_id;$('modalMessage').textContent=x.ack_message||'Your report has a responder update.';$('modalTime').textContent=x.ack_at||'-';$('ackModal').classList.add('show')}}catch(e){}}
-async function sendReport(){const message=$('message').value.trim();if(!message){alert('Please enter a short emergency message.');return}const p=new URLSearchParams();p.set('type',$('type').value);p.set('message',message);p.set('created_at',localTime());$('send').disabled=true;try{const r=await fetch('/send',{method:'POST',body:p}),t=await r.text();alert(t);$('message').value='';$('remaining').textContent='70';await refresh()}catch(e){alert('Could not reach NODE 1. Please reconnect to its Wi-Fi and try again.')}finally{$('send').disabled=false}}
-setInterval(refresh,1500);refresh();
+
 </script></body></html>
 )rawliteral";
 
@@ -433,19 +435,10 @@ void markLoRaActivity() {
 }
 
 bool sendLoRaPacket(const String& payload) {
-  if (payload.length() > 245) {
-    Serial.println("[WARN] LoRa packet too long; preserving the complete packet by skipping transmission.");
-    return false;
-  }
-
-  LoRa.idle();
-  LoRa.beginPacket();
-  LoRa.print(payload);
-  const int result = LoRa.endPacket();
-  LoRa.receive();
-  if (result == 1) markLoRaActivity();
-  Serial.println("[LORA TX] " + payload);
-  return result == 1;
+  const bool sent = meshWriteFrame(payload);
+  if (sent) markLoRaActivity();
+  else Serial.println("[LORA] Authenticated transmission failed or packet exceeds radio budget.");
+  return sent;
 }
 
 void checkServerIfNeeded() {
@@ -471,6 +464,7 @@ void sendGatewayHeartbeatIfNeeded() {
     body += "\"round_trip_age_ms\":" + String(millis() - websiteRoundTripAtMs) + ",";
   }
   body += "\"hop\":0,\"ttl\":0,\"packet_type\":\"HB\"";
+  body += ",\"blocked_submissions\":" + String(reportBlocked) + ",\"radio_rejections\":" + String(meshInvalidFrames) + ",\"guard_boot\":\"" + meshField(reportGuardHeartbeat(), 3) + "\",\"radio_auth\":\"hmac-sha256-v2\"";
   body += "}";
   String response;
   requestApi("POST", "/heartbeat", body, response);
@@ -524,6 +518,8 @@ void pollPendingAcknowledgmentIfNeeded() {
     return;
   }
 
+  packet = meshSignOrigin(packet, true, meshNodeNumber(origin));
+  if (!packet.length()) return;
   bool deliveredOverRadio = true;
   for (int attempt = 0; attempt < 3; attempt++) {
     if (!sendLoRaPacket(packet)) deliveredOverRadio = false;
@@ -537,7 +533,7 @@ void pollPendingAcknowledgmentIfNeeded() {
 
 String normalizedLocalType(String type) {
   type.trim();
-  if (type == "ROAD_ACCIDENT") return "Road Accident";
+  if (type == "R" || type == "ROAD_ACCIDENT") return "Road Accident";
   if (type == "MEDICAL_EMERGENCY") return "Medical Emergency";
   if (type == "FIRE") return "Fire";
   if (type == "FLOOD") return "Flood";
@@ -553,8 +549,10 @@ bool submitLocalReport() {
   body += "\"sequence\":\"" + jsonEscape(pendingLocalMsgId) + "\",";
   body += "\"gateway_id\":\"NODE_1\",";
   body += "\"created_at\":\"" + jsonEscape(latestCreatedAt) + "\",";
-  body += "\"incident_type\":\"" + jsonEscape(getField(pendingLocalPacket, 4)) + "\",";
+  body += "\"incident_type\":\"" + jsonEscape(normalizedLocalType(getField(pendingLocalPacket, 4))) + "\",";
   body += "\"description\":\"" + jsonEscape(getField(pendingLocalPacket, 5)) + "\",";
+  body += "\"incident_landmark\":\"" + jsonEscape(getField(pendingLocalPacket, 10)) + "\",";
+  body += "\"radio_auth\":\"hmac-sha256-v2\",";
   body += "\"battery\":\"" + jsonEscape(getField(pendingLocalPacket, 6)) + "\",\"hop\":0,\"ttl\":12,";
   body += "\"route\":\"NODE_1\",\"rssi\":0,\"snr\":0";
   body += "}";
@@ -579,32 +577,50 @@ void retryLocalReportIfNeeded(bool forceNow = false) {
 }
 
 void handleLocalEmergency() {
-  String message = localServer.arg("message");
-  String type = localServer.arg("type");
-  String createdAt = localServer.arg("created_at");
-  message.trim();
-  type.trim();
-  createdAt.trim();
-  message.replace("|", " ");
-
-  if (message.length() == 0 || message.length() > 70 || createdAt.length() == 0) {
-    localServer.send(400, "text/plain", "Message and submitted time are required; message limit is 70 characters.");
-    return;
+  String message = localServer.arg("message"), landmark = localServer.arg("landmark");
+  String type = localServer.arg("type"), createdAt = localServer.arg("created_at");
+  message.trim(); landmark.trim(); createdAt.trim();
+  if (!meshSecurityReady || localServer.arg("confirmed") != "1" || type != "ROAD_ACCIDENT" ||
+      !message.length() || message.length() > 70 || !landmark.length() || landmark.length() > 32 ||
+      message.indexOf('|') >= 0 || landmark.indexOf('|') >= 0 || message.indexOf('\n') >= 0 ||
+      landmark.indexOf('\n') >= 0 || message.indexOf('\r') >= 0 || landmark.indexOf('\r') >= 0 ||
+      message.indexOf('\t') >= 0 || landmark.indexOf('\t') >= 0 || createdAt.length() != 10) {
+    localServer.send(400, "text/plain", "Confirm a Road Accident report with description and actual location/landmark. Limits: 70 and 32 UTF-8 bytes."); return;
+  }
+  for (size_t i = 0; i < createdAt.length(); ++i) if (!isDigit(createdAt[i])) {
+    localServer.send(400, "text/plain", "Invalid report time."); return;
+  }
+  if (!meshReportFits(message, landmark, measuredBatteryVoltage())) {
+    localServer.send(400, "text/plain", "Shorten the description or landmark so the complete report fits the radio route."); return;
+  }
+  const uint32_t clientAddress = (uint32_t)localServer.client().remoteIP();
+  const uint32_t retry = reportRetrySeconds(clientAddress, millis());
+  if (retry) {
+    reportRecordBlocked(); localServer.sendHeader("Retry-After", String(retry));
+    localServer.send(429, "text/plain", "Anti-spam protection: wait " + String(retry) + " seconds. Your saved report continues retrying automatically."); return;
   }
   if (pendingLocalPacket.length() > 0) {
-    localServer.send(409, "text/plain", "The previous report is still waiting for a responder acknowledgment.");
-    return;
+    reportRecordBlocked(); localServer.send(409, "text/plain", "This node already has a report waiting for admin acknowledgment. Check Latest Report."); return;
   }
-
+  if (!reportConsumeConfirmation(clientAddress, reportConfirmationBody(message, landmark, type, createdAt), localServer.arg("confirmation"))) {
+    localServer.send(400, "text/plain", "Confirmation expired, already used, or report details changed. Review the report again."); return;
+  }
+  if (prefs.getUInt("seq", 0) == UINT32_MAX || !reportGuardAccept(clientAddress, millis())) {
+    reportRecordBlocked(); localServer.sendHeader("Retry-After", "60");
+    localServer.send(429, "text/plain", "Submission protection active. Wait 60 seconds or contact the emergency team."); return;
+  }
   const uint32_t sequence = prefs.getUInt("seq", 0) + 1;
-  prefs.putUInt("seq", sequence);
+  if (prefs.putUInt("seq", sequence) != 4) {
+    localServer.send(503, "text/plain", "Could not save the report ID. Report was not submitted."); return;
+  }
   latestMsgId = String(NODE_ID) + "-" + String(sequence);
   pendingLocalMsgId = latestMsgId;
   latestCreatedAt = createdAt;
   latestAckMessage = "";
   latestAckAt = "";
   latestReportStatus = "QUEUED";
-  pendingLocalPacket = "SOS|" + latestMsgId + "|NODE_1|" + createdAt + "|" + normalizedLocalType(type) + "|" + message + "|" + measuredBatteryVoltage() + "|0|12|NODE_1";
+  pendingLocalPacket = "SOS|" + latestMsgId + "|NODE_1|" + createdAt + "|R|" + message + "|" + measuredBatteryVoltage() + "|0|12|NODE_1|" + landmark;
+  pendingLocalPacket = meshSignOrigin(pendingLocalPacket, false, 1);
   prefs.putString("latest_msg", latestMsgId);
   prefs.putString("latest_created", latestCreatedAt);
   prefs.putString("latest_status", latestReportStatus);
@@ -623,6 +639,7 @@ void handleLocalEmergency() {
 void handleLocalStatus() {
   const bool online = serverRouteAvailable();
   String json = "{";
+  json += reportGuardStatus((uint32_t)localServer.client().remoteIP());
   json += "\"node_id\":\"NODE_1\",";
   json += "\"server_base_url\":\"" + jsonEscape(SERVER_BASE_URL) + "\",";
   json += "\"gateway_status\":\"" + jsonEscape(gatewayStatus) + "\",";
@@ -654,8 +671,21 @@ void redirectToDashboard() {
 void startCaptivePortal() {
   const IPAddress apIP = WiFi.softAPIP();
   dnsServer.start(DNS_PORT, "*", apIP);
-  localServer.on("/", HTTP_GET, []() { localServer.send_P(200, "text/html", LOCAL_DASHBOARD); });
+  localServer.on("/", HTTP_GET, []() { String page = FPSTR(LOCAL_DASHBOARD); page.replace("</body>", String(FPSTR(REPORT_GUARD_SCRIPT)) + "</body>"); localServer.sendHeader("Cache-Control", "no-store"); localServer.send(200, "text/html", page); });
   localServer.on("/status", HTTP_GET, handleLocalStatus);
+  localServer.on("/prepare", HTTP_POST, []() {
+    if (localServer.arg("message").length() > 70 || localServer.arg("landmark").length() > 32) {
+      localServer.send(400, "text/plain", "Report exceeds description or location limit."); return;
+    }
+    if (!meshReportFits(localServer.arg("message"), localServer.arg("landmark"), measuredBatteryVoltage())) {
+      localServer.send(400, "text/plain", "Shorten the description or landmark so the complete report fits the radio route."); return;
+    }
+    const String token = reportPrepare((uint32_t)localServer.client().remoteIP(), reportConfirmationBody(
+      localServer.arg("message"), localServer.arg("landmark"), localServer.arg("type"), localServer.arg("created_at")));
+    localServer.sendHeader("Cache-Control", "no-store");
+    if (!token.length()) { localServer.send(429, "text/plain", "Too many report confirmations. Try again shortly."); return; }
+    localServer.send(200, "application/json", "{\"confirmation\":\"" + token + "\"}");
+  });
   localServer.on("/send", HTTP_POST, handleLocalEmergency);
   localServer.on("/generate_204", HTTP_ANY, redirectToDashboard);
   localServer.on("/gen_204", HTTP_ANY, redirectToDashboard);
@@ -672,7 +702,7 @@ void startCaptivePortal() {
 
 String normalizedType(String type) {
   type.trim();
-  if (type == "ROAD_ACCIDENT") return "Road Accident";
+  if (type == "R" || type == "ROAD_ACCIDENT") return "Road Accident";
   if (type == "MEDICAL_EMERGENCY") return "Medical Emergency";
   if (type == "FIRE") return "Fire";
   if (type == "FLOOD") return "Flood";
@@ -692,6 +722,7 @@ bool forwardSosToLaravel(const String& packet, int rssi, float snr) {
   String ttl = getField(packet, 8);
   String route = appendGatewayToRoute(getField(packet, 9));
 
+  if (!meshAcceptSos(packet, false)) { ++meshInvalidFrames; return false; }
   if (msgId.length() == 0 || senderId.length() == 0 || message.length() == 0) {
     Serial.println("[SOS] Rejected malformed SOS packet.");
     return false;
@@ -704,6 +735,8 @@ bool forwardSosToLaravel(const String& packet, int rssi, float snr) {
   body += "\"created_at\":\"" + jsonEscape(createdAt) + "\",";
   body += "\"incident_type\":\"" + jsonEscape(normalizedType(type)) + "\",";
   body += "\"description\":\"" + jsonEscape(message) + "\",";
+  body += "\"incident_landmark\":\"" + jsonEscape(getField(packet, 10)) + "\",";
+  body += "\"radio_auth\":\"hmac-sha256-v2\",";
   body += "\"battery\":\"" + jsonEscape(battery.length() ? battery : "NA") + "\",";
   body += "\"hop\":" + String(hop.toInt()) + ",";
   body += "\"ttl\":" + String(ttl.toInt()) + ",";
@@ -715,6 +748,7 @@ bool forwardSosToLaravel(const String& packet, int rssi, float snr) {
   String response;
   bool accepted = requestApi("POST", "/alerts", body, response);
   if (accepted) {
+    if (!meshAcceptSos(packet, true)) return false;
     lastForwardedMessage = msgId + " from " + senderId;
     Serial.println("[SOS] Laravel accepted " + lastForwardedMessage);
   }
@@ -806,6 +840,10 @@ bool forwardHeartbeatToLaravel(const String& packet, int rssi, float snr) {
     body += "\"round_trip_sample\":\"" + jsonEscape(sample) + "\",";
     body += "\"round_trip_age_ms\":" + sampleAge + ",";
   }
+  body += "\"blocked_submissions\":" + String(getField(packet, 11).toInt()) + ",";
+  body += "\"radio_rejections\":" + String(getField(packet, 12).toInt()) + ",";
+  body += "\"guard_boot\":\"" + jsonEscape(getField(packet, 13)) + "\",";
+  body += "\"radio_auth\":\"hmac-sha256-v2\",";
   body += "\"packet_type\":\"HB\"";
   body += "}";
 
@@ -823,9 +861,8 @@ void handleIncomingLoRa() {
   if (!packetSize) return;
   markLoRaActivity();
 
-  String packet;
-  while (LoRa.available()) packet += (char) LoRa.read();
-  packet.trim();
+  String packet = meshReadFrame(packetSize);
+  if (!packet.length()) return;
   const int rssi = LoRa.packetRssi();
   const float snr = LoRa.packetSnr();
   Serial.println("[LORA RX " + String(rssi) + " dBm] " + packet);
@@ -884,6 +921,10 @@ void setup() {
   randomSeed(esp_random());
 
   prefs.begin("node1", false);
+  if (MESH_THIS_NODE != 1 || !meshSecurityBegin()) {
+    Serial.println("ERROR: NODE_1 mesh security configuration failed.");
+    while (true) delay(1000);
+  }
   latestMsgId = prefs.getString("latest_msg", "");
   latestCreatedAt = prefs.getString("latest_created", "");
   latestReportStatus = prefs.getString("latest_status", "NONE");

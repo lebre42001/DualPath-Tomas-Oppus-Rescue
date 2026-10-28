@@ -22,6 +22,8 @@ class LoRaAlertIngestController extends Controller
         $validated = Validator::make($request->all(), [
             'sender_id' => ['required', 'string', 'max:40'],
             'sequence' => ['required', 'string', 'max:40'],
+            'radio_auth' => ['nullable', 'in:hmac-sha256-v2'],
+            'incident_landmark' => ['required_with:radio_auth', 'nullable', 'string', 'max:32'],
             'reporter_name' => ['nullable', 'string', 'max:48'],
             'gateway_id' => ['nullable', 'string', 'max:40'],
             'latitude' => ['nullable', 'numeric', 'between:-90,90'],
@@ -42,6 +44,23 @@ class LoRaAlertIngestController extends Controller
             'rssi' => ['nullable', 'integer'],
             'snr' => ['nullable', 'numeric'],
         ])->validate();
+
+        // During the coordinated firmware rollout, legacy gateways remain
+        // readable and are explicitly labelled unauthenticated. V2 firmware
+        // rejects unsigned radio traffic before using this token-protected API.
+        if (($validated['radio_auth'] ?? null) === 'hmac-sha256-v2') {
+            Validator::make($validated, [
+                'incident_type' => ['required', 'in:Road Accident'],
+                'description' => ['required', 'string', 'max:70'],
+                'created_at' => ['required', 'regex:/^[0-9]{10}$/'],
+                'incident_landmark' => ['required', function (string $attribute, mixed $value, \Closure $fail): void {
+                    if (strlen((string) $value) > 32 || preg_match('/[|\r\n\t]/', (string) $value)) {
+                        $fail('Use a short, single-line accident landmark.');
+                    }
+                }],
+            ])->validate();
+            $validated['created_at'] = \Carbon\CarbonImmutable::createFromTimestampUTC((int) $validated['created_at'])->toIso8601String();
+        }
 
         $senderId = strtoupper(trim((string) $validated['sender_id']));
         $sequence = trim((string) $validated['sequence']);
@@ -121,6 +140,8 @@ class LoRaAlertIngestController extends Controller
             'transmitted_at' => now(),
             'status_updated_at' => now(),
             'hardware_source' => 'arduino_lora_gateway',
+            'lora_incident_landmark' => $validated['incident_landmark'] ?? null,
+            'lora_radio_auth' => $validated['radio_auth'] ?? null,
             'lora_sender_id' => $senderId,
             'lora_sequence' => $sequence,
             'lora_gateway_id' => $gatewayId,
@@ -159,7 +180,6 @@ class LoRaAlertIngestController extends Controller
         // A field node retries its SOS until it receives the admin's ACK.
         // A successful gateway broadcast alone does not confirm radio receipt.
         IncidentReport::query()->whereKey($report->id)
-            ->where('status', '!=', 'received')
             ->whereNotNull('lora_ack_queued_at')
             ->whereNotNull('lora_ack_delivered_at')
             ->update(['lora_ack_delivered_at' => null]);

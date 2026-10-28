@@ -1,5 +1,11 @@
 # Arduino LoRa Hardware Integration
 
+**Current report protection:** see [MESH_SECURITY.md](MESH_SECURITY.md) for
+confirmation, required accident landmark, sender/admin anti-spam indicators,
+separate report verification, private key provisioning and protocol-v2 upload
+instructions. Only Road Accident is enabled. All boards need matching v2
+firmware and keys; updating the website alone does not activate radio security.
+
 The active mesh uses `GatewayNode1/GatewayNode1.ino` for NODE_1 and the configurable `FieldNode/FieldNode.ino` sketch for NODE_2 through NODE_10. `GatewayNode1` is the only gateway sketch to use for the active mesh. The older `Sender_GPS`, `Reciever`, and `sketch_may21a` sketches are legacy prototypes and do not use the active mesh protocol.
 
 ## Active Mesh Flow

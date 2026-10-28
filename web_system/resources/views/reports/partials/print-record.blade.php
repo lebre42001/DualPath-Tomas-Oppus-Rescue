@@ -20,6 +20,8 @@
                     @endif
                 </dd></div>
                 @if ($isLoRaReport)
+                    <div><dt>Verification</dt><dd>{{ ['confirmed' => 'Confirmed', 'needs_clarification' => 'Needs clarification', 'false_report' => 'False report'][$report->lora_verification] ?? 'Unverified' }}</dd></div>
+                    @if ($includeLocation)<div class="wide"><dt>Actual accident landmark</dt><dd>{{ $report->lora_incident_landmark ?: 'Not supplied by older firmware' }}</dd></div>@endif
                     <div><dt>Message ID</dt><dd>{{ $report->lora_sequence ?: 'Not recorded' }}</dd></div>
                     <div><dt>Origin node</dt><dd>{{ $report->lora_sender_id ?: 'Not recorded' }}</dd></div>
                     <div><dt>Gateway</dt><dd>{{ $report->lora_gateway_id ?: 'Not recorded' }}</dd></div>
@@ -37,6 +39,7 @@
                 @unless (in_array($report->ai_source, ['human_responder', 'manual_override', 'text_human_override'], true))<p class="print-note">The intake severity category is not a confirmed medical assessment.</p>@endunless
             @endif
             <section><h3>Description</h3><p class="print-copy">{{ $report->description ?: 'No description provided.' }}</p></section>
+            @if ($isLoRaReport && $report->lora_verified_at)<section><h3>Admin verification notes</h3><p class="print-copy">{{ $report->lora_verification_notes }}</p></section>@endif
             @if ($report->ai_top_category)<p><strong>{{ in_array($report->ai_source, ['human_responder', 'manual_override', 'text_human_override'], true) ? 'Original AI analysis' : 'AI analysis' }}:</strong> {{ $report->ai_top_category['label'] }} — model score {{ number_format($report->ai_top_category['score'], 1) }}% (uncalibrated). @if ($report->isAwaitingTextSeverityConfirmation() || $report->operational_severity === null)Admin confirmation required.@endif</p>@endif
             <section><h3>Assessment</h3><p>{{ \App\Support\ReportAssessmentSummary::forReport($report) }}</p></section>
             @if ($report->reported_fatality_flag)<p>Reported fatality: reported by sender; requires verification.</p>@endif

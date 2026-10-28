@@ -82,6 +82,9 @@
                         <div><dt>Signal quality (SNR)</dt><dd>{{ $node['gateway_snr'] !== null ? $node['gateway_snr'].' dB' : 'Not reported' }}</dd></div>
                         <div><dt>Timing sample</dt><dd>{{ $node['round_trip_measured_at']?->timezone(config('app.timezone'))->format('M j, Y g:i:s A') ?? 'Awaiting timing sample' }}</dd></div>
                         <div><dt>Battery voltage</dt><dd>{{ $node['battery'] ?: 'No voltage reading' }}</dd></div>
+                        <div><dt>Submission protection</dt><dd>@if ($node['blocked_submissions'] !== null){{ number_format($node['blocked_submissions']) }} blocked submission attempt(s) since this node restarted. A blocked repeat is not proof of a prank.@else Not reported by installed firmware @endif</dd></div>
+                        <div><dt>Radio authentication</dt><dd>{{ $node['radio_auth'] === 'hmac-sha256-v2' ? 'Authenticated firmware v2' : 'Not reported by installed firmware' }}@if ($node['radio_rejections'] !== null) · {{ number_format($node['radio_rejections']) }} rejected frame(s) since restart @endif</dd></div>
+                        <div><dt>Protection last reported</dt><dd>{{ $node['guard_reported_at']?->timezone(config('app.timezone'))->format('M j, Y g:i:s A') ?? 'Not yet reported' }}@if (! $node['recently_heard']) (stale)@endif</dd></div>
                     </dl>
                 </div>
             </details>

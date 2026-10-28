@@ -22,7 +22,9 @@ tool/runtime/
 Arduino.zip
 Arduino/**/arduino_secrets.h
 Arduino/**/field_node_secrets.h
+Arduino/**/mesh_secrets.h
 Arduino/**/libraries/
+Arduino/**/build/
 
 # Python
 **/__pycache__/
