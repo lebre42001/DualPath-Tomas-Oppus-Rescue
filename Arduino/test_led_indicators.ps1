@@ -44,6 +44,7 @@ $gatewayFunctions = (@('markLoRaActivity', 'hasPendingLocalEmergency', 'initiali
 $fieldRouteFields = Get-LedFields -Source $field -Names @('SERVER_ROUTE_TIMEOUT_MS', 'lastGatewaySeenMs')
 $gatewayRouteFields = Get-LedFields -Source $gateway -Names @('SERVER_ROUTE_TIMEOUT_MS', 'lastServerSuccessMs')
 $fieldRouteFunction = Get-FirmwareFunction -Source $field -Name 'serverRouteAvailable'
+$heartbeatRelayFunction = Get-FirmwareFunction -Source $field -Name 'heartbeatRelayAllowed'
 $gatewayRouteFunction = Get-FirmwareFunction -Source $gateway -Name 'serverRouteAvailable'
 $ackHandler = Get-FirmwareFunction -Source $field -Name 'handleAck'
 $ackGuard = [regex]::Match($ackHandler,
@@ -114,8 +115,14 @@ public abstract class RouteClock {
     protected uint millis() { return clock; }
 }
 public sealed class FieldRouteLease : RouteClock {
+    private int gatewayHopCount;
 $fieldRouteFields
 $fieldRouteFunction
+$heartbeatRelayFunction
+    public bool Relay(uint now, uint lastBeacon, int ourDistance, int senderDistance) {
+        clock = now; lastGatewaySeenMs = lastBeacon; gatewayHopCount = ourDistance;
+        return heartbeatRelayAllowed(senderDistance);
+    }
     public bool Check(uint now, uint lastBeacon) {
         clock = now; lastGatewaySeenMs = lastBeacon;
         return serverRouteAvailable();
@@ -149,6 +156,12 @@ Assert-Led (-not $fieldLease.Check(31001, 1000)) 'field route expires when gatew
 Assert-Led ($fieldLease.Check(40000, 39000)) 'a fresh gateway beacon restores route confirmation'
 Assert-Led ($fieldLease.Check(100, [uint32]4294967040)) 'field route age crosses millis rollover'
 Assert-Led (-not $fieldLease.Check(30000, [uint32]4294967040)) 'field route expiry crosses millis rollover'
+Assert-Led ($fieldLease.Relay(2000, 1000, 2, 3)) 'heartbeat can move from hop three toward hop two'
+Assert-Led ($fieldLease.Relay(2000, 1000, 1, 2)) 'heartbeat can move from hop two toward hop one'
+Assert-Led (-not $fieldLease.Relay(2000, 1000, 1, 1)) 'same-distance peers cannot multiply routine heartbeat traffic'
+Assert-Led (-not $fieldLease.Relay(2000, 1000, 3, 2)) 'heartbeat cannot move away from the gateway'
+Assert-Led (-not $fieldLease.Relay(40000, 1000, 1, 2)) 'expired routes cannot relay routine heartbeats'
+Assert-Led (-not $fieldLease.Relay(2000, 1000, 1, 0)) 'unknown-route heartbeats remain direct discovery only'
 $gatewayLease = New-Object "$namespace.GatewayRouteLease"
 Assert-Led (-not $gatewayLease.Check(1000, 0, $true)) 'router association alone cannot confirm API access'
 Assert-Led ($gatewayLease.Check(31000, 1000, $true)) 'gateway confirms a recent API success'

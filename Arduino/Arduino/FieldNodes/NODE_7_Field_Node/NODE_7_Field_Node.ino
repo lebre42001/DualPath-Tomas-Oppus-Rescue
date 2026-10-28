@@ -1,7 +1,7 @@
 /*
   STITCH ESP32 LoRa FIELD NODE firmware for NODE_2 ... NODE_10
   NODE_2..10: green/yellow/red LEDs with the same status algorithm
-  No switch or GPS; existing optional battery voltage ADC
+  No switch or GPS; battery voltage ADC enabled by default
 
   Hardware:
   - ESP32
@@ -25,7 +25,7 @@
   - All nodes must use the same LoRa frequency/settings.
   - Attach the LoRa antenna before transmitting.
   - LoRa VCC is 3.3 V only.
-  - Battery voltage requires divider wiring and BATTERY_MONITOR_ENABLED=true.
+  - Battery sensing is enabled; valid voltage readings require divider wiring.
   - Website delay is measured as a complete LoRa + HTTPS + LoRa round trip.
 
   Required Arduino library:
@@ -90,8 +90,8 @@ const unsigned long PEER_TIMEOUT_MS           = 40000;
 // Allow missed 5-second beacons while NODE_1 completes synchronous HTTPS work.
 // Confirmation still expires after 30 seconds without a new gateway beacon.
 const unsigned long SERVER_ROUTE_TIMEOUT_MS   = 30000;
-const unsigned long NETWORK_SUMMARY_TIMEOUT_MS = 30000;
-const unsigned long SOS_RETRY_INTERVAL_MS     = 30000;
+const unsigned long NETWORK_SUMMARY_TIMEOUT_MS = 60000;
+const unsigned long SOS_RETRY_INTERVAL_MS     = 15000;
 const unsigned long LED_ACTIVITY_MS           = 700;
 const unsigned long LED_FAST_TOGGLE_MS        = 125;
 const unsigned long LED_SLOW_TOGGLE_MS        = 600;
@@ -115,6 +115,7 @@ unsigned long lastHeartbeatMs = 0;
 unsigned long lastGatewaySeenMs = 0;
 unsigned long lastNetworkSummarySeenMs = 0;
 unsigned long lastSosAttemptMs = 0;
+unsigned long sosRetryDelayMs = SOS_RETRY_INTERVAL_MS;
 unsigned long lastLedActivityMs = 0;
 unsigned long lastLedToggleMs = 0;
 bool ledActivityPending = false;
@@ -125,7 +126,7 @@ bool emergencyLedBlinkState = false;
 bool emergencyLedWasPending = false;
 
 uint32_t heartbeatSequence = 0;
-const unsigned long PROBE_INTERVAL_MS = 60000;
+const unsigned long PROBE_INTERVAL_MS = 90000;
 const unsigned long PROBE_TIMEOUT_MS = 60000;
 unsigned long lastProbeMs = 0;
 unsigned long probeStartedMs = 0;
@@ -161,6 +162,7 @@ String latestAckAt = "";
 // If non-empty, this exact packet must be preserved/retried until manual ACK.
 String pendingPacket = "";
 String pendingMsgId = "";
+String serverReceiptMsgId = "";
 
 // =====================================================
 // DIRECT PEER TABLE
@@ -258,7 +260,7 @@ textarea{min-height:80px}button{background:#116530;color:white;border:0;font-wei
 function pad(n){return String(n).padStart(2,'0')}
 function buttonTime(){const d=new Date();const o=-d.getTimezoneOffset();const s=o>=0?'+':'-';const h=pad(Math.floor(Math.abs(o)/60));const m=pad(Math.abs(o)%60);return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())+s+h+':'+m}
 const messageBox=document.getElementById('message');messageBox.addEventListener('input',()=>{document.getElementById('remaining').textContent=70-messageBox.value.length});
-const statusLabels={'QUEUED - WAITING FOR ROUTE':'Saved locally - waiting for LoRa route','SUBMITTED - UNDER ADMIN REVIEW':'Submitted - under admin review','ACKNOWLEDGED':'Responder update received','REJECTED':'Report cancelled by admin'};
+const statusLabels={'QUEUED - WAITING FOR ROUTE':'Saved locally - waiting for LoRa route','SENT - WAITING FOR SERVER':'Sent by radio - waiting for server receipt','SUBMITTED - UNDER ADMIN REVIEW':'Received by server - under admin review','ACKNOWLEDGED':'Responder update received','REJECTED':'Report cancelled by admin'};
 let shownReview='';
 function closeReview(){if(shownReview)localStorage.setItem('field_review_seen_'+shownReview,'1');document.getElementById('reviewModal').classList.remove('show')}
 function showReviewIfNeeded(x){
@@ -580,7 +582,13 @@ void sendHeartbeatIfNeeded() {
 
   if (!getField(packet, 10).length()) packet += "|NA|NA|NA";
   packet += reportGuardHeartbeat();
+  // Distance is mutable routing metadata, after the existing guard fields.
+  packet += "|" + String(serverRouteAvailable() ? gatewayHopCount : 0);
   sendLoRaPacket(packet);
+}
+
+bool heartbeatRelayAllowed(int advertisedDistance) {
+  return serverRouteAvailable() && gatewayHopCount > 0 && advertisedDistance > gatewayHopCount;
 }
 
 void handleHeartbeat(String packet) {
@@ -594,6 +602,11 @@ void handleHeartbeat(String packet) {
 
   if (origin.length() == 0 || origin == NODE_ID || ttl <= 0) return;
   if (routeHasNode(route, NODE_ID)) return;
+
+  // Routine heartbeats travel only toward a confirmed gateway, not through
+  // every peer at the same distance. Legacy packets retain their TTL fallback.
+  const String distance = getField(packet, 14);
+  if (distance.length() && !heartbeatRelayAllowed(distance.toInt())) return;
 
   String key = "HB:" + origin + ":" + sequence;
   if (recentlySeen(key)) return;
@@ -610,6 +623,7 @@ void handleHeartbeat(String packet) {
 
   forwarded += "|" + getField(packet, 8) + "|" + getField(packet, 9) + "|" + getField(packet, 10);
   if (getField(packet, 13).length()) forwarded += "|" + getField(packet, 11) + "|" + getField(packet, 12) + "|" + getField(packet, 13);
+  if (distance.length()) forwarded += "|" + String(gatewayHopCount);
 
   relayJitter();
   sendLoRaPacket(forwarded);
@@ -815,6 +829,18 @@ void handleAck(String packet) {
 
   if (origin == NODE_ID) {
     if (!meshVerifyOrigin(packet, true, NODE_NUMBER)) { ++meshInvalidFrames; return; }
+    if (status == "RECEIVED" && gateway == "NODE_1" && acknowledgedAt.length() &&
+        pendingPacket.length() && pendingMsgId == msgId) {
+      serverReceiptMsgId = msgId;
+      lastSosAttemptMs = millis();
+      sosRetryDelayMs = 60000 + random(0, 5000);
+      latestStatus = "SUBMITTED - UNDER ADMIN REVIEW";
+      prefs.putString("receipt_msg", msgId);
+      prefs.putString("latest_status", latestStatus);
+      lastGatewaySeenMs = millis();
+      Serial.println("[RECEIPT] Server received " + msgId + "; waiting for responder review.");
+      return; // A server receipt never clears the local SOS queue or red LED.
+    }
     if (latestAckAt.length() && acknowledgedAt.compareTo(latestAckAt) < 0) return;
     // Only a matching final response from the established gateway may clear
     // the local queue (and consequently its emergency LED).
@@ -834,7 +860,7 @@ void handleAck(String packet) {
 
   if (ttl <= 0 || routeHasNode(route, NODE_ID)) return;
 
-  String key = "ACK:" + msgId + ":" + acknowledgedAt;
+  String key = "ACK:" + msgId + ":" + status + ":" + acknowledgedAt;
   if (recentlySeen(key, 15000)) return;
 
   String forwarded =
@@ -861,9 +887,17 @@ void handleIncomingLoRa() {
   markLoRaActivity();
 
   String packet = meshReadFrame(packetSize);
-  if (!packet.length()) return;
+  if (!packet.length()) {
+    static bool logged = false; static unsigned long lastLog = 0;
+    if (!logged || millis() - lastLog >= 5000) {
+      logged = true; lastLog = millis();
+      Serial.println("[LORA DROP] " + String(meshLastFrameError) + "; rejected=" + String(meshInvalidFrames));
+    }
+    return;
+  }
 
   int rssi = LoRa.packetRssi();
+  if (meshLastFrameSender != MESH_THIS_NODE) updatePeer("NODE_" + String(meshLastFrameSender), rssi);
 
   Serial.print("[LORA RX RSSI ");
   Serial.print(rssi);
@@ -909,21 +943,24 @@ void trySendPending(bool forceNow = false) {
   if (pendingPacket.length() == 0) return;
 
   if (!serverRouteAvailable()) {
-    if (latestStatus != "QUEUED - WAITING FOR ROUTE") {
+    if (serverReceiptMsgId != pendingMsgId && latestStatus != "QUEUED - WAITING FOR ROUTE") {
       latestStatus = "QUEUED - WAITING FOR ROUTE";
       prefs.putString("latest_status", latestStatus);
     }
     return;
   }
 
-  if (!forceNow && millis() - lastSosAttemptMs < SOS_RETRY_INTERVAL_MS) return;
+  if (!forceNow && millis() - lastSosAttemptMs < sosRetryDelayMs) return;
 
   lastSosAttemptMs = millis();
+  sosRetryDelayMs = (serverReceiptMsgId == pendingMsgId ? 60000 : SOS_RETRY_INTERVAL_MS) + random(0, 5000);
 
   bool sent = sendLoRaPacket(pendingPacket);
   if (sent) {
-    latestStatus = "SUBMITTED - UNDER ADMIN REVIEW";
-    prefs.putString("latest_status", latestStatus);
+    if (serverReceiptMsgId != pendingMsgId) {
+      latestStatus = "SENT - WAITING FOR SERVER";
+      prefs.putString("latest_status", latestStatus);
+    }
   }
 }
 
@@ -971,7 +1008,7 @@ void handleLocalSend() {
   latestAckAt = "";
   latestStatus = serverRouteAvailable() ? "READY TO SEND" : "QUEUED - WAITING FOR ROUTE";
 
-  // Battery stays NA unless real divider wiring is configured and enabled.
+  // The enabled sampler needs the physical divider for a valid battery voltage.
   // The exact createdAt received from the phone is permanently embedded here.
   pendingPacket =
     "SOS|" + latestMsgId +
@@ -982,11 +1019,13 @@ void handleLocalSend() {
   pendingPacket = meshSignOrigin(pendingPacket, false, NODE_NUMBER);
 
   pendingMsgId = latestMsgId;
+  serverReceiptMsgId = "";
+  prefs.remove("receipt_msg");
   savePendingState();
 
   if (serverRouteAvailable()) {
     trySendPending(true);
-    localServer.send(200, "text/plain", "Emergency report submitted through LoRa. It is now under admin review.");
+    localServer.send(200, "text/plain", "Report saved and radio delivery attempted. Wait for the server receipt in Latest report. This node will retry automatically.");
   } else {
     localServer.send(200, "text/plain", "No confirmed server route. Report saved on this node and will auto-send when a route becomes available.");
   }
@@ -1065,6 +1104,7 @@ void loadPersistentState() {
   latestAckAt = prefs.getString("latest_ack_at", "");
   pendingPacket = prefs.getString("pending_packet", "");
   pendingMsgId = prefs.getString("pending_msg", "");
+  serverReceiptMsgId = prefs.getString("receipt_msg", "");
 }
 
 // =====================================================
@@ -1147,6 +1187,9 @@ void setup() {
   Serial.println();
   Serial.println(NODE_ID + " field node ready.");
   Serial.println("Battery sensing: " + String(BATTERY_MONITOR_ENABLED ? "enabled" : "disabled (no voltage reading)"));
+  if (BATTERY_MONITOR_ENABLED) {
+    Serial.println("Battery ADC: GPIO" + String(BATTERY_ADC_PIN) + " (connect voltage divider for valid readings)");
+  }
   Serial.println("Waiting for LoRa peers and NODE_1 server-route beacon...");
 }
 

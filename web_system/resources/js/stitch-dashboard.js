@@ -1,6 +1,7 @@
 import { onDomReady } from './dom-ready';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { initializeIncomingReports, receiveIncomingReport } from './incoming-reports';
 
 const severityColors = {
     Minor: '#1f9d68',
@@ -23,6 +24,17 @@ const mapStates = [];
 let mapDecorationsInjected = false;
 
 onDomReady( () => {
+    // Start arrival monitoring before optional maps/panels are initialized.
+    initializeIncomingReports((payload, fresh) => {
+        const report = payload.report ?? {};
+        if (fresh) {
+            renderToast(payload.message ?? 'New report received.', report);
+            void maybeShowBrowserNotification(payload.message ?? 'New report received.', report);
+        }
+        updateLiveLists(report, payload.action ?? 'created');
+        updateMaps(report);
+        updateCounters(report, payload.action ?? 'created');
+    });
     initializeSidebar();
     initializeMaps();
     initializeNotificationToggle();
@@ -291,26 +303,27 @@ function initializeNotificationToggle() {
 }
 
 function initializeAlertCenter() {
-    const trigger = document.querySelector('[data-alert-center-toggle]');
+    const triggers = [...document.querySelectorAll('[data-alert-center-toggle]')];
+    const trigger = triggers[0];
     const panel = document.querySelector('[data-alert-center-panel]');
     const close = panel?.querySelector('[data-alert-center-close]');
     if (!trigger || !panel) return;
     const hide = (restoreFocus = false) => {
         panel.hidden = true;
-        trigger.setAttribute('aria-expanded', 'false');
+        triggers.forEach(button => button.setAttribute('aria-expanded', 'false'));
         if (restoreFocus) trigger.focus();
     };
-    trigger.addEventListener('click', () => {
+    triggers.forEach(button => button.addEventListener('click', () => {
         panel.hidden = !panel.hidden;
-        trigger.setAttribute('aria-expanded', String(!panel.hidden));
+        triggers.forEach(item => item.setAttribute('aria-expanded', String(!panel.hidden)));
         if (!panel.hidden) close?.focus();
-    });
+    }));
     close?.addEventListener('click', () => hide(true));
     document.addEventListener('keydown', event => {
         if (event.key === 'Escape' && !panel.hidden) hide(true);
     });
     document.addEventListener('click', event => {
-        if (!panel.hidden && !panel.contains(event.target) && !trigger.contains(event.target)) hide();
+        if (!panel.hidden && !panel.contains(event.target) && !triggers.some(button => button.contains(event.target))) hide();
     });
 }
 
@@ -668,14 +681,7 @@ function subscribeToIncidentFeed() {
     }
 
     window.Echo.private('responders.incidents').listen('.incident.feed.updated', (payload) => {
-        const report = payload.report ?? {};
-
-        renderToast(payload.message ?? 'Incident feed updated.', report);
-        void maybeShowBrowserNotification(payload.message ?? 'Incident feed updated.', report);
-        prependAlert(report);
-        updateLiveLists(report, payload.action ?? 'created');
-        updateMaps(report);
-        updateCounters(report, payload.action ?? 'created');
+        receiveIncomingReport(payload);
     });
 }
 

@@ -58,6 +58,9 @@ static Preferences meshSecurityPrefs;
 static uint64_t meshTxCounter = 0, meshTxLimit = 0;
 static uint64_t meshRxCounter[11] = {};
 static unsigned long meshInvalidFrames = 0;
+// Actual authenticated radio transmitter, distinct from a relayed origin ID.
+static uint8_t meshLastFrameSender = 0;
+static const char* meshLastFrameError = "none";
 static bool meshSecurityReady = false;
 static bool meshSecurityBegin() {
   if (!meshSecurityPrefs.begin("mesh-auth-v2", false)) return false;
@@ -110,17 +113,21 @@ static bool meshWriteFrame(const String& payload) {
   const bool sent = LoRa.endPacket() == 1; LoRa.receive(); return sent;
 }
 static String meshReadFrame(int packetSize) {
+  meshLastFrameSender = 0;
+  meshLastFrameError = "none";
   uint8_t frame[255]; int used = 0;
   while (LoRa.available()) { int value = LoRa.read(); if (used < 255) frame[used++] = (uint8_t)value; }
   if (!meshSecurityReady || packetSize != used || used < 35 || frame[0] != 'A' || frame[1] != 'R' ||
-      frame[2] != 2 || frame[3] < 1 || frame[3] > 10) { ++meshInvalidFrames; return ""; }
+      frame[2] != 2 || frame[3] < 1 || frame[3] > 10) { meshLastFrameError = "invalid frame/version/length"; ++meshInvalidFrames; return ""; }
   String received; for (int i = used-22; i < used; ++i) received += (char)frame[i];
-  if (!meshEqual(received, meshTag(MESH_GROUP_KEY, frame, used-22))) { ++meshInvalidFrames; return ""; }
+  if (!meshEqual(received, meshTag(MESH_GROUP_KEY, frame, used-22))) { meshLastFrameError = "authentication failed (check matching mesh keys)"; ++meshInvalidFrames; return ""; }
   uint64_t counter = 0; for (int i = 0; i < 8; ++i) counter = (counter << 8) | frame[4+i];
-  if (!counter || counter <= meshRxCounter[frame[3]]) { ++meshInvalidFrames; return ""; }
+  if (!counter || counter <= meshRxCounter[frame[3]]) { meshLastFrameError = "replayed counter or duplicate node identity"; ++meshInvalidFrames; return ""; }
   String body; for (int i = 12; i < used-22; ++i) body += (char)frame[i];
-  const String payload = meshExpand(body); if (!payload.length()) { ++meshInvalidFrames; return ""; }
-  meshRxCounter[frame[3]] = counter; return payload;
+  const String payload = meshExpand(body); if (!payload.length()) { meshLastFrameError = "invalid compact payload"; ++meshInvalidFrames; return ""; }
+  meshRxCounter[frame[3]] = counter;
+  meshLastFrameSender = frame[3];
+  return payload;
 }
 
 // Durable origin anti-replay at the gateway. Exact current SOS retries remain

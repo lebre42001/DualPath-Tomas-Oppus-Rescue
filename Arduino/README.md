@@ -10,6 +10,50 @@ The active mesh uses `GatewayNode1/GatewayNode1.ino` for NODE_1 and the configur
 
 ## Active Mesh Flow
 
+### Report delivery and radio service (2026-10-29)
+
+NODE_1 performs HTTPS on a dedicated FreeRTOS worker. While a request is in
+progress, the main task continues receiving/authenticating LoRa, updating peers
+and LEDs, and broadcasting due gateway beacons. Router reconnection also uses
+timed states instead of a blocking 20-second wait. Only the main task touches
+LoRa, mesh replay state, peer arrays, or report NVS.
+
+Incoming SOS is stored in a separate durable inbox slot for each origin before
+submission. Failed requests remain queued; one failing origin cannot overwrite
+or starve another. Heartbeats are coalesced per node and sent as one authenticated
+`POST /api/v1/lora/heartbeats` batch about every 10 seconds. Captured packet age
+is retained, and stale snapshots are discarded instead of making offline nodes
+look fresh. Deploy the new API before flashing the Gateway. Old servers fall
+back to individual heartbeat requests, which do not offer ten-node throughput.
+New heartbeat packets also carry gateway distance after the existing guard
+fields. Relays forward only to a smaller confirmed distance, avoiding an
+all-peer flood for every routine heartbeat. Unknown-route heartbeats still
+advertise directly; gateway beacons build the relay path. SOS retains its
+bounded flood/retry behavior so an emergency can use alternate paths.
+
+Every valid authenticated radio frame refreshes its actual transmitter as a
+direct peer. Relayed origin IDs are not mistaken for direct neighbors. Both
+Gateway and field-node peer leases expire after 40 seconds without reception.
+
+Radio transmission success now displays **Sent by radio - waiting for server
+receipt**. Only after Laravel accepts a report does NODE_1 send a signed
+`ACK ... RECEIVED` receipt; this changes the origin's status to **Received by
+server - under admin review**. The receipt never clears the pending report or
+red LED. Only the existing matching final responder ACK/rejection clears them.
+Receipts and final ACKs have distinct relay deduplication keys, even in the same
+second. Before a receipt, SOS retries use 15–20 seconds of jitter; afterward they
+slow to about 60–65 seconds while waiting for review/recovery of a missing ACK.
+Timing probes run about every 90 seconds and ACK polling about every 10 seconds.
+
+Diagnostics: `[QUEUE] Saved SOS`, `[SOS] Laravel accepted`, and `[RECEIPT] Server
+received` identify the three stages. `[API validation]` reports a rejected API
+payload. A successful heartbeat alone does not confirm SOS delivery.
+
+Run `powershell.exe -NoProfile -ExecutionPolicy Bypass -File
+.\Arduino\test_gateway_inbox.ps1` from the repo root for simulated HTTP-delay,
+concurrent-origin, retry, persistence, coalescing, and flash-failure checks.
+These simulations and ESP32 builds do not replace a real radio/hardware test.
+
 1. A phone joins the selected node's local Wi-Fi AP and is redirected to that ESP32's captive-portal dashboard. The user submits the emergency from the dashboard. This works without mobile data or internet.
 2. NODE_2 through NODE_10 assign a persistent message ID and creation time, then keep the SOS packet queued on the originating node.
 3. Nodes discover direct radio peers, relay heartbeats and SOS packets with route/TTL data, and suppress duplicate relays.
@@ -48,7 +92,7 @@ The deployed design intentionally has no physical SOS button or switch. Emergenc
 
 Field nodes send a heartbeat every 10 seconds, so NODE_1 can mark them active on the monitoring page without a user opening the local dashboard. Heartbeats are scheduled before peer discovery, and field nodes learn peers from received `HELLO` packets without echoing field-to-field acknowledgments. This keeps NODE_2 through NODE_10 from flooding the shared LoRa channel when several boards start together. NODE_1 still acknowledges a field node's `HELLO`, allowing the field node to identify a direct gateway peer.
 
-GPS is not required. Battery voltage sensing is optional and requires the divider described below. Coordinates are fixed per sender in `web_system/config/lora_nodes.php`. Configure `node_name`, `location_label`, `latitude`, and `longitude` for NODE_1 through NODE_10. `S01` remains as a legacy entry. Laravel ignores coordinates and satellite values carried in a received radio packet.
+GPS is not required. Battery voltage sensing is enabled by default on NODE_1 through NODE_10; valid measurements require the divider described below. Coordinates are fixed per sender in `web_system/config/lora_nodes.php`. Configure `node_name`, `location_label`, `latitude`, and `longitude` for NODE_1 through NODE_10. `S01` remains as a legacy entry. Laravel ignores coordinates and satellite values carried in a received radio packet.
 
 ## Uploading the Field Nodes
 
@@ -300,22 +344,28 @@ with cells in series requires a different divider design. GPIO34 is ADC1, so
 it can be used while Wi-Fi is running. The sampler uses calibrated
 `analogReadMilliVolts`, 16 samples, and a 10-second cache.
 
-Each uploadable sketch has `battery_config.h`, initially disabled:
+Each uploadable sketch has `battery_config.h`, enabled on NODE_1 through NODE_10:
 
 ```cpp
-static const bool BATTERY_MONITOR_ENABLED = false;
+static const bool BATTERY_MONITOR_ENABLED = true;
 static const int BATTERY_ADC_PIN = 34;
 static const float BATTERY_DIVIDER_RATIO = 2.0f;
 static const float BATTERY_CALIBRATION = 1.0f;
 ```
 
-After physically installing/checking the divider, change the enable flag to
-`true` in that board's `battery_config.h` and upload its matching sketch. If the
-display differs from a multimeter, set `BATTERY_CALIBRATION` to the multimeter
-battery voltage divided by the displayed battery voltage. `battery_monitor.h`
-is generated from `Arduino/Arduino/shared/`; the generator preserves existing
-per-board `battery_config.h` files. Disabled, near-zero, or saturated readings
-remain `NA`; the admin sees **No voltage reading**, never a made-up charge level.
+Upload each board's matching sketch once to enable monitoring. The divider
+can be connected later without another code change or upload. Both gateway
+and field-node Serial Monitors report `Battery sensing: enabled` and GPIO34.
+Until the divider is connected, a floating ADC can produce `NA` or an arbitrary
+voltage; neither is a valid battery measurement. Near-zero or saturated readings
+are rejected as `NA`, but software cannot reliably identify every unwired input.
+
+If the wired display differs from a multimeter, set `BATTERY_CALIBRATION` to
+the multimeter battery voltage divided by the displayed battery voltage.
+`battery_monitor.h` is generated from `Arduino/Arduino/shared/`; the generator
+preserves existing per-board `battery_config.h` files. New configs also default
+to enabled. Measurements continue through the existing LoRa heartbeat and
+gateway API to the online monitor once the board has a working server route.
 
 ## Measured node-to-website delay
 
@@ -323,7 +373,7 @@ The admin monitor shows **Node ↔ website delay (RTT)**, in milliseconds:
 
 - NODE_1 times an authenticated HTTPS health request plus its complete response,
   including connection/TLS setup. The next heartbeat sends that real sample.
-- NODE_2 through NODE_10 send a staggered `PING` once per minute. NODE_1 sends it
+- NODE_2 through NODE_10 send a staggered `PING` about every 90 seconds. NODE_1 sends it
   to the authenticated `/api/v1/lora/probe` endpoint; only the returned website
   `PONG` is sent back over LoRa. The originating board measures the full round
   trip with its monotonic clock and includes it in subsequent heartbeats.

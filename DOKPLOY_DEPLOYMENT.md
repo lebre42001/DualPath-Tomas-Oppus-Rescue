@@ -5,6 +5,43 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## LoRa delivery and incoming-report alerts (2026-10-29)
+
+Deploy the authenticated `POST /api/v1/lora/heartbeats` endpoint together with
+the receiver-only `GET /monitoring/reports/feed`, layout, notification module,
+and rebuilt Vite assets. No database migration or new credentials are required.
+The batch endpoint reuses the existing heartbeat rules in one transaction,
+preserves captured packet age, rejects invalid/duplicate node rows atomically,
+and reduces ten-node HTTPS traffic. Existing single heartbeat clients still work.
+
+Incoming arrivals of every severity and both channels now populate the Alerts
+badge, persistent in-page banner, and per-browser/per-user unread list. The
+receiver can enable sound with a user gesture and mark arrivals seen without
+changing rescue/report status. Reverb events and the 5-second polling fallback
+share deduplication, so a report cannot double-notify or double-increment the
+latest list. The fallback is session-authenticated, excludes civilians, and
+returns no cached/private data to unauthenticated requests.
+
+Release the server first, then flash `GatewayNode1.ino` and every matching
+NODE_2–NODE_10 sketch from this Laragon repo. The Gateway's new dedicated HTTP
+worker keeps radio/LED service active during HTTPS and queues incoming SOS in
+per-origin NVS inboxes. A signed nonfinal server receipt now distinguishes radio
+transmission from actual ingestion; final responder ACK semantics remain intact.
+Existing matching mesh keys must be retained; do not reprovision keys merely
+to update firmware. Old Gateway/API combinations use the legacy heartbeat
+endpoint until restart, with reduced throughput compared with the batch API.
+
+Verify the new routes, public login, release/build identity, and an authenticated
+monitoring page. On hardware, send from NODE_4 then NODE_3; confirm both distinct
+message IDs reach the server, each origin receives its server receipt, then
+verify the final responder ACK and red LED independently. Observe peer expiry
+after actual radio loss rather than treating successful TX as a received peer.
+Simulations and compilation do not claim to verify physical RF conditions.
+
+Local release checks passed: 310 Laravel tests (3,286 assertions), six notification
+JavaScript tests, Vite build, Gateway/NODE_3 ESP32 builds, and source-extracted
+LED/route/inbox simulations. No connected browser was available for visual QA.
+
 ## Google sign-in placement and LoRa print preview (2026-10-28)
 
 The civilian login now displays the terms agreement and privacy acknowledgment

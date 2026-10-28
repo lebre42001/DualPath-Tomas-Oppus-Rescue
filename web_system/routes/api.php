@@ -19,6 +19,7 @@ Route::prefix('v1')->group(function (): void {
     Route::middleware('throttle:120,1')->prefix('lora')->group(function (): void {
         Route::get('/health', [LoRaMeshGatewayController::class, 'health']);
         Route::post('/heartbeat', [LoRaMeshGatewayController::class, 'heartbeat']);
+        Route::post('/heartbeats', [LoRaMeshGatewayController::class, 'heartbeats']);
         Route::post('/probe', [LoRaMeshGatewayController::class, 'probe']);
         Route::get('/network-summary', [LoRaMeshGatewayController::class, 'networkSummary']);
         Route::get('/acks/pending', [LoRaMeshGatewayController::class, 'pendingAcknowledgment']);

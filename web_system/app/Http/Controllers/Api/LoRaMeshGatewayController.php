@@ -9,6 +9,8 @@ use App\Support\LoraMeshNodeDirectory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\InputBag;
 
 class LoRaMeshGatewayController extends Controller
 {
@@ -24,6 +26,31 @@ class LoRaMeshGatewayController extends Controller
             'gatewayId' => self::GATEWAY_ID,
             'serverTime' => now('UTC')->toIso8601String(),
         ]);
+    }
+
+    public function heartbeats(Request $request): JsonResponse
+    {
+        $this->authorizeGateway($request);
+        $request->validate([
+            'nodes' => ['required', 'array', 'min:1', 'max:10'],
+            'nodes.*' => ['required', 'array'],
+            'nodes.*.node_id' => ['required', 'string', 'distinct:ignore_case', 'max:40'],
+        ]);
+
+        // Reuse the same validation and storage rules. Any invalid row rolls
+        // back the whole batch rather than accepting a partial node snapshot.
+        $ids = DB::transaction(function () use ($request): array {
+            $ids = [];
+            foreach ($request->input('nodes') as $node) {
+                $child = clone $request;
+                $child->setJson(new InputBag($node));
+                $result = $this->heartbeat($child)->getData(true);
+                $ids[] = $result['nodeId'];
+            }
+            return $ids;
+        });
+
+        return response()->json(['ok' => true, 'nodeIds' => $ids]);
     }
 
     public function heartbeat(Request $request): JsonResponse
@@ -49,6 +76,7 @@ class LoRaMeshGatewayController extends Controller
             'radio_rejections' => ['nullable', 'integer', 'between:0,4294967295'],
             'guard_boot' => ['nullable', 'string', 'max:16', 'regex:/^[a-f0-9]+$/'],
             'radio_auth' => ['nullable', 'in:hmac-sha256-v2'],
+            'received_age_ms' => ['nullable', 'integer', 'between:0,30000'],
         ]);
 
         $nodeId = strtoupper(trim($validated['node_id']));
@@ -66,14 +94,14 @@ class LoRaMeshGatewayController extends Controller
         $measuredAt = $sample === null ? null : (
             $previous?->round_trip_sample === $sample
                 ? $previous->round_trip_measured_at
-                : now()->subMilliseconds((int) ($validated['round_trip_age_ms'] ?? 0))
+                : now()->subMilliseconds((int) ($validated['round_trip_age_ms'] ?? 0) + (int) ($validated['received_age_ms'] ?? 0))
         );
 
         LoraNodeState::query()->updateOrCreate(
             ['node_id' => $nodeId],
             [
                 'gateway_id' => $validated['gateway_id'] ?? self::GATEWAY_ID,
-                'last_seen_at' => now(),
+                'last_seen_at' => now()->subMilliseconds((int) ($validated['received_age_ms'] ?? 0)),
                 'last_known_route' => $validated['route'] ?? $nodeId,
                 'known_peers' => $knownPeers,
                 'battery' => $this->normalizedBattery($validated['battery'] ?? null),

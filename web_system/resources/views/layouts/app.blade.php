@@ -34,7 +34,10 @@
         $isAdminDashboard = request()->routeIs('admin.dashboard');
         $isReportsPage = request()->routeIs('reports.*');
         $isAdminReportsPage = $isReportsPage && ! $isCivilian;
-        $fatalAlertCount = isset($fatalAlerts) ? collect($fatalAlerts)->count() : 0;
+        $incomingReports = $authUser?->is_admin
+            ? \App\Models\IncidentReport::query()->where('status', 'received')->latest('id')->take(20)->get()
+            : collect();
+        $fatalAlertCount = $incomingReports->count();
         $compactPrimaryUrl = $isCivilian ? route('dashboard') : route('monitoring');
         $compactPrimaryLabel = $isCivilian ? 'Home' : 'Monitor';
         $compactPrimaryCode = $isCivilian ? 'HM' : 'DB';
@@ -261,27 +264,36 @@ SVG,
         </nav>
     @endif
     @unless ($isCivilian)
-        <aside class="alert-center" data-alert-center-panel hidden>
+        <aside class="alert-center" data-alert-center-panel data-incoming-reports data-feed-url="{{ route('monitoring.reports.feed') }}" data-user-id="{{ $authUser?->id }}" hidden>
             <div class="alert-top">
                 <div>
                     <p class="eyebrow">Alert Center</p>
-                    <h3>Latest fatal incidents</h3>
+                    <h3>Incoming reports</h3>
                 </div>
                 <button type="button" class="pill-btn" data-alert-center-close>Close</button>
             </div>
+            <div class="incoming-report-controls">
+                <button type="button" class="pill-btn" data-incoming-sound>Enable sound</button>
+                <button type="button" class="pill-btn" data-incoming-clear>Mark all seen</button>
+                <small data-incoming-status role="status">Checking new reports…</small>
+            </div>
             <div class="alert-list" data-alert-list>
-                @forelse (($fatalAlerts ?? []) as $alert)
-                    <a href="{{ route('reports.show', $alert) }}" class="alert-item">
-                        <span class="tag red">Fatal</span>
+                @forelse ($incomingReports as $alert)
+                    <a href="{{ route($alert->transmission_type === 'lora' ? 'lora-reports.index' : 'reports.index', ['review' => $alert->id]) }}#incident-report-{{ $alert->id }}" class="alert-item">
+                        <span class="tag blue">{{ $alert->transmission_type === 'lora' ? 'LoRa · '.$alert->lora_sender_id : 'Online' }}</span>
                         <strong>{{ $alert->incident_type }}</strong>
                         <p>{{ $alert->location_text }}</p>
                         <p>{{ optional($alert->created_at)->diffForHumans() }}</p>
                     </a>
                 @empty
-                    <div class="data-empty">No fatal incidents are queued right now.</div>
+                    <div class="data-empty">No unseen incoming reports.</div>
                 @endforelse
             </div>
         </aside>
+        <section class="incoming-report-banner" data-incoming-banner role="status" aria-live="polite" hidden>
+            <div><strong data-incoming-banner-title>New report received</strong><p data-incoming-banner-copy></p></div>
+            <button type="button" class="pill-btn" data-alert-center-toggle>View alerts</button>
+        </section>
     @endunless
 
     @if ($authUser && ! $isCivilian)

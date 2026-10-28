@@ -28,6 +28,7 @@
 #include "mesh_security.h"
 #include "report_guard.h"
 #include "report_dashboard.h"
+#include "gateway_runtime.h"
 
 #if __has_include("arduino_secrets.h")
 #include "arduino_secrets.h"
@@ -56,11 +57,11 @@ static_assert(!BATTERY_MONITOR_ENABLED ||
    BATTERY_ADC_PIN != RED_EMERGENCY_LED_PIN),
   "Battery ADC conflicts with an active gateway LED GPIO. Check battery_config.h.");
 
-const unsigned long SERVER_CHECK_INTERVAL_MS = 10000;
+const unsigned long SERVER_CHECK_INTERVAL_MS = 30000;
 const unsigned long HEARTBEAT_INTERVAL_MS = 10000;
 const unsigned long BEACON_INTERVAL_MS = 5000;
-const unsigned long NETWORK_POLL_INTERVAL_MS = 10000;
-const unsigned long ACK_POLL_INTERVAL_MS = 2000;
+const unsigned long NETWORK_POLL_INTERVAL_MS = 30000;
+const unsigned long ACK_POLL_INTERVAL_MS = 10000;
 const unsigned long SERVER_ROUTE_TIMEOUT_MS = 30000;
 const unsigned long LOCAL_REPORT_RETRY_INTERVAL_MS = 15000;
 const unsigned long LED_ACTIVITY_MS = 700;
@@ -107,6 +108,19 @@ String websiteRoundTripSample;
 String lastProbeIds[11];
 String lastHeartbeatSequences[11];
 unsigned long lastHeartbeatForwardedAtMs[11] = {};
+QueueHandle_t apiWorkQueue = nullptr;
+QueueHandle_t apiResultQueue = nullptr;
+bool apiRequestBusy = false;
+bool apiWorkerReady = false;
+uint32_t apiRequestSequence = 0;
+unsigned long lastApiFinishedMs = 0;
+int lastApiStatusCode = 0;
+bool batchHeartbeatsSupported = true;
+GatewayRadioItem sosInbox[11], heartbeatInbox[11], probeInbox[11];
+int nextSosNode = 2, nextHeartbeatNode = 2, nextProbeNode = 2;
+uint8_t routerPhase = 0;
+bool routerEverAttempted = false, routerWasConnected = false;
+unsigned long routerPhaseAtMs = 0;
 
 struct PeerInfo {
   String nodeId;
@@ -115,7 +129,7 @@ struct PeerInfo {
 };
 
 const int MAX_PEERS = 10;
-const unsigned long PEER_TIMEOUT_MS = 18000;
+const unsigned long PEER_TIMEOUT_MS = 40000;
 PeerInfo peers[MAX_PEERS];
 
 const char LOCAL_DASHBOARD[] PROGMEM = R"rawliteral(
@@ -293,14 +307,8 @@ bool beginHttp(HTTPClient& http, const String& url) {
       Serial.println("[HTTPS] Configure SERVER_ROOT_CA_CERT; certificate verification is required.");
       return false;
     }
-    // TLS validates certificate dates against the ESP32 clock. Keep serving
-    // the local portal and retry later while NTP synchronizes after boot.
-    if (time(nullptr) < 1700000000) {
-      gatewayStatus = "Waiting for internet time before HTTPS";
-      Serial.println("[HTTPS] Waiting for NTP time; check the hotspot's internet connection.");
-      return false;
-    }
     secureClient.setCACert(SERVER_ROOT_CA_CERT);
+    secureClient.setHandshakeTimeout(7);
     return http.begin(secureClient, url);
   }
 
@@ -313,31 +321,71 @@ String apiUrl(const String& path) {
   return base + "/api/v1/lora" + path;
 }
 
+void gatewayApiWorker(void*) {
+  for (;;) {
+    GatewayApiWork* work = nullptr;
+    if (xQueueReceive(apiWorkQueue, &work, portMAX_DELAY) != pdTRUE || !work) continue;
+    const unsigned long started = millis();
+    HTTPClient http;
+    http.setConnectTimeout(7000);
+    http.setTimeout(7000);
+    if (beginHttp(http, apiUrl(work->path))) {
+      http.addHeader("Accept", "application/json");
+      http.addHeader("Content-Type", "application/json");
+      http.addHeader("X-STITCH-LORA-TOKEN", LORA_GATEWAY_TOKEN);
+      work->status = work->method == "POST" ? http.POST(work->body) : http.GET();
+      work->response = http.getString();
+    }
+    http.end();
+    work->elapsedMs = millis() - started;
+    xQueueSend(apiResultQueue, &work, portMAX_DELAY);
+  }
+}
+
+bool startGatewayApiWorker() {
+  apiWorkQueue = xQueueCreate(1, sizeof(GatewayApiWork*));
+  apiResultQueue = xQueueCreate(1, sizeof(GatewayApiWork*));
+  if (!apiWorkQueue || !apiResultQueue) return false;
+  return xTaskCreatePinnedToCore(gatewayApiWorker, "gateway-http", 16384,
+    nullptr, 1, nullptr, 0) == pdPASS;
+}
+
 bool requestApi(const String& method, const String& path, const String& body, String& responseBody) {
-  if (!isConfigured() || WiFi.status() != WL_CONNECTED) return false;
-
-  HTTPClient http;
-  const unsigned long requestStartedMs = millis();
-  http.setConnectTimeout(7000);
-  http.setTimeout(7000);
-  if (!beginHttp(http, apiUrl(path))) return false;
-  http.addHeader("Accept", "application/json");
-  http.addHeader("Content-Type", "application/json");
-  http.addHeader("X-STITCH-LORA-TOKEN", LORA_GATEWAY_TOKEN);
-
-  int statusCode = method == "POST" ? http.POST(body) : http.GET();
-  responseBody = http.getString();
+  if (apiRequestBusy || !apiWorkerReady || !apiWorkQueue || !apiResultQueue ||
+      !isConfigured() || WiFi.status() != WL_CONNECTED) return false;
+  if (String(SERVER_BASE_URL).startsWith("https://") && time(nullptr) < 1700000000) {
+    gatewayStatus = "Waiting for internet time before HTTPS";
+    return false;
+  }
+  GatewayApiWork* work = new GatewayApiWork;
+  work->method = method; work->path = path; work->body = body;
+  if (xQueueSend(apiWorkQueue, &work, 0) != pdTRUE) { delete work; return false; }
+  apiRequestBusy = true;
+  ++apiRequestSequence;
+  GatewayApiWork* completed = nullptr;
+  while (xQueueReceive(apiResultQueue, &completed, 0) != pdTRUE) {
+    // Only this task touches LoRa, peer state, security counters and NVS.
+    // Incoming SOS is durably queued, never recursively sent over HTTPS here.
+    serviceGatewayRadio();
+    delay(2);
+  }
+  apiRequestBusy = false;
+  lastApiFinishedMs = millis();
+  const int statusCode = completed->status;
+  lastApiStatusCode = statusCode;
+  const unsigned long requestElapsedMs = completed->elapsedMs;
+  responseBody = completed->response;
+  delete completed;
   if (statusCode < 0) {
     Serial.println("[API connection] " + HTTPClient::errorToString(statusCode));
   } else if (statusCode == 401 || statusCode == 403) {
     Serial.println("[API auth] Match LORA_GATEWAY_TOKEN with LORA_INGEST_TOKEN on the hosted website.");
   }
-  http.end();
-
+  if (statusCode == 422) Serial.println("[API validation] " + extractJsonString(responseBody, "message"));
   Serial.println("[API " + method + "] " + path + " -> " + String(statusCode));
   if (statusCode >= 200 && statusCode < 300) {
     if (path == "/health") {
-      websiteRoundTripMs = (long)(millis() - requestStartedMs);
+      websiteRoundTripMs = (long)requestElapsedMs;
       websiteRoundTripAtMs = millis();
       websiteRoundTripSample = String(esp_random(), HEX) + "-" + String(websiteRoundTripAtMs);
     }
@@ -448,10 +496,7 @@ void checkServerIfNeeded() {
   requestApi("GET", "/health", "", response);
 }
 
-void sendGatewayHeartbeatIfNeeded() {
-  if (!serverRouteAvailable() || millis() - lastHeartbeatMs < HEARTBEAT_INTERVAL_MS) return;
-  lastHeartbeatMs = millis();
-
+String gatewayHeartbeatBody() {
   String body = "{";
   body += "\"node_id\":\"NODE_1\",";
   body += "\"gateway_id\":\"NODE_1\",";
@@ -466,8 +511,40 @@ void sendGatewayHeartbeatIfNeeded() {
   body += "\"hop\":0,\"ttl\":0,\"packet_type\":\"HB\"";
   body += ",\"blocked_submissions\":" + String(reportBlocked) + ",\"radio_rejections\":" + String(meshInvalidFrames) + ",\"guard_boot\":\"" + meshField(reportGuardHeartbeat(), 3) + "\",\"radio_auth\":\"hmac-sha256-v2\"";
   body += "}";
+  return body;
+}
+
+void sendGatewayHeartbeatIfNeeded() {
+  if (!serverRouteAvailable() || millis() - lastHeartbeatMs < HEARTBEAT_INTERVAL_MS) return;
+  lastHeartbeatMs = millis();
   String response;
-  requestApi("POST", "/heartbeat", body, response);
+  if (!batchHeartbeatsSupported) {
+    requestApi("POST", "/heartbeat", gatewayHeartbeatBody(), response);
+    return;
+  }
+  String snapshots[11];
+  String body = "{\"nodes\":[" + gatewayHeartbeatBody();
+  for (int node = 2; node <= 10; ++node) {
+    GatewayRadioItem& item = heartbeatInbox[node];
+    if (!item.packet.length()) continue;
+    const unsigned long age = millis() - item.receivedAtMs;
+    if (age > 25000) { item.packet = ""; continue; }
+    snapshots[node] = item.packet;
+    String row = heartbeatBodyForPacket(item.packet, item.rssi, item.snr);
+    if (!row.length()) continue;
+    row.remove(row.length() - 1);
+    body += "," + row + ",\"received_age_ms\":" + String(age) + "}";
+  }
+  body += "]}";
+  if (requestApi("POST", "/heartbeats", body, response)) {
+    for (int node = 2; node <= 10; ++node) {
+      if (snapshots[node].length() && heartbeatInbox[node].packet == snapshots[node]) heartbeatInbox[node].packet = "";
+    }
+  } else if (lastApiStatusCode == 404 || lastApiStatusCode == 405) {
+    // Preserve operation during rollout; deploy the server endpoint first for ten-node throughput.
+    batchHeartbeatsSupported = false;
+    Serial.println("[API] Batch heartbeat endpoint unavailable; using legacy heartbeat API.");
+  }
 }
 
 void sendGatewayBeaconIfNeeded() {
@@ -563,7 +640,7 @@ bool submitLocalReport() {
   if (accepted) {
     latestReportStatus = "RECEIVED BY SERVER - WAITING FOR ACK";
     lastForwardedMessage = pendingLocalMsgId + " from NODE_1";
-  } else {
+  } else if (latestReportStatus != "RECEIVED BY SERVER - WAITING FOR ACK") {
     latestReportStatus = "QUEUED - SERVER UNAVAILABLE";
   }
   prefs.putString("latest_status", latestReportStatus);
@@ -572,7 +649,9 @@ bool submitLocalReport() {
 
 void retryLocalReportIfNeeded(bool forceNow = false) {
   if (pendingLocalPacket.length() == 0) return;
-  if (!forceNow && millis() - lastLocalReportRetryMs < LOCAL_REPORT_RETRY_INTERVAL_MS) return;
+  const unsigned long retryInterval = latestReportStatus == "RECEIVED BY SERVER - WAITING FOR ACK"
+    ? 60000 : LOCAL_REPORT_RETRY_INTERVAL_MS;
+  if (!forceNow && millis() - lastLocalReportRetryMs < retryInterval) return;
   lastLocalReportRetryMs = millis();
   submitLocalReport();
 }
@@ -752,6 +831,9 @@ bool forwardSosToLaravel(const String& packet, int rssi, float snr) {
     if (!meshAcceptSos(packet, true)) return false;
     lastForwardedMessage = msgId + " from " + senderId;
     Serial.println("[SOS] Laravel accepted " + lastForwardedMessage);
+    const String receipt = "ACK|" + msgId + "|" + senderId + "|NODE_1|RECEIVED|" +
+      utcTimestamp() + "|12|NODE_1|Report received by server.|SERVER";
+    sendLoRaPacket(meshSignOrigin(receipt, true, meshNodeNumber(senderId)));
   }
   return accepted;
 }
@@ -807,7 +889,7 @@ void forwardTimingProbe(const String& packet) {
   if (pong.startsWith("PONG|" + nodeId + "|" + probeId + "|")) sendLoRaPacket(pong);
 }
 
-bool forwardHeartbeatToLaravel(const String& packet, int rssi, float snr) {
+String heartbeatBodyForPacket(const String& packet, int rssi, float snr) {
   String nodeId = getField(packet, 1);
   String battery = getField(packet, 2);
   String hop = getField(packet, 3);
@@ -820,11 +902,7 @@ bool forwardHeartbeatToLaravel(const String& packet, int rssi, float snr) {
   String sampleAge = getField(packet, 10);
 
   const int number = registeredMeshNodeNumber(nodeId);
-  if (number < 2) return false;
-  // Flooding can deliver the same heartbeat via multiple routes. Forward once
-  // per origin/sequence so ten boards remain within the website's API budget.
-  if (sequence.length() && lastHeartbeatSequences[number] == sequence &&
-      millis() - lastHeartbeatForwardedAtMs[number] < 20000) return true;
+  if (number < 2) return "";
   String body = "{";
   body += "\"node_id\":\"" + jsonEscape(nodeId) + "\",";
   body += "\"gateway_id\":\"NODE_1\",";
@@ -848,13 +926,108 @@ bool forwardHeartbeatToLaravel(const String& packet, int rssi, float snr) {
   body += "\"packet_type\":\"HB\"";
   body += "}";
 
+  return body;
+}
+
+bool forwardHeartbeatToLaravel(const String& packet, int rssi, float snr) {
+  const int number = registeredMeshNodeNumber(getField(packet, 1));
+  if (number < 2) return false;
+  const String sequence = getField(packet, 7);
+  if (sequence.length() && lastHeartbeatSequences[number] == sequence &&
+      millis() - lastHeartbeatForwardedAtMs[number] < 20000) return true;
   String response;
-  const bool accepted = requestApi("POST", "/heartbeat", body, response);
+  const bool accepted = requestApi("POST", "/heartbeat", heartbeatBodyForPacket(packet, rssi, snr), response);
   if (accepted && sequence.length()) {
     lastHeartbeatSequences[number] = sequence;
     lastHeartbeatForwardedAtMs[number] = millis();
   }
   return accepted;
+}
+
+void queueGatewayPacket(const String& packet, int rssi, float snr) {
+  const bool sos = packet.startsWith("SOS|");
+  const int node = meshNodeNumber(getField(packet, sos ? 2 : 1));
+  if (node < 2) return;
+  GatewayRadioItem* item = nullptr;
+  if (sos) {
+    if (!meshAcceptSos(packet, false)) { ++meshInvalidFrames; return; }
+    item = &sosInbox[node];
+    if (item->packet.length()) {
+      // Each origin keeps one pending report. Do not overwrite an undelivered one.
+      return;
+    }
+    const String key = "inbox" + String(node);
+    if (!prefs.putString(key.c_str(), packet)) {
+      Serial.println("[QUEUE] Could not persist SOS; origin will retry.");
+      return;
+    }
+    Serial.println("[QUEUE] Saved SOS " + getField(packet, 1));
+  } else if (packet.startsWith("HB|")) item = &heartbeatInbox[node];
+  else if (packet.startsWith("PING|")) item = &probeInbox[node];
+  if (!item) return;
+  // Heartbeats/probes coalesce to the newest packet per origin during HTTPS.
+  item->packet = packet; item->rssi = rssi; item->snr = snr; item->receivedAtMs = millis();
+}
+
+void restoreGatewayInbox() {
+  for (int node = 2; node <= 10; ++node) {
+    const String key = "inbox" + String(node);
+    const String packet = prefs.getString(key.c_str(), "");
+    if (packet.length() && meshAcceptSos(packet, false)) sosInbox[node].packet = packet;
+  }
+}
+
+bool forwardQueuedSosIfNeeded() {
+  if (!serverRouteAvailable()) return false;
+  for (int scanned = 0; scanned < 9; ++scanned) {
+    const int node = nextSosNode;
+    nextSosNode = node == 10 ? 2 : node + 1;
+    GatewayRadioItem& item = sosInbox[node];
+    if (!item.packet.length() || (item.attempted && millis() - item.attemptedAtMs < 5000)) continue;
+    item.attempted = true; item.attemptedAtMs = millis();
+    const String packet = item.packet;
+    if (forwardSosToLaravel(packet, item.rssi, item.snr)) {
+      item.packet = ""; item.attempted = false;
+      const String key = "inbox" + String(node); prefs.remove(key.c_str());
+    }
+    return true;
+  }
+  return false;
+}
+
+void forwardQueuedHeartbeatIfNeeded() {
+  if (!serverRouteAvailable()) return;
+  for (int scanned = 0; scanned < 9; ++scanned) {
+    const int node = nextHeartbeatNode;
+    nextHeartbeatNode = node == 10 ? 2 : node + 1;
+    GatewayRadioItem& item = heartbeatInbox[node];
+    if (!item.packet.length() || (item.attempted && millis() - item.attemptedAtMs < 10000)) continue;
+    item.attempted = true; item.attemptedAtMs = millis();
+    const String packet = item.packet;
+    if (forwardHeartbeatToLaravel(packet, item.rssi, item.snr) && item.packet == packet) {
+      item.packet = "";
+    }
+    return;
+  }
+}
+
+void forwardQueuedProbeIfNeeded() {
+  if (!serverRouteAvailable()) return;
+  for (int scanned = 0; scanned < 9; ++scanned) {
+    const int node = nextProbeNode;
+    nextProbeNode = node == 10 ? 2 : node + 1;
+    if (!probeInbox[node].packet.length()) continue;
+    const String packet = probeInbox[node].packet; probeInbox[node].packet = "";
+    forwardTimingProbe(packet);
+    return;
+  }
+}
+
+void serviceGatewayRadio() {
+  dnsServer.processNextRequest();
+  handleIncomingLoRa();
+  sendGatewayBeaconIfNeeded();
+  updateLedIndicators();
 }
 
 void handleIncomingLoRa() {
@@ -863,9 +1036,17 @@ void handleIncomingLoRa() {
   markLoRaActivity();
 
   String packet = meshReadFrame(packetSize);
-  if (!packet.length()) return;
+  if (!packet.length()) {
+    static bool logged = false; static unsigned long lastLog = 0;
+    if (!logged || millis() - lastLog >= 5000) {
+      logged = true; lastLog = millis();
+      Serial.println("[LORA DROP] " + String(meshLastFrameError) + "; rejected=" + String(meshInvalidFrames));
+    }
+    return;
+  }
   const int rssi = LoRa.packetRssi();
   const float snr = LoRa.packetSnr();
+  if (meshLastFrameSender != MESH_THIS_NODE) updatePeer("NODE_" + String(meshLastFrameSender), rssi);
   Serial.println("[LORA RX " + String(rssi) + " dBm] " + packet);
 
   if (packet.startsWith("HELLO|")) {
@@ -878,11 +1059,11 @@ void handleIncomingLoRa() {
     String peerId = getField(packet, 1);
     if (getField(packet, 2) == NODE_ID) updatePeer(peerId, rssi);
   } else if (packet.startsWith("SOS|")) {
-    forwardSosToLaravel(packet, rssi, snr);
+    queueGatewayPacket(packet, rssi, snr);
   } else if (packet.startsWith("HB|")) {
-    forwardHeartbeatToLaravel(packet, rssi, snr);
+    queueGatewayPacket(packet, rssi, snr);
   } else if (packet.startsWith("PING|")) {
-    forwardTimingProbe(packet);
+    queueGatewayPacket(packet, rssi, snr);
   }
 }
 
@@ -891,28 +1072,38 @@ void connectRouter() {
     gatewayStatus = "Configure gateway Wi-Fi, server URL, and token";
     return;
   }
-  if (WiFi.status() == WL_CONNECTED) return;
-
-  // End any previous in-progress STA attempt before starting a clean retry.
-  // This avoids ESP-IDF's "sta is connecting, cannot set config" error.
-  WiFi.disconnect(false, false);
-  delay(250);
-  WiFi.setAutoReconnect(true);
-  WiFi.begin(ROUTER_WIFI_SSID, ROUTER_WIFI_PASSWORD);
-  unsigned long started = millis();
-  while (WiFi.status() != WL_CONNECTED && millis() - started < 20000) delay(250);
-
+  const unsigned long now = millis();
   if (WiFi.status() == WL_CONNECTED) {
-    Serial.println("Router connected: " + WiFi.localIP().toString());
-    configTime(0, 0, "pool.ntp.org", "time.nist.gov", "time.cloudflare.com");
-    Serial.println("Laravel server: " + String(SERVER_BASE_URL));
-    gatewayStatus = "Router connected; checking Laravel";
-    lastServerCheckMs = millis() - SERVER_CHECK_INTERVAL_MS;
-  } else {
+    if (!routerWasConnected) {
+      Serial.println("Router connected: " + WiFi.localIP().toString());
+      configTime(0, 0, "pool.ntp.org", "time.nist.gov", "time.cloudflare.com");
+      gatewayStatus = "Router connected; checking Laravel";
+      lastServerCheckMs = now - SERVER_CHECK_INTERVAL_MS;
+    }
+    routerWasConnected = true; routerPhase = 0;
+    return;
+  }
+  if (routerWasConnected) { routerWasConnected = false; lastServerSuccessMs = 0; }
+  if (routerPhase == 1) {
+    if (now - routerPhaseAtMs < 250) return;
+    WiFi.begin(ROUTER_WIFI_SSID, ROUTER_WIFI_PASSWORD);
+    routerPhase = 2; routerPhaseAtMs = now;
+    return;
+  }
+  if (routerPhase == 2) {
+    if (now - routerPhaseAtMs < 20000) return;
+    routerPhase = 0; lastWifiReconnectMs = now;
     gatewayStatus = "Router unavailable; field nodes will queue reports";
     Serial.println(gatewayStatus);
     Serial.println("Wi-Fi status code: " + String((int) WiFi.status()));
+    return;
   }
+  if (routerEverAttempted && now - lastWifiReconnectMs < 10000) return;
+  routerEverAttempted = true;
+  WiFi.setAutoReconnect(false);
+  WiFi.disconnect(false, false);
+  routerPhase = 1; routerPhaseAtMs = now;
+  gatewayStatus = "Connecting router; LoRa receiver remains active";
 }
 
 void setup() {
@@ -920,12 +1111,17 @@ void setup() {
   Serial.begin(115200);
   delay(500);
   randomSeed(esp_random());
+  Serial.println("Battery sensing: " + String(BATTERY_MONITOR_ENABLED ? "enabled" : "disabled (no voltage reading)"));
+  if (BATTERY_MONITOR_ENABLED) {
+    Serial.println("Battery ADC: GPIO" + String(BATTERY_ADC_PIN) + " (connect voltage divider for valid readings)");
+  }
 
   prefs.begin("node1", false);
   if (MESH_THIS_NODE != 1 || !meshSecurityBegin()) {
     Serial.println("ERROR: NODE_1 mesh security configuration failed.");
     while (true) delay(1000);
   }
+  restoreGatewayInbox();
   latestMsgId = prefs.getString("latest_msg", "");
   latestCreatedAt = prefs.getString("latest_created", "");
   latestReportStatus = prefs.getString("latest_status", "NONE");
@@ -957,6 +1153,8 @@ void setup() {
   LoRa.setSignalBandwidth(125E3);
   LoRa.setCodingRate4(5);
   LoRa.receive();
+  apiWorkerReady = startGatewayApiWorker();
+  if (!apiWorkerReady) Serial.println("ERROR: Could not start HTTP worker; SOS remains queued.");
   Serial.println("NODE_1 Laravel LoRa gateway ready.");
 }
 
@@ -964,18 +1162,20 @@ void loop() {
   dnsServer.processNextRequest();
   localServer.handleClient();
 
-  if (WiFi.status() != WL_CONNECTED && millis() - lastWifiReconnectMs >= SERVER_CHECK_INTERVAL_MS) {
-    lastWifiReconnectMs = millis();
-    connectRouter();
+  connectRouter();
+  serviceGatewayRadio();
+  if (millis() - lastApiFinishedMs >= 150) {
+    const uint32_t before = apiRequestSequence;
+    // One HTTP operation per scheduler pass; radio is serviced during its wait.
+    checkServerIfNeeded();
+    if (apiRequestSequence == before && millis() - lastHeartbeatMs >= 15000) sendGatewayHeartbeatIfNeeded();
+    if (apiRequestSequence == before) forwardQueuedSosIfNeeded();
+    if (apiRequestSequence == before) retryLocalReportIfNeeded();
+    if (apiRequestSequence == before) sendGatewayHeartbeatIfNeeded();
+    if (apiRequestSequence == before) pollPendingAcknowledgmentIfNeeded();
+    if (apiRequestSequence == before) pollNetworkSummaryIfNeeded();
+    if (apiRequestSequence == before && !batchHeartbeatsSupported) forwardQueuedHeartbeatIfNeeded();
+    if (apiRequestSequence == before) forwardQueuedProbeIfNeeded();
   }
-
-  handleIncomingLoRa();
-  checkServerIfNeeded();
-  sendGatewayHeartbeatIfNeeded();
-  sendGatewayBeaconIfNeeded();
-  pollNetworkSummaryIfNeeded();
-  pollPendingAcknowledgmentIfNeeded();
-  retryLocalReportIfNeeded();
-  updateLedIndicators();
   delay(2);
 }

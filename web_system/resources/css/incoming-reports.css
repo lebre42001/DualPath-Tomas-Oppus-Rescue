@@ -1,0 +1,19 @@
+.incoming-report-banner[hidden] { display: none; }
+.alert-center:not([hidden]) ~ .incoming-report-banner { display: none; }
+.incoming-report-banner {
+    position: fixed; z-index: 1060; inset: auto 20px 24px auto;
+    display: flex; align-items: center; gap: 18px; max-width: min(540px, calc(100vw - 40px));
+    padding: 16px 20px; border: 2px solid #b91c1c; border-radius: 16px;
+    background: #fff7ed; color: #7f1d1d; box-shadow: 0 8px 30px #0003;
+}
+.incoming-report-banner p { margin: 5px 0 0; font-size: 13px; overflow-wrap: anywhere; }
+.incoming-report-banner .pill-btn { flex-shrink: 0; }
+.incoming-report-controls { display: flex; flex-wrap: wrap; gap: 10px; padding: 12px 0; }
+.incoming-report-controls small { flex-basis: 100%; }
+.has-unread-reports { outline: 2px solid #b91c1c; background: #fff1f2 !important; }
+.has-unread-reports [data-alert-count] { color: #b91c1c; font-weight: 800; }
+[data-incoming-reports] .alert-item { overflow-wrap: anywhere; }
+@media (max-width: 640px) {
+    .incoming-report-banner { inset: auto 12px 90px 12px; max-width: none; padding: 12px; gap: 10px; }
+}
+html[data-theme='dark'] .incoming-report-banner { background: #35191d; color: #ffe4e6; }
