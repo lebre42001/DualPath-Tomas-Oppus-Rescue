@@ -97,27 +97,26 @@ nodes at SF9. Network-wide airtime planning, emergency/ACK prioritisation and
 actual loss/latency tests must precede a deployment-profile change. Increasing
 timeouts or keeping green lit does not repair the radio link.
 
-## Proposed locations (not applied as live installed coordinates)
+## Confirmed server coordinates (2026-10-29)
 
-These positions were supplied as a deployment plan. NODE_5 and NODE_10 still
-have two alternatives, so the active server registry has not been changed based
-on a guessed installation. NODE_11 is optional and is not added to the ten-node
-firmware/security registry.
+The operator confirmed Cumajig for NODE_5 and 10.2932380, 124.9777614 for NODE_10.
+The ten coordinates below are configured in `web_system/config/lora_nodes.php`.
+The deployment migration corrects any existing saved location overrides once;
+later admin edits continue to take precedence. Historical incident coordinates
+are retained. NODE_11 is optional and is not added to the ten-node registry.
 
 | Node | Latitude | Longitude | Note |
 |---|---:|---:|---|
 | NODE_1 | 10.304469 | 124.979829 | Gateway, MDRRMO office |
-| NODE_2 | 10.3042205 | 124.9805496 | Proposed |
-| NODE_3 | 10.3035340 | 124.9813019 | Proposed |
-| NODE_4 | 10.3028159 | 124.9820385 | Proposed |
-| NODE_5 A | 10.3025949 | 124.9823205 | Cumajig; final choice pending |
-| NODE_5 B | 10.3023871 | 124.9822927 | Mini resort opposite large house; alternative |
-| NODE_6 | 10.3002690 | 124.9818665 | Proposed |
-| NODE_7 | 10.2990587 | 124.9816322 | Proposed |
-| NODE_8 | 10.2971533 | 124.9814451 | Proposed |
-| NODE_9 | 10.2960984 | 124.9801040 | Proposed |
-| NODE_10 A | 10.2932380 | 124.9777614 | Final choice pending; same as optional NODE_11 |
-| NODE_10 B | 10.2938822 | 124.9781292 | Alternative |
+| NODE_2 | 10.3042205 | 124.9805496 | Confirmed |
+| NODE_3 | 10.3035340 | 124.9813019 | Confirmed |
+| NODE_4 | 10.3028159 | 124.9820385 | Confirmed |
+| NODE_5 | 10.3025949 | 124.9823205 | Cumajig |
+| NODE_6 | 10.3002690 | 124.9818665 | Confirmed |
+| NODE_7 | 10.2990587 | 124.9816322 | Confirmed |
+| NODE_8 | 10.2971533 | 124.9814451 | Confirmed |
+| NODE_9 | 10.2960984 | 124.9801040 | Confirmed |
+| NODE_10 | 10.2932380 | 124.9777614 | Confirmed |
 | NODE_11 | 10.2932380 | 124.9777614 | Optional, not enabled |
 
 Installed registry: `web_system/config/lora_nodes.php`. Saved Admin > Overview >

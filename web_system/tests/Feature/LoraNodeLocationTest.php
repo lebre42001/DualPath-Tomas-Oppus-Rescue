@@ -15,6 +15,16 @@ class LoraNodeLocationTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        // These editor tests start with an empty deployment; the installed
+        // defaults have separate coverage in ConfirmedNodeLocationsTest.
+        foreach (array_keys(config('lora_nodes')) as $nodeId) {
+            config(["lora_nodes.$nodeId.latitude" => null, "lora_nodes.$nodeId.longitude" => null]);
+        }
+    }
+
     public function test_only_admins_can_view_locations_and_save_coordinates(): void
     {
         $this->get('/admin/node-locations')->assertRedirect(route('admin.login'));
