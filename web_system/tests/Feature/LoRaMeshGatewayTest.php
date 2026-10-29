@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\IncidentReport;
 use App\Models\LoraNodeState;
+use App\Models\User;
 use App\Support\LoraMeshNodeDirectory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
@@ -188,7 +189,7 @@ class LoRaMeshGatewayTest extends TestCase
     public function test_mesh_view_uses_the_same_connection_status_for_gateway_and_node_rows(): void
     {
         $this->travelTo(now()->startOfSecond());
-        $admin = \App\Models\User::factory()->create(['role' => 'admin', 'is_admin' => true]);
+        $admin = User::factory()->create(['role' => 'admin', 'is_admin' => true]);
         LoraNodeState::query()->create(['node_id' => 'NODE_1', 'last_seen_at' => now()->subWeek()]);
         $this->actingAs($admin)->get('/monitoring/lora-mesh')
             ->assertOk()->assertSee('Reachable nodes')->assertSee('UNAVAILABLE')
@@ -250,6 +251,46 @@ class LoRaMeshGatewayTest extends TestCase
             ->assertJsonPath('msgId', 'NODE_2-42');
 
         $this->assertNotNull($report->fresh()?->lora_ack_delivered_at);
+    }
+
+    public function test_radio_confirmation_token_matches_the_response_that_was_actually_transmitted(): void
+    {
+        $report = $this->queuedAckReport();
+        $token = $this->getJson('/api/v1/lora/acks/pending?gatewayId=NODE_1', $this->gatewayHeaders())
+            ->assertOk()->json('ackToken');
+        $this->assertMatchesRegularExpression('/^[a-f0-9]{64}$/', $token);
+        $this->postJson('/api/v1/lora/acks/NODE_2-99/delivered', ['ack_token' => $token], $this->gatewayHeaders())->assertOk();
+        $this->assertNotNull($report->fresh()->lora_ack_delivered_at);
+        $this->postJson('/api/v1/lora/acks/NODE_2-99/delivered', ['ack_token' => $token], $this->gatewayHeaders())->assertOk();
+    }
+
+    public function test_a_stale_radio_confirmation_cannot_clear_newer_notes_even_in_the_same_second(): void
+    {
+        $report = $this->queuedAckReport();
+        $url = '/api/v1/lora/acks/pending?gatewayId=NODE_1';
+        $old = $this->getJson($url, $this->gatewayHeaders())->assertOk()->json('ackToken');
+        $report->update(['response_notes' => 'New route: use the eastern bridge.']);
+        $new = $this->getJson($url, $this->gatewayHeaders())->assertOk()->json('ackToken');
+        $this->assertNotSame($old, $new);
+        $this->postJson('/api/v1/lora/acks/NODE_2-99/delivered', ['ack_token' => $old], $this->gatewayHeaders())
+            ->assertOk()->assertJsonPath('delivered', false)->assertJsonPath('superseded', true);
+        $this->assertNull($report->fresh()->lora_ack_delivered_at);
+        $this->postJson('/api/v1/lora/acks/NODE_2-99/delivered', ['ack_token' => 'invalid'], $this->gatewayHeaders())->assertUnprocessable();
+        $this->assertNull($report->fresh()->lora_ack_delivered_at);
+        $this->postJson('/api/v1/lora/acks/NODE_2-99/delivered', ['ack_token' => $new], $this->gatewayHeaders())->assertOk();
+        $this->assertNotNull($report->fresh()->lora_ack_delivered_at);
+    }
+
+    private function queuedAckReport(): IncidentReport
+    {
+        return IncidentReport::create([
+            'report_code' => 'ACK-REVISION-TEST', 'reporter_name' => 'Field Node 2',
+            'incident_type' => 'Road Accident', 'severity' => 'Serious', 'status' => 'responding',
+            'channel' => 'LoRa Mesh', 'transmission_type' => 'lora', 'location_text' => 'Test bridge',
+            'description' => 'Test response revision.', 'response_notes' => 'Use the western bridge.',
+            'lora_sender_id' => 'NODE_2', 'lora_sequence' => 'NODE_2-99', 'lora_gateway_id' => 'NODE_1',
+            'lora_ack_queued_at' => now()->startOfSecond(),
+        ]);
     }
 
     private function gatewayHeaders(): array

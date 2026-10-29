@@ -38,7 +38,7 @@ pending reports first. Keep the assigned NODE_NUMBER and matching private keys.
 After a baseline build, Serial Monitor at 115200 prints:
 
 ```text
-[RADIO] SF7 mesh baseline; 433 MHz; BW 125000 Hz; CR 4/5; TX 17 dBm; range-diagnostics-20261029
+[RADIO] SF7 mesh baseline; 433 MHz; BW 125000 Hz; CR 4/5; TX 17 dBm; mesh-reconnect-20261029
 ```
 
 In the phone's local node dashboard (`http://192.168.4.1` while joined to that

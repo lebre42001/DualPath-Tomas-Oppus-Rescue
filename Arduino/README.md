@@ -10,6 +10,14 @@ The active mesh uses `GatewayNode1/GatewayNode1.ino` for NODE_1 and the configur
 
 ## Active Mesh Flow
 
+### Whole-mesh fast discovery and radio scheduling
+
+See [CONNECTION_STABILITY.md](CONNECTION_STABILITY.md) for the matching gateway
+and NODE_2–NODE_10 update: fast discovery after startup/peer loss, coalesced
+priority queues, nonblocking CAD/backoff/TX, spaced ACKs and stale gateway-beacon
+handling. **Every board needs its matching Arduino upload.** Default SF7/433 MHz
+and power remain unchanged; physical range must still be measured.
+
 For a link that drops near a displayed -98 dBm, see [RANGE_TEST.md](RANGE_TEST.md).
 It includes the proposed node positions, antenna-height checks, local SNR/age
 diagnostics, and an optional **isolated SF9 pair test**. The deployed SF7 profile,
@@ -96,7 +104,7 @@ node. Fixed map coordinates still require actual installation coordinates in
 
 The deployed design intentionally has no physical SOS button or switch. Emergency submission is always performed from the local dashboard after the user connects to the selected ESP32 node's Wi-Fi. If the captive portal does not open automatically, the user can browse to `http://192.168.4.1` while remaining connected to the node Wi-Fi. After submission, the field-node dashboard shows that the report is under admin review. When the admin or responder reviews it, the originating node displays a persistent review-completed popup with the result, response message, and review time.
 
-Field nodes send a heartbeat every 10 seconds, so NODE_1 can mark them active on the monitoring page without a user opening the local dashboard. Heartbeats are scheduled before peer discovery, and field nodes learn peers from received `HELLO` packets without echoing field-to-field acknowledgments. This keeps NODE_2 through NODE_10 from flooding the shared LoRa channel when several boards start together. NODE_1 still acknowledges a field node's `HELLO`, allowing the field node to identify a direct gateway peer.
+Field nodes schedule heartbeats about every 10–11 seconds, without requiring a user to open the local dashboard. Discovery attempts accelerate during the first 20 seconds without a peer and after peer loss, then settle to about 15 seconds. Field nodes learn peers without echoing field-to-field acknowledgments; NODE_1 acknowledges a field's HELLO. The shared queue prioritizes SOS/ACK and discovery, coalesces telemetry and defers transmissions on detected channel activity.
 
 GPS is not required. Battery voltage sensing is enabled by default on NODE_1 through NODE_10; valid measurements require the divider described below. Coordinates are fixed per sender in `web_system/config/lora_nodes.php`. Configure `node_name`, `location_label`, `latitude`, and `longitude` for NODE_1 through NODE_10. `S01` remains as a legacy entry. Laravel ignores coordinates and satellite values carried in a received radio packet.
 

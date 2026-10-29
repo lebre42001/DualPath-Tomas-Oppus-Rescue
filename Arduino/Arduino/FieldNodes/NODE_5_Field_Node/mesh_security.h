@@ -98,7 +98,7 @@ static bool meshReportFits(const String& message, const String& landmark, const 
     "|10|12|" + route + "|" + landmark + "|AAAAAAAAAAAAAAAAAAAAAA";
   return meshCompact(worst).length() + 34 <= 255;
 }
-static bool meshWriteFrame(const String& payload) {
+static bool meshWriteFrame(const String& payload, bool async = false) {
   const String body = meshCompact(payload);
   // 12-byte authenticated header + 22-byte base64url tag; SX127x max = 255.
   if (body.length() == 0 || body.length() + 34 > 255) return false;
@@ -110,7 +110,9 @@ static bool meshWriteFrame(const String& payload) {
   if (tag.length() != 22) return false;
   memcpy(frame + length, tag.c_str(), 22);
   LoRa.idle(); LoRa.beginPacket(); LoRa.write(frame, length + 22);
-  const bool sent = LoRa.endPacket() == 1; LoRa.receive(); return sent;
+  const bool sent = LoRa.endPacket(async) == 1;
+  if (!async || !sent) LoRa.receive();
+  return sent;
 }
 static String meshReadFrame(int packetSize) {
   meshLastFrameSender = 0;

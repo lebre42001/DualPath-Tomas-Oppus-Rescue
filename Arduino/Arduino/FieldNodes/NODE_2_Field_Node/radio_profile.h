@@ -17,7 +17,7 @@ constexpr long bandwidth = 125000;
 constexpr int spreadingFactor = AKSYRES_RADIO_PROFILE == 1 ? 9 : 7;
 constexpr int codingDenominator = AKSYRES_RADIO_PROFILE == 1 ? 6 : 5;
 constexpr const char* profile = AKSYRES_RADIO_PROFILE == 1 ? "SF9 PAIR TEST ONLY" : "SF7 mesh baseline";
-constexpr const char* revision = "range-diagnostics-20261029";
+constexpr const char* revision = "mesh-reconnect-20261029";
 
 template<class Radio> void configure(Radio& radio) {
   radio.setSyncWord(syncWord);

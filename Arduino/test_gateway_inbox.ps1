@@ -32,12 +32,14 @@ public class FakePrefs {
     public void remove(string key) { Store.Remove(key); }
 }
 public class Dummy { public void println(string s) {} public void processNextRequest() {} }
+public class FakeMeshRadio { public void tick(uint now) {} }
 public class Harness {
     public uint clock=0, meshInvalidFrames=0;
     public int nextSosNode=2, Calls=0, RadioPasses=0, LedPasses=0;
     public bool Accepted=false;
     public GatewayRadioItem[] sosInbox=new GatewayRadioItem[11], heartbeatInbox=new GatewayRadioItem[11], probeInbox=new GatewayRadioItem[11];
     FakePrefs prefs=new FakePrefs(); Dummy Serial=new Dummy(), dnsServer=new Dummy();
+    FakeMeshRadio meshRadio=new FakeMeshRadio();
     public Harness() { for(int i=0;i<=10;i++){ sosInbox[i]=new GatewayRadioItem(); heartbeatInbox[i]=new GatewayRadioItem(); probeInbox[i]=new GatewayRadioItem(); } }
     uint millis(){ return clock; }
     bool serverRouteAvailable(){ return true; }

@@ -40,9 +40,10 @@ inline uint32_t millis(){return fakeClock;}
 inline uint32_t esp_random(){return ++fakeRandom;}
 struct FakeRadio {
   std::vector<uint8_t> tx,rx;size_t at=0;
-  void idle(){} void beginPacket(){tx.clear();}void receive(){}
+  int receiveCalls=0;bool lastAsync=false;
+  void idle(){} void beginPacket(){tx.clear();}void receive(){++receiveCalls;}
   void write(const uint8_t* data,size_t length){tx.assign(data,data+length);}
-  int endPacket(){return 1;}int available(){return at<rx.size();}int read(){return rx[at++];}
+  int endPacket(bool async=false){lastAsync=async;return 1;}int available(){return at<rx.size();}int read(){return rx[at++];}
   void inject(const std::vector<uint8_t>& data){rx=data;at=0;}
 };
 inline FakeRadio LoRa;

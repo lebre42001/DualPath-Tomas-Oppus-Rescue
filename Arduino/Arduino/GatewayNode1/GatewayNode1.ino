@@ -27,6 +27,7 @@
 #include "server_root_ca.h"
 #include "battery_monitor.h"
 #include "mesh_security.h"
+#include "mesh_sx127x.h"
 #include "report_guard.h"
 #include "report_dashboard.h"
 #include "gateway_runtime.h"
@@ -73,6 +74,12 @@ WiFiClientSecure secureClient;
 WebServer localServer(80);
 DNSServer dnsServer;
 Preferences prefs;
+MeshSX127xPort meshRadioPort;
+void onRadioTransmitted(const String& packet);
+MeshLink::Pump<MeshSX127xPort> meshRadio(meshRadioPort,onRadioTransmitted);
+String radioAckToConfirm;
+String radioAckConfirmToken, radioAckQueuedPacket, radioAckQueuedToken, lastRadioAckNotified;
+String gatewayBeaconBoot;
 const byte DNS_PORT = 53;
 
 unsigned long lastServerCheckMs = 0;
@@ -483,10 +490,30 @@ void markLoRaActivity() {
 }
 
 bool sendLoRaPacket(const String& payload) {
-  const bool sent = meshWriteFrame(payload);
-  if (sent) markLoRaActivity();
-  else Serial.println("[LORA] Authenticated transmission failed or packet exceeds radio budget.");
-  return sent;
+  const uint8_t copies=payload.startsWith("ACK|")&&getField(payload,4)!="RECEIVED"?3:1;
+  const bool queued=meshSecurityReady&&meshCompact(payload).length()+34<=255&&meshRadio.enqueue(payload,millis(),copies);
+  if(!queued)Serial.println("[LORA] Radio queue full or authenticated packet too large; pending server ACK/SOS remains retryable.");
+  return queued;
+}
+
+void onRadioTransmitted(const String& packet) {
+  markLoRaActivity();
+  if(packet.startsWith("ACK|")&&getField(packet,4)!="RECEIVED"&&getField(packet,3)==NODE_ID){
+    const String id=getField(packet,1);
+    const String identity=radioAckQueuedToken.length()?radioAckQueuedToken:packet;
+    if(packet==radioAckQueuedPacket&&identity!=lastRadioAckNotified&&(!radioAckToConfirm.length()||radioAckToConfirm==id)){
+      radioAckToConfirm=id;radioAckConfirmToken=radioAckQueuedToken;lastRadioAckNotified=identity;
+    }
+  }
+}
+
+void confirmTransmittedAcknowledgmentIfNeeded() {
+  if(!radioAckToConfirm.length())return;
+  String ignored;
+  const String body=radioAckConfirmToken.length()?"{\"ack_token\":\""+radioAckConfirmToken+"\"}":"{}";
+  if(requestApi("POST","/acks/"+urlEncode(radioAckToConfirm)+"/delivered",body,ignored)){
+    radioAckToConfirm="";radioAckConfirmToken="";lastAckPollMs=millis()-ACK_POLL_INTERVAL_MS;
+  }
 }
 
 void checkServerIfNeeded() {
@@ -551,7 +578,7 @@ void sendGatewayBeaconIfNeeded() {
   if (!serverRouteAvailable() || millis() - lastBeaconMs < BEACON_INTERVAL_MS) return;
   lastBeaconMs = millis();
   gatewaySequence++;
-  sendLoRaPacket("GW|NODE_1|" + String(gatewaySequence) + "|0|12|NODE_1");
+  sendLoRaPacket("GW|NODE_1|" + gatewayBeaconBoot + ":" + String(gatewaySequence) + "|0|12|NODE_1");
 }
 
 void pollNetworkSummaryIfNeeded() {
@@ -566,6 +593,7 @@ void pollNetworkSummaryIfNeeded() {
 }
 
 void pollPendingAcknowledgmentIfNeeded() {
+  if(radioAckToConfirm.length()||meshRadio.finalAckPending())return;
   if (!serverRouteAvailable() || millis() - lastAckPollMs < ACK_POLL_INTERVAL_MS) return;
   lastAckPollMs = millis();
 
@@ -573,6 +601,7 @@ void pollPendingAcknowledgmentIfNeeded() {
   if (!requestApi("GET", "/acks/pending?gatewayId=NODE_1", "", response)) return;
   String packet = extractJsonString(response, "packet");
   String msgId = extractJsonString(response, "msgId");
+  const String ackToken=extractJsonString(response,"ackToken");
   if (!packet.startsWith("ACK|") || msgId.length() == 0) return;
 
   const String origin = getField(packet, 2);
@@ -592,21 +621,15 @@ void pollPendingAcknowledgmentIfNeeded() {
       prefs.remove("pending_msg");
     }
     String ignored;
-    requestApi("POST", "/acks/" + urlEncode(msgId) + "/delivered", "{}", ignored);
+    const String body=ackToken.length()?"{\"ack_token\":\""+ackToken+"\"}":"{}";
+    requestApi("POST", "/acks/" + urlEncode(msgId) + "/delivered", body, ignored);
     return;
   }
 
   packet = meshSignOrigin(packet, true, meshNodeNumber(origin));
   if (!packet.length()) return;
-  bool deliveredOverRadio = true;
-  for (int attempt = 0; attempt < 3; attempt++) {
-    if (!sendLoRaPacket(packet)) deliveredOverRadio = false;
-    if (attempt < 2) delay(220);
-  }
-  if (deliveredOverRadio) {
-    String ignored;
-    requestApi("POST", "/acks/" + urlEncode(msgId) + "/delivered", "{}", ignored);
-  }
+  if(sendLoRaPacket(packet)){radioAckQueuedPacket=packet;radioAckQueuedToken=ackToken;}
+  // Three spaced copies; confirm the API only after actual TX_DONE.
 }
 
 String normalizedLocalType(String type) {
@@ -720,6 +743,7 @@ void handleLocalStatus() {
   const bool online = serverRouteAvailable();
   String json = "{";
   json += AksyResRadio::statusFields();
+  json += meshRadio.statusFields();
   json += reportGuardStatus((uint32_t)localServer.client().remoteIP());
   json += "\"node_id\":\"NODE_1\",";
   json += "\"server_base_url\":\"" + jsonEscape(SERVER_BASE_URL) + "\",";
@@ -1026,17 +1050,24 @@ void forwardQueuedProbeIfNeeded() {
 
 void serviceGatewayRadio() {
   dnsServer.processNextRequest();
+  meshRadio.tick(millis());
   handleIncomingLoRa();
   sendGatewayBeaconIfNeeded();
+  meshRadio.tick(millis());
   updateLedIndicators();
 }
 
 void handleIncomingLoRa() {
+  if(meshRadio.busy())return;
   const int packetSize = LoRa.parsePacket();
   if (!packetSize) return;
   markLoRaActivity();
 
   String packet = meshReadFrame(packetSize);
+  const int rssi = LoRa.packetRssi();
+  const float snr = LoRa.packetSnr();
+  const long frequencyError = LoRa.packetFrequencyError();
+  LoRa.receive();
   if (!packet.length()) {
     static bool logged = false; static unsigned long lastLog = 0;
     if (!logged || millis() - lastLog >= 5000) {
@@ -1045,9 +1076,7 @@ void handleIncomingLoRa() {
     }
     return;
   }
-  const int rssi = LoRa.packetRssi();
-  const float snr = LoRa.packetSnr();
-  AksyResRadio::record(rssi, snr, LoRa.packetFrequencyError(), meshLastFrameSender);
+  AksyResRadio::record(rssi, snr, frequencyError, meshLastFrameSender);
   if (meshLastFrameSender != MESH_THIS_NODE) updatePeer("NODE_" + String(meshLastFrameSender), rssi);
   Serial.println("[LORA RX " + String(rssi) + " dBm, SNR " + String(snr, 2) + " dB] " + packet);
 
@@ -1150,6 +1179,9 @@ void setup() {
   }
 
   AksyResRadio::configure(LoRa);
+  meshRadioPort.begin(LORA_SS);
+  meshRadio.begin(esp_random());
+  gatewayBeaconBoot=String(esp_random(),HEX);
   LoRa.receive();
   Serial.println("[RADIO] " + AksyResRadio::summary());
   apiWorkerReady = startGatewayApiWorker();
@@ -1168,6 +1200,7 @@ void loop() {
     // One HTTP operation per scheduler pass; radio is serviced during its wait.
     checkServerIfNeeded();
     if (apiRequestSequence == before && millis() - lastHeartbeatMs >= 15000) sendGatewayHeartbeatIfNeeded();
+    if (apiRequestSequence == before) confirmTransmittedAcknowledgmentIfNeeded();
     if (apiRequestSequence == before) forwardQueuedSosIfNeeded();
     if (apiRequestSequence == before) retryLocalReportIfNeeded();
     if (apiRequestSequence == before) sendGatewayHeartbeatIfNeeded();

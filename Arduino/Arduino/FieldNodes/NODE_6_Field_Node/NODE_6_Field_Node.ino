@@ -41,6 +41,7 @@
 #include <esp_system.h>
 #include "battery_monitor.h"
 #include "mesh_security.h"
+#include "mesh_sx127x.h"
 #include "report_guard.h"
 #include "report_dashboard.h"
 
@@ -84,7 +85,6 @@ static_assert(!BATTERY_MONITOR_ENABLED ||
 
 // Peer discovery is less urgent than the heartbeat used by the website.
 // A longer interval prevents nine field nodes from flooding the shared radio.
-const unsigned long HELLO_INTERVAL_MS         = 15000;
 const unsigned long HEARTBEAT_INTERVAL_MS     = 10000;
 const unsigned long PEER_TIMEOUT_MS           = 40000;
 // Allow missed 5-second beacons while NODE_1 completes synchronous HTTPS work.
@@ -106,12 +106,17 @@ const unsigned long SEEN_PACKET_WINDOW_MS     = 7000;
 
 WebServer localServer(80);
 Preferences prefs;
+MeshSX127xPort meshRadioPort;
+void onRadioTransmitted(const String& packet);
+MeshLink::Pump<MeshSX127xPort> meshRadio(meshRadioPort,onRadioTransmitted);
+MeshLink::Discovery peerDiscovery;
+MeshLink::BeaconTracker gatewayBeacons;
 
 String NODE_ID;
 String LOCAL_AP_SSID;
 
-unsigned long lastHelloMs = 0;
 unsigned long lastHeartbeatMs = 0;
+unsigned long heartbeatIntervalMs = HEARTBEAT_INTERVAL_MS;
 unsigned long lastGatewaySeenMs = 0;
 unsigned long lastNetworkSummarySeenMs = 0;
 unsigned long lastSosAttemptMs = 0;
@@ -260,7 +265,7 @@ textarea{min-height:80px}button{background:#116530;color:white;border:0;font-wei
 function pad(n){return String(n).padStart(2,'0')}
 function buttonTime(){const d=new Date();const o=-d.getTimezoneOffset();const s=o>=0?'+':'-';const h=pad(Math.floor(Math.abs(o)/60));const m=pad(Math.abs(o)%60);return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())+s+h+':'+m}
 const messageBox=document.getElementById('message');messageBox.addEventListener('input',()=>{document.getElementById('remaining').textContent=70-messageBox.value.length});
-const statusLabels={'QUEUED - WAITING FOR ROUTE':'Saved locally - waiting for LoRa route','SENT - WAITING FOR SERVER':'Sent by radio - waiting for server receipt','SUBMITTED - UNDER ADMIN REVIEW':'Received by server - under admin review','ACKNOWLEDGED':'Responder update received','REJECTED':'Report cancelled by admin'};
+const statusLabels={'READY TO SEND':'Saved locally - waiting for radio','QUEUED FOR RADIO':'Saved locally - waiting for a clear radio slot','QUEUED - WAITING FOR ROUTE':'Saved locally - waiting for LoRa route','SENT - WAITING FOR SERVER':'Sent by radio - waiting for server receipt','SUBMITTED - UNDER ADMIN REVIEW':'Received by server - under admin review','ACKNOWLEDGED':'Responder update received','REJECTED':'Report cancelled by admin'};
 let shownReview='';
 function closeReview(){if(shownReview)localStorage.setItem('field_review_seen_'+shownReview,'1');document.getElementById('reviewModal').classList.remove('show')}
 function showReviewIfNeeded(x){
@@ -286,8 +291,10 @@ async function refresh(){try{
   document.getElementById('status').textContent=statusLabels[x.report_status]||x.report_status||'None';
   document.getElementById('ack').textContent=x.ack_message||'None';
   const b=document.getElementById('sendButton');b.disabled=x.pending;
-  if(x.pending&&x.report_status==='QUEUED - WAITING FOR ROUTE'){
-    b.textContent='REPORT QUEUED';document.getElementById('hint').textContent='Report saved on this node. It will be submitted when a route to the server becomes available.';
+  if(x.pending&&['QUEUED - WAITING FOR ROUTE','QUEUED FOR RADIO','READY TO SEND'].includes(x.report_status)){
+    b.textContent='REPORT QUEUED';document.getElementById('hint').textContent=x.report_status==='QUEUED - WAITING FOR ROUTE'?'Report saved on this node. It will be submitted when a route becomes available.':'Report saved on this node. Waiting for a clear radio slot.';
+  }else if(x.pending&&x.report_status==='SENT - WAITING FOR SERVER'){
+    b.textContent='WAITING FOR SERVER';document.getElementById('hint').textContent='Radio transmission completed. Waiting for the server receipt; retries continue automatically.';
   }else if(x.pending){
     b.textContent='UNDER ADMIN REVIEW';document.getElementById('hint').textContent='Your report was submitted and is under admin review. Waiting for the review result.';
   }else if(x.server_route){
@@ -367,10 +374,6 @@ bool recentlySeen(const String& key, unsigned long windowMs = SEEN_PACKET_WINDOW
   return false;
 }
 
-void relayJitter() {
-  delay(random(35, 150));
-}
-
 // =====================================================
 // DIRECT PEER DISCOVERY
 // =====================================================
@@ -440,10 +443,18 @@ void markLoRaActivity() {
 }
 
 bool sendLoRaPacket(String payload) {
-  const bool sent = meshWriteFrame(payload);
-  if (sent) markLoRaActivity();
-  else Serial.println("[LORA] Authenticated transmission failed or packet exceeds radio budget.");
-  return sent;
+  const bool queued = meshSecurityReady && meshCompact(payload).length()+34<=255 && meshRadio.enqueue(payload,millis());
+  if (!queued) Serial.println("[LORA] Radio queue full or packet exceeds authenticated frame budget; durable SOS will retry.");
+  return queued;
+}
+
+void onRadioTransmitted(const String& packet) {
+  markLoRaActivity();
+  if (packet.startsWith("SOS|") && getField(packet,1)==pendingMsgId &&
+      getField(packet,2)==NODE_ID && serverReceiptMsgId!=pendingMsgId && latestStatus!="SENT - WAITING FOR SERVER") {
+    latestStatus="SENT - WAITING FOR SERVER";prefs.putString("latest_status",latestStatus);
+    Serial.println("[RADIO TX] Local SOS transmitted; waiting for server receipt.");
+  }
 }
 
 // =====================================================
@@ -536,8 +547,7 @@ bool networkSummaryFresh() {
 // =====================================================
 
 void sendHelloIfNeeded() {
-  if (millis() - lastHelloMs < HELLO_INTERVAL_MS) return;
-  lastHelloMs = millis();
+  if (!peerDiscovery.ready(millis(),hasFreshLoRaPeer())) return;
   sendLoRaPacket("HELLO|" + NODE_ID);
 }
 
@@ -565,8 +575,9 @@ void handleHelloAck(String packet, int rssi) {
 // =====================================================
 
 void sendHeartbeatIfNeeded() {
-  if (millis() - lastHeartbeatMs < HEARTBEAT_INTERVAL_MS) return;
+  if (millis() - lastHeartbeatMs < heartbeatIntervalMs) return;
   lastHeartbeatMs = millis();
+  heartbeatIntervalMs = HEARTBEAT_INTERVAL_MS + random(0,1000);
   heartbeatSequence++;
 
   String packet =
@@ -625,7 +636,6 @@ void handleHeartbeat(String packet) {
   if (getField(packet, 13).length()) forwarded += "|" + getField(packet, 11) + "|" + getField(packet, 12) + "|" + getField(packet, 13);
   if (distance.length()) forwarded += "|" + String(gatewayHopCount);
 
-  relayJitter();
   sendLoRaPacket(forwarded);
 }
 
@@ -666,7 +676,6 @@ void handleTimingPacket(const String& packet) {
   }
   if (ttl <= 0 || routeHasNode(route, NODE_ID)) return;
   if (recentlySeen(type + ":" + origin + ":" + probeId, 60000)) return;
-  relayJitter();
   sendLoRaPacket(type + "|" + origin + "|" + probeId + "|" + String(ttl - 1) +
     "|" + appendRoute(route, NODE_ID));
 }
@@ -685,11 +694,19 @@ void handleGatewayBeacon(String packet) {
   int ttl = getField(packet, 4).toInt();
   String route = getField(packet, 5);
 
-  if (gateway.length() == 0 || sequence.length() == 0) return;
+  if (gateway != "NODE_1" || sequence.length() == 0) return;
   if (routeHasNode(route, NODE_ID)) return;
+  if (!gatewayBeacons.accept(sequence,millis())) return;
 
   int ourHopToGateway = hop + 1;
+  const bool wasConnected = serverRouteAvailable();
   lastGatewaySeenMs = millis();
+  if (!wasConnected) {
+    // Announce recovery promptly, staggered across node identities.
+    heartbeatIntervalMs = HEARTBEAT_INTERVAL_MS;
+    lastHeartbeatMs = millis()-HEARTBEAT_INTERVAL_MS+250+NODE_NUMBER*80+random(0,350);
+    if(pendingPacket.length()&&(lastSosAttemptMs==0||millis()-lastSosAttemptMs>=5000))lastSosAttemptMs=millis()-sosRetryDelayMs;
+  }
 
   bool newSequence = sequence != lastGatewaySequence;
   if (newSequence) {
@@ -719,7 +736,6 @@ void handleGatewayBeacon(String packet) {
       "|" + String(ttl - 1) +
       "|" + appendRoute(route, NODE_ID);
 
-    relayJitter();
     sendLoRaPacket(forwarded);
   }
 }
@@ -747,7 +763,6 @@ void handleNetworkSummary(String packet) {
   String key = "NET:" + timestamp;
   if (recentlySeen(key, 30000)) return;
 
-  relayJitter();
   sendLoRaPacket(packet);
 }
 
@@ -789,7 +804,6 @@ void handleSos(String packet) {
     "|" + appendRoute(route, NODE_ID) +
     "|" + getField(packet, 10) + "|" + getField(packet, 11);
 
-  relayJitter();
   sendLoRaPacket(forwarded);
 }
 
@@ -800,6 +814,7 @@ void handleSos(String packet) {
 // =====================================================
 
 void saveAcknowledgedState(String status, String ackAt, String message) {
+  meshRadio.cancel("SOS:"+pendingMsgId);
   latestStatus = status;
   latestAckAt = ackAt;
   latestAckMessage = message;
@@ -832,6 +847,7 @@ void handleAck(String packet) {
     if (status == "RECEIVED" && gateway == "NODE_1" && acknowledgedAt.length() &&
         pendingPacket.length() && pendingMsgId == msgId) {
       serverReceiptMsgId = msgId;
+      meshRadio.cancel("SOS:"+msgId);
       lastSosAttemptMs = millis();
       sosRetryDelayMs = 60000 + random(0, 5000);
       latestStatus = "SUBMITTED - UNDER ADMIN REVIEW";
@@ -873,7 +889,6 @@ void handleAck(String packet) {
     "|" + appendRoute(route, NODE_ID) +
     "|" + shortMessage + "|" + getField(packet, 9) + "|" + getField(packet, 10);
 
-  relayJitter();
   sendLoRaPacket(forwarded);
 }
 
@@ -882,11 +897,16 @@ void handleAck(String packet) {
 // =====================================================
 
 void handleIncomingLoRa() {
+  if (meshRadio.busy()) return;
   int packetSize = LoRa.parsePacket();
   if (!packetSize) return;
   markLoRaActivity();
 
   String packet = meshReadFrame(packetSize);
+  const int rssi = LoRa.packetRssi();
+  const float snr = LoRa.packetSnr();
+  const long frequencyError = LoRa.packetFrequencyError();
+  LoRa.receive(); // parsePacket leaves standby; resume listening before dispatch/NVS work.
   if (!packet.length()) {
     static bool logged = false; static unsigned long lastLog = 0;
     if (!logged || millis() - lastLog >= 5000) {
@@ -896,9 +916,7 @@ void handleIncomingLoRa() {
     return;
   }
 
-  int rssi = LoRa.packetRssi();
-  const float snr = LoRa.packetSnr();
-  AksyResRadio::record(rssi, snr, LoRa.packetFrequencyError(), meshLastFrameSender);
+  AksyResRadio::record(rssi, snr, frequencyError, meshLastFrameSender);
   if (meshLastFrameSender != MESH_THIS_NODE) updatePeer("NODE_" + String(meshLastFrameSender), rssi);
 
   Serial.print("[LORA RX RSSI ");
@@ -959,10 +977,10 @@ void trySendPending(bool forceNow = false) {
   lastSosAttemptMs = millis();
   sosRetryDelayMs = (serverReceiptMsgId == pendingMsgId ? 60000 : SOS_RETRY_INTERVAL_MS) + random(0, 5000);
 
-  bool sent = sendLoRaPacket(pendingPacket);
-  if (sent) {
+  bool queued = sendLoRaPacket(pendingPacket);
+  if (queued) {
     if (serverReceiptMsgId != pendingMsgId) {
-      latestStatus = "SENT - WAITING FOR SERVER";
+      latestStatus = "QUEUED FOR RADIO";
       prefs.putString("latest_status", latestStatus);
     }
   }
@@ -1029,7 +1047,7 @@ void handleLocalSend() {
 
   if (serverRouteAvailable()) {
     trySendPending(true);
-    localServer.send(200, "text/plain", "Report saved and radio delivery attempted. Wait for the server receipt in Latest report. This node will retry automatically.");
+    localServer.send(200, "text/plain", "Report saved. Radio delivery is pending; this node will retry automatically. Wait for the server receipt in Latest report.");
   } else {
     localServer.send(200, "text/plain", "No confirmed server route. Report saved on this node and will auto-send when a route becomes available.");
   }
@@ -1047,6 +1065,7 @@ void handleLocalStatus() {
 
   String json = "{";
   json += AksyResRadio::statusFields();
+  json += meshRadio.statusFields();
   json += reportGuardStatus((uint32_t)localServer.client().remoteIP());
   json += "\"battery\":\"" + measuredBatteryVoltage() + "\",";
   json += "\"round_trip_ms\":" + (lastRoundTripMs < 0 ? String("null") : String(lastRoundTripMs)) + ",";
@@ -1139,10 +1158,8 @@ void setup() {
   randomSeed(esp_random());
   probeBootId = String(esp_random(), HEX);
 
-  // Randomize initial network-control transmissions so 9 nodes do not all
-  // transmit HELLO/heartbeat at the exact same millisecond after power-up.
+  // Randomize heartbeat/probe phase; discovery starts after the radio is ready.
   unsigned long now = millis();
-  lastHelloMs = now - HELLO_INTERVAL_MS + random(0, HELLO_INTERVAL_MS);
   lastHeartbeatMs = now - HEARTBEAT_INTERVAL_MS + random(0, HEARTBEAT_INTERVAL_MS);
   lastProbeMs = now - PROBE_INTERVAL_MS + NODE_NUMBER * 1200 + random(0, 1000);
 
@@ -1183,6 +1200,9 @@ void setup() {
   }
 
   AksyResRadio::configure(LoRa);
+  meshRadioPort.begin(LORA_SS);
+  meshRadio.begin(esp_random());
+  peerDiscovery.begin(millis(),NODE_NUMBER,esp_random());
   LoRa.receive();
   Serial.println("[RADIO] " + AksyResRadio::summary());
 
@@ -1196,15 +1216,17 @@ void setup() {
 }
 
 void loop() {
-  localServer.handleClient();
+  meshRadio.tick(millis());
   handleIncomingLoRa();
+  localServer.handleClient();
 
-  // Website reachability has priority when two scheduled packets become due
-  // together. Peer discovery can safely wait for its next pass through loop().
+  // Telemetry is coalesced; the radio queue schedules SOS/ACK first and leaves
+  // receive time between transmissions. Discovery is fast while disconnected.
   sendHeartbeatIfNeeded();
   sendHelloIfNeeded();
   trySendPending(false);
   sendTimingProbeIfNeeded();
+  meshRadio.tick(millis());
 
   updateLedIndicators();
 

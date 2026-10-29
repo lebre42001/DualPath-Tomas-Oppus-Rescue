@@ -7,6 +7,14 @@ serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
 ## LoRa delivery and incoming-report alerts (2026-10-29)
 
+The later `mesh-reconnect-20261029` firmware also needs the ACK `ackToken` /
+optional `ack_token` callback support in `LoRaMeshGatewayController`. Deploy
+the API before uploading the matching gateway/field sketches. This update uses
+no new migration or credentials; it conditionally confirms the response revision
+under a row lock so a delayed old radio ACK cannot clear newer admin notes.
+Legacy callbacks without a token remain compatible. See
+`Arduino/CONNECTION_STABILITY.md` for firmware rollout and field validation.
+
 Deploy the authenticated `POST /api/v1/lora/heartbeats` endpoint together with
 the receiver-only `GET /monitoring/reports/feed`, layout, notification module,
 and rebuilt Vite assets. No database migration or new credentials are required.

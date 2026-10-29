@@ -8,13 +8,14 @@ use App\Models\LoraNodeState;
 use App\Support\LoraMeshNodeDirectory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\InputBag;
 
 class LoRaMeshGatewayController extends Controller
 {
     private const GATEWAY_ID = 'NODE_1';
+
     private const NETWORK_TTL = 12;
 
     public function health(Request $request): JsonResponse
@@ -47,6 +48,7 @@ class LoRaMeshGatewayController extends Controller
                 $result = $this->heartbeat($child)->getData(true);
                 $ids[] = $result['nodeId'];
             }
+
             return $ids;
         });
 
@@ -165,7 +167,9 @@ class LoRaMeshGatewayController extends Controller
 
         $activeCount = 0;
         for ($index = 0; $index < 10; $index++) {
-            if (($activeNodeBitmask & (1 << $index)) !== 0) $activeCount++;
+            if (($activeNodeBitmask & (1 << $index)) !== 0) {
+                $activeCount++;
+            }
         }
 
         $serverTimestamp = $now->copy()->utc()->toIso8601String();
@@ -256,29 +260,47 @@ class LoRaMeshGatewayController extends Controller
             'pending' => true,
             'msgId' => $report->lora_sequence,
             'packet' => $packet,
+            'ackToken' => $this->ackRevisionToken($report),
         ], 200, [], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     public function acknowledgmentDelivered(Request $request, string $msgId): JsonResponse
     {
         $this->authorizeGateway($request);
+        $validated = $request->validate(['ack_token' => ['sometimes', 'required', 'string', 'regex:/^[a-f0-9]{64}$/']]);
 
-        $report = IncidentReport::query()
-            ->where('transmission_type', 'lora')
-            ->where('lora_sequence', $msgId)
-            ->firstOrFail();
+        return DB::transaction(function () use ($msgId, $validated): JsonResponse {
+            $report = IncidentReport::query()
+                ->where('transmission_type', 'lora')
+                ->where('lora_sequence', $msgId)
+                ->lockForUpdate()
+                ->firstOrFail();
 
-        if ($report->lora_ack_queued_at === null) {
-            return response()->json(['ok' => false, 'error' => 'No responder acknowledgment is queued.'], 409);
-        }
+            if ($report->lora_ack_queued_at === null) {
+                return response()->json(['ok' => false, 'error' => 'No responder acknowledgment is queued.'], 409);
+            }
+            if (isset($validated['ack_token']) && ! hash_equals($this->ackRevisionToken($report), $validated['ack_token'])) {
+                // A previously transmitted response must not clear a newer admin update.
+                return response()->json(['ok' => true, 'delivered' => false, 'superseded' => true, 'msgId' => $msgId]);
+            }
 
-        $report->forceFill(['lora_ack_delivered_at' => $report->lora_ack_delivered_at ?? now()])->save();
+            $report->forceFill(['lora_ack_delivered_at' => $report->lora_ack_delivered_at ?? now()])->save();
 
-        return response()->json([
-            'ok' => true,
-            'msgId' => $msgId,
-            'deliveredAt' => $report->lora_ack_delivered_at?->toIso8601String(),
-        ]);
+            return response()->json([
+                'ok' => true,
+                'msgId' => $msgId,
+                'deliveredAt' => $report->lora_ack_delivered_at?->toIso8601String(),
+            ]);
+        });
+    }
+
+    private function ackRevisionToken(IncidentReport $report): string
+    {
+        return hash('sha256', json_encode([
+            $report->lora_sequence, $report->lora_ack_queued_at?->toIso8601String(),
+            $report->status, $report->response_notes, $report->status_updated_at?->toIso8601String(),
+            $report->lora_verification, $report->lora_verification_notes, $report->lora_verified_at?->toIso8601String(),
+        ], JSON_THROW_ON_ERROR));
     }
 
     private function authorizeGateway(Request $request): void
