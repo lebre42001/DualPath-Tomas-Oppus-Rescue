@@ -10,6 +10,12 @@ The active mesh uses `GatewayNode1/GatewayNode1.ino` for NODE_1 and the configur
 
 ## Active Mesh Flow
 
+For a link that drops near a displayed -98 dBm, see [RANGE_TEST.md](RANGE_TEST.md).
+It includes the proposed node positions, antenna-height checks, local SNR/age
+diagnostics, and an optional **isolated SF9 pair test**. The deployed SF7 profile,
+TX power and peer/LED timeouts remain unchanged; no range improvement is claimed
+without physical testing. Uploading the website cannot update the ESP32 firmware.
+
 ### Report delivery and radio service (2026-10-29)
 
 NODE_1 performs HTTPS on a dedicated FreeRTOS worker. While a request is in

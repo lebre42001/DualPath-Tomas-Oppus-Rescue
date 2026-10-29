@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cstdint>
 #include <cstring>
+#include <cstdio>
 #include <map>
 #include <string>
 #include <type_traits>
@@ -13,6 +14,7 @@ public:
   String() = default;
   String(const char* s): value(s ? s : "") {}
   String(const std::string& s): value(s) {}
+  String(double n, int decimals) { char buffer[64]; std::snprintf(buffer, sizeof(buffer), "%.*f", decimals, n); value=buffer; }
   template<class T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
   String(T n, int radix=10) {
     if (radix == 16) { const char* digits="0123456789abcdef"; do { value.insert(value.begin(), digits[n&15]); n>>=4; } while(n); }

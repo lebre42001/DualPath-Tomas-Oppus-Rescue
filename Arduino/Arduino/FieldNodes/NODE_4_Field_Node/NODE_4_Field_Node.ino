@@ -37,6 +37,7 @@
 #include <Preferences.h>
 #include <SPI.h>
 #include <LoRa.h>
+#include "radio_profile.h"
 #include <esp_system.h>
 #include "battery_monitor.h"
 #include "mesh_security.h"
@@ -54,8 +55,7 @@ const int NODE_NUMBER = 4;
 // LORA CONFIGURATION - MUST MATCH NODE_1
 // =====================================================
 
-const long LORA_FREQUENCY = 433000000;
-const byte LORA_SYNC_WORD = 0x34;
+const long LORA_FREQUENCY = AksyResRadio::frequency;
 
 // ESP32 <-> SX1278 / Ra-02 / XL1278
 const int LORA_SS   = 5;   // NSS / CS
@@ -897,11 +897,15 @@ void handleIncomingLoRa() {
   }
 
   int rssi = LoRa.packetRssi();
+  const float snr = LoRa.packetSnr();
+  AksyResRadio::record(rssi, snr, LoRa.packetFrequencyError(), meshLastFrameSender);
   if (meshLastFrameSender != MESH_THIS_NODE) updatePeer("NODE_" + String(meshLastFrameSender), rssi);
 
   Serial.print("[LORA RX RSSI ");
   Serial.print(rssi);
-  Serial.print("] ");
+  Serial.print(" dBm, SNR ");
+  Serial.print(snr, 2);
+  Serial.print(" dB] ");
   Serial.println(packet);
 
   String type = getField(packet, 0);
@@ -1042,6 +1046,7 @@ void handleLocalStatus() {
   int displayActiveCount = networkSummaryFresh() ? activeNodeCount : -1;
 
   String json = "{";
+  json += AksyResRadio::statusFields();
   json += reportGuardStatus((uint32_t)localServer.client().remoteIP());
   json += "\"battery\":\"" + measuredBatteryVoltage() + "\",";
   json += "\"round_trip_ms\":" + (lastRoundTripMs < 0 ? String("null") : String(lastRoundTripMs)) + ",";
@@ -1177,12 +1182,9 @@ void setup() {
     }
   }
 
-  LoRa.setSyncWord(LORA_SYNC_WORD);
-  LoRa.setTxPower(17);
-  LoRa.setSpreadingFactor(7);
-  LoRa.setSignalBandwidth(125E3);
-  LoRa.setCodingRate4(5);
+  AksyResRadio::configure(LoRa);
   LoRa.receive();
+  Serial.println("[RADIO] " + AksyResRadio::summary());
 
   Serial.println();
   Serial.println(NODE_ID + " field node ready.");

@@ -21,6 +21,7 @@
 #include <Preferences.h>
 #include <SPI.h>
 #include <LoRa.h>
+#include "radio_profile.h"
 #include <time.h>
 #include <esp_system.h>
 #include "server_root_ca.h"
@@ -40,8 +41,7 @@
 
 const char* LOCAL_AP_SSID = "NODE_1_Gateway";
 
-const long LORA_FREQUENCY = 433000000;
-const byte LORA_SYNC_WORD = 0x34;
+const long LORA_FREQUENCY = AksyResRadio::frequency;
 const int LORA_SS = 5;
 const int LORA_SCK = 18;
 const int LORA_MISO = 19;
@@ -719,6 +719,7 @@ void handleLocalEmergency() {
 void handleLocalStatus() {
   const bool online = serverRouteAvailable();
   String json = "{";
+  json += AksyResRadio::statusFields();
   json += reportGuardStatus((uint32_t)localServer.client().remoteIP());
   json += "\"node_id\":\"NODE_1\",";
   json += "\"server_base_url\":\"" + jsonEscape(SERVER_BASE_URL) + "\",";
@@ -1046,8 +1047,9 @@ void handleIncomingLoRa() {
   }
   const int rssi = LoRa.packetRssi();
   const float snr = LoRa.packetSnr();
+  AksyResRadio::record(rssi, snr, LoRa.packetFrequencyError(), meshLastFrameSender);
   if (meshLastFrameSender != MESH_THIS_NODE) updatePeer("NODE_" + String(meshLastFrameSender), rssi);
-  Serial.println("[LORA RX " + String(rssi) + " dBm] " + packet);
+  Serial.println("[LORA RX " + String(rssi) + " dBm, SNR " + String(snr, 2) + " dB] " + packet);
 
   if (packet.startsWith("HELLO|")) {
     String peerId = getField(packet, 1);
@@ -1147,12 +1149,9 @@ void setup() {
     }
   }
 
-  LoRa.setSyncWord(LORA_SYNC_WORD);
-  LoRa.setTxPower(17);
-  LoRa.setSpreadingFactor(7);
-  LoRa.setSignalBandwidth(125E3);
-  LoRa.setCodingRate4(5);
+  AksyResRadio::configure(LoRa);
   LoRa.receive();
+  Serial.println("[RADIO] " + AksyResRadio::summary());
   apiWorkerReady = startGatewayApiWorker();
   if (!apiWorkerReady) Serial.println("ERROR: Could not start HTTP worker; SOS remains queued.");
   Serial.println("NODE_1 Laravel LoRa gateway ready.");

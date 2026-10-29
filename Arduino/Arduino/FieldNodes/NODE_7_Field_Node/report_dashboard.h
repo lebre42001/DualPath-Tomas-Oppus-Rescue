@@ -15,6 +15,10 @@ const char REPORT_GUARD_SCRIPT[] PROGMEM = R"guard(
   field.append(landmark);message.before(field);
   const indicator=document.createElement('p');indicator.id='reportGuard';indicator.className='small';
   indicator.setAttribute('role','status');indicator.setAttribute('aria-live','polite');button.after(indicator);
+  const radioDetails=document.createElement('details');
+  radioDetails.style.cssText='margin:14px 0;padding:12px;background:#f4f7f5;border-radius:10px';
+  radioDetails.innerHTML='<summary>Radio diagnostics &amp; range test</summary><p class="small">Readings belong to the last authenticated radio packet, not a live signal meter. Green LED means a direct peer was heard within 40 seconds; it does not prove a working server route.</p><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px" data-radio-diagnostics>Waiting for radio status...</pre>';
+  indicator.after(radioDetails);
   const modal=document.createElement('div');modal.className='modal';modal.id='confirmReport';
   modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');modal.setAttribute('aria-labelledby','confirmReportTitle');
   modal.innerHTML='<div class="modal-box box" style="max-height:85vh;overflow:auto"><h2 id="confirmReportTitle">Confirm emergency</h2><p>Road Accident</p><b>Actual location</b><p id="confirmLocation"></p><b>Description</b><p id="confirmDescription"></p><p class="small">Send accurate details. Your report will be reviewed by the emergency team.</p><button id="confirmSend">Confirm and send</button><button id="confirmBack" style="background:#eef3ef;color:#14251a">Go back</button></div>';
@@ -76,6 +80,11 @@ const char REPORT_GUARD_SCRIPT[] PROGMEM = R"guard(
   window.refresh=async()=>{
     await originalRefresh();
     try{const response=await fetch('/status',{cache:'no-store'});lastStatus=await response.json();retryUntil=Date.now()+Number(lastStatus.retry_after_seconds||0)*1000;
+      if(lastStatus.radio_profile){
+        const age=lastStatus.radio_last_age_ms;
+        const last=age==null?'No authenticated packet received yet.':'Last packet from NODE_'+lastStatus.radio_last_sender+': '+lastStatus.radio_last_rssi+' dBm; SNR '+lastStatus.radio_last_snr+' dB; '+Math.floor(age/1000)+'s ago'+(age>40000?' (historical reading)':'')+'.\nFrequency error: '+lastStatus.radio_last_frequency_error_hz+' Hz.';
+        radioDetails.querySelector('[data-radio-diagnostics]').textContent=lastStatus.radio_profile+'\n'+lastStatus.radio_revision+'\n'+(lastStatus.radio_frequency_hz/1e6)+' MHz; SF'+lastStatus.radio_sf+'; BW '+(lastStatus.radio_bandwidth_hz/1000)+' kHz; CR '+lastStatus.radio_coding_rate+'; TX '+lastStatus.radio_tx_dbm+' dBm\n'+last+'\nValid packets since restart: '+lastStatus.radio_valid_packets+'\nAuthentication/replay rejections since restart: '+(lastStatus.radio_rejections||0)+(lastStatus.radio_sf===9?'\nISOLATED PAIR TEST ONLY: this setting cannot join the SF7 mesh.':'');
+      }
       if(lastStatus.created_at&&/^\d+$/.test(lastStatus.created_at))byId('created').textContent=new Date(Number(lastStatus.created_at)*1000).toLocaleString();
       if(lastStatus.verification)byId('status').textContent=(lastStatus.report_status||'')+' · '+lastStatus.verification;
     }catch(error){}paint();
