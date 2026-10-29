@@ -232,6 +232,15 @@ SVG,
             @endif
 
             <main id="main-content" tabindex="-1" class="content-stack {{ $isAdminReportsPage ? 'reports-content-stack' : '' }}">
+                @if ($authUser?->is_admin)
+                    <section class="incoming-alarm-toolbar" aria-label="Report alarm">
+                        <div><strong>Report alarm</strong><small data-incoming-sound-status role="status">Enable sound to hear incoming reports.</small></div>
+                        <div class="incoming-alarm-actions">
+                            <button type="button" class="pill-btn" data-incoming-sound aria-pressed="false">Enable sound</button>
+                            <button type="button" class="pill-btn" data-incoming-sound-stop hidden>Stop alarm</button>
+                        </div>
+                    </section>
+                @endif
                 @yield('content')
             </main>
         </div>
@@ -264,7 +273,7 @@ SVG,
         </nav>
     @endif
     @unless ($isCivilian)
-        <aside class="alert-center" data-alert-center-panel data-incoming-reports data-feed-url="{{ route('monitoring.reports.feed') }}" data-user-id="{{ $authUser?->id }}" hidden>
+        <aside class="alert-center" data-alert-center-panel data-incoming-reports data-feed-url="{{ route('monitoring.reports.feed') }}" data-user-id="{{ $authUser?->id }}" data-alarm-url="{{ asset('sounds/incoming-report-alarm.mp3') }}" hidden>
             <div class="alert-top">
                 <div>
                     <p class="eyebrow">Alert Center</p>
@@ -273,7 +282,8 @@ SVG,
                 <button type="button" class="pill-btn" data-alert-center-close>Close</button>
             </div>
             <div class="incoming-report-controls">
-                <button type="button" class="pill-btn" data-incoming-sound>Enable sound</button>
+                <button type="button" class="pill-btn" data-incoming-sound aria-pressed="false">Enable sound</button>
+                <button type="button" class="pill-btn" data-incoming-sound-stop hidden>Stop alarm</button>
                 <button type="button" class="pill-btn" data-incoming-clear>Mark all seen</button>
                 <small data-incoming-status role="status">Checking new reports…</small>
             </div>
@@ -292,6 +302,7 @@ SVG,
         </aside>
         <section class="incoming-report-banner" data-incoming-banner role="status" aria-live="polite" hidden>
             <div><strong data-incoming-banner-title>New report received</strong><p data-incoming-banner-copy></p></div>
+            <button type="button" class="pill-btn" data-incoming-sound-stop hidden>Stop alarm</button>
             <button type="button" class="pill-btn" data-alert-center-toggle>View alerts</button>
         </section>
     @endunless

@@ -1,3 +1,5 @@
+import { ReportAlarm } from './report-alarm.js';
+
 // Arrival notifications are separate from incident severity and rescue status.
 export class IncomingReportState {
     constructor(saved = {}) {
@@ -38,22 +40,28 @@ export function initializeIncomingReports(onReport) {
     const list = panel.querySelector('[data-alert-list]');
     const banner = document.querySelector('[data-incoming-banner]');
     const status = panel.querySelector('[data-incoming-status]');
-    const soundButton = panel.querySelector('[data-incoming-sound]');
-    let audio = null, sound = false, busy = false, stopped = false, timer = null;
-    const save = () => { try { localStorage.setItem(storageKey, JSON.stringify(state.snapshot())); } catch (_) { /* Optional. */ } };
-    const play = () => {
-        if (!sound || audio?.state !== 'running') return;
-        [0, 0.23].forEach(offset => {
-            const oscillator = audio.createOscillator(), gain = audio.createGain();
-            const at = audio.currentTime + offset;
-            oscillator.frequency.value = offset ? 880 : 660;
-            gain.gain.setValueAtTime(0.0001, at);
-            gain.gain.exponentialRampToValueAtTime(0.15, at + 0.015);
-            gain.gain.exponentialRampToValueAtTime(0.0001, at + 0.18);
-            oscillator.connect(gain); gain.connect(audio.destination);
-            oscillator.start(at); oscillator.stop(at + 0.2);
+    const soundButtons = document.querySelectorAll('[data-incoming-sound]');
+    const stopButtons = document.querySelectorAll('[data-incoming-sound-stop]');
+    let alarm = null, busy = false, stopped = false, timer = null;
+    const syncSound = () => {
+        soundButtons.forEach(button => {
+            button.textContent = alarm?.enabled ? 'Mute sound' : 'Enable sound';
+            button.setAttribute('aria-pressed', String(alarm?.enabled ?? false));
+        });
+        stopButtons.forEach(button => { button.hidden = !alarm?.playing; });
+        document.querySelectorAll('[data-incoming-sound-status]').forEach(copy => {
+            copy.textContent = alarm?.blocked ? 'Sound could not play. Tap Enable sound to retry.'
+                : alarm?.playing ? 'Alarm playing (up to 10 seconds).'
+                : alarm?.enabled ? 'Sound on for new online and LoRa reports.'
+                : 'Tap Enable sound on this page. Keep the admin website open for alarms.';
         });
     };
+    try {
+        const audio = new window.Audio(panel.dataset.alarmUrl);
+        audio.preload = 'none';
+        alarm = new ReportAlarm(audio, syncSound, window);
+    } catch (_) { /* Visual notifications remain available without audio support. */ }
+    const save = () => { try { localStorage.setItem(storageKey, JSON.stringify(state.snapshot())); } catch (_) { /* Optional. */ } };
     const render = () => {
         const reports = [...state.unread.values()].sort((a, b) => b.id - a.id);
         document.querySelectorAll('[data-alert-count]').forEach(counter => {
@@ -82,28 +90,27 @@ export function initializeIncomingReports(onReport) {
             const title = document.createElement('strong'); title.textContent = report.report_code ?? 'New report';
             const detail = document.createElement('p'); detail.textContent = `${report.incident_type ?? 'Emergency'} · ${report.location_text ?? 'Location unavailable'}`;
             link.append(source, title, detail);
-            link.addEventListener('click', () => { state.unread.delete(report.id); save(); render(); });
+            link.addEventListener('click', () => { alarm?.stop(); state.unread.delete(report.id); save(); render(); });
             list.append(link);
         });
     };
     controller = {
         receive(payload, initial) {
             const fresh = state.accept(payload, initial);
-            if (fresh) { save(); render(); if (!initial) play(); }
+            if (fresh) { save(); render(); if (!initial) void alarm?.play(); }
             if (!initial && (fresh || payload.action !== 'created')) onReport(payload, fresh);
         },
     };
-    panel.querySelector('[data-incoming-clear]').addEventListener('click', () => { state.unread.clear(); save(); render(); });
-    soundButton.addEventListener('click', async () => {
-        try {
-            const Audio = window.AudioContext ?? window.webkitAudioContext;
-            if (!Audio) { soundButton.textContent = 'Sound unavailable'; return; }
-            audio ??= new Audio(); await audio.resume(); sound = !sound;
-            soundButton.textContent = sound ? 'Sound on' : 'Enable sound';
-            soundButton.setAttribute('aria-pressed', String(sound));
-            if (sound) play();
-        } catch (_) { sound = false; soundButton.textContent = 'Tap to enable sound'; }
-    });
+    panel.querySelector('[data-incoming-clear]').addEventListener('click', () => { alarm?.stop(); state.unread.clear(); save(); render(); });
+    soundButtons.forEach(button => button.addEventListener('click', () => {
+        if (!alarm) {
+            button.textContent = 'Sound unavailable';
+            return;
+        }
+        if (alarm.enabled) alarm.disable();
+        else void alarm.enable();
+    }));
+    stopButtons.forEach(button => button.addEventListener('click', () => alarm?.stop()));
     const poll = async () => {
         if (busy || stopped || document.hidden) return;
         busy = true;
@@ -113,7 +120,7 @@ export function initializeIncomingReports(onReport) {
             const url = new URL(panel.dataset.feedUrl, window.location.origin);
             if (state.cursor !== null) url.searchParams.set('after', String(state.cursor));
             const response = await fetch(url, { credentials: 'same-origin', cache: 'no-store', headers: { Accept: 'application/json' }, signal: abort.signal });
-            if ([401, 403].includes(response.status)) { stopped = true; throw new Error('Sign in again to receive reports.'); }
+            if ([401, 403].includes(response.status)) { alarm?.disable(); stopped = true; throw new Error('Sign in again to receive reports.'); }
             if (!response.ok) throw new Error('Updates delayed; retrying.');
             const data = await response.json();
             for (const item of data.items) controller.receive(item, data.initial === true);
@@ -123,6 +130,6 @@ export function initializeIncomingReports(onReport) {
         finally { window.clearTimeout(timeout); busy = false; }
     };
     document.addEventListener('visibilitychange', () => { if (!document.hidden) void poll(); });
-    window.addEventListener('pagehide', () => { stopped = true; window.clearInterval(timer); });
-    render(); void poll(); timer = window.setInterval(poll, 5000);
+    window.addEventListener('pagehide', () => { alarm?.disable(); stopped = true; window.clearInterval(timer); });
+    syncSound(); render(); void poll(); timer = window.setInterval(poll, 5000);
 }

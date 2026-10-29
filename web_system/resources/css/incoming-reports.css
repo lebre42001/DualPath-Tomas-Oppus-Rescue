@@ -2,7 +2,7 @@
 .alert-center:not([hidden]) ~ .incoming-report-banner { display: none; }
 .incoming-report-banner {
     position: fixed; z-index: 1060; inset: auto 20px 24px auto;
-    display: flex; align-items: center; gap: 18px; max-width: min(540px, calc(100vw - 40px));
+    display: flex; flex-wrap: wrap; align-items: center; gap: 18px; max-width: min(540px, calc(100vw - 40px));
     padding: 16px 20px; border: 2px solid #b91c1c; border-radius: 16px;
     background: #fff7ed; color: #7f1d1d; box-shadow: 0 8px 30px #0003;
 }
@@ -10,6 +10,15 @@
 .incoming-report-banner .pill-btn { flex-shrink: 0; }
 .incoming-report-controls { display: flex; flex-wrap: wrap; gap: 10px; padding: 12px 0; }
 .incoming-report-controls small { flex-basis: 100%; }
+.incoming-alarm-toolbar {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 12px 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface);
+}
+.incoming-alarm-toolbar > div:first-child { flex: 1 1 220px; min-width: 0; }
+.incoming-alarm-toolbar small { display: block; margin-top: 4px; color: var(--muted); overflow-wrap: anywhere; }
+.incoming-alarm-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+[data-incoming-sound-stop][hidden] { display: none !important; }
+@media print { .incoming-alarm-toolbar { display: none !important; } }
 .has-unread-reports { outline: 2px solid #b91c1c; background: #fff1f2 !important; }
 .has-unread-reports [data-alert-count] { color: #b91c1c; font-weight: 800; }
 [data-incoming-reports] .alert-item { overflow-wrap: anywhere; }
