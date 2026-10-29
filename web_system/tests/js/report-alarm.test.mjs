@@ -18,9 +18,9 @@ function fixture() {
     return { audio, alarm, timers, callbacks, finish };
 }
 
-test('audio requires activation; sample and arrival have separate bounded durations', async () => {
+test('alarm defaults on; activation sample and actual arrival have separate bounded durations', async () => {
     const { audio, alarm, timers, finish } = fixture();
-    await alarm.play(); assert.equal(audio.plays, 0);
+    assert.equal(alarm.enabled, true); assert.equal(alarm.ready, false);
     await alarm.enable(); assert.equal(audio.plays, 1);
     assert.equal([...timers.values()][0].duration, 1200);
     finish(); assert.equal(alarm.enabled, true); assert.equal(alarm.playing, false);
@@ -41,15 +41,50 @@ test('bursts cannot overlap or extend an active alarm; stop preserves future ale
     assert.equal(alarm.playing, false); assert.equal(timers.size, 0);
 });
 
-test('blocked playback or media error fails safely and can be retried by clicking enable', async () => {
+test('blocked playback retains the desired setting and retries a pending arrival at full duration', async () => {
     const { audio, alarm, callbacks, timers } = fixture();
     audio.play = () => Promise.reject(new Error('NotAllowedError'));
-    assert.equal(await alarm.enable(), false);
-    assert.equal(alarm.blocked, true); assert.equal(alarm.enabled, false); assert.equal(timers.size, 0);
+    assert.equal(await alarm.play(), false);
+    assert.equal(alarm.blocked, true); assert.equal(alarm.enabled, true); assert.equal(timers.size, 0);
+    assert.equal(alarm.pending, true); assert.equal(alarm.ready, false);
     audio.play = () => Promise.resolve();
     assert.equal(await alarm.enable(), true); assert.equal(alarm.blocked, false);
+    assert.equal([...timers.values()][0].duration, 10000, 'retry must not become a short test sample');
+    assert.equal(alarm.pending, false); assert.equal(alarm.ready, true);
     callbacks.get('error')(); assert.equal(alarm.blocked, true); assert.equal(alarm.playing, false);
     assert.equal(timers.size, 0);
+});
+
+test('a report arriving during the activation sample gets a full alarm', async () => {
+    const { alarm, timers } = fixture();
+    await alarm.enable(); assert.equal([...timers.values()][0].duration, 1200);
+    await alarm.play(); assert.equal(timers.size, 1);
+    assert.equal([...timers.values()][0].duration, 10000);
+    assert.equal(alarm.isSample, false);
+});
+
+test('navigation suspension preserves an unplayed arrival and does not mute the preference', async () => {
+    const { audio, alarm } = fixture();
+    audio.play = () => Promise.reject(new Error('NotAllowedError'));
+    await alarm.play(); alarm.suspend();
+    assert.equal(alarm.pending, true); assert.equal(alarm.enabled, true); assert.equal(alarm.ready, false);
+    alarm.disable(); assert.equal(alarm.pending, false); assert.equal(alarm.enabled, false);
+});
+
+test('a stalled audio load preserves pending arrival without claiming that sound played', async () => {
+    const { audio, alarm, finish, timers } = fixture();
+    audio.play = () => new Promise(() => {});
+    void alarm.play(); assert.equal(alarm.playing, false); assert.equal(alarm.starting, true);
+    finish(); assert.equal(alarm.playing, false); assert.equal(alarm.starting, false);
+    assert.equal(alarm.pending, true); assert.equal(alarm.blocked, true); assert.equal(timers.size, 0);
+});
+
+test('temporary media failure reloads the file before a later activation attempt', async () => {
+    const { audio, alarm } = fixture();
+    audio.error = { code: 2 };
+    let reloads = 0;
+    audio.load = () => { reloads++; audio.error = null; };
+    await alarm.enable(); assert.equal(reloads, 1); assert.equal(alarm.ready, true);
 });
 
 test('an interrupted pending play cannot re-enable sound or leave timers behind', async () => {

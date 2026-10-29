@@ -34,6 +34,7 @@ export function initializeIncomingReports(onReport) {
     const panel = document.querySelector('[data-incoming-reports]');
     if (!panel || controller) return;
     const storageKey = `aksyr-incoming-${panel.dataset.userId}`;
+    const alarmKey = `aksyr-report-alarm-${panel.dataset.userId}`;
     let saved = {};
     try { saved = JSON.parse(localStorage.getItem(storageKey) ?? '{}'); } catch (_) { /* Storage is optional. */ }
     const state = new IncomingReportState(saved && typeof saved === 'object' ? saved : {});
@@ -42,24 +43,39 @@ export function initializeIncomingReports(onReport) {
     const status = panel.querySelector('[data-incoming-status]');
     const soundButtons = document.querySelectorAll('[data-incoming-sound]');
     const stopButtons = document.querySelectorAll('[data-incoming-sound-stop]');
-    let alarm = null, busy = false, stopped = false, timer = null;
+    let alarm = null, busy = false, stopped = false, unauthorized = false, timer = null;
     const syncSound = () => {
+        if (alarm) {
+            try { localStorage.setItem(alarmKey, JSON.stringify({ enabled: alarm.enabled, pending: alarm.pending })); } catch (_) { /* Optional. */ }
+        }
         soundButtons.forEach(button => {
-            button.textContent = alarm?.enabled ? 'Mute sound' : 'Enable sound';
-            button.setAttribute('aria-pressed', String(alarm?.enabled ?? false));
+            button.textContent = alarm?.enabled && alarm?.ready ? 'Test sound' : 'Enable sound';
+            if (button.hasAttribute('data-incoming-sound-unlock')) button.hidden = !alarm?.pending || !alarm?.blocked;
         });
-        stopButtons.forEach(button => { button.hidden = !alarm?.playing; });
+        document.querySelectorAll('[data-incoming-sound-mute]').forEach(button => { button.hidden = !alarm?.enabled; });
+        stopButtons.forEach(button => { button.hidden = !alarm?.playing && !alarm?.starting && !alarm?.pending; });
+        document.querySelectorAll('.incoming-alarm-toolbar').forEach(toolbar => {
+            toolbar.dataset.alarmState = alarm?.enabled && !alarm?.ready ? 'attention' : 'ready';
+        });
         document.querySelectorAll('[data-incoming-sound-status]').forEach(copy => {
-            copy.textContent = alarm?.blocked ? 'Sound could not play. Tap Enable sound to retry.'
+            copy.textContent = !alarm ? 'Audio unavailable. Visual report alerts remain active.'
+                : !alarm.enabled ? 'Sound muted on this browser. Tap Enable sound to turn it back on.'
+                : alarm.blocked && alarm.pending ? 'New report waiting for sound. Click anywhere or tap Enable sound to play the alarm.'
+                : alarm.blocked ? 'Browser audio needs activation. Click anywhere or tap Enable sound.'
+                : alarm.starting ? 'Loading alarm sound...'
                 : alarm?.playing ? 'Alarm playing (up to 10 seconds).'
-                : alarm?.enabled ? 'Sound on for new online and LoRa reports.'
-                : 'Tap Enable sound on this page. Keep the admin website open for alarms.';
+                : alarm.ready ? 'Sound ready for new online and LoRa reports. Keep this website open.'
+                : 'Alarm is on. Your first click activates audio with a short sound test.';
         });
     };
     try {
         const audio = new window.Audio(panel.dataset.alarmUrl);
         audio.preload = 'none';
         alarm = new ReportAlarm(audio, syncSound, window);
+        let preference = {};
+        try { preference = JSON.parse(localStorage.getItem(alarmKey) ?? '{}') ?? {}; } catch (_) { /* Optional. */ }
+        alarm.enabled = preference.enabled !== false;
+        alarm.pending = alarm.enabled && preference.pending === true;
     } catch (_) { /* Visual notifications remain available without audio support. */ }
     const save = () => { try { localStorage.setItem(storageKey, JSON.stringify(state.snapshot())); } catch (_) { /* Optional. */ } };
     const render = () => {
@@ -107,12 +123,28 @@ export function initializeIncomingReports(onReport) {
             button.textContent = 'Sound unavailable';
             return;
         }
-        if (alarm.enabled) alarm.disable();
-        else void alarm.enable();
+        void alarm.enable();
     }));
+    document.querySelectorAll('[data-incoming-sound-mute]').forEach(button => button.addEventListener('click', () => alarm?.disable()));
     stopButtons.forEach(button => button.addEventListener('click', () => alarm?.stop()));
+    // Browser activation belongs to the document, not a localStorage flag.
+    // Retry during a real click/key gesture, including a previously blocked arrival.
+    const activate = event => {
+        if (!event.isTrusted || event.target.closest?.('[data-incoming-sound], [data-incoming-sound-mute], [data-incoming-sound-stop], [data-incoming-clear], .alert-item')) return;
+        if (alarm?.enabled && !alarm.ready && !alarm.starting && !alarm.playing) void alarm.enable();
+    };
+    document.addEventListener('click', activate);
+    document.addEventListener('keydown', activate);
+    window.addEventListener('storage', event => {
+        if (event.key !== alarmKey || !alarm) return;
+        try {
+            const preference = JSON.parse(event.newValue ?? '{}');
+            if (preference.enabled === false) alarm.disable();
+            else if (preference.enabled === true && !alarm.enabled) { alarm.enabled = true; syncSound(); }
+        } catch (_) { /* Invalid optional preferences cannot stop report monitoring. */ }
+    });
     const poll = async () => {
-        if (busy || stopped || document.hidden) return;
+        if (busy || stopped) return;
         busy = true;
         const abort = new AbortController();
         const timeout = window.setTimeout(() => abort.abort(), 15000);
@@ -120,7 +152,7 @@ export function initializeIncomingReports(onReport) {
             const url = new URL(panel.dataset.feedUrl, window.location.origin);
             if (state.cursor !== null) url.searchParams.set('after', String(state.cursor));
             const response = await fetch(url, { credentials: 'same-origin', cache: 'no-store', headers: { Accept: 'application/json' }, signal: abort.signal });
-            if ([401, 403].includes(response.status)) { alarm?.disable(); stopped = true; throw new Error('Sign in again to receive reports.'); }
+            if ([401, 403].includes(response.status)) { alarm?.stop(); stopped = true; unauthorized = true; throw new Error('Sign in again to receive reports.'); }
             if (!response.ok) throw new Error('Updates delayed; retrying.');
             const data = await response.json();
             for (const item of data.items) controller.receive(item, data.initial === true);
@@ -130,6 +162,14 @@ export function initializeIncomingReports(onReport) {
         finally { window.clearTimeout(timeout); busy = false; }
     };
     document.addEventListener('visibilitychange', () => { if (!document.hidden) void poll(); });
-    window.addEventListener('pagehide', () => { alarm?.disable(); stopped = true; window.clearInterval(timer); });
+    window.addEventListener('pagehide', () => { alarm?.suspend(); stopped = true; window.clearInterval(timer); });
+    window.addEventListener('pageshow', event => {
+        if (!event.persisted || unauthorized) return;
+        stopped = false;
+        window.clearInterval(timer);
+        void poll(); timer = window.setInterval(poll, 5000);
+        if (alarm?.pending) void alarm.play();
+    });
     syncSound(); render(); void poll(); timer = window.setInterval(poll, 5000);
+    if (alarm?.pending) void alarm.play();
 }

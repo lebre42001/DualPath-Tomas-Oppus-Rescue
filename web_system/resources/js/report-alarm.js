@@ -4,7 +4,11 @@ export class ReportAlarm {
         this.audio = audio;
         this.onChange = onChange;
         this.clock = clock;
-        this.enabled = false;
+        this.enabled = true;
+        this.ready = false;
+        this.pending = false;
+        this.starting = false;
+        this.isSample = false;
         this.playing = false;
         this.blocked = false;
         this.timer = null;
@@ -18,32 +22,56 @@ export class ReportAlarm {
     enable() {
         this.enabled = true;
         this.blocked = false;
-        // Called directly from a click: a short sample also unlocks browser audio.
-        return this.play(1200);
+        // A blocked arrival takes priority over the short activation sample.
+        return this.start(this.pending ? 10000 : 1200, !this.pending);
     }
 
-    async play(duration = 10000) {
-        if (!this.enabled || this.playing) return false;
+    play() { return this.start(10000, false); }
+
+    async start(duration, sample) {
+        if (!this.enabled) return false;
+        if (this.playing || this.starting) {
+            if (sample || !this.isSample) return false;
+            // An arrival must not be reduced to the short activation sample.
+            this.stop();
+        }
         const generation = ++this.generation;
-        this.playing = true;
-        this.timer = this.clock.setTimeout(() => this.stop(), duration);
+        this.pending = !sample;
+        this.starting = true;
+        this.isSample = sample;
+        // Bound a stalled network load too; the audible timer starts after play succeeds.
+        this.timer = this.clock.setTimeout(() => this.fail(), 15000);
         this.onChange();
         try {
+            // Retry the same supplied file after a temporary media/network failure.
+            if (this.audio.error) this.audio.load();
             this.audio.currentTime = 0;
             await this.audio.play();
-            return generation === this.generation;
+            if (generation !== this.generation) return false;
+            this.clock.clearTimeout(this.timer);
+            this.starting = false;
+            this.playing = true;
+            this.pending = false;
+            this.ready = true;
+            this.blocked = false;
+            this.timer = this.clock.setTimeout(() => this.stop(), duration);
+            this.onChange();
+            return true;
         } catch (_) {
             if (generation === this.generation) this.fail();
             return false;
         }
     }
 
-    stop() {
+    stop({ preservePending = false } = {}) {
         ++this.generation;
         this.clock.clearTimeout(this.timer);
         this.timer = null;
         this.audio.pause();
         this.playing = false;
+        this.starting = false;
+        this.isSample = false;
+        if (!preservePending) this.pending = false;
         this.onChange();
     }
 
@@ -52,8 +80,15 @@ export class ReportAlarm {
         this.stop();
     }
 
+    suspend() {
+        this.ready = false;
+        this.stop({ preservePending: true });
+    }
+
     fail() {
         this.blocked = true;
-        this.disable();
+        this.ready = false;
+        // Autoplay rejection is not the administrator choosing Mute.
+        this.stop({ preservePending: true });
     }
 }

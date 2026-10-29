@@ -170,7 +170,7 @@ SVG,
         </aside>
 
         <div class="ops-main {{ $isAdminReportsPage ? 'reports-ops-main' : '' }}">
-            <div class="live-toast-stack" data-live-toast-stack></div>
+            <div class="live-toast-stack" data-live-toast-stack aria-live="polite" aria-relevant="additions"></div>
 
             @unless ($hideTopbar)
                 <header class="topbar {{ $isAdminDashboard ? 'admin-dashboard-topbar' : '' }} {{ $isReportsPage ? 'reports-topbar' : '' }}">
@@ -234,9 +234,10 @@ SVG,
             <main id="main-content" tabindex="-1" class="content-stack {{ $isAdminReportsPage ? 'reports-content-stack' : '' }}">
                 @if ($authUser?->is_admin)
                     <section class="incoming-alarm-toolbar" aria-label="Report alarm">
-                        <div><strong>Report alarm</strong><small data-incoming-sound-status role="status">Enable sound to hear incoming reports.</small></div>
+                        <div><strong>Report alarm</strong><small data-incoming-sound-status role="status">Alarm on. Click once to activate browser audio.</small></div>
                         <div class="incoming-alarm-actions">
-                            <button type="button" class="pill-btn" data-incoming-sound aria-pressed="false">Enable sound</button>
+                            <button type="button" class="pill-btn" data-incoming-sound>Enable sound</button>
+                            <button type="button" class="pill-btn" data-incoming-sound-mute>Mute sound</button>
                             <button type="button" class="pill-btn" data-incoming-sound-stop hidden>Stop alarm</button>
                         </div>
                     </section>
@@ -282,7 +283,8 @@ SVG,
                 <button type="button" class="pill-btn" data-alert-center-close>Close</button>
             </div>
             <div class="incoming-report-controls">
-                <button type="button" class="pill-btn" data-incoming-sound aria-pressed="false">Enable sound</button>
+                <button type="button" class="pill-btn" data-incoming-sound>Enable sound</button>
+                <button type="button" class="pill-btn" data-incoming-sound-mute>Mute sound</button>
                 <button type="button" class="pill-btn" data-incoming-sound-stop hidden>Stop alarm</button>
                 <button type="button" class="pill-btn" data-incoming-clear>Mark all seen</button>
                 <small data-incoming-status role="status">Checking new reports…</small>
@@ -302,6 +304,7 @@ SVG,
         </aside>
         <section class="incoming-report-banner" data-incoming-banner role="status" aria-live="polite" hidden>
             <div><strong data-incoming-banner-title>New report received</strong><p data-incoming-banner-copy></p></div>
+            <button type="button" class="pill-btn" data-incoming-sound data-incoming-sound-unlock hidden>Enable sound</button>
             <button type="button" class="pill-btn" data-incoming-sound-stop hidden>Stop alarm</button>
             <button type="button" class="pill-btn" data-alert-center-toggle>View alerts</button>
         </section>
