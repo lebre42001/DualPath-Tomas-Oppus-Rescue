@@ -741,6 +741,27 @@ uses the actual detector with licensed local research frames for positioning and
 mocks the independent server verdict; it does not certify physical-camera
 liveness or replay resistance. Verify blink capture on the user's phone too.
 
+## Admin audit printing (2026-10-30)
+
+Overview keeps the latest six report audit actions. View all opens the existing
+ten-per-page modal with report/admin/note search, source, action, inclusive
+Philippines audit dates, and admin-name filters. Checkboxes retain selections
+across pages; applying or resetting filters clears them. Print one action from
+its row or detail dialog, print selected actions, or print every action matching
+the applied filters, including pages not currently loaded.
+
+`/admin/report-audit/print` uses the same admin access controls and historical
+audit query as the list. Printing is read-only and retains deleted-report audit
+snapshots. The A4 preview uses the existing report print assets, with optional
+recorded notes and no raw context, IP/device metadata, model internals, or secrets.
+The copy shows the selected scope, filters, admin, audit time, report reference,
+source, and historical status/severity changes. Copies are private and no-store.
+
+Deploy the normal web build and clear Laravel caches. No migration, firmware,
+severity-model change, or APK rebuild is required. Validate with the Laravel
+suite and Vite build; check multi-page selections, date boundaries, print
+preview, deleted history, and short-screen modal scrolling.
+
 ## Local Compose check
 
 After Docker Desktop is installed, create an untracked `.env` from

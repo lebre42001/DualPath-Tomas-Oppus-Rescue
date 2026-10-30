@@ -11,7 +11,9 @@ use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class AdminDashboardController extends Controller
@@ -114,9 +116,40 @@ class AdminDashboardController extends Controller
         $entries = $this->auditQuery($filters)->paginate(10, ['*'], 'audit_page', $filters['audit_page'] ?? 1);
 
         return response()->json([
-            'html' => view('admin.partials.report-audit-rows', ['auditTrail' => $entries])->render(),
+            'html' => view('admin.partials.report-audit-rows', ['auditTrail' => $entries, 'auditSelectable' => true])->render(),
             'pagination' => ['page' => $entries->currentPage(), 'lastPage' => $entries->lastPage(),
                 'total' => $entries->total(), 'from' => $entries->firstItem(), 'to' => $entries->lastItem()],
+        ])->header('Cache-Control', 'private, no-store');
+    }
+
+    public function printHistory(Request $request): Response
+    {
+        $filters = $this->auditFilters($request);
+        $options = $request->validate([
+            'audit_ids' => ['sometimes', 'required', 'string', 'max:4000', 'regex:/^[1-9][0-9]*(,[1-9][0-9]*)*$/'],
+            'include_notes' => ['sometimes', 'boolean'],
+            'print' => ['sometimes', 'boolean'],
+        ]);
+        $ids = isset($options['audit_ids']) ? array_values(array_unique(explode(',', $options['audit_ids']))) : [];
+        if (count($ids) > 500) {
+            throw ValidationException::withMessages(['audit_ids' => 'Select up to 500 actions per print copy, or print all matching filters.']);
+        }
+        $query = $this->auditQuery($filters);
+        if ($ids !== []) {
+            $query->whereIn('id', $ids);
+        }
+        $entries = $query->get();
+        if ($ids !== [] && $entries->count() !== count($ids)) {
+            throw ValidationException::withMessages(['audit_ids' => 'Some selected actions are unavailable or do not match these filters. Refresh the list and select them again.']);
+        }
+
+        return response()->view('admin.report-audit-print', [
+            'entries' => $entries,
+            'filters' => $filters,
+            'selectedIds' => $ids,
+            'includeNotes' => $request->boolean('include_notes'),
+            'autoPrint' => $request->boolean('print'),
+            'printedAt' => now()->timezone('Asia/Manila')->format('M d, Y h:i A'),
         ])->header('Cache-Control', 'private, no-store');
     }
 
@@ -126,6 +159,7 @@ class AdminDashboardController extends Controller
             'audit_source' => ['nullable', 'in:online,lora'],
             'audit_action' => ['nullable', 'in:coordination,severity_review,ai_analysis,deletion'],
             'audit_search' => ['nullable', 'string', 'max:100'],
+            'audit_admin' => ['nullable', 'string', 'max:100'],
             'audit_page' => ['nullable', 'integer', 'min:1'],
             'audit_from' => ['nullable', 'date_format:Y-m-d'],
             'audit_to' => array_merge(['nullable', 'date_format:Y-m-d'], $request->filled('audit_from') ? ['after_or_equal:audit_from'] : []),
@@ -141,10 +175,14 @@ class AdminDashboardController extends Controller
         if (filled($filters['audit_action'] ?? null)) {
             $query->where('action', $filters['audit_action']);
         }
+        if ($admin = trim($filters['audit_admin'] ?? '')) {
+            $pattern = '%'.str_replace(['!', '%', '_'], ['!!', '!%', '!_'], mb_strtolower($admin)).'%';
+            $query->whereRaw("LOWER(actor_name) LIKE ? ESCAPE '!'", [$pattern]);
+        }
         if ($search = trim($filters['audit_search'] ?? '')) {
             $pattern = '%'.str_replace(['!', '%', '_'], ['!!', '!%', '!_'], mb_strtolower($search)).'%';
             $query->where(function ($scoped) use ($pattern): void {
-                foreach (['report_code', 'actor_name', 'node_id', 'incident_type', 'notes'] as $column) {
+                foreach (['report_code', 'actor_name', 'node_id', 'incident_type', 'notes', 'label'] as $column) {
                     $scoped->orWhereRaw("LOWER({$column}) LIKE ? ESCAPE '!'", [$pattern]);
                 }
             });

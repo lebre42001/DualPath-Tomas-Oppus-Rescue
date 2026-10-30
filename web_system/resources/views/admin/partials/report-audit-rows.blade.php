@@ -7,7 +7,7 @@
         $after = $statusLabels[$entry->status_after] ?? ($entry->status_after ?: 'Not recorded');
     @endphp
     <tr class="command-audit-row" data-command-audit-row data-command-audit-title="{{ $entryTitle }}" tabindex="0" role="button" aria-label="View audit details for {{ $entryTitle }}">
-        <td data-label="Action"><strong>{{ $entry->label }}</strong><span>{{ \Illuminate\Support\Str::limit($entry->notes ?: 'View action details', 80) }}</span></td>
+        <td data-label="Action"><div class="audit-action-title">@if ($auditSelectable ?? false)<input type="checkbox" data-audit-select="{{ $entry->id }}" aria-label="Select audit #{{ $entry->id }}: {{ $entryTitle }}">@endif<strong>{{ $entry->label }}</strong></div><span>{{ \Illuminate\Support\Str::limit($entry->notes ?: 'View action details', 80) }}</span><a class="audit-row-print" href="{{ route('admin.report-audit.print', ['audit_ids' => $entry->id]) }}" target="_blank" rel="noopener">Print</a></td>
         <td data-label="Incident"><strong>{{ $entry->incident_type }}</strong><span>{{ $entry->report_code }}</span>@unless ($entry->report)<span>Report deleted</span>@endunless</td>
         <td data-label="Source"><span class="tag {{ $entry->transmission_type === 'lora' ? 'amber' : 'blue' }}">{{ $entry->transmission_type === 'lora' ? 'LoRa' : 'Online' }}</span>@if ($entry->node_id)<span>{{ $entry->node_id }}</span>@endif</td>
         <td data-label="Status"><strong>{{ $after }}</strong>@if ($entry->status_before && $entry->status_before !== $entry->status_after)<span>From {{ $before }}</span>@endif</td>
@@ -27,6 +27,7 @@
                     @if ($entry->imported)<p class="section-copy command-audit-modal-wide">Imported from the saved report log. Missing historical details are shown as Not recorded.</p>@endif
                 </div>
                 <div class="button-row command-audit-modal-actions">
+                    <a class="btn btn-secondary" href="{{ route('admin.report-audit.print', ['audit_ids' => $entry->id]) }}" target="_blank" rel="noopener">Print audit</a>
                     @if ($entry->report)<a class="btn btn-primary" href="{{ route($entry->transmission_type === 'lora' ? 'lora-reports.index' : 'reports.index', ['review' => $entry->incident_report_id]).'#incident-report-'.$entry->incident_report_id }}">{{ $entry->transmission_type === 'lora' ? 'View LoRa report' : 'View online report' }}</a>@else<span class="section-copy">The report was deleted. This audit entry is retained.</span>@endif
                     <button type="button" class="btn btn-secondary" data-command-audit-modal-close>Close</button>
                 </div>

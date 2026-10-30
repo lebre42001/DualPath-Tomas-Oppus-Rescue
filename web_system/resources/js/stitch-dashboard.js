@@ -621,6 +621,7 @@ function initializeCommandAuditModal() {
             return;
         }
 
+        if (target.closest('a, button, input, label, select, textarea')) return;
         event.preventDefault();
         openModal(row);
     });
@@ -636,6 +637,7 @@ function initializeCommandAuditModal() {
             return;
         }
 
+        if (event.target !== row) return;
         event.preventDefault();
         openModal(row);
     });

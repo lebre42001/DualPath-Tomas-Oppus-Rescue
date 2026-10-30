@@ -45,6 +45,7 @@ h1 { margin: 6px 0 10px; font-size: 24px; }
 @media print {
     .online-report-print { page: online-report; }
     .lora-report-print { page: lora-report; }
+    .audit-history-print { page: audit-history; }
     .lora-report-print .print-report { break-inside: auto; page-break-inside: auto; }
     body { background: white; color: black; font-size: 10pt; }
     .print-toolbar { display: none !important; }
@@ -61,4 +62,8 @@ h1 { margin: 6px 0 10px; font-size: 24px; }
 @page lora-report {
     @top-right { content: 'LoRa report record'; }
     @bottom-left { content: 'LoRa report history'; }
+}
+@page audit-history {
+    @top-right { content: 'Admin audit history'; }
+    @bottom-left { content: 'Administrative action history'; }
 }

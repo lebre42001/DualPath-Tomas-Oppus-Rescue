@@ -10,6 +10,14 @@ body.admin-portal .audit-history-filter-actions { display: flex; flex-wrap: wrap
 body.admin-portal .audit-history-filters .btn { width: auto; }
 body.admin-portal .audit-history-scroll { padding-top: 8px; }
 body.admin-portal .audit-history-scroll .command-table-wrap { overflow: visible; }
+body.admin-portal .audit-action-title { display: flex; align-items: flex-start; gap: 8px; }
+body.admin-portal .audit-action-title input, body.admin-portal .audit-history-printbar input { width: 18px; height: 18px; flex: 0 0 18px; accent-color: var(--primary, #be1026); }
+body.admin-portal .audit-row-print { display: inline-flex; align-items: center; min-height: 32px; margin-top: 3px; font-size: .8rem; font-weight: 700; color: var(--link, #1767a8); }
+body.admin-portal .audit-history-printbar { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px; padding: 10px 20px; border-bottom: 1px solid var(--line); font-size: .8rem; }
+body.admin-portal .audit-history-printbar label, body.admin-portal .audit-history-printbar > div { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+body.admin-portal .audit-history-printbar > div { margin-left: auto; }
+body.admin-portal .audit-history-printbar .btn { width: auto; }
+body.admin-portal .audit-history-printbar [aria-disabled="true"] { opacity: .5; pointer-events: none; }
 @media (max-width: 650px) {
     body.admin-portal .audit-history-filters { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px 10px; padding: 10px 12px; }
     body.admin-portal .audit-history-search, body.admin-portal .audit-history-filter-actions { grid-column: 1 / -1; }
@@ -17,4 +25,8 @@ body.admin-portal .audit-history-scroll .command-table-wrap { overflow: visible;
     body.admin-portal .audit-history-scroll .command-audit-row { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
     body.admin-portal .audit-history-scroll .command-audit-table td { min-width: 0; padding: 8px 10px; }
     body.admin-portal .audit-history-scroll .command-audit-table td:first-child > span { display: none; }
+}
+@media (max-height: 650px) {
+    body.admin-portal .audit-history-dialog { display: block; overflow-y: auto; }
+    body.admin-portal .audit-history-scroll { min-height: 160px; max-height: 50dvh; overflow-y: auto; }
 }
