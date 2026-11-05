@@ -295,6 +295,8 @@ const clearSuccessDrafts = async () => {
 };
 
 onDomReady( () => {
+    // Civilian drafts use an account-scoped store and managed upload recovery.
+    if (document.body.classList.contains('civilian-portal')) return;
     const successMarker = document.querySelector('[data-report-draft-clear-on-success]');
     if (successMarker) {
         void clearSuccessDrafts();

@@ -200,6 +200,7 @@
 
 @section('content')
     @if ($isCivilian)
+        @include('reports.partials.civilian-drafts')
         <section class="civilian-shell civilian-home-compact">
             <section class="civilian-home-card">
                 <div class="civilian-home-card-copy">

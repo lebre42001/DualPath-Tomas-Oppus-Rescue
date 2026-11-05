@@ -40,6 +40,9 @@
 @endsection
 
 @section('content')
+    @if ($isCivilian)
+        @include('reports.partials.civilian-drafts')
+    @endif
     <section id="report-form" class="panel stack" data-report-form-root>
         <div class="panel-head">
             <div class="panel-heading">
@@ -112,9 +115,6 @@
                                 <span data-requirement-status="selfie">Selfie opens on send</span>
                                 <span data-requirement-status="gps">Still required</span>
                                 <span data-requirement-status="description">Still required</span>
-                                <span data-draft-queue-count>0 queued</span>
-                                <span data-draft-autosave-state>Autosave ready</span>
-                                <span data-draft-status>Draft ready.</span>
                             </div>
                         </div>
 
@@ -197,6 +197,8 @@
                         <p data-capture-submit-status role="status" aria-live="polite">Add a scene photo, location, and short description.</p>
                         <button class="btn btn-primary" type="submit" data-draft-submit data-report-submit>Send Report</button>
                         <p class="civilian-selfie-note">A verification selfie opens before the report is sent.</p>
+                        <button class="btn btn-secondary" type="button" data-civilian-draft-save>Save draft</button>
+                        <p class="civilian-draft-feedback" data-civilian-draft-feedback role="status" aria-live="polite">Your details and scene photo are saved on this device as you edit. A draft is not a received report.</p>
                     </section>
                 </div>
             @else

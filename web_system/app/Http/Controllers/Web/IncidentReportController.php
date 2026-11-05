@@ -13,6 +13,7 @@ use App\Support\EvidencePhotoPreScreen;
 use App\Support\IncidentFeedBroadcaster;
 use App\Support\IncidentReportIngestor;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -129,7 +130,37 @@ class IncidentReportController extends Controller
         ]);
     }
 
-    public function store(Request $request, IncidentReportIngestor $ingestor): RedirectResponse
+    public function submission(Request $request, string $submissionId, IncidentReportIngestor $ingestor): JsonResponse
+    {
+        $report = $ingestor->existing($ingestor->onlineKey($request->user(), $submissionId));
+        $received = $report !== null && (int) $report->reported_by === (int) $request->user()->getKey();
+
+        return response()->json([
+            'received' => $received,
+            'redirect_url' => $received ? route('reports.success', $report) : null,
+            'report_code' => $received ? $report->report_code : null,
+        ], 200, ['Cache-Control' => 'private, no-store']);
+    }
+
+    private function submissionResponse(Request $request, IncidentReport $report, bool $duplicate = false): RedirectResponse|JsonResponse
+    {
+        if ($request->expectsJson()) {
+            return response()->json([
+                'received' => true,
+                'duplicate' => $duplicate,
+                'redirect_url' => route('reports.success', $report),
+                'report_code' => $report->report_code,
+            ], $duplicate ? 200 : 201, ['Cache-Control' => 'private, no-store']);
+        }
+
+        $response = redirect()->route('reports.success', $report);
+
+        return $duplicate
+            ? $response->with('status', 'This emergency report was already received. The existing database record was kept.')
+            : $response;
+    }
+
+    public function store(Request $request, IncidentReportIngestor $ingestor): RedirectResponse|JsonResponse
     {
         $isCivilian = $request->user()?->isCivilian() ?? false;
 
@@ -196,9 +227,7 @@ class IncidentReportController extends Controller
         $ingestKey = $ingestor->onlineKey($request->user(), $validated['submission_id'] ?? null);
 
         if ($existing = $ingestor->existing($ingestKey)) {
-            return redirect()
-                ->route('reports.success', $existing)
-                ->with('status', 'This emergency report was already received. The existing database record was kept.');
+            return $this->submissionResponse($request, $existing, true);
         }
 
         $description = trim((string) ($validated['description'] ?? ''));
@@ -315,14 +344,12 @@ class IncidentReportController extends Controller
         if (! $result['created']) {
             Storage::delete(array_filter([$evidencePath, $selfiePath]));
 
-            return redirect()
-                ->route('reports.success', $report)
-                ->with('status', 'This emergency report was already received. The existing database record was kept.');
+            return $this->submissionResponse($request, $report, true);
         }
 
         IncidentFeedBroadcaster::dispatch($report, 'created');
 
-        return redirect()->route('reports.success', $report);
+        return $this->submissionResponse($request, $report);
     }
 
     public function show(IncidentReport $incidentReport): View

@@ -5,6 +5,48 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Civilian interrupted-upload drafts (2026-11-06)
+
+Deploy the civilian draft UI/store/upload modules, report Blade views, scoped
+submission receipt route, controller JSON responses, and rebuilt Vite assets
+together. No new database migration or environment variable is needed. The
+existing native form redirect and responder submission remain supported.
+
+Civilian Home, My Reports and Send Report show local drafts with Continue/Delete,
+the last saved time and interruption state. Text and the scene photo are saved
+to account-scoped IndexedDB before upload. The same submission UUID is retained
+when a draft resumes. If IndexedDB is blocked/full, text-only storage is explicitly
+labelled and the photo must be reattached. If both stores fail, the UI says that
+local saving failed; keep the form open rather than assuming a draft exists.
+Local drafts stay on that browser/device; they are not server receipts and can
+be lost if browser site data is cleared or removed by the device.
+
+The upload stays in the page, handles network failure even when the browser says
+online, notices slowness after 15 seconds and aborts an unconfirmed upload after
+90 seconds. A user can stop the request and keep the draft. Reconnection does not
+automatically submit a report. Continue/Send checks the user's own receipt when a
+previous attempt may have reached the server; existing ingest-key idempotency
+prevents a repeated submission UUID creating a second report. The read-only
+`GET /reports/submissions/{submissionId}` route requires authentication and
+returns no details for another user's UUID, with private/no-store responses.
+
+Resuming restores the description, landmark and available scene photo. GPS fixes,
+verification selfies, CSRF tokens and liveness proofs are not persisted in these
+drafts. A fresh GPS lock and live face/blink check are still required to send.
+Previously unowned legacy draft records are not automatically attributed to a
+signed-in account. The administrator's existing draft tools remain separate.
+
+Validation: `npm run test:report-drafts`, Laravel draft/persistence/verification
+feature tests, `npm run build`, and `tool/check_civilian_drafts.cjs` using an
+installed Playwright engine. Its local fixtures never submit a real report.
+Before calling this release live, verify the new build asset identity, public
+login, unauthenticated receipt route (401 JSON), and an authenticated application
+page. Test a genuine phone connection interruption with a designated test report
+separately; simulated upload failures do not establish cellular performance.
+
+Browser references: [online status is only a connectivity hint](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/onLine),
+[IndexedDB completion confirms the transaction committed](https://developer.mozilla.org/en-US/docs/Web/API/IDBTransaction/complete_event).
+
 ## LoRa delivery and incoming-report alerts (2026-10-29)
 
 The later `mesh-reconnect-20261029` firmware also needs the ACK `ackToken` /

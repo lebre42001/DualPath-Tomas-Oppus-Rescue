@@ -3,6 +3,7 @@
 @import './legal.css';
 @import './brand.css';
 @import './system-flow.css';
+@import './civilian-drafts.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';

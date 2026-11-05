@@ -411,6 +411,7 @@ onDomReady( () => {
     });
 
     const updateCivilianReadiness = () => {
+        if (form?.dataset.reportSending === 'true') return false;
         if (!isCivilian) {
             return true;
         }

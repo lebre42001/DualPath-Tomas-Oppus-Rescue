@@ -1,0 +1,11 @@
+.civilian-drafts-panel { border: 1px solid var(--amber, #e8c878); min-width: 0; }
+.civilian-draft-list { display: grid; gap: 12px; }
+.civilian-draft-card { padding: 14px; border: 1px solid var(--line, #d8e1e8); border-radius: 12px; background: var(--surface-alt, #f7fbff); color: var(--ink, #0f1f2f); min-width: 0; }
+.civilian-draft-card strong, .civilian-draft-card p { overflow-wrap: anywhere; }
+.civilian-draft-card p { margin: 7px 0; line-height: 1.5; }
+.civilian-draft-card .button-row { margin-top: 12px; flex-wrap: wrap; }
+.civilian-draft-card .btn { min-height: 44px; }
+.civilian-portal .civilian-draft-card .btn.btn-secondary { background: var(--surface, #fff); color: var(--blue, #2068ae); border-color: var(--line-strong, #ccd6df); }
+.civilian-draft-feedback { font-size: .875rem; line-height: 1.55; margin: 0; }
+[data-civilian-drafts][hidden] { display: none !important; }
+@media (max-width: 480px) { .civilian-draft-card .button-row > .btn { flex: 1; } }
