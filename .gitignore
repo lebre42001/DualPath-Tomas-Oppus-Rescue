@@ -6,6 +6,10 @@ Thumbs.db
 .fleet/
 .zed/
 
+# Local test compilers, scratch files, and generated document/diagram exports
+/tmp/
+/output/
+
 # Secrets / local env
 **/.env
 **/.env.*
