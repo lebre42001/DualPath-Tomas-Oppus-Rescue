@@ -234,7 +234,7 @@ SVG,
             <main id="main-content" tabindex="-1" class="content-stack {{ $isAdminReportsPage ? 'reports-content-stack' : '' }}">
                 @if ($authUser?->is_admin)
                     <section class="incoming-alarm-toolbar" aria-label="Report alarm">
-                        <div><strong>Report alarm</strong><small data-incoming-sound-status role="status">Alarm on. Click once to activate browser audio.</small></div>
+                        <div><strong>Report alarm</strong><small data-incoming-sound-status role="status">Alarm on. Click once to prepare audio silently. New reports sound for 10 seconds.</small></div>
                         <div class="incoming-alarm-actions">
                             <button type="button" class="pill-btn" data-incoming-sound>Enable sound</button>
                             <button type="button" class="pill-btn" data-incoming-sound-mute>Mute sound</button>

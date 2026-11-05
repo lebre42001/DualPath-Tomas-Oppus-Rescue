@@ -43,14 +43,16 @@ export function initializeIncomingReports(onReport) {
     const status = panel.querySelector('[data-incoming-status]');
     const soundButtons = document.querySelectorAll('[data-incoming-sound]');
     const stopButtons = document.querySelectorAll('[data-incoming-sound-stop]');
-    let alarm = null, busy = false, stopped = false, unauthorized = false, timer = null;
+    let alarm = null, busy = false, stopped = false, unauthorized = false, timer = null, baselineNeeded = true;
     const syncSound = () => {
         if (alarm) {
-            try { localStorage.setItem(alarmKey, JSON.stringify({ enabled: alarm.enabled, pending: alarm.pending })); } catch (_) { /* Optional. */ }
+            // Only the user's preference survives navigation. A stale pending
+            // boolean must never become an alarm on a later refresh/click.
+            try { localStorage.setItem(alarmKey, JSON.stringify({ enabled: alarm.enabled })); } catch (_) { /* Optional. */ }
         }
         soundButtons.forEach(button => {
-            button.textContent = alarm?.enabled && alarm?.ready ? 'Test sound' : 'Enable sound';
-            if (button.hasAttribute('data-incoming-sound-unlock')) button.hidden = !alarm?.pending || !alarm?.blocked;
+            button.textContent = alarm?.enabled && alarm?.pending ? 'Play report alarm' : alarm?.enabled && alarm?.ready ? 'Test sound' : 'Enable sound';
+            if (button.hasAttribute('data-incoming-sound-unlock')) button.hidden = !alarm?.pending;
         });
         document.querySelectorAll('[data-incoming-sound-mute]').forEach(button => { button.hidden = !alarm?.enabled; });
         stopButtons.forEach(button => { button.hidden = !alarm?.playing && !alarm?.starting && !alarm?.pending; });
@@ -60,12 +62,12 @@ export function initializeIncomingReports(onReport) {
         document.querySelectorAll('[data-incoming-sound-status]').forEach(copy => {
             copy.textContent = !alarm ? 'Audio unavailable. Visual report alerts remain active.'
                 : !alarm.enabled ? 'Sound muted on this browser. Tap Enable sound to turn it back on.'
-                : alarm.blocked && alarm.pending ? 'New report waiting for sound. Click anywhere or tap Enable sound to play the alarm.'
-                : alarm.blocked ? 'Browser audio needs activation. Click anywhere or tap Enable sound.'
+                : alarm.pending && !alarm.starting && !alarm.playing ? 'A new report is waiting for sound. Tap Play report alarm; ordinary clicks stay silent.'
+                : alarm.blocked ? 'Browser audio needs activation. Tap Enable sound. No test sound plays automatically.'
                 : alarm.starting ? 'Loading alarm sound...'
-                : alarm?.playing ? 'Alarm playing (up to 10 seconds).'
+                : alarm?.playing ? (alarm.isSample ? 'Playing the requested short sound test.' : 'New-report alarm playing for 10 seconds. Stop alarm to end it sooner.')
                 : alarm.ready ? 'Sound ready for new online and LoRa reports. Keep this website open.'
-                : 'Alarm is on. Your first click activates audio with a short sound test.';
+                : 'Alarm is on. Your first click prepares audio silently; only new reports trigger an alarm.';
         });
     };
     try {
@@ -75,7 +77,6 @@ export function initializeIncomingReports(onReport) {
         let preference = {};
         try { preference = JSON.parse(localStorage.getItem(alarmKey) ?? '{}') ?? {}; } catch (_) { /* Optional. */ }
         alarm.enabled = preference.enabled !== false;
-        alarm.pending = alarm.enabled && preference.pending === true;
     } catch (_) { /* Visual notifications remain available without audio support. */ }
     const save = () => { try { localStorage.setItem(storageKey, JSON.stringify(state.snapshot())); } catch (_) { /* Optional. */ } };
     const render = () => {
@@ -112,6 +113,7 @@ export function initializeIncomingReports(onReport) {
     };
     controller = {
         receive(payload, initial) {
+            if (stopped || unauthorized) return;
             const fresh = state.accept(payload, initial);
             if (fresh) { save(); render(); if (!initial) void alarm?.play(); }
             if (!initial && (fresh || payload.action !== 'created')) onReport(payload, fresh);
@@ -123,15 +125,17 @@ export function initializeIncomingReports(onReport) {
             button.textContent = 'Sound unavailable';
             return;
         }
-        void alarm.enable();
+        if (alarm.enabled && alarm.ready && !alarm.pending) void alarm.test();
+        else void alarm.enable();
     }));
     document.querySelectorAll('[data-incoming-sound-mute]').forEach(button => button.addEventListener('click', () => alarm?.disable()));
     stopButtons.forEach(button => button.addEventListener('click', () => alarm?.stop()));
     // Browser activation belongs to the document, not a localStorage flag.
-    // Retry during a real click/key gesture, including a previously blocked arrival.
+    // Prime audio silently during a genuine gesture. Pending arrivals require
+    // the explicit Play report alarm button; an unrelated click never replays one.
     const activate = event => {
         if (!event.isTrusted || event.target.closest?.('[data-incoming-sound], [data-incoming-sound-mute], [data-incoming-sound-stop], [data-incoming-clear], .alert-item')) return;
-        if (alarm?.enabled && !alarm.ready && !alarm.starting && !alarm.playing) void alarm.enable();
+        if (alarm?.enabled && !alarm.ready && !alarm.starting && !alarm.playing) void alarm.unlock();
     };
     document.addEventListener('click', activate);
     document.addEventListener('keydown', activate);
@@ -150,13 +154,16 @@ export function initializeIncomingReports(onReport) {
         const timeout = window.setTimeout(() => abort.abort(), 15000);
         try {
             const url = new URL(panel.dataset.feedUrl, window.location.origin);
-            if (state.cursor !== null) url.searchParams.set('after', String(state.cursor));
+            // Each new page establishes a silent history baseline. A stored
+            // cursor from yesterday is not a fresh live arrival on refresh.
+            if (!baselineNeeded && state.cursor !== null) url.searchParams.set('after', String(state.cursor));
             const response = await fetch(url, { credentials: 'same-origin', cache: 'no-store', headers: { Accept: 'application/json' }, signal: abort.signal });
             if ([401, 403].includes(response.status)) { alarm?.stop(); stopped = true; unauthorized = true; throw new Error('Sign in again to receive reports.'); }
             if (!response.ok) throw new Error('Updates delayed; retrying.');
             const data = await response.json();
-            for (const item of data.items) controller.receive(item, data.initial === true);
-            if (Number.isSafeInteger(data.cursor)) state.cursor = Math.max(state.cursor ?? 0, data.cursor);
+            for (const item of data.items) controller.receive(item, baselineNeeded || data.initial === true);
+            if (Number.isSafeInteger(data.cursor)) state.cursor = baselineNeeded ? data.cursor : Math.max(state.cursor ?? 0, data.cursor);
+            baselineNeeded = false;
             save(); status.textContent = 'Checking for new reports every 5 seconds';
         } catch (error) { status.textContent = stopped ? error.message : 'Updates delayed; retrying.'; }
         finally { window.clearTimeout(timeout); busy = false; }
@@ -168,8 +175,6 @@ export function initializeIncomingReports(onReport) {
         stopped = false;
         window.clearInterval(timer);
         void poll(); timer = window.setInterval(poll, 5000);
-        if (alarm?.pending) void alarm.play();
     });
     syncSound(); render(); void poll(); timer = window.setInterval(poll, 5000);
-    if (alarm?.pending) void alarm.play();
 }

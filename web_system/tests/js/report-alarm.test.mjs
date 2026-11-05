@@ -6,9 +6,9 @@ import { IncomingReportState } from '../../resources/js/incoming-reports.js';
 function fixture() {
     const callbacks = new Map(), timers = new Map();
     let id = 0;
-    const audio = { plays: 0, pauses: 0, currentTime: 12,
+    const audio = { plays: 0, pauses: 0, currentTime: 12, muted: false, starts: [],
         addEventListener(name, callback) { callbacks.set(name, callback); },
-        play() { this.plays++; return Promise.resolve(); },
+        play() { this.plays++; this.starts.push({ muted: this.muted, loop: this.loop }); return Promise.resolve(); },
         pause() { this.pauses++; },
     };
     const clock = { setTimeout(callback, duration) { timers.set(++id, { callback, duration }); return id; },
@@ -18,14 +18,18 @@ function fixture() {
     return { audio, alarm, timers, callbacks, finish };
 }
 
-test('alarm defaults on; activation sample and actual arrival have separate bounded durations', async () => {
+test('activation is silent; only an explicit test or fresh arrival is audible', async () => {
     const { audio, alarm, timers, finish } = fixture();
     assert.equal(alarm.enabled, true); assert.equal(alarm.ready, false);
     await alarm.enable(); assert.equal(audio.plays, 1);
+    assert.deepEqual(audio.starts, [{ muted: true, loop: false }]);
+    assert.equal(alarm.ready, true); assert.equal(alarm.playing, false); assert.equal(timers.size, 0);
+    assert.equal(audio.muted, false);
+    await alarm.test();
     assert.equal([...timers.values()][0].duration, 1200);
     finish(); assert.equal(alarm.enabled, true); assert.equal(alarm.playing, false);
     await alarm.play(); assert.equal([...timers.values()][0].duration, 10000);
-    assert.equal(audio.currentTime, 0); assert.equal(audio.loop, false);
+    assert.equal(audio.currentTime, 0); assert.equal(audio.loop, true);
     finish(); assert.equal(alarm.playing, false); assert.equal(timers.size, 0);
 });
 
@@ -55,19 +59,19 @@ test('blocked playback retains the desired setting and retries a pending arrival
     assert.equal(timers.size, 0);
 });
 
-test('a report arriving during the activation sample gets a full alarm', async () => {
+test('a report arriving during an explicitly requested sample gets a full alarm', async () => {
     const { alarm, timers } = fixture();
-    await alarm.enable(); assert.equal([...timers.values()][0].duration, 1200);
+    await alarm.test(); assert.equal([...timers.values()][0].duration, 1200);
     await alarm.play(); assert.equal(timers.size, 1);
     assert.equal([...timers.values()][0].duration, 10000);
     assert.equal(alarm.isSample, false);
 });
 
-test('navigation suspension preserves an unplayed arrival and does not mute the preference', async () => {
+test('navigation suspension drops stale audio replay without muting future arrivals', async () => {
     const { audio, alarm } = fixture();
     audio.play = () => Promise.reject(new Error('NotAllowedError'));
     await alarm.play(); alarm.suspend();
-    assert.equal(alarm.pending, true); assert.equal(alarm.enabled, true); assert.equal(alarm.ready, false);
+    assert.equal(alarm.pending, false); assert.equal(alarm.enabled, true); assert.equal(alarm.ready, false);
     alarm.disable(); assert.equal(alarm.pending, false); assert.equal(alarm.enabled, false);
 });
 
@@ -110,4 +114,51 @@ test('initial history, updates and Echo/poll duplicates cannot produce extra ala
     assert.equal(audio.plays, 2);
     await receive(7, false, 'created', 'lora');
     assert.equal(audio.plays, 3);
+});
+
+test('an incidental silent unlock never replays a blocked arrival', async () => {
+    const { audio, alarm, timers } = fixture();
+    const play = audio.play.bind(audio);
+    audio.play = () => Promise.reject(new Error('NotAllowedError'));
+    await alarm.play(); assert.equal(alarm.pending, true);
+    audio.play = play;
+    await alarm.unlock();
+    assert.deepEqual(audio.starts, [{ muted: true, loop: false }]);
+    assert.equal(alarm.pending, true); assert.equal(alarm.playing, false); assert.equal(timers.size, 0);
+    await alarm.enable();
+    assert.deepEqual(audio.starts[1], { muted: false, loop: true });
+    assert.equal([...timers.values()][0].duration, 10000);
+});
+
+test('re-enabling an already primed muted alarm persists the choice without emitting a test sound', async () => {
+    const { audio, alarm } = fixture();
+    await alarm.enable(); alarm.disable();
+    const before = audio.plays; let changes = 0;
+    alarm.onChange = () => { changes++; };
+    assert.equal(await alarm.enable(), true);
+    assert.equal(alarm.enabled, true); assert.equal(alarm.ready, true);
+    assert(changes > 0); assert.equal(audio.plays, before);
+});
+
+test('a genuine arrival can interrupt a stalled silent unlock without being muted or canceled later', async () => {
+    const { audio, alarm, timers } = fixture();
+    let resolveUnlock;
+    const play = audio.play.bind(audio);
+    audio.play = () => { audio.play = play; return new Promise(resolve => { resolveUnlock = resolve; }); };
+    const unlocking = alarm.unlock();
+    await alarm.play();
+    resolveUnlock(); assert.equal(await unlocking, false);
+    assert.equal(alarm.playing, true); assert.equal(audio.muted, false);
+    assert.equal([...timers.values()][0].duration, 10000);
+});
+
+test('a short source file cannot truncate a real arrival or extend its original deadline', async () => {
+    const { audio, alarm, callbacks, timers, finish } = fixture();
+    await alarm.play(); const originalTimer = [...timers.keys()][0];
+    callbacks.get('ended')();
+    assert.equal(alarm.playing, true); assert.equal(audio.plays, 2);
+    assert.deepEqual([...timers.keys()], [originalTimer]);
+    finish(); assert.equal(alarm.playing, false);
+    await alarm.test(); callbacks.get('ended')();
+    assert.equal(alarm.playing, false); assert.equal(timers.size, 0);
 });

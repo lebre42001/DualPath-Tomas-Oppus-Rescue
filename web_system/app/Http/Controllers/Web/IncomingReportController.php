@@ -19,7 +19,7 @@ class IncomingReportController extends Controller
         $cursor = $initial ? (int) IncidentReport::query()->max('id') : (int) $validated['after'];
         $query = IncidentReport::query()->with('assignedResponder');
         $reports = $initial
-            ? $query->where('status', 'received')->latest('id')->take(20)->get()->reverse()->values()
+            ? $query->where('id', '<=', $cursor)->where('status', 'received')->latest('id')->take(20)->get()->reverse()->values()
             : $query->where('id', '>', $cursor)->orderBy('id')->take(50)->get();
 
         return response()->json([

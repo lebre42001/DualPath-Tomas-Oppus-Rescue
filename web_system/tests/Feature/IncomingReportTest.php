@@ -7,6 +7,7 @@ use App\Models\IncidentReport;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -59,6 +60,23 @@ class IncomingReportTest extends TestCase
         $page = $this->actingAs($admin)->getJson(route('monitoring.reports.feed', ['after' => 0]))->assertOk()->assertJsonCount(50, 'items');
         $this->getJson(route('monitoring.reports.feed', ['after' => $page->json('cursor')]))->assertOk()->assertJsonCount(3, 'items');
         $this->getJson(route('monitoring.reports.feed', ['after' => -1]))->assertUnprocessable();
+    }
+
+    public function test_arrival_after_the_initial_cursor_is_not_swallowed_by_silent_history(): void
+    {
+        $admin = User::factory()->create(['is_admin' => true, 'role' => 'admin']);
+        $inserted = false;
+        DB::listen(function ($query) use (&$inserted): void {
+            if (! $inserted && str_contains(strtolower($query->sql), 'max(') && str_contains($query->sql, 'incident_reports')) {
+                $inserted = true;
+                $this->report(['description' => 'Arrived while history was loading.']);
+            }
+        });
+        $initial = $this->actingAs($admin)->getJson(route('monitoring.reports.feed'))
+            ->assertOk()->assertJsonPath('initial', true)->assertJsonCount(0, 'items');
+        $this->assertTrue($inserted);
+        $this->getJson(route('monitoring.reports.feed', ['after' => $initial->json('cursor')]))
+            ->assertOk()->assertJsonCount(1, 'items')->assertJsonPath('initial', false);
     }
 
     private function report(array $attributes = []): IncidentReport

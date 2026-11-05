@@ -5,6 +5,43 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Quiet alarm activation and fresh-arrival audio (2026-11-06)
+
+Deploy `report-alarm.js`, `incoming-reports.js`, the layout copy, the initial feed
+snapshot bound and rebuilt Vite assets together. No migration, new credential,
+AI retraining or model selection change is involved.
+
+Ordinary trusted clicks/keys prime the audio element while muted, then immediately
+pause/reset it; they do not play the former 1.2-second activation sample. Explicit
+Test sound still plays a short sample. A fresh Online/LoRa arrival plays the
+existing MP3 for ten seconds, with Stop alarm and persistent Mute controls. The
+arrival uses looping and a fixed timer; a source-file end cannot truncate the
+alarm or extend its deadline. The supplied file is about 74.19 seconds long.
+
+Every newly loaded page establishes a silent initial history snapshot, including
+the already pending/unreviewed reports. Only subsequent live arrivals sound.
+The feed bounds initial rows by its captured maximum ID so a concurrent new
+arrival remains available to the next delta poll. Echo/poll duplicates, status
+edits and report links do not create extra alarms. Only the enabled preference
+is persisted; obsolete stored pending-audio booleans are ignored. Stop or page
+navigation does not replay an old alarm. Visual unread notifications remain
+separate from the incident's review/response status.
+
+When browser autoplay blocks a real arrival, the visible Play report alarm
+button retries it explicitly. An unrelated click only primes silently. Sound
+cannot be guaranteed on a locked/suspended device or when browser/OS audio is
+blocked; retain the visible alarm/unread UI. After receiver authorization
+expires, both polling and further arrival audio stop.
+
+Validate with `npm run test:report-alarm`, Laravel `IncomingReportTest`, a Vite
+build and `tool/check_report_alarm.cjs` using an installed Playwright engine. Its
+sixteen-report feed is isolated; playback-state checks include simulated media
+and the real MP3 in an isolated browser with speaker output muted. It never
+creates a real incident. Verify the deployed JS signature, public app
+route, and real admin activation/arrival on the intended device separately.
+References: [media autoplay](https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Autoplay),
+[media looping](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/loop).
+
 ## Civilian interrupted-upload drafts (2026-11-06)
 
 Deploy the civilian draft UI/store/upload modules, report Blade views, scoped
