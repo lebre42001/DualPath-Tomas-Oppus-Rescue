@@ -71,7 +71,7 @@ fix. [RANGE_TEST.md](RANGE_TEST.md) covers the proposed 400 m link and antenna c
    to each physical NODE_2–NODE_10. **Arduino upload needed on every board.**
    Updating the website/repository cannot flash the ESP32 devices.
 4. Use the default matching SF7 profile for the live mesh. Serial Monitor at
-   115200 and the local dashboard should show `mesh-reconnect-20261029`. Do not
+   115200 and the local dashboard should show `mesh-rx-recovery-20261105`. Do not
    mix the optional SF9 test profile into the live SF7 mesh.
 5. Start NODE_1 with a working server connection, then bring up the fields and
    observe green peer evidence, yellow gateway-route indication and fresh website

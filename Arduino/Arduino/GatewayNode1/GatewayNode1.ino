@@ -744,6 +744,7 @@ void handleLocalStatus() {
   String json = "{";
   json += AksyResRadio::statusFields();
   json += meshRadio.statusFields();
+  json += meshRadioPort.statusFields();
   json += reportGuardStatus((uint32_t)localServer.client().remoteIP());
   json += "\"node_id\":\"NODE_1\",";
   json += "\"server_base_url\":\"" + jsonEscape(SERVER_BASE_URL) + "\",";

@@ -44,8 +44,9 @@ const char REPORT_GUARD_SCRIPT[] PROGMEM = R"guard(
   });
   const paint=()=>{
     const remaining=Math.max(0,Math.ceil((retryUntil-Date.now())/1000));
-    button.disabled=busy||!!lastStatus.pending||remaining>0;
-    indicator.textContent=remaining?'Anti-spam protection: wait '+remaining+'s before another report.':lastStatus.pending?'This node already has a report waiting for admin acknowledgment.':'Anti-spam protection active: one new report per client every 60 seconds. Saved-report retries continue automatically.';
+    button.disabled=busy||lastStatus.radio_ready===false||!!lastStatus.pending||remaining>0;
+    const pendingText=lastStatus.report_status==='SUBMITTED - UNDER ADMIN REVIEW'?'The server received this report. Waiting for admin review.':lastStatus.report_status==='SENT - WAITING FOR SERVER'?'This node transmitted the report. Waiting for the server receipt; delivery is not confirmed yet.':'Report saved on this node. It has not been confirmed as received by the server; retries continue automatically.';
+    indicator.textContent=lastStatus.radio_ready===false?'LoRa radio unavailable. Check its power and wiring, then restart this node.':lastStatus.pending?pendingText:remaining?'Anti-spam protection: wait '+remaining+'s before another report.':'Anti-spam protection active: one new report per client every 60 seconds. Saved-report retries continue automatically.';
     if(lastStatus.blocked_submissions)indicator.textContent+=' Blocked attempts on this node since restart: '+lastStatus.blocked_submissions+'.';
   };
   window.sendReport=async()=>{
@@ -84,7 +85,9 @@ const char REPORT_GUARD_SCRIPT[] PROGMEM = R"guard(
         const age=lastStatus.radio_last_age_ms;
         const last=age==null?'No authenticated packet received yet.':'Last packet from NODE_'+lastStatus.radio_last_sender+': '+lastStatus.radio_last_rssi+' dBm; SNR '+lastStatus.radio_last_snr+' dB; '+Math.floor(age/1000)+'s ago'+(age>40000?' (historical reading)':'')+'.\nFrequency error: '+lastStatus.radio_last_frequency_error_hz+' Hz.';
         const queue=lastStatus.radio_tx_queue==null?'':'\nRadio queue: '+lastStatus.radio_tx_queue+'; completed transmissions: '+lastStatus.radio_tx_done+'\nChannel deferrals: '+lastStatus.radio_channel_deferrals+'; CAD timeouts: '+lastStatus.radio_cad_timeouts+'\nTX failures: '+lastStatus.radio_tx_failed+'; queue drops: '+lastStatus.radio_queue_dropped+'; expired: '+lastStatus.radio_queue_expired+'\nThese counters are not a measured packet-loss percentage.';
-        radioDetails.querySelector('[data-radio-diagnostics]').textContent=lastStatus.radio_profile+'\n'+lastStatus.radio_revision+'\n'+(lastStatus.radio_frequency_hz/1e6)+' MHz; SF'+lastStatus.radio_sf+'; BW '+(lastStatus.radio_bandwidth_hz/1000)+' kHz; CR '+lastStatus.radio_coding_rate+'; TX '+lastStatus.radio_tx_dbm+' dBm\n'+last+'\nValid packets since restart: '+lastStatus.radio_valid_packets+'\nAuthentication/replay rejections since restart: '+(lastStatus.radio_rejections||0)+queue+(lastStatus.radio_sf===9?'\nISOLATED PAIR TEST ONLY: this setting cannot join the SF7 mesh.':'');
+        const recovery=lastStatus.radio_rx_recoveries==null?'':'\nReceiver recoveries: '+lastStatus.radio_rx_recoveries+'; receive guard: '+lastStatus.radio_rx_guard_ms+' ms.';
+        const leds=lastStatus.led_active_low==null?'':'\nLED wiring: active-'+(lastStatus.led_active_low?'LOW (3.3 V common)':'HIGH (GND common)')+'\nGPIO drive: green D25 '+(lastStatus.led_green_on?'ON':'OFF')+', yellow D32 '+(lastStatus.led_yellow_on?'ON':'OFF')+', red D33 '+(lastStatus.led_red_on?'ON':'OFF')+'. These outputs do not measure whether the physical LEDs light.';
+        radioDetails.querySelector('[data-radio-diagnostics]').textContent=lastStatus.radio_profile+'\n'+lastStatus.radio_revision+'\n'+(lastStatus.radio_frequency_hz/1e6)+' MHz; SF'+lastStatus.radio_sf+'; BW '+(lastStatus.radio_bandwidth_hz/1000)+' kHz; CR '+lastStatus.radio_coding_rate+'; TX '+lastStatus.radio_tx_dbm+' dBm\n'+last+'\nValid packets since restart: '+lastStatus.radio_valid_packets+'\nAuthentication/replay rejections since restart: '+(lastStatus.radio_rejections||0)+queue+recovery+leds+(lastStatus.radio_sf===9?'\nISOLATED PAIR TEST ONLY: this setting cannot join the SF7 mesh.':'');
       }
       if(lastStatus.created_at&&/^\d+$/.test(lastStatus.created_at))byId('created').textContent=new Date(Number(lastStatus.created_at)*1000).toLocaleString();
       if(lastStatus.verification)byId('status').textContent=(lastStatus.report_status||'')+' · '+lastStatus.verification;

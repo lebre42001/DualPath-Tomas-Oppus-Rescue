@@ -18,7 +18,7 @@
   6. Relay heartbeats, SOS reports, gateway beacons, network summaries, and ACKs.
   7. Accept routes that skip numbered nodes when radio reachability permits.
   8. Receive the server's manual acknowledgment and short message.
-  9. Show the active-node count broadcast by NODE_1/server.
+  9. Show NODE_1/server's active count, or a labelled local peer estimate.
 
   IMPORTANT:
   - Change NODE_NUMBER below for each physical ESP32 (2 through 10).
@@ -34,12 +34,14 @@
 
 #include <WiFi.h>
 #include <WebServer.h>
+#include <DNSServer.h>
 #include <Preferences.h>
 #include <SPI.h>
 #include <LoRa.h>
 #include "radio_profile.h"
 #include <esp_system.h>
 #include "battery_monitor.h"
+#include "led_config.h"
 #include "mesh_security.h"
 #include "mesh_sx127x.h"
 #include "report_guard.h"
@@ -66,7 +68,7 @@ const int LORA_MOSI = 23;
 const int LORA_RST  = 27;  // RST / REST
 const int LORA_DIO0 = 26;
 
-// All field nodes NODE_2..NODE_10 use the same active-high three-LED wiring.
+// All field nodes use the same pins; led_config.h selects this board's polarity.
 const bool HAS_THREE_STATUS_LEDS = NODE_NUMBER >= 2 && NODE_NUMBER <= 10;
 const int GREEN_LED_PIN = 25;          // Fresh direct LoRa peer
 const int YELLOW_STATUS_LED_PIN = 32;  // Mesh route / radio activity
@@ -105,6 +107,8 @@ const unsigned long SEEN_PACKET_WINDOW_MS     = 7000;
 // =====================================================
 
 WebServer localServer(80);
+DNSServer dnsServer;
+const byte LOCAL_DNS_PORT = 53;
 Preferences prefs;
 MeshSX127xPort meshRadioPort;
 void onRadioTransmitted(const String& packet);
@@ -156,6 +160,7 @@ int activeNodeCount = -1;
 const int expectedNodeCount = 10;
 uint16_t activeNodeMask = 0;
 String lastNetworkTimestamp = "";
+bool radioInitialized = false;
 
 // Latest local emergency/report state.
 String latestMsgId = "";
@@ -208,6 +213,7 @@ const char LOCAL_DASHBOARD[] PROGMEM = R"rawliteral(
 <style>
 body{font-family:Arial,sans-serif;margin:0;background:#f4f7f5;color:#14251a}
 header{background:#116530;color:white;padding:18px;text-align:center}
+header .open-browser{display:inline-block;margin-top:10px;padding:9px 16px;border:1px solid #fff;border-radius:9px;color:#fff;text-decoration:none;font-size:14px;font-weight:bold}
 main{max-width:520px;margin:auto;padding:14px}
 .card{background:white;padding:15px;margin-bottom:12px;border-radius:14px;box-shadow:0 2px 8px #0001}
 .label{font-size:13px;color:#647168}.value{font-size:19px;font-weight:bold;margin:4px 0 11px}
@@ -219,12 +225,13 @@ textarea{min-height:80px}button{background:#116530;color:white;border:0;font-wei
 </style>
 </head>
 <body>
-<header><h2>LoRa Emergency System</h2><div id="node">Connected Node</div></header>
+<header><h2>LoRa Emergency System</h2><div id="node">Connected Node</div><a class="open-browser" href="http://192.168.4.1/" target="_blank" rel="noopener">Open Browser</a></header>
 <main>
 <div class="card">
   <div class="label">LoRa Network</div><div id="network" class="value">Searching...</div>
   <div class="label">Nearby LoRa Nodes</div><div id="peers" class="peers">None detected</div>
-  <div class="label">Active Nodes</div><div id="active" class="value">-- / 10</div>
+  <div class="label" id="activeLabel">Active Nodes (Nearby)</div><div id="active" class="value">1 / 10</div>
+  <div id="activeNote" class="small">This node is active. Direct LoRa peers will be counted here.</div>
   <div class="label">Server Route</div><div id="route" class="value">Checking...</div>
 </div>
 <div class="card">
@@ -283,15 +290,20 @@ function showReviewIfNeeded(x){
 async function refresh(){try{
   const r=await fetch('/status',{cache:'no-store'});const x=await r.json();
   document.getElementById('node').textContent='Connected to '+x.node_id;
-  document.getElementById('network').innerHTML=x.peer_count>0?'<span class="ok">LoRa Network Detected</span>':'<span class="warn">Searching for LoRa Nodes...</span>';
+  document.getElementById('network').innerHTML=!x.radio_ready?'<span class="bad">LoRa Radio Unavailable</span>':x.peer_count>0?'<span class="ok">LoRa Network Detected</span>':'<span class="warn">Searching for LoRa Nodes...</span>';
   document.getElementById('peers').textContent=x.peer_list||'None detected';
-  document.getElementById('active').textContent=(x.active_nodes<0?'--':x.active_nodes)+' / '+x.expected_nodes;
+  const networkCount=x.active_nodes_scope==='network';
+  document.getElementById('activeLabel').textContent=!x.radio_ready?'Active Nodes (Radio unavailable)':networkCount?'Active Nodes (Gateway/Server)':'Active Nodes (Nearby)';
+  document.getElementById('active').textContent=x.active_nodes+' / '+x.expected_nodes;
+  document.getElementById('activeNote').textContent=!x.radio_ready?'LoRa hardware did not initialize, so no mesh nodes can be counted.':networkCount?'Latest NODE_1/server count. Visible here: '+x.nearby_nodes+' including this node.':'Local estimate: this node plus direct LoRa peers. Other mesh nodes may also be active.';
   document.getElementById('route').innerHTML=x.server_route?'<span class="ok">Available</span>':'<span class="warn">Unavailable / Searching</span>';
   document.getElementById('msgid').textContent=x.message_id||'None';document.getElementById('created').textContent=x.created_at||'None';
   document.getElementById('status').textContent=statusLabels[x.report_status]||x.report_status||'None';
   document.getElementById('ack').textContent=x.ack_message||'None';
-  const b=document.getElementById('sendButton');b.disabled=x.pending;
-  if(x.pending&&['QUEUED - WAITING FOR ROUTE','QUEUED FOR RADIO','READY TO SEND'].includes(x.report_status)){
+  const b=document.getElementById('sendButton');b.disabled=x.pending||!x.radio_ready;
+  if(!x.radio_ready){
+    b.textContent='RADIO UNAVAILABLE';document.getElementById('hint').textContent='The LoRa module did not initialize. Check its 3.3 V power and SPI wiring, then restart this node.';
+  }else if(x.pending&&['QUEUED - WAITING FOR ROUTE','QUEUED FOR RADIO','READY TO SEND'].includes(x.report_status)){
     b.textContent='REPORT QUEUED';document.getElementById('hint').textContent=x.report_status==='QUEUED - WAITING FOR ROUTE'?'Report saved on this node. It will be submitted when a route becomes available.':'Report saved on this node. Waiting for a clear radio slot.';
   }else if(x.pending&&x.report_status==='SENT - WAITING FOR SERVER'){
     b.textContent='WAITING FOR SERVER';document.getElementById('hint').textContent='Radio transmission completed. Waiting for the server receipt; retries continue automatically.';
@@ -475,14 +487,28 @@ bool hasPendingLocalEmergency() {
   return pendingPacket.length() > 0;
 }
 
+void writeStatusLed(int pin, bool on) {
+  digitalWrite(pin, on != STATUS_LED_ACTIVE_LOW ? HIGH : LOW);
+}
+
 void initializeLedIndicators() {
   pinMode(MESH_STATUS_LED_PIN, OUTPUT);
-  digitalWrite(MESH_STATUS_LED_PIN, LOW);
+  writeStatusLed(MESH_STATUS_LED_PIN, false);
   if (HAS_THREE_STATUS_LEDS) {
     pinMode(GREEN_LED_PIN, OUTPUT);
     pinMode(RED_EMERGENCY_LED_PIN, OUTPUT);
-    digitalWrite(GREEN_LED_PIN, LOW);
-    digitalWrite(RED_EMERGENCY_LED_PIN, LOW);
+    writeStatusLed(GREEN_LED_PIN, false);
+    writeStatusLed(RED_EMERGENCY_LED_PIN, false);
+  }
+}
+
+void testStatusLedsAtBoot() {
+  Serial.println("[LED] Green=25 Yellow=32 Red=33; active-" + String(STATUS_LED_ACTIVE_LOW ? "LOW" : "HIGH"));
+  // One short test before AP/radio startup, so wiring can be checked without
+  // needing a peer or a report. Normal indicators resume immediately afterward.
+  const int pins[] = {GREEN_LED_PIN, YELLOW_STATUS_LED_PIN, RED_EMERGENCY_LED_PIN};
+  for (int pin : pins) {
+    writeStatusLed(pin, true);delay(300);writeStatusLed(pin, false);delay(100);
   }
 }
 
@@ -514,12 +540,12 @@ void updateLedIndicators() {
       ledBlinkState = !ledBlinkState;
     }
   }
-  digitalWrite(MESH_STATUS_LED_PIN, ledBlinkState ? HIGH : LOW);
+  writeStatusLed(MESH_STATUS_LED_PIN, ledBlinkState);
 
   if (HAS_THREE_STATUS_LEDS) {
     // GPIO25 is physically green: received peer evidence lights it, and peer
     // expiry turns it off. Transmitting alone never establishes a peer.
-    digitalWrite(GREEN_LED_PIN, hasPeer ? HIGH : LOW);
+    writeStatusLed(GREEN_LED_PIN, hasPeer);
 
     // Independent timer: mesh traffic cannot reset or suppress pending SOS.
     const bool pending = hasPendingLocalEmergency();
@@ -533,7 +559,7 @@ void updateLedIndicators() {
       emergencyLedBlinkState = !emergencyLedBlinkState;
     }
     emergencyLedWasPending = pending;
-    digitalWrite(RED_EMERGENCY_LED_PIN, emergencyLedBlinkState ? HIGH : LOW);
+    writeStatusLed(RED_EMERGENCY_LED_PIN, emergencyLedBlinkState);
   }
 }
 
@@ -987,6 +1013,9 @@ void trySendPending(bool forceNow = false) {
 }
 
 void handleLocalSend() {
+  if (!radioInitialized) {
+    localServer.send(503, "text/plain", "LoRa radio unavailable. Check hardware and restart this node before reporting."); return;
+  }
   String message = localServer.arg("message"), landmark = localServer.arg("landmark");
   String type = localServer.arg("type"), createdAt = localServer.arg("created_at");
   message.trim(); landmark.trim(); createdAt.trim();
@@ -1010,7 +1039,7 @@ void handleLocalSend() {
     localServer.send(429, "text/plain", "Anti-spam protection: wait " + String(retry) + " seconds. Your saved report continues retrying automatically."); return;
   }
   if (pendingPacket.length() > 0) {
-    reportRecordBlocked(); localServer.send(409, "text/plain", "This node already has a report waiting for admin acknowledgment. Check Latest Report."); return;
+    reportRecordBlocked(); localServer.send(409, "text/plain", "This node already has a saved or submitted report. Check Latest Report for its delivery status."); return;
   }
   if (!reportConsumeConfirmation(clientAddress, reportConfirmationBody(message, landmark, type, createdAt), localServer.arg("confirmation"))) {
     localServer.send(400, "text/plain", "Confirmation expired, already used, or report details changed. Review the report again."); return;
@@ -1061,11 +1090,17 @@ void handleLocalStatus() {
   int peerCount = activePeerCount();
   String peerList = peerCsv(true);
 
-  int displayActiveCount = networkSummaryFresh() ? activeNodeCount : -1;
+  // A field node can count only itself and recently authenticated direct peers
+  // until NODE_1 relays the server's network-wide summary.
+  const bool networkCountFresh = radioInitialized && networkSummaryFresh() &&
+    activeNodeCount >= 0 && activeNodeCount <= expectedNodeCount;
+  const int nearbyCount = radioInitialized ? min(expectedNodeCount, 1 + peerCount) : 0;
+  const int displayActiveCount = networkCountFresh ? activeNodeCount : nearbyCount;
 
   String json = "{";
   json += AksyResRadio::statusFields();
   json += meshRadio.statusFields();
+  json += meshRadioPort.statusFields();
   json += reportGuardStatus((uint32_t)localServer.client().remoteIP());
   json += "\"battery\":\"" + measuredBatteryVoltage() + "\",";
   json += "\"round_trip_ms\":" + (lastRoundTripMs < 0 ? String("null") : String(lastRoundTripMs)) + ",";
@@ -1073,6 +1108,13 @@ void handleLocalStatus() {
   json += "\"peer_count\":" + String(peerCount) + ",";
   json += "\"peer_list\":\"" + jsonEscape(peerList) + "\",";
   json += "\"active_nodes\":" + String(displayActiveCount) + ",";
+  json += "\"nearby_nodes\":" + String(nearbyCount) + ",";
+  json += "\"active_nodes_scope\":\"" + String(!radioInitialized ? "radio_unavailable" : networkCountFresh ? "network" : "nearby") + "\",";
+  json += "\"radio_ready\":" + String(radioInitialized ? "true" : "false") + ",";
+  json += "\"led_active_low\":" + String(STATUS_LED_ACTIVE_LOW ? "true" : "false") + ",";
+  json += "\"led_green_on\":" + String((digitalRead(GREEN_LED_PIN) == (STATUS_LED_ACTIVE_LOW ? LOW : HIGH)) ? "true" : "false") + ",";
+  json += "\"led_yellow_on\":" + String((digitalRead(YELLOW_STATUS_LED_PIN) == (STATUS_LED_ACTIVE_LOW ? LOW : HIGH)) ? "true" : "false") + ",";
+  json += "\"led_red_on\":" + String((digitalRead(RED_EMERGENCY_LED_PIN) == (STATUS_LED_ACTIVE_LOW ? LOW : HIGH)) ? "true" : "false") + ",";
   json += "\"expected_nodes\":" + String(expectedNodeCount) + ",";
   json += "\"server_route\":" + String(serverRouteAvailable() ? "true" : "false") + ",";
   json += "\"gateway_path\":\"" + jsonEscape(gatewayPath) + "\",";
@@ -1093,17 +1135,30 @@ void handleLocalStatus() {
 
 void startLocalWiFi() {
   WiFi.mode(WIFI_AP);
+  const IPAddress apIP(192, 168, 4, 1);
+  if (!WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0), IPAddress(), apIP)) {
+    Serial.println("WARN: Could not advertise the local DNS server to Wi-Fi clients.");
+  }
   // Omitting the passphrase creates an open AP for civilian emergency access.
   if (!WiFi.softAP(LOCAL_AP_SSID.c_str())) {
     Serial.println("ERROR: Could not start the open local Wi-Fi access point.");
     return;
   }
+  // Android's HTTP connectivity probes resolve to this AP and receive a 302
+  // toward the local dashboard instead of the expected Internet 204 response.
+  dnsServer.start(LOCAL_DNS_PORT, "*", WiFi.softAPIP());
 
   Serial.print("Local Wi-Fi: ");
   Serial.println(LOCAL_AP_SSID);
   Serial.println("Wi-Fi access: OPEN (no password required)");
   Serial.print("Local dashboard: http://");
   Serial.println(WiFi.softAPIP());
+}
+
+void redirectToLocalDashboard() {
+  localServer.sendHeader("Location", "http://" + WiFi.softAPIP().toString() + "/", true);
+  localServer.sendHeader("Cache-Control", "no-store");
+  localServer.send(302, "text/plain", "Open this node's emergency dashboard in your browser.");
 }
 
 // =====================================================
@@ -1139,6 +1194,7 @@ void setup() {
   initializeLedIndicators();
   Serial.begin(115200);
   delay(1000);
+  testStatusLedsAtBoot();
 
   if (NODE_NUMBER < 2 || NODE_NUMBER > 10) {
     Serial.println("ERROR: NODE_NUMBER must be from 2 to 10 for this field-node firmware.");
@@ -1173,6 +1229,9 @@ void setup() {
   });
   localServer.on("/status", HTTP_GET, handleLocalStatus);
   localServer.on("/prepare", HTTP_POST, []() {
+    if (!radioInitialized) {
+      localServer.send(503, "text/plain", "LoRa radio unavailable. Check hardware and restart this node before reporting."); return;
+    }
     if (localServer.arg("message").length() > 70 || localServer.arg("landmark").length() > 32) {
       localServer.send(400, "text/plain", "Report exceeds description or location limit."); return;
     }
@@ -1186,6 +1245,16 @@ void setup() {
     localServer.send(200, "application/json", "{\"confirmation\":\"" + token + "\"}");
   });
   localServer.on("/send", HTTP_POST, handleLocalSend);
+  localServer.on("/generate_204", HTTP_ANY, redirectToLocalDashboard);
+  localServer.on("/gen_204", HTTP_ANY, redirectToLocalDashboard);
+  localServer.on("/redirect", HTTP_ANY, redirectToLocalDashboard);
+  localServer.on("/hotspot-detect.html", HTTP_ANY, redirectToLocalDashboard);
+  localServer.on("/library/test/success.html", HTTP_ANY, redirectToLocalDashboard);
+  localServer.on("/connecttest.txt", HTTP_ANY, redirectToLocalDashboard);
+  localServer.on("/ncsi.txt", HTTP_ANY, redirectToLocalDashboard);
+  localServer.on("/canonical.html", HTTP_ANY, redirectToLocalDashboard);
+  localServer.on("/success.txt", HTTP_ANY, redirectToLocalDashboard);
+  localServer.onNotFound(redirectToLocalDashboard);
   localServer.begin();
 
   SPI.begin(LORA_SCK, LORA_MISO, LORA_MOSI, LORA_SS);
@@ -1194,6 +1263,8 @@ void setup() {
   if (!LoRa.begin(LORA_FREQUENCY)) {
     Serial.println("ERROR: LoRa initialization failed. Check 3.3 V power and NSS/SCK/MISO/MOSI/REST/DIO0 wiring.");
     while (true) {
+      dnsServer.processNextRequest();
+      localServer.handleClient();
       updateLedIndicators();
       delay(2);
     }
@@ -1204,7 +1275,9 @@ void setup() {
   meshRadio.begin(esp_random());
   peerDiscovery.begin(millis(),NODE_NUMBER,esp_random());
   LoRa.receive();
+  radioInitialized = true;
   Serial.println("[RADIO] " + AksyResRadio::summary());
+  Serial.println("[PORTAL] field-portal-20261105");
 
   Serial.println();
   Serial.println(NODE_ID + " field node ready.");
@@ -1216,6 +1289,7 @@ void setup() {
 }
 
 void loop() {
+  dnsServer.processNextRequest();
   meshRadio.tick(millis());
   handleIncomingLoRa();
   localServer.handleClient();

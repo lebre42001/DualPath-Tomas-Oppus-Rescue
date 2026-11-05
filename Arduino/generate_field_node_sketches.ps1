@@ -85,6 +85,12 @@ foreach ($hardwareDirectory in $hardwareDirectories) {
     if (-not (Test-Path -LiteralPath $hardwareConfig)) {
         Copy-Item -LiteralPath (Join-Path $sharedDirectory 'battery_config.example.h') -Destination $hardwareConfig
     }
+    if ($hardwareDirectory -ne (Join-Path $PSScriptRoot 'Arduino\GatewayNode1')) {
+        $ledConfig = Join-Path $hardwareDirectory 'led_config.h'
+        if (-not (Test-Path -LiteralPath $ledConfig)) {
+            Copy-Item -LiteralPath (Join-Path $sharedDirectory 'led_config.example.h') -Destination $ledConfig
+        }
+    }
 }
 
 foreach ($nodeNumber in 2..10) {

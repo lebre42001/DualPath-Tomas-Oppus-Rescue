@@ -35,7 +35,7 @@ $commonFields = @('GREEN_LED_PIN', 'LED_ACTIVITY_MS', 'LED_FAST_TOGGLE_MS', 'LED
 $fieldFields = Get-LedFields -Source $field -Names (@('NODE_NUMBER', 'HAS_THREE_STATUS_LEDS',
     'YELLOW_STATUS_LED_PIN', 'RED_EMERGENCY_LED_PIN', 'MESH_STATUS_LED_PIN',
     'lastEmergencyLedToggleMs', 'emergencyLedBlinkState', 'emergencyLedWasPending') + $commonFields)
-$fieldFunctions = (@('markLoRaActivity', 'hasPendingLocalEmergency', 'initializeLedIndicators', 'updateLedIndicators') |
+$fieldFunctions = (@('markLoRaActivity', 'hasPendingLocalEmergency', 'writeStatusLed', 'initializeLedIndicators', 'updateLedIndicators') |
     ForEach-Object { Get-FirmwareFunction -Source $field -Name $_ }) -join "`n"
 $gatewayFields = Get-LedFields -Source $gateway -Names (@('YELLOW_STATUS_LED_PIN', 'RED_EMERGENCY_LED_PIN',
     'lastEmergencyLedToggleMs', 'emergencyLedBlinkState', 'emergencyLedWasPending') + $commonFields)
@@ -64,6 +64,7 @@ public abstract class LedHarness {
     protected const int HIGH = 1, LOW = 0, OUTPUT = 1;
     private uint clock;
     private bool peer, route;
+    public bool STATUS_LED_ACTIVE_LOW = false;
     protected PendingPacket pendingPacket = new PendingPacket();
     protected PendingPacket pendingLocalPacket = new PendingPacket();
     private Dictionary<int, int> outputs = new Dictionary<int, int>();
@@ -175,6 +176,14 @@ foreach ($n in 2..10) {
     $threeLeds = $n -ge 2 -and $n -le 10
     $statusPin = if ($threeLeds) { 32 } else { 25 }
     $node = New-Object "$namespace.Node$n"
+    $inverted = New-Object "$namespace.Node$n"
+    $inverted.STATUS_LED_ACTIVE_LOW = $true
+    $inverted.Pending($true)
+    $inverted.Tick(100, $true, $true, $false)
+    Assert-Led ($inverted.Read(25) -eq 0 -and $inverted.Read(32) -eq 0 -and $inverted.Read(33) -eq 0) "NODE_$n active-low LEDs use LOW for ON"
+    $inverted.Pending($false)
+    $inverted.Tick(200, $false, $false, $false)
+    Assert-Led ($inverted.Read(25) -eq 1 -and $inverted.Read(32) -eq 1 -and $inverted.Read(33) -eq 1) "NODE_$n active-low LEDs use HIGH for OFF"
     $node.Tick(100, $false, $false, $false)
     Assert-Led ($node.Read($statusPin) -eq 0) "NODE_$n isolated status OFF"
     if ($threeLeds) {

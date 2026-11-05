@@ -102,11 +102,32 @@ needed. This does not add a phone push notification while disconnected from the
 node. Fixed map coordinates still require actual installation coordinates in
 `web_system/config/lora_nodes.php`.
 
-The deployed design intentionally has no physical SOS button or switch. Emergency submission is always performed from the local dashboard after the user connects to the selected ESP32 node's Wi-Fi. If the captive portal does not open automatically, the user can browse to `http://192.168.4.1` while remaining connected to the node Wi-Fi. After submission, the field-node dashboard shows that the report is under admin review. When the admin or responder reviews it, the originating node displays a persistent review-completed popup with the result, response message, and review time.
+The deployed design intentionally has no physical SOS button or switch. Emergency submission is always performed from the local dashboard after the user connects to the selected ESP32 node's Wi-Fi. If the captive portal does not open automatically, the user can browse to `http://192.168.4.1` while remaining connected to the node Wi-Fi. A locally saved report is not yet proof of server receipt: the dashboard distinguishes queued, transmitted/waiting for receipt, and server-received/under-review states. When the admin or responder reviews it, the originating node displays a persistent review-completed popup with the result, response message, and review time.
 
 Field nodes schedule heartbeats about every 10–11 seconds, without requiring a user to open the local dashboard. Discovery attempts accelerate during the first 20 seconds without a peer and after peer loss, then settle to about 15 seconds. Field nodes learn peers without echoing field-to-field acknowledgments; NODE_1 acknowledges a field's HELLO. The shared queue prioritizes SOS/ACK and discovery, coalesces telemetry and defers transmissions on detected channel activity.
 
 GPS is not required. Battery voltage sensing is enabled by default on NODE_1 through NODE_10; valid measurements require the divider described below. Coordinates are fixed per sender in `web_system/config/lora_nodes.php`. Configure `node_name`, `location_label`, `latitude`, and `longitude` for NODE_1 through NODE_10. `S01` remains as a legacy entry. Laravel ignores coordinates and satellite values carried in a received radio packet.
+
+### Receiver starvation recovery (2026-11-05)
+
+The `mesh-rx-recovery-20261105` firmware fixes an unbounded receive-busy guard
+shared by NODE_1 and all field nodes. The previous guard treated a modem
+synchronization bit as proof that a packet was still being received. This could
+leave queued reports with many channel deferrals and zero completed transmissions.
+The guard now protects RX_DONE and actual RX-ongoing, bounds the latter by the
+maximum 255-byte frame airtime plus 150 ms, restarts a stuck receiver, and then
+runs CAD before transmitting. A busy CAD result still defers the transmission.
+The diagnostics expose receiver recoveries and the guard interval. This does not
+change the radio profile, mesh keys, packet format, or erase pending reports.
+The register and airtime interpretation follows the
+[Semtech SX1276/77/78/79 Rev. 7 datasheet](https://cdn.sparkfun.com/assets/7/7/3/2/2/SX1276_Datasheet.pdf).
+
+Upload the updated gateway and matching field sketches to apply this shared fix.
+For a pending report, verify that completed transmissions increases, then look
+for a server receipt/under-review state and the matching message ID in the admin
+reports. A successful compile or local queue entry does not establish end-to-end
+delivery. If transmissions remain zero, capture the diagnostics including the
+new revision, receiver recoveries, and CAD counters.
 
 ## Uploading the Field Nodes
 
@@ -124,8 +145,25 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Arduino\generate_field
 
 Each node exposes a local AP named `Node 2 Emergency` through `Node 10 Emergency`.
 Join the matching open network, stay connected if the phone reports no internet,
-and open `http://192.168.4.1` to submit an emergency. The Serial Monitor confirms
-`Wi-Fi access: OPEN (no password required)` after the access point starts.
+and open `http://192.168.4.1` to submit an emergency. The field nodes now
+advertise their own DNS address and redirect common phone connectivity probes
+to that dashboard. Android may show a captive-portal or "Action needed" prompt;
+the exact notification and Wi-Fi settings button are controlled by the phone,
+so they cannot be guaranteed by ESP32 firmware. Use the dashboard's **Open
+Browser** link or type `http://192.168.4.1` in a browser if no prompt appears.
+Do not use HTTPS for this local address. The Serial Monitor confirms
+`Wi-Fi access: OPEN (no password required)` and `[PORTAL] field-portal-20261105`
+after startup. If the LoRa radio fails to initialize, the dashboard remains
+available for diagnosis but blocks new submissions until the hardware is fixed
+and the node is restarted.
+
+The field dashboard shows **Active Nodes (Nearby)** as this node plus its fresh,
+authenticated direct peers while no recent NODE_1/server summary is available.
+For example, NODE_9 hearing NODE_1 and NODE_2 shows `3 / 10`. This is a local
+estimate, not a claim about every remote node. When a recent network summary
+arrives, the dashboard switches to **Active Nodes (Gateway/Server)** and also
+shows how many nodes are visible nearby. The field-node `GET /status` response
+includes `active_nodes_scope`, `active_nodes`, and `nearby_nodes` for this reason.
 Upload each matching regenerated sketch to its physical board to apply this
 change. If a phone retains an old saved password, forget that network and join it
 again after the firmware upload.
@@ -261,8 +299,20 @@ Use a 3.3 V supply for the SX1278/Ra-02/XL1278 and attach the antenna before tra
 
 ## LoRa and emergency status LEDs
 
-Each LED is active high: wire its GPIO through a separate 1 kOhm resistor to
-the LED anode, with the cathode connected to common GND.
+The confirmed wiring is active high: wire each GPIO through its own 330 Ohm
+resistor to the LED anode (+), with the cathode (-) connected to common GND.
+A separate 1 kOhm resistor per LED is also suitable, with lower brightness.
+Do not connect a bare LED directly between GPIO and GND. Every generated field
+sketch has a `led_config.h`; `STATUS_LED_ACTIVE_LOW=false` matches this wiring
+on NODE_2 through NODE_10. The generator preserves each board's setting. Set
+it to true only for deliberate wiring from 3.3 V through a resistor and LED
+to the GPIO; NODE_1 retains its existing active-high implementation.
+
+Field nodes test green, yellow, then red for 300 ms each before AP/radio startup.
+The Serial Monitor prints the pins and polarity. Radio diagnostics show GPIO
+drive levels, not a measurement of emitted light. If a commanded LED still does
+not light during this test, check resistor, LED polarity, connections, and the
+LED/GPIO hardware; firmware cannot establish that the physical LED works.
 
 | Nodes | GPIO25 | GPIO32 | GPIO33 |
 | --- | --- | --- | --- |
@@ -324,6 +374,7 @@ Run the clock/GPIO simulation checks with:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Arduino\test_led_indicators.ps1
+node .\Arduino\tests\report_dashboard_test.cjs
 ```
 
 These checks exercise the source LED functions without physical boards. Compile
