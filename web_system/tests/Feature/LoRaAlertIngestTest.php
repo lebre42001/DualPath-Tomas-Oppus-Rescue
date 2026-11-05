@@ -18,6 +18,7 @@ class LoRaAlertIngestTest extends TestCase
         parent::setUp();
         config([
             'services.lora_ingest.token' => 'test-lora-token',
+            'services.ai_text.mode' => 'MANUAL_ONLY',
             'lora_nodes.NODE_2' => [
                 'node_name' => 'Field Node 2',
                 'location_label' => 'Test Installation Site',
@@ -44,14 +45,15 @@ class LoRaAlertIngestTest extends TestCase
 
         $this->assertSame('Juan Dela Cruz', $report->reporter_name);
         $this->assertSame('LoRa Emergency Alert', $report->incident_type);
-        $this->assertSame('Serious', $report->severity);
+        $this->assertNull($report->severity);
         $this->assertSame('received', $report->status);
         $this->assertSame('LoRa Mesh', $report->channel);
         $this->assertSame('lora', $report->transmission_type);
         $this->assertSame('arduino_lora_gateway', $report->hardware_source);
         $this->assertNotNull($report->ingest_key);
-        $this->assertSame('not_applicable', $report->ai_status);
-        $this->assertNull($report->ai_source);
+        $this->assertSame('needs_review', $report->ai_status);
+        $this->assertSame('manual_only', $report->ai_source);
+        $this->assertTrue($report->ai_review_required);
         $this->assertNull($report->ai_confidence);
         $this->assertSame('NODE_1', $report->lora_gateway_id);
         $this->assertSame(-70, $report->lora_gateway_rssi);

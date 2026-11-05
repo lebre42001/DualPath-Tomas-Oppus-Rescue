@@ -116,7 +116,8 @@ class LoRaReportController extends Controller
             });
         }
 
-        $reviewId = (int) ($filters['review'] ?? 0);
+        $reviewId = (int) old('severity_review_report_id', old('review_report_id',
+            $request->session()->get('ai_review_report_id', $filters['review'] ?? 0)));
         if ($reviewId > 0) {
             $query->orderByRaw('case when id = ? then 0 else 1 end', [$reviewId]);
         }

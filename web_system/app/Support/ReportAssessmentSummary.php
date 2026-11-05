@@ -9,6 +9,9 @@ class ReportAssessmentSummary
     /** Report-facing copy deliberately excludes free-form service diagnostics/model metadata. */
     public static function forReport(IncidentReport $report): string
     {
+        if ($report->ai_source === 'text_review' && $report->ai_status === 'pending') {
+            return 'Description analysis is pending. Admin review is required; you can assess the report now or retry analysis if it does not complete.';
+        }
         if (in_array($report->ai_source, ['human_responder', 'manual_override', 'text_human_override'], true)) {
             return $report->operational_severity === null
                 ? 'An administrator reviewed this report and requested more information.'

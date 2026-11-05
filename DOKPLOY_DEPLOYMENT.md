@@ -5,6 +5,38 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## LoRa description AI and admin severity review (2026-11-06)
+
+Hardware LoRa alerts now use `AiTextSeverityClient::analyzeForReport`, the same
+description-only pipeline as civilian online reports. Gateway-provided severity
+is a firmware transport default and does not become a human assessment. No
+model, threshold, phrase rule, dataset, or training artifact is changed.
+
+Laravel saves and announces the report before scheduling `AnalyzeLoraDescription`
+with `dispatchAfterResponse`. Production uses PHP-FPM, which finishes the gateway
+HTTP response before the text service is called; no separate queue worker is
+needed. While analysis runs, the report is unassessed and requires review. Blank
+legacy descriptions are not replaced with generated transport metadata as AI
+input. MANUAL_ONLY/disabled AI and AI outages keep the report available for admin
+review, using the same configured fallback as online reports.
+
+LoRa Reports > Review now includes the shared analysis, score display and admin
+confirmation/correction controls. Older unreviewed LoRa reports can use Analyze
+description with AI individually. Severity review records the original suggestion
+and reviewer reasoning, independently of authenticity verification, rescue status,
+and the manual radio ACK. An AI update broadcasts `ai_suggestion`, never a second
+new-report alarm. Duplicate SOS retries neither re-analyze nor replace a human
+review; concurrent admin decisions take precedence over delayed AI results.
+
+After-response processing is not a durable queue: if the PHP process is killed
+after receipt, a report can remain pending. The admin can still assess it or retry
+with Analyze description with AI. Existing reports are not bulk reclassified.
+Deploy backend classes and Blade views together; no migration, credential,
+firmware re-upload or model retraining is required. Validate LoRaTextAnalysisTest,
+LoRa ingestion/history/ACK tests, the web suite and Vite build. After deployment,
+check the public routes and AI readiness plus the protected LoRa review modal;
+do not inject fake emergency reports into the live system to test inference.
+
 ## Quiet alarm activation and fresh-arrival audio (2026-11-06)
 
 Deploy `report-alarm.js`, `incoming-reports.js`, the layout copy, the initial feed

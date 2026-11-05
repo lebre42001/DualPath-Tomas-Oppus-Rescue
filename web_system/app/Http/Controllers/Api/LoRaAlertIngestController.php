@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\AnalyzeLoraDescription;
 use App\Models\IncidentReport;
 use App\Models\LoraNodeState;
+use App\Services\AiTextSeverityClient;
 use App\Support\IncidentFeedBroadcaster;
 use App\Support\IncidentReportIngestor;
 use App\Support\LoraNodeRegistry;
+use App\Support\ReportedFatalityKeyword;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -93,6 +96,18 @@ class LoRaAlertIngestController extends Controller
         $locationLabel = trim((string) ($node['location_label'] ?? 'Location not registered'));
         $locationText = $this->locationText($latitude, $longitude, $senderId, $nodeName, $locationLabel, $gatewayId);
         $description = $this->descriptionFor($validated, $senderId, $sequence, $gatewayId);
+        // Firmware severity is a transport default, not an admin assessment.
+        // Initialize without a remote request, then analyze after the gateway
+        // response has been sent (its HTTP timeout is shorter than the AI's).
+        $textClient = app(AiTextSeverityClient::class);
+        $analysis = $textClient->analyzeForReport('');
+        $analyzeDescription = ! IncidentReport::manualOnlyMode() && $textClient->enabled()
+            && filled($validated['description'] ?? null);
+        if ($analyzeDescription) {
+            $analysis['severity'] = null;
+            $analysis['status'] = 'pending';
+            $analysis['summary'] = 'Description analysis is pending. Admin review is required.';
+        }
 
         $result = $ingestor->persist($ingestKey, [
             'report_code' => 'LORA-'.now()->format('YmdHis').'-'.Str::upper(Str::random(4)),
@@ -100,7 +115,7 @@ class LoRaAlertIngestController extends Controller
             'reporter_name' => $reporterName,
             'reporter_contact' => null,
             'incident_type' => $validated['incident_type'] ?? 'LoRa Emergency Alert',
-            'severity' => $validated['severity'] ?? 'Serious',
+            'severity' => $analysis['severity'],
             'status' => 'received',
             'channel' => 'LoRa Mesh',
             'transmission_type' => 'lora',
@@ -108,14 +123,15 @@ class LoRaAlertIngestController extends Controller
             'latitude' => $latitude,
             'longitude' => $longitude,
             'description' => $description,
-            'ai_summary' => null,
-            'ai_confidence' => null,
-            'ai_source' => null,
-            'ai_status' => 'not_applicable',
-            'ai_model_name' => null,
-            'ai_model_version' => null,
-            'ai_review_required' => false,
-            'ai_probabilities' => null,
+            'reported_fatality_flag' => ReportedFatalityKeyword::matches((string) ($validated['description'] ?? '')),
+            'ai_summary' => $analysis['summary'],
+            'ai_confidence' => $analysis['confidence'],
+            'ai_source' => $analysis['source'],
+            'ai_status' => $analysis['status'],
+            'ai_model_name' => $analysis['model_name'],
+            'ai_model_version' => $analysis['model_version'],
+            'ai_review_required' => true,
+            'ai_probabilities' => $analysis['probabilities'],
             'ai_processed_at' => null,
             'ai_error_message' => null,
             'evidence_type' => 'none',
@@ -167,6 +183,10 @@ class LoRaAlertIngestController extends Controller
         $this->recordNodeSeen($senderId, $gatewayId, $validated, 'SOS');
 
         IncidentFeedBroadcaster::dispatch($report, 'created');
+
+        if ($analyzeDescription) {
+            AnalyzeLoraDescription::dispatchAfterResponse($report->id);
+        }
 
         return response()->json([
             'message' => 'LoRa alert ingested successfully.',

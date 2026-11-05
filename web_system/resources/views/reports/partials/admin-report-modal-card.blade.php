@@ -65,6 +65,7 @@
                         <div class="meta-row"><span>Signal</span><strong>RX {{ $report->lora_receiver_rssi ?? 'n/a' }} dBm / {{ $report->lora_receiver_snr ?? 'n/a' }} dB</strong></div>
                     </div>
                     <p>LoRa carries the sender name and short description without media. The fixed map location comes from the official node registry. Responders review the description to assess severity.</p>
+                    @include('reports.partials.ai-analysis', ['report' => $report, 'compact' => false])
                 </div>
             @else
                 <div class="preview-card">

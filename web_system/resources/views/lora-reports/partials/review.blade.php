@@ -19,6 +19,12 @@
         <h3>Emergency description</h3>
         <p class="lora-review-description">{{ $report->description ?: 'No description provided.' }}</p>
     </section>
+    <section class="detail-card" data-lora-description-analysis>
+        <h3>Description analysis and severity review</h3>
+        <p class="section-copy">The short LoRa description uses the same text analysis as online reports. An admin must confirm or correct the severity. This does not verify report authenticity or send a radio acknowledgment.</p>
+        @include('reports.partials.ai-analysis', ['report' => $report, 'compact' => false])
+        @include('reports.partials.severity-review-form', ['report' => $report])
+    </section>
     <dl class="lora-review-metadata">
         <div><dt>Sender</dt><dd>{{ $report->reporter_name ?: 'Unknown sender' }}</dd></div>
         <div><dt>Message ID</dt><dd>{{ $report->lora_sequence ?: 'Not available' }}</dd></div>
