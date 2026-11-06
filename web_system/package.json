@@ -6,7 +6,7 @@
         "build": "vite build",
         "test:face-guide": "node --test tests/js/face-guide-quality.test.mjs",
         "test:report-drafts": "node --test tests/js/report-draft-delivery.test.mjs tests/js/civilian-draft-navigation.test.mjs",
-        "test:civilian-system": "node --test tests/js/civilian-system.test.mjs tests/js/civilian-pwa-update.test.mjs tests/js/report-connection.test.mjs",
+        "test:civilian-system": "node --test tests/js/civilian-system.test.mjs tests/js/civilian-updates-position.test.mjs tests/js/civilian-pwa-update.test.mjs tests/js/report-connection.test.mjs",
         "test:report-alarm": "node --test tests/js/report-alarm.test.mjs tests/js/incoming-reports.test.mjs",
         "dev": "vite"
     },

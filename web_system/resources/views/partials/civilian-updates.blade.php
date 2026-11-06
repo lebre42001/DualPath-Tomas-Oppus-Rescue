@@ -1,10 +1,11 @@
 <section data-civilian-updates data-owner="{{ $authUser->id }}" data-running-version="{{ $pwaAssetVersion }}"
     data-feed-url="{{ route('civilian.system-updates') }}" data-read-url="{{ route('civilian.system-updates.read') }}"
     data-event-url="{{ route('civilian.app-events') }}">
-    <button type="button" class="civilian-updates-toggle" data-civilian-updates-toggle data-connection-state="checking" aria-label="System updates" aria-controls="civilian-updates-modal" aria-expanded="false" title="Connection and system updates">
+    <button type="button" class="civilian-updates-toggle" data-civilian-updates-toggle data-connection-state="checking" aria-label="System updates" aria-describedby="civilian-updates-position-help" aria-controls="civilian-updates-modal" aria-expanded="false" title="Tap to open updates. Drag to move.">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M9 21h6"/></svg>
         <span>Updates</span><b data-civilian-update-count hidden>0</b>
     </button>
+    <span id="civilian-updates-position-help" class="sr-only">Tap or press Enter to open updates. Drag to move the badge. With the badge focused, arrow keys move it and Home restores its default position.</span>
     <div id="civilian-updates-modal" class="civilian-updates-modal" data-civilian-updates-modal hidden>
         <div class="civilian-updates-sheet" role="dialog" aria-modal="true" aria-labelledby="civilian-updates-heading">
             <header class="civilian-updates-heading"><h2 id="civilian-updates-heading">System updates</h2><button type="button" class="btn btn-secondary" data-civilian-updates-close>Close</button></header>

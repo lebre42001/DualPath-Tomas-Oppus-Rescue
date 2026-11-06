@@ -1,5 +1,8 @@
 .civilian-updates-toggle { position: fixed; right: 12px; bottom: calc(var(--pwa-install-offset, 110px) + 76px); z-index: 1250; width: 60px; min-height: 60px; display: grid; justify-items: center; align-content: center; gap: 3px; border: 2px solid #237442; border-radius: 18px; color: #174a2a; background: #edf9f0; box-shadow: 0 4px 18px #0f1f2f24; cursor: pointer; }
 .civilian-updates-toggle svg { width: 24px; height: 24px; }
+.civilian-updates-toggle { touch-action: none; user-select: none; -webkit-user-select: none; --updates-safe-top: env(safe-area-inset-top, 0px); --updates-safe-right: env(safe-area-inset-right, 0px); --updates-safe-bottom: env(safe-area-inset-bottom, 0px); --updates-safe-left: env(safe-area-inset-left, 0px); }
+.civilian-updates-toggle.is-dragging { cursor: grabbing; }
+.civilian-updates-toggle:focus-visible { outline: 3px solid #23699c; outline-offset: 3px; }
 .civilian-updates-toggle > span { font-size: .65rem; font-weight: 800; }
 .civilian-updates-toggle > b { position: absolute; top: -7px; right: -5px; min-width: 22px; padding: 3px 5px; border-radius: 99px; background: #a32418; color: #fff; font-size: .75rem; }
 .civilian-updates-toggle[data-connection-state="checking"], .civilian-updates-toggle[data-connection-state="offline"], .civilian-updates-toggle[data-connection-state="unavailable"], .civilian-updates-toggle[data-connection-state="session"] { color: #493500; border-color: #94711a; background: #fff9e8; }

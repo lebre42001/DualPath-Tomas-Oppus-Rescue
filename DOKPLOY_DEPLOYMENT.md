@@ -5,6 +5,31 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Draggable civilian Updates on phone, laptop and desktop (2026-11-07)
+
+The shared civilian Updates badge supports touch, pen and primary-mouse dragging.
+A drag does not open the modal; a tap/click still opens it. Position is remembered
+per account in this browser and adapts proportionally to viewport/orientation
+changes, with safe-area padding and room above visible bottom navigation.
+Moving still works when local storage is denied, but that position lasts only
+for the page. Keyboard users can focus the badge, move with arrow keys, press
+Home to reset the position, or Enter to open updates.
+
+Updates, unread counts, Check again, Update app, Draft Reports and System Log
+use the same civilian layout/modules on desktop, laptop and phone. Wide screens
+access Draft Reports and System Log from the sidebar; compact screens also have
+the six-item bottom navigation. Logout stays in the sidebar.
+
+Deploy the matching Vite build and Blade partial with the normal automatic
+`main` deployment. No additional migration, environment setting or APK rebuild.
+Validate with the Laravel suite, `node --test tests/js/*.test.mjs`, Vite build,
+and `tool/check_civilian_updates.cjs` (Playwright via `PLAYWRIGHT_MODULE`, optional
+installed Chrome via `UI_BROWSER_PATH`). The isolated browser fixture uses the
+real widget partial/modules/built CSS and mocked feeds, never live reports.
+Phone touch (390px), laptop mouse (1366px), desktop mouse (1920px), reload,
+320px resize, modal/check feedback and keyboard reset passed. Physical device
+and authenticated live flows remain separate pilot checks.
+
 ## Civilian floating Updates and System Log (2026-11-07)
 
 The civilian connection panel is now in a floating Updates badge/modal across

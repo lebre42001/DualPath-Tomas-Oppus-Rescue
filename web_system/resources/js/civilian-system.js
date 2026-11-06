@@ -1,10 +1,12 @@
 import { onDomReady } from './dom-ready.js';
 import { createCivilianUpdateState, isBuildVersion } from './civilian-update-state.js';
+import { initializeUpdatesPosition } from './civilian-updates-position.js';
 
 export function initializeCivilianSystem(root, { document: doc = document, window: win = window, navigator: nav = navigator, fetchImpl = fetch, storage } = {}) {
     const running = root.dataset.runningVersion;
     const state = createCivilianUpdateState(root.dataset.owner, running, { storage });
     const toggle = root.querySelector('[data-civilian-updates-toggle]');
+    initializeUpdatesPosition(toggle, root.dataset.owner, { document: doc, window: win, storage });
     const modal = root.querySelector('[data-civilian-updates-modal]');
     const closeButton = root.querySelector('[data-civilian-updates-close]');
     const badge = root.querySelector('[data-civilian-update-count]');
