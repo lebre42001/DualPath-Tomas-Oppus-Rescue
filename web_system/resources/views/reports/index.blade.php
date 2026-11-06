@@ -525,7 +525,7 @@
                                 </article>
                                 </div>
                             </td>
-                            <td data-label="Actions"><button type="button" class="btn btn-secondary" data-civilian-report-modal-trigger aria-label="View {{ $report->report_code }}">View</button></td>
+                            <td data-label="Actions"><button type="button" class="btn civilian-report-view" data-civilian-report-modal-trigger aria-label="View report: {{ $report->report_code }}">View report</button></td>
                         </tr>
                     @else
                         @php

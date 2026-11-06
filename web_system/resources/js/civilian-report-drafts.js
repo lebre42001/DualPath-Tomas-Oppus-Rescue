@@ -60,7 +60,7 @@ export function initializeCivilianDrafts({ document = globalThis.document, windo
             const hasPhoto = record.evidenceFile instanceof Blob;
             card.append(element('p', hasPhoto ? 'Scene photo saved with this draft.' : record.evidenceName ? 'Text saved. Reattach the scene photo when continuing.' : 'Scene photo still required.', 'section-copy'));
             const actions = element('div', '', 'button-row');
-            const view = element('button', 'View', 'btn btn-secondary'); view.type = 'button';
+            const view = element('button', 'View draft', 'btn civilian-report-view'); view.type = 'button';
             view.dataset.civilianLibraryDraft = record.submissionId;
             const resume = element('button', 'Continue', 'btn btn-primary'); resume.type = 'button'; resume.disabled = busy;
             resume.addEventListener('click', () => { void continueDraft(record).catch(storageError); });

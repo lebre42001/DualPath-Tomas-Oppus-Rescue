@@ -4,6 +4,16 @@
 // These release labels are separate from the app's runtime build fingerprint.
 return [
     [
+        'id' => '2026.11.07.5',
+        'date' => '2026-11-07',
+        'title' => 'Clearer report buttons',
+        'changes' => [
+            'Report buttons now say View report or View draft so you know what will open.',
+            'Larger, bold labels and stronger text contrast make these buttons easier to read in light and dark mode.',
+            'Button spacing keeps the full label readable on phones, laptops and desktops.',
+        ],
+    ],
+    [
         'id' => '2026.11.07.4',
         'date' => '2026-11-07',
         'title' => 'Readable update details',

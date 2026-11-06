@@ -38,9 +38,35 @@ const server = http.createServer((req, res) => {
             const context = await browser.newContext({ viewport: { width, height: width < 600 ? 844 : 900 }, isMobile: width < 600, hasTouch: width < 600 });
             const page = await context.newPage(), errors = []; page.on('pageerror', error => errors.push(error.message));
             await page.goto(origin);
+            assert(await page.evaluate(() => {
+                const preview = document.createElement('section'); preview.className = 'panel';
+                preview.innerHTML = '<div class="civilian-history-table-wrap"><table class="civilian-history-table"><tbody><tr class="civilian-history-table-row"><td data-label="Actions"><button class="btn civilian-report-view">View report</button></td></tr></tbody></table></div>';
+                document.querySelector('main').append(preview);
+                const button = preview.querySelector('button'), row = preview.querySelector('tr');
+                const b = button.getBoundingClientRect(), r = row.getBoundingClientRect();
+                const fits = b.left >= r.left && b.right <= r.right && button.scrollWidth <= button.clientWidth;
+                preview.remove(); return fits;
+            }), `${width}px: main history preview does not clip View report`);
             const modal = page.locator('[data-library-modal]'), detail = page.locator('[data-library-detail]'), rows = modal.locator('tbody tr');
             const loaded = text => page.waitForFunction(value => document.querySelector('[data-library-count]').textContent === value && document.querySelector('[data-library-rows]').getAttribute('aria-busy') === 'false', text);
             await page.getByRole('button', { name: 'History View All', exact: true }).click(); await loaded('1–10 of 23 reports');
+            const viewButton = rows.first().getByRole('button', { name: /^View report:/ });
+            assert.equal(await viewButton.textContent(), 'View report');
+            for (const theme of ['light', 'dark']) {
+                await page.evaluate(value => document.documentElement.setAttribute('data-theme', value), theme);
+                await viewButton.evaluate(async button => { await Promise.all(button.getAnimations().map(animation => animation.finished.catch(() => {}))); });
+                const readability = await viewButton.evaluate(button => {
+                    const style = getComputedStyle(button), rect = button.getBoundingClientRect();
+                    const luminance = color => {
+                        const rgb = color.match(/[\d.]+/g).slice(0, 3).map(value => { const s = Number(value) / 255; return s <= .04045 ? s / 12.92 : ((s + .055) / 1.055) ** 2.4; });
+                        return .2126 * rgb[0] + .7152 * rgb[1] + .0722 * rgb[2];
+                    };
+                    const a = luminance(style.color), b = luminance(style.backgroundColor);
+                    return { contrast: (Math.max(a, b) + .05) / (Math.min(a, b) + .05), height: rect.height, font: parseFloat(style.fontSize), clipped: button.scrollWidth > button.clientWidth };
+                });
+                assert(readability.contrast >= 4.5 && readability.height >= 44 && readability.font >= 14 && !readability.clipped, `${width}px ${theme}: readable View report button ${JSON.stringify(readability)}`);
+            }
+            await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'light'));
             await modal.getByRole('button', { name: 'Next', exact: true }).click(); await loaded('11–20 of 23 reports');
             await rows.first().getByRole('button', { name: /^View / }).click(); await detail.waitFor({ state: 'visible' });
             await detail.getByText('Team is reviewing.', { exact: true }).waitFor();
@@ -68,6 +94,7 @@ const server = http.createServer((req, res) => {
             });
             await page.waitForFunction(() => document.querySelectorAll('[data-civilian-draft-list] article').length === 3);
             await page.locator('[data-civilian-library-open="drafts"]').click(); await loaded('1–10 of 23 drafts');
+            assert.equal(await rows.first().getByRole('button', { name: /^View draft:/ }).textContent(), 'View draft');
             assert(!(await modal.textContent()).includes('SECRET-OTHER'));
             await context.setOffline(true);
             await modal.getByRole('button', { name: 'Page 3', exact: true }).click(); await loaded('21–23 of 23 drafts');

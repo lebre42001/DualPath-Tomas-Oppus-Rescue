@@ -58,7 +58,7 @@ const server = http.createServer((req, res) => {
             const moved = await toggle.boundingBox();
             assert(Math.abs(moved.x - 90) < 2 && Math.abs(moved.y - 210) < 2, `${name}: drag moves badge`);
             await toggle.click(); await modal.waitFor({ state: 'visible' });
-            await modal.getByText('Readable update details', { exact: true }).waitFor();
+            await modal.locator('[data-civilian-release-notes] > article > strong').waitFor();
             await page.screenshot({ path: path.join(output, `${name}-release-notes.png`) });
             const earlier = modal.locator('details[data-release-id="2026.11.07.3"]');
             await earlier.locator('summary').click();
@@ -69,7 +69,7 @@ const server = http.createServer((req, res) => {
             assert(await earlier.evaluate(node => node.open), 'Checking must keep earlier notes expanded');
             await modal.getByRole('button', { name: 'Mark shown updates as read', exact: true }).click();
             assert(await earlier.evaluate(node => node.open));
-            assert(await modal.getByText('Readable update details', { exact: true }).isVisible());
+            assert(await modal.locator('[data-civilian-release-notes] > article > strong').isVisible());
             assert(await page.getByRole('button', { name: 'Update app', exact: true }).isVisible());
             await page.screenshot({ path: path.join(output, `${name}-modal.png`) });
             await page.keyboard.press('Escape'); assert(await modal.isHidden());

@@ -90,8 +90,9 @@ export function initializeCivilianReportLibrary(root, { document: doc = document
         for (const report of data.reports) {
             const row = node('tr');
             for (const value of [report.code, report.location, report.statusLabel, formatted(mode === 'status' ? report.updatedAt || report.submittedAt : report.submittedAt)]) row.append(node('td', value));
-            const cell = node('td'), view = button('View', () => void openDetail(report, view));
-            view.setAttribute('aria-label', `View ${report.code}`); cell.append(view); row.append(cell); rows.append(row);
+            const label = mode === 'drafts' ? 'View draft' : 'View report';
+            const cell = node('td'), view = button(label, () => void openDetail(report, view), 'btn civilian-report-view');
+            view.setAttribute('aria-label', `${label}: ${report.code}`); cell.append(view); row.append(cell); rows.append(row);
         }
         if (!data.reports.length) { const row = node('tr'), cell = node('td', 'No reports match these filters.'); cell.colSpan = 5; row.append(cell); rows.append(row); }
         const p = data.pagination;

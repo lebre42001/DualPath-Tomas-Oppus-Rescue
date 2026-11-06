@@ -5,6 +5,17 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Civilian report button readability (2026-11-07)
+
+The report table, history preview and draft preview use explicit View report /
+View draft labels. A shared civilian button style supplies 14px bold text,
+contrasting light/dark colors, a minimum 44px tap height and enough width/padding
+to prevent clipped labels. The isolated report-library browser checks verify
+unclipped labels and at least 4.5:1 text contrast in both themes at 320, 390,
+1366 and 1920px, after theme transitions settle. Release `2026.11.07.5` describes
+the change in Updates. Deploy matching Blade, JS, CSS, release config and Vite
+assets; no migration or environment changes.
+
 ## Readable civilian release notes (2026-11-07)
 
 The floating Updates dialog starts with What's new / Mga giusab: the latest
