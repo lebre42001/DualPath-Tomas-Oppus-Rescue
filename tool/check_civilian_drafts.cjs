@@ -28,7 +28,7 @@ const server = http.createServer((request, response) => {
     const url = new URL(request.url, origin || 'http://localhost');
     if (url.pathname.startsWith('/modules/')) {
         const name = path.basename(url.pathname).replace(/\.js$/, '') + '.js';
-        if (!['civilian-report-drafts.js', 'civilian-draft-store.js', 'report-delivery.js', 'dom-ready.js'].includes(name)) { response.writeHead(404).end(); return; }
+        if (!['civilian-report-drafts.js', 'civilian-draft-store.js', 'civilian-draft-recovery.js', 'report-delivery.js', 'dom-ready.js'].includes(name)) { response.writeHead(404).end(); return; }
         response.setHeader('Content-Type', 'application/javascript'); response.end(fs.readFileSync(path.join(web, 'resources/js', name))); return;
     }
     if (url.pathname.startsWith('/build/')) {
@@ -45,8 +45,10 @@ const server = http.createServer((request, response) => {
     const panel = partial.replace(/{{ auth\(\)->id\(\) }}/g, owner)
         .replace(/{{ route\('reports.create'\) }}/g, origin+'/form')
         .replace(/{{ route\('reports.submission', '__submission__'\) }}/g, origin+'/reports/submissions/__submission__');
+    const context = `<span hidden data-civilian-draft-context data-owner="${owner}" data-create-url="${origin}/form" data-receipt-url="${origin}/reports/submissions/__submission__"></span>`;
+    const navigation = '<nav><a href="/history" data-civilian-draft-nav>Draft Reports <b data-civilian-draft-nav-count hidden>0</b></a></nav>';
     response.setHeader('Content-Type', 'text/html');
-    response.end(`<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1">${css}</head><body class="civilian-portal"><main style="max-width:560px;margin:auto;padding:12px;display:grid;gap:12px">${panel}${url.pathname==='/history'?'':form(crypto.randomUUID())}</main><script type="module" src="/modules/civilian-report-drafts.js"></script></body></html>`);
+    response.end(`<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1">${css}</head><body class="civilian-portal">${context}<main style="max-width:560px;margin:auto;padding:12px;display:grid;gap:12px">${navigation}${url.pathname==='/history'?panel:form(crypto.randomUUID())}</main><script type="module" src="/modules/civilian-report-drafts.js"></script></body></html>`);
 });
 
 (async () => {
@@ -73,7 +75,8 @@ const server = http.createServer((request, response) => {
             await page.locator('input[name="evidence"]').setInputFiles({name:'scene.png',mimeType:'image/png',buffer:Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aKXcAAAAASUVORK5CYII=','base64')});
             await page.locator('[name="location_text"]').fill('Market entrance');
             await page.locator('[name="description"]').fill('Vehicle collision beside the market.');
-            await page.waitForFunction(()=>document.querySelector('[data-civilian-draft-list]')?.children.length===1);
+            await page.waitForFunction(()=>document.querySelector('[data-civilian-draft-nav-count]')?.textContent==='1');
+            assert.equal(await page.locator('[data-civilian-draft-list]').count(), 0, 'Draft lists live only on their dedicated page');
         };
         await page.goto(origin+'/form'); await fill();
         await page.evaluate(()=>window.fixtureVerified=false);
@@ -83,7 +86,8 @@ const server = http.createServer((request, response) => {
         await page.waitForFunction(()=>document.querySelector('[data-civilian-draft-feedback]')?.textContent.includes('connection was interrupted'));
         assert.equal(posted.length,1); const original = posted[0];
         assert.equal((await list())[0].photo,true);
-        await page.reload(); await page.getByRole('button',{name:'Continue',exact:true}).click();
+        await page.reload(); await page.getByRole('link',{name:/Draft Reports/}).click();
+        await page.getByRole('button',{name:'Continue',exact:true}).click();
         await page.waitForFunction(id=>document.querySelector('[name="submission_id"]').value===id,original);
         assert.equal(await page.locator('[name="description"]').inputValue(),'Vehicle collision beside the market.');
         assert.equal(await page.locator('[name="evidence"]').evaluate(e=>e.files.length),1);
@@ -94,7 +98,9 @@ const server = http.createServer((request, response) => {
         await page.locator('[data-report-submit]').click(); assert.equal(posted.length,1);
         await context.setOffline(false); assert.equal(posted.length,1,'Reconnection never auto-sends an emergency');
         await page.goto(origin+'/history?owner=2');
-        assert.equal(await page.locator('[data-civilian-drafts]').isVisible(),false,'Another account cannot see the draft');
+        assert.equal(await page.locator('[data-civilian-draft-list]').evaluate(node=>node.children.length),0,'Another account cannot see the draft');
+        assert.equal(await page.locator('[data-civilian-draft-empty]').isVisible(),true);
+        assert.equal(await page.locator('[data-civilian-draft-nav-count]').isVisible(),false);
         await page.goto(origin+'/history'); await page.getByRole('button',{name:'Continue',exact:true}).waitFor();
         assert.equal((await list())[0].id,original);
         for (const width of [320,390]) {
@@ -124,11 +130,12 @@ const server = http.createServer((request, response) => {
         await page.locator('[data-report-submit]').click();
         await page.waitForFunction(()=>document.querySelector('[data-civilian-draft-feedback]')?.textContent.includes('connection was interrupted'));
         const before=posted.length;
-        await page.reload(); await page.getByRole('button',{name:'Continue',exact:true}).click();
+        await page.reload(); await page.getByRole('link',{name:/Draft Reports/}).click();
+        await page.getByRole('button',{name:'Continue',exact:true}).click();
         await page.waitForURL('**/reports/7/success');
         assert.equal(posted.length,before,'A receipt found after response loss prevents another upload');
         assert.deepEqual(await list(),[]); assert.deepEqual(errors,[]);
-        console.log('PASS mobile browser: validation gate, interrupted upload, IndexedDB photo/reload restoration, stable submission ID, fresh GPS/live-check reset, account isolation, offline draft, no automatic retry, receipt reconciliation, 320/390px and dark layout.');
+        console.log('PASS mobile browser: dedicated draft page, account navigation badge, validation gate, interrupted upload, IndexedDB photo/reload restoration, stable submission ID, fresh GPS/live-check reset, account isolation, offline draft, no automatic retry, receipt reconciliation, 320/390px and dark layout.');
         fs.writeFileSync(path.join(output,'results.json'),JSON.stringify({passed:true,cases:10,errors},null,2));
         await context.close();
     } finally { await browser.close(); server.closeAllConnections(); await new Promise(resolve=>server.close(resolve)); }

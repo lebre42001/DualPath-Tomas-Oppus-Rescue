@@ -40,9 +40,6 @@
 @endsection
 
 @section('content')
-    @if ($isCivilian)
-        @include('reports.partials.civilian-drafts')
-    @endif
     <section id="report-form" class="panel stack" data-report-form-root>
         <div class="panel-head">
             <div class="panel-heading">
@@ -63,6 +60,14 @@
             <input type="hidden" name="submission_id" value="{{ old('submission_id', $submissionId) }}">
 
             @if ($isCivilian)
+                <aside class="civilian-report-connection" data-report-connection data-connection-state="checking" data-connection-url="{{ route('reports.connection') }}">
+                    <div role="status" aria-live="polite" aria-atomic="true">
+                        <strong data-report-connection-title>Checking online reporting</strong>
+                        <p data-report-connection-message>Availability is not confirmed yet. You can prepare or save a draft while checking.</p>
+                    </div>
+                    <button class="btn btn-secondary" type="button" data-report-connection-retry>Check again</button>
+                    <noscript>Enable JavaScript to check the connection and use camera, GPS, and live verification.</noscript>
+                </aside>
                 <p class="legal-small">Your location, scene photo, verification selfie, and description are shared with authorized reviewers. Only the description is used for severity AI. <a href="{{ route('legal.privacy') }}">Privacy Policy</a>.</p>
                 <div class="civilian-report-mobile-flow">
                     <section class="form-step-card civilian-capture-panel">

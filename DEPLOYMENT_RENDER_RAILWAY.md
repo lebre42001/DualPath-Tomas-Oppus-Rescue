@@ -1,5 +1,65 @@
 # Online Deployment Plan
 
+## Civilian Draft Reports navigation (2026-11-06)
+
+Deploy the civilian layout, standalone `reports/drafts` view/route/controller,
+draft store/recovery/UI modules and rebuilt CSS/JS together. The civilian
+collapsible sidebar now has Draft Reports with an account-scoped local count;
+draft lists no longer appear on Home, Report Status or Send Report. Empty lists
+show a dedicated empty state. Administrators and responders cannot open the
+civilian-only route.
+
+Text is checkpointed synchronously while editing; photo saves use IndexedDB.
+Background/pagehide events additionally flush pending saves. Newer text backups
+retain matching committed photos and cannot be replaced by an older queued
+write. Drafts remain on the same device/browser and origin across app restarts
+and account sign-out/sign-in. They do not sync across devices or between local
+and online URLs. A photo interrupted before its storage transaction commits may
+need reattachment. Browser storage clearing/eviction can remove local drafts.
+Existing drafts in the same origin/account storage are retained; no migration,
+AI model switch, credential change or firmware upload is required.
+
+Check `npm.cmd run test:report-drafts`, the Laravel suite and production build.
+This update passed 339 Laravel tests (3623 assertions) using Laragon PHP with
+ZIP enabled for exports, and 15 JavaScript draft/navigation/connection tests.
+The final Vite build passed and Laravel caches were cleared. Local `/`, `/login`,
+`/register`, `/system/version` and the built app JS returned 200; final fingerprint
+was `fccfbc46636f2a38`. A guest JSON request to `/reports/drafts` returned 401;
+authenticated rendering and civilian-only access passed in isolated feature tests.
+The browser fixture helper was updated and syntax-checked; no new physical-phone
+or visual-browser run is claimed. After release, sign in as a civilian, leave a
+partially filled report, close/reopen, check the badge and continue from Draft
+Reports. Check account switching, deletion and confirmed-receipt cleanup. Verify
+the badge in both expanded and collapsed navigation on actual pilot phones.
+
+The Render version/login endpoints were again unreachable during these checks.
+No public redeploy or deployed-commit parity is claimed. The new civilian page
+and matching built assets must be included in the next reviewed deployment.
+
+## Civilian online pilot connection status (2026-11-06)
+
+Deploy the reporting controller/route, civilian form, connection/delivery scripts,
+CSS, service worker and rebuilt Vite assets together. The new authenticated,
+read-only `/reports/connection` endpoint returns no incident or account details;
+the form distinguishes a responding server from browser-only connectivity.
+No migration, firmware upload or AI model change is required. See
+[civilian questionnaire fit and pilot tasks](CIVILIAN_PILOT_EVALUATION.md).
+
+Use the Laragon PHP executable with PDO MySQL/SQLite, GD, Fileinfo and ZIP enabled;
+the unrelated `C:\php\php.exe` on PATH may lack these extensions. From
+`C:\laragon\www\TomasOppusRescue-main\web_system`, run the Laravel tests,
+`npm.cmd run build` and `php artisan optimize:clear` with the configured PHP.
+Verify local `/login`, then the authenticated report form and connection endpoint.
+Verify the deployed commit using hosting metadata and repeat the real app-route
+checks online before claiming parity; `/system/version` is a file fingerprint,
+not a Git revision. The public Render demo was unreachable during this update's
+checks; no online rollout or mobile-browser certification is claimed.
+
+The current root `render.yaml` demo uses local **SQLite**, file storage and AI
+disabled. Older free-Postgres assumptions do not describe this profile. SQLite
+and uploads on the free service are ephemeral; this remains a disposable demo,
+not a production deployment.
+
 ## Docker PHP extension fix (2026-10-15)
 
 The web Dockerfile shared by Render and Dokploy now installs GD with JPEG and

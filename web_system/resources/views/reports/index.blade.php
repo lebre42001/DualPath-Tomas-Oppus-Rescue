@@ -253,9 +253,6 @@
 @endsection
 
 @section('content')
-    @if ($isCivilian)
-        @include('reports.partials.civilian-drafts')
-    @endif
     @unless ($isCivilian)
         <div class="report-detail-modal report-filter-modal" data-report-filter-modal hidden>
             <div class="report-detail-modal-shell report-filter-modal-shell" role="dialog" aria-modal="true" aria-labelledby="report-filter-modal-title">

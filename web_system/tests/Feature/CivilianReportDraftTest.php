@@ -84,17 +84,45 @@ class CivilianReportDraftTest extends TestCase
         $this->assertDatabaseCount('incident_reports', 0);
     }
 
-    public function test_civilian_drafts_are_discoverable_in_home_reports_and_report_form(): void
+    public function test_civilian_drafts_have_a_dedicated_navigation_page_and_no_embedded_lists(): void
     {
         $user = $this->civilian();
-        foreach (['dashboard', 'reports.index', 'reports.create'] as $name) {
+        foreach (['dashboard', 'reports.index', 'reports.create', 'profile.show', 'settings.index'] as $name) {
             $this->actingAs($user)->get(route($name))->assertOk()
-                ->assertSee('data-civilian-drafts', false)
+                ->assertSee('data-civilian-draft-context', false)
+                ->assertSee('data-civilian-draft-nav-count', false)
                 ->assertSee('data-owner="'.$user->id.'"', false)
-                ->assertSee('Report drafts');
+                ->assertSee(route('reports.drafts'), false)
+                ->assertSee('Draft Reports')
+                ->assertDontSee('data-civilian-draft-list', false);
         }
         $this->get(route('reports.create'))->assertSee('data-civilian-draft-save', false);
+        $this->get(route('reports.drafts'))->assertOk()
+            ->assertSee('data-civilian-draft-list', false)
+            ->assertSee('data-civilian-draft-empty', false)
+            ->assertSee('No draft reports')
+            ->assertSee('aria-current="page"', false)
+            ->assertSee('Only drafts for your signed-in account on this device');
         $admin = User::factory()->create(['role' => 'admin', 'is_admin' => true]);
-        $this->actingAs($admin)->get(route('reports.create'))->assertOk()->assertDontSee('data-civilian-drafts', false);
+        $this->actingAs($admin)->get(route('reports.create'))->assertOk()
+            ->assertDontSee('data-civilian-draft-context', false)
+            ->assertDontSee('data-civilian-draft-nav', false);
+        $this->get(route('reports.drafts'))->assertForbidden();
+    }
+
+    public function test_drafts_page_requires_a_signed_in_active_civilian_but_does_not_require_verification_to_view_saved_work(): void
+    {
+        $this->get(route('reports.drafts'))->assertRedirect(route('login'));
+        $user = User::factory()->create(['role' => 'civilian', 'account_verified_at' => null]);
+        $this->actingAs($user)->get(route('reports.drafts'))->assertOk()
+            ->assertSee('data-owner="'.$user->id.'"', false);
+        $other = $this->civilian();
+        $this->actingAs($other)->get(route('reports.drafts'))->assertOk()
+            ->assertSee('data-owner="'.$other->id.'"', false)
+            ->assertDontSee('data-owner="'.$user->id.'"', false);
+        $responder = User::factory()->create(['role' => 'responder', 'is_admin' => false]);
+        $this->actingAs($responder)->get(route('reports.drafts'))->assertForbidden();
+        $user->forceFill(['blocked_at' => now()])->save();
+        $this->actingAs($user)->get(route('reports.drafts'))->assertRedirect(route('login'));
     }
 }

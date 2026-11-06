@@ -45,4 +45,9 @@ async function requestJson(url, options, { fetchImpl = globalThis.fetch, signal,
 }
 
 export const checkReportReceipt = (url, options = {}) => requestJson(url, { method: 'GET' }, { timeoutMs: 12000, ...options });
+export async function checkReportConnection(url, options = {}) {
+    const data = await requestJson(url, { method: 'GET' }, { timeoutMs: 6000, ...options });
+    if (data?.available !== true) throw new ReportDeliveryError('server', 'Online reporting is unavailable.');
+    return true;
+}
 export const uploadReport = (url, body, options = {}) => requestJson(url, { method: 'POST', body }, options);

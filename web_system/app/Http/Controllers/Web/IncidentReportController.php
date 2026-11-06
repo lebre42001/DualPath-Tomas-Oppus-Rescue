@@ -130,6 +130,20 @@ class IncidentReportController extends Controller
         ]);
     }
 
+    public function connection(): JsonResponse
+    {
+        // The auth and account.active middleware verify the current account.
+        // This probe never creates a report or exposes other users' records.
+        return response()->json(['available' => true], 200, ['Cache-Control' => 'private, no-store']);
+    }
+
+    public function drafts(): View
+    {
+        abort_unless(Auth::user()?->isCivilian(), 403);
+
+        return view('reports.drafts');
+    }
+
     public function submission(Request $request, string $submissionId, IncidentReportIngestor $ingestor): JsonResponse
     {
         $report = $ingestor->existing($ingestor->onlineKey($request->user(), $submissionId));

@@ -5,6 +5,41 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Civilian Draft Reports navigation and connection status (2026-11-06)
+
+The civilian collapsible sidebar now links to `/reports/drafts` and displays an
+account-scoped count of local drafts. The list is on that dedicated page, with
+Continue/Delete and an empty state; it no longer appears on Home, Report Status
+or Send Report. Administrators/responders cannot open the civilian draft route.
+The report form also checks the authenticated, read-only `/reports/connection`
+endpoint and distinguishes server reachability, offline state and session issues.
+
+Deploy the controller/routes, layout, draft view/partial, draft store/recovery/UI,
+connection/delivery modules, CSS and rebuilt Vite assets together. Text backups
+are saved synchronously on edits before waiting for photo storage. Background
+and pagehide events also flush pending saves. A newer text backup retains a
+matching committed photo without accepting an older queued text write. A photo
+whose transaction was interrupted may need reattachment. Drafts stay scoped to
+the same account, browser/device and origin; there is no cross-device sync or
+automatic send on reconnection. Existing same-origin drafts are retained. Fresh
+GPS and live selfie verification are still required to send.
+
+No migration, firmware upload, AI model change or environment variable is needed.
+The suite passed 339 Laravel tests (3623 assertions), 15 JavaScript
+draft/navigation/connection tests and the Vite build. Local caches were cleared
+and public entry routes/assets verified. Push this release to the connected
+`main` branch for the existing automatic rebuild. At pre-push verification, the
+public `/system/version` fingerprint was `8ec95bc335cd8b48` and `/login` returned
+200. This fingerprint is not a Git SHA; record the pushed commit and compare
+hosting release metadata plus the actual published bundle after deployment.
+
+After rebuild, verify `/login`, `/register`, `/system/version`, matching asset
+responses and the new draft/connection source signatures. Authenticated checks
+should cover the Draft Reports menu/badge, account isolation, continue/delete,
+close/reopen and cleanup after a confirmed receipt. Do not create fake emergency
+reports on the operational system. Physical-phone/browser testing remains a
+separate pilot check. See [questionnaire and pilot notes](CIVILIAN_PILOT_EVALUATION.md).
+
 ## LoRa description AI and admin severity review (2026-11-06)
 
 Hardware LoRa alerts now use `AiTextSeverityClient::analyzeForReport`, the same
@@ -81,8 +116,9 @@ submission receipt route, controller JSON responses, and rebuilt Vite assets
 together. No new database migration or environment variable is needed. The
 existing native form redirect and responder submission remain supported.
 
-Civilian Home, My Reports and Send Report show local drafts with Continue/Delete,
-the last saved time and interruption state. Text and the scene photo are saved
+The dedicated civilian Draft Reports page shows local drafts with Continue/Delete,
+the last saved time and interruption state. The sidebar count appears across the
+civilian workspace. Text and the scene photo are saved
 to account-scoped IndexedDB before upload. The same submission UUID is retained
 when a draft resumes. If IndexedDB is blocked/full, text-only storage is explicitly
 labelled and the photo must be reattached. If both stores fail, the UI says that

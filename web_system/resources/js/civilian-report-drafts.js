@@ -1,6 +1,7 @@
-import { onDomReady } from './dom-ready';
-import { createCivilianDraftStore, isSubmissionId } from './civilian-draft-store';
-import { checkReportReceipt, uploadReport, receivedReportUrl } from './report-delivery';
+import { onDomReady } from './dom-ready.js';
+import { createCivilianDraftStore, isSubmissionId } from './civilian-draft-store.js';
+import { checkReportReceipt, uploadReport, receivedReportUrl } from './report-delivery.js';
+import { watchCivilianDraftRecovery } from './civilian-draft-recovery.js';
 
 const messages = {
     editing: 'Draft — not sent', sending: 'Delivery unconfirmed — check before sending again',
@@ -9,35 +10,47 @@ const messages = {
     server: 'Draft — server receipt unconfirmed', session: 'Draft — sign in to continue',
     validation: 'Draft — review details and verification',
 };
-const element = (tag, text, className = '') => {
-    const node = document.createElement(tag); node.textContent = text; node.className = className; return node;
-};
-
-onDomReady(() => {
+export function initializeCivilianDrafts({ document = globalThis.document, window = globalThis.window, navigator = globalThis.navigator } = {}) {
+    const element = (tag, text, className = '') => {
+        const node = document.createElement(tag); node.textContent = text; node.className = className; return node;
+    };
     const panel = document.querySelector('[data-civilian-drafts]');
-    if (!panel) return;
-    const store = createCivilianDraftStore(panel.dataset.owner);
+    const context = document.querySelector('[data-civilian-draft-context]') ?? panel;
+    if (!context) return;
+    const store = createCivilianDraftStore(context.dataset.owner);
     const form = document.querySelector('[data-report-draft-form][data-report-role="civilian"]');
-    const list = panel.querySelector('[data-civilian-draft-list]');
-    const counter = panel.querySelector('[data-civilian-draft-count]');
+    const list = panel?.querySelector('[data-civilian-draft-list]');
+    const counter = panel?.querySelector('[data-civilian-draft-count]');
+    const empty = panel?.querySelector('[data-civilian-draft-empty]');
+    const badges = document.querySelectorAll('[data-civilian-draft-nav-count]');
     const saveButton = form?.querySelector('[data-civilian-draft-save]');
     const feedback = form?.querySelector('[data-civilian-draft-feedback]');
     const submitButton = form?.querySelector('[data-report-submit]');
-    let records = [], saving = Promise.resolve(), timer, controller = null, busy = false, restoring = false;
+    let records = [], saving = Promise.resolve(), controller = null, busy = false, restoring = false, received = false, recovery;
+    let renderVersion = 0, refreshTimer, lastSnapshot = null, lastTimestamp = 0;
     const notice = (text) => {
         if (feedback) feedback.textContent = text;
-        panel.querySelector('[data-civilian-draft-notice]').textContent = text;
+        const status = panel?.querySelector('[data-civilian-draft-notice]');
+        if (status) status.textContent = text;
     };
     const storageError = () => notice('Could not save a local draft. Keep this page open and check your device storage. Your report has not been confirmed as received.');
-    const receiptUrl = (id) => panel.dataset.receiptUrl.replace('__submission__', encodeURIComponent(id));
+    const receiptUrl = (id) => context.dataset.receiptUrl.replace('__submission__', encodeURIComponent(id));
     const currentId = () => form?.elements.namedItem('submission_id')?.value;
     const fileInput = (name) => form?.querySelector(`input[name="${name}"]`);
     const selectedPhoto = () => fileInput('evidence_photo_capture')?.files?.[0] ?? fileInput('evidence')?.files?.[0] ?? null;
 
     const render = async () => {
-        records = await store.list();
-        panel.hidden = records.length === 0;
-        counter.textContent = String(records.length);
+        const version = ++renderVersion;
+        const latest = await store.list();
+        if (version !== renderVersion) return;
+        records = latest;
+        for (const badge of badges) {
+            badge.textContent = String(records.length); badge.hidden = records.length === 0;
+        }
+        document.querySelector('[data-civilian-draft-nav]')?.setAttribute('aria-label', records.length ? `Draft Reports, ${records.length} saved` : 'Draft Reports');
+        if (counter) counter.textContent = String(records.length);
+        if (empty) empty.hidden = records.length !== 0;
+        if (!list) return;
         list.replaceChildren();
         for (const record of records) {
             const card = element('article', '', 'civilian-draft-card');
@@ -61,23 +74,25 @@ onDomReady(() => {
     };
 
     const snapshot = (state, attempted) => {
-        if (!form || !isSubmissionId(currentId())) return null;
+        if (received || !form || !isSubmissionId(currentId())) return null;
         const fields = {
             description: form.elements.namedItem('description')?.value ?? '',
             location_text: form.elements.namedItem('location_text')?.value ?? '',
         };
         const evidenceFile = selectedPhoto();
         if (!fields.description.trim() && !fields.location_text.trim() && !evidenceFile) return null;
-        const previous = records.find((record) => record.submissionId === currentId());
-        return {
+        const previous = lastSnapshot?.submissionId === currentId() ? lastSnapshot : records.find((record) => record.submissionId === currentId());
+        lastTimestamp = Math.max(Date.now(), lastTimestamp + 1);
+        return lastSnapshot = {
             submissionId: currentId(), fields, evidenceFile, evidenceName: evidenceFile?.name ?? previous?.evidenceName,
-            createdAt: previous?.createdAt ?? new Date().toISOString(), updatedAt: new Date().toISOString(),
+            createdAt: previous?.createdAt ?? new Date().toISOString(), updatedAt: new Date(lastTimestamp).toISOString(),
             state: state ?? previous?.state ?? 'editing', attempted: attempted ?? previous?.attempted ?? false,
         };
     };
     const save = (state, attempted) => {
         const record = snapshot(state, attempted);
         if (!record) return Promise.resolve(null);
+        try { store.checkpoint(record); } catch { /* Report storage failure only if the full save also fails. */ }
         const job = saving.catch(() => {}).then(async () => {
             const saved = await store.put(record); await render(); return saved;
         });
@@ -91,6 +106,8 @@ onDomReady(() => {
     const confirmReceipt = async (data, id) => {
         const url = receivedReportUrl(data);
         if (!url) return false;
+        received = true;
+        recovery?.cancel();
         // A received report is authoritative even if local cleanup fails. The
         // same submission ID lets Continue reconcile a leftover draft later.
         try { await store.remove(id); } catch { /* Do not hide a confirmed server receipt. */ }
@@ -108,15 +125,16 @@ onDomReady(() => {
         }
         if (!form) {
             if (!navigator.onLine) { notice('Your draft is saved. Reconnect to open the report form and continue.'); return; }
-            window.location.assign(`${panel.dataset.createUrl}?draft=${encodeURIComponent(record.submissionId)}`);
+            window.location.assign(`${context.dataset.createUrl}?draft=${encodeURIComponent(record.submissionId)}`);
             return;
         }
-        clearTimeout(timer);
+        recovery?.cancel();
         if (currentId() !== record.submissionId) await save();
         await saving.catch(() => {});
         restoring = true;
         try {
             form.elements.namedItem('submission_id').value = record.submissionId;
+            lastSnapshot = record;
             for (const [name, value] of Object.entries(record.fields)) {
                 const input = form.elements.namedItem(name); if (!input) continue;
                 input.value = value; input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -155,11 +173,11 @@ onDomReady(() => {
             }
             if (submitButton) submitButton.textContent = sending ? 'Sending report…' : 'Send Report';
             if (saveButton) saveButton.textContent = sending ? 'Stop sending and keep draft' : 'Save draft';
-            for (const button of list.querySelectorAll('button')) button.disabled = sending;
+            for (const button of list?.querySelectorAll('button') ?? []) button.disabled = sending;
         };
         const send = async () => {
             if (busy) return;
-            clearTimeout(timer);
+            recovery?.cancel();
             const body = new FormData(form), id = currentId();
             toggleSending(true); controller = new AbortController();
             let slowTimer, saved = null, attempted = false;
@@ -193,17 +211,14 @@ onDomReady(() => {
                 form.dispatchEvent(new Event('stitch:report-draft-restored'));
             }
         };
-        form.addEventListener('input', () => {
-            if (restoring || busy) return;
-            clearTimeout(timer); timer = setTimeout(() => { void save().then((record) => { if (record) savedNotice(record); }).catch(storageError); }, 500);
-        });
-        form.addEventListener('change', () => {
-            if (restoring || busy) return;
-            clearTimeout(timer); void save().then((record) => { if (record) savedNotice(record); }).catch(storageError);
+        recovery = watchCivilianDraftRecovery({
+            form, window, document, paused: () => restoring || busy || received,
+            checkpoint: () => { const record = snapshot(); if (record) store.checkpoint(record); },
+            persist: () => save(), saved: savedNotice, failed: storageError,
         });
         saveButton?.addEventListener('click', () => {
             if (busy) { controller?.abort('interrupted'); return; }
-            clearTimeout(timer); void save(navigator.onLine ? 'editing' : 'offline').then((record) => savedNotice(record)).catch(storageError);
+            recovery.cancel(); void save(navigator.onLine ? 'editing' : 'offline').then((record) => savedNotice(record)).catch(storageError);
         });
         // Capture offline attempts before GPS/selfie validation can open a
         // network-dependent modal. Partial drafts never need those checks.
@@ -219,15 +234,24 @@ onDomReady(() => {
         });
         window.addEventListener('offline', () => {
             if (controller) { controller.abort('offline'); return; }
-            clearTimeout(timer); void save('offline').then((record) => { if (record) savedNotice(record, 'Connection lost. Draft saved on this device.'); }).catch(storageError);
+            recovery.cancel(); void save('offline').then((record) => { if (record) savedNotice(record, 'Connection lost. Draft saved on this device.'); }).catch(storageError);
         });
     }
     window.addEventListener('online', () => notice('Connection is available again. Continue your saved draft and review it before sending. Reports are not sent automatically.'));
+    const refresh = () => { clearTimeout(refreshTimer); refreshTimer = setTimeout(() => { void render().catch(storageError); }, 100); };
+    window.addEventListener('stitch:civilian-drafts-changed', (event) => { if (event.detail?.owner === context.dataset.owner) refresh(); });
+    window.addEventListener('storage', (event) => { if (event.key === null || store.ownsStorageKey(event.key)) refresh(); });
+    window.addEventListener('pageshow', refresh);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
     void render().then(async () => {
         const id = new URL(window.location.href).searchParams.get('draft');
         if (form && isSubmissionId(id)) {
             const record = await store.get(id);
             if (record) await continueDraft(record); else notice('This draft is not available for this account on this device.');
+        } else if (form) {
+            const record = await save(); if (record) savedNotice(record);
         }
     }).catch(storageError);
-});
+}
+
+onDomReady(() => initializeCivilianDrafts());

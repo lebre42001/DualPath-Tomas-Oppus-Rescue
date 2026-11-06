@@ -123,6 +123,8 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
     Route::prefix('reports')->name('reports.')->group(function (): void {
         Route::get('/', [IncidentReportController::class, 'index'])->name('index');
         Route::get('/create', [IncidentReportController::class, 'create'])->name('create');
+        Route::get('/drafts', [IncidentReportController::class, 'drafts'])->name('drafts');
+        Route::get('/connection', [IncidentReportController::class, 'connection'])->name('connection');
         Route::get('/submissions/{submissionId}', [IncidentReportController::class, 'submission'])->whereUuid('submissionId')->name('submission');
         Route::post('/', [IncidentReportController::class, 'store'])->name('store');
         Route::get('/{incidentReport}/evidence', [IncidentReportController::class, 'evidence'])->name('evidence');

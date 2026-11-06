@@ -4,6 +4,7 @@ import './stitch-dashboard';
 import './pwa';
 import './permission-readiness';
 import './report-form';
+import './report-connection';
 import './report-drafts';
 import './civilian-report-drafts';
 import './account-verification';

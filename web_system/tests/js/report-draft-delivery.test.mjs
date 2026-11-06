@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createCivilianDraftStore } from '../../resources/js/civilian-draft-store.js';
 import { checkReportReceipt, uploadReport, receivedReportUrl } from '../../resources/js/report-delivery.js';
+import { watchCivilianDraftRecovery } from '../../resources/js/civilian-draft-recovery.js';
 
 const id = 'f06f156c-d08c-4d3b-939a-670b1cef6ad9';
 const draft = { submissionId: id, fields: { description: 'Vehicle collision', location_text: 'Bridge', latitude: 10, liveness_proof: 'do not persist' },
@@ -53,4 +54,87 @@ test('receipt reconciliation is read-only, fresh and same-account authenticated;
     assert.equal(receivedReportUrl({ received: false, redirect_url: response.redirect_url }, 'https://app.test'), null);
     assert.equal(receivedReportUrl({ received: true, redirect_url: 'https://other.test/reports/12/success' }, 'https://app.test'), null);
     assert.equal(receivedReportUrl({ received: true, redirect_url: '/login' }, 'https://app.test'), null);
+});
+
+test('text is already on disk when a photo transaction has not opened yet, including immediately before app termination', async () => {
+    const local = storage();
+    let request;
+    const store = createCivilianDraftStore(1, { storage: local, indexedDB: { open: () => request = {} } });
+    const pending = store.put(draft);
+    const afterRestart = createCivilianDraftStore(1, { storage: local, indexedDB: null });
+    assert.equal((await afterRestart.get(id)).fields.description, draft.fields.description);
+    assert.equal((await afterRestart.get(id)).storageMode, 'text-only');
+    assert.equal((await createCivilianDraftStore(2, { storage: local, indexedDB: null }).list()).length, 0);
+    request.onerror(); await pending;
+});
+
+const photoDatabase = () => {
+    const rows = new Map();
+    return { open() {
+        const request = {};
+        request.result = {
+            close() {}, objectStoreNames: { contains: () => true },
+            transaction() {
+                const tx = {};
+                const operation = action => {
+                    const result = {};
+                    setImmediate(() => { result.result = action(); tx.oncomplete(); });
+                    return result;
+                };
+                tx.objectStore = () => ({
+                    getAll: () => operation(() => [...rows.values()]),
+                    put: row => operation(() => { rows.set(row.id, row); return row.id; }),
+                    delete: key => operation(() => rows.delete(key)),
+                });
+                return tx;
+            },
+        };
+        setImmediate(() => request.onsuccess());
+        return request;
+    } };
+};
+
+test('a newer shutdown checkpoint keeps its latest text and previously committed photo despite an older queued write', async () => {
+    const local = storage(), indexedDB = photoDatabase();
+    const store = createCivilianDraftStore(1, { storage: local, indexedDB });
+    const original = await store.put(draft);
+    store.checkpoint({ ...original, fields: { description: 'Latest unfinished text', location_text: 'New landmark' }, updatedAt: '2026-11-06T01:00:02Z' });
+    await store.put({ ...draft, updatedAt: '2026-11-06T01:00:01Z' });
+    const restored = await createCivilianDraftStore(1, { storage: local, indexedDB }).get(id);
+    assert.equal(restored.fields.description, 'Latest unfinished text');
+    assert.equal(restored.fields.location_text, 'New landmark');
+    assert(restored.evidenceFile instanceof Blob);
+    assert.equal(restored.storageMode, 'full');
+    assert.equal((await store.list()).length, 1, 'One draft is counted once across both storage layers');
+    await store.remove(id); assert.equal((await store.list()).length, 0);
+});
+
+test('a replacement photo that never committed cannot silently restore a different older photo', async () => {
+    const local = storage(), indexedDB = photoDatabase();
+    const store = createCivilianDraftStore(1, { storage: local, indexedDB });
+    await store.put(draft);
+    store.checkpoint({ ...draft, updatedAt: '2026-11-06T01:00:02Z', evidenceFile: new File(['new scene'], 'scene.jpg', { type: 'image/jpeg' }) });
+    const restored = await store.get(id);
+    assert.equal(restored.evidenceFile, null); assert.equal(restored.storageMode, 'text-only');
+});
+
+test('autosave checkpoints every edit, flushes on background/close, and cannot recreate a confirmed report', async () => {
+    const form = new EventTarget(), win = new EventTarget(), doc = new EventTarget();
+    const local = storage(), store = createCivilianDraftStore(1, { indexedDB: null, storage: local });
+    let timer, paused = false, persists = 0, failures = 0, current = { ...draft, state: 'editing', attempted: false };
+    win.clearTimeout = () => { timer = null; }; win.setTimeout = callback => { timer = callback; return 1; };
+    watchCivilianDraftRecovery({ form, window: win, document: doc, paused: () => paused,
+        checkpoint: () => store.checkpoint(current), persist: () => { persists++; return store.put(current); }, saved() {}, failed: () => failures++ });
+    form.dispatchEvent(new Event('input'));
+    assert.equal(persists, 0, 'The immediate checkpoint does not wait for the debounced full save');
+    assert.equal((await store.get(id)).fields.description, draft.fields.description);
+    current = { ...current, fields: { description: 'Last keystroke', location_text: '' }, updatedAt: '2026-11-06T01:00:03Z' };
+    form.dispatchEvent(new Event('input'));
+    assert.equal((await store.get(id)).fields.description, 'Last keystroke');
+    doc.hidden = true; doc.dispatchEvent(new Event('visibilitychange'));
+    await new Promise(resolve => setImmediate(resolve)); assert.equal(persists, 1);
+    win.dispatchEvent(new Event('pagehide')); await new Promise(resolve => setImmediate(resolve)); assert.equal(persists, 2);
+    paused = true; await store.remove(id);
+    form.dispatchEvent(new Event('change')); win.dispatchEvent(new Event('pagehide'));
+    assert.equal(persists, 2); assert.equal((await store.list()).length, 0); assert.equal(failures, 0); assert.equal(timer, null);
 });
