@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\ResponderProfile;
 use App\Models\User;
+use App\Services\CivilianActivityRecorder;
 use App\Support\LegalDocuments;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -59,12 +60,12 @@ class RegisteredUserController extends Controller
         Auth::login($user);
         $this->recordLoginMetadata($user, $request);
 
-        return redirect()->route('account.verify');
+        return redirect()->route('dashboard');
     }
 
     private function recordLoginMetadata(User $user, Request $request): void
     {
-        app(\App\Services\CivilianActivityRecorder::class)->record($user, 'login', 'Account created and signed in', 'Your account was created and you signed in to the web app.');
+        app(CivilianActivityRecorder::class)->record($user, 'login', 'Account created and signed in', 'Your account was created and you signed in to the web app.');
         $user->forceFill([
             'last_login_at' => now(),
             'last_login_ip_address' => $request->ip(),

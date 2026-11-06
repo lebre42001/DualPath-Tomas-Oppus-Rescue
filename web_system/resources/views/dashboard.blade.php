@@ -201,15 +201,15 @@
 @section('content')
     @if ($isCivilian)
         <section class="civilian-shell civilian-home-compact">
-            <section class="civilian-home-card">
+            <section class="civilian-home-card" data-civilian-tour-home>
                 <div class="civilian-home-card-copy">
                     <p class="panel-kicker">Civilian Home</p>
                     <h1>Report or check status</h1>
                     <p>Hi, <strong>{{ $user?->name }}</strong>. {{ $isAccountVerified ? 'Send an emergency report or check your latest update.' : 'Verify your account first to send an emergency report.' }}</p>
                 </div>
                 <div class="civilian-home-primary-actions">
-                    <a href="{{ $isAccountVerified ? route('reports.create') : route('account.verify') }}" class="btn btn-primary">{{ $isAccountVerified ? 'Report Emergency' : 'Verify Account' }}</a>
-                    <a href="{{ route('reports.index') }}" class="btn btn-secondary">My Reports &amp; Status</a>
+                    <a href="{{ $isAccountVerified ? route('reports.create') : route('account.verify') }}" class="btn btn-primary" data-civilian-tour-report>{{ $isAccountVerified ? 'Report Emergency' : 'Verify Account' }}</a>
+                    <a href="{{ route('reports.index') }}" class="btn btn-secondary" data-civilian-tour-status>My Reports &amp; Status</a>
                 </div>
                 <div class="civilian-home-status-row" aria-label="Report summary">
                     <article><span>Total</span><strong>{{ $stats['total'] }}</strong></article>
@@ -217,6 +217,7 @@
                     <article><span>Resolved</span><strong>{{ $stats['resolved'] }}</strong></article>
                 </div>
                 <div class="civilian-home-mini-actions">
+                    <button type="button" class="btn btn-secondary" data-civilian-tutorial-start>Quick tutorial</button>
                     <a href="{{ route('profile.show') }}">Profile</a>
                     <a href="{{ route('settings.readiness') }}">Device Check</a>
                 </div>
@@ -451,6 +452,7 @@
                 });
             })();
         </script>
+        @include('partials.civilian-tutorial')
     @else
         <section class="monitoring-latest-only">
             <article class="panel monitoring-card-panel">

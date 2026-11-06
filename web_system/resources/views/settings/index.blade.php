@@ -45,6 +45,7 @@
                 <p data-settings-message>Alert preferences save automatically.</p>
             </div>
             <div class="civilian-settings-compact-links">
+                <a href="{{ route('dashboard', ['tutorial' => 1]) }}" class="btn btn-secondary">Quick tutorial</a>
                 <a href="{{ route('settings.readiness') }}" class="btn btn-secondary" aria-label="Permission Readiness Check">Device Check</a>
                 <a href="{{ route('reports.index') }}" class="btn btn-secondary">My Reports</a>
             </div>

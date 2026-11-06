@@ -5,6 +5,49 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Civilian guided tutorial before verification (2026-11-07)
+
+Civilian web registration and unverified password/Google sign-ins now land on
+Home, including when a saved intended URL would otherwise force the report or
+verification screen. Verified sign-ins retain their existing intended/default
+destinations. Legal acceptance, admin portal checks, account blocking, live
+verification and server-side report submission checks remain enforced.
+
+On unverified Home, a first-visit spotlight tour introduces actual navigation,
+the floating Updates badge and a read-only reporting preview. Sixteen short
+steps explain Home, Report/Verify, scene photo, GPS/written location, description,
+fresh report selfie, server receipt, drafts, status/history, profile, settings,
+System Log and Log Out. Next/Back/Skip/Done control the tour; Escape skips.
+The last step offers Verify Account without forcing it. The preview has no
+file inputs, submission form, permission requests or transmission actions.
+
+Home's Quick tutorial button replays it. Settings and verification also link to
+Home with `?tutorial=1`; the replay parameter is removed after being consumed.
+Progress is stored locally under `aksyres-civilian-tutorial:v1:<account>`.
+Skip/Done suppress automatic replay for that account in this browser. Active
+progress resumes on reload; clearing browser storage can offer the tour again.
+Verified users can replay manually. Storage denial never traps a user in the tour.
+
+The tour uses the existing dialog focus/Escape handling and a blocking spotlight
+so highlighted navigation cannot accidentally sign out or submit anything.
+It points at visible bottom navigation or opens the drawer when needed, keeping
+consecutive sidebar steps together. The drawer it opened closes on exit.
+Callouts reposition on resize/scroll and use the same civilian mobile/desktop CSS.
+
+Deploy auth controllers, Home/settings/verification views, tutorial partial and
+JS/CSS, release config and matching Vite assets together. No migration, new
+dependency, environment change, model or firmware update. Validate with the
+Laravel/JavaScript suites, Vite build and `tool/check_civilian_tutorial.cjs`.
+The browser fixture renders the real Blade Home with synthetic, unsaved users
+and in-memory database config; it uses real sidebar/dialog/tutorial code on an
+isolated server. It never calls live authentication, camera/GPS or report APIs.
+Verify public entry routes and deployed tutorial asset signatures after push.
+Validation passed: 357 Laravel tests / 3845 assertions, 60 JavaScript tests,
+and all sixteen tutorial steps at 320/390/1366/1920px in the isolated browser
+checks, including replay/resume, keyboard focus, resize, verification handoff,
+zero report POSTs and zero permission requests. Physical devices and live
+authenticated Google/verification flows remain separate pilot checks.
+
 ## Civilian report button readability (2026-11-07)
 
 The report table, history preview and draft preview use explicit View report /

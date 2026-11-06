@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\CivilianActivityRecorder;
 use App\Support\CivilianPresence;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -93,6 +94,12 @@ class AuthenticatedSessionController extends Controller
             $this->recordLoginMetadata($user, $request);
         }
 
+        if ($user?->isCivilian() && ! $user->hasVerifiedAccount()) {
+            $request->session()->forget('url.intended');
+
+            return redirect()->route('dashboard');
+        }
+
         $targetUrl = $user?->is_admin
             ? route('admin.dashboard')
             : ($user?->isCivilian() ? route('reports.create') : route('dashboard'));
@@ -104,7 +111,7 @@ class AuthenticatedSessionController extends Controller
     {
         $wasAdmin = (bool) $request->user()?->is_admin;
         if ($request->user()) {
-            app(\App\Services\CivilianActivityRecorder::class)->record($request->user(), 'logout', 'Signed out', 'You signed out of the web app.');
+            app(CivilianActivityRecorder::class)->record($request->user(), 'logout', 'Signed out', 'You signed out of the web app.');
         }
         app(CivilianPresence::class)->endContext($request);
 
@@ -118,7 +125,7 @@ class AuthenticatedSessionController extends Controller
 
     private function recordLoginMetadata(User $user, Request $request): void
     {
-        app(\App\Services\CivilianActivityRecorder::class)->record($user, 'login', 'Signed in', 'You signed in to the web app.');
+        app(CivilianActivityRecorder::class)->record($user, 'login', 'Signed in', 'You signed in to the web app.');
         $user->forceFill([
             'last_login_at' => now(),
             'last_login_ip_address' => $request->ip(),

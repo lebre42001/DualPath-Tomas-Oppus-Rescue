@@ -164,7 +164,7 @@ class AuthAndReportFlowTest extends TestCase
                 'state' => 'valid-state',
                 'code' => 'valid-code',
             ]))
-            ->assertRedirect(route('account.verify'));
+            ->assertRedirect(route('dashboard'));
 
         $this->assertAuthenticated();
 
@@ -315,7 +315,7 @@ class AuthAndReportFlowTest extends TestCase
             'password' => 'abc123',
             'password_confirmation' => 'abc123',
             'role' => 'civilian',
-        ])->assertRedirect(route('account.verify'));
+        ])->assertRedirect(route('dashboard'));
 
         $user = User::query()->where('email', 'civilian.web@example.com')->firstOrFail();
 
@@ -337,7 +337,7 @@ class AuthAndReportFlowTest extends TestCase
             'password' => 'abc123',
             'password_confirmation' => 'abc123',
             'role' => 'responder',
-        ])->assertRedirect(route('account.verify'));
+        ])->assertRedirect(route('dashboard'));
 
         $user = User::query()->where('email', 'spoofed.responder@example.com')->firstOrFail();
 

@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\ResponderProfile;
 use App\Models\User;
+use App\Services\CivilianActivityRecorder;
 use App\Support\LegalDocuments;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -156,8 +158,8 @@ class GoogleAuthController extends Controller
                     'role' => 'civilian',
                     'is_admin' => false,
                     ...LegalDocuments::acceptanceAttributes(),
-                    'terms_accepted_at' => \Illuminate\Support\Carbon::createFromTimestamp($acknowledgment['recorded_at']),
-                    'privacy_acknowledged_at' => \Illuminate\Support\Carbon::createFromTimestamp($acknowledgment['recorded_at']),
+                    'terms_accepted_at' => Carbon::createFromTimestamp($acknowledgment['recorded_at']),
+                    'privacy_acknowledged_at' => Carbon::createFromTimestamp($acknowledgment['recorded_at']),
                 ]);
             } else {
                 $emailInUseByAnotherAccount = User::query()
@@ -194,9 +196,13 @@ class GoogleAuthController extends Controller
         $request->session()->regenerate();
         $this->recordLoginMetadata($user, $request);
 
-        return redirect()->intended(
-            $user->hasVerifiedAccount() ? route('reports.create') : route('account.verify')
-        );
+        if (! $user->hasVerifiedAccount()) {
+            $request->session()->forget('url.intended');
+
+            return redirect()->route('dashboard');
+        }
+
+        return redirect()->intended(route('reports.create'));
     }
 
     /**
@@ -230,7 +236,7 @@ class GoogleAuthController extends Controller
 
     private function recordLoginMetadata(User $user, Request $request): void
     {
-        app(\App\Services\CivilianActivityRecorder::class)->record($user, 'login', 'Signed in with Google', 'You signed in to the web app with Google.');
+        app(CivilianActivityRecorder::class)->record($user, 'login', 'Signed in with Google', 'You signed in to the web app with Google.');
         $user->forceFill([
             'last_login_at' => now(),
             'last_login_ip_address' => $request->ip(),

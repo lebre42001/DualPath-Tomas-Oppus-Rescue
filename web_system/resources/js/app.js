@@ -15,6 +15,7 @@ import './civilian-directory';
 import './civilian-reports';
 import './account-presence';
 import './shell-dialogs';
+import './civilian-tutorial';
 import './online-reports';
 import './audit-history';
 import './report-index';

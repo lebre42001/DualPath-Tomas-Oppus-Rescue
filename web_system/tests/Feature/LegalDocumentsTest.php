@@ -64,7 +64,7 @@ class LegalDocumentsTest extends TestCase
         $this->travelTo(now()->startOfSecond());
         $this->post('/register', $this->registration([
             'terms_accepted_at' => '2000-01-01', 'legal_documents_version' => 'spoofed',
-        ]))->assertRedirect(route('account.verify'));
+        ]))->assertRedirect(route('dashboard'));
         $user = User::where('email', 'policy-test@example.com')->firstOrFail();
         $this->assertSame(config('legal.version'), $user->legal_documents_version);
         $this->assertTrue($user->terms_accepted_at->equalTo(now()));

@@ -4,6 +4,17 @@
 // These release labels are separate from the app's runtime build fingerprint.
 return [
     [
+        'id' => '2026.11.07.6',
+        'date' => '2026-11-07',
+        'title' => 'Step-by-step civilian tutorial',
+        'changes' => [
+            'New unverified sign-ups and logins open Home so you can learn the app before verifying.',
+            'A guided tour points to tabs and explains photo, GPS, description, live check and server receipt using a safe report preview.',
+            'Use Next, Back, Skip or Done. Replay Quick tutorial from Home or Settings.',
+            'The tutorial never sends a report or asks for camera/location access. Account verification is still required before real reporting.',
+        ],
+    ],
+    [
         'id' => '2026.11.07.5',
         'date' => '2026-11-07',
         'title' => 'Clearer report buttons',

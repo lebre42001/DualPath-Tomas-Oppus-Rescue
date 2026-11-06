@@ -49,6 +49,7 @@
                 <p><strong>{{ $user->name }}</strong><br>{{ $user->email }}</p>
                 <p>Emergency reporting stays locked until verification is complete.</p>
             </details>
+            <div class="button-row"><a href="{{ route('dashboard', ['tutorial' => 1]) }}" class="btn btn-secondary">Quick tutorial first</a><a href="{{ route('dashboard') }}" class="btn btn-secondary">Do this later</a></div>
         </article>
     </section>
 @endsection
