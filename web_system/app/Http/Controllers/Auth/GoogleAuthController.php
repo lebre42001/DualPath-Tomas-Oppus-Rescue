@@ -230,6 +230,7 @@ class GoogleAuthController extends Controller
 
     private function recordLoginMetadata(User $user, Request $request): void
     {
+        app(\App\Services\CivilianActivityRecorder::class)->record($user, 'login', 'Signed in with Google', 'You signed in to the web app with Google.');
         $user->forceFill([
             'last_login_at' => now(),
             'last_login_ip_address' => $request->ip(),

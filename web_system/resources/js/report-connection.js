@@ -25,6 +25,7 @@ export function initializeReportConnection(panel, { window: win = window, docume
         message.textContent = states[state][1];
         retry.disabled = state === 'checking';
         retry.textContent = state === 'checking' ? 'Checking…' : 'Check again';
+        panel.dispatchEvent?.(new CustomEvent('stitch:connection-state', { detail: { state } }));
     };
     const check = async () => {
         // Automatic polling must not cancel a check the user is waiting for.

@@ -1,5 +1,16 @@
 # Online Deployment Plan
 
+## Civilian System Log and floating Updates (2026-11-07)
+
+This release adds the `civilian_activities` table through the new additive migration.
+The existing container startup runs migrations before PHP-FPM. Deploy auth hooks,
+report-audit projection/observers, the civilian log/feed routes, Blade/CSS/JS and
+rebuilt assets together. Connection checks move into the floating Updates modal;
+civilian app updates are now applied on request after saving drafts. System Log
+replaces bottom Logout while preserving sidebar Logout. Historical import uses
+only surviving reports and recorded timestamps; no old login/logout history is
+invented. See `DOKPLOY_DEPLOYMENT.md` for the active hosted release and checks.
+
 ## Civilian navigation and connection feedback follow-up (2026-11-07)
 
 The civilian bottom navigation now includes Drafts with the same account-local

@@ -1,4 +1,4 @@
-import { onDomReady } from './dom-ready';
+import { onDomReady } from './dom-ready.js';
 const PWA_DISMISS_KEY = 'bontoc-rescue-pwa-dismissed';
 const APP_VERSION_ENDPOINT = '/system/version';
 const APP_VERSION_POLL_INTERVAL = 15000;
@@ -10,6 +10,8 @@ let appVersionPollHandle = null;
 let updateReloadHandle = null;
 let installDismissedThisVisit = false;
 let installedThisVisit = false;
+let civilianManualUpdate = false;
+const hasCivilianUpdates = () => !!document.querySelector('[data-civilian-updates]');
 
 const setInstallDismissed = (dismissed) => {
     installDismissedThisVisit = dismissed;
@@ -233,7 +235,11 @@ const activateWaitingWorker = (worker = null) => {
     return true;
 };
 
-const beginAutomaticUpdate = (worker = null) => {
+export const beginAutomaticUpdate = (worker = null) => {
+    if (hasCivilianUpdates() && !civilianManualUpdate) {
+        window.dispatchEvent(new CustomEvent('stitch:application-update'));
+        return;
+    }
     setUpdateCardContent();
     toggleUpdateCard(true);
     refreshingForUpdate = true;
@@ -276,7 +282,7 @@ const requestServiceWorkerUpdate = async () => {
 };
 
 const captureCurrentAppVersion = async () => {
-    activeAppVersion = await fetchSystemVersion();
+    activeAppVersion = document.querySelector('[data-civilian-updates]')?.dataset.runningVersion ?? await fetchSystemVersion();
 };
 
 const checkForApplicationUpdates = async () => {
@@ -485,4 +491,10 @@ window.addEventListener('online', () => {
 
 window.addEventListener('offline', () => {
     updateNetworkStatus();
+});
+
+window.addEventListener('stitch:apply-application-update', () => {
+    if (!hasCivilianUpdates() || refreshingForUpdate) return;
+    civilianManualUpdate = true;
+    beginAutomaticUpdate();
 });

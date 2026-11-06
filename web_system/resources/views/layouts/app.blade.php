@@ -144,6 +144,7 @@ SVG,
                         <a href="{{ $sendReportUrl }}" class="{{ request()->routeIs('reports.create') || request()->routeIs('account.verify') ? 'active' : '' }}"><span>{{ $isAccountVerified ? 'Send Report' : 'Verify Account' }}</span><small>{{ $isAccountVerified ? 'SR' : 'VA' }}</small></a>
                         <a href="{{ route('reports.index') }}" class="{{ request()->routeIs('reports.index') || request()->routeIs('reports.show') || request()->routeIs('reports.success') ? 'active' : '' }}"><span>Report Status</span><small>{{ isset($stats['total']) ? $stats['total'] : 'RS' }}</small></a>
                         <a href="{{ route('reports.drafts') }}" class="civilian-drafts-nav {{ request()->routeIs('reports.drafts') ? 'active' : '' }}" data-civilian-draft-nav aria-label="Draft Reports" @if(request()->routeIs('reports.drafts')) aria-current="page" @endif><span>Draft Reports</span><b class="civilian-draft-nav-count" data-civilian-draft-nav-count hidden aria-hidden="true">0</b><small aria-hidden="true">DR</small></a>
+                        <a href="{{ route('civilian.system-log') }}" class="{{ request()->routeIs('civilian.system-log') ? 'active' : '' }}"><span>System Log</span><small>SL</small></a>
                     @else
                         <a href="{{ route('reports.index') }}" class="{{ request()->routeIs('reports.*') ? 'active' : '' }}"><span>Online Report</span><small>{{ isset($stats['active']) ? $stats['active'] : $fatalAlertCount }}</small></a>
                     @endif
@@ -275,6 +276,11 @@ SVG,
                 <span aria-hidden="true">{!! $navIcons['settings'] !!}</span>
                 <strong>Settings</strong>
             </a>
+            @if($isCivilian)
+                <a href="{{ route('civilian.system-log') }}" class="{{ request()->routeIs('civilian.system-log') ? 'active' : '' }}" aria-label="System Log" data-civilian-system-log-nav @if(request()->routeIs('civilian.system-log')) aria-current="page" @endif>
+                    <span aria-hidden="true">{!! $navIcons['feed'] !!}</span><strong>System Log</strong>
+                </a>
+            @else
             <form method="POST" action="{{ route('logout') }}" class="mobile-quick-nav__logout">
                 @csrf
                 <button type="submit" class="is-logout" aria-label="Log out">
@@ -282,6 +288,7 @@ SVG,
                     <strong>Logout</strong>
                 </button>
             </form>
+            @endif
         </nav>
     @endif
     @unless ($isCivilian)
@@ -375,6 +382,7 @@ SVG,
         </div>
     @endif
     @if ($isCivilian)
+    @include('partials.civilian-updates')
     <span hidden data-civilian-draft-context data-owner="{{ $authUser->id }}" data-create-url="{{ route('reports.create') }}" data-receipt-url="{{ route('reports.submission', '__submission__') }}"></span>
     <span hidden data-presence-url="{{ route('account.presence') }}" data-presence-interval="{{ \App\Support\CivilianPresence::HEARTBEAT_SECONDS }}"></span>
     <button type="button" class="pwa-install-indicator" data-pwa-install-toggle aria-controls="civilian-install-options" aria-expanded="false" aria-label="Install or download AksyRes" title="Install or download the app" hidden>

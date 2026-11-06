@@ -14,6 +14,7 @@ const APP_SHELL_URLS = [
 const NEVER_CACHE_PATHS = new Set([
     '/system/version',
     '/reports/connection',
+    '/account/system-updates',
     '/sw.js',
     '/auth-password.js',
     '/pwa-helper.js',

@@ -60,16 +60,6 @@
             <input type="hidden" name="submission_id" value="{{ old('submission_id', $submissionId) }}">
 
             @if ($isCivilian)
-                <aside class="civilian-report-connection" data-report-connection data-connection-state="checking" data-connection-url="{{ route('reports.connection') }}">
-                    <div role="status" aria-live="polite" aria-atomic="true">
-                        <strong data-report-connection-title>Checking online reporting</strong>
-                        <p data-report-connection-message>Availability is not confirmed yet. You can prepare or save a draft while checking.</p>
-                        <p class="civilian-connection-result" data-report-connection-result>No completed check yet.</p>
-                    </div>
-                    <button class="btn btn-secondary" type="button" data-report-connection-retry aria-describedby="report-connection-help">Check again</button>
-                    <p id="report-connection-help" class="civilian-connection-help">Check again tests access to the reporting server. Use Send Report to send your report.</p>
-                    <noscript>Enable JavaScript to check the connection and use camera, GPS, and live verification.</noscript>
-                </aside>
                 <p class="legal-small">Your location, scene photo, verification selfie, and description are shared with authorized reviewers. Only the description is used for severity AI. <a href="{{ route('legal.privacy') }}">Privacy Policy</a>.</p>
                 <div class="civilian-report-mobile-flow">
                     <section class="form-step-card civilian-capture-panel">

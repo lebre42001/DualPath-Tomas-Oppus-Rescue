@@ -64,6 +64,7 @@ class RegisteredUserController extends Controller
 
     private function recordLoginMetadata(User $user, Request $request): void
     {
+        app(\App\Services\CivilianActivityRecorder::class)->record($user, 'login', 'Account created and signed in', 'Your account was created and you signed in to the web app.');
         $user->forceFill([
             'last_login_at' => now(),
             'last_login_ip_address' => $request->ip(),

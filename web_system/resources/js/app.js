@@ -5,6 +5,7 @@ import './pwa';
 import './permission-readiness';
 import './report-form';
 import './report-connection';
+import './civilian-system';
 import './report-drafts';
 import './civilian-report-drafts';
 import './account-verification';

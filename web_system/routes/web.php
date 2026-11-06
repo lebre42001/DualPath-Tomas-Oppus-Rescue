@@ -73,6 +73,10 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
     Route::post('/account/presence', CivilianPresenceController::class)->middleware('throttle:120,1')->name('account.presence');
 
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::get('/account/system-log', [\App\Http\Controllers\Web\CivilianSystemLogController::class, 'index'])->name('civilian.system-log');
+    Route::get('/account/system-updates', [\App\Http\Controllers\Web\CivilianSystemLogController::class, 'feed'])->middleware('throttle:60,1')->name('civilian.system-updates');
+    Route::post('/account/system-updates/read', [\App\Http\Controllers\Web\CivilianSystemLogController::class, 'read'])->name('civilian.system-updates.read');
+    Route::post('/account/app-events', [\App\Http\Controllers\Web\CivilianSystemLogController::class, 'appEvent'])->middleware('throttle:30,1')->name('civilian.app-events');
     Route::redirect('/home', '/dashboard');
     Route::get('/account/verify', [AccountVerificationController::class, 'create'])->name('account.verify');
     Route::post('/account/verify', [AccountVerificationController::class, 'store'])->name('account.verify.store');

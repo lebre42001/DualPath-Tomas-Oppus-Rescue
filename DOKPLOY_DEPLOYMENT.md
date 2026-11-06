@@ -5,6 +5,60 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Civilian floating Updates and System Log (2026-11-07)
+
+The civilian connection panel is now in a floating Updates badge/modal across
+the signed-in app. Its number counts unread app-release and report-admin events;
+Mark shown updates as read acknowledges only the displayed, account-owned IDs.
+The modal contains Check again, running/latest/previous device build IDs, and
+Update app. Civilian version/worker changes notify instead of automatically
+reloading. A requested update waits for unfinished report text/photo persistence
+and refuses a reload during transmission or when the photo cannot be saved.
+Admin automatic updates retain their existing behavior. Browser notifications
+are not requested; this badge polls while the app is open/visible.
+
+System Log replaces only the civilian bottom Logout item. Logout remains in
+the sidebar. The log provides literal text/type searches, inclusive Philippine
+date filters (UTC+8), pagination and Copy text for the current filtered page,
+with a selectable-text fallback when clipboard access is denied. It has no print
+or download action; its content is hidden in print styling.
+
+**Migration required:** `2026_11_07_000001_create_civilian_activities_table`.
+The existing `start-web.sh` runs `php artisan migrate --force` before starting
+PHP-FPM. The additive table records successful web/Google/API sign-ins, explicit
+sign-outs, report receipts and safe projections of recorded admin actions.
+Deletion retains the report code/activity for its owner. Backfill is idempotent
+and imports surviving report receipts and dated admin audits as already read.
+It cannot reconstruct old sign-outs, unknown timestamps, or ownership of reports
+deleted before this feature. Closing the app/shutdown is never inferred as logout.
+Internal notes, AI payloads, credentials, IPs and other users' history are excluded.
+
+App version/update/connectivity entries are explicitly device-reported. Current
+and previous build values are build fingerprints, not semantic/APK versions.
+An account-scoped local queue retries device events after reconnection; the server
+deduplicates IDs and release notices. Old/invalid telemetry cannot block current
+notifications. Failed telemetry sync does not hide report notices, and a durable
+queue lets a user-requested update proceed even if telemetry writes are unavailable.
+All log/feed/read/event routes enforce the authenticated civilian account.
+
+Deploy the model/service/observers, auth hooks, routes/controller, migration,
+layout/views, PWA/update/draft scripts, service worker and matching Vite build
+together. No model, firmware, environment secret or LoRa setting changes.
+Validation: full Laravel suite 348 tests / 3725 assertions and 51 JavaScript tests; new tests cover
+ownership, historical import, real admin transitions/deletion, timezone filters,
+literal search, login/logout, event forgery prevention and unread races. JS tests
+cover polling, manual update gating, draft protection, retry queues, clipboard
+fallback and unchanged admin updates. Run `node --test tests/js/*.test.mjs`,
+`npm run build` and Laravel checks before release. Browser automation was
+unavailable; physical-phone visual/accessibility and real live-account flows
+still require pilot verification. No fake emergencies are sent to the live app.
+
+Push to `main` for automatic deployment, then verify public entry routes and new
+build signatures, plus unauthenticated 401s on `/account/system-log` and
+`/account/system-updates`. Authenticated pilot checks must include a designated
+civilian report's notifications/timestamps, date search/copy and the update modal.
+Pre-release hosted fingerprint: `098664c148c3c4c1`.
+
 ## Civilian connection feedback and bottom Drafts tab (2026-11-07)
 
 The phone's bottom navigation now includes Drafts between Report and Profile.

@@ -103,6 +103,9 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         $wasAdmin = (bool) $request->user()?->is_admin;
+        if ($request->user()) {
+            app(\App\Services\CivilianActivityRecorder::class)->record($request->user(), 'logout', 'Signed out', 'You signed out of the web app.');
+        }
         app(CivilianPresence::class)->endContext($request);
 
         Auth::logout();
@@ -115,6 +118,7 @@ class AuthenticatedSessionController extends Controller
 
     private function recordLoginMetadata(User $user, Request $request): void
     {
+        app(\App\Services\CivilianActivityRecorder::class)->record($user, 'login', 'Signed in', 'You signed in to the web app.');
         $user->forceFill([
             'last_login_at' => now(),
             'last_login_ip_address' => $request->ip(),

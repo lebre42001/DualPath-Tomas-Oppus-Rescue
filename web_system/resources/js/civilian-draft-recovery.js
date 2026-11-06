@@ -17,5 +17,16 @@ export function watchCivilianDraftRecovery({ form, checkpoint, persist, paused, 
     form.addEventListener('change', flush);
     doc.addEventListener('visibilitychange', () => { if (doc.hidden) flush(); });
     win.addEventListener('pagehide', flush);
+    doc.addEventListener('stitch:prepare-app-update', event => {
+        cancel();
+        const prepare = async () => {
+            if (paused()) throw new Error('Finish or stop sending the report before updating the app.');
+            checkpoint();
+            const record = await persist();
+            if (record?.evidenceName && record.storageMode === 'text-only') throw new Error('The scene photo could not be saved. Keep this page open and finish or save the photo before updating.');
+            if (record) saved(record);
+        };
+        event.detail.pending.push(prepare());
+    });
     return { cancel, flush };
 }
