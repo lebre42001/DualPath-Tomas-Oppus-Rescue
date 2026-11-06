@@ -11,6 +11,8 @@ export function initializeCivilianSystem(root, { document: doc = document, windo
     const closeButton = root.querySelector('[data-civilian-updates-close]');
     const badge = root.querySelector('[data-civilian-update-count]');
     const list = root.querySelector('[data-civilian-update-list]');
+    const releaseNotes = root.querySelector('[data-civilian-release-notes]');
+    let lastReleaseNotes = null;
     const markRead = root.querySelector('[data-civilian-updates-read]');
     const update = root.querySelector('[data-civilian-apply-update]');
     const status = root.querySelector('[data-app-update-status]');
@@ -41,6 +43,14 @@ export function initializeCivilianSystem(root, { document: doc = document, windo
     };
     const node = (tag, text) => { const element = doc.createElement(tag); element.textContent = text; return element; };
     const render = data => {
+        // This fragment comes only from our same-origin, Blade-escaped feed.
+        // Keep expanded earlier releases and avoid replacing text during polls.
+        if (releaseNotes && typeof data.release_notes_html === 'string' && data.release_notes_html.trim() && data.release_notes_html !== lastReleaseNotes) {
+            const expanded = new Set([...releaseNotes.querySelectorAll('details[open]')].map(node => node.dataset.releaseId));
+            releaseNotes.innerHTML = data.release_notes_html;
+            for (const node of releaseNotes.querySelectorAll('details')) node.open = expanded.has(node.dataset.releaseId);
+            lastReleaseNotes = data.release_notes_html;
+        }
         if (isBuildVersion(data.version)) latest = data.version;
         setText('[data-app-latest]', latest ?? 'Not confirmed');
         update.hidden = !latest || latest === running;

@@ -15,6 +15,13 @@
 .civilian-version-card dl { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; margin: 12px 0; }
 .civilian-version-card dt { font-size: .85rem; }
 .civilian-version-card dd { margin: 0; font-weight: 700; overflow-wrap: anywhere; }
+.civilian-release-list { display: grid; gap: 10px; }
+.civilian-release-note { padding: 14px; border: 1px solid var(--line); border-radius: 12px; overflow-wrap: anywhere; }
+.civilian-release-note summary { min-height: 44px; cursor: pointer; font-weight: 700; }
+.civilian-release-meta { color: var(--muted); font-size: .8rem; font-weight: 400; }
+.civilian-release-note ul { display: grid; gap: 8px; padding-left: 20px; margin: 10px 0 0; list-style: disc; line-height: 1.5; }
+.civilian-updates-heading { position: sticky; top: -18px; z-index: 1; padding-block: 8px; background: var(--surface, #fff); }
+.civilian-updates-heading > .btn { width: auto; flex: 0 0 auto; }
 .civilian-update-list, .civilian-log-list { display: grid; gap: 12px; padding: 0; list-style: none; }
 .civilian-update-item, .civilian-log-entry { padding: 14px; border: 1px solid var(--line); border-radius: 12px; min-width: 0; overflow-wrap: anywhere; }
 .civilian-log-entry time, .civilian-log-entry strong, .civilian-update-item time { display: block; margin-bottom: 6px; }

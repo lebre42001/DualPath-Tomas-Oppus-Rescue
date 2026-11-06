@@ -5,6 +5,39 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Readable civilian release notes (2026-11-07)
+
+The floating Updates dialog starts with What's new / Mga giusab: the latest
+release's title, release label, publication date and plain-language change list.
+Earlier releases expand below it, including report tables, moving the badge,
+draft recovery and System Log. Release labels are editorial identifiers, separate
+from runtime build fingerprints in App version. Notes remain available after
+notifications are marked read and after an update has been applied.
+
+`web_system/config/civilian_releases.php` is the source of published civilian
+release notes, newest first. For each future civilian feature release, add a
+unique ID, accurate date, title and user-facing changes; retain earlier entries.
+Do not infer descriptions from build hashes, client telemetry or private admin
+audit notes. The current server release's change list also supplies the app-update
+notification summary, so older clients can read a description in their existing
+Unread updates list before they have the new notes section.
+
+Blade escapes all notes on the initial signed-in page and in the private,
+no-store system-updates feed. Check again/visible-app polling refresh the notes
+from that same-origin feed. Unchanged responses preserve the displayed content;
+changed responses retain expanded earlier-release IDs. A failed check leaves
+the notes already included with the loaded page visible.
+
+Deploy config, controller, Blade partials, civilian system JS/CSS and matching
+Vite assets together. No migration or environment change. Tests cover initial
+render, dates, persistence after marking read, server ownership/HTML escaping,
+empty config, refresh without repeated replacement and existing update/draft
+guards. The isolated phone/laptop/desktop browser fixture renders the real notes
+through Laravel; set `QA_PHP_PATH` if its default `php` is unsuitable. No live
+reports or account messages are sent by these checks.
+Validation passed: 354 Laravel tests / 3803 assertions, 58 JavaScript tests,
+Vite build and the phone/laptop/desktop update-dialog browser checks.
+
 ## Civilian View All report tables (2026-11-07)
 
 Draft Reports, Report History and Report Status now open a shared View All modal

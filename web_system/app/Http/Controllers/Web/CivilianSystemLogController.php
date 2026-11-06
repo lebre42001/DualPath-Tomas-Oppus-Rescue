@@ -66,7 +66,10 @@ class CivilianSystemLogController extends Controller
             'kind' => $event->kind, 'occurred_at' => $event->occurred_at->toIso8601String(),
         ]);
 
-        return response()->json(['version' => $version->current(), 'unread_count' => $count, 'notifications' => $notifications], 200, ['Cache-Control' => 'private, no-store']);
+        return response()->json([
+            'version' => $version->current(), 'unread_count' => $count, 'notifications' => $notifications,
+            'release_notes_html' => view('partials.civilian-release-notes')->render(),
+        ], 200, ['Cache-Control' => 'private, no-store']);
     }
 
     public function read(Request $request): JsonResponse
@@ -94,8 +97,12 @@ class CivilianSystemLogController extends Controller
         if (in_array($data['kind'], ['app_update_available', 'app_update_requested'], true)) {
             abort_unless(hash_equals($systemVersion->current(), $data['version']), 409, 'Check for the current app version again.');
         }
+        $changes = config('civilian_releases.0.changes', []);
+        $updateMessage = $changes
+            ? 'What changed: '.implode(' ', $changes).' Open Updates for release dates and earlier changes.'
+            : 'The device detected a newer server build. Open Updates to apply it.';
         [$title, $message] = match ($data['kind']) {
-            'app_update_available' => ['App update available', 'The device detected a newer server build. Open Updates to apply it.'],
+            'app_update_available' => ['App update available', $updateMessage],
             'app_update_requested' => ['App update requested', 'The device requested a reload to apply the server build.'],
             'app_update_applied' => ['Updated app version opened', 'The device opened this build after previously using '.($data['previous_version'] ?? 'an earlier build').'.'],
             'app_update_failed' => ['App update could not be completed', 'The device could not prepare or apply the update. Existing report drafts were kept.'],

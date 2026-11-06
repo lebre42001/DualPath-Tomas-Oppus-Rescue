@@ -191,4 +191,45 @@ class CivilianSystemLogTest extends TestCase
         $form = $this->get(route('reports.create'))->assertOk()->getContent();
         $this->assertSame(1, substr_count($form, 'data-connection-url='));
     }
+
+    public function test_release_notes_are_visible_on_first_render_and_remain_after_notices_are_read(): void
+    {
+        $owner = $this->civilian();
+        $notice = $this->entry($owner, 'Own report update');
+        $release = config('civilian_releases.0');
+        $this->actingAs($owner)->get(route('dashboard'))->assertOk()
+            ->assertSee('data-civilian-release-notes', false)->assertSee('Mga giusab')
+            ->assertSee($release['title'])->assertSee($release['id'])->assertSee($release['changes'][0])
+            ->assertSee('Organized report lists')->assertSee('Move the Updates badge');
+        $html = $this->getJson(route('civilian.system-updates'))->assertOk()->assertJsonPath('unread_count', 1)->json('release_notes_html');
+        $this->assertStringContainsString($release['title'], $html);
+        $this->assertStringContainsString('datetime="'.$release['date'].'"', $html);
+        $this->postJson(route('civilian.system-updates.read'), ['ids' => [$notice->id]])->assertOk();
+        $this->getJson(route('civilian.system-updates'))->assertOk()->assertJsonPath('unread_count', 0)
+            ->assertJsonPath('release_notes_html', $html);
+    }
+
+    public function test_release_notes_are_server_owned_escaped_and_describe_new_build_notifications(): void
+    {
+        $owner = $this->civilian();
+        $version = '0123456789abcdef';
+        $mock = \Mockery::mock(SystemVersion::class);
+        $mock->shouldReceive('current')->andReturn($version);
+        $this->app->instance(SystemVersion::class, $mock);
+        config(['civilian_releases' => [[
+            'id' => 'release-test', 'date' => '2026-11-07', 'title' => '<script>unsafe-title</script>',
+            'changes' => ['Search reports by date.', '<img src=x onerror=alert(1)>'],
+        ]]]);
+        $this->actingAs($owner)->postJson(route('civilian.app-events'), [
+            'event_id' => (string) Str::uuid(), 'kind' => 'app_update_available', 'version' => $version,
+            'message' => 'FORGED RELEASE', 'release_notes_html' => 'FORGED RELEASE',
+        ])->assertOk();
+        $this->assertStringContainsString('Search reports by date.', CivilianActivity::sole()->message);
+        $html = $this->getJson(route('civilian.system-updates'))->assertOk()->assertDontSee('FORGED RELEASE')->json('release_notes_html');
+        $this->assertStringContainsString('&lt;script&gt;unsafe-title&lt;/script&gt;', $html);
+        $this->assertStringContainsString('&lt;img src=x onerror=alert(1)&gt;', $html);
+        $this->assertStringNotContainsString('<script>', $html);
+        config(['civilian_releases' => []]);
+        $this->getJson(route('civilian.system-updates'))->assertOk()->assertJsonPath('release_notes_html', view('partials.civilian-release-notes')->render());
+    }
 }

@@ -9,6 +9,11 @@
     <div id="civilian-updates-modal" class="civilian-updates-modal" data-civilian-updates-modal hidden>
         <div class="civilian-updates-sheet" role="dialog" aria-modal="true" aria-labelledby="civilian-updates-heading">
             <header class="civilian-updates-heading"><h2 id="civilian-updates-heading">System updates</h2><button type="button" class="btn btn-secondary" data-civilian-updates-close>Close</button></header>
+            <section class="civilian-release-section" aria-labelledby="civilian-release-heading">
+                <h3 id="civilian-release-heading">What's new · Mga giusab</h3>
+                <p class="section-copy">Read what changed in each release. Check again refreshes these notes from the server; marking notices as read keeps these notes available.</p>
+                <div class="civilian-release-list" data-civilian-release-notes>@include('partials.civilian-release-notes')</div>
+            </section>
             <aside class="civilian-report-connection" data-report-connection data-connection-state="checking" data-connection-url="{{ route('reports.connection') }}">
                 <div role="status" aria-live="polite" aria-atomic="true">
                     <strong data-report-connection-title>Checking online reporting</strong>

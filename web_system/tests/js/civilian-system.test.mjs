@@ -55,13 +55,17 @@ test('corrupted local activity state is recoverable and events queued during an 
 
 class Element extends EventTarget {
     dataset = {}; children = []; attributes = {}; hidden = false; textContent = ''; disabled = false;
+    html = ''; htmlWrites = 0;
+    set innerHTML(value) { this.html = value; this.htmlWrites++; }
+    get innerHTML() { return this.html; }
+    querySelectorAll() { return []; }
     setAttribute(name, value) { this.attributes[name] = value; }
     append(...nodes) { this.children.push(...nodes); }
     replaceChildren() { this.children = []; }
 }
 const fixture = ({ failEvents = () => false } = {}) => {
     const doc = new EventTarget(), win = new EventTarget(), nav = { onLine: true }, root = new Element();
-    const selectors = ['civilian-updates-toggle', 'civilian-updates-modal', 'civilian-updates-close', 'civilian-update-count', 'civilian-update-list', 'civilian-updates-read', 'civilian-apply-update', 'app-update-status', 'report-connection', 'report-connection-retry'];
+    const selectors = ['civilian-updates-toggle', 'civilian-updates-modal', 'civilian-updates-close', 'civilian-update-count', 'civilian-update-list', 'civilian-updates-read', 'civilian-apply-update', 'app-update-status', 'report-connection', 'report-connection-retry', 'civilian-release-notes'];
     const elements = Object.fromEntries(selectors.map(name => [name, new Element()]));
     elements['report-connection'].querySelector = () => elements['report-connection-retry'];
     root.dataset = { owner: '1', runningVersion: running, feedUrl: '/feed', readUrl: '/read', eventUrl: '/events' };
@@ -70,6 +74,7 @@ const fixture = ({ failEvents = () => false } = {}) => {
     doc.createElement = () => new Element();
     win.setTimeout = setTimeout; win.clearTimeout = clearTimeout; win.setInterval = () => 1; win.clearInterval = () => {};
     const sent = [], notifications = [{ id: 1, kind: 'report_status', title: 'Report acknowledged', message: 'Your report was acknowledged.', occurred_at: new Date().toISOString() }];
+    let releaseNotes = '<article>Search and browse reports by date.</article>';
     const fetchImpl = async (url, options) => {
         assert.equal(options.credentials, 'same-origin'); assert.equal(options.cache, 'no-store');
         if (url === '/events') {
@@ -82,11 +87,25 @@ const fixture = ({ failEvents = () => false } = {}) => {
             const { ids } = JSON.parse(options.body); assert.deepEqual(ids, [1, 2]); notifications.splice(0);
             return Response.json({ saved: true });
         }
-        return Response.json({ version: latest, unread_count: notifications.length, notifications });
+        return Response.json({ version: latest, unread_count: notifications.length, notifications, release_notes_html: releaseNotes });
     };
     initializeCivilianSystem(root, { document: doc, window: win, navigator: nav, fetchImpl, storage: storage() });
-    return { doc, win, nav, elements, sent };
+    return { doc, win, nav, elements, sent, setReleaseNotes: html => { releaseNotes = html; } };
 };
+
+test('release notes refresh without repeated replacement, persist after marking read, and survive unavailable note data', async () => {
+    const { elements, setReleaseNotes } = fixture(); await settle();
+    const notes = elements['civilian-release-notes'];
+    assert.match(notes.innerHTML, /browse reports by date/); assert.equal(notes.htmlWrites, 1);
+    elements['civilian-updates-read'].dispatchEvent(new Event('click')); await settle();
+    assert.equal(elements['civilian-update-count'].hidden, true); assert.equal(notes.htmlWrites, 1);
+    elements['report-connection-retry'].dispatchEvent(new Event('click')); await settle(); assert.equal(notes.htmlWrites, 1);
+    setReleaseNotes('<article>New server release details.</article>');
+    elements['report-connection-retry'].dispatchEvent(new Event('click')); await settle();
+    assert.match(notes.innerHTML, /New server release/); assert.equal(notes.htmlWrites, 2);
+    setReleaseNotes(null); elements['report-connection-retry'].dispatchEvent(new Event('click')); await settle();
+    assert.match(notes.innerHTML, /New server release/); assert.equal(notes.htmlWrites, 2);
+});
 
 test('floating modal counts report/build updates, marks only shown entries, and applies an update only after draft preparation', async () => {
     const { doc, win, elements, sent } = fixture(); let applied = 0, finish;
