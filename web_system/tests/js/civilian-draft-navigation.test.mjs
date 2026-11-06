@@ -19,7 +19,7 @@ class Element extends EventTarget {
 const surface = ({ owner = '1', drafts = false, form = false, draftId = null } = {}) => {
     const doc = new EventTarget(), win = new EventTarget(), nav = { onLine: true }, context = new Element();
     context.dataset = { owner, createUrl: 'https://app.test/reports/create', receiptUrl: 'https://app.test/reports/submissions/__submission__' };
-    const badge = new Element(), link = new Element(), list = new Element(), empty = new Element(), counter = new Element(), notice = new Element();
+    const badge = new Element(), link = new Element(), mobileBadge = new Element(), mobileLink = new Element(), list = new Element(), empty = new Element(), counter = new Element(), notice = new Element();
     const panel = drafts ? new Element() : null;
     if (panel) panel.querySelector = selector => ({
         '[data-civilian-draft-list]': list, '[data-civilian-draft-empty]': empty,
@@ -40,14 +40,14 @@ const surface = ({ owner = '1', drafts = false, form = false, draftId = null } =
         '[data-report-draft-form][data-report-role="civilian"]': reportForm,
         '[data-civilian-draft-nav]': link,
     })[selector];
-    doc.querySelectorAll = selector => selector === '[data-civilian-draft-nav-count]' ? [badge] : [];
+    doc.querySelectorAll = selector => selector === '[data-civilian-draft-nav-count]' ? [badge, mobileBadge] : selector === '[data-civilian-draft-nav]' ? [link, mobileLink] : [];
     doc.createElement = tag => Object.assign(new Element(), { tag });
     const destinations = [];
     win.location = { origin: 'https://app.test', href: 'https://app.test/reports/' + (drafts ? 'drafts' : 'create') + (draftId ? '?draft='+draftId : ''), assign: url => destinations.push(url) };
     win.setTimeout = setTimeout; win.clearTimeout = clearTimeout; win.confirm = () => true;
     globalThis.window = win; globalThis.location = win.location;
     initializeCivilianDrafts({ document: doc, window: win, navigator: nav });
-    return { doc, win, reportForm, fields, badge, link, list, empty, counter, destinations };
+    return { doc, win, reportForm, fields, badge, link, mobileBadge, mobileLink, list, empty, counter, destinations };
 };
 
 test('draft navigation badge follows saved work across app close/reopen, account switch and deletion without embedding a list in the form', async () => {
@@ -56,22 +56,27 @@ test('draft navigation badge follows saved work across app close/reopen, account
     globalThis.indexedDB = null;
     const editing = surface({ form: true }); await settle();
     assert.equal(editing.badge.hidden, true);
+    assert.equal(editing.mobileBadge.hidden, true);
     editing.fields.description.value = 'Unsent accident report';
     editing.reportForm.dispatchEvent(new Event('input'));
     assert.match(values.get('aksyres-report-drafts-v2:1'), /Unsent accident report/, 'The last edit survives even without a lifecycle callback');
     await settle(); assert.equal(editing.badge.textContent, '1'); assert.equal(editing.badge.hidden, false);
+    assert.equal(editing.mobileBadge.textContent, '1'); assert.equal(editing.mobileBadge.hidden, false);
     assert.equal(editing.list.children.length, 0, 'Only the navigation count is updated on the form');
     editing.win.dispatchEvent(new Event('pagehide')); await settle();
     const reopened = surface({ drafts: true }); await settle();
     assert.equal(reopened.list.children.length, 1); assert.equal(reopened.empty.hidden, true);
     assert.equal(reopened.link.attributes['aria-label'], 'Draft Reports, 1 saved');
+    assert.equal(reopened.mobileLink.attributes['aria-label'], 'Draft Reports, 1 saved');
     reopened.list.children[0].querySelectorAll('button')[0].dispatchEvent(new Event('click')); await settle();
     assert.equal(reopened.destinations[0], 'https://app.test/reports/create?draft='+id);
     const other = surface({ owner: '2', drafts: true }); await settle();
     assert.equal(other.list.children.length, 0); assert.equal(other.badge.hidden, true); assert.equal(other.empty.hidden, false);
+    assert.equal(other.mobileBadge.hidden, true); assert.equal(other.mobileLink.attributes['aria-label'], 'Draft Reports');
     const own = surface({ drafts: true }); await settle();
     own.list.children[0].querySelectorAll('button')[1].dispatchEvent(new Event('click')); await settle();
     assert.equal(own.list.children.length, 0); assert.equal(own.badge.hidden, true); assert.equal(own.counter.textContent, '0');
+    assert.equal(own.mobileBadge.hidden, true); assert.equal(own.mobileLink.attributes['aria-label'], 'Draft Reports');
 });
 
 test('receipt reconciliation on a reopened form removes its draft and a pagehide save cannot recreate it', async () => {

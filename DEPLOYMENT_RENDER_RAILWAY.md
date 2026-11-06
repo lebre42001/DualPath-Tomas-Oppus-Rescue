@@ -1,5 +1,16 @@
 # Online Deployment Plan
 
+## Civilian navigation and connection feedback follow-up (2026-11-07)
+
+The civilian bottom navigation now includes Drafts with the same account-local
+count as the sidebar. Check again now shows progress and a persistent numbered,
+timestamped result, including response time or the reason access is unavailable.
+Deploy the layout/form, draft/connection scripts, CSS and matching Vite assets
+together. No migration or environment changes are required. The active public
+application uses the automatic `main` deployment at
+`https://dualpath.bsit4bdevs.tech`; see `DOKPLOY_DEPLOYMENT.md`. The root Render
+profile remains a separate disposable demo.
+
 ## Civilian Draft Reports navigation (2026-11-06)
 
 Deploy the civilian layout, standalone `reports/drafts` view/route/controller,

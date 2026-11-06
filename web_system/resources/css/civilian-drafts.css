@@ -22,5 +22,7 @@ body.civilian-portal .civilian-draft-nav-count[hidden], .civilian-draft-empty[hi
 .civilian-report-connection p { margin: 6px 0 0; line-height: 1.5; font-size: .875rem; }
 .civilian-report-connection[data-connection-state="available"] { border-color: #237442; background: #edf9f0; color: #174a2a; }
 .civilian-report-connection .btn { min-height: 44px; }
+.civilian-report-connection .civilian-connection-result { font-weight: 700; color: inherit; }
+.civilian-report-connection .civilian-connection-help { flex: 1 0 100%; margin: 0; font-size: .8rem; color: inherit; }
 [data-civilian-drafts][hidden] { display: none !important; }
 @media (max-width: 480px) { .civilian-draft-card .button-row > .btn { flex: 1; } }

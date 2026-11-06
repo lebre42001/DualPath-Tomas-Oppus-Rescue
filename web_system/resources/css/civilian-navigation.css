@@ -33,7 +33,9 @@ body.civilian-portal .ops-sidebar { min-width: 0; }
     body.civilian-portal .sidebar-nav a > span { display: inline; }
 }
 @media (max-width: 1220px) {
-    body.civilian-portal .mobile-quick-nav { display: grid !important; }
+    body.civilian-portal .mobile-quick-nav { display: grid !important; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 3px; padding-inline: 6px; }
+    body.civilian-portal .mobile-quick-nav > a, body.civilian-portal .mobile-quick-nav button { min-width: 0; padding-inline: 2px; }
+    body.civilian-portal .mobile-quick-nav .civilian-draft-nav-count { position: absolute; top: 3px; right: calc(50% - 25px); min-width: 18px; height: 18px; padding: 0 4px; font-size: .625rem; z-index: 2; }
     body.civilian-portal .ops-main { padding-bottom: calc(122px + env(safe-area-inset-bottom, 0px)); }
 }
 @media (prefers-reduced-motion: reduce) {

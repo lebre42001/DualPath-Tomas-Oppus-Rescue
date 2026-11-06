@@ -5,6 +5,33 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Civilian connection feedback and bottom Drafts tab (2026-11-07)
+
+The phone's bottom navigation now includes Drafts between Report and Profile.
+Its account-scoped count matches the collapsible sidebar and clears/hides at
+zero. Both links expose their count to screen readers and mark the active draft
+page. Civilian navigation uses six columns with compact spacing for 320px phones;
+the other role menus retain their existing layout.
+
+Check again performs the same read-only authenticated server probe, but now shows
+Checking while pending and leaves a numbered, timestamped result with response
+time on success. Offline/session/server failures also leave a visible result.
+Repeated fast successful checks produce distinct feedback. The form explains
+that checking server access does not submit a report. Automatic polling no longer
+cancels a pending check; offline events still abort stale results.
+
+Deploy the Blade layout/form, civilian navigation/connection CSS, draft UI and
+connection JS with matching Vite assets. No migration, model, firmware or new
+environment setting is needed. Check ReportConnectionTest, CivilianReportDraftTest,
+the JavaScript connection/draft navigation tests, full Laravel suite and Vite build.
+Validation passed: 340 Laravel tests (3636 assertions), 16 JavaScript tests and
+the Vite build. Automated checks cover both count badges, role/active-page markup,
+fast repeated successful checks, loading/results, offline/session errors and
+polling during an active check. Physical-phone visual testing remains separate.
+Push to `main`; this host automatically rebuilds pushed commits. Compare the
+published build/signatures with the release and verify public app entry routes.
+The pre-update online fingerprint was `28680c95e20a51f3`.
+
 ## Civilian Draft Reports navigation and connection status (2026-11-06)
 
 The civilian collapsible sidebar now links to `/reports/drafts` and displays an

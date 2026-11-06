@@ -91,6 +91,7 @@ class CivilianReportDraftTest extends TestCase
             $this->actingAs($user)->get(route($name))->assertOk()
                 ->assertSee('data-civilian-draft-context', false)
                 ->assertSee('data-civilian-draft-nav-count', false)
+                ->assertSee('data-civilian-draft-mobile', false)
                 ->assertSee('data-owner="'.$user->id.'"', false)
                 ->assertSee(route('reports.drafts'), false)
                 ->assertSee('Draft Reports')
@@ -108,6 +109,19 @@ class CivilianReportDraftTest extends TestCase
             ->assertDontSee('data-civilian-draft-context', false)
             ->assertDontSee('data-civilian-draft-nav', false);
         $this->get(route('reports.drafts'))->assertForbidden();
+    }
+
+    public function test_civilian_bottom_navigation_links_to_drafts_with_its_own_count_and_active_state(): void
+    {
+        $this->actingAs($this->civilian());
+        $response = $this->get(route('reports.drafts'))->assertOk();
+        $html = $response->getContent();
+        $this->assertSame(2, substr_count($html, 'data-civilian-draft-nav-count'));
+        $this->assertSame(2, substr_count($html, 'aria-current="page"'));
+        $response->assertSeeInOrder(['aria-label="Quick navigation"', 'data-civilian-draft-mobile', '<strong>Drafts</strong>'], false);
+        $admin = User::factory()->create(['role' => 'admin', 'is_admin' => true]);
+        $this->actingAs($admin)->get(route('reports.create'))->assertOk()
+            ->assertDontSee('data-civilian-draft-mobile', false);
     }
 
     public function test_drafts_page_requires_a_signed_in_active_civilian_but_does_not_require_verification_to_view_saved_work(): void

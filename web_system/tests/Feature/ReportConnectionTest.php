@@ -32,7 +32,9 @@ class ReportConnectionTest extends TestCase
         $civilian = User::factory()->create(['role' => 'civilian', 'account_verified_at' => now()]);
         $this->actingAs($civilian)->get(route('reports.create'))->assertOk()
             ->assertSee('data-report-connection', false)->assertSee('Checking online reporting')
-            ->assertSee(route('reports.connection'), false)->assertSee('Check again');
+            ->assertSee(route('reports.connection'), false)->assertSee('Check again')
+            ->assertSee('data-report-connection-result', false)
+            ->assertSee('Check again tests access to the reporting server.');
         $admin = User::factory()->create(['role' => 'admin', 'is_admin' => true]);
         $this->actingAs($admin)->get(route('reports.create'))->assertOk()
             ->assertDontSee('data-report-connection', false);

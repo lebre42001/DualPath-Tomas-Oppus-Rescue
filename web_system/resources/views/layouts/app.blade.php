@@ -64,6 +64,9 @@ SVG,
             'feed' => <<<'SVG'
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5h16"/><path d="M4 12h16"/><path d="M4 17.5h10"/><circle cx="18" cy="17.5" r="2"/></svg>
 SVG,
+            'drafts' => <<<'SVG'
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/><path d="M8 7h3M8 11h2m3 3 7-7-3-3-7 7-1 4 4-1Z"/></svg>
+SVG,
             'profile' => <<<'SVG'
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>
 SVG,
@@ -257,6 +260,13 @@ SVG,
                 <span aria-hidden="true">{!! $isCivilian ? $navIcons['report'] : $navIcons['feed'] !!}</span>
                 <strong>{{ $compactSecondaryLabel }}</strong>
             </a>
+            @if ($isCivilian)
+                <a href="{{ route('reports.drafts') }}" class="civilian-drafts-quick-link {{ request()->routeIs('reports.drafts') ? 'active' : '' }}" data-civilian-draft-nav data-civilian-draft-mobile aria-label="Draft Reports" @if(request()->routeIs('reports.drafts')) aria-current="page" @endif>
+                    <span aria-hidden="true">{!! $navIcons['drafts'] !!}</span>
+                    <b class="civilian-draft-nav-count" data-civilian-draft-nav-count hidden aria-hidden="true">0</b>
+                    <strong>Drafts</strong>
+                </a>
+            @endif
             <a href="{{ route('profile.show') }}" class="{{ request()->routeIs('profile.*') ? 'active' : '' }}">
                 <span aria-hidden="true">{!! $navIcons['profile'] !!}</span>
                 <strong>Profile</strong>

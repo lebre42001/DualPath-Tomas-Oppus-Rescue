@@ -23,21 +23,25 @@ test('offline, captive/unreachable server, session expiry and reconnection displ
     const win = new EventTarget(), doc = new EventTarget(), nav = { onLine: false };
     let interval, calls = 0, behavior = async () => true;
     win.setInterval = callback => { interval = callback; return 1; }; win.clearInterval = () => {};
-    const title = {}, message = {}, retry = new EventTarget();
+    const title = {}, message = {}, result = {}, retry = new EventTarget();
     const panel = { dataset: { connectionUrl: '/reports/connection' }, querySelector: selector => ({
         '[data-report-connection-title]': title, '[data-report-connection-message]': message,
         '[data-report-connection-retry]': retry,
+        '[data-report-connection-result]': result,
     })[selector] };
     initializeReportConnection(panel, { window: win, document: doc, navigator: nav, probe: async (url, options) => {
         calls++; assert.equal(url, '/reports/connection'); return behavior(options.signal);
     } });
     const settle = () => new Promise(resolve => setImmediate(resolve));
     assert.equal(calls, 0); assert.equal(panel.dataset.connectionState, 'offline');
+    assert.match(result.textContent, /device offline/);
     nav.onLine = true; behavior = async () => { throw new Error('Server unavailable'); };
     win.dispatchEvent(new Event('online')); await settle();
     assert.equal(panel.dataset.connectionState, 'unavailable');
+    assert.match(result.textContent, /completed at.*unavailable/);
     behavior = async () => { throw Object.assign(new Error('Session expired'), { reason: 'session' }); };
     retry.dispatchEvent(new Event('click')); await settle(); assert.equal(panel.dataset.connectionState, 'session');
+    assert.match(result.textContent, /sign in to use online reporting/);
     behavior = async () => true; retry.dispatchEvent(new Event('click')); await settle();
     assert.equal(panel.dataset.connectionState, 'available'); assert.match(message.textContent, /receipt/);
     let finish;
@@ -46,4 +50,33 @@ test('offline, captive/unreachable server, session expiry and reconnection displ
     nav.onLine = false; win.dispatchEvent(new Event('offline')); finish(true); await settle();
     assert.equal(panel.dataset.connectionState, 'offline', 'A late response cannot overwrite the offline state');
     const previousCalls = calls; doc.hidden = true; interval(); assert.equal(calls, previousCalls);
+});
+
+test('each manual check shows progress and a fresh numbered result even when the server is still reachable', async () => {
+    const win = new EventTarget(), doc = new EventTarget(), nav = { onLine: true };
+    const title = {}, message = {}, result = {}, retry = new EventTarget();
+    const panel = { dataset: { connectionUrl: '/reports/connection' }, querySelector: selector => ({
+        '[data-report-connection-title]': title, '[data-report-connection-message]': message,
+        '[data-report-connection-retry]': retry, '[data-report-connection-result]': result,
+    })[selector] };
+    let interval, finish, calls = 0, timestamp = 1794000000000;
+    win.setInterval = callback => { interval = callback; return 1; }; win.clearInterval = () => {};
+    initializeReportConnection(panel, { window: win, document: doc, navigator: nav, now: () => timestamp,
+        probe: () => { calls++; return new Promise(resolve => { finish = resolve; }); } });
+    assert.equal(retry.textContent, 'Checking…'); assert.equal(retry.disabled, true);
+    assert.match(result.textContent, /Check #1: contacting/);
+    interval(); assert.equal(calls, 1, 'Polling does not cancel the in-flight check');
+    timestamp += 125; finish(true); await new Promise(resolve => setImmediate(resolve));
+    assert.equal(retry.textContent, 'Check again'); assert.equal(retry.disabled, false);
+    assert.match(result.textContent, /Check #1 completed at.*server responded in 125 ms/);
+    const firstResult = result.textContent;
+    retry.dispatchEvent(new Event('click'));
+    assert.equal(calls, 2); assert.equal(retry.disabled, true); assert.match(result.textContent, /Check #2: contacting/);
+    finish(true); await new Promise(resolve => setImmediate(resolve));
+    assert.notEqual(result.textContent, firstResult, 'A fast successful recheck leaves distinct visible feedback');
+    assert.match(result.textContent, /Check #2 completed at/);
+    nav.onLine = false; win.dispatchEvent(new Event('offline'));
+    retry.dispatchEvent(new Event('click'));
+    assert.equal(calls, 2); assert.match(result.textContent, /Check #3.*device offline/);
+    assert.equal(retry.disabled, false);
 });

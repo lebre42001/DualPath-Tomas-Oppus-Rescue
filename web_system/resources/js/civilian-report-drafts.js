@@ -47,7 +47,9 @@ export function initializeCivilianDrafts({ document = globalThis.document, windo
         for (const badge of badges) {
             badge.textContent = String(records.length); badge.hidden = records.length === 0;
         }
-        document.querySelector('[data-civilian-draft-nav]')?.setAttribute('aria-label', records.length ? `Draft Reports, ${records.length} saved` : 'Draft Reports');
+        for (const link of document.querySelectorAll('[data-civilian-draft-nav]')) {
+            link.setAttribute('aria-label', records.length ? `Draft Reports, ${records.length} saved` : 'Draft Reports');
+        }
         if (counter) counter.textContent = String(records.length);
         if (empty) empty.hidden = records.length !== 0;
         if (!list) return;
