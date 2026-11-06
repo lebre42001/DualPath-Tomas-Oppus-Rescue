@@ -383,6 +383,7 @@ SVG,
     @endif
     @if ($isCivilian)
     @include('partials.civilian-updates')
+    @include('partials.civilian-report-library')
     <span hidden data-civilian-draft-context data-owner="{{ $authUser->id }}" data-create-url="{{ route('reports.create') }}" data-receipt-url="{{ route('reports.submission', '__submission__') }}"></span>
     <span hidden data-presence-url="{{ route('account.presence') }}" data-presence-interval="{{ \App\Support\CivilianPresence::HEARTBEAT_SECONDS }}"></span>
     <button type="button" class="pwa-install-indicator" data-pwa-install-toggle aria-controls="civilian-install-options" aria-expanded="false" aria-label="Install or download AksyRes" title="Install or download the app" hidden>

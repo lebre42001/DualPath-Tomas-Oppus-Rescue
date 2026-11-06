@@ -108,7 +108,7 @@ class OnlineReportHistoryTest extends TestCase
         $owner = User::factory()->create(['role' => 'civilian', 'is_admin' => false]);
         for ($i = 1; $i <= 6; $i++) $this->report('MINE-'.$i, ['reported_by' => $owner->id, 'description' => '<img src=x onerror=alert(1)>']);
         $this->actingAs($owner)->get(route('reports.index', ['page' => 2]))->assertOk()
-            ->assertViewHas('reports', fn ($reports) => $reports->count() === 1)->assertSee('Report feed pagination');
+            ->assertViewHas('reports', fn ($reports) => $reports->count() === 1)->assertSee('data-civilian-library-open="history"', false);
         $this->actingAs($this->admin())->getJson(route('reports.all', ['search' => 'NO-MATCH']))->assertOk()->assertJsonCount(0, 'reports');
         $html = $this->getJson(route('reports.online-details', IncidentReport::first()))->assertOk()->json('html');
         $this->assertStringNotContainsString('<img src=x onerror=alert(1)>', $html);

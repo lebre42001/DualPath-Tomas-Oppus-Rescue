@@ -5,6 +5,42 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Civilian View All report tables (2026-11-07)
+
+Draft Reports, Report History and Report Status now open a shared View All modal
+with an account-owned table, literal text search, status/date filters, sort,
+ten rows per page, Previous/Next and numbered page buttons. Main pages keep
+short previews (three drafts, five history records, one home status and two
+recent status updates). The history page's search and pagination live in the
+modal. Wide and compact screens use the same workflow; tables scroll sideways
+on narrow screens and have a keyboard-focusable scroll region.
+
+View opens a nested detail dialog. Back restores the list, filters, page and
+focus. Submitted-report details are read fresh from the server and expose only
+the authenticated civilian's records. The new `/reports/civilian-collection`
+and `/reports/{id}/civilian-details` endpoints reject guests/other roles and
+are private/no-store; the service worker treats them as network-only.
+History sorts by submission time; Status sorts by latest recorded status time.
+Server date filters use inclusive Philippine submission dates (UTC+8).
+
+Drafts still belong to the current account on this device, including while
+offline. Their date filters use the latest save date in Philippine time.
+View can show saved text/photo and Continue/Delete actions. Continue preserves
+the submission ID and uses the existing receipt reconciliation, fresh GPS and
+live selfie checks; browsing never sends a report. Removing a draft refreshes
+the preview/counts and clamps pagination if the last page disappears.
+
+No migration, environment secret, model or firmware changes. Deploy the controller,
+routes, shared layout/modal, draft/list modules, service worker and matching
+Vite build together through the normal push-to-main automatic deployment.
+Validated: 352 Laravel tests / 3778 assertions, 57 JavaScript tests, Vite build,
+`tool/check_civilian_report_library.cjs` at 320/390/1366/1920px and the existing
+`tool/check_civilian_drafts.cjs` browser recovery suite. Browser fixtures use real
+partials/modules/assets and mocked feeds; no live reports are submitted.
+Verify public entry/version routes, the new deployed asset signatures, and
+unauthenticated 401 responses for the collection/detail endpoints after deployment.
+Physical-device and authenticated live-account checks remain pilot verification.
+
 ## Draggable civilian Updates on phone, laptop and desktop (2026-11-07)
 
 The shared civilian Updates badge supports touch, pen and primary-mouse dragging.

@@ -678,7 +678,7 @@ class AuthAndReportFlowTest extends TestCase
             ->get(route('reports.index'))
             ->assertOk()
             ->assertSee('Viewing 1-5 of 6 reports')
-            ->assertSee('Page 1 / 2')
+            ->assertSee('data-civilian-library-open="history"', false)
             ->assertSee('INC-CIV-PAGED-6')
             ->assertSee('INC-CIV-PAGED-2')
             ->assertDontSee('INC-CIV-PAGED-1');

@@ -289,6 +289,7 @@
                     <h2 class="panel-title">Recent status updates</h2>
                     <p class="section-copy">Review the latest changes to your submitted reports, including admin acknowledgements, dispatch updates, completions, or rejections.</p>
                 </div>
+                <button type="button" class="btn btn-secondary" data-civilian-library-open="status" aria-haspopup="dialog">View All</button>
             </div>
             <div class="preview-grid">
                 @forelse ($civilianRecentUpdates as $report)
@@ -310,21 +311,6 @@
             </div>
         </section>
 
-        <section class="panel">
-            <div class="panel-toolbar">
-                <div class="panel-heading">
-                    <p class="panel-kicker">Controls</p>
-                    <h2 class="panel-title">Search and filter</h2>
-                    <p class="section-copy">Review your report history by reference code and current status.</p>
-                </div>
-            </div>
-            <form method="GET" action="{{ route('reports.index') }}" class="form-grid">
-                <div class="field"><label for="search">Search</label><input id="search" class="input" type="text" name="search" value="{{ $filters['search'] }}" placeholder="Code, incident, or location"></div>
-                <div class="field"><label for="status">Status</label><select id="status" name="status"><option value="">All statuses</option>@foreach (['received', 'acknowledged', 'dispatched', 'responding', 'resolved', 'rejected'] as $status)<option value="{{ $status }}" @selected($filters['status'] === $status)>{{ $statusDisplayLabel($status) }}</option>@endforeach</select></div>
-                <div class="field"><label for="sort">Sort</label><select id="sort" name="sort"><option value="newest" @selected($filters['sort'] === 'newest')>Newest first</option><option value="oldest" @selected($filters['sort'] === 'oldest')>Oldest first</option><option value="status" @selected($filters['sort'] === 'status')>Status</option></select></div>
-                <div class="field"><label>&nbsp;</label><button class="btn btn-primary" type="submit">Apply Filters</button></div>
-            </form>
-        </section>
     @endif
 
     <section class="panel {{ $isCivilian ? '' : 'report-list-panel' }}">
@@ -333,9 +319,12 @@
                 <p class="panel-kicker">{{ $isCivilian ? 'Report History' : 'Incident Feed' }}</p>
                 <h2 class="panel-title">{{ $isCivilian ? 'My current and past reports' : 'Latest reports' }}</h2>
                 @if ($isCivilian)
-                    <p class="section-copy">Review your submitted emergency details and current response status.</p>
+                    <p class="section-copy">Latest reports. View All to search, filter by date and browse every submission.</p>
                 @endif
             </div>
+            @if ($isCivilian)
+                <button type="button" class="btn btn-secondary" data-civilian-library-open="history" aria-haspopup="dialog">View All</button>
+            @endif
             @unless ($isCivilian)
                 <div class="panel-actions report-feed-toolbar">
                     <button type="button" class="btn btn-secondary" data-report-filter-open aria-haspopup="dialog">Search &amp; Filters</button>
@@ -410,6 +399,7 @@
                                     <th scope="col">Status</th>
                                     <th scope="col">Date</th>
                                     <th scope="col">GPS</th>
+                                    <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -428,7 +418,7 @@
                                 ? number_format((float) $report->latitude, 6).', '.number_format((float) $report->longitude, 6)
                                 : 'Coordinates not available';
                         @endphp
-                        <tr class="civilian-history-table-row" data-civilian-report-row data-civilian-report-modal-trigger data-civilian-report-id="{{ $report->id }}" data-civilian-report-title="{{ $report->report_code }} - {{ $report->incident_type }}" role="button" tabindex="0" aria-label="Open full details for {{ $report->report_code }}">
+                        <tr class="civilian-history-table-row" data-civilian-report-row data-civilian-report-id="{{ $report->id }}" data-civilian-report-title="{{ $report->report_code }} - {{ $report->incident_type }}">
                             <td data-label="INC / ID"><span class="incident-code">{{ $report->report_code }}</span></td>
                             <td data-label="Type of Accident"><strong>{{ $report->incident_type }}</strong></td>
                             <td data-label="Status"><span class="tag {{ $statusDisplayTone($report->status) }}">{{ $statusDisplayLabel($report->status) }}</span></td>
@@ -535,6 +525,7 @@
                                 </article>
                                 </div>
                             </td>
+                            <td data-label="Actions"><button type="button" class="btn btn-secondary" data-civilian-report-modal-trigger aria-label="View {{ $report->report_code }}">View</button></td>
                         </tr>
                     @else
                         @php
@@ -760,7 +751,7 @@
                 @empty
                     @if ($isCivilian)
                         <tr>
-                            <td colspan="5">
+                            <td colspan="6">
                                 <div class="civilian-history-empty">
                                     <p class="eyebrow">No Report History Yet</p>
                                     <h2>Your submitted reports will appear here once you send an emergency report.</h2>
@@ -794,31 +785,8 @@
 
             </div>
 
-            @if ($isCivilian && method_exists($reports, 'hasPages') && $reports->hasPages())
-                @php
-                    $currentPage = $reports->currentPage();
-                    $lastPage = $reports->lastPage();
-                @endphp
-                <nav class="report-pagination report-page-toggle" aria-label="Report feed pagination">
-                    <span class="report-pagination-meta">
-                        {{ $isCivilian ? 'Viewing' : 'Latest view' }} {{ $reports->firstItem() }}-{{ $reports->lastItem() }} of {{ $reports->total() }} reports
-                    </span>
-                    <div class="report-page-controls">
-                        @if ($reports->onFirstPage())
-                            <span class="report-page-arrow is-disabled" aria-disabled="true" aria-label="Previous reports">&larr;</span>
-                        @else
-                            <a href="{{ $reports->previousPageUrl() }}" class="report-page-arrow" aria-label="Previous reports">&larr;</a>
-                        @endif
-
-                        <span class="report-page-index">Page {{ $currentPage }} / {{ $lastPage }}</span>
-
-                        @if ($reports->hasMorePages())
-                            <a href="{{ $reports->nextPageUrl() }}" class="report-page-arrow is-next" aria-label="Next reports">&rarr;</a>
-                        @else
-                            <span class="report-page-arrow is-next is-disabled" aria-disabled="true" aria-label="Next reports">&rarr;</span>
-                        @endif
-                    </div>
-                </nav>
+            @if ($isCivilian && $reports->total())
+                <p class="section-copy">Viewing {{ $reports->firstItem() }}-{{ $reports->lastItem() }} of {{ $reports->total() }} reports. Use View All for search, dates and pages.</p>
             @endif
         </div>
         @unless ($isCivilian)

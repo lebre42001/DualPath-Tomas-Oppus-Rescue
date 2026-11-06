@@ -8,6 +8,7 @@ import './report-connection';
 import './civilian-system';
 import './report-drafts';
 import './civilian-report-drafts';
+import './civilian-report-library';
 import './account-verification';
 import './civilian-accounts';
 import './civilian-directory';

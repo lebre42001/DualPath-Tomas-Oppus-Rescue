@@ -14,6 +14,7 @@ const APP_SHELL_URLS = [
 const NEVER_CACHE_PATHS = new Set([
     '/system/version',
     '/reports/connection',
+    '/reports/civilian-collection',
     '/account/system-updates',
     '/sw.js',
     '/auth-password.js',
@@ -74,7 +75,7 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    if (NEVER_CACHE_PATHS.has(url.pathname)) {
+    if (NEVER_CACHE_PATHS.has(url.pathname) || /^\/reports\/\d+\/civilian-details$/.test(url.pathname)) {
         event.respondWith(networkFresh(request));
         return;
     }

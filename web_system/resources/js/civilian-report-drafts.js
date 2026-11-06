@@ -2,14 +2,8 @@ import { onDomReady } from './dom-ready.js';
 import { createCivilianDraftStore, isSubmissionId } from './civilian-draft-store.js';
 import { checkReportReceipt, uploadReport, receivedReportUrl } from './report-delivery.js';
 import { watchCivilianDraftRecovery } from './civilian-draft-recovery.js';
+import { DRAFT_STATES as messages } from './civilian-report-list.js';
 
-const messages = {
-    editing: 'Draft — not sent', sending: 'Delivery unconfirmed — check before sending again',
-    offline: 'Draft — connection lost', connection: 'Draft — connection interrupted',
-    interrupted: 'Draft — sending interrupted', slow: 'Draft — sending took too long',
-    server: 'Draft — server receipt unconfirmed', session: 'Draft — sign in to continue',
-    validation: 'Draft — review details and verification',
-};
 export function initializeCivilianDrafts({ document = globalThis.document, window = globalThis.window, navigator = globalThis.navigator } = {}) {
     const element = (tag, text, className = '') => {
         const node = document.createElement(tag); node.textContent = text; node.className = className; return node;
@@ -53,8 +47,10 @@ export function initializeCivilianDrafts({ document = globalThis.document, windo
         if (counter) counter.textContent = String(records.length);
         if (empty) empty.hidden = records.length !== 0;
         if (!list) return;
+        const preview = panel.querySelector('[data-civilian-draft-preview]');
+        if (preview) preview.textContent = records.length > 3 ? `Showing the latest 3 of ${records.length} drafts. View All to search and browse every draft.` : 'Your latest saved drafts. View All to search by date, description or location.';
         list.replaceChildren();
-        for (const record of records) {
+        for (const record of records.slice(0, 3)) {
             const card = element('article', '', 'civilian-draft-card');
             card.dataset.draftId = record.submissionId;
             card.append(element('span', messages[record.state] ?? messages.editing, 'tag amber'));
@@ -64,6 +60,8 @@ export function initializeCivilianDrafts({ document = globalThis.document, windo
             const hasPhoto = record.evidenceFile instanceof Blob;
             card.append(element('p', hasPhoto ? 'Scene photo saved with this draft.' : record.evidenceName ? 'Text saved. Reattach the scene photo when continuing.' : 'Scene photo still required.', 'section-copy'));
             const actions = element('div', '', 'button-row');
+            const view = element('button', 'View', 'btn btn-secondary'); view.type = 'button';
+            view.dataset.civilianLibraryDraft = record.submissionId;
             const resume = element('button', 'Continue', 'btn btn-primary'); resume.type = 'button'; resume.disabled = busy;
             resume.addEventListener('click', () => { void continueDraft(record).catch(storageError); });
             const remove = element('button', 'Delete draft', 'btn btn-secondary'); remove.type = 'button'; remove.disabled = busy;
@@ -71,7 +69,7 @@ export function initializeCivilianDrafts({ document = globalThis.document, windo
                 if (busy || !window.confirm('Delete this local draft? This does not change any report already received by the server.')) return;
                 void store.remove(record.submissionId).then(render).catch(storageError);
             });
-            actions.append(resume, remove); card.append(actions); list.append(card);
+            actions.append(view, resume, remove); card.append(actions); list.append(card);
         }
     };
 

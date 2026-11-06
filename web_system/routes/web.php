@@ -125,6 +125,8 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
     });
 
     Route::prefix('reports')->name('reports.')->group(function (): void {
+        Route::get('/civilian-collection', [\App\Http\Controllers\Web\CivilianReportLibraryController::class, 'index'])->middleware('throttle:60,1')->name('civilian-collection');
+        Route::get('/{incidentReport}/civilian-details', [\App\Http\Controllers\Web\CivilianReportLibraryController::class, 'details'])->middleware('throttle:60,1')->name('civilian-details');
         Route::get('/', [IncidentReportController::class, 'index'])->name('index');
         Route::get('/create', [IncidentReportController::class, 'create'])->name('create');
         Route::get('/drafts', [IncidentReportController::class, 'drafts'])->name('drafts');

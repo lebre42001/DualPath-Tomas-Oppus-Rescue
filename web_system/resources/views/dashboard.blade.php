@@ -228,7 +228,7 @@
                         <p class="panel-kicker">Latest Status</p>
                         <h2 class="panel-title">Your latest report</h2>
                     </div>
-                    <a href="{{ route('reports.index') }}" class="btn btn-secondary">View All</a>
+                    <button type="button" class="btn btn-secondary" data-civilian-library-open="status" aria-haspopup="dialog">View All</button>
                 </div>
 
                 <div class="civilian-latest-list">

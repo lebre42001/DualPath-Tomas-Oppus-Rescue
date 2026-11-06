@@ -28,7 +28,7 @@ const server = http.createServer((request, response) => {
     const url = new URL(request.url, origin || 'http://localhost');
     if (url.pathname.startsWith('/modules/')) {
         const name = path.basename(url.pathname).replace(/\.js$/, '') + '.js';
-        if (!['civilian-report-drafts.js', 'civilian-draft-store.js', 'civilian-draft-recovery.js', 'report-delivery.js', 'dom-ready.js'].includes(name)) { response.writeHead(404).end(); return; }
+        if (!['civilian-report-drafts.js', 'civilian-report-list.js', 'civilian-draft-store.js', 'civilian-draft-recovery.js', 'report-delivery.js', 'dom-ready.js'].includes(name)) { response.writeHead(404).end(); return; }
         response.setHeader('Content-Type', 'application/javascript'); response.end(fs.readFileSync(path.join(web, 'resources/js', name))); return;
     }
     if (url.pathname.startsWith('/build/')) {

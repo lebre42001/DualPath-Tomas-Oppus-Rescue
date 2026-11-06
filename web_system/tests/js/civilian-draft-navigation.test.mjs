@@ -68,13 +68,13 @@ test('draft navigation badge follows saved work across app close/reopen, account
     assert.equal(reopened.list.children.length, 1); assert.equal(reopened.empty.hidden, true);
     assert.equal(reopened.link.attributes['aria-label'], 'Draft Reports, 1 saved');
     assert.equal(reopened.mobileLink.attributes['aria-label'], 'Draft Reports, 1 saved');
-    reopened.list.children[0].querySelectorAll('button')[0].dispatchEvent(new Event('click')); await settle();
+    reopened.list.children[0].querySelectorAll('button').find(button => button.textContent === 'Continue').dispatchEvent(new Event('click')); await settle();
     assert.equal(reopened.destinations[0], 'https://app.test/reports/create?draft='+id);
     const other = surface({ owner: '2', drafts: true }); await settle();
     assert.equal(other.list.children.length, 0); assert.equal(other.badge.hidden, true); assert.equal(other.empty.hidden, false);
     assert.equal(other.mobileBadge.hidden, true); assert.equal(other.mobileLink.attributes['aria-label'], 'Draft Reports');
     const own = surface({ drafts: true }); await settle();
-    own.list.children[0].querySelectorAll('button')[1].dispatchEvent(new Event('click')); await settle();
+    own.list.children[0].querySelectorAll('button').find(button => button.textContent === 'Delete draft').dispatchEvent(new Event('click')); await settle();
     assert.equal(own.list.children.length, 0); assert.equal(own.badge.hidden, true); assert.equal(own.counter.textContent, '0');
     assert.equal(own.mobileBadge.hidden, true); assert.equal(own.mobileLink.attributes['aria-label'], 'Draft Reports');
 });
