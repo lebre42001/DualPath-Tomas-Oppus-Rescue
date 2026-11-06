@@ -223,6 +223,8 @@
                 </div>
             </section>
 
+            @include('partials.civilian-admin-contact')
+
             <section class="panel civilian-latest-panel">
                 <div class="panel-head">
                     <div class="panel-heading">

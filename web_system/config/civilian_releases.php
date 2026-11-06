@@ -4,6 +4,16 @@
 // These release labels are separate from the app's runtime build fingerprint.
 return [
     [
+        'id' => '2026.11.07.7',
+        'date' => '2026-11-07',
+        'title' => 'Contact Admin for help',
+        'changes' => [
+            'Find Contact Admin on civilian Home and App Settings for account concerns, app issues or feedback.',
+            'Tap Email Admin or aksyres900@gmail.com to open your email app addressed to the administrator.',
+            'For emergencies, continue using Report Emergency.',
+        ],
+    ],
+    [
         'id' => '2026.11.07.6',
         'date' => '2026-11-07',
         'title' => 'Step-by-step civilian tutorial',

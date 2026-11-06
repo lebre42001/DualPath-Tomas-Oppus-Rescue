@@ -17,6 +17,8 @@
                 <p class="panel-kicker">Your preferences</p>
                 <h1 class="panel-title">App Settings</h1>
             </div>
+            @include('partials.civilian-admin-contact')
+
             <section aria-labelledby="settings-alerts-heading">
                 <h2 id="settings-alerts-heading">Alert preferences</h2>
                 <div class="toggle-stack" data-settings-root data-settings-endpoint="{{ route('settings.update') }}" data-connectivity-initial="{{ $settings['connectivity_mode'] }}">

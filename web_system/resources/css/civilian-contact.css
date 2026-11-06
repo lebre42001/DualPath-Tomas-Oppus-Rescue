@@ -1,0 +1,23 @@
+.civilian-admin-contact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    color: var(--ink);
+    background: var(--surface-alt);
+}
+.civilian-admin-contact-copy { display: grid; gap: 8px; min-width: 0; }
+.civilian-admin-contact h2 { margin: 0; font-size: 1.1rem; line-height: 1.4; }
+.civilian-admin-contact p { margin: 0; line-height: 1.5; }
+.civilian-admin-contact-email { width: fit-content; max-width: 100%; color: var(--ink); font-weight: 800; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.civilian-admin-contact-note { font-size: .85rem; color: var(--muted); }
+.civilian-admin-contact > .btn { flex-shrink: 0; min-height: 44px; }
+.civilian-admin-contact a:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+@media (max-width: 600px) {
+    .civilian-admin-contact { flex-direction: column; align-items: stretch; padding: 16px; }
+    .civilian-admin-contact > .btn { width: 100%; }
+}

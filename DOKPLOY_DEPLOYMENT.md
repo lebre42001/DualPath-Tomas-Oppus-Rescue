@@ -5,6 +5,16 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Civilian admin contact (2026-11-07)
+
+Civilian Home and App Settings show a Contact Admin card with
+`aksyres900@gmail.com` and an Email Admin link. Both open the device's email app
+using `mailto:` for account concerns, app issues and feedback. Emergency reporting
+continues through Report Emergency. The support address is defined once in
+`web_system/config/support.php`; legal/privacy contact configuration is separate.
+The floating Updates panel also lists this addition. Deploy the normal web build
+and clear Laravel caches. No migration or mail server configuration is required.
+
 ## Civilian guided tutorial before verification (2026-11-07)
 
 Civilian web registration and unverified password/Google sign-ins now land on
