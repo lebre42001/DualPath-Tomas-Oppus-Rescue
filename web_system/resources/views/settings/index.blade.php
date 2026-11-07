@@ -22,7 +22,7 @@
             <section aria-labelledby="settings-alerts-heading">
                 <h2 id="settings-alerts-heading">Alert preferences</h2>
                 <div class="toggle-stack" data-settings-root data-settings-endpoint="{{ route('settings.update') }}" data-connectivity-initial="{{ $settings['connectivity_mode'] }}">
-                    @foreach (['critical_alerts' => ['Report status alerts', 'Updates about your reports.'], 'push_notifications' => ['Push notifications', 'Requires browser notification permission.'], 'sms_backup' => ['SMS backup', 'Preference only; SMS delivery not configured.']] as $key => [$label, $description])
+                    @foreach (['critical_alerts' => ['Report status alerts', 'Show an in-app notice when an admin acknowledges or updates your report. Updates and System Log keep the record.'], 'push_notifications' => ['Push notifications', 'Saved preference only. Alerts while the app is closed are not available yet.'], 'sms_backup' => ['SMS backup', 'Preference only; SMS delivery not configured.']] as $key => [$label, $description])
                         <div class="toggle-item">
                             <div class="toggle-copy"><strong>{{ $label }}</strong><p>{{ $description }}</p></div>
                             <label class="switch">

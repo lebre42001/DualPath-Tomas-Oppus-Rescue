@@ -67,19 +67,28 @@ class CivilianActivityRecorder
         };
         if ($status && $audit->status_before !== $audit->status_after) {
             $title = 'Report '.$status;
-            $message = $actor.' changed report '.$audit->report_code.' to '.$status.'.';
+            $message = match ($audit->status_after) {
+                'acknowledged' => $actor.' acknowledged receiving report '.$audit->report_code.'. Open the report to follow its status.',
+                'responding' => $actor.' responded to report '.$audit->report_code.'. Open the report to read the response.',
+                default => $actor.' changed report '.$audit->report_code.' to '.$status.'.',
+            };
         }
         $assignment = $audit->context['assigned_responder_name'] ?? null;
-        if (is_string($assignment) && $assignment !== '' && $assignment !== ($audit->context['previous_assigned_responder_name'] ?? null)) {
+        $assignmentChanged = $audit->context['assignment_changed'] ?? ($assignment !== ($audit->context['previous_assigned_responder_name'] ?? null));
+        if (is_string($assignment) && $assignment !== '' && $assignmentChanged) {
             $message .= ' Assigned responder: '.$assignment.'.';
         }
+        $notifiable = $audit->action !== 'coordination'
+            || $audit->status_before !== $audit->status_after
+            || ($audit->context['response_changed'] ?? false)
+            || $assignmentChanged;
 
         // Deliberately project only the action/status, never internal notes, AI
         // inputs, other accounts, contact information or private audit context.
         $this->record($report->reporter, $kind, $title, $message, [
             'incident_report_id' => $report->id, 'report_code' => $audit->report_code,
             'source_key' => hash('sha256', 'civilian:audit:'.$audit->id),
-            'occurred_at' => $audit->occurred_at, 'notifiable' => true,
+            'occurred_at' => $audit->occurred_at, 'notifiable' => $notifiable,
             'read_at' => $historical || $audit->imported ? now() : null,
         ]);
     }

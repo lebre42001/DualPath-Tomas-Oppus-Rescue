@@ -4,6 +4,18 @@
 // These release labels are separate from the app's runtime build fingerprint.
 return [
     [
+        'id' => '2026.11.07.9',
+        'date' => '2026-11-07',
+        'title' => 'Notifications for admin report updates',
+        'changes' => [
+            'See an in-app notice when an admin acknowledges, responds to or updates your report. Server receipt and admin acknowledgement have separate messages.',
+            'Open Updates to see the newest unread notices first, with the report code, Philippine date and time, and View report links.',
+            'Dismiss a notice without marking it read. Unread counts remain, and marking an update as read keeps its permanent System Log record.',
+            'Repeated saves without a changed status, response or assignment do not create extra alerts. Reconnect or reopen AksyRes to retrieve saved updates.',
+            'Report status alerts in Settings control the in-app notice. The same notification flow works on phones and desktop; closed-app push delivery is not available.',
+        ],
+    ],
+    [
         'id' => '2026.11.07.8',
         'date' => '2026-11-07',
         'title' => 'Human-reviewed report severity',

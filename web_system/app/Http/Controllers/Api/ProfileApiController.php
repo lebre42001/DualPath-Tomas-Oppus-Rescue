@@ -35,7 +35,7 @@ class ProfileApiController extends Controller
             'assigned_station' => $user->isCivilian() ? 'Civilian Mobile' : 'Bontoc HQ',
             'connectivity_mode' => 'auto_select',
             'notification_profile' => $user->isCivilian()
-                ? 'push_notifications,sms_backup'
+                ? 'critical_alerts,push_notifications,sms_backup'
                 : 'critical_alerts,push_notifications,sms_backup',
         ]);
 

@@ -63,18 +63,21 @@ class Element extends EventTarget {
     append(...nodes) { this.children.push(...nodes); }
     replaceChildren() { this.children = []; }
 }
-const fixture = ({ failEvents = () => false } = {}) => {
+const fixture = ({ failEvents = () => false, owner = '1', feedVersion = latest, alertsEnabled = true, initialNotifications } = {}) => {
     const doc = new EventTarget(), win = new EventTarget(), nav = { onLine: true }, root = new Element();
-    const selectors = ['civilian-updates-toggle', 'civilian-updates-modal', 'civilian-updates-close', 'civilian-update-count', 'civilian-update-list', 'civilian-updates-read', 'civilian-apply-update', 'app-update-status', 'report-connection', 'report-connection-retry', 'civilian-release-notes'];
+    const selectors = ['civilian-updates-toggle', 'civilian-updates-modal', 'civilian-updates-close', 'civilian-update-count', 'civilian-update-list', 'civilian-updates-read', 'civilian-apply-update', 'app-update-status', 'report-connection', 'report-connection-retry', 'civilian-release-notes', 'civilian-report-alerts-off', 'civilian-report-notice', 'civilian-report-notice-title', 'civilian-report-notice-message', 'civilian-report-notice-count', 'civilian-report-notice-date', 'civilian-report-notice-open', 'civilian-report-notice-dismiss'];
     const elements = Object.fromEntries(selectors.map(name => [name, new Element()]));
     elements['report-connection'].querySelector = () => elements['report-connection-retry'];
-    root.dataset = { owner: '1', runningVersion: running, feedUrl: '/feed', readUrl: '/read', eventUrl: '/events' };
+    elements['civilian-report-notice'].hidden = true; elements['civilian-updates-modal'].hidden = true;
+    root.dataset = { owner, runningVersion: running, feedUrl: '/feed', readUrl: '/read', eventUrl: '/events' };
     root.querySelector = selector => elements[selector.slice(6, -1)];
     doc.querySelectorAll = () => []; doc.querySelector = () => ({ content: 'test-csrf' });
-    doc.createElement = () => new Element();
-    win.setTimeout = setTimeout; win.clearTimeout = clearTimeout; win.setInterval = () => 1; win.clearInterval = () => {};
-    const sent = [], notifications = [{ id: 1, kind: 'report_status', title: 'Report acknowledged', message: 'Your report was acknowledged.', occurred_at: new Date().toISOString() }];
-    let releaseNotes = '<article>Search and browse reports by date.</article>';
+    doc.createElement = tag => Object.assign(new Element(), { tag });
+    let poll;
+    win.setTimeout = setTimeout; win.clearTimeout = clearTimeout; win.setInterval = callback => { poll = callback; return 1; }; win.clearInterval = () => {};
+    win.location = { origin: 'https://app.test' };
+    const sent = [], reads = [], notifications = initialNotifications ?? [{ id: 1, kind: 'report_status', title: 'Report acknowledged', message: 'Your report was acknowledged.', occurred_at: new Date().toISOString() }];
+    let releaseNotes = '<article>Search and browse reports by date.</article>', feedFailed = false;
     const fetchImpl = async (url, options) => {
         assert.equal(options.credentials, 'same-origin'); assert.equal(options.cache, 'no-store');
         if (url === '/events') {
@@ -84,13 +87,19 @@ const fixture = ({ failEvents = () => false } = {}) => {
             return Response.json({ saved: true });
         }
         if (url === '/read') {
-            const { ids } = JSON.parse(options.body); assert.deepEqual(ids, [1, 2]); notifications.splice(0);
+            const { ids } = JSON.parse(options.body); assert.deepEqual(ids, notifications.map(event => event.id)); reads.push(ids); notifications.splice(0);
             return Response.json({ saved: true });
         }
-        return Response.json({ version: latest, unread_count: notifications.length, notifications, release_notes_html: releaseNotes });
+        if (feedFailed) return Response.json({ message: 'Feed unavailable' }, { status: 503 });
+        return Response.json({ version: feedVersion, unread_count: notifications.length, notifications, release_notes_html: releaseNotes, report_alerts_enabled: alertsEnabled });
     };
     initializeCivilianSystem(root, { document: doc, window: win, navigator: nav, fetchImpl, storage: storage() });
-    return { doc, win, nav, elements, sent, setReleaseNotes: html => { releaseNotes = html; } };
+    return { doc, win, nav, elements, sent, reads, poll: () => poll(),
+        setReleaseNotes: html => { releaseNotes = html; },
+        setNotifications: events => notifications.splice(0, notifications.length, ...events),
+        setAlertsEnabled: value => { alertsEnabled = value; },
+        setFeedFailed: value => { feedFailed = value; },
+    };
 };
 
 test('release notes refresh without repeated replacement, persist after marking read, and survive unavailable note data', async () => {
@@ -140,6 +149,81 @@ test('device telemetry failures do not hide server report notifications and dura
     let applied = 0; win.addEventListener('stitch:apply-application-update', () => applied++);
     elements['civilian-apply-update'].dispatchEvent(new Event('click')); await settle();
     assert.equal(applied, 1);
+});
+
+const reportNotice = (id, overrides = {}) => ({ id, kind: 'report_status', title: 'Report acknowledged', message: 'A reviewer acknowledged your report.', occurred_at: '2026-11-07T01:12:00Z', report_url: '/reports/42', report_code: 'TEST-42', ...overrides });
+
+test('the active report notice can be dismissed or opened without clearing the server unread badge', async () => {
+    const { elements, reads } = fixture({ owner: '301', feedVersion: running, initialNotifications: [reportNotice(301)] });
+    await settle();
+    assert.equal(elements['civilian-report-notice'].hidden, false);
+    assert.equal(elements['civilian-update-count'].textContent, '1');
+    elements['civilian-report-notice-dismiss'].dispatchEvent(new Event('click')); await settle();
+    assert.equal(elements['civilian-report-notice'].hidden, true);
+    assert.equal(elements['civilian-update-count'].hidden, false); assert.equal(reads.length, 0);
+    elements['civilian-report-notice-open'].dispatchEvent(new Event('click')); await settle();
+    assert.equal(elements['civilian-updates-modal'].hidden, false);
+    assert.equal(elements['civilian-update-count'].textContent, '1'); assert.equal(reads.length, 0);
+    elements['civilian-updates-read'].dispatchEvent(new Event('click')); await settle();
+    assert.deepEqual(reads, [[301]]); assert.equal(elements['civilian-update-count'].hidden, true);
+    assert.equal(elements['civilian-report-notice'].hidden, true);
+});
+
+test('reconnecting retrieves persistent report events missed while offline and duplicate polls do not reannounce them', async () => {
+    const f = fixture({ owner: '302', feedVersion: running, initialNotifications: [] }); await settle();
+    f.nav.onLine = false; f.win.dispatchEvent(new Event('offline'));
+    f.setNotifications([reportNotice(302, { title: 'Responder assigned' })]); f.poll(); await settle();
+    assert.equal(f.elements['civilian-update-count'].hidden, true);
+    assert.equal(f.elements['civilian-report-notice'].hidden, true);
+    f.nav.onLine = true; f.win.dispatchEvent(new Event('online')); await settle();
+    assert.equal(f.elements['civilian-update-count'].textContent, '1');
+    assert.equal(f.elements['civilian-report-notice-title'].textContent, 'Responder assigned');
+    assert.equal(f.elements['civilian-report-notice'].hidden, false);
+    f.elements['civilian-report-notice-dismiss'].dispatchEvent(new Event('click'));
+    f.poll(); await settle();
+    assert.equal(f.elements['civilian-report-notice'].hidden, true); assert.equal(f.reads.length, 0);
+});
+
+test('disabled report alerts keep the server badge/list available and only new events announce after enabling', async () => {
+    const f = fixture({ owner: '303', feedVersion: running, alertsEnabled: false, initialNotifications: [reportNotice(303)] }); await settle();
+    assert.equal(f.elements['civilian-update-count'].textContent, '1');
+    assert.equal(f.elements['civilian-update-list'].children.length, 1);
+    assert.equal(f.elements['civilian-report-alerts-off'].hidden, false);
+    assert.equal(f.elements['civilian-report-notice'].hidden, true);
+    f.setAlertsEnabled(true); f.poll(); await settle();
+    assert.equal(f.elements['civilian-report-alerts-off'].hidden, true);
+    assert.equal(f.elements['civilian-report-notice'].hidden, true);
+    f.setNotifications([reportNotice(303), reportNotice(304, { title: 'Report resolved' })]); f.poll(); await settle();
+    assert.equal(f.elements['civilian-update-count'].textContent, '2');
+    assert.equal(f.elements['civilian-report-notice'].hidden, false);
+    assert.equal(f.elements['civilian-report-notice-title'].textContent, 'Report resolved');
+});
+
+test('unread report cards render inert text and only link to a same-origin report detail page', async () => {
+    const title = '<img src=x onerror=alert(1)>', message = '<script>alert(1)</script>';
+    const f = fixture({ owner: '304', feedVersion: running, initialNotifications: [
+        reportNotice(311, { title, message }),
+        reportNotice(312, { report_url: 'javascript:alert(1)' }),
+        reportNotice(313, { report_url: 'https://evil.example/reports/42' }),
+        reportNotice(314, { report_url: '/logout' }),
+    ] }); await settle();
+    const cards = f.elements['civilian-update-list'].children;
+    assert.equal(cards[0].children[0].textContent, title);
+    assert.equal(cards[0].children[1].textContent, message);
+    const links = cards.flatMap(card => card.children.filter(node => node.tag === 'a'));
+    assert.equal(links.length, 1); assert.equal(links[0].textContent, 'View report');
+    assert.equal(links[0].attributes.href, 'https://app.test/reports/42');
+    assert(cards.every(card => card.htmlWrites === 0 && card.children.every(node => node.htmlWrites === 0)));
+});
+
+test('failed feed requests do not consume unseen report IDs before a successful retry', async () => {
+    const f = fixture({ owner: '305', feedVersion: running, initialNotifications: [] }); await settle();
+    f.setFeedFailed(true); f.setNotifications([reportNotice(321)]); f.poll(); await settle();
+    assert.equal(f.elements['civilian-report-notice'].hidden, true);
+    assert.match(f.elements['app-update-status'].textContent, /could not be confirmed/);
+    f.setFeedFailed(false); f.poll(); await settle();
+    assert.equal(f.elements['civilian-report-notice'].hidden, false);
+    assert.equal(f.elements['civilian-update-count'].textContent, '1'); assert.equal(f.reads.length, 0);
 });
 
 test('update preparation waits for photo persistence and refuses a text-only photo fallback or active transmission', async () => {

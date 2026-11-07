@@ -5,6 +5,30 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Civilian admin report notifications (2026-11-07)
+
+The existing owner-scoped CivilianActivity record remains the single source for
+notifications and the permanent System Log. Admin acknowledgement and response
+notices distinguish an actual admin action from the original server receipt.
+Status transitions, changed response messages and assignments notify; redundant
+coordination saves remain in the log without generating another unread alert.
+Internal notes, AI inputs and model details are excluded from the notice text.
+
+The private updates feed returns the newest twenty unread events first and only
+links a report that still belongs to the signed-in account. Deleted reports keep
+their report code and log entries without a broken report link. Reading an event
+only stamps read_at; it never deletes its history. Existing report-alert settings
+are respected. Future civilian registrations enable report alerts by default;
+previously saved preferences are preserved.
+
+While AksyRes is open, the existing authenticated polling flow presents a visible,
+nonblocking report notice alongside the unread Updates badge. Notices are
+deduplicated per account across polls and page opens. Dismiss hides the notice;
+it does not mark the server record read. Reconnect/reopen retrieves server-saved
+updates. This release adds no server Web Push delivery while the app is closed.
+Deploy the normal Blade/JS/CSS/config build and clear Laravel caches. No new
+migration, notification service, email/SMS delivery or AI change is required.
+
 ## Civilian human-reviewed severity (2026-11-07)
 
 Civilian Home, history, View All details, full reports, submission receipts and

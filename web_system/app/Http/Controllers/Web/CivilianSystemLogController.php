@@ -61,13 +61,20 @@ class CivilianSystemLogController extends Controller
         $this->civilian($request);
         $unread = CivilianActivity::query()->where('user_id', $request->user()->id)->where('notifiable', true)->whereNull('read_at');
         $count = (clone $unread)->count();
-        $notifications = $unread->orderBy('id')->limit(20)->get()->map(fn ($event) => [
+        $notifications = $unread->with('report:id,reported_by')->orderByDesc('id')->limit(20)->get()->map(fn ($event) => [
             'id' => $event->id, 'title' => $event->title, 'message' => $event->message,
             'kind' => $event->kind, 'occurred_at' => $event->occurred_at->toIso8601String(),
+            'report_code' => $event->report_code,
+            'report_url' => $event->report && (int) $event->report->reported_by === (int) $request->user()->id
+                ? route('reports.show', $event->report) : null,
         ]);
+        $preferences = explode(',', (string) ($request->user()->responderProfile?->notification_profile ?? 'critical_alerts,push_notifications'));
+        $reportAlerts = in_array('critical_alerts', $preferences, true);
 
         return response()->json([
             'version' => $version->current(), 'unread_count' => $count, 'notifications' => $notifications,
+            'report_alerts_enabled' => $reportAlerts,
+            'browser_notifications_enabled' => $reportAlerts && in_array('push_notifications', $preferences, true),
             'release_notes_html' => view('partials.civilian-release-notes')->render(),
         ], 200, ['Cache-Control' => 'private, no-store']);
     }

@@ -50,7 +50,7 @@ class RegisteredUserController extends Controller
                 'emergency_contact_name' => $validated['name'].' Emergency Contact',
                 'emergency_contact_phone' => $validated['phone'],
                 'connectivity_mode' => 'auto_select',
-                'notification_profile' => 'push_notifications,sms_backup',
+                'notification_profile' => 'critical_alerts,push_notifications,sms_backup',
             ]);
 
             return $user;

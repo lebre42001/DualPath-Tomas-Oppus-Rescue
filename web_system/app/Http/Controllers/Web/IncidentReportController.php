@@ -588,6 +588,8 @@ class IncidentReportController extends Controller
                     assignedResponderName: $assignedResponder?->name,
                     responseNotes: $effectiveNotes,
                     actorId: $actor?->id,
+                    responseChanged: trim((string) $effectiveNotes) !== trim((string) $incidentReport->response_notes),
+                    assignmentChanged: (string) $assignedResponderId !== (string) $incidentReport->assigned_responder_id,
                 ),
             ]),
         ];
@@ -1137,6 +1139,8 @@ class IncidentReportController extends Controller
         ?string $assignedResponderName,
         ?string $responseNotes,
         ?int $actorId = null,
+        bool $responseChanged = false,
+        bool $assignmentChanged = false,
     ): array {
         return [
             'label' => $this->coordinationLabelFor(
@@ -1153,6 +1157,8 @@ class IncidentReportController extends Controller
             'status' => $newStatus,
             'assigned_responder_name' => $assignedResponderName,
             'response_notes' => $responseNotes,
+            'response_changed' => $responseChanged,
+            'assignment_changed' => $assignmentChanged,
             'occurred_at' => now()->toIso8601String(),
         ];
     }

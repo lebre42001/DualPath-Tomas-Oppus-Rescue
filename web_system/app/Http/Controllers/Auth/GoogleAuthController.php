@@ -185,7 +185,7 @@ class GoogleAuthController extends Controller
                     'emergency_contact_name' => $user->name.' Emergency Contact',
                     'emergency_contact_phone' => null,
                     'connectivity_mode' => 'auto_select',
-                    'notification_profile' => 'push_notifications,sms_backup',
+                    'notification_profile' => 'critical_alerts,push_notifications,sms_backup',
                 ],
             );
 

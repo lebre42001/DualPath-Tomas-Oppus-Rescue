@@ -34,6 +34,7 @@ class IncidentReportAuditRecorder
                 'previous_status', 'previous_severity', 'previous_stored_severity',
                 'reviewed_severity', 'review_method', 'review_notes', 'assigned_responder_name',
                 'previous_assigned_responder_name', 'model_name', 'model_version', 'suggested_severity',
+                'response_changed', 'assignment_changed',
             ]));
             IncidentReportAudit::query()->firstOrCreate([
                 'entry_key' => hash('sha256', $report->id.':'.$index.':'.json_encode($entry, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)),

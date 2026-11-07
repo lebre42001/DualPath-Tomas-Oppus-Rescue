@@ -1,6 +1,7 @@
 import { onDomReady } from './dom-ready.js';
 import { createCivilianUpdateState, isBuildVersion } from './civilian-update-state.js';
 import { initializeUpdatesPosition } from './civilian-updates-position.js';
+import { initializeCivilianReportNotices, safeCivilianReportUrl, formatCivilianNoticeDate } from './civilian-report-notices.js';
 
 export function initializeCivilianSystem(root, { document: doc = document, window: win = window, navigator: nav = navigator, fetchImpl = fetch, storage } = {}) {
     const running = root.dataset.runningVersion;
@@ -12,6 +13,7 @@ export function initializeCivilianSystem(root, { document: doc = document, windo
     const badge = root.querySelector('[data-civilian-update-count]');
     const list = root.querySelector('[data-civilian-update-list]');
     const releaseNotes = root.querySelector('[data-civilian-release-notes]');
+    const alertsOff = root.querySelector('[data-civilian-report-alerts-off]');
     let lastReleaseNotes = null;
     const markRead = root.querySelector('[data-civilian-updates-read]');
     const update = root.querySelector('[data-civilian-apply-update]');
@@ -19,6 +21,7 @@ export function initializeCivilianSystem(root, { document: doc = document, windo
     const connection = root.querySelector('[data-report-connection]');
     toggle.dataset.connectionState = connection.dataset.connectionState ?? 'checking';
     let latest = null, ids = [], syncing = false, applying = false, stopped = false, timer;
+    const reportNotices = initializeCivilianReportNotices(root, { document: doc, window: win, storage, onOpen: () => openUpdates() });
     const setText = (selector, value) => { for (const node of doc.querySelectorAll(selector)) node.textContent = value; };
     setText('[data-app-running]', running); setText('[data-app-previous]', state.previous() ?? 'Not recorded');
     const request = async (url, body) => {
@@ -57,15 +60,27 @@ export function initializeCivilianSystem(root, { document: doc = document, windo
         if (!applying) status.textContent = latest !== running ? 'A newer server build is available. Choose Update app when you are ready.' : 'This page is using the latest server build.';
         const count = Math.max(0, Number(data.unread_count) || 0);
         badge.textContent = String(count); badge.hidden = count === 0;
-        toggle.setAttribute('aria-label', count ? `System updates, ${count} unread` : 'System updates');
+        toggle.setAttribute('aria-label', count ? `Report and app updates, ${count} unread` : 'Report and app updates');
+        if (alertsOff) alertsOff.hidden = data.report_alerts_enabled !== false;
         list.replaceChildren(); ids = [];
         for (const event of data.notifications ?? []) {
             const card = node('article', ''); card.className = 'civilian-update-item';
-            card.append(node('strong', event.title), node('p', event.message), node('time', new Date(event.occurred_at).toLocaleString()));
+            card.append(node('strong', event.title), node('p', event.message));
+            if (typeof event.report_code === 'string' && event.report_code.trim()) {
+                const code = node('p', `Report: ${event.report_code}`); code.className = 'civilian-update-report-code'; card.append(code);
+            }
+            const date = node('time', formatCivilianNoticeDate(event.occurred_at));
+            if (typeof event.occurred_at === 'string' && !Number.isNaN(new Date(event.occurred_at).getTime())) date.setAttribute('datetime', event.occurred_at);
+            card.append(date);
+            const reportUrl = safeCivilianReportUrl(event.report_url, win.location?.origin);
+            if (reportUrl) {
+                const link = node('a', 'View report'); link.setAttribute('href', reportUrl); link.className = 'civilian-update-report-link'; card.append(link);
+            }
             list.append(card); ids.push(event.id);
         }
         if (!ids.length) list.append(node('p', 'No unread app or report updates.'));
         markRead.hidden = ids.length === 0;
+        reportNotices.observe(data);
     };
     const sync = async () => {
         if (syncing || stopped || applying || doc.hidden || nav.onLine === false) return;
@@ -91,10 +106,12 @@ export function initializeCivilianSystem(root, { document: doc = document, windo
         doc.dispatchEvent(new CustomEvent('stitch:dialog-close', { detail: { modal } }));
         modal.hidden = true; toggle.setAttribute('aria-expanded', 'false');
     };
-    toggle.addEventListener('click', () => {
+    const openUpdates = () => {
+        reportNotices.dismiss();
         doc.dispatchEvent(new CustomEvent('stitch:dialog-open', { detail: { modal, close, opener: toggle } }));
         modal.hidden = false; toggle.setAttribute('aria-expanded', 'true'); void sync();
-    });
+    };
+    toggle.addEventListener('click', openUpdates);
     closeButton.addEventListener('click', close);
     modal.addEventListener('click', event => { if (event.target === modal) close(); });
     connection.addEventListener('stitch:connection-state', event => { toggle.dataset.connectionState = event.detail.state; });
@@ -105,6 +122,7 @@ export function initializeCivilianSystem(root, { document: doc = document, windo
         try {
             const data = await request(root.dataset.readUrl, { ids: [...ids] });
             if (data.saved !== true) throw new Error('Read receipt was not confirmed.');
+            reportNotices.dismiss();
             await sync();
         }
         catch { status.textContent = 'Could not mark updates as read. Check your connection and try again.'; }
