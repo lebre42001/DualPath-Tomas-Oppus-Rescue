@@ -59,7 +59,14 @@ class CivilianTutorialTest extends TestCase
         $this->assertStringNotContainsString('<form', $demo);
         $this->assertStringNotContainsString('type="file"', $demo);
         $this->assertStringNotContainsString('data-report-submit', $demo);
+        $this->assertStringNotContainsString('name="incident_type"', $demo);
+        $this->assertStringNotContainsString('data-incident-picker', $demo);
         $this->assertStringContainsString('No report is sent.', $demo);
+        $this->assertStringContainsString('data-tutorial-example="incident"', $demo);
+        $this->assertStringContainsString('data-tutorial-preview-target="incident"', $demo);
+        $this->assertStringContainsString('Type of incident', $demo);
+        $this->assertStringContainsString('Type of incident preview: Road Accident selected', $demo);
+        $this->assertLessThan(strpos($demo, 'data-tutorial-example="photo"'), strpos($demo, 'data-tutorial-example="incident"'));
         $this->get(route('settings.index'))->assertOk()->assertSee(route('dashboard', ['tutorial' => 1]), false);
         $this->get(route('account.verify'))->assertOk()->assertSee('Quick tutorial first')->assertSee('Do this later');
         $this->get(route('reports.create'))->assertRedirect(route('account.verify'));

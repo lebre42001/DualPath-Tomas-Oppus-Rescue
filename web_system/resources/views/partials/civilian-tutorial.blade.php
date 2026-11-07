@@ -3,6 +3,12 @@
     <div class="civilian-tutorial-spotlight" data-tutorial-spotlight hidden aria-hidden="true"></div>
     <section class="civilian-tutorial-demo" data-tutorial-demo hidden aria-label="Report tutorial preview">
         <strong>Report tutorial preview</strong><p>No report is sent. Camera and location stay off.</p>
+        <div class="civilian-tutorial-example" data-tutorial-example="incident" hidden>
+            <div class="civilian-tutorial-incident-selector" data-tutorial-preview-target="incident" role="img" aria-label="Type of incident preview: Road Accident selected">
+                <div><span>Type of incident</span><strong>Road Accident</strong><small>Tap to view incident types</small></div>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+        </div>
         <div class="civilian-tutorial-example" data-tutorial-example="photo" hidden><strong>Capture Photo / Upload Photo</strong><span>Attach a clear scene photo.</span></div>
         <div class="civilian-tutorial-example" data-tutorial-example="gps" hidden><strong>Get GPS</strong><span>Allow location once when offered; keep phone Location on. Add a barangay, road or landmark.</span></div>
         <div class="civilian-tutorial-example" data-tutorial-example="description" hidden><strong>Short description</strong><span>Example: Motorcycle crash near the market; one injured person.</span></div>

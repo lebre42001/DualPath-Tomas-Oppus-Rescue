@@ -63,10 +63,17 @@ class Element extends EventTarget {
     append(...nodes) { this.children.push(...nodes); }
     replaceChildren() { this.children = []; }
 }
-const fixture = ({ failEvents = () => false, owner = '1', feedVersion = latest, alertsEnabled = true, initialNotifications } = {}) => {
+const fixture = ({ failEvents = () => false, owner = '1', feedVersion = latest, alertsEnabled = true, initialNotifications, withSound = false } = {}) => {
     const doc = new EventTarget(), win = new EventTarget(), nav = { onLine: true }, root = new Element();
     const selectors = ['civilian-updates-toggle', 'civilian-updates-modal', 'civilian-updates-close', 'civilian-update-count', 'civilian-update-list', 'civilian-updates-read', 'civilian-apply-update', 'app-update-status', 'report-connection', 'report-connection-retry', 'civilian-release-notes', 'civilian-report-alerts-off', 'civilian-report-notice', 'civilian-report-notice-title', 'civilian-report-notice-message', 'civilian-report-notice-count', 'civilian-report-notice-date', 'civilian-report-notice-open', 'civilian-report-notice-dismiss'];
     const elements = Object.fromEntries(selectors.map(name => [name, new Element()]));
+    if (withSound) {
+        for (const name of ['civilian-notification-audio', 'civilian-sound-status', 'civilian-sound-enable', 'civilian-sound-test', 'civilian-sound-mute']) elements[name] = new Element();
+        const audio = elements['civilian-notification-audio'];
+        audio.starts = []; audio.pauses = 0;
+        audio.play = () => { audio.starts.push({ muted: audio.muted, loop: audio.loop }); return audio.rejectPlay ? Promise.reject(new Error('Playback blocked')) : Promise.resolve(); };
+        audio.pause = () => audio.pauses++;
+    }
     elements['report-connection'].querySelector = () => elements['report-connection-retry'];
     elements['civilian-report-notice'].hidden = true; elements['civilian-updates-modal'].hidden = true;
     root.dataset = { owner, runningVersion: running, feedUrl: '/feed', readUrl: '/read', eventUrl: '/events' };
@@ -152,6 +159,61 @@ test('device telemetry failures do not hide server report notifications and dura
 });
 
 const reportNotice = (id, overrides = {}) => ({ id, kind: 'report_status', title: 'Report acknowledged', message: 'A reviewer acknowledged your report.', occurred_at: '2026-11-07T01:12:00Z', report_url: '/reports/42', report_code: 'TEST-42', ...overrides });
+
+test('the real updates feed plays fresh admin notices once while old unread and mark-read refreshes remain silent', async () => {
+    const { elements, setNotifications, poll, reads } = fixture({ owner: '801', feedVersion: running, withSound: true, initialNotifications: [reportNotice(8010)] });
+    const audio = elements['civilian-notification-audio'];
+    await settle(); assert.equal(audio.starts.length, 0);
+    setNotifications([reportNotice(8011), reportNotice(8010)]); poll(); await settle();
+    assert.deepEqual(audio.starts, [{ muted: false, loop: false }]);
+    assert.equal(elements['civilian-update-count'].textContent, '2');
+    assert.equal(elements['civilian-report-notice'].hidden, false);
+    audio.dispatchEvent(new Event('ended'));
+    poll(); await settle(); assert.equal(audio.starts.length, 1);
+    elements['civilian-updates-read'].dispatchEvent(new Event('click')); await settle();
+    assert.equal(reads.length, 1); assert.equal(elements['civilian-update-count'].hidden, true);
+    assert.equal(audio.starts.length, 1);
+});
+
+test('Updates sound controls consume muted notices, test the chime, and independently respect report alert settings', async () => {
+    const { elements, setNotifications, setAlertsEnabled, poll } = fixture({ owner: '802', feedVersion: running, withSound: true, initialNotifications: [] });
+    const audio = elements['civilian-notification-audio'];
+    await settle();
+    elements['civilian-sound-mute'].dispatchEvent(new Event('click'));
+    setNotifications([reportNotice(8020)]); poll(); await settle();
+    assert.equal(audio.starts.length, 0); assert.match(elements['civilian-sound-status'].textContent, /muted/);
+    elements['civilian-sound-enable'].dispatchEvent(new Event('click')); await settle();
+    assert.deepEqual(audio.starts, [{ muted: true, loop: false }], 'Enable only primes silently');
+    poll(); await settle(); assert.equal(audio.starts.length, 1, 'unmuting never replays consumed notices');
+    elements['civilian-sound-test'].dispatchEvent(new Event('click')); await settle();
+    assert.equal(audio.starts.length, 2); assert.equal(audio.starts[1].muted, false);
+    audio.dispatchEvent(new Event('ended'));
+    setAlertsEnabled(false); setNotifications([reportNotice(8021)]); poll(); await settle();
+    assert.equal(audio.starts.length, 2, 'disabled report alerts suppress report chimes');
+    setNotifications([reportNotice(8022, { kind: 'app_update_available' })]); poll(); await settle();
+    assert.equal(audio.starts.length, 3, 'app update chimes follow the separate sound preference');
+    audio.dispatchEvent(new Event('ended'));
+});
+
+test('blocked audio leaves report notices and unread counts usable; leaving the page stops playback', async () => {
+    const { elements, doc, win, setNotifications, poll } = fixture({ owner: '803', feedVersion: running, withSound: true, initialNotifications: [] });
+    const audio = elements['civilian-notification-audio'];
+    await settle(); audio.rejectPlay = true;
+    setNotifications([reportNotice(8030)]); poll(); await settle();
+    assert.match(elements['civilian-sound-status'].textContent, /could not play/);
+    assert.equal(elements['civilian-update-count'].textContent, '1'); assert.equal(elements['civilian-report-notice'].hidden, false);
+    audio.rejectPlay = false;
+    elements['civilian-sound-enable'].dispatchEvent(new Event('click')); await settle();
+    assert.equal(audio.starts.length, 2); assert.equal(audio.starts[1].muted, true);
+    poll(); await settle(); assert.equal(audio.starts.length, 2, 'an old blocked alert is never queued for replay');
+    setNotifications([reportNotice(8031)]); poll(); await settle();
+    assert.equal(audio.starts.length, 3);
+    const paused = audio.pauses; doc.hidden = true; doc.dispatchEvent(new Event('visibilitychange'));
+    assert(audio.pauses > paused);
+    doc.hidden = false; win.dispatchEvent(new Event('pagehide'));
+    setNotifications([reportNotice(8032)]); poll(); await settle();
+    assert.equal(audio.starts.length, 3, 'a departed page must not play a delayed sound');
+});
 
 test('the active report notice can be dismissed or opened without clearing the server unread badge', async () => {
     const { elements, reads } = fixture({ owner: '301', feedVersion: running, initialNotifications: [reportNotice(301)] });

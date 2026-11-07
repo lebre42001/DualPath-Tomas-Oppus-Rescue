@@ -15,5 +15,11 @@
 .civilian-tutorial-demo > p { color: var(--muted); font-size: .8rem; margin-block: 6px 12px; }
 .civilian-tutorial-example { display: grid; gap: 8px; padding: 14px; border: 2px solid #b92428; border-radius: 12px; background: var(--surface-alt, #f0f6fc); line-height: 1.4; }
 .civilian-tutorial-example span { font-size: .875rem; }
+.civilian-tutorial-example[data-tutorial-example="incident"] { padding: 0; border: 0; background: transparent; }
+.civilian-tutorial-incident-selector { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-width: 0; padding: 14px; border: 2px solid var(--ink, #142c40); border-radius: 12px; background: var(--surface, #fff); }
+.civilian-tutorial-incident-selector > div { display: grid; gap: 5px; min-width: 0; }
+.civilian-tutorial-incident-selector strong { font-size: 1.15rem; line-height: 1.35; overflow-wrap: anywhere; }
+.civilian-tutorial-incident-selector small { color: var(--muted); line-height: 1.45; }
+.civilian-tutorial-incident-selector svg { flex: 0 0 32px; width: 32px; height: 32px; padding: 5px; border-radius: 50%; border: 1px solid var(--line, #cbd5e1); }
 [data-civilian-tutorial][hidden], [data-civilian-tutorial] [hidden] { display: none !important; }
 @media print { .civilian-tutorial { display: none !important; } }

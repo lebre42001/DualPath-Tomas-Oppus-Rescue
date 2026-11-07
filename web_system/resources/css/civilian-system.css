@@ -40,6 +40,9 @@
 .civilian-alerts-off { border: 1px solid #94711a; border-radius: 10px; padding: 12px; color: var(--ink); background: var(--surface); line-height: 1.5; }
 .civilian-alerts-off a { color: #175c8c; font-weight: 700; text-decoration: underline; }
 .civilian-updates-log-link { margin-top: 12px; }
+.civilian-sound-card { min-width: 0; padding: 14px; border: 1px solid var(--line); border-radius: 14px; }
+.civilian-sound-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.civilian-sound-actions .btn { flex: 1 1 120px; width: auto; min-height: 44px; padding: 10px 14px; }
 html[data-theme="dark"] .civilian-report-notice .civilian-report-notice-count, html.dark .civilian-report-notice .civilian-report-notice-count { color: #9fe2b6; }
 html[data-theme="dark"] .civilian-update-report-link, html[data-theme="dark"] .civilian-alerts-off a, html.dark .civilian-update-report-link, html.dark .civilian-alerts-off a { color: #a7d6fa; }
 .civilian-log-filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }

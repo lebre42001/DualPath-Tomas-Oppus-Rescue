@@ -5,11 +5,14 @@ export function createTutorialProgress(owner, { storage } = {}) {
     let value = null;
     try { value = JSON.parse(storage?.getItem(key) ?? 'null'); } catch { /* Offer the tour if saved progress is unreadable. */ }
     if (!value || !['active', 'done', 'skipped'].includes(value.status) || !Number.isInteger(value.step) || value.step < 0) value = null;
+    // Keep completed/skipped tours dismissed. Resume older active tours no later
+    // than the newly inserted incident selector, without skipping earlier steps.
+    if (value?.status === 'active' && value.version !== 2) value = { ...value, step: Math.min(value.step, 3), version: 2 };
     return {
         value: () => value,
         shouldStart: () => !value || value.status === 'active',
         save(status, step) {
-            value = { status, step };
+            value = { status, step, version: 2 };
             try { storage?.setItem(key, JSON.stringify(value)); } catch { /* Skip/Done still work for this visit. */ }
         },
     };

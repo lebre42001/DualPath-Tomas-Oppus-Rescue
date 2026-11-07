@@ -4,6 +4,17 @@
 // These release labels are separate from the app's runtime build fingerprint.
 return [
     [
+        'id' => '2026.11.07.12',
+        'date' => '2026-11-07',
+        'title' => 'Incident selection tutorial and notification sound',
+        'changes' => [
+            'Quick tutorial now explains choosing the incident type before the scene photo. Road Accident is available; other incident types remain locked.',
+            'New admin responses, report changes and available app updates can play a short notification chime while the app is open and connected.',
+            'Open Updates for Enable sound, Test sound and Mute sound. The browser may need a tap first; device volume and silent mode also affect playback.',
+            'Old unread notices do not chime on page opening. Muting keeps the unread badge, report updates and permanent System Log records available.',
+        ],
+    ],
+    [
         'id' => '2026.11.07.11',
         'date' => '2026-11-07',
         'title' => 'Clearer incident type selector',

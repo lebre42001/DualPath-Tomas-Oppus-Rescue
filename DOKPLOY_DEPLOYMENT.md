@@ -5,6 +5,39 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Civilian tutorial incident selection and notification chime (2026-11-07)
+
+Quick tutorial now includes a safe incident selection preview before scene photo:
+Road Accident is available and other types are coming soon. The sequence has
+seventeen steps, including six numbered reporting steps. Completed/skipped tours
+remain dismissed; older active progress resumes no later than the new selector.
+
+The civilian Updates panel uses the supplied positive-notification MP3 at
+`/sounds/civilian-notification-416bef34427e.mp3`. Its bytes are unchanged from the
+uploaded file. Enable sound silently prepares playback through a user gesture;
+Test sound plays the chime once. Mute is saved per account in this browser.
+Fresh report/admin updates and `app_update_available` events can chime while the
+page is visible and connected. Report status alerts also gate report sounds.
+The first successful feed is a silent baseline, so old unread notices do not
+sound on page opening. Repeated polls, read receipts and connection checks do
+not replay the same event. All underlying updates remain in the System Log.
+
+Sound claims use per-account numeric storage cursors and Web Locks where
+supported (best-effort storage rereads otherwise). No report content, playback
+readiness or pending sound is persisted. A chime never loops or overlaps; media
+loading and playback are bounded, and leaving/hiding the page or losing the
+authenticated session stops playback. Autoplay rejection shows Enable sound
+guidance without hiding notifications or queueing stale audio. Device silent
+mode, volume and browser rules still apply. This is visible-page audio, not
+closed-app Web Push or a delivery guarantee.
+
+Deploy the normal Blade/JS/CSS/config build **and the public MP3** together,
+then clear Laravel caches. No migration or new environment configuration is
+required. Public `/sounds/` requests, including Range headers, pass through the
+existing service worker without entering its build-asset cache. Verify the MP3
+hash/content type, updated tutorial and sound module signatures, version and
+real public entry routes after the automatic Dokploy rebuild.
+
 ## Civilian incident type selector clarity (2026-11-07)
 
 The civilian Report incident selector has a bordered, tinted control, a larger
@@ -107,8 +140,8 @@ destinations. Legal acceptance, admin portal checks, account blocking, live
 verification and server-side report submission checks remain enforced.
 
 On unverified Home, a first-visit spotlight tour introduces actual navigation,
-the floating Updates badge and a read-only reporting preview. Sixteen short
-steps explain Home, Report/Verify, scene photo, GPS/written location, description,
+the floating Updates badge and a read-only reporting preview. Seventeen short
+steps explain Home, Report/Verify, incident selection, scene photo, GPS/written location, description,
 fresh report selfie, server receipt, drafts, status/history, profile, settings,
 System Log and Log Out. Next/Back/Skip/Done control the tour; Escape skips.
 The last step offers Verify Account without forcing it. The preview has no

@@ -1,6 +1,7 @@
 <section data-civilian-updates data-owner="{{ $authUser->id }}" data-running-version="{{ $pwaAssetVersion }}"
     data-feed-url="{{ route('civilian.system-updates') }}" data-read-url="{{ route('civilian.system-updates.read') }}"
     data-event-url="{{ route('civilian.app-events') }}">
+    <audio data-civilian-notification-audio preload="none" src="{{ asset('sounds/civilian-notification-416bef34427e.mp3') }}" hidden></audio>
     <button type="button" class="civilian-updates-toggle" data-civilian-updates-toggle data-connection-state="checking" aria-label="Report and app updates" aria-describedby="civilian-updates-position-help" aria-controls="civilian-updates-modal" aria-expanded="false" title="Tap to open updates. Drag to move.">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M9 21h6"/></svg>
         <span>Updates</span><b data-civilian-update-count hidden>0</b>
@@ -22,6 +23,17 @@
     <div id="civilian-updates-modal" class="civilian-updates-modal" data-civilian-updates-modal hidden>
         <div class="civilian-updates-sheet" role="dialog" aria-modal="true" aria-labelledby="civilian-updates-heading">
             <header class="civilian-updates-heading"><h2 id="civilian-updates-heading">Report and app updates</h2><button type="button" class="btn btn-secondary" data-civilian-updates-close>Close</button></header>
+            <section class="civilian-sound-card" aria-labelledby="civilian-sound-heading">
+                <h3 id="civilian-sound-heading">Notification sound</h3>
+                <p class="section-copy">A short chime for new admin responses, report changes and available app updates. Old unread notices stay silent when you open a page. Report status alerts in Settings also control report sounds.</p>
+                <p data-civilian-sound-status role="status" aria-live="polite">Sound is on. Your browser may need one tap to enable playback.</p>
+                <div class="civilian-sound-actions">
+                    <button type="button" class="btn btn-primary" data-civilian-sound-enable>Enable sound</button>
+                    <button type="button" class="btn btn-secondary" data-civilian-sound-test>Test sound</button>
+                    <button type="button" class="btn btn-secondary" data-civilian-sound-mute>Mute sound</button>
+                </div>
+                <p class="section-copy">Sound works while the app is visible and connected. Device volume, silent mode and browser rules may prevent playback. Muting keeps all notifications and System Log records available.</p>
+            </section>
             <section aria-labelledby="civilian-unread-updates-heading">
                 <h3 id="civilian-unread-updates-heading">Unread report and app updates</h3>
                 <p class="section-copy">Report notifications appear while the app is open and connected, or when you return. Dismissing a notice does not mark it as read.</p>

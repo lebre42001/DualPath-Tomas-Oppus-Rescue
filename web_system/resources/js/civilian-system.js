@@ -2,6 +2,7 @@ import { onDomReady } from './dom-ready.js';
 import { createCivilianUpdateState, isBuildVersion } from './civilian-update-state.js';
 import { initializeUpdatesPosition } from './civilian-updates-position.js';
 import { initializeCivilianReportNotices, safeCivilianReportUrl, formatCivilianNoticeDate } from './civilian-report-notices.js';
+import { initializeCivilianNotificationSound } from './civilian-notification-sound.js';
 
 export function initializeCivilianSystem(root, { document: doc = document, window: win = window, navigator: nav = navigator, fetchImpl = fetch, storage } = {}) {
     const running = root.dataset.runningVersion;
@@ -22,6 +23,7 @@ export function initializeCivilianSystem(root, { document: doc = document, windo
     toggle.dataset.connectionState = connection.dataset.connectionState ?? 'checking';
     let latest = null, ids = [], syncing = false, applying = false, stopped = false, timer;
     const reportNotices = initializeCivilianReportNotices(root, { document: doc, window: win, storage, onOpen: () => openUpdates() });
+    const notificationSound = initializeCivilianNotificationSound(root, { document: doc, window: win, navigator: nav, storage });
     const setText = (selector, value) => { for (const node of doc.querySelectorAll(selector)) node.textContent = value; };
     setText('[data-app-running]', running); setText('[data-app-previous]', state.previous() ?? 'Not recorded');
     const request = async (url, body) => {
@@ -34,7 +36,7 @@ export function initializeCivilianSystem(root, { document: doc = document, windo
                 ...(body ? { body: JSON.stringify(body) } : {}),
             });
             if (!response.ok || response.redirected) {
-                if ([401, 403, 419].includes(response.status) || response.redirected) { stopped = true; toggle.dataset.connectionState = 'session'; }
+                if ([401, 403, 419].includes(response.status) || response.redirected) { stopped = true; notificationSound.suspend(); toggle.dataset.connectionState = 'session'; }
                 throw Object.assign(new Error('The server could not confirm this request.'), { status: response.status });
             }
             return await response.json();
@@ -81,6 +83,7 @@ export function initializeCivilianSystem(root, { document: doc = document, windo
         if (!ids.length) list.append(node('p', 'No unread app or report updates.'));
         markRead.hidden = ids.length === 0;
         reportNotices.observe(data);
+        void notificationSound.observe(data);
     };
     const sync = async () => {
         if (syncing || stopped || applying || doc.hidden || nav.onLine === false) return;
