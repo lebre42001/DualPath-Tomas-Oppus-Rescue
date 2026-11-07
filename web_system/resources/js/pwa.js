@@ -11,7 +11,7 @@ let updateReloadHandle = null;
 let installDismissedThisVisit = false;
 let installedThisVisit = false;
 let civilianManualUpdate = false;
-const hasCivilianUpdates = () => !!document.querySelector('[data-civilian-updates]');
+const hasCivilianUpdates = () => !!(document.querySelector('[data-civilian-updates]') || document.querySelector('[data-admin-app-updates]'));
 
 const setInstallDismissed = (dismissed) => {
     installDismissedThisVisit = dismissed;

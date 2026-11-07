@@ -19,6 +19,7 @@ import './civilian-tutorial';
 import './online-reports';
 import './audit-history';
 import './admin-system-log';
+import './admin-notifications';
 import './report-index';
 import './report-ai-analysis';
 import './profile-page';

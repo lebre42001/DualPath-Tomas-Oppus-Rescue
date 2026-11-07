@@ -3,10 +3,10 @@ const uuid = () => globalThis.crypto?.randomUUID?.() ?? '10000000-1000-4000-8000
 
 // Only device app-version events live here. Server-recorded report/auth events
 // never come from the browser. Keys and retry queues are scoped to the account.
-export function createCivilianUpdateState(owner, running, { storage, newId = uuid, now = () => new Date().toISOString() } = {}) {
+export function createCivilianUpdateState(owner, running, { storage, newId = uuid, now = () => new Date().toISOString(), keyPrefix = 'aksyres-system-state:v1:' } = {}) {
     if (!/^\d+$/.test(String(owner)) || !isBuildVersion(running)) throw new Error('Invalid account or build.');
     if (storage === undefined) { try { storage = globalThis.localStorage; } catch { storage = null; } }
-    const key = `aksyres-system-state:v1:${owner}`;
+    const key = `${keyPrefix}${owner}`;
     let data = {}, flushing = null, persistent = true;
     try { data = JSON.parse(storage?.getItem(key) ?? '{}') ?? {}; } catch { data = {}; }
     if (typeof data !== 'object' || Array.isArray(data)) data = {};

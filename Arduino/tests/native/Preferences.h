@@ -11,4 +11,5 @@ public:
   size_t putULong64(const char* key,uint64_t value){if(failWrites)return 0;numbers[space+key]=value;return 8;}
   String getString(const char* key,const char* fallback=""){auto p=strings.find(space+key);return p==strings.end()?String(fallback):p->second;}
   size_t putString(const char* key,const String& value){if(failWrites)return 0;strings[space+key]=value;return value.length();}
+  bool remove(const char* key){if(failWrites)return false;return strings.erase(space+key)>0;}
 };

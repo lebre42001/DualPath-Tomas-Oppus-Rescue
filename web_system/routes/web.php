@@ -85,6 +85,8 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
 
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function (): void {
         Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
+        Route::get('/notification-updates', [\App\Http\Controllers\Web\AdminUpdatesController::class, 'feed'])->middleware('throttle:30,1')->name('notification-updates');
+        Route::post('/app-events', [\App\Http\Controllers\Web\AdminUpdatesController::class, 'event'])->middleware('throttle:120,1')->name('app-events');
         Route::get('/system-log', [\App\Http\Controllers\Web\AdminSystemLogController::class, 'index'])->name('system-log');
         Route::get('/system-log/print', [\App\Http\Controllers\Web\AdminSystemLogController::class, 'print'])->name('system-log.print');
         Route::post('/system-log/duty', [\App\Http\Controllers\Web\AdminSystemLogController::class, 'duty'])->name('system-log.duty');

@@ -44,9 +44,12 @@ const char REPORT_GUARD_SCRIPT[] PROGMEM = R"guard(
   });
   const paint=()=>{
     const remaining=Math.max(0,Math.ceil((retryUntil-Date.now())/1000));
-    button.disabled=busy||lastStatus.radio_ready===false||!!lastStatus.pending||remaining>0;
+    button.disabled=busy||lastStatus.radio_ready===false||lastStatus.outbox_full===true;
+    button.textContent=busy?'SAVING REPORT...':'SEND EMERGENCY';
     const pendingText=lastStatus.report_status==='SUBMITTED - UNDER ADMIN REVIEW'?'The server received this report. Waiting for admin review.':lastStatus.report_status==='SENT - WAITING FOR SERVER'?'This node transmitted the report. Waiting for the server receipt; delivery is not confirmed yet.':'Report saved on this node. It has not been confirmed as received by the server; retries continue automatically.';
-    indicator.textContent=lastStatus.radio_ready===false?'LoRa radio unavailable. Check its power and wiring, then restart this node.':lastStatus.pending?pendingText:remaining?'Anti-spam protection: wait '+remaining+'s before another report.':'Anti-spam protection active: one new report per client every 60 seconds. Saved-report retries continue automatically.';
+    indicator.textContent=lastStatus.radio_ready===false?'LoRa radio unavailable. Check its power and wiring, then restart this node.':lastStatus.pending?pendingText:'Ready for a new report. There is no 60-second submission cooldown.';
+    indicator.textContent+=' Saved reports on this node: '+Number(lastStatus.queued_reports||0)+'. New reports are forwarded in order without waiting for admin review.';
+    if(lastStatus.outbox_full)indicator.textContent+=' Local storage is full. Existing reports are kept; contact the emergency team or use another available node.';
     if(lastStatus.blocked_submissions)indicator.textContent+=' Blocked attempts on this node since restart: '+lastStatus.blocked_submissions+'.';
   };
   window.sendReport=async()=>{
@@ -70,8 +73,8 @@ const char REPORT_GUARD_SCRIPT[] PROGMEM = R"guard(
     busy=true;byId('confirmSend').disabled=true;paint();
     try{
       const response=await fetch('/send',{method:'POST',body:reviewedPayload}),text=await response.text();
-      if(response.status===429)retryUntil=Date.now()+Number(response.headers.get('Retry-After')||60)*1000;
-      if(response.ok){message.value='';landmark.value='';byId('remaining').textContent='70';retryUntil=Date.now()+60000;lastStatus.pending=true;modal.classList.remove('show')}
+      if(response.status===429)retryUntil=Date.now()+Number(response.headers.get('Retry-After')||0)*1000;
+      if(response.ok){message.value='';landmark.value='';byId('remaining').textContent='70';retryUntil=0;modal.classList.remove('show')}
       else{modal.classList.remove('show');reviewedPayload=null}
       alert(text);
     }catch(error){alert('Could not reach this node. Reconnect to its Wi-Fi and check Latest Report before retrying.')}
@@ -94,7 +97,7 @@ const char REPORT_GUARD_SCRIPT[] PROGMEM = R"guard(
     }catch(error){}paint();
   };
   // Original interval captures its old callback; a fresh lightweight update
-  // also keeps the cooldown indicator authoritative while reports are pending.
+  // also keeps report delivery and queue capacity visible while reports are pending.
   setInterval(()=>window.refresh(),2000);window.refresh();
 })();
 </script>

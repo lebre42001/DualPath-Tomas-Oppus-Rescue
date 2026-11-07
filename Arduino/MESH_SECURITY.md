@@ -12,15 +12,15 @@ reported landmark is a separate field, not a claim of live GPS.
   exact report fields and local client IP. `/send` rejects changed, expired or
   reused confirmations. Nothing is sent on the radio by opening or cancelling
   the confirmation dialog.
-- A node enforces 60 seconds between accepted new reports from a client IP,
-  including after the preceding report is acknowledged. HTTP 429 includes
-  `Retry-After`; the dashboard shows the countdown. The bounded table retains
-  active limits instead of evicting them. Changing IP/device or rebooting the
-  node can evade this friction; this is not verified civilian identity.
-- The existing one-pending-report queue per node remains unchanged. While it
-  is occupied, all clients see the pending-report indicator. That constraint
-  can delay a second person's incident until an admin acknowledges the first.
-  This update does not silently introduce a multi-report queue.
+- New incidents have no timed submission cooldown. Each node retains up to
+  16 separate outstanding reports in durable NVS slots. A full outbox or failed
+  flash write returns a clear error and never overwrites an earlier report.
+- Reports use ascending origin sequence order. A signed server receipt releases
+  the delivery lane immediately, so the next report does not wait for an admin.
+  Server-confirmed slots may be reused for new incidents without waiting for
+  admin review; their permanent records remain on the server. ACKs for cached
+  older reports do not clear a newer report. Radio airtime, connectivity and server response still affect
+  actual delivery time; simultaneous over-the-air delivery is not guaranteed.
 - Existing SOS retries keep the same message ID and exact body. They bypass
   new-submission admission control and still use Laravel's idempotency logic.
 - Blocked submission and rejected radio-frame counters are sent in existing
@@ -142,6 +142,8 @@ keys. With Zig available:
 ```powershell
 zig c++ -std=c++17 -I Arduino/tests/native -I Arduino/Arduino/shared Arduino/tests/native/mesh_security_test.cpp -lbcrypt -o tool/runtime/test_mesh_security.exe
 .\tool\runtime\test_mesh_security.exe
+zig c++ -std=c++17 -I Arduino/tests/native -I Arduino/Arduino/shared Arduino/tests/native/report_outbox_test.cpp -o tool/runtime/test_report_outbox.exe
+.\tool\runtime\test_report_outbox.exe
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File Arduino/test_led_indicators.ps1
 ```
 

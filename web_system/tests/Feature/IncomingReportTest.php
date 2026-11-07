@@ -37,7 +37,7 @@ class IncomingReportTest extends TestCase
             ->assertJsonPath('items.1.report.lora_sender_id', 'NODE_3');
         $this->getJson(route('monitoring.reports.feed', ['after' => $feed->json('cursor')]))->assertOk()->assertJsonCount(0, 'items');
         $this->get(route('monitoring'))->assertOk()->assertSee('data-incoming-reports', false)
-            ->assertSee('Enable sound')->assertSee('Incoming reports')->assertSee('Report alarm')
+            ->assertSee('Test sound')->assertSee('Notifications')->assertSee('Report alarm')
             ->assertSee('sounds/admin-report-alarm-993.wav')->assertDontSee('sounds/incoming-report-alarm.mp3')->assertSee('data-incoming-sound-stop', false);
     }
 

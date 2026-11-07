@@ -12,10 +12,10 @@ function render(status, cooldown = 0) {
 }
 for (const report_status of ['QUEUED FOR RADIO', 'QUEUED - WAITING FOR ROUTE', 'READY TO SEND']) {
   const view = render({pending: true, report_status}, Date.now() + 60000);
-  assert.equal(view.button.disabled, true);
+  assert.equal(view.button.disabled, false);
   assert.match(view.text, /saved on this node/i);
   assert.match(view.text, /not been confirmed/i);
-  assert.doesNotMatch(view.text, /waiting for admin/i);
+  assert.doesNotMatch(view.text, /^The server received/);
 }
 assert.match(render({pending: true, report_status: 'SENT - WAITING FOR SERVER'}).text, /delivery is not confirmed/i);
 assert.match(render({pending: true, report_status: 'SUBMITTED - UNDER ADMIN REVIEW'}).text, /server received.*admin review/i);
@@ -24,5 +24,6 @@ assert.equal(unavailable.button.disabled, true);
 assert.match(unavailable.text, /radio unavailable/i);
 // NODE_1 does not currently expose radio_ready; its existing submit flow stays enabled.
 assert.equal(render({pending: false}).button.disabled, false);
-assert.equal(render({pending: false}, Date.now() + 60000).button.disabled, true);
+assert.equal(render({pending: false}, Date.now() + 60000).button.disabled, false);
+assert.equal(render({pending: true, queued_reports:16, outbox_full:true}).button.disabled, true);
 console.log('PASS actual dashboard indicator: local queue, transmission, server receipt, cooldown, radio failure and gateway compatibility.');

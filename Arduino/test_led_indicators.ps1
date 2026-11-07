@@ -59,6 +59,7 @@ namespace $namespace {
 public sealed class PendingPacket {
     public bool Present;
     public int length() { return Present ? 1 : 0; }
+    public int count() { return Present ? 1 : 0; }
 }
 public abstract class LedHarness {
     protected const int HIGH = 1, LOW = 0, OUTPUT = 1;
@@ -67,6 +68,7 @@ public abstract class LedHarness {
     public bool STATUS_LED_ACTIVE_LOW = false;
     protected PendingPacket pendingPacket = new PendingPacket();
     protected PendingPacket pendingLocalPacket = new PendingPacket();
+    protected PendingPacket localOutbox = new PendingPacket();
     private Dictionary<int, int> outputs = new Dictionary<int, int>();
     protected uint millis() { return clock; }
     protected bool hasFreshLoRaPeer() { return peer; }
@@ -76,7 +78,7 @@ public abstract class LedHarness {
     protected abstract void Drive();
     protected abstract void Activity();
     public int Read(int pin) { return outputs.ContainsKey(pin) ? outputs[pin] : -1; }
-    public void Pending(bool present) { pendingPacket.Present = present; pendingLocalPacket.Present = present; }
+    public void Pending(bool present) { pendingPacket.Present = present; pendingLocalPacket.Present = present; localOutbox.Present = present; }
     public void Tick(uint now, bool hasPeer, bool hasRoute, bool activity) {
         clock = now; peer = hasPeer; route = hasRoute;
         if (activity) Activity();

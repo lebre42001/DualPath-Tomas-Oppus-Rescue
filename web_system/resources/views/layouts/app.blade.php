@@ -190,11 +190,9 @@ SVG,
                     <div class="topbar-actions">
                         <button type="button" class="pill-btn sidebar-toggle" data-sidebar-toggle aria-controls="primary-navigation" aria-expanded="false">{{ $isCivilian ? $authUser->name : 'Menu' }}</button>
                         <div class="pwa-shell-pill" data-pwa-status-pill><span data-pwa-status-label>Online Ready</span><strong data-pwa-display-mode>Browser</strong></div>
-                        @unless ($isCivilian)
-                            <button type="button" class="pill-btn" data-alert-center-toggle aria-expanded="false"><span>Alerts</span><strong data-alert-count>{{ $fatalAlertCount }}</strong></button>
-                        @else
+                        @if ($isCivilian)
                             <a href="{{ $sendReportUrl }}" class="mini-chip"><span>Quick Action</span><strong>{{ $isAccountVerified ? 'Send Report' : 'Verify Account' }}</strong></a>
-                        @endunless
+                        @endif
                         <div class="topbar-profile-stack">
                             <div class="mini-chip"><span>System Time</span><strong data-system-time>{{ now()->format('Y-m-d H:i:s') }}</strong></div>
                             @if ($authUser)
@@ -240,14 +238,7 @@ SVG,
             <main id="main-content" tabindex="-1" class="content-stack {{ $isAdminReportsPage ? 'reports-content-stack' : '' }}">
                 @if ($authUser?->is_admin)
                     <span hidden data-admin-activity-url="{{ route('admin.system-log.activity') }}"></span>
-                    <section class="incoming-alarm-toolbar" aria-label="Report alarm">
-                        <div><strong>Report alarm</strong><small data-incoming-sound-status role="status">Your Sound on or Mute choice is remembered across navigation. New reports sound for 10 seconds.</small></div>
-                        <div class="incoming-alarm-actions">
-                            <button type="button" class="pill-btn" data-incoming-sound>Test sound</button>
-                            <button type="button" class="pill-btn" data-incoming-sound-mute>Mute sound</button>
-                            <button type="button" class="pill-btn" data-incoming-sound-stop hidden>Stop alarm</button>
-                        </div>
-                    </section>
+
                 @endif
                 @yield('content')
             </main>
@@ -294,40 +285,7 @@ SVG,
         </nav>
     @endif
     @unless ($isCivilian)
-        <aside class="alert-center" data-alert-center-panel data-incoming-reports data-feed-url="{{ route('monitoring.reports.feed') }}" data-user-id="{{ $authUser?->id }}" data-alarm-url="{{ asset('sounds/admin-report-alarm-993.wav') }}" hidden>
-            <div class="alert-top">
-                <div>
-                    <p class="eyebrow">Alert Center</p>
-                    <h3>Incoming reports</h3>
-                </div>
-                <button type="button" class="pill-btn" data-alert-center-close>Close</button>
-            </div>
-            <div class="incoming-report-controls">
-                <button type="button" class="pill-btn" data-incoming-sound>Enable sound</button>
-                <button type="button" class="pill-btn" data-incoming-sound-mute>Mute sound</button>
-                <button type="button" class="pill-btn" data-incoming-sound-stop hidden>Stop alarm</button>
-                <button type="button" class="pill-btn" data-incoming-clear>Mark all seen</button>
-                <small data-incoming-status role="status">Checking new reports…</small>
-            </div>
-            <div class="alert-list" data-alert-list>
-                @forelse ($incomingReports as $alert)
-                    <a href="{{ route($alert->transmission_type === 'lora' ? 'lora-reports.index' : 'reports.index', ['review' => $alert->id]) }}#incident-report-{{ $alert->id }}" class="alert-item">
-                        <span class="tag blue">{{ $alert->transmission_type === 'lora' ? 'LoRa · '.$alert->lora_sender_id : 'Online' }}</span>
-                        <strong>{{ $alert->incident_type }}</strong>
-                        <p>{{ $alert->location_text }}</p>
-                        <p>{{ optional($alert->created_at)->diffForHumans() }}</p>
-                    </a>
-                @empty
-                    <div class="data-empty">No unseen incoming reports.</div>
-                @endforelse
-            </div>
-        </aside>
-        <section class="incoming-report-banner" data-incoming-banner role="status" aria-live="polite" hidden>
-            <div><strong data-incoming-banner-title>New report received</strong><p data-incoming-banner-copy></p></div>
-            <button type="button" class="pill-btn" data-incoming-sound data-incoming-sound-unlock hidden>Enable sound</button>
-            <button type="button" class="pill-btn" data-incoming-sound-stop hidden>Stop alarm</button>
-            <button type="button" class="pill-btn" data-alert-center-toggle>View alerts</button>
-        </section>
+        @include('partials.admin-notifications')
     @endunless
 
     @if ($authUser && ! $isCivilian)

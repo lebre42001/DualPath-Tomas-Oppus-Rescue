@@ -45,6 +45,7 @@
 #include "mesh_security.h"
 #include "mesh_sx127x.h"
 #include "report_guard.h"
+#include "report_outbox.h"
 #include "report_dashboard.h"
 
 // =====================================================
@@ -110,6 +111,8 @@ WebServer localServer(80);
 DNSServer dnsServer;
 const byte LOCAL_DNS_PORT = 53;
 Preferences prefs;
+ReportOutbox localOutbox;
+String lastSosAttemptId = "";
 MeshSX127xPort meshRadioPort;
 void onRadioTransmitted(const String& packet);
 MeshLink::Pump<MeshSX127xPort> meshRadio(meshRadioPort,onRadioTransmitted);
@@ -483,8 +486,8 @@ bool hasConfirmedServerRoute() {
 
 bool hasPendingLocalEmergency() {
   // Only locally originated reports enter this persistent queue. Relaying an
-  // SOS does not populate it; the existing matching responder ACK clears it.
-  return pendingPacket.length() > 0;
+  // SOS does not populate it; each matching admin ACK clears only its own slot.
+  return localOutbox.count() > 0;
 }
 
 void writeStatusLed(int pin, bool on) {
@@ -845,7 +848,7 @@ void saveAcknowledgedState(String status, String ackAt, String message) {
   latestAckAt = ackAt;
   latestAckMessage = message;
 
-  // The user may create a new report only after the current report is ACKed.
+  // Only clear the latest report display; older report slots are independent.
   pendingPacket = "";
   pendingMsgId = "";
 
@@ -870,18 +873,19 @@ void handleAck(String packet) {
 
   if (origin == NODE_ID) {
     if (!meshVerifyOrigin(packet, true, NODE_NUMBER)) { ++meshInvalidFrames; return; }
-    if (status == "RECEIVED" && gateway == "NODE_1" && acknowledgedAt.length() &&
-        pendingPacket.length() && pendingMsgId == msgId) {
-      serverReceiptMsgId = msgId;
+    if (status == "RECEIVED" && gateway == "NODE_1" && acknowledgedAt.length() && localOutbox.find(msgId) >= 0) {
+      if (!localOutbox.receipt(prefs, msgId)) return;
+      meshRadio.cancel("SOS:"+msgId); lastGatewaySeenMs = millis();
+      if (latestMsgId == msgId) {
+        serverReceiptMsgId = msgId; latestStatus = "SUBMITTED - UNDER ADMIN REVIEW";
+        prefs.putString("receipt_msg", msgId); prefs.putString("latest_status", latestStatus);
+      }
+      Serial.println("[RECEIPT] Server received " + msgId + "; next saved report may send immediately.");
+      return;
+    }
+    if (gateway == "NODE_1" && acknowledgedAt.length() && (status == "ACKNOWLEDGED" || status == "REJECTED")) {
+      if (!localOutbox.acknowledge(prefs, msgId)) return;
       meshRadio.cancel("SOS:"+msgId);
-      lastSosAttemptMs = millis();
-      sosRetryDelayMs = 60000 + random(0, 5000);
-      latestStatus = "SUBMITTED - UNDER ADMIN REVIEW";
-      prefs.putString("receipt_msg", msgId);
-      prefs.putString("latest_status", latestStatus);
-      lastGatewaySeenMs = millis();
-      Serial.println("[RECEIPT] Server received " + msgId + "; waiting for responder review.");
-      return; // A server receipt never clears the local SOS queue or red LED.
     }
     if (latestAckAt.length() && acknowledgedAt.compareTo(latestAckAt) < 0) return;
     // Only a matching final response from the established gateway may clear
@@ -983,32 +987,26 @@ void savePendingState() {
   prefs.putString("latest_status", latestStatus);
   prefs.putString("latest_ack", latestAckMessage);
   prefs.putString("latest_ack_at", latestAckAt);
-  prefs.putString("pending_packet", pendingPacket);
-  prefs.putString("pending_msg", pendingMsgId);
+  prefs.remove("pending_packet");
+  prefs.remove("pending_msg");
 }
 
 void trySendPending(bool forceNow = false) {
-  if (pendingPacket.length() == 0) return;
-
+  const String packet = localOutbox.nextPacket();
+  if (!packet.length()) return;
+  const String msgId = ReportOutbox::id(packet);
   if (!serverRouteAvailable()) {
-    if (serverReceiptMsgId != pendingMsgId && latestStatus != "QUEUED - WAITING FOR ROUTE") {
-      latestStatus = "QUEUED - WAITING FOR ROUTE";
-      prefs.putString("latest_status", latestStatus);
+    if (!localOutbox.isReceived(latestMsgId) && pendingPacket.length() && latestStatus != "QUEUED - WAITING FOR ROUTE") {
+      latestStatus = "QUEUED - WAITING FOR ROUTE"; prefs.putString("latest_status", latestStatus);
     }
     return;
   }
-
-  if (!forceNow && millis() - lastSosAttemptMs < sosRetryDelayMs) return;
-
-  lastSosAttemptMs = millis();
-  sosRetryDelayMs = (serverReceiptMsgId == pendingMsgId ? 60000 : SOS_RETRY_INTERVAL_MS) + random(0, 5000);
-
-  bool queued = sendLoRaPacket(pendingPacket);
-  if (queued) {
-    if (serverReceiptMsgId != pendingMsgId) {
-      latestStatus = "QUEUED FOR RADIO";
-      prefs.putString("latest_status", latestStatus);
-    }
+  const bool nextReport = lastSosAttemptId != msgId;
+  if (!forceNow && !nextReport && millis() - lastSosAttemptMs < sosRetryDelayMs) return;
+  lastSosAttemptId = msgId; lastSosAttemptMs = millis();
+  sosRetryDelayMs = SOS_RETRY_INTERVAL_MS + random(0, 5000);
+  if (sendLoRaPacket(packet) && latestMsgId == msgId) {
+    latestStatus = "QUEUED FOR RADIO"; prefs.putString("latest_status", latestStatus);
   }
 }
 
@@ -1033,49 +1031,35 @@ void handleLocalSend() {
     localServer.send(400, "text/plain", "Shorten the description or landmark so the complete report fits the radio route."); return;
   }
   const uint32_t clientAddress = (uint32_t)localServer.client().remoteIP();
-  const uint32_t retry = reportRetrySeconds(clientAddress, millis());
-  if (retry) {
-    reportRecordBlocked(); localServer.sendHeader("Retry-After", String(retry));
-    localServer.send(429, "text/plain", "Anti-spam protection: wait " + String(retry) + " seconds. Your saved report continues retrying automatically."); return;
-  }
-  if (pendingPacket.length() > 0) {
-    reportRecordBlocked(); localServer.send(409, "text/plain", "This node already has a saved or submitted report. Check Latest Report for its delivery status."); return;
+  if (localOutbox.full()) {
+    reportRecordBlocked(); localServer.send(503, "text/plain", "Local report storage is full. Saved reports are kept. Contact the emergency team or use another available node."); return;
   }
   if (!reportConsumeConfirmation(clientAddress, reportConfirmationBody(message, landmark, type, createdAt), localServer.arg("confirmation"))) {
     localServer.send(400, "text/plain", "Confirmation expired, already used, or report details changed. Review the report again."); return;
   }
-  if (prefs.getUInt("seq", 0) == UINT32_MAX || !reportGuardAccept(clientAddress, millis())) {
-    reportRecordBlocked(); localServer.sendHeader("Retry-After", "60");
-    localServer.send(429, "text/plain", "Submission protection active. Wait 60 seconds or contact the emergency team."); return;
+  if (prefs.getUInt("seq", 0) == UINT32_MAX) {
+    localServer.send(503, "text/plain", "Report ID capacity reached. Contact the emergency team."); return;
   }
   uint32_t sequence = prefs.getUInt("seq", 0) + 1;
   if (prefs.putUInt("seq", sequence) != 4) {
     localServer.send(503, "text/plain", "Could not save the report ID. Report was not submitted."); return;
   }
 
-  latestMsgId = NODE_ID + "-" + String(sequence);
-  latestCreatedAt = createdAt;
-  latestAckMessage = "";
-  latestAckAt = "";
-  latestStatus = serverRouteAvailable() ? "READY TO SEND" : "QUEUED - WAITING FOR ROUTE";
-
-  // The enabled sampler needs the physical divider for a valid battery voltage.
-  // The exact createdAt received from the phone is permanently embedded here.
-  pendingPacket =
-    "SOS|" + latestMsgId +
-    "|" + NODE_ID +
-    "|" + createdAt +
-    "|R|" + message +
+  const String msgId = NODE_ID + "-" + String(sequence);
+  String packet = "SOS|" + msgId + "|" + NODE_ID + "|" + createdAt + "|R|" + message +
     "|" + measuredBatteryVoltage() + "|0|12|" + NODE_ID + "|" + landmark;
-  pendingPacket = meshSignOrigin(pendingPacket, false, NODE_NUMBER);
-
-  pendingMsgId = latestMsgId;
-  serverReceiptMsgId = "";
-  prefs.remove("receipt_msg");
-  savePendingState();
+  packet = meshSignOrigin(packet, false, NODE_NUMBER);
+  if (!localOutbox.add(prefs, packet)) {
+    localServer.send(503, "text/plain", "Could not save this report. Existing reports were kept. Try again or contact the emergency team."); return;
+  }
+  latestMsgId = msgId; latestCreatedAt = createdAt;
+  latestAckMessage = ""; latestAckAt = "";
+  latestStatus = serverRouteAvailable() ? "READY TO SEND" : "QUEUED - WAITING FOR ROUTE";
+  pendingPacket = packet; pendingMsgId = msgId; serverReceiptMsgId = "";
+  prefs.remove("receipt_msg"); savePendingState();
 
   if (serverRouteAvailable()) {
-    trySendPending(true);
+    trySendPending();
     localServer.send(200, "text/plain", "Report saved. Radio delivery is pending; this node will retry automatically. Wait for the server receipt in Latest report.");
   } else {
     localServer.send(200, "text/plain", "No confirmed server route. Report saved on this node and will auto-send when a route becomes available.");
@@ -1118,6 +1102,7 @@ void handleLocalStatus() {
   json += "\"expected_nodes\":" + String(expectedNodeCount) + ",";
   json += "\"server_route\":" + String(serverRouteAvailable() ? "true" : "false") + ",";
   json += "\"gateway_path\":\"" + jsonEscape(gatewayPath) + "\",";
+  json += "\"queued_reports\":" + String(localOutbox.count()) + ",\"outbox_full\":" + String(localOutbox.full() ? "true" : "false") + ",";
   json += "\"pending\":" + String(pendingPacket.length() > 0 ? "true" : "false") + ",";
   json += "\"message_id\":\"" + jsonEscape(latestMsgId) + "\",";
   json += "\"created_at\":\"" + jsonEscape(latestCreatedAt) + "\",";
@@ -1184,6 +1169,14 @@ void loadPersistentState() {
   pendingPacket = prefs.getString("pending_packet", "");
   pendingMsgId = prefs.getString("pending_msg", "");
   serverReceiptMsgId = prefs.getString("receipt_msg", "");
+  localOutbox.restore(prefs);
+  if (pendingPacket.length() && localOutbox.add(prefs, pendingPacket, serverReceiptMsgId == pendingMsgId)) {
+    prefs.remove("pending_packet"); prefs.remove("pending_msg");
+  }
+  const int latestSlot = localOutbox.find(latestMsgId);
+  pendingPacket = latestSlot >= 0 ? localOutbox.items[latestSlot].packet : String("");
+  pendingMsgId = latestSlot >= 0 ? latestMsgId : String("");
+
 }
 
 // =====================================================

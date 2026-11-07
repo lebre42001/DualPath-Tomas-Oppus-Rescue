@@ -99,16 +99,20 @@ class AdminSystemLogController extends Controller
         abort_unless($request->user()?->is_admin, 403);
         $data = $request->validate([
             'event_id' => ['required', 'uuid'],
-            'event' => ['required', Rule::in(['report_opened', 'alarm_enabled', 'alarm_muted', 'alarm_tested', 'alarm_stopped', 'alarm_play_requested'])],
-            'report_id' => ['nullable', 'required_if:event,report_opened', 'integer', 'exists:incident_reports,id'],
+            'event' => ['required', Rule::in(['report_opened', 'alarm_enabled', 'alarm_muted', 'alarm_tested', 'alarm_stopped', 'alarm_play_requested', 'notifications_opened', 'notification_tab_reports', 'notification_tab_updates', 'notifications_cleared', 'update_notice_seen', 'update_check_requested', 'report_notification_opened', 'report_notification_received'])],
+            'report_id' => ['nullable', 'required_if:event,report_opened,report_notification_opened,report_notification_received', 'integer', 'exists:incident_reports,id'],
         ]);
-        $report = $data['event'] === 'report_opened' ? \App\Models\IncidentReport::findOrFail($data['report_id']) : null;
+        $report = in_array($data['event'], ['report_opened', 'report_notification_opened', 'report_notification_received'], true) ? \App\Models\IncidentReport::findOrFail($data['report_id']) : null;
         $label = match ($data['event']) {
+            'notifications_opened' => 'Opened notifications', 'notification_tab_reports' => 'Opened report notifications tab',
+            'notification_tab_updates' => 'Opened app updates tab', 'notifications_cleared' => 'Marked report notifications seen',
+            'update_notice_seen' => 'Marked app update notice seen', 'update_check_requested' => 'Checked for app updates',
+            'report_notification_opened' => 'Opened an incoming report notification', 'report_notification_received' => 'Browser received a new report alert',
             'report_opened' => 'Opened report review', 'alarm_enabled' => 'Enabled report alarm',
             'alarm_muted' => 'Muted report alarm', 'alarm_stopped' => 'Stopped report alarm',
             'alarm_play_requested' => 'Requested report alarm playback', default => 'Requested report alarm test',
         };
-        AdminActivity::query()->firstOrCreate(['entry_key' => 'browser:'.$request->user()->id.':'.$data['event_id']], [
+        AdminActivity::query()->firstOrCreate(['entry_key' => 'browser:'.$request->user()->id.':'.($data['event'] === 'report_notification_received' ? 'report-notice:'.$report->id : $data['event_id'])], [
             'actor_reference' => $request->user()->id, 'actor_name' => $request->user()->name,
             'category' => $report ? 'report' : 'system', 'action' => $data['event'], 'label' => $label,
             'summary' => 'The signed-in browser reported this interface action. This does not confirm audio playback or a saved report decision.',

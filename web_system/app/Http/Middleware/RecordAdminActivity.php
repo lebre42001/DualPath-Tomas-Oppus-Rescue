@@ -35,7 +35,7 @@ class RecordAdminActivity
         ];
         $print = str_ends_with($route, '.print') || in_array($route, ['reports.export', 'reports.export.preview'], true);
         $reportAction = in_array($route, ['reports.coordination', 'reports.severity-review', 'reports.ai-suggestion', 'reports.destroy', 'reports.destroy-all', 'lora-reports.verification'], true);
-        $ownAction = str_starts_with($route, 'admin.system-log.') || $route === 'logout';
+        $ownAction = str_starts_with($route, 'admin.system-log.') || in_array($route, ['admin.app-events', 'logout'], true);
         $failed = $response->getStatusCode() >= 400 || ($request->hasSession() && in_array('errors', (array) $request->session()->get('_flash.new', []), true));
         $safeRead = $request->isMethod('GET') && (isset($pages[$route]) || $print)
             && ! ($route === 'admin.system-log' && $request->ajax());

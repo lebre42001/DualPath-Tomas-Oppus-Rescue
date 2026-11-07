@@ -29,6 +29,7 @@
 #include "mesh_security.h"
 #include "mesh_sx127x.h"
 #include "report_guard.h"
+#include "report_outbox.h"
 #include "report_dashboard.h"
 #include "gateway_runtime.h"
 
@@ -74,6 +75,8 @@ WiFiClientSecure secureClient;
 WebServer localServer(80);
 DNSServer dnsServer;
 Preferences prefs;
+ReportOutbox localOutbox;
+String lastLocalAttemptId = "";
 MeshSX127xPort meshRadioPort;
 void onRadioTransmitted(const String& packet);
 MeshLink::Pump<MeshSX127xPort> meshRadio(meshRadioPort,onRadioTransmitted);
@@ -420,7 +423,7 @@ bool hasConfirmedServerRoute() {
 
 bool hasPendingLocalEmergency() {
   // Forwarded field-node reports never populate this local persistent queue.
-  return pendingLocalPacket.length() > 0;
+  return localOutbox.count() > 0;
 }
 
 void initializeLedIndicators() {
@@ -606,6 +609,7 @@ void pollPendingAcknowledgmentIfNeeded() {
 
   const String origin = getField(packet, 2);
   if (origin == NODE_ID) {
+    if (!localOutbox.acknowledge(prefs, msgId)) return;
     if (msgId == latestMsgId || msgId == pendingLocalMsgId) {
       latestReportStatus = getField(packet, 4);
       latestAckAt = getField(packet, 5);
@@ -643,27 +647,30 @@ String normalizedLocalType(String type) {
 }
 
 bool submitLocalReport() {
-  if (pendingLocalPacket.length() == 0) return false;
+  const String packet = localOutbox.nextPacket();
+  if (!packet.length()) return false;
+  const String msgId = ReportOutbox::id(packet);
 
   String body = "{";
   body += "\"sender_id\":\"NODE_1\",";
-  body += "\"sequence\":\"" + jsonEscape(pendingLocalMsgId) + "\",";
+  body += "\"sequence\":\"" + jsonEscape(msgId) + "\",";
   body += "\"gateway_id\":\"NODE_1\",";
-  body += "\"created_at\":\"" + jsonEscape(latestCreatedAt) + "\",";
-  body += "\"incident_type\":\"" + jsonEscape(normalizedLocalType(getField(pendingLocalPacket, 4))) + "\",";
-  body += "\"description\":\"" + jsonEscape(getField(pendingLocalPacket, 5)) + "\",";
-  body += "\"incident_landmark\":\"" + jsonEscape(getField(pendingLocalPacket, 10)) + "\",";
+  body += "\"created_at\":\"" + jsonEscape(getField(packet, 3)) + "\",";
+  body += "\"incident_type\":\"" + jsonEscape(normalizedLocalType(getField(packet, 4))) + "\",";
+  body += "\"description\":\"" + jsonEscape(getField(packet, 5)) + "\",";
+  body += "\"incident_landmark\":\"" + jsonEscape(getField(packet, 10)) + "\",";
   body += "\"radio_auth\":\"hmac-sha256-v2\",";
-  body += "\"battery\":\"" + jsonEscape(getField(pendingLocalPacket, 6)) + "\",\"hop\":0,\"ttl\":12,";
+  body += "\"battery\":\"" + jsonEscape(getField(packet, 6)) + "\",\"hop\":0,\"ttl\":12,";
   body += "\"route\":\"NODE_1\",\"rssi\":0,\"snr\":0";
   body += "}";
 
   String response;
   const bool accepted = requestApi("POST", "/alerts", body, response);
-  if (accepted) {
+  if (accepted && !localOutbox.receipt(prefs, msgId)) return false;
+  if (accepted) lastForwardedMessage = msgId + " from NODE_1";
+  if (accepted && latestMsgId == msgId) {
     latestReportStatus = "RECEIVED BY SERVER - WAITING FOR ACK";
-    lastForwardedMessage = pendingLocalMsgId + " from NODE_1";
-  } else if (latestReportStatus != "RECEIVED BY SERVER - WAITING FOR ACK") {
+  } else if (!accepted && latestMsgId == msgId && latestReportStatus != "RECEIVED BY SERVER - WAITING FOR ACK") {
     latestReportStatus = "QUEUED - SERVER UNAVAILABLE";
   }
   prefs.putString("latest_status", latestReportStatus);
@@ -671,12 +678,11 @@ bool submitLocalReport() {
 }
 
 void retryLocalReportIfNeeded(bool forceNow = false) {
-  if (pendingLocalPacket.length() == 0) return;
-  const unsigned long retryInterval = latestReportStatus == "RECEIVED BY SERVER - WAITING FOR ACK"
-    ? 60000 : LOCAL_REPORT_RETRY_INTERVAL_MS;
-  if (!forceNow && millis() - lastLocalReportRetryMs < retryInterval) return;
-  lastLocalReportRetryMs = millis();
-  submitLocalReport();
+  const String packet = localOutbox.nextPacket();
+  if (!packet.length()) return;
+  const String msgId = ReportOutbox::id(packet);
+  if (!forceNow && msgId == lastLocalAttemptId && millis() - lastLocalReportRetryMs < LOCAL_REPORT_RETRY_INTERVAL_MS) return;
+  lastLocalAttemptId = msgId; lastLocalReportRetryMs = millis(); submitLocalReport();
 }
 
 void handleLocalEmergency() {
@@ -697,43 +703,34 @@ void handleLocalEmergency() {
     localServer.send(400, "text/plain", "Shorten the description or landmark so the complete report fits the radio route."); return;
   }
   const uint32_t clientAddress = (uint32_t)localServer.client().remoteIP();
-  const uint32_t retry = reportRetrySeconds(clientAddress, millis());
-  if (retry) {
-    reportRecordBlocked(); localServer.sendHeader("Retry-After", String(retry));
-    localServer.send(429, "text/plain", "Anti-spam protection: wait " + String(retry) + " seconds. Your saved report continues retrying automatically."); return;
-  }
-  if (pendingLocalPacket.length() > 0) {
-    reportRecordBlocked(); localServer.send(409, "text/plain", "This node already has a report waiting for admin acknowledgment. Check Latest Report."); return;
+  if (localOutbox.full()) {
+    reportRecordBlocked(); localServer.send(503, "text/plain", "Local report storage is full. Saved reports are kept. Contact the emergency team or use another available node."); return;
   }
   if (!reportConsumeConfirmation(clientAddress, reportConfirmationBody(message, landmark, type, createdAt), localServer.arg("confirmation"))) {
     localServer.send(400, "text/plain", "Confirmation expired, already used, or report details changed. Review the report again."); return;
   }
-  if (prefs.getUInt("seq", 0) == UINT32_MAX || !reportGuardAccept(clientAddress, millis())) {
-    reportRecordBlocked(); localServer.sendHeader("Retry-After", "60");
-    localServer.send(429, "text/plain", "Submission protection active. Wait 60 seconds or contact the emergency team."); return;
+  if (prefs.getUInt("seq", 0) == UINT32_MAX) {
+    localServer.send(503, "text/plain", "Report ID capacity reached. Contact the emergency team."); return;
   }
   const uint32_t sequence = prefs.getUInt("seq", 0) + 1;
   if (prefs.putUInt("seq", sequence) != 4) {
     localServer.send(503, "text/plain", "Could not save the report ID. Report was not submitted."); return;
   }
-  latestMsgId = String(NODE_ID) + "-" + String(sequence);
-  pendingLocalMsgId = latestMsgId;
-  latestCreatedAt = createdAt;
-  latestAckMessage = "";
-  latestAckAt = "";
-  latestReportStatus = "QUEUED";
-  pendingLocalPacket = "SOS|" + latestMsgId + "|NODE_1|" + createdAt + "|R|" + message + "|" + measuredBatteryVoltage() + "|0|12|NODE_1|" + landmark;
-  pendingLocalPacket = meshSignOrigin(pendingLocalPacket, false, 1);
-  prefs.putString("latest_msg", latestMsgId);
-  prefs.putString("latest_created", latestCreatedAt);
-  prefs.putString("latest_status", latestReportStatus);
-  prefs.remove("latest_ack");
-  prefs.remove("latest_ack_at");
-  prefs.putString("pending_packet", pendingLocalPacket);
-  prefs.putString("pending_msg", pendingLocalMsgId);
+  const String msgId = String(NODE_ID) + "-" + String(sequence);
+  String packet = "SOS|" + msgId + "|NODE_1|" + createdAt + "|R|" + message + "|" + measuredBatteryVoltage() + "|0|12|NODE_1|" + landmark;
+  packet = meshSignOrigin(packet, false, 1);
+  if (!localOutbox.add(prefs, packet)) {
+    localServer.send(503, "text/plain", "Could not save this report. Existing reports were kept. Try again or contact the emergency team."); return;
+  }
+  latestMsgId = msgId; pendingLocalMsgId = msgId; pendingLocalPacket = packet;
+  latestCreatedAt = createdAt; latestAckMessage = ""; latestAckAt = ""; latestReportStatus = "QUEUED";
+  prefs.putString("latest_msg", latestMsgId); prefs.putString("latest_created", latestCreatedAt);
+  prefs.putString("latest_status", latestReportStatus); prefs.remove("latest_ack"); prefs.remove("latest_ack_at");
+  prefs.remove("pending_packet"); prefs.remove("pending_msg");
 
-  if (submitLocalReport()) {
-    localServer.send(200, "text/plain", "Emergency report reached the Laravel server. Waiting for responder acknowledgment.");
+  submitLocalReport();
+  if (localOutbox.isReceived(latestMsgId)) {
+    localServer.send(200, "text/plain", "Emergency report reached the Laravel server. Waiting for responder acknowledgment. You may submit another separate incident.");
   } else {
     localServer.send(200, "text/plain", "Server unavailable. NODE 1 saved the report and will retry automatically.");
   }
@@ -756,6 +753,7 @@ void handleLocalStatus() {
   json += "\"server_online\":" + String(online ? "true" : "false") + ",";
   json += "\"peer_list\":\"" + jsonEscape(peerList()) + "\",";
   json += "\"active_nodes\":" + String(activeNodeCount) + ",";
+  json += "\"queued_reports\":" + String(localOutbox.count()) + ",\"outbox_full\":" + String(localOutbox.full() ? "true" : "false") + ",";
   json += "\"pending\":" + String(pendingLocalPacket.length() > 0 ? "true" : "false") + ",";
   json += "\"message_id\":\"" + jsonEscape(latestMsgId) + "\",";
   json += "\"created_at\":\"" + jsonEscape(latestCreatedAt) + "\",";
@@ -1161,6 +1159,14 @@ void setup() {
   latestAckAt = prefs.getString("latest_ack_at", "");
   pendingLocalPacket = prefs.getString("pending_packet", "");
   pendingLocalMsgId = prefs.getString("pending_msg", "");
+  localOutbox.restore(prefs);
+  if (pendingLocalPacket.length() && localOutbox.add(prefs, pendingLocalPacket, latestReportStatus == "RECEIVED BY SERVER - WAITING FOR ACK")) {
+    prefs.remove("pending_packet"); prefs.remove("pending_msg");
+  }
+  const int latestSlot = localOutbox.find(latestMsgId);
+  pendingLocalPacket = latestSlot >= 0 ? localOutbox.items[latestSlot].packet : String("");
+  pendingLocalMsgId = latestSlot >= 0 ? latestMsgId : String("");
+
   updateLedIndicators();  // Restore the pending indicator after a reboot.
 
   WiFi.mode(WIFI_AP_STA);

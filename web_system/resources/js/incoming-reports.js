@@ -17,7 +17,7 @@ export class IncomingReportState {
         this.unread.set(id, {
             id, report_code: report.report_code, incident_type: report.incident_type,
             transmission_type: report.transmission_type, lora_sender_id: report.lora_sender_id,
-            detail_url: report.detail_url, location_text: report.location_text,
+            detail_url: report.detail_url, location_text: report.location_text, created_at: report.created_at,
         });
         this.seen = new Set([...this.seen].slice(-200));
         while (this.unread.size > 100) this.unread.delete(this.unread.keys().next().value);
@@ -83,10 +83,13 @@ export function initializeIncomingReports(onReport) {
         const reports = [...state.unread.values()].sort((a, b) => b.id - a.id);
         document.querySelectorAll('[data-alert-count]').forEach(counter => {
             counter.textContent = String(reports.length);
-            counter.closest('button')?.classList.toggle('has-unread-reports', reports.length > 0);
         });
-        banner.hidden = reports.length === 0;
-        if (reports.length) {
+        panel.dataset.unreadCount = String(reports.length);
+        const summary = panel.querySelector('[data-incoming-unread-summary]');
+        if (summary) summary.textContent = `${reports.length} unseen incoming report${reports.length === 1 ? '' : 's'}.`;
+        if (typeof CustomEvent !== 'undefined') document.dispatchEvent(new CustomEvent('stitch:incoming-count', { detail: { count: reports.length } }));
+        if (banner) banner.hidden = reports.length === 0;
+        if (banner && reports.length) {
             banner.querySelector('[data-incoming-banner-title]').textContent = `${reports.length} unseen report${reports.length === 1 ? '' : 's'}`;
             const first = reports[0];
             banner.querySelector('[data-incoming-banner-copy]').textContent = `${first.report_code ?? 'Report'} · ${first.transmission_type === 'lora' ? first.lora_sender_id ?? 'LoRa' : 'Online'} · ${first.incident_type ?? 'Emergency'}`;
@@ -107,7 +110,13 @@ export function initializeIncomingReports(onReport) {
             const title = document.createElement('strong'); title.textContent = report.report_code ?? 'New report';
             const detail = document.createElement('p'); detail.textContent = `${report.incident_type ?? 'Emergency'} · ${report.location_text ?? 'Location unavailable'}`;
             link.append(source, title, detail);
-            link.addEventListener('click', () => { alarm?.stop(); state.unread.delete(report.id); save(); render(); });
+            if (report.created_at && Number.isFinite(new Date(report.created_at).getTime())) {
+                const time = document.createElement('time'); time.dateTime = report.created_at;
+                time.textContent = new Date(report.created_at).toLocaleString('en-PH', { timeZone: 'Asia/Manila' }) + ' (Philippines)'; link.append(time);
+            }
+            link.addEventListener('click', () => {
+                if (typeof CustomEvent !== 'undefined') document.dispatchEvent(new CustomEvent('stitch:admin-activity', { detail: { event: 'report_notification_opened', report_id: report.id } }));
+                alarm?.stop(); state.unread.delete(report.id); save(); render(); });
             list.append(link);
         });
     };
@@ -115,11 +124,16 @@ export function initializeIncomingReports(onReport) {
         receive(payload, initial) {
             if (stopped || unauthorized) return;
             const fresh = state.accept(payload, initial);
-            if (fresh) { save(); render(); if (!initial) void alarm?.play(); }
+            if (fresh) { save(); render(); if (!initial) {
+                void alarm?.play();
+                if (typeof CustomEvent !== 'undefined') document.dispatchEvent(new CustomEvent('stitch:admin-activity', { detail: { event: 'report_notification_received', report_id: Number(payload.report.id) } }));
+            } }
             if (!initial && (fresh || payload.action !== 'created')) onReport(payload, fresh);
         },
     };
-    panel.querySelector('[data-incoming-clear]').addEventListener('click', () => { alarm?.stop(); state.unread.clear(); save(); render(); });
+    panel.querySelector('[data-incoming-clear]').addEventListener('click', () => {
+        if (typeof CustomEvent !== 'undefined') document.dispatchEvent(new CustomEvent('stitch:admin-activity', { detail: { event: 'notifications_cleared' } }));
+        alarm?.stop(); state.unread.clear(); save(); render(); });
     soundButtons.forEach(button => button.addEventListener('click', () => {
         if (!alarm) {
             button.textContent = 'Sound unavailable';

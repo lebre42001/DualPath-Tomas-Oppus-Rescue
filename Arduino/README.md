@@ -55,9 +55,21 @@ receipt**. Only after Laravel accepts a report does NODE_1 send a signed
 server - under admin review**. The receipt never clears the pending report or
 red LED. Only the existing matching final responder ACK/rejection clears them.
 Receipts and final ACKs have distinct relay deduplication keys, even in the same
-second. Before a receipt, SOS retries use 15–20 seconds of jitter; afterward they
-slow to about 60–65 seconds while waiting for review/recovery of a missing ACK.
-Timing probes run about every 90 seconds and ACK polling about every 10 seconds.
+second. The current firmware has no 60-second new-report cooldown. Each node
+saves up to 16 outstanding local reports with separate IDs and flash-backed
+slots. A server receipt immediately releases the delivery lane for the next
+saved report; admin acknowledgment is not a prerequisite for a new submission.
+Unreceived reports retry at the existing transport retry interval. Receipt and
+ACK state survive reboot, and each admin ACK clears only its matching tracked report.
+Server-confirmed slots can be reused immediately for new incidents, so capacity
+also does not depend on admin review. Those reports remain in Laravel history.
+The red LED covers reports still tracked locally, not the full server backlog.
+Queue capacity and radio failures are shown explicitly; full storage never
+silently replaces a saved incident. Shared radio airtime and connectivity can
+still affect delivery time. Timing probes and ACK polling are unchanged.
+
+Upload the regenerated NODE_1 and NODE_2?NODE_10 firmware to apply this change.
+A website deployment alone cannot update firmware already running on a board.
 
 Diagnostics: `[QUEUE] Saved SOS`, `[SOS] Laravel accepted`, and `[RECEIPT] Server
 received` identify the three stages. `[API validation]` reports a rejected API

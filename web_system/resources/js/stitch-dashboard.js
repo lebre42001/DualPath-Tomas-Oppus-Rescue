@@ -307,6 +307,7 @@ function initializeAlertCenter() {
     const trigger = triggers[0];
     const panel = document.querySelector('[data-alert-center-panel]');
     const close = panel?.querySelector('[data-alert-center-close]');
+    if (panel?.closest('[data-admin-notifications]')) return;
     if (!trigger || !panel) return;
     const hide = (restoreFocus = false) => {
         panel.hidden = true;

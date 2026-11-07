@@ -42,12 +42,8 @@ int main(){
   worst.replace("|0|12|NODE_10|","|10|12|"+route+"|");
   assert(meshWriteFrame(meshSignOrigin(worst,false,10)));assert(LoRa.tx.size()<=255);
   String excessive;for(int i=0;i<70;++i)excessive+='~';assert(!meshReportFits(excessive,landmark,"4.20 V"));
-  assert(reportGuardAccept(1,0));assert(reportRetrySeconds(1,0)==60);assert(!reportGuardAccept(1,59999));
-  assert(reportGuardAccept(2,1));assert(reportGuardAccept(1,60000));
-  for(auto& c:reportClients)c={};
-  assert(reportGuardAccept(1,UINT32_MAX-100));assert(reportRetrySeconds(1,100)==60); // millis rollover
-  for(auto& c:reportClients)c={};
-  for(uint32_t n=1;n<=16;++n)assert(reportGuardAccept(n,0));assert(!reportGuardAccept(17,0));assert(reportGuardAccept(17,60000));
+  for(uint32_t n=1;n<=100;++n){assert(reportGuardAccept(1,0));assert(reportGuardAccept(n,0));assert(reportRetrySeconds(n,0)==0);}
+  assert(reportGuardAccept(1,UINT32_MAX-100));assert(reportRetrySeconds(1,100)==0);
   String body=reportConfirmationBody("Crash","Bridge","ROAD_ACCIDENT","1793145600");fakeClock=100;
   String token=reportPrepare(1,body);assert(token.length()==22);
   assert(!reportConsumeConfirmation(2,body,token));assert(!reportConsumeConfirmation(1,body+"changed",token));
