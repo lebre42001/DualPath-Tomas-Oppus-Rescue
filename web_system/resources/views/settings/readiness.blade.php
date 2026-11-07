@@ -57,33 +57,34 @@
                 <h1 class="panel-title">Device Check</h1>
                 <button type="button" class="btn btn-secondary" data-readiness-refresh aria-label="Refresh Status">Refresh Status</button>
             </div>
+            <p class="civilian-device-intro">Allow camera and location access on this device. Your browser remembers permission when supported. Photo uploads use the phone or computer’s photo picker.</p>
             <div class="civilian-readiness-summary" role="status" aria-live="polite">
                 <strong><span data-readiness-score>0 / 3</span> core checks ready</strong>
                 <p data-readiness-summary>Checking browser permissions...</p>
             </div>
             <div class="civilian-readiness-checks">
-                @foreach (['camera' => 'Camera access', 'location' => 'Location access', 'notifications' => 'Notifications', 'network' => 'Online and offline state', 'app' => 'App install mode'] as $key => $label)
+                @foreach (['camera' => 'Camera access', 'location' => 'Location access', 'files' => 'Photo access', 'notifications' => 'Notifications', 'network' => 'Online and offline state', 'app' => 'App install mode'] as $key => $label)
                     <details class="civilian-readiness-check" data-readiness-card="{{ $key }}">
                         <summary><strong>{{ $label }}@if (in_array($key, ['notifications', 'app'])) <small>(optional)</small>@endif</strong><span class="tag neutral" data-readiness-badge="{{ $key }}">Not checked</span></summary>
                         <div class="civilian-readiness-check-body">
                             <p data-readiness-copy="{{ $key }}">Checking access...</p>
-                            @if ($key === 'location')<p data-readiness-location-result>Coordinates appear after a successful test.</p>@endif
+                            @if ($key === 'location')<p data-readiness-location-result>A fresh location check confirms whether device location is available now.</p>@endif
+                            @if ($key === 'files')<input type="file" accept=".jpg,.jpeg,.png,.webp" data-readiness-photo-input hidden><p>Choose one photo to test access. It stays on this page and is not uploaded or saved. The app does not request access to all your files.</p>@endif
                             @if ($key === 'network')<strong data-readiness-network-value>Unknown</strong>@endif
                             @if ($key === 'app')<strong data-readiness-app-mode>Browser</strong>@endif
                             <div class="button-row">
-                                <button type="button" class="btn btn-secondary" data-readiness-action="{{ $key }}">{{ ['camera' => 'Test camera', 'location' => 'Test location', 'notifications' => 'Allow notifications', 'network' => 'Refresh network check', 'app' => 'Refresh app check'][$key] }}</button>
-                                @if ($key === 'camera')<button type="button" class="btn btn-secondary" data-readiness-stop-camera hidden>Stop camera</button>@endif
+                                <button type="button" class="btn btn-secondary" data-readiness-action="{{ $key }}">{{ ['camera' => 'Allow camera', 'location' => 'Allow location / test GPS', 'files' => 'Choose photo', 'notifications' => 'Allow notifications', 'network' => 'Refresh network check', 'app' => 'Refresh app check'][$key] }}</button>
                             </div>
-                            @if ($key === 'camera')<video class="detail-media" data-readiness-camera-preview autoplay muted playsinline hidden></video>@endif
                         </div>
                     </details>
                 @endforeach
             </div>
             <details class="civilian-readiness-help">
-                <summary>Blocked in Mobile Preview?</summary>
+                <summary>Need help with device access?</summary>
                 <div>
                     <p>Open the app in Chrome or Safari on your phone. Allow camera and location in the browser site settings, then test again. VS Code Mobile Preview has its own permissions.</p>
-                    <p>If GPS is unavailable, enter your barangay, road, or landmark in the report form. Notifications and installing the app are optional.</p>
+                    <p>Turn on your phone or computer’s location service if it is off. The app cannot switch on device GPS. A report needs both current GPS coordinates and a barangay, road, or landmark.</p>
+                    <p>Once location permission is allowed, the report form checks for current GPS automatically. If permission is reset or location is switched off, allow access or turn location back on and try again. Notifications and installing the app are optional.</p>
                     <p>This check stays on this device. A location test does not send a report or share your location with admins.</p>
                 </div>
             </details>

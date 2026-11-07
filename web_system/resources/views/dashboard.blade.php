@@ -219,7 +219,7 @@
                 <div class="civilian-home-mini-actions">
                     <button type="button" class="btn btn-secondary" data-civilian-tutorial-start>Quick tutorial</button>
                     <a href="{{ route('profile.show') }}">Profile</a>
-                    <a href="{{ route('settings.readiness') }}">Device Check</a>
+                    <a href="{{ route('settings.readiness') }}" class="btn btn-secondary" data-civilian-device-permissions>Device permissions</a>
                 </div>
             </section>
 

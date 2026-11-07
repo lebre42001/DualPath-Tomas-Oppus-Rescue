@@ -4,7 +4,7 @@
     <section class="civilian-tutorial-demo" data-tutorial-demo hidden aria-label="Report tutorial preview">
         <strong>Report tutorial preview</strong><p>No report is sent. Camera and location stay off.</p>
         <div class="civilian-tutorial-example" data-tutorial-example="photo" hidden><strong>Capture Photo / Upload Photo</strong><span>Attach a clear scene photo.</span></div>
-        <div class="civilian-tutorial-example" data-tutorial-example="gps" hidden><strong>Lock GPS</strong><span>Barangay, road or landmark + your current location.</span></div>
+        <div class="civilian-tutorial-example" data-tutorial-example="gps" hidden><strong>Get GPS</strong><span>Allow location once when offered; keep phone Location on. Add a barangay, road or landmark.</span></div>
         <div class="civilian-tutorial-example" data-tutorial-example="description" hidden><strong>Short description</strong><span>Example: Motorcycle crash near the market; one injured person.</span></div>
         <div class="civilian-tutorial-example" data-tutorial-example="selfie" hidden><strong>Live selfie &amp; blink check</strong><span>A fresh check opens when you send a real report.</span></div>
         <div class="civilian-tutorial-example" data-tutorial-example="receipt" hidden><strong>Send Report → Server receipt</strong><span>Wait for confirmation that the server received your report.</span></div>

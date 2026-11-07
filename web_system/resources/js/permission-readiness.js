@@ -43,6 +43,8 @@ onDomReady( () => {
     const cameraPreview = root.querySelector('[data-readiness-camera-preview]');
     const stopCameraButton = root.querySelector('[data-readiness-stop-camera]');
     const refreshButton = root.querySelector('[data-readiness-refresh]');
+    const photoInput = root.querySelector('[data-readiness-photo-input]');
+    const cameraCard = root.querySelector('details[data-readiness-card="camera"]');
     const isCivilian = root.dataset.readinessRole === 'civilian';
 
     const states = {
@@ -54,6 +56,14 @@ onDomReady( () => {
     };
 
     let cameraStream = null;
+    let cameraRequestId = 0;
+    let locationRequestId = 0;
+    let cameraCheckPending = false;
+    let locationCheckPending = false;
+    let pagePaused = false;
+    let selectedPhotoName = '';
+    const permissionWatchers = new Map();
+    const pageIsActive = () => !pagePaused && !document.hidden;
 
     const setCardState = (key, state, copy) => {
         states[key] = state;
@@ -82,12 +92,12 @@ onDomReady( () => {
             summary.textContent = states.camera === 'blocked'
                 ? 'Allow camera access for scene photos and verification selfies.'
                 : states.location === 'blocked'
-                    ? 'GPS is blocked. You can enter a location manually in the report.'
+                    ? 'Allow location in browser settings and turn on device location. A report needs both GPS and a barangay, road, or landmark.'
                     : states.network !== 'ready'
                         ? 'Check your connection before sending a report.'
                         : ready === core.length
                             ? 'Camera, location, and connection checks passed. Notifications and installation are optional.'
-                            : 'Test camera and location to confirm access. Notifications and installation are optional.';
+                            : 'Use Allow camera and Allow location to check this device. Notifications and installation are optional.';
             return;
         }
         const stateValues = Object.values(states);
@@ -122,11 +132,7 @@ onDomReady( () => {
     };
 
     const stopCameraStream = () => {
-        if (!cameraStream) {
-            return;
-        }
-
-        cameraStream.getTracks().forEach((track) => track.stop());
+        cameraStream?.getTracks().forEach((track) => track.stop());
         cameraStream = null;
 
         if (cameraPreview) {
@@ -140,6 +146,28 @@ onDomReady( () => {
         }
     };
 
+    const invalidateCameraCheck = () => {
+        cameraRequestId += 1;
+        stopCameraStream();
+        if (cameraCheckPending) {
+            setCardState('camera', 'attention', isCivilian
+                ? 'Camera check paused. Tap Allow camera to try again.'
+                : 'Camera check paused. Tap Test camera to try again.');
+        } else if (!isCivilian && states.camera === 'ready') {
+            setCardState('camera', 'attention', 'Camera preview is closed. Test the camera again when needed.');
+        }
+        cameraCheckPending = false;
+    };
+
+    const invalidateLocationCheck = () => {
+        locationRequestId += 1;
+        locationCheckPending = false;
+        if (locationResult) locationResult.textContent = 'A new location check is needed to confirm current GPS.';
+        if (['ready', 'checking'].includes(states.location)) {
+            setCardState('location', 'attention', 'Location needs a fresh check. Keep device location on and try again.');
+        }
+    };
+
     const queryPermissionState = async (name) => {
         if (!supportsPermissionsApi()) {
             return null;
@@ -147,6 +175,23 @@ onDomReady( () => {
 
         try {
             const result = await navigator.permissions.query({ name });
+            const previous = permissionWatchers.get(name);
+            if (previous?.status !== result && result.addEventListener) {
+                if (previous) previous.status.removeEventListener?.('change', previous.listener);
+                const listener = () => {
+                    if (name === 'camera') {
+                        if (cameraCheckPending && result.state === 'granted') return;
+                        invalidateCameraCheck();
+                        if (pageIsActive()) void refreshCameraState();
+                    } else if (name === 'geolocation') {
+                        if (locationCheckPending && result.state === 'granted') return;
+                        invalidateLocationCheck();
+                        if (pageIsActive()) void refreshLocationState();
+                    }
+                };
+                result.addEventListener('change', listener);
+                permissionWatchers.set(name, { status: result, listener });
+            }
             return result.state ?? null;
         } catch {
             return null;
@@ -223,6 +268,7 @@ onDomReady( () => {
     };
 
     const refreshLocationState = async () => {
+        const requestId = locationRequestId;
         if (!('geolocation' in navigator)) {
             setCardState('location', 'attention', 'This browser does not provide geolocation support.');
             return;
@@ -234,9 +280,13 @@ onDomReady( () => {
         }
 
         const permissionState = await queryPermissionState('geolocation');
+        if (requestId !== locationRequestId || !pageIsActive() || locationCheckPending) return;
 
         if (permissionState === 'granted') {
-            if (states.location !== 'ready') setCardState('location', 'allowed', 'Location permission is allowed. Tap Test location to confirm GPS can return coordinates.');
+            if (locationResult) locationResult.textContent = 'Permission is allowed; device GPS still needs a current location check.';
+            setCardState('location', 'allowed', isCivilian
+                ? 'Location permission is allowed. Tap Allow location / test GPS to check device location now. The report form checks automatically when permission is already allowed.'
+                : 'Location permission is allowed. Tap Test location to confirm GPS can return current coordinates.');
             return;
         }
 
@@ -245,10 +295,13 @@ onDomReady( () => {
             return;
         }
 
-        setCardState('location', 'attention', 'GPS is supported, but permission still needs to be requested from this device.');
+        setCardState('location', 'attention', permissionState === null
+            ? 'This browser does not expose location permission status. Use the location button to check access. Keep device location on.'
+            : 'Allow location when asked. Keep device location on; the app cannot switch on device GPS.');
     };
 
     const refreshCameraState = async () => {
+        const requestId = cameraRequestId;
         if (!navigator.mediaDevices?.getUserMedia) {
             setCardState('camera', 'attention', 'This browser does not support direct camera capture from the web page.');
             return;
@@ -260,9 +313,12 @@ onDomReady( () => {
         }
 
         const permissionState = await queryPermissionState('camera');
+        if (requestId !== cameraRequestId || !pageIsActive() || cameraCheckPending) return;
 
         if (permissionState === 'granted') {
-            if (states.camera !== 'ready') setCardState('camera', 'allowed', 'Camera permission is allowed. Tap Test camera to confirm a camera can open.');
+            if (states.camera !== 'ready') setCardState('camera', 'allowed', isCivilian
+                ? 'Camera permission is allowed. Use Allow camera to test it; the camera is opened only when needed for capture or selfie verification.'
+                : 'Camera permission is allowed. Tap Test camera to confirm a camera can open.');
             return;
         }
 
@@ -271,10 +327,13 @@ onDomReady( () => {
             return;
         }
 
-        setCardState('camera', 'attention', 'Camera capture is supported, but permission still needs to be requested.');
+        setCardState('camera', 'attention', permissionState === null
+            ? 'This browser does not expose camera permission status. Use the camera button to check access.'
+            : 'Allow camera when asked to use scene capture and the live verification selfie.');
     };
 
     const testCamera = async () => {
+        if (cameraCheckPending || !pageIsActive()) return;
         if (!navigator.mediaDevices?.getUserMedia) {
             setCardState('camera', 'attention', 'This browser does not support direct camera capture from the web page.');
             return;
@@ -285,21 +344,38 @@ onDomReady( () => {
             return;
         }
 
-        if (await queryPermissionState('camera') === 'denied') {
-            setCardState('camera', 'blocked', 'Camera access is blocked. Allow it in browser site settings or open the app on your phone.');
-            return;
-        }
-
         stopCameraStream();
+        const requestId = ++cameraRequestId;
+        cameraCheckPending = true;
         setCardState('camera', 'checking', 'Opening the camera...');
 
         try {
-            cameraStream = await navigator.mediaDevices.getUserMedia({
+            const permissionState = await queryPermissionState('camera');
+            if (requestId !== cameraRequestId || !pageIsActive() || (isCivilian && cameraCard && !cameraCard.open)) {
+                if (requestId === cameraRequestId) invalidateCameraCheck();
+                return;
+            }
+            if (permissionState === 'denied') {
+                setCardState('camera', 'blocked', 'Camera access is blocked. Allow it in browser site settings or open the app on your phone.');
+                return;
+            }
+            const stream = await navigator.mediaDevices.getUserMedia({
                 video: {
                     facingMode: 'environment',
                 },
                 audio: false,
             });
+            if (requestId !== cameraRequestId || !pageIsActive() || (isCivilian && cameraCard && !cameraCard.open)) {
+                stream.getTracks().forEach((track) => track.stop());
+                if (requestId === cameraRequestId) invalidateCameraCheck();
+                return;
+            }
+            if (isCivilian) {
+                stream.getTracks().forEach((track) => track.stop());
+                setCardState('camera', 'ready', 'Camera access worked. The test camera is now closed. Use scene capture or the verification selfie when you are ready to report.');
+                return;
+            }
+            cameraStream = stream;
 
             if (cameraPreview) {
                 cameraPreview.srcObject = cameraStream;
@@ -316,6 +392,7 @@ onDomReady( () => {
 
             setCardState('camera', 'ready', 'Camera opened successfully. Stop the preview when finished. Reporting also requests a verification selfie.');
         } catch (error) {
+            if (requestId !== cameraRequestId || !pageIsActive()) return;
             const denied = ['NotAllowedError', 'SecurityError'].includes(error.name);
             const message = denied
                 ? 'Camera access is blocked. Allow it in browser site settings or open the app on your phone.'
@@ -323,29 +400,47 @@ onDomReady( () => {
                     ? 'No camera was found. Connect a camera or test on your phone.'
                     : 'The camera could not open. Close other camera apps and try again.';
             setCardState('camera', denied ? 'blocked' : 'attention', message);
+        } finally {
+            if (requestId === cameraRequestId) cameraCheckPending = false;
         }
     };
 
     const testLocation = () => {
+        if (locationCheckPending || !pageIsActive()) return;
         if (!('geolocation' in navigator)) {
             setCardState('location', 'attention', 'This browser does not provide geolocation support.');
             return;
         }
-
         if (!isSecurePageContext()) {
             setCardState('location', 'blocked', 'GPS needs localhost or HTTPS. The current page context is not secure.');
             return;
         }
+        const requestId = ++locationRequestId;
+        locationCheckPending = true;
 
         if (locationResult) {
             locationResult.textContent = 'Getting current coordinates from the browser...';
         }
         setCardState('location', 'checking', 'Getting your location...');
 
-        navigator.geolocation.getCurrentPosition(
+        try {
+            navigator.geolocation.getCurrentPosition(
             (position) => {
-                const latitude = position.coords.latitude.toFixed(6);
-                const longitude = position.coords.longitude.toFixed(6);
+                if (requestId !== locationRequestId || !pageIsActive()) return;
+                locationCheckPending = false;
+                const { latitude: rawLatitude, longitude: rawLongitude, accuracy } = position?.coords ?? {};
+                const timestamp = position?.timestamp;
+                const now = Date.now();
+                if (!Number.isFinite(rawLatitude) || rawLatitude < -90 || rawLatitude > 90
+                    || !Number.isFinite(rawLongitude) || rawLongitude < -180 || rawLongitude > 180
+                    || !Number.isFinite(accuracy) || accuracy < 0
+                    || !Number.isFinite(timestamp) || now - timestamp > 30000 || timestamp - now > 30000) {
+                    if (locationResult) locationResult.textContent = 'The device did not return a valid current location. Keep device location on and try again.';
+                    setCardState('location', 'attention', 'Current GPS could not be confirmed. Try the location check again.');
+                    return;
+                }
+                const latitude = rawLatitude.toFixed(6);
+                const longitude = rawLongitude.toFixed(6);
 
                 if (locationResult) {
                     locationResult.textContent = `Latest coordinates: ${latitude}, ${longitude}`;
@@ -354,9 +449,11 @@ onDomReady( () => {
                 setCardState('location', 'ready', `Location test succeeded. Browser GPS returned ${latitude}, ${longitude}.`);
             },
             (error) => {
+                if (requestId !== locationRequestId || !pageIsActive()) return;
+                locationCheckPending = false;
                 const messageMap = {
-                    1: 'Location permission was denied.',
-                    2: 'Location is unavailable on this device right now.',
+                    1: 'Location permission was denied. Allow access in browser site settings.',
+                    2: 'Location is unavailable. Turn on device location and try again; the app cannot switch on GPS.',
                     3: 'The browser location request timed out.',
                 };
 
@@ -371,7 +468,12 @@ onDomReady( () => {
                 timeout: 15000,
                 maximumAge: 0,
             }
-        );
+            );
+        } catch {
+            if (requestId !== locationRequestId || !pageIsActive()) return;
+            locationCheckPending = false;
+            setCardState('location', 'attention', 'The location check could not start. Check browser access and device location, then try again.');
+        }
     };
 
     const requestNotifications = async () => {
@@ -409,7 +511,24 @@ onDomReady( () => {
         ]);
         refreshNetworkState();
         await refreshAppState();
+        if (isCivilian && !selectedPhotoName) {
+            setCardState('files', 'idle', 'Choose a photo to test your device picker. Only a photo you select is accessible; no access to all files is requested.');
+        }
     };
+
+    photoInput?.addEventListener('change', () => {
+        const file = photoInput.files?.[0];
+        // Some browsers dispatch an empty change when the picker is cancelled.
+        if (!file) return;
+        const supportedType = ['image/jpeg', 'image/png', 'image/webp'].includes(file.type)
+            || (!file.type && /\.(jpe?g|png|webp)$/i.test(file.name));
+        if (!supportedType || file.size === 0) {
+            setCardState('files', 'attention', 'Choose a JPG, PNG, or WebP photo that is not empty. This check does not upload files.');
+            return;
+        }
+        selectedPhotoName = file.name;
+        setCardState('files', 'ready', `Photo selected: ${selectedPhotoName}. Picker access worked. This test photo is not uploaded or saved.`);
+    });
 
     root.addEventListener('click', (event) => {
         const actionButton = event.target.closest('[data-readiness-action]');
@@ -421,6 +540,9 @@ onDomReady( () => {
                 void testCamera();
             } else if (action === 'location') {
                 testLocation();
+            } else if (action === 'files') {
+                // Keep the native picker directly in the user's click gesture.
+                photoInput?.click();
             } else if (action === 'notifications') {
                 void requestNotifications();
             } else if (action === 'network') {
@@ -433,21 +555,39 @@ onDomReady( () => {
         }
 
         if (event.target.closest('[data-readiness-stop-camera]')) {
-            stopCameraStream();
+            invalidateCameraCheck();
             void refreshCameraState();
         }
     });
 
     refreshButton?.addEventListener('click', () => {
+        invalidateCameraCheck();
+        invalidateLocationCheck();
         void refreshAll();
     });
 
+    const suspendChecks = () => {
+        pagePaused = true;
+        invalidateCameraCheck();
+        invalidateLocationCheck();
+    };
+    const resumeChecks = () => {
+        pagePaused = false;
+        invalidateLocationCheck();
+        void refreshAll();
+    };
+
     window.addEventListener('online', refreshNetworkState);
     window.addEventListener('offline', refreshNetworkState);
-    window.addEventListener('beforeunload', stopCameraStream);
-    window.addEventListener('pagehide', stopCameraStream);
+    window.addEventListener('beforeunload', suspendChecks);
+    window.addEventListener('pagehide', suspendChecks);
+    window.addEventListener('pageshow', resumeChecks);
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) suspendChecks();
+        else resumeChecks();
+    });
     root.querySelector('details[data-readiness-card="camera"]')?.addEventListener('toggle', (event) => {
-        if (!event.target.open) stopCameraStream();
+        if (!event.target.open) invalidateCameraCheck();
     });
 
     void refreshAll();

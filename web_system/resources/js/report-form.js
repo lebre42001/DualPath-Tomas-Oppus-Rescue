@@ -1,6 +1,8 @@
 import { onDomReady } from './dom-ready';
 import { captureLiveness, applyLiveness, clearLiveness, hasLiveness } from './face-liveness';
 import { watchFaceGuide, showVerifiedFace } from './face-guide';
+import { createReportLocationAccess } from './report-location-access.js';
+import { initializeReportCameraPermission } from './report-camera-permission.js';
 const createPreviewUrl = (file) => {
     if (!(file instanceof File)) {
         return null;
@@ -824,35 +826,23 @@ onDomReady( () => {
         updateCivilianReadiness();
     };
 
-    // Require a fresh device reading again immediately before sending.
-    const lockCurrentGps = async () => {
-        if (gpsRequestPending) return false;
-        gpsRequestPending = true;
-        clearGps();
-        updateCivilianReadiness();
-        if (geoButton instanceof HTMLButtonElement) geoButton.disabled = true;
-        if (gpsFocusButton instanceof HTMLButtonElement) gpsFocusButton.disabled = true;
-        setGeoStatus('Getting your current GPS coordinates...');
-        setBadgeState(gpsBadge, 'amber', 'Locking GPS');
-        setCaptureActionState(gpsActionCard, 'working');
-        try {
-            if (!window.isSecureContext || !navigator.geolocation) {
-                throw new Error('GPS requires a supported browser on HTTPS. Open this page in Chrome or Safari, enable device location, then tap Lock GPS.');
+    // A saved browser grant allows automatic fresh readings, never reuse of a
+    // previous report's coordinates. Sending still requests a new reading.
+    const gpsAccess = createReportLocationAccess({ automatic: isCivilian,
+        onClear: () => { clearGps(); updateCivilianReadiness(); },
+        onBusy: (busy) => {
+            gpsRequestPending = busy;
+            updateCivilianReadiness();
+            if (geoButton instanceof HTMLButtonElement) geoButton.disabled = busy;
+            if (gpsFocusButton instanceof HTMLButtonElement) gpsFocusButton.disabled = busy;
+            if (busy) {
+                setGeoStatus('Getting your current GPS coordinates...');
+                setBadgeState(gpsBadge, 'amber', 'Getting GPS');
+                setCaptureActionState(gpsActionCard, 'working');
             }
-            const position = await new Promise((resolve, reject) => {
-                navigator.geolocation.getCurrentPosition(resolve, reject, {
-                    enableHighAccuracy: true,
-                    timeout: 15000,
-                    maximumAge: 0,
-                });
-            });
+        },
+        onPosition: (position) => {
             const { latitude, longitude } = position.coords;
-            if (!Number.isFinite(latitude) || !Number.isFinite(longitude)
-                || Math.abs(latitude) > 90 || Math.abs(longitude) > 180
-                || !Number.isFinite(position.timestamp)
-                || Math.abs(Date.now() - position.timestamp) > 30000) {
-                throw new Error('A current GPS reading could not be obtained. Enable device location and tap Lock GPS again.');
-            }
             latitudeInput.value = latitude.toFixed(6);
             longitudeInput.value = longitude.toFixed(6);
             gpsLocked = true;
@@ -865,50 +855,38 @@ onDomReady( () => {
                 input?.dispatchEvent(new Event('change', { bubbles: true }));
             });
             setGeoStatus(`GPS locked: ${latitudeInput.value}, ${longitudeInput.value}. Location will be checked again before sending.`);
-            return true;
-        } catch (error) {
-            clearGps();
+        },
+        onError: (error) => {
             const messageMap = {
                 1: isEmbeddedBrowser
                     ? 'Location was blocked. Open this page in Chrome or Safari, enable device location, and allow location access before sending.'
-                    : 'Location permission was denied. Enable device location and allow location access in your browser settings, then tap Lock GPS.',
-                2: 'Location is unavailable. Enable device location, move to an open area, and tap Lock GPS again. The report has not been sent.',
-                3: 'GPS timed out. Keep device location enabled and tap Lock GPS to retry. The report has not been sent.',
+                    : 'Location permission was denied. Enable device location and allow location access in your browser settings, then tap Get GPS.',
+                2: 'Location is unavailable. Turn on Location in your phone settings, return to AksyRes, and retry GPS. The report has not been sent.',
+                3: 'GPS timed out. Keep device location enabled and tap Get GPS to retry. The report has not been sent.',
             };
-            setGeoStatus(messageMap[error.code] ?? error.message ?? 'Unable to get GPS. Enable device location and tap Lock GPS again.');
-            return false;
-        } finally {
-            gpsRequestPending = false;
-            if (geoButton instanceof HTMLButtonElement) geoButton.disabled = false;
-            if (gpsFocusButton instanceof HTMLButtonElement) gpsFocusButton.disabled = false;
-            updateCivilianReadiness();
-        }
-    };
+            setGeoStatus(messageMap[error.code] ?? error.message ?? 'Unable to get GPS. Enable device location and tap Get GPS again.');
+        },
+        onPermission: (state) => {
+            if (gpsLocked) return;
+            setGeoStatus(state === 'denied'
+                ? 'Location access is blocked. Enable phone Location and allow this site in browser settings, then return and retry GPS.'
+                : state === 'granted' ? 'Location access is allowed. Getting a fresh GPS reading...'
+                    : 'Allow location to get your current GPS. Your browser can remember the permission; keep phone Location turned on.');
+        },
+    });
+    const lockCurrentGps = () => gpsAccess.request();
 
     geoButton?.addEventListener('click', () => { void lockCurrentGps(); });
 
     if (isCivilian) {
         // Never trust restored hidden values or old offline drafts as a current GPS lock.
         clearGps();
-        window.addEventListener('pageshow', (event) => {
-            if (!event.persisted) return;
-            clearGps();
-            setGeoStatus('Tap Lock GPS to get your current location before sending.');
-            updateCivilianReadiness();
-        });
         form.addEventListener('stitch:report-draft-restored', () => {
-            clearGps();
-            setGeoStatus('Draft restored. Tap Lock GPS to get your current location before sending.');
-            updateCivilianReadiness();
+            gpsAccess.reset();
+            setGeoStatus('Draft restored. Checking location access for a fresh GPS reading...');
+            void gpsAccess.refresh();
         });
-        navigator.permissions?.query({ name: 'geolocation' }).then((permission) => {
-            permission.addEventListener('change', () => {
-                if (permission.state === 'granted') return;
-                clearGps();
-                setGeoStatus('Location access is required. Allow location and tap Lock GPS before sending.');
-                updateCivilianReadiness();
-            });
-        }).catch(() => { /* Fresh GPS on submit also covers browsers without Permissions API. */ });
+        initializeReportCameraPermission(root);
     }
 
     triggerButtons.forEach((button) => {
@@ -1034,6 +1012,18 @@ onDomReady( () => {
     });
 
     updateCivilianReadiness();
+
+    if (isCivilian) void gpsAccess.start();
+
+    document.addEventListener('visibilitychange', () => {
+        if (!isCivilian || !document.hidden) return;
+        livenessController?.abort();
+        clearLiveness(form);
+        pendingSubmitAfterSelfie = false;
+        stopSelfieCamera();
+        hideSelfieCameraModal();
+        updateCivilianReadiness();
+    });
 
     form.addEventListener('liveness:expired', () => {
         updateCivilianReadiness();

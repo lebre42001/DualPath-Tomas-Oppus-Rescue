@@ -5,6 +5,32 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Civilian device permission setup and automatic GPS (2026-11-07)
+
+Home links to Device permissions, where civilians can explicitly allow camera
+and location and test a selected photo locally. The Report form has device-access
+guidance and a camera permission button. A camera permission check closes every
+track immediately, including a stream resolving after the page is hidden. The
+camera never starts automatically merely because permission was previously given.
+Photo access uses the native file picker for the selected image, not a broad or
+persisted filesystem permission. The tutorial and Home do not trigger prompts.
+
+Report queries the real browser geolocation grant. With a granted state it obtains
+fresh coordinates on entry, foreground/BFCache return and draft restore. Prompt,
+denied and unsupported permission-query states require an explicit Get GPS action.
+No grant or coordinates are invented from local storage. The final submission
+still checks current location with maximumAge zero, bounded coordinates and a
+reading no older than thirty seconds. Revocation, backgrounding and restoration
+invalidate in-flight fixes so old callbacks cannot repopulate the form.
+
+Browser permission cannot turn on the device's Location switch or guarantee that
+the browser remembers consent indefinitely. GPS failure clears the coordinates
+and keeps sending blocked, with guidance to enable device Location/site access.
+The readiness screen no longer suggests a written landmark can replace required
+GPS. Existing verification, live-selfie checks and admin report flows remain.
+Deploy the normal web assets/views/config and clear caches; no migration, native
+APK rebuild, new environment setting or AI change is required.
+
 ## Civilian admin report notifications (2026-11-07)
 
 The existing owner-scoped CivilianActivity record remains the single source for

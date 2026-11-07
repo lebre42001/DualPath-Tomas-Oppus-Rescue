@@ -8,7 +8,7 @@
 @section('title', $isCivilian ? 'Send Emergency Report' : 'Create Report')
 @section('page_label', $isCivilian ? 'Send Report' : 'Manual Report Entry')
 @section('page_heading', $isCivilian ? 'Civilian Emergency Report' : 'Create an Incident from the Web Dashboard')
-@section('page_subheading', $isCivilian ? 'Capture or upload a scene photo, lock GPS, describe the emergency for severity review, then verify your selfie when sending.' : 'Use this admin-side form for manual incident entry while preserving the standard Laravel incident workflow.')
+@section('page_subheading', $isCivilian ? 'Capture or upload a scene photo, allow location for current GPS, describe the emergency for severity review, then verify your selfie when sending.' : 'Use this admin-side form for manual incident entry while preserving the standard Laravel incident workflow.')
 @section('hide_topbar', $isCivilian ? 'true' : 'false')
 
 @section('hero')
@@ -61,6 +61,18 @@
 
             @if ($isCivilian)
                 <p class="legal-small">Your location, scene photo, verification selfie, and description are shared with authorized reviewers. Only the description is used for severity AI. <a href="{{ route('legal.privacy') }}">Privacy Policy</a>.</p>
+                <details class="civilian-compact-details civilian-device-access">
+                    <summary>Device access: camera, photos &amp; location</summary>
+                    <div class="civilian-device-access-body">
+                        <p data-report-camera-permission-status role="status" aria-live="polite">Camera permission is checked on this device. Allow access for scene capture and the live verification selfie.</p>
+                        <div class="button-row">
+                            <button type="button" class="btn btn-secondary" data-report-camera-permission>Allow camera</button>
+                            <a href="{{ route('settings.readiness') }}" class="btn btn-secondary">Device permissions</a>
+                        </div>
+                        <p>Choose <strong>Upload Photo</strong> below to open your device’s photo picker. Only the selected photo is used for this report.</p>
+                        <p>With location permission allowed, current GPS is checked automatically. If device location is off, switch it on and tap <strong>Get GPS</strong>. The app cannot switch on device GPS.</p>
+                    </div>
+                </details>
                 <div class="civilian-report-mobile-flow">
                     <section class="form-step-card civilian-capture-panel">
                         <details class="civilian-report-type" data-incident-picker>
@@ -100,13 +112,13 @@
                                 <span class="tag neutral" data-capture-badge="upload" aria-live="polite">Upload pending</span>
                             </button>
                             <button type="button" class="setting-card capture-action-card" data-capture-trigger="gps" data-capture-card="gps" data-capture-state="pending" aria-pressed="false">
-                                <strong>Lock GPS</strong>
+                                <strong>Get GPS</strong>
                                 <span class="tag neutral" data-capture-badge="gps" aria-live="polite">GPS pending</span>
                             </button>
                         </div>
 
                         <div class="civilian-mobile-status-card">
-                            <p data-geo-status role="status">Enable device location and tap Lock GPS. Location access is required to send.</p>
+                            <p data-geo-status role="status">Checking location access. Once allowed, current GPS is checked automatically. Keep device location on.</p>
                             <div class="visually-hidden-control" aria-hidden="true">
                                 <span data-requirement-status="photo">Still required</span>
                                 <span data-requirement-status="selfie">Selfie opens on send</span>

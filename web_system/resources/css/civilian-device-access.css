@@ -1,0 +1,8 @@
+.civilian-device-access-body { display: grid; gap: 10px; padding: 0 16px 16px; min-width: 0; }
+.civilian-device-access-body p, .civilian-device-intro { margin: 0; line-height: 1.5; overflow-wrap: anywhere; }
+.civilian-device-access-body .button-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.civilian-device-access-body .btn { min-height: 44px; width: auto; white-space: normal; }
+.civilian-home-mini-actions [data-civilian-device-permissions] { grid-column: 1 / -1; min-height: 44px; white-space: normal; text-align: center; }
+.civilian-device-access summary:focus-visible, .civilian-readiness-check summary:focus-visible { outline: 3px solid #23699c; outline-offset: -3px; }
+body.civilian-readiness-page .civilian-readiness-check-body input[hidden] { display: none !important; }
+@media (max-width: 480px) { .civilian-device-access-body .button-row .btn { flex: 1 1 100%; } }

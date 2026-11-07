@@ -4,6 +4,18 @@
 // These release labels are separate from the app's runtime build fingerprint.
 return [
     [
+        'id' => '2026.11.07.10',
+        'date' => '2026-11-07',
+        'title' => 'Device permissions and automatic report GPS',
+        'changes' => [
+            'Open Device permissions from Home to allow camera and location access, or choose a photo for a local access check. No test sends a report.',
+            'When location permission is already granted, Report automatically gets fresh GPS on opening, returning or restoring a draft. Location is checked again before sending.',
+            'If phone Location is off, unavailable or blocked, follow the on-screen instructions to enable it and retry Get GPS. The app cannot turn on the phone switch for you.',
+            'Camera access is requested when you choose it; permission checks close the camera immediately. Your browser controls whether and how long grants are remembered.',
+            'Photo uploads use the device picker and access only the file you choose. Account verification, a fresh live selfie, GPS and a written location are still required to submit.',
+        ],
+    ],
+    [
         'id' => '2026.11.07.9',
         'date' => '2026-11-07',
         'title' => 'Notifications for admin report updates',
