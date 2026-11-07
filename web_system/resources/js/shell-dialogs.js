@@ -101,6 +101,8 @@ function initializeShellDialogs() {
             resetClonedMaps();
             activateDialog(modal, closeModal, opener);
 
+            document.dispatchEvent(new CustomEvent('stitch:admin-activity', { detail: { event: 'report_opened', report_id: row.dataset.reportId } }));
+
             window.setTimeout(() => {
                 window.StitchRefreshMaps?.();
             }, 80);

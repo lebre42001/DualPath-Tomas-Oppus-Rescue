@@ -85,6 +85,10 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
 
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function (): void {
         Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
+        Route::get('/system-log', [\App\Http\Controllers\Web\AdminSystemLogController::class, 'index'])->name('system-log');
+        Route::get('/system-log/print', [\App\Http\Controllers\Web\AdminSystemLogController::class, 'print'])->name('system-log.print');
+        Route::post('/system-log/duty', [\App\Http\Controllers\Web\AdminSystemLogController::class, 'duty'])->name('system-log.duty');
+        Route::post('/system-log/activity', [\App\Http\Controllers\Web\AdminSystemLogController::class, 'activity'])->middleware('throttle:60,1')->name('system-log.activity');
         Route::get('/report-audit', [AdminDashboardController::class, 'history'])->name('report-audit');
         Route::get('/report-audit/print', [AdminDashboardController::class, 'printHistory'])->name('report-audit.print');
         Route::get('/node-locations', [LoraNodeLocationController::class, 'index'])->name('node-locations.index');

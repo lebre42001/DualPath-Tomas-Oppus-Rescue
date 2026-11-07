@@ -153,6 +153,7 @@ SVG,
                     @endif
                     @if ($authUser?->is_admin)
                         <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard', 'admin.node-locations.*') ? 'active' : '' }}"><span>Overview</span><small>AD</small></a>
+                        <a href="{{ route('admin.system-log') }}" class="{{ request()->routeIs('admin.system-log*') ? 'active' : '' }}"><span>System Log</span><small>SL</small></a>
                     @endif
                     <a href="{{ route('profile.show') }}" class="{{ request()->routeIs('profile.*') ? 'active' : '' }}"><span>{{ $isCivilian ? 'Civilian Profile' : 'Profile' }}</span><small>{{ $isCivilian ? 'CP' : 'AP' }}</small></a>
                     <a href="{{ route('settings.index') }}" class="{{ request()->routeIs('settings.*') ? 'active' : '' }}"><span>{{ $isCivilian ? 'App Settings' : 'Settings' }}</span><small>ST</small></a>
@@ -238,10 +239,11 @@ SVG,
 
             <main id="main-content" tabindex="-1" class="content-stack {{ $isAdminReportsPage ? 'reports-content-stack' : '' }}">
                 @if ($authUser?->is_admin)
+                    <span hidden data-admin-activity-url="{{ route('admin.system-log.activity') }}"></span>
                     <section class="incoming-alarm-toolbar" aria-label="Report alarm">
-                        <div><strong>Report alarm</strong><small data-incoming-sound-status role="status">Alarm on. Click once to prepare audio silently. New reports sound for 10 seconds.</small></div>
+                        <div><strong>Report alarm</strong><small data-incoming-sound-status role="status">Your Sound on or Mute choice is remembered across navigation. New reports sound for 10 seconds.</small></div>
                         <div class="incoming-alarm-actions">
-                            <button type="button" class="pill-btn" data-incoming-sound>Enable sound</button>
+                            <button type="button" class="pill-btn" data-incoming-sound>Test sound</button>
                             <button type="button" class="pill-btn" data-incoming-sound-mute>Mute sound</button>
                             <button type="button" class="pill-btn" data-incoming-sound-stop hidden>Stop alarm</button>
                         </div>
@@ -292,7 +294,7 @@ SVG,
         </nav>
     @endif
     @unless ($isCivilian)
-        <aside class="alert-center" data-alert-center-panel data-incoming-reports data-feed-url="{{ route('monitoring.reports.feed') }}" data-user-id="{{ $authUser?->id }}" data-alarm-url="{{ asset('sounds/incoming-report-alarm.mp3') }}" hidden>
+        <aside class="alert-center" data-alert-center-panel data-incoming-reports data-feed-url="{{ route('monitoring.reports.feed') }}" data-user-id="{{ $authUser?->id }}" data-alarm-url="{{ asset('sounds/admin-report-alarm-993.wav') }}" hidden>
             <div class="alert-top">
                 <div>
                     <p class="eyebrow">Alert Center</p>

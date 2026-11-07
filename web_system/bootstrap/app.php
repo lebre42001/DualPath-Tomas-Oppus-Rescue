@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
+        $middleware->web(append: [\App\Http\Middleware\RecordAdminActivity::class]);
 
         $middleware->redirectGuestsTo(static fn (Request $request): string =>
             route($request->is('admin', 'admin/*') ? 'admin.login' : 'login')

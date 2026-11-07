@@ -704,9 +704,11 @@ class IncidentReportController extends Controller
         DB::transaction(fn () => $incidentReport->delete());
         Storage::delete($paths);
 
-        $redirectRoute = $request->input('return_to') === 'monitoring'
-            ? 'monitoring'
-            : 'reports.index';
+        $redirectRoute = match ($request->input('return_to')) {
+            'monitoring' => 'monitoring',
+            'lora-reports' => 'lora-reports.index',
+            default => 'reports.index',
+        };
 
         return redirect()
             ->route($redirectRoute)

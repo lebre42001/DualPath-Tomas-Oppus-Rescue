@@ -38,7 +38,7 @@ class IncomingReportTest extends TestCase
         $this->getJson(route('monitoring.reports.feed', ['after' => $feed->json('cursor')]))->assertOk()->assertJsonCount(0, 'items');
         $this->get(route('monitoring'))->assertOk()->assertSee('data-incoming-reports', false)
             ->assertSee('Enable sound')->assertSee('Incoming reports')->assertSee('Report alarm')
-            ->assertSee('sounds/incoming-report-alarm.mp3')->assertSee('data-incoming-sound-stop', false);
+            ->assertSee('sounds/admin-report-alarm-993.wav')->assertDontSee('sounds/incoming-report-alarm.mp3')->assertSee('data-incoming-sound-stop', false);
     }
 
     public function test_initial_notifications_include_noncritical_reports_but_not_reviewed_history(): void

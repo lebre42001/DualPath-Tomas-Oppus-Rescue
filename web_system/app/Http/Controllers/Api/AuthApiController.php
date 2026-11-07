@@ -126,6 +126,8 @@ class AuthApiController extends Controller
     {
         /** @var User $user */
         $user = $request->user();
+        app(\App\Services\AdminActivityRecorder::class)->endDuty($user, true);
+        app(\App\Services\AdminActivityRecorder::class)->record($user, 'account', 'logout', 'Signed out', 'The officer signed out of the API session.');
         app(CivilianPresence::class)->endContext($request);
         app(\App\Services\CivilianActivityRecorder::class)->record($user, 'logout', 'Signed out', 'You signed out of the mobile API session.');
         $user->forceFill(['api_token' => null])->save();
@@ -148,6 +150,7 @@ class AuthApiController extends Controller
 
     private function recordLoginMetadata(User $user, Request $request): void
     {
+        app(\App\Services\AdminActivityRecorder::class)->record($user, 'account', 'login', 'Signed in', 'The officer signed in to the API session.');
         app(\App\Services\CivilianActivityRecorder::class)->record($user, 'login', 'Signed in', 'You signed in to the mobile API session.');
         $user->forceFill([
             'last_login_at' => now(),

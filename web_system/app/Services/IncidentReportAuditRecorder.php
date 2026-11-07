@@ -21,8 +21,8 @@ class IncidentReportAuditRecorder
             }
             $historical = $imported || array_key_exists($index, $previousLog);
             $label = (string) ($entry['label'] ?? 'Updated report');
-            $action = isset($entry['reviewed_severity']) ? 'severity_review'
-                : ($label === 'Text AI suggestion requested' ? 'ai_analysis' : 'coordination');
+            $action = ($entry['event'] ?? '') === 'lora_verification' ? 'verification' : (isset($entry['reviewed_severity']) ? 'severity_review'
+                : ($label === 'Text AI suggestion requested' ? 'ai_analysis' : 'coordination'));
             $time = $entry['occurred_at'] ?? $entry['created_at'] ?? $entry['at'] ?? null;
             try {
                 $occurredAt = $time ? Carbon::parse($time)->utc() : null;

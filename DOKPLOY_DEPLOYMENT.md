@@ -5,6 +5,55 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Admin alarm, shared review and System Log (2026-11-07)
+
+Admin Report alarm retains each officer's Sound on/Mute preference across full
+sidebar navigation. A new page silently prepares audio when sound is on; it
+offers Test sound without resetting the saved choice to Enable. Browser media
+activation is checked again rather than persisted as a false readiness flag.
+If playback is blocked, the setting remains on with explicit Test guidance.
+Only fresh report arrivals trigger the bounded ten-second alarm. Initial
+history stays silent; Stop, Mute and page navigation cancel old pending audio.
+The previous admin MP3 is replaced by the exact supplied WAV at
+`/sounds/admin-report-alarm-993.wav`. Civilian notification audio is separate.
+
+Monitoring, Online Reports and LoRa Reports share the same report review card,
+with evidence, severity assessment, map, admin process/decision and officer
+history. LoRa retains its node/radio timestamps, delivery state and independent
+authenticity verification. Severity review, authenticity verification and
+rescue status remain separate actions. No LoRa protocol or AI model changes.
+
+Admin-only System Log is at `/admin/system-log` and in the sidebar. The new
+`admin_activities` table keeps officer name/ID snapshots, report codes, saved
+report action summaries, logins/logouts, navigation, settings/account actions,
+print-preview requests and explicitly identified browser interface events.
+Request bodies, credentials, media and internal report notes are excluded.
+Saved report actions come from immutable report audit entries; browser events
+cannot fabricate a saved decision. Deleted reports do not delete their logs.
+
+Use Start duty/End duty to declare officer monitoring shifts. Logout closes the
+officer's open declared shift. Open shifts show last server activity, including
+an inactivity warning; a declaration alone is not proof of current presence.
+Distinct admin accounts retain distinct actors across handovers. Duty does not
+block urgent report processing or alter report assignment.
+
+The default day is midnight-to-midnight Asia/Manila. Visible log pages refresh
+every thirty seconds without recording the refresh as a visit. Editing filters
+pauses refresh; explicit historical date filters stay fixed. At midnight the
+default daily view returns to page one. The database history is retained.
+Search, inclusive dates, officer, activity and source filters also apply to the
+print preview across all matching pages. Narrow filters if more than 2,000
+entries match. Print uses the existing A4 report styles with System Log page
+labels; select Save as PDF in the browser's print dialog.
+
+Deploy code, assets and the public WAV together. Startup's existing
+`php artisan migrate --force` creates `admin_activities` and `admin_duty_shifts`
+and imports surviving report audits once. Existing report audits retain their
+original actor/time; missing historical sessions or duty are not invented.
+`php artisan admin-activity:backfill` safely retries the idempotent import.
+Clear Laravel caches and rebuild Vite assets. Verify public entry routes,
+admin-protected log routes, the shared review/signature assets and WAV hash.
+
 ## Civilian tutorial incident selection and notification chime (2026-11-07)
 
 Quick tutorial now includes a safe incident selection preview before scene photo:

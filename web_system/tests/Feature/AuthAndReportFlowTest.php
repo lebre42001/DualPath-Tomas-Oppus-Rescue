@@ -1991,7 +1991,7 @@ class AuthAndReportFlowTest extends TestCase
         $this->actingAs($responder)
             ->get(route('reports.index'))
             ->assertOk()
-            ->assertSee('AI quick read')
+            ->assertSee('Severity assessment')
             ->assertSee('Fatal output')
             ->assertSee('Confidence 100%')
             ->assertSee('Historical photo assessment')

@@ -22,5 +22,6 @@ class AppServiceProvider extends ServiceProvider
         \App\Models\IncidentReport::observe(\App\Observers\IncidentReportObserver::class);
         \App\Models\IncidentReport::observe(\App\Observers\CivilianReportActivityObserver::class);
         \App\Models\IncidentReportAudit::observe(\App\Observers\CivilianReportActivityObserver::class);
+        \App\Models\IncidentReportAudit::observe(\App\Observers\AdminReportActivityObserver::class);
     }
 }

@@ -42,7 +42,8 @@ class LoRaReportHistoryTest extends TestCase
             ->assertSee('LORA-HISTORY-12')->assertDontSee('LORA-HISTORY-2')
             ->assertDontSee('ONLINE-ONLY-REPORT')->assertSee('Next')->assertSee('Rows per page')
             ->assertSee('Report status toggle')->assertSee('data-report-modal-trigger', false)
-            ->assertSee('dashboard-modal-source lora-review-detail', false)
+            ->assertSee('admin-unified-review', false)->assertSee('data-admin-report-review="lora"', false)
+            ->assertSee('Admin process')->assertSee('Admin decision')->assertSee('Verify report authenticity')
             ->assertSee('data-report-detail-modal', false);
 
         $this->get(route('lora-reports.index', ['page' => 2]))

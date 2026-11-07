@@ -48,6 +48,7 @@ class LoRaReportController extends Controller
                         'verification' => $validated['verification'],
                         'actor_id' => $request->user()->id,
                         'actor_name' => $request->user()->name,
+                        'actor_role' => 'Admin',
                         'at' => now()->toIso8601String(),
                         'response_notes' => $validated['verification_notes'],
                     ],

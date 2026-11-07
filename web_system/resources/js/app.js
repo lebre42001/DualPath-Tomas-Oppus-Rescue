@@ -18,6 +18,7 @@ import './shell-dialogs';
 import './civilian-tutorial';
 import './online-reports';
 import './audit-history';
+import './admin-system-log';
 import './report-index';
 import './report-ai-analysis';
 import './profile-page';

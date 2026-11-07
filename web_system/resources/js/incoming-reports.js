@@ -51,23 +51,23 @@ export function initializeIncomingReports(onReport) {
             try { localStorage.setItem(alarmKey, JSON.stringify({ enabled: alarm.enabled })); } catch (_) { /* Optional. */ }
         }
         soundButtons.forEach(button => {
-            button.textContent = alarm?.enabled && alarm?.pending ? 'Play report alarm' : alarm?.enabled && alarm?.ready ? 'Test sound' : 'Enable sound';
+            button.textContent = alarm?.enabled && alarm?.pending ? 'Play report alarm' : alarm?.enabled ? 'Test sound' : 'Enable sound';
             if (button.hasAttribute('data-incoming-sound-unlock')) button.hidden = !alarm?.pending;
         });
         document.querySelectorAll('[data-incoming-sound-mute]').forEach(button => { button.hidden = !alarm?.enabled; });
         stopButtons.forEach(button => { button.hidden = !alarm?.playing && !alarm?.starting && !alarm?.pending; });
         document.querySelectorAll('.incoming-alarm-toolbar').forEach(toolbar => {
-            toolbar.dataset.alarmState = alarm?.enabled && !alarm?.ready ? 'attention' : 'ready';
+            toolbar.dataset.alarmState = alarm?.enabled && (alarm?.blocked || alarm?.pending) ? 'attention' : 'ready';
         });
         document.querySelectorAll('[data-incoming-sound-status]').forEach(copy => {
             copy.textContent = !alarm ? 'Audio unavailable. Visual report alerts remain active.'
                 : !alarm.enabled ? 'Sound muted on this browser. Tap Enable sound to turn it back on.'
                 : alarm.pending && !alarm.starting && !alarm.playing ? 'A new report is waiting for sound. Tap Play report alarm; ordinary clicks stay silent.'
-                : alarm.blocked ? 'Browser audio needs activation. Tap Enable sound. No test sound plays automatically.'
+                : alarm.blocked ? 'Sound is on and remembered. The browser blocked playback; tap Test sound to activate it.'
                 : alarm.starting ? 'Loading alarm sound...'
                 : alarm?.playing ? (alarm.isSample ? 'Playing the requested short sound test.' : 'New-report alarm playing for 10 seconds. Stop alarm to end it sooner.')
                 : alarm.ready ? 'Sound ready for new online and LoRa reports. Keep this website open.'
-                : 'Alarm is on. Your first click prepares audio silently; only new reports trigger an alarm.';
+                : 'Sound is on and remembered across tabs in this navigation. Preparing audio silently; only new reports trigger an alarm.';
         });
     };
     try {
@@ -125,7 +125,7 @@ export function initializeIncomingReports(onReport) {
             button.textContent = 'Sound unavailable';
             return;
         }
-        if (alarm.enabled && alarm.ready && !alarm.pending) void alarm.test();
+        if (alarm.enabled && !alarm.pending) void alarm.test();
         else void alarm.enable();
     }));
     document.querySelectorAll('[data-incoming-sound-mute]').forEach(button => button.addEventListener('click', () => alarm?.disable()));
@@ -176,5 +176,9 @@ export function initializeIncomingReports(onReport) {
         window.clearInterval(timer);
         void poll(); timer = window.setInterval(poll, 5000);
     });
-    syncSound(); render(); void poll(); timer = window.setInterval(poll, 5000);
+    syncSound();
+    // Restore the desired setting on every document without inventing a saved
+    // browser activation. Failure stays visible; a genuine Test gesture can retry.
+    if (alarm?.enabled) void alarm.unlock();
+    render(); void poll(); timer = window.setInterval(poll, 5000);
 }

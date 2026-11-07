@@ -46,6 +46,7 @@ h1 { margin: 6px 0 10px; font-size: 24px; }
     .online-report-print { page: online-report; }
     .lora-report-print { page: lora-report; }
     .audit-history-print { page: audit-history; }
+    .admin-system-log-print { page: admin-system-log; }
     .lora-report-print .print-report { break-inside: auto; page-break-inside: auto; }
     body { background: white; color: black; font-size: 10pt; }
     .print-toolbar { display: none !important; }
@@ -66,4 +67,8 @@ h1 { margin: 6px 0 10px; font-size: 24px; }
 @page audit-history {
     @top-right { content: 'Admin audit history'; }
     @bottom-left { content: 'Administrative action history'; }
+}
+@page admin-system-log {
+    @top-right { content: 'Admin System Log'; }
+    @bottom-left { content: 'Officer activity history'; }
 }
