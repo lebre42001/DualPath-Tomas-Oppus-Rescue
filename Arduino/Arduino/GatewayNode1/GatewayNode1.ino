@@ -32,6 +32,8 @@
 #include "report_outbox.h"
 #include "report_dashboard.h"
 #include "gateway_runtime.h"
+#include "local_responses.h"
+#include "ack_recovery.h"
 
 #if __has_include("arduino_secrets.h")
 #include "arduino_secrets.h"
@@ -64,6 +66,7 @@ const unsigned long HEARTBEAT_INTERVAL_MS = 10000;
 const unsigned long BEACON_INTERVAL_MS = 5000;
 const unsigned long NETWORK_POLL_INTERVAL_MS = 30000;
 const unsigned long ACK_POLL_INTERVAL_MS = 10000;
+const unsigned long ACK_CONFIRM_RETRY_MS = 5000;
 const unsigned long SERVER_ROUTE_TIMEOUT_MS = 30000;
 const unsigned long LOCAL_REPORT_RETRY_INTERVAL_MS = 15000;
 const unsigned long LED_ACTIVITY_MS = 700;
@@ -76,12 +79,15 @@ WebServer localServer(80);
 DNSServer dnsServer;
 Preferences prefs;
 ReportOutbox localOutbox;
+LocalResponses localResponses;
 String lastLocalAttemptId = "";
 MeshSX127xPort meshRadioPort;
 void onRadioTransmitted(const String& packet);
 MeshLink::Pump<MeshSX127xPort> meshRadio(meshRadioPort,onRadioTransmitted);
 String radioAckToConfirm;
 String radioAckConfirmToken, radioAckQueuedPacket, radioAckQueuedToken, lastRadioAckNotified;
+bool ackConfirmAttempted = false;
+unsigned long lastAckConfirmAttemptMs = 0;
 String gatewayBeaconBoot;
 const byte DNS_PORT = 53;
 
@@ -127,7 +133,10 @@ unsigned long lastApiFinishedMs = 0;
 int lastApiStatusCode = 0;
 bool batchHeartbeatsSupported = true;
 GatewayRadioItem sosInbox[11], heartbeatInbox[11], probeInbox[11];
+GatewayRadioItem ackRequestInbox[11];
+int nextAckRequestNode = 2;
 int nextSosNode = 2, nextHeartbeatNode = 2, nextProbeNode = 2;
+uint8_t nextApiTask = 0;
 uint8_t routerPhase = 0;
 bool routerEverAttempted = false, routerWasConnected = false;
 unsigned long routerPhaseAtMs = 0;
@@ -150,13 +159,47 @@ const char LOCAL_DASHBOARD[] PROGMEM = R"rawliteral(
 </style></head><body><header><h2>LoRa Emergency System</h2><div>Connected to NODE 1</div></header><main>
 <section class="card"><div class="label">Laravel server</div><div id="server" class="value">Checking...</div><div class="label">Nearby LoRa nodes</div><div id="peers">None detected</div><div class="label" style="margin-top:10px">Active nodes</div><div id="active" class="value">-- / 10</div></section>
 <section class="card"><h3>Emergency report</h3><select id="type"><option value="ROAD_ACCIDENT">Road Accident</option><option value="MEDICAL_EMERGENCY">Medical Emergency</option><option value="FIRE">Fire</option><option value="FLOOD">Flood</option><option value="SECURITY">Security</option><option value="OTHER">Other</option></select><textarea id="message" maxlength="70" placeholder="Describe the emergency briefly"></textarea><div class="small"><span id="remaining">70</span> characters remaining</div><button id="send" onclick="sendReport()">SEND EMERGENCY</button><div id="hint" class="small"></div></section>
-<section class="card"><h3>Latest report</h3><div class="label">Message ID</div><div id="msgid">None</div><div class="label" style="margin-top:8px">Submitted</div><div id="created">None</div><div class="label" style="margin-top:8px">Status</div><div id="status" class="value">None</div><div class="label">Responder message</div><div id="ack">None</div></section></main>
+<section class="card"><h3>Latest report</h3><div class="label">Message ID</div><div id="msgid">None</div><div class="label" style="margin-top:8px">Submitted</div><div id="created">None</div><div class="label" style="margin-top:8px">Status</div><div id="status" class="value">None</div><div class="label">Responder message</div><div id="ack">None</div></section>
+<section class="card"><h3>Responder messages</h3><p class="small">The latest 16 responses received on this node. Match the message ID to your report. Older reports remain in the emergency team's server records.</p><div id="responses" aria-live="polite">No responses received yet.</div></section></main>
 <div id="ackModal" class="modal"><div class="box"><h2>Report acknowledged</h2><p>Your report has a response from the emergency team.</p><div class="ack"><div class="label">Report</div><b id="modalId">-</b><div class="label" style="margin-top:10px">Message</div><b id="modalMessage">-</b><div class="label" style="margin-top:10px">Time</div><b id="modalTime">-</b></div><button onclick="closeAck()">OK</button></div></div>
 <script>
-const $=id=>document.getElementById(id);let shownAck='';$('message').addEventListener('input',()=>$('remaining').textContent=70-$('message').value.length);
+const $=id=>document.getElementById(id);let shownAck='',responses=[],responseFingerprint='';const seenResponses=new Set();$('message').addEventListener('input',()=>$('remaining').textContent=70-$('message').value.length);
 function localTime(){const d=new Date(),p=n=>String(n).padStart(2,'0'),off=-d.getTimezoneOffset(),sign=off>=0?'+':'-';return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'T'+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())+sign+p(Math.floor(Math.abs(off)/60))+':'+p(Math.abs(off)%60)}
-function closeAck(){localStorage.setItem('node1_ack_seen_'+shownAck,'1');$('ackModal').classList.remove('show')}
-async function refresh(){try{const r=await fetch('/status',{cache:'no-store'}),x=await r.json();$('server').innerHTML=x.server_online?'<span class="ok">Connected</span>':'<span class="warn">Unavailable</span>';$('peers').textContent=x.peer_list||'None detected';$('active').textContent=(x.active_nodes<0?'--':x.active_nodes)+' / 10';$('msgid').textContent=x.message_id||'None';$('created').textContent=x.created_at||'None';$('status').textContent=x.report_status||'None';$('ack').textContent=x.ack_message||'None';$('send').disabled=x.pending;$('send').textContent=x.pending?'WAITING FOR RESPONDER':'SEND EMERGENCY';$('hint').textContent=x.pending?'This report is saved until a responder acknowledgment arrives.':(x.server_online?'Server available.':'Server unavailable; NODE 1 will retry the saved report.');if((x.report_status==='ACKNOWLEDGED'||x.report_status==='REJECTED')&&x.message_id&&x.message_id!==shownAck&&!localStorage.getItem('node1_ack_seen_'+x.message_id)){shownAck=x.message_id;$('modalId').textContent=x.message_id;$('modalMessage').textContent=x.ack_message||'Your report has a responder update.';$('modalTime').textContent=x.ack_at||'-';$('ackModal').classList.add('show')}}catch(e){}}
+const responseKey=x=>JSON.stringify([x.message_id,x.ack_at,x.report_status,x.ack_message]);
+const responseTime=value=>value?new Date(/^\d+$/.test(value)?Number(value)*1000:value).toLocaleString():'Not recorded';
+function wasSeen(key){if(seenResponses.has(key))return true;try{return !!localStorage.getItem('node1_response_seen_'+key)}catch(e){return false}}
+function showNextResponse(){
+  if($('ackModal').classList.contains('show'))return;
+  const item=[...responses].reverse().find(x=>!wasSeen(responseKey(x)));if(!item)return;
+  shownAck=responseKey(item);$('modalId').textContent=item.message_id;
+  $('modalMessage').textContent=item.ack_message||'Your report has a responder update.';
+  $('modalTime').textContent=responseTime(item.ack_at);$('ackModal').classList.add('show');
+}
+function closeAck(){seenResponses.add(shownAck);try{localStorage.setItem('node1_response_seen_'+shownAck,'1')}catch(e){}$('ackModal').classList.remove('show');showNextResponse()}
+function renderResponses(items){
+  responses=items.filter(x=>x.message_id&&['ACKNOWLEDGED','REJECTED'].includes(x.report_status)).sort((a,b)=>(b.ack_at||'').localeCompare(a.ack_at||''));
+  const fingerprint=JSON.stringify(responses);
+  if(fingerprint!==responseFingerprint){
+    responseFingerprint=fingerprint;const list=$('responses');list.replaceChildren();
+    if(!responses.length)list.textContent='No responses received yet.';
+    for(const item of responses){
+      const row=document.createElement('details'),title=document.createElement('summary'),body=document.createElement('p'),time=document.createElement('p');
+      row.className='ack';row.style.marginTop='10px';title.textContent=item.message_id+' - '+item.report_status;
+      body.textContent=item.ack_message||'Your report has a responder update.';
+      time.className='small';time.textContent='Submitted: '+responseTime(item.created_at)+' | Responded: '+responseTime(item.ack_at);
+      row.append(title,body,time);list.append(row);
+    }
+  }
+  showNextResponse();
+}
+async function refresh(){try{
+  const r=await fetch('/status',{cache:'no-store'});if(!r.ok)return;const x=await r.json();
+  $('server').innerHTML=x.server_online?'<span class="ok">Connected</span>':'<span class="warn">Unavailable</span>';
+  $('peers').textContent=x.peer_list||'None detected';$('active').textContent=(x.active_nodes<0?'--':x.active_nodes)+' / 10';
+  $('msgid').textContent=x.message_id||'None';$('created').textContent=responseTime(x.created_at);$('status').textContent=x.report_status||'None';$('ack').textContent=x.ack_message||'None';
+  $('hint').textContent=x.server_online?'Server available.':'Server unavailable; NODE 1 will retry saved reports.';
+  renderResponses(Array.isArray(x.responses)?x.responses:[]);
+}catch(e){}}
 
 </script></body></html>
 )rawliteral";
@@ -506,16 +549,26 @@ void onRadioTransmitted(const String& packet) {
     const String identity=radioAckQueuedToken.length()?radioAckQueuedToken:packet;
     if(packet==radioAckQueuedPacket&&identity!=lastRadioAckNotified&&(!radioAckToConfirm.length()||radioAckToConfirm==id)){
       radioAckToConfirm=id;radioAckConfirmToken=radioAckQueuedToken;lastRadioAckNotified=identity;
+      ackConfirmAttempted=false;
     }
   }
 }
 
 void confirmTransmittedAcknowledgmentIfNeeded() {
   if(!radioAckToConfirm.length())return;
+  if(ackConfirmAttempted && millis()-lastAckConfirmAttemptMs<ACK_CONFIRM_RETRY_MS)return;
+  ackConfirmAttempted=true;lastAckConfirmAttemptMs=millis();
   String ignored;
   const String body=radioAckConfirmToken.length()?"{\"ack_token\":\""+radioAckConfirmToken+"\"}":"{}";
-  if(requestApi("POST","/acks/"+urlEncode(radioAckToConfirm)+"/delivered",body,ignored)){
+  // requestApi can return before HTTP starts (offline/busy). Never interpret a
+  // previous request's status as the result of this confirmation.
+  const uint32_t before=apiRequestSequence;
+  const bool confirmed=requestApi("POST","/acks/"+urlEncode(radioAckToConfirm)+"/delivered",body,ignored);
+  const bool retired=apiRequestSequence!=before && (lastApiStatusCode==404 || lastApiStatusCode==409);
+  if(confirmed || retired){
+    if(retired)Serial.println("[ACK] Report deleted or response no longer queued; continuing with other reports.");
     radioAckToConfirm="";radioAckConfirmToken="";lastAckPollMs=millis()-ACK_POLL_INTERVAL_MS;
+    ackConfirmAttempted=false;
   }
 }
 
@@ -609,6 +662,10 @@ void pollPendingAcknowledgmentIfNeeded() {
 
   const String origin = getField(packet, 2);
   if (origin == NODE_ID) {
+    const int slot = localOutbox.find(msgId);
+    const String createdAt = slot >= 0 ? getField(localOutbox.items[slot].packet, 3) :
+      (msgId == latestMsgId ? latestCreatedAt : String(""));
+    if (!localResponses.remember(prefs, packet, createdAt)) return;
     if (!localOutbox.acknowledge(prefs, msgId)) return;
     if (msgId == latestMsgId || msgId == pendingLocalMsgId) {
       latestReportStatus = getField(packet, 4);
@@ -624,9 +681,9 @@ void pollPendingAcknowledgmentIfNeeded() {
       prefs.remove("pending_packet");
       prefs.remove("pending_msg");
     }
-    String ignored;
-    const String body=ackToken.length()?"{\"ack_token\":\""+ackToken+"\"}":"{}";
-    requestApi("POST", "/acks/" + urlEncode(msgId) + "/delivered", body, ignored);
+    // The response is now durable even for an older report. Confirm on a later
+    // scheduler turn, with the same bounded retry used by radio responses.
+    radioAckToConfirm=msgId;radioAckConfirmToken=ackToken;ackConfirmAttempted=false;
     return;
   }
 
@@ -759,7 +816,21 @@ void handleLocalStatus() {
   json += "\"created_at\":\"" + jsonEscape(latestCreatedAt) + "\",";
   json += "\"report_status\":\"" + jsonEscape(latestReportStatus) + "\",";
   json += "\"ack_message\":\"" + jsonEscape(latestAckMessage) + "\",";
-  json += "\"ack_at\":\"" + jsonEscape(latestAckAt) + "\"}";
+  json += "\"ack_at\":\"" + jsonEscape(latestAckAt) + "\",\"responses\":[";
+  bool firstResponse = true;
+  for (const auto& item : localResponses.items) {
+    if (!item.packet.length()) continue;
+    if (!firstResponse) json += ",";
+    firstResponse = false;
+    String message = getField(item.packet, 8);
+    if (getField(item.packet, 9).length()) message = getField(item.packet, 9) + ": " + message;
+    json += "{\"message_id\":\"" + jsonEscape(getField(item.packet, 1)) + "\",";
+    json += "\"created_at\":\"" + jsonEscape(item.createdAt) + "\",";
+    json += "\"report_status\":\"" + jsonEscape(getField(item.packet, 4)) + "\",";
+    json += "\"ack_message\":\"" + jsonEscape(message) + "\",";
+    json += "\"ack_at\":\"" + jsonEscape(getField(item.packet, 5)) + "\"}";
+  }
+  json += "]}";
   localServer.sendHeader("Cache-Control", "no-store");
   localServer.send(200, "application/json", json);
 }
@@ -969,6 +1040,15 @@ bool forwardHeartbeatToLaravel(const String& packet, int rssi, float snr) {
 }
 
 void queueGatewayPacket(const String& packet, int rssi, float snr) {
+  if (packet.startsWith("ACKREQ|")) {
+    if (!AckRecovery::verify(packet)) { ++meshInvalidFrames; return; }
+    const int origin = meshNodeNumber(getField(packet, 2));
+    GatewayRadioItem& request = ackRequestInbox[origin];
+    if (request.packet.length() && getField(request.packet, 1) == getField(packet, 1)) return;
+    request.packet = packet; request.rssi = rssi; request.snr = snr;
+    request.receivedAtMs = millis(); request.attempted = false;
+    return;
+  }
   const bool sos = packet.startsWith("SOS|");
   const int node = meshNodeNumber(getField(packet, sos ? 2 : 1));
   if (node < 2) return;
@@ -1017,6 +1097,38 @@ bool forwardQueuedSosIfNeeded() {
     return true;
   }
   return false;
+}
+
+void forwardAcknowledgmentRequestIfNeeded() {
+  // Metadata for a queued final ACK belongs to that one transmission group.
+  // Do not replace it while normal delivery confirmation is still pending.
+  if (!serverRouteAvailable() || radioAckToConfirm.length() || meshRadio.finalAckPending()) return;
+  for (int scanned = 0; scanned < 9; ++scanned) {
+    const int node = nextAckRequestNode;
+    nextAckRequestNode = node == 10 ? 2 : node + 1;
+    GatewayRadioItem& item = ackRequestInbox[node];
+    if (!item.packet.length() || (item.attempted && millis() - item.attemptedAtMs < 5000)) continue;
+    item.attempted = true; item.attemptedAtMs = millis();
+    const String requested = item.packet;
+    const String id = getField(requested, 1), origin = getField(requested, 2);
+    String response;
+    const uint32_t before = apiRequestSequence;
+    if (!requestApi("GET", "/acks/pending?gatewayId=NODE_1&senderId=" + urlEncode(origin) +
+        "&msgId=" + urlEncode(id), "", response)) {
+      if (item.packet == requested && apiRequestSequence != before &&
+          (lastApiStatusCode == 404 || lastApiStatusCode == 422)) item.packet = "";
+      return;
+    }
+    String packet = extractJsonString(response, "packet");
+    if (!packet.length()) { if (item.packet == requested) item.packet = ""; return; } // No reviewed response yet, or report deleted.
+    if (!packet.startsWith("ACK|") || getField(packet, 1) != id || getField(packet, 2) != origin) return;
+    packet = meshSignOrigin(packet, true, node);
+    if (packet.length() && sendLoRaPacket(packet)) {
+      radioAckQueuedPacket = packet; radioAckQueuedToken = extractJsonString(response, "ackToken");
+      if (item.packet == requested) item.packet = "";
+    }
+    return;
+  }
 }
 
 void forwardQueuedHeartbeatIfNeeded() {
@@ -1094,6 +1206,8 @@ void handleIncomingLoRa() {
     queueGatewayPacket(packet, rssi, snr);
   } else if (packet.startsWith("PING|")) {
     queueGatewayPacket(packet, rssi, snr);
+  } else if (packet.startsWith("ACKREQ|")) {
+    queueGatewayPacket(packet, rssi, snr);
   }
 }
 
@@ -1166,6 +1280,19 @@ void setup() {
   const int latestSlot = localOutbox.find(latestMsgId);
   pendingLocalPacket = latestSlot >= 0 ? localOutbox.items[latestSlot].packet : String("");
   pendingLocalMsgId = latestSlot >= 0 ? latestMsgId : String("");
+  localResponses.restore(prefs);
+  for (const auto& item : localResponses.items)
+    if (item.packet.length()) localOutbox.acknowledge(prefs, getField(item.packet, 1));
+  const int responseSlot = localResponses.find(latestMsgId);
+  if (responseSlot >= 0) {
+    const String packet = localResponses.items[responseSlot].packet;
+    latestReportStatus = getField(packet, 4); latestAckAt = getField(packet, 5); latestAckMessage = getField(packet, 8);
+    if (getField(packet, 9).length()) latestAckMessage = getField(packet, 9) + ": " + latestAckMessage;
+    if (localOutbox.find(latestMsgId) < 0) { pendingLocalPacket="";pendingLocalMsgId=""; }
+  } else if (latestAckMessage.length() && (latestReportStatus == "ACKNOWLEDGED" || latestReportStatus == "REJECTED")) {
+    localResponses.remember(prefs, "ACK|" + latestMsgId + "|NODE_1|NODE_1|" + latestReportStatus + "|" +
+      latestAckAt + "|12|NODE_1|" + latestAckMessage, latestCreatedAt);
+  }
 
   updateLedIndicators();  // Restore the pending indicator after a reboot.
 
@@ -1207,14 +1334,24 @@ void loop() {
     // One HTTP operation per scheduler pass; radio is serviced during its wait.
     checkServerIfNeeded();
     if (apiRequestSequence == before && millis() - lastHeartbeatMs >= 15000) sendGatewayHeartbeatIfNeeded();
-    if (apiRequestSequence == before) confirmTransmittedAcknowledgmentIfNeeded();
-    if (apiRequestSequence == before) forwardQueuedSosIfNeeded();
-    if (apiRequestSequence == before) retryLocalReportIfNeeded();
-    if (apiRequestSequence == before) sendGatewayHeartbeatIfNeeded();
-    if (apiRequestSequence == before) pollPendingAcknowledgmentIfNeeded();
-    if (apiRequestSequence == before) pollNetworkSummaryIfNeeded();
-    if (apiRequestSequence == before && !batchHeartbeatsSupported) forwardQueuedHeartbeatIfNeeded();
-    if (apiRequestSequence == before) forwardQueuedProbeIfNeeded();
+    // Keep route health/overdue heartbeats, then rotate the remaining work.
+    // A continuously replenished SOS inbox or failed confirmation cannot starve
+    // NODE_1's own reports, responder ACK polling, or other gateway work.
+    for (uint8_t scanned=0; scanned<9 && apiRequestSequence==before; ++scanned) {
+      const uint8_t task=nextApiTask;
+      nextApiTask=(nextApiTask+1)%9;
+      switch(task) {
+        case 0: confirmTransmittedAcknowledgmentIfNeeded(); break;
+        case 1: forwardQueuedSosIfNeeded(); break;
+        case 2: retryLocalReportIfNeeded(); break;
+        case 3: pollPendingAcknowledgmentIfNeeded(); break;
+        case 4: sendGatewayHeartbeatIfNeeded(); break;
+        case 5: pollNetworkSummaryIfNeeded(); break;
+        case 6: if(!batchHeartbeatsSupported)forwardQueuedHeartbeatIfNeeded(); break;
+        case 7: forwardQueuedProbeIfNeeded(); break;
+        case 8: forwardAcknowledgmentRequestIfNeeded(); break;
+      }
+    }
   }
   delay(2);
 }

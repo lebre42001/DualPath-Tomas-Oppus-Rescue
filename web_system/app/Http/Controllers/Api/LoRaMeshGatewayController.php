@@ -190,14 +190,33 @@ class LoRaMeshGatewayController extends Controller
         $this->authorizeGateway($request);
         abort_unless($request->query('gatewayId') === self::GATEWAY_ID, 422, 'gatewayId must be NODE_1.');
 
-        $report = IncidentReport::query()
+        $recoverResponse = $request->query->has('senderId');
+        abort_unless($recoverResponse === $request->query->has('msgId'), 422, 'senderId and msgId must be provided together.');
+        if ($recoverResponse) {
+            $validated = $request->validate([
+                'senderId' => ['required', 'string', 'regex:/^NODE_(?:[2-9]|10)$/D'],
+                'msgId' => ['required', 'string', 'regex:/^NODE_(?:[2-9]|10)-[1-9][0-9]{0,9}$/D'],
+            ]);
+            [$sender, $sequence] = explode('-', $validated['msgId'], 2);
+            abort_unless($sender === $validated['senderId'] && (int) $sequence <= 4294967295, 422, 'msgId must belong to senderId and use a positive uint32 sequence.');
+            abort_unless(isset(config('lora_nodes')[$sender]), 422, 'Unknown registered LoRa node.');
+        }
+
+        $query = IncidentReport::query()
             ->where('transmission_type', 'lora')
             ->where(fn ($query) => $query->where('status', '!=', 'received')->orWhere('lora_verification', '!=', 'unverified'))
             ->whereNotNull('lora_ack_queued_at')
-            ->whereNull('lora_ack_delivered_at')
-            ->whereNotNull('lora_sequence')
-            ->oldest('lora_ack_queued_at')
-            ->first();
+            ->whereNotNull('lora_sequence');
+        if ($recoverResponse) {
+            // A gateway transmission receipt does not prove the field node heard
+            // it. Recover that report's current response without requeueing the
+            // incident, changing delivery state, or ingesting a second SOS.
+            $query->where('lora_sender_id', $validated['senderId'])
+                ->where('lora_sequence', $validated['msgId']);
+        } else {
+            $query->whereNull('lora_ack_delivered_at');
+        }
+        $report = $query->oldest('lora_ack_queued_at')->first();
 
         if ($report === null) {
             return response()->json(['ok' => true, 'pending' => false]);

@@ -8,7 +8,9 @@ function Read-TestFunction([string]$name) {
     $body = $body.Replace('String&', 'string').Replace('nullptr', 'null').Replace('GatewayRadioItem*', 'GatewayRadioItem').Replace('GatewayRadioItem&', 'GatewayRadioItem')
     $body = [regex]::Replace($body, '\bString\b', 'string')
     $body = $body.Replace('item->', 'item.').Replace('= &', '= ').Replace('.c_str()', '').Replace('.startsWith(', '.StartsWith(')
+    $body = $body.Replace('AckRecovery::verify', 'AckRecovery.verify')
     $body = $body.Replace('!item.packet.length()', 'item.packet.Length == 0').Replace('item.packet.length()', 'item.packet.Length > 0')
+    $body = $body.Replace('!request.packet.length()', 'request.packet.Length == 0').Replace('request.packet.length()', 'request.packet.Length > 0')
     $body = $body.Replace('!packet.length()', 'packet.Length == 0').Replace('packet.length()', 'packet.Length > 0')
     $body = $body.Replace('!prefs.putString(key, packet)', 'prefs.putString(key, packet) == 0')
     $body = $body.Replace('if (!item)', 'if (item == null)')
@@ -33,14 +35,15 @@ public class FakePrefs {
 }
 public class Dummy { public void println(string s) {} public void processNextRequest() {} }
 public class FakeMeshRadio { public void tick(uint now) {} }
+public static class AckRecovery { public static bool verify(string packet) { return packet.StartsWith("ACKREQ|") && packet.EndsWith("|signed"); } }
 public class Harness {
     public uint clock=0, meshInvalidFrames=0;
     public int nextSosNode=2, Calls=0, RadioPasses=0, LedPasses=0;
     public bool Accepted=false;
-    public GatewayRadioItem[] sosInbox=new GatewayRadioItem[11], heartbeatInbox=new GatewayRadioItem[11], probeInbox=new GatewayRadioItem[11];
+    public GatewayRadioItem[] sosInbox=new GatewayRadioItem[11], heartbeatInbox=new GatewayRadioItem[11], probeInbox=new GatewayRadioItem[11], ackRequestInbox=new GatewayRadioItem[11];
     FakePrefs prefs=new FakePrefs(); Dummy Serial=new Dummy(), dnsServer=new Dummy();
     FakeMeshRadio meshRadio=new FakeMeshRadio();
-    public Harness() { for(int i=0;i<=10;i++){ sosInbox[i]=new GatewayRadioItem(); heartbeatInbox[i]=new GatewayRadioItem(); probeInbox[i]=new GatewayRadioItem(); } }
+    public Harness() { for(int i=0;i<=10;i++){ sosInbox[i]=new GatewayRadioItem(); heartbeatInbox[i]=new GatewayRadioItem(); probeInbox[i]=new GatewayRadioItem(); ackRequestInbox[i]=new GatewayRadioItem(); } }
     uint millis(){ return clock; }
     bool serverRouteAvailable(){ return true; }
     string getField(string s,int n){ var f=s.Split('|'); return n<f.Length?f[n]:""; }

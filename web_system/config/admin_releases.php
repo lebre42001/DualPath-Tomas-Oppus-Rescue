@@ -2,6 +2,15 @@
 
 return [
     [
+        'id' => '2026.11.07.4', 'date' => '2026-11-07', 'title' => 'LoRa response recovery and reliable report queues',
+        'changes' => [
+            'Missed field-node responses can be recovered from the existing report without creating a duplicate incident.',
+            'Matching firmware keeps older report responses, saves replies before clearing pending reports, and notifies again for later admin updates.',
+            'Gateway scheduling and acknowledgment retries keep other reports moving. Existing LED colors, pins and status rules are preserved.',
+            'Upload the matching updated NODE_1 and NODE_2–NODE_10 sketches after this server update. Updating the website alone does not update the boards.',
+        ],
+    ],
+    [
         'id' => '2026.11.07.3', 'date' => '2026-11-07', 'title' => 'Floating report notifications and admin updates',
         'changes' => [
             'A draggable Notifications badge shows unseen incoming reports and unread app updates. Open Reports to review the reports that triggered the alarm.',

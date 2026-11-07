@@ -23,6 +23,14 @@ reported landmark is a separate field, not a claim of live GPS.
   actual delivery time; simultaneous over-the-air delivery is not guaranteed.
 - Existing SOS retries keep the same message ID and exact body. They bypass
   new-submission admission control and still use Laravel's idempotency logic.
+- After server receipt, missed admin replies are recovered with a separate
+  signed `ACKREQ`, not by replaying an old SOS. NODE_1 retrieves only that
+  existing report's current response through the authenticated ACK endpoint;
+  this never creates another incident or changes rescue status. See
+  [README.md](README.md#field-node-response-recovery-2026-11-07) for rollout.
+- Final responses are saved atomically by report ID before their matching
+  outbox slot is cleared. The latest 16 replies survive reboot; later revisions
+  can notify again. LED rules and SOS admission/sequence checks are unchanged.
 - Blocked submission and rejected radio-frame counters are sent in existing
   heartbeats. Admins can see them in LoRa Reports > Node protection indicators
   and expanded LoRa Mesh node details. Counts reset on node reboot; boot ID
@@ -68,7 +76,8 @@ receive-counter cache is RAM-only: after receiver reboot, recorded control
 frames may pass again. The durable SOS check below prevents creating a new
 incident from an older SOS. This does not prevent radio jamming.
 
-Separate per-origin keys authenticate SOS immutable fields and final ACKs:
+Separate per-origin keys authenticate SOS immutable fields, final ACKs and
+response recovery requests:
 
 - Each field node holds only its own origin key plus the group key. NODE_1
   holds the origin-key table. Compromising a relay's group key does not expose
@@ -77,6 +86,10 @@ Separate per-origin keys authenticate SOS immutable fields and final ACKs:
 - SOS body: `SOS2|msgId|origin|unixSeconds|R|description|battery|landmark`.
   Wire SOS fields are the original 0–9 fields followed by landmark (10) and
   origin tag (11). `R` is Road Accident. Route/hop/TTL may change in transit.
+- Recovery body: `ACKREQ2|msgId|origin|nonce`. Wire format is
+  `ACKREQ|msgId|origin|nonce|ttl|route|originTag`. NODE_1 validates the origin's
+  key and exact positive uint32 message ID before requesting a response.
+  Relays may change only TTL/route and suppress repeated request nonces.
 - ACK body: `ACK2|msgId|origin|gateway|status|time|message|verificationLabel`.
   Wire ACK fields are the original 0–8 fields followed by verification label
   (9) and destination-origin tag (10). Relays preserve this tag. A field node

@@ -22,6 +22,8 @@ public:
   }
   size_t length() const { return value.length(); }
   const char* c_str() const { return value.c_str(); }
+  long toInt() const { try { return std::stol(value); } catch (...) { return 0; } }
+  int compareTo(const String& other) const { return value.compare(other.value); }
   char operator[](size_t i) const { return value[i]; }
   int indexOf(char c, size_t start=0) const { auto p=value.find(c,start); return p==std::string::npos ? -1 : (int)p; }
   bool startsWith(const String& s) const { return value.rfind(s.value,0)==0; }

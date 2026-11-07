@@ -115,6 +115,114 @@ class LoRaReportAcknowledgmentTest extends TestCase
         $this->assertNull($report->fresh()->lora_ack_queued_at);
     }
 
+    public function test_gateway_can_recover_an_older_delivered_response_without_requeueing_or_mutating_reports(): void
+    {
+        $this->freezeTime();
+        $older = $this->report('NODE_2', '41');
+        $older->update([
+            'status' => 'resolved', 'response_notes' => 'Rescue response completed.',
+            'lora_ack_queued_at' => now()->subMinutes(2), 'lora_ack_delivered_at' => now()->subMinute(),
+            'lora_radio_auth' => 'hmac-sha256-v2', 'lora_verification' => 'confirmed',
+        ]);
+        $newer = $this->report('NODE_2', '42');
+        $newer->update(['status' => 'acknowledged', 'lora_ack_queued_at' => now()]);
+        $before = IncidentReport::query()->orderBy('id')->get()->map->getAttributes()->all();
+
+        $recovered = $this->getJson('/api/v1/lora/acks/pending?gatewayId=NODE_1&senderId=NODE_2&msgId=NODE_2-41', $this->headers())
+            ->assertOk()->assertJsonPath('pending', true)->assertJsonPath('msgId', 'NODE_2-41');
+        $packet = explode('|', $recovered->json('packet'));
+        $this->assertSame(['ACK', 'NODE_2-41', 'NODE_2', 'NODE_1', 'ACKNOWLEDGED'], array_slice($packet, 0, 5));
+        $this->assertSame('Rescue response completed.', $packet[8]);
+        $this->assertSame('Confirmed', $packet[9]);
+        $this->assertMatchesRegularExpression('/^[a-f0-9]{64}$/', $recovered->json('ackToken'));
+        $this->getJson('/api/v1/lora/acks/pending?gatewayId=NODE_1&senderId=NODE_2&msgId=NODE_2-41', $this->headers())
+            ->assertExactJson($recovered->json());
+        $this->getJson('/api/v1/lora/acks/pending?gatewayId=NODE_1', $this->headers())
+            ->assertOk()->assertJsonPath('msgId', 'NODE_2-42');
+
+        $this->assertSame($before, IncidentReport::query()->orderBy('id')->get()->map->getAttributes()->all());
+        $this->assertDatabaseCount('incident_reports', 2);
+        $this->assertDatabaseCount('lora_node_states', 0);
+    }
+
+    public function test_explicit_ack_recovery_uses_the_same_packet_and_revision_token_as_normal_delivery(): void
+    {
+        foreach (range(2, 10) as $nodeNumber) {
+            $node = 'NODE_'.$nodeNumber;
+            $report = $this->report($node, '4294967295');
+            $report->update(['status' => 'acknowledged', 'lora_ack_queued_at' => now()]);
+            $normal = $this->getJson('/api/v1/lora/acks/pending?gatewayId=NODE_1', $this->headers())->assertOk()->json();
+            $this->getJson('/api/v1/lora/acks/pending?gatewayId=NODE_1&senderId='.$node.'&msgId='.$node.'-4294967295', $this->headers())
+                ->assertOk()->assertExactJson($normal);
+            $this->postJson('/api/v1/lora/acks/'.$report->lora_sequence.'/delivered', ['ack_token' => $normal['ackToken']], $this->headers())
+                ->assertOk();
+            $this->getJson('/api/v1/lora/acks/pending?gatewayId=NODE_1', $this->headers())
+                ->assertOk()->assertJsonPath('pending', false);
+            $this->getJson('/api/v1/lora/acks/pending?gatewayId=NODE_1&senderId='.$node.'&msgId='.$node.'-4294967295', $this->headers())
+                ->assertOk()->assertExactJson($normal);
+        }
+    }
+
+    public function test_ack_recovery_rejects_missing_or_invalid_identity_pairs(): void
+    {
+        $queries = [
+            ['senderId' => 'NODE_2'], ['msgId' => 'NODE_2-42'],
+            ['senderId' => '', 'msgId' => 'NODE_2-42'],
+            ['senderId' => 'NODE_2', 'msgId' => ''],
+            ['senderId' => 'NODE_3', 'msgId' => 'NODE_2-42'],
+            ['senderId' => 'NODE_1', 'msgId' => 'NODE_1-42'],
+            ['senderId' => 'NODE_11', 'msgId' => 'NODE_11-42'],
+            ['senderId' => 'NODE_02', 'msgId' => 'NODE_02-42'],
+            ['senderId' => 'NODE_2', 'msgId' => 'NODE_2-0'],
+            ['senderId' => 'NODE_2', 'msgId' => 'NODE_2-01'],
+            ['senderId' => 'NODE_2', 'msgId' => 'NODE_2-4294967296'],
+            ['senderId' => 'NODE_2', 'msgId' => 'NODE_2-99999999999'],
+            ['senderId' => 'NODE_2', 'msgId' => 'NODE_2-42-extra'],
+            ['senderId' => ['NODE_2'], 'msgId' => 'NODE_2-42'],
+            ['senderId' => 'NODE_2', 'msgId' => ['NODE_2-42']],
+        ];
+        foreach ($queries as $query) {
+            $this->getJson('/api/v1/lora/acks/pending?'.http_build_query(['gatewayId' => 'NODE_1'] + $query), $this->headers())
+                ->assertUnprocessable();
+        }
+        config(['lora_nodes.NODE_2' => null]);
+        $this->getJson('/api/v1/lora/acks/pending?gatewayId=NODE_1&senderId=NODE_2&msgId=NODE_2-42', $this->headers())
+            ->assertUnprocessable();
+    }
+
+    public function test_ack_recovery_requires_gateway_authentication_and_gateway_identity(): void
+    {
+        $url = '/api/v1/lora/acks/pending?gatewayId=NODE_1&senderId=NODE_2&msgId=NODE_2-42';
+        $this->getJson($url)->assertUnauthorized();
+        $this->getJson($url, ['X-STITCH-LORA-TOKEN' => 'wrong-token'])->assertUnauthorized();
+        $civilian = User::factory()->create(['role' => 'civilian', 'is_admin' => false]);
+        $this->actingAs($civilian)->getJson($url)->assertUnauthorized();
+        $this->getJson(str_replace('gatewayId=NODE_1', 'gatewayId=NODE_2', $url), $this->headers())
+            ->assertUnprocessable();
+    }
+
+    public function test_ack_recovery_never_returns_an_unknown_deleted_unreviewed_or_unqueued_report(): void
+    {
+        $report = $this->report();
+        $url = '/api/v1/lora/acks/pending?gatewayId=NODE_1&senderId=NODE_2&msgId=NODE_2-42';
+        $this->getJson($url, $this->headers())->assertOk()->assertJsonPath('pending', false);
+        $report->update(['lora_ack_queued_at' => now()]);
+        $this->getJson($url, $this->headers())->assertOk()->assertJsonPath('pending', false);
+        $report->update(['status' => 'acknowledged', 'lora_ack_queued_at' => null]);
+        $this->getJson($url, $this->headers())->assertOk()->assertJsonPath('pending', false);
+        $report->update(['lora_ack_queued_at' => now(), 'lora_sender_id' => 'NODE_3']);
+        $this->getJson($url, $this->headers())->assertOk()->assertJsonPath('pending', false);
+        $report->update(['lora_sender_id' => 'NODE_2', 'transmission_type' => 'online']);
+        $this->getJson($url, $this->headers())->assertOk()->assertJsonPath('pending', false);
+        $report->update(['transmission_type' => 'lora']);
+        $report->delete();
+        $this->getJson($url, $this->headers())->assertOk()->assertJsonPath('pending', false);
+        $this->getJson(str_replace('NODE_2-42', 'NODE_2-43', $url), $this->headers())
+            ->assertOk()->assertJsonPath('pending', false);
+        $this->assertDatabaseCount('incident_reports', 0);
+        $this->assertDatabaseCount('lora_node_states', 0);
+    }
+
     public function test_unicode_review_message_fits_radio_budget_after_all_nodes_relay_it(): void
     {
         $report = $this->report('NODE_10');

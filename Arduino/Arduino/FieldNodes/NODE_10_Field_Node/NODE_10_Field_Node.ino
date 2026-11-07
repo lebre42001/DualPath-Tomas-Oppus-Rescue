@@ -12,7 +12,7 @@
   Each field node can:
   1. Create its own open (no-password) Wi-Fi AP and emergency dashboard.
   2. Originate an emergency report while preserving the original button-press time.
-  3. Queue one emergency report if no route to NODE_1/server is available.
+  3. Queue separate emergency reports if no server route is available.
   4. Send periodic heartbeat/status packets.
   5. Discover direct LoRa peers using HELLO and the gateway acknowledgment.
   6. Relay heartbeats, SOS reports, gateway beacons, network summaries, and ACKs.
@@ -47,6 +47,9 @@
 #include "report_guard.h"
 #include "report_outbox.h"
 #include "report_dashboard.h"
+#include "local_responses.h"
+#include "report_responses.h"
+#include "ack_recovery.h"
 
 // =====================================================
 // CHANGE ONLY THIS FOR EACH FIELD NODE
@@ -95,6 +98,7 @@ const unsigned long PEER_TIMEOUT_MS           = 40000;
 const unsigned long SERVER_ROUTE_TIMEOUT_MS   = 30000;
 const unsigned long NETWORK_SUMMARY_TIMEOUT_MS = 60000;
 const unsigned long SOS_RETRY_INTERVAL_MS     = 15000;
+const unsigned long ACK_RECOVERY_INTERVAL_MS  = 30000;
 const unsigned long LED_ACTIVITY_MS           = 700;
 const unsigned long LED_FAST_TOGGLE_MS        = 125;
 const unsigned long LED_SLOW_TOGGLE_MS        = 600;
@@ -112,9 +116,15 @@ DNSServer dnsServer;
 const byte LOCAL_DNS_PORT = 53;
 Preferences prefs;
 ReportOutbox localOutbox;
+LocalResponses localResponses(NODE_NUMBER);
+uint8_t recoveryNextSlot = 0;
+unsigned long lastAckRecoveryMs = 0, ackRecoveryDelayMs = ACK_RECOVERY_INTERVAL_MS;
+unsigned long lastResponseCleanupMs = 0;
+uint32_t ackRecoverySequence = 0;
 String lastSosAttemptId = "";
 MeshSX127xPort meshRadioPort;
 void onRadioTransmitted(const String& packet);
+void restoreLocalResponses();
 MeshLink::Pump<MeshSX127xPort> meshRadio(meshRadioPort,onRadioTransmitted);
 MeshLink::Discovery peerDiscovery;
 MeshLink::BeaconTracker gatewayBeacons;
@@ -317,7 +327,7 @@ async function refresh(){try{
   }else{
     b.textContent='QUEUE EMERGENCY';document.getElementById('hint').textContent='No confirmed server route. The report will be stored and sent automatically once a route becomes available.';
   }
-  showReviewIfNeeded(x);
+  if(window.renderReportResponses)window.renderReportResponses(x.responses||[]);
 }catch(e){}}
 
 </script>
@@ -873,6 +883,8 @@ void handleAck(String packet) {
 
   if (origin == NODE_ID) {
     if (!meshVerifyOrigin(packet, true, NODE_NUMBER)) { ++meshInvalidFrames; return; }
+    // A delayed server receipt must not downgrade a durably saved final reply.
+    if (status == "RECEIVED" && localResponses.find(msgId) >= 0) return;
     if (status == "RECEIVED" && gateway == "NODE_1" && acknowledgedAt.length() && localOutbox.find(msgId) >= 0) {
       if (!localOutbox.receipt(prefs, msgId)) return;
       meshRadio.cancel("SOS:"+msgId); lastGatewaySeenMs = millis();
@@ -884,10 +896,15 @@ void handleAck(String packet) {
       return;
     }
     if (gateway == "NODE_1" && acknowledgedAt.length() && (status == "ACKNOWLEDGED" || status == "REJECTED")) {
+      const int slot = localOutbox.find(msgId);
+      const String createdAt = slot >= 0 ? getField(localOutbox.items[slot].packet, 3) :
+        (msgId == latestMsgId ? latestCreatedAt : String(""));
+      // Save the complete response first. Failed flash writes leave the pending
+      // report intact; recovery can request this exact report again later.
+      if (!localResponses.remember(prefs, packet, createdAt)) return;
       if (!localOutbox.acknowledge(prefs, msgId)) return;
       meshRadio.cancel("SOS:"+msgId);
     }
-    if (latestAckAt.length() && acknowledgedAt.compareTo(latestAckAt) < 0) return;
     // Only a matching final response from the established gateway may clear
     // the local queue (and consequently its emergency LED).
     if ((latestMsgId == msgId || pendingMsgId == msgId) &&
@@ -906,7 +923,7 @@ void handleAck(String packet) {
 
   if (ttl <= 0 || routeHasNode(route, NODE_ID)) return;
 
-  String key = "ACK:" + msgId + ":" + status + ":" + acknowledgedAt;
+  String key = "ACK:" + msgId + ":" + status + ":" + acknowledgedAt + ":" + getField(packet, 10);
   if (recentlySeen(key, 15000)) return;
 
   String forwarded =
@@ -920,6 +937,43 @@ void handleAck(String packet) {
     "|" + shortMessage + "|" + getField(packet, 9) + "|" + getField(packet, 10);
 
   sendLoRaPacket(forwarded);
+}
+
+void handleAcknowledgmentRequest(const String& packet) {
+  if (!AckRecovery::shape(packet) || getField(packet, 2) == NODE_ID) return;
+  const int ttl = getField(packet, 4).toInt();
+  const String route = getField(packet, 5);
+  if (ttl <= 0 || routeHasNode(route, NODE_ID)) return;
+  if (recentlySeen("ACKREQ:" + getField(packet, 1) + ":" + getField(packet, 3), 60000)) return;
+  sendLoRaPacket("ACKREQ|" + getField(packet, 1) + "|" + getField(packet, 2) + "|" +
+    getField(packet, 3) + "|" + String(ttl - 1) + "|" + appendRoute(route, NODE_ID) + "|" + getField(packet, 6));
+}
+
+void requestMissingAcknowledgmentIfNeeded() {
+  if (!serverRouteAvailable() || millis() - lastAckRecoveryMs < ackRecoveryDelayMs) return;
+  // Pending received reports and recent completed reports both get a turn: the
+  // latter may have missed a later admin correction/resolution notification.
+  for (int scanned = 0; scanned < ReportOutbox::Capacity + LocalResponses::Capacity; ++scanned) {
+    const int index = recoveryNextSlot;
+    recoveryNextSlot = (recoveryNextSlot + 1) % (ReportOutbox::Capacity + LocalResponses::Capacity);
+    String id;
+    if (index < ReportOutbox::Capacity) {
+      const auto& item = localOutbox.items[index];
+      if (!item.packet.length() || !item.received) continue;
+      id = ReportOutbox::id(item.packet);
+      if (localResponses.find(id) >= 0) continue;
+    } else {
+      const auto& item = localResponses.items[index - ReportOutbox::Capacity];
+      if (!item.packet.length()) continue;
+      id = getField(item.packet, 1);
+    }
+    lastAckRecoveryMs = millis();
+    ackRecoveryDelayMs = ACK_RECOVERY_INTERVAL_MS + NODE_NUMBER * 80 + random(0, 5000);
+    const String nonce = probeBootId + "-" + String(++ackRecoverySequence);
+    const String packet = AckRecovery::request(id, NODE_NUMBER, nonce);
+    if (packet.length()) sendLoRaPacket(packet);
+    return;
+  }
 }
 
 // =====================================================
@@ -972,6 +1026,8 @@ void handleIncomingLoRa() {
     handleSos(packet);
   } else if (type == "ACK") {
     handleAck(packet);
+  } else if (type == "ACKREQ") {
+    handleAcknowledgmentRequest(packet);
   } else if (type == "PING" || type == "PONG") {
     handleTimingPacket(packet);
   }
@@ -1109,6 +1165,21 @@ void handleLocalStatus() {
   json += "\"report_status\":\"" + jsonEscape(latestStatus) + "\",";
   json += "\"ack_message\":\"" + jsonEscape(latestAckMessage) + "\",";
   json += "\"ack_at\":\"" + jsonEscape(latestAckAt) + "\"";
+  json += ",\"responses\":[";
+  bool firstResponse = true;
+  for (const auto& item : localResponses.items) {
+    if (!item.packet.length()) continue;
+    if (!firstResponse) json += ",";
+    firstResponse = false;
+    String message = getField(item.packet, 8);
+    if (getField(item.packet, 9).length()) message = getField(item.packet, 9) + ": " + message;
+    json += "{\"message_id\":\"" + jsonEscape(getField(item.packet, 1)) + "\",";
+    json += "\"created_at\":\"" + jsonEscape(item.createdAt) + "\",";
+    json += "\"report_status\":\"" + jsonEscape(getField(item.packet, 4)) + "\",";
+    json += "\"ack_message\":\"" + jsonEscape(message) + "\",";
+    json += "\"ack_at\":\"" + jsonEscape(getField(item.packet, 5)) + "\"}";
+  }
+  json += "]";
   json += "}";
 
   localServer.send(200, "application/json", json);
@@ -1176,7 +1247,41 @@ void loadPersistentState() {
   const int latestSlot = localOutbox.find(latestMsgId);
   pendingPacket = latestSlot >= 0 ? localOutbox.items[latestSlot].packet : String("");
   pendingMsgId = latestSlot >= 0 ? latestMsgId : String("");
+  restoreLocalResponses();
+}
 
+void restoreLocalResponses() {
+  localResponses.restore(prefs);
+  if (localResponses.find(latestMsgId) < 0 && latestAckMessage.length() && latestAckAt.length() &&
+      (latestStatus == "ACKNOWLEDGED" || latestStatus == "REJECTED")) {
+    localResponses.remember(prefs, "ACK|" + latestMsgId + "|" + NODE_ID + "|NODE_1|" + latestStatus +
+      "|" + latestAckAt + "|12|NODE_1|" + latestAckMessage, latestCreatedAt);
+  }
+  for (const auto& item : localResponses.items)
+    if (item.packet.length()) localOutbox.acknowledge(prefs, getField(item.packet, 1));
+  const int slot = localResponses.find(latestMsgId);
+  if (slot >= 0) {
+    const String packet = localResponses.items[slot].packet;
+    latestStatus = getField(packet, 4); latestAckAt = getField(packet, 5); latestAckMessage = getField(packet, 8);
+    if (getField(packet, 9).length()) latestAckMessage = getField(packet, 9) + ": " + latestAckMessage;
+    if (localOutbox.find(latestMsgId) < 0) { pendingPacket="";pendingMsgId=""; }
+  }
+}
+
+void retrySavedResponseCleanupIfNeeded() {
+  if (millis() - lastResponseCleanupMs < 5000) return;
+  lastResponseCleanupMs = millis();
+  for (const auto& item : localResponses.items) {
+    if (!item.packet.length()) continue;
+    const String id = getField(item.packet, 1);
+    if (localOutbox.find(id) < 0 || !localOutbox.acknowledge(prefs, id)) continue;
+    meshRadio.cancel("SOS:" + id);
+    if (id == latestMsgId || id == pendingMsgId) {
+      String message = getField(item.packet, 8);
+      if (getField(item.packet, 9).length()) message = getField(item.packet, 9) + ": " + message;
+      saveAcknowledgedState(getField(item.packet, 4), getField(item.packet, 5), message);
+    }
+  }
 }
 
 // =====================================================
@@ -1216,7 +1321,7 @@ void setup() {
 
   localServer.on("/", HTTP_GET, []() {
     String page = FPSTR(LOCAL_DASHBOARD);
-    page.replace("</body>", String(FPSTR(REPORT_GUARD_SCRIPT)) + "</body>");
+    page.replace("</body>", String(FPSTR(REPORT_RESPONSES_SCRIPT)) + String(FPSTR(REPORT_GUARD_SCRIPT)) + "</body>");
     localServer.sendHeader("Cache-Control", "no-store");
     localServer.send(200, "text/html", page);
   });
@@ -1292,6 +1397,8 @@ void loop() {
   sendHeartbeatIfNeeded();
   sendHelloIfNeeded();
   trySendPending(false);
+  requestMissingAcknowledgmentIfNeeded();
+  retrySavedResponseCleanupIfNeeded();
   sendTimingProbeIfNeeded();
   meshRadio.tick(millis());
 

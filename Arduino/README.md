@@ -80,6 +80,95 @@ Run `powershell.exe -NoProfile -ExecutionPolicy Bypass -File
 concurrent-origin, retry, persistence, coalescing, and flash-failure checks.
 These simulations and ESP32 builds do not replace a real radio/hardware test.
 
+### NODE_1 acknowledgment and scheduling fixes (2026-11-07)
+
+NODE_1 rotates API work between received SOS, its local report outbox, responder
+ACK polling, delivery confirmations and telemetry. A continuously replenished
+SOS inbox cannot monopolize forwarding. Health checks and overdue gateway
+heartbeats retain priority; radio reception, gateway beacons and LEDs continue
+to be serviced during HTTPS. Existing per-origin SOS ordering, authentication,
+receipts and final responder ACK handling remain in place.
+
+Failed delivery confirmations retry at five-second intervals without monopolizing
+the scheduler. A server `404` (report deleted) or `409` (no ACK queued) retires
+that obsolete confirmation. Connection errors, authentication failures and server
+errors retain it for retry. This retry interval is **not** a submission cooldown:
+new incidents still enter the existing durable outbox immediately.
+
+The NODE_1 local dashboard also keeps a separate flash-backed cache of the latest
+16 responder messages, keyed by report ID. An older report's response remains
+visible even after another report is submitted. Each response is saved before
+its matching outbox item is cleared and before Laravel receives confirmation.
+Responses and later revisions have separate popup dismissal state. The cache is
+bounded; the server retains the complete report history. This portal is shared
+by phones connected to the node's AP, as before; it is not an account inbox.
+
+LED pins, color meanings and blink rules are unchanged: green GPIO25 indicates
+a fresh direct peer, yellow GPIO32 indicates the existing server-route/activity
+state, and red GPIO33 covers locally tracked reports awaiting a final ACK.
+The response display cache does not drive the red LED.
+
+Only the updated **GatewayNode1** firmware needs uploading for these fixes;
+matching v2 field-node firmware and Laravel ACK endpoints remain compatible.
+Pushing website code cannot update an ESP32 that is already running.
+
+Additional regression checks from the repo root:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File Arduino/test_gateway_scheduling.ps1 -Compiler 'C:\path\to\zig.exe'
+node --test Arduino/tests/gateway_responses.test.cjs
+```
+
+The first test compiles the actual gateway scheduler/ACK functions against fake
+HTTP, clock and flash services, including sustained traffic, HTTP failures,
+millis rollover, earlier report responses, reboot recovery and failed writes.
+
+### Field-node response recovery (2026-11-07)
+
+NODE_2 through NODE_10 now save authenticated final responses independently by
+report ID before removing their matching delivery slots. A response for an older
+report is retained even when another incident has already been submitted. The
+latest 16 responses survive reboot and appear in the local dashboard; changed
+response content or verification results can notify again for the same report.
+An unchanged response does not repeatedly write flash or reopen its popup.
+Delayed server receipts and older response timestamps cannot downgrade a saved
+final reply. Interrupted outbox removals are retried every five seconds and
+reconciled from the saved response after reboot.
+
+After the server receipt releases the normal SOS lane, the node can recover a
+missing admin reply with an origin-authenticated `ACKREQ` packet. Requests rotate
+between received reports still tracked locally and the recent response cache
+(to recover missed later updates). They use a separate approximately 30–36 second
+interval, only with a confirmed server route. This is not a new-report cooldown;
+unreceived SOS packets retain their existing FIFO and retry behavior. Recovery
+can take several rotations under load; it is not an instant delivery guarantee.
+Locally tracked storage and the response cache remain bounded. The complete
+incident history stays on the server.
+
+Relays preserve the request's origin signature, suppress duplicate request
+nonces and honor route/TTL limits. NODE_1 verifies ownership, rotates request
+work between field nodes, and fetches that existing report's current reply with
+`GET /api/v1/lora/acks/pending?gatewayId=NODE_1&senderId=NODE_2&msgId=NODE_2-42`.
+Only the authenticated gateway can use this lookup; it does not create a second
+incident, change the report status, or relax SOS anti-replay sequence checks.
+The response returns through the existing signed ACK transport. A gateway
+transmission still is not proof of field-node reception; recovery handles a
+missed downlink after connectivity returns.
+
+Deploy the updated Laravel backend first, then upload the matching NODE_1 and
+all field nodes used as origins or relays. Existing normal ACK lookups remain
+compatible. Website deployment cannot flash the boards. This change preserves
+radio settings, direct-peer/route timeouts, LED pins, polarity and color rules.
+
+Additional tests (from the repo root, with the existing local Zig compiler or
+an explicit `-Compiler` path):
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File Arduino/test_field_delivery.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File Arduino/test_gateway_ack_recovery.ps1
+node --test Arduino/tests/report_responses.test.cjs
+```
+
 1. A phone joins the selected node's local Wi-Fi AP and is redirected to that ESP32's captive-portal dashboard. The user submits the emergency from the dashboard. This works without mobile data or internet.
 2. NODE_2 through NODE_10 assign a persistent message ID and creation time, then keep the SOS packet queued on the originating node.
 3. Nodes discover direct radio peers, relay heartbeats and SOS packets with route/TTL data, and suppress duplicate relays.
@@ -106,12 +195,13 @@ for subsequent decisions.
 
 The phone must remain connected to the originating node's Wi-Fi and its local
 dashboard to see the returned message/popup. A gateway broadcast is not proof
-that the field node received the ACK. If the node retries a report that was
-already reviewed, Laravel queues the ACK again without creating a second report.
-Later status or response-message changes also queue a fresh notification. The
-existing NODE_1 and field firmware support this backend update; no reupload is
-needed. This does not add a phone push notification while disconnected from the
-node. Fixed map coordinates still require actual installation coordinates in
+that the field node received the ACK. The updated firmware can explicitly
+request an existing report's latest reply without submitting a second incident.
+Later status or response-message changes also queue a fresh notification, and
+recent responses can be recovered if that broadcast was missed. Apply the
+coordinated backend and board updates described above to enable this recovery.
+This does not add a phone push notification while disconnected from the node.
+Fixed map coordinates still require actual installation coordinates in
 `web_system/config/lora_nodes.php`.
 
 The deployed design intentionally has no physical SOS button or switch. Emergency submission is always performed from the local dashboard after the user connects to the selected ESP32 node's Wi-Fi. If the captive portal does not open automatically, the user can browse to `http://192.168.4.1` while remaining connected to the node Wi-Fi. A locally saved report is not yet proof of server receipt: the dashboard distinguishes queued, transmitted/waiting for receipt, and server-received/under-review states. When the admin or responder reviews it, the originating node displays a persistent review-completed popup with the result, response message, and review time.
