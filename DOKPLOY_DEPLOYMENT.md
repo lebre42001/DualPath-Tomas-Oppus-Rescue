@@ -16,6 +16,8 @@ Only fresh report arrivals trigger the bounded ten-second alarm. Initial
 history stays silent; Stop, Mute and page navigation cancel old pending audio.
 The previous admin MP3 is replaced by the exact supplied WAV at
 `/sounds/admin-report-alarm-993.wav`. Civilian notification audio is separate.
+The Nginx template explicitly serves this WAV as `audio/wav`, with native byte
+ranges and revalidation, including container images whose default MIME map omits WAV.
 
 Monitoring, Online Reports and LoRa Reports share the same report review card,
 with evidence, severity assessment, map, admin process/decision and officer

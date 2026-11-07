@@ -7,6 +7,15 @@ server {
 
     client_max_body_size 25m;
 
+    # Alpine's default MIME map may omit WAV. Serve the supplied alarm as audio
+    # while retaining native static-file byte ranges for browser media loading.
+    location = /sounds/admin-report-alarm-993.wav {
+        types { audio/wav wav; }
+        default_type audio/wav;
+        add_header Cache-Control "no-cache";
+        try_files $uri =404;
+    }
+
     # Hashed Vite assets include the face guide's WASM/model. Compress these
     # public files and reuse them across camera openings/app updates.
     location /build/assets/ {
