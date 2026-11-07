@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\IncidentReport;
 use App\Support\IncidentFeedBroadcaster;
+use App\Support\CivilianSeverityAssessment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,7 @@ class IncidentSeverityReviewController extends Controller
         $validated = $request->validate([
             'severity_review_label' => ['required', Rule::in(['minor', 'serious', 'critical', 'needs_review'])],
             'severity_review_notes' => ['required', 'string', 'max:1000'],
+            'severity_public_note' => ['nullable', 'string', 'max:500'],
         ], [
             'severity_review_label.required' => 'Choose a severity or Needs review after reading the description.',
             'severity_review_notes.required' => 'Explain what in the description supports your review, or what information is missing.',
@@ -30,24 +32,7 @@ class IncidentSeverityReviewController extends Controller
             $needsReview = $label === 'needs_review';
             $severity = $needsReview ? null : ucfirst($label);
             $display = $needsReview ? 'Needs review' : $severity;
-            $priorReview = $report->description_severity_review;
-            $aiSuggestion = $priorReview['ai_suggestion'] ?? null;
-            $hasSuggestion = in_array($report->ai_source, ['text_model', 'text_model_experimental', 'text_rule_advisory'], true)
-                && $report->ai_status === 'complete' && in_array($report->severity, ['Minor', 'Serious', 'Critical'], true);
-            $hasAbstention = $report->ai_source === 'text_review' && $report->ai_status === 'needs_review'
-                && filled($report->ai_model_name);
-            if (! IncidentReport::manualOnlyMode() && ($hasSuggestion || $hasAbstention)) {
-                $aiSuggestion = [
-                    'label' => $hasSuggestion ? strtolower($report->severity) : 'needs_review',
-                    'model_name' => $report->ai_model_name,
-                    'model_version' => $report->ai_model_version,
-                    'model_score' => $report->ai_confidence,
-                    'model_probabilities' => $report->ai_probabilities,
-                    'source' => $report->ai_source,
-                    'summary' => $report->ai_summary,
-                    'processed_at' => $report->ai_processed_at?->toIso8601String(),
-                ];
-            }
+            $aiSuggestion = CivilianSeverityAssessment::aiSnapshotForReview($report);
             $reviewMethod = ! IncidentReport::manualOnlyMode() && $aiSuggestion && $aiSuggestion['label'] !== 'needs_review'
                 ? ($label === $aiSuggestion['label'] ? 'confirmed_ai' : 'corrected_ai')
                 : 'human_assessment';
@@ -62,6 +47,7 @@ class IncidentSeverityReviewController extends Controller
                 'reviewed_label' => $label,
                 'reviewed_severity' => $display,
                 'review_notes' => $validated['severity_review_notes'],
+                'public_note' => $validated['severity_public_note'] ?? null,
                 'review_method' => $reviewMethod,
                 'ai_suggestion' => $aiSuggestion,
                 'description_sha256' => hash('sha256', (string) $report->description),

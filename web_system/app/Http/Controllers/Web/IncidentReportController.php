@@ -9,6 +9,7 @@ use App\Services\AiTextSeverityClient;
 use App\Services\IncidentReportFilterQuery;
 use App\Services\RouteNavigationClient;
 use App\Support\AiSeverityMapper;
+use App\Support\CivilianSeverityAssessment;
 use App\Support\EvidencePhotoPreScreen;
 use App\Support\IncidentFeedBroadcaster;
 use App\Support\IncidentReportIngestor;
@@ -547,6 +548,7 @@ class IncidentReportController extends Controller
                     && ! str_starts_with((string) $incidentReport->ai_source, 'text_')
             ), Rule::in(['Minor', 'Serious', 'Critical', 'Fatal'])],
             'response_notes' => [$requiresDecisionMessage ? 'required' : 'nullable', 'string', 'max:1000'],
+            'severity_public_note' => ['nullable', 'string', 'max:500'],
         ], [
             'response_notes.required' => 'Add a message before responding to or cancelling this incident report.',
         ]);
@@ -609,6 +611,8 @@ class IncidentReportController extends Controller
         if (filled($validated['reviewed_severity'] ?? null)) {
             $reviewedSeverity = $validated['reviewed_severity'];
             $manualOnlyMode = IncidentReport::manualOnlyMode();
+            $aiSnapshot = CivilianSeverityAssessment::aiSnapshotForReview($incidentReport);
+            $reviewedLabel = strtolower($reviewedSeverity === 'Fatal' ? 'Critical' : $reviewedSeverity);
             $updates['severity'] = $reviewedSeverity;
             $updates['ai_source'] = $incidentReport->ai_source === 'manual_only' || $manualOnlyMode
                 ? 'human_responder'
@@ -646,6 +650,13 @@ class IncidentReportController extends Controller
                     : null,
                 'previous_stored_severity' => $incidentReport->severity,
                 'reviewed_severity' => $reviewedSeverity,
+                'reviewed_label' => $reviewedLabel,
+                'review_scope' => 'operational',
+                'description_sha256' => hash('sha256', (string) $incidentReport->description),
+                'ai_suggestion' => $aiSnapshot,
+                'review_method' => $aiSnapshot && ($aiSnapshot['label'] ?? 'needs_review') !== 'needs_review'
+                    ? ($aiSnapshot['label'] === $reviewedLabel ? 'confirmed_ai' : 'corrected_ai') : 'human_assessment',
+                'public_note' => $validated['severity_public_note'] ?? null,
                 'occurred_at' => now()->toIso8601String(),
             ];
         }

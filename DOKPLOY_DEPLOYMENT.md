@@ -5,6 +5,29 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Civilian human-reviewed severity (2026-11-07)
+
+Civilian Home, history, View All details, full reports, submission receipts and
+the civilian API share a restricted severity projection. Until an explicit,
+current human review exists, they show `Severity under review`, even when a
+report is acknowledged, responding or resolved. The latest review must match
+the current incident description and severity and include recorded reviewer
+provenance. Older reviews without that provenance require a fresh assessment;
+stale decisions are not published as current severity.
+
+After review, `Human-reviewed Severity` is primary. Expandable assessment details
+show the recorded original AI label when available, confirmation/correction,
+reviewer and Philippine review time. Model scores, raw model metadata and
+internal review reasons are excluded. The admin review form has a separate
+optional explanation explicitly intended for the civilian; older internal
+notes are never repurposed as public explanations. An assessment requesting
+more information has no confirmed severity and exposes no AI comparison.
+
+Both existing review paths retain an audit snapshot of the original suggestion
+and bind new reviews to the submitted description. No model/configuration,
+severity mapping, response-state or Reverb admin-feed behavior is changed.
+Deploy the normal web build and clear Laravel caches. No migration is required.
+
 ## Civilian admin contact (2026-11-07)
 
 Civilian Home and App Settings show a Contact Admin card with

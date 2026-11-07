@@ -96,9 +96,17 @@
             </label>
             <p>This internal review note is separate from the response message sent to the civilian.</p>
         </div>
+        <div class="field">
+            <label>
+                Explanation for the civilian (optional)
+                <textarea name="severity_public_note" class="textarea" maxlength="500" rows="2" placeholder="A short explanation suitable for the report's sender.">{{ $isSubmittedReview ? old('severity_public_note') : ($textReview['public_note'] ?? '') }}</textarea>
+            </label>
+            <p>Shown with the reviewed severity. Leave blank to use the standard assessment explanation. Do not include internal case notes.</p>
+        </div>
         @if ($isSubmittedReview)
             @error('severity_review_label')<p role="alert">{{ $message }}</p>@enderror
             @error('severity_review_notes')<p role="alert">{{ $message }}</p>@enderror
+            @error('severity_public_note')<p role="alert">{{ $message }}</p>@enderror
         @endif
         <button type="submit" class="btn btn-primary">{{ $reviewAiSuggestion ? 'Confirm severity' : 'Save admin assessment' }}</button>
     </form>

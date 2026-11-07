@@ -198,6 +198,8 @@
                 </div>
             </article>
 
+            @include('partials.civilian-severity-assessment', ['report' => $report])
+
             <section class="dual-grid">
                 <article class="panel">
                     <div class="panel-head"><div class="panel-heading"><p class="panel-kicker">Submitted Report</p><h2 class="panel-title">Emergency details</h2></div></div>

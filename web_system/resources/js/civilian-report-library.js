@@ -72,6 +72,11 @@ export function initializeCivilianReportLibrary(root, { document: doc = document
                 paragraph(body, 'Status updated (Philippine time)', formatted(item.updatedAt));
                 paragraph(body, 'Location', item.location); paragraph(body, 'Description', item.description);
                 paragraph(body, 'Admin response', item.response || 'No admin message yet.'); paragraph(body, 'Assigned admin', item.assignedTo || 'Not assigned yet.');
+                if (typeof item.assessmentHtml === 'string') {
+                    // Same-origin, own-account fragment rendered with escaped Blade values.
+                    const assessment = node('div', '', 'civilian-library-assessment');
+                    assessment.innerHTML = item.assessmentHtml; body.append(assessment);
+                }
                 photo(body, 'Scene photo', item.evidenceUrl); photo(body, 'Verification selfie', item.selfieUrl);
                 const link = node('a', 'Open full report', 'btn btn-secondary'); link.href = item.showUrl; body.append(link);
             }

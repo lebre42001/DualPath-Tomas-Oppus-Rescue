@@ -7,6 +7,7 @@ use App\Models\IncidentReport;
 use App\Models\User;
 use App\Services\AiTextSeverityClient;
 use App\Support\AiSeverityMapper;
+use App\Support\CivilianSeverityAssessment;
 use App\Support\EvidencePhotoPreScreen;
 use App\Support\IncidentFeedBroadcaster;
 use App\Support\IncidentReportIngestor;
@@ -281,7 +282,12 @@ class IncidentReportApiController extends Controller
         ];
 
         if ($viewer->isCivilian()) {
-            return $clientPayload;
+            $assessment = CivilianSeverityAssessment::forReport($report);
+
+            return array_merge($clientPayload, [
+                'severity' => $assessment['severity'],
+                'severityAssessment' => $assessment,
+            ]);
         }
 
         return array_merge($clientPayload, [

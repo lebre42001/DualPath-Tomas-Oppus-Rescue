@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\IncidentReport;
 use App\Services\IncidentReportFilterQuery;
+use App\Support\CivilianSeverityAssessment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -60,6 +61,9 @@ class CivilianReportLibraryController extends Controller
                 ? route('reports.evidence', $incidentReport) : null,
             'selfieUrl' => $incidentReport->reporter_selfie_path ? route('reports.selfie', $incidentReport) : null,
             'showUrl' => route('reports.show', $incidentReport),
+            'assessmentHtml' => view('partials.civilian-severity-assessment', [
+                'assessment' => CivilianSeverityAssessment::forReport($incidentReport),
+            ])->render(),
         ]], 200, ['Cache-Control' => 'private, no-store']);
     }
 

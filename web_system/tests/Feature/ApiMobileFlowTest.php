@@ -85,7 +85,8 @@ class ApiMobileFlowTest extends TestCase
             ->assertJsonPath('data.status', 'received')
             ->assertJsonPath('data.evidence_available', true)
             ->assertJsonPath('data.selfie_available', true)
-            ->assertJsonMissingPath('data.severity')
+            ->assertJsonPath('data.severity', null)
+            ->assertJsonPath('data.severityAssessment.state', 'pending')
             ->assertJsonMissingPath('data.transmission_type')
             ->assertJsonMissingPath('data.latitude')
             ->assertJsonMissingPath('data.longitude')
@@ -420,7 +421,8 @@ class ApiMobileFlowTest extends TestCase
 
         $reportResponse->assertCreated()
             ->assertJsonPath('data.status', 'received')
-            ->assertJsonMissingPath('data.severity')
+            ->assertJsonPath('data.severity', null)
+            ->assertJsonPath('data.severityAssessment.state', 'pending')
             ->assertJsonMissingPath('data.ai_source')
             ->assertJsonMissingPath('data.ai_status')
             ->assertJsonMissingPath('data.ai_confidence')
@@ -621,7 +623,8 @@ class ApiMobileFlowTest extends TestCase
 
         $reportResponse->assertCreated()
             ->assertJsonPath('data.status', 'received')
-            ->assertJsonMissingPath('data.severity')
+            ->assertJsonPath('data.severity', null)
+            ->assertJsonPath('data.severityAssessment.state', 'pending')
             ->assertJsonMissingPath('data.ai_source')
             ->assertJsonMissingPath('data.ai_status')
             ->assertJsonMissingPath('data.ai_review_required');
@@ -689,7 +692,8 @@ class ApiMobileFlowTest extends TestCase
 
         $reportResponse->assertCreated()
             ->assertJsonPath('data.status', 'received')
-            ->assertJsonMissingPath('data.severity')
+            ->assertJsonPath('data.severity', null)
+            ->assertJsonPath('data.severityAssessment.state', 'pending')
             ->assertJsonMissingPath('data.ai_source')
             ->assertJsonMissingPath('data.ai_status')
             ->assertJsonMissingPath('data.ai_review_required');

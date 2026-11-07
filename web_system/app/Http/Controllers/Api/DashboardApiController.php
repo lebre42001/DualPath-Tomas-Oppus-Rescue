@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\IncidentReport;
 use App\Models\User;
+use App\Support\CivilianSeverityAssessment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -124,7 +125,12 @@ class DashboardApiController extends Controller
         ];
 
         if ($viewer->isCivilian()) {
-            return $clientPayload;
+            $assessment = CivilianSeverityAssessment::forReport($report);
+
+            return array_merge($clientPayload, [
+                'severity' => $assessment['severity'],
+                'severityAssessment' => $assessment,
+            ]);
         }
 
         return array_merge($clientPayload, [

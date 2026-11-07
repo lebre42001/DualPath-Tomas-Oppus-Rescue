@@ -107,6 +107,8 @@
                 </div>
             </article>
 
+            @include('partials.civilian-severity-assessment', ['report' => $report])
+
             <article class="panel">
                 <div class="panel-head">
                     <div class="panel-heading">

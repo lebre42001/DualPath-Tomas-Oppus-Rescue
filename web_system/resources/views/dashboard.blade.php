@@ -276,7 +276,6 @@
                                         </div>
                                         <div class="tag-row">
                                             <span class="tag {{ $statusTone }}">{{ $statusDisplayLabel($report->status) }}</span>
-                                            <span class="tag {{ $tone($report->severity_display) }}">{{ $report->severity_display }}</span>
                                             <span class="tag neutral">{{ strtoupper($report->transmission_type ?: 'online') }}</span>
                                         </div>
                                     </div>
@@ -306,15 +305,7 @@
                                             <p><strong>Assigned admin:</strong> {{ $report->assignedResponder?->name ?? 'Not yet assigned' }}</p>
                                             <p><strong>Message:</strong> {{ $report->response_notes ?: 'No admin message yet.' }}</p>
                                         </div>
-                                        <div class="detail-card">
-                                            <strong>{{ $aiSourceLabel($report->operational_ai_source) }}</strong>
-                                            <div class="tag-row">
-                                                <span class="tag {{ $tone($report->severity_display) }}">{{ $report->severity_display }}</span>
-                                                <span class="badge {{ $confidenceTone($report->operational_ai_confidence) }}">{{ $report->ai_score_display }}</span>
-                                                <span class="badge {{ $aiStatusTone($report) }}">{{ $aiStatusLabel($report) }}</span>
-                                            </div>
-                                            <p>{{ \App\Support\ReportAssessmentSummary::forReport($report) }}</p>
-                                        </div>
+                                        @include('partials.civilian-severity-assessment', ['report' => $report])
                                         <div class="detail-card civilian-report-modal-wide">
                                             <strong>Description</strong>
                                             <p>{{ $report->description ?: 'No description was submitted with this report.' }}</p>

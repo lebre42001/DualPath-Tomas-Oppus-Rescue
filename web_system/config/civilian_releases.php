@@ -4,6 +4,17 @@
 // These release labels are separate from the app's runtime build fingerprint.
 return [
     [
+        'id' => '2026.11.07.8',
+        'date' => '2026-11-07',
+        'title' => 'Human-reviewed report severity',
+        'changes' => [
+            'Reports show Severity under review until an authorized reviewer records a current severity assessment.',
+            'After review, see Human-reviewed Severity and expand Assessment details for the original AI suggestion, confirmation or correction, reviewer, date and public explanation.',
+            'Acknowledgement and response progress remain separate from severity review. AI results are not shown as confirmed assessments.',
+            'The same assessment appears on Home, Report History, View All, full reports and submission receipts. Internal review notes and model scores stay private.',
+        ],
+    ],
+    [
         'id' => '2026.11.07.7',
         'date' => '2026-11-07',
         'title' => 'Contact Admin for help',

@@ -1,0 +1,37 @@
+.civilian-severity-assessment {
+    display: grid;
+    gap: 12px;
+    min-width: 0;
+    padding: 20px;
+    color: var(--ink);
+    background: var(--surface-alt);
+    border: 1px solid var(--line-strong, var(--line));
+    border-radius: 20px;
+    overflow-wrap: anywhere;
+}
+.civilian-report-modal-grid > .civilian-severity-assessment { grid-column: 1 / -1; }
+.civilian-assessment-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.civilian-assessment-heading h3 { margin: 0; font-size: 1.1rem; line-height: 1.4; }
+.civilian-severity-assessment p { margin: 0; line-height: 1.6; }
+.civilian-severity-assessment .civilian-assessment-message { color: var(--ink); }
+.civilian-assessment-severity { display: inline-flex; align-items: center; padding: 8px 14px; border: 1px solid currentColor; border-radius: 12px; font-size: 1.15rem; line-height: 1.35; }
+.civilian-assessment-severity--critical { color: #8e151c; background: #ffe6e7; }
+.civilian-assessment-severity--serious { color: #744600; background: #fff0cf; }
+.civilian-assessment-severity--minor { color: #155f3c; background: #dcf5e7; }
+.civilian-assessment-details { min-width: 0; border-top: 1px solid var(--line-strong, var(--line)); }
+.civilian-assessment-details > summary { min-height: 44px; padding: 12px 0; color: var(--ink); font-weight: 800; cursor: pointer; }
+.civilian-assessment-details > summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+.civilian-assessment-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 4px 0 16px; }
+.civilian-assessment-facts > div { display: grid; align-content: start; gap: 4px; min-width: 0; }
+.civilian-assessment-facts dt { color: var(--muted); font-size: .85rem; }
+.civilian-assessment-facts dd { margin: 0; color: var(--ink); font-weight: 700; line-height: 1.5; }
+.civilian-severity-assessment .civilian-assessment-advisory { color: var(--muted); font-size: .875rem; }
+.civilian-assessment-explanation { display: grid; gap: 6px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.civilian-assessment-explanation p { color: var(--ink); white-space: pre-wrap; }
+html[data-theme="dark"] .civilian-assessment-severity--critical, html.dark .civilian-assessment-severity--critical { color: #ffccd0; background: #5a2028; }
+html[data-theme="dark"] .civilian-assessment-severity--serious, html.dark .civilian-assessment-severity--serious { color: #ffe1a6; background: #533b16; }
+html[data-theme="dark"] .civilian-assessment-severity--minor, html.dark .civilian-assessment-severity--minor { color: #c4f6dc; background: #194933; }
+@media (max-width: 480px) {
+    .civilian-severity-assessment { padding: 16px; }
+    .civilian-assessment-facts { grid-template-columns: minmax(0, 1fr); }
+}

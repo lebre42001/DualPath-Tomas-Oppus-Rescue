@@ -146,12 +146,14 @@ class DescriptionSeverityDashboardTest extends TestCase
             ->assertJsonPath('recent_reports.0.id', $own->id)
             ->assertJsonPath('summary.active_alerts', 1)
             ->assertJsonPath('summary.my_reports', 1)
+            ->assertJsonPath('recent_reports.0.severity', null)
+            ->assertJsonPath('recent_reports.0.severityAssessment.state', 'pending')
             ->assertJsonCount(0, 'map_points')
             ->assertJsonPath('notifications', [$own->report_code.' - Received'])
             ->assertJsonMissingPath('summary.fatal_reports')
             ->assertJsonMissingPath('summary.needs_review');
 
-        foreach (['severity', 'severity_display', 'severity_is_provisional', 'ai_score_label', 'ai_source', 'ai_confidence', 'ai_summary'] as $field) {
+        foreach (['severity_display', 'severity_is_provisional', 'ai_score_label', 'ai_source', 'ai_confidence', 'ai_summary'] as $field) {
             $response->assertJsonMissingPath('recent_reports.0.'.$field);
         }
 
