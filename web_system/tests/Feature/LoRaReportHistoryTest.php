@@ -42,13 +42,61 @@ class LoRaReportHistoryTest extends TestCase
             ->assertSee('LORA-HISTORY-12')->assertDontSee('LORA-HISTORY-2')
             ->assertDontSee('ONLINE-ONLY-REPORT')->assertSee('Next')->assertSee('Rows per page')
             ->assertSee('Report status toggle')->assertSee('data-report-modal-trigger', false)
-            ->assertSee('admin-unified-review', false)->assertSee('data-admin-report-review="lora"', false)
-            ->assertSee('Admin process')->assertSee('Admin decision')->assertSee('Verify report authenticity')
+            ->assertSee('lora-review-detail', false)
+            ->assertSee('Description analysis and severity review')->assertSee('Admin response')->assertSee('Verify report authenticity')
             ->assertSee('data-report-detail-modal', false);
 
         $this->get(route('lora-reports.index', ['page' => 2]))
             ->assertOk()->assertViewHas('reports', fn ($reports) => $reports->count() === 2 && $reports->currentPage() === 2)
             ->assertSee('LORA-HISTORY-2')->assertSee('LORA-HISTORY-1')->assertDontSee('LORA-HISTORY-12');
+    }
+
+    public function test_monitoring_reuses_the_original_lora_review_and_online_uses_the_same_stacked_sections(): void
+    {
+        $this->travelTo(now()->startOfMinute());
+        $lora = $this->report(1);
+        $online = $this->report(2, ['transmission_type' => 'online', 'channel' => 'Internet']);
+        $this->actingAs($this->admin());
+
+        $extract = static function (string $html, int $reportId): \DOMElement {
+            $document = new \DOMDocument;
+            $previous = libxml_use_internal_errors(true);
+            $document->loadHTML('<?xml encoding="UTF-8">'.$html);
+            libxml_clear_errors();
+            libxml_use_internal_errors($previous);
+            $xpath = new \DOMXPath($document);
+
+            return $xpath->query('//*[@data-report-modal-row and @data-report-id="'.$reportId.'"]//div[contains(concat(" ", normalize-space(@class), " "), " dashboard-modal-source ")]')->item(0);
+        };
+        $monitoring = $this->get(route('monitoring'))->assertOk()->getContent();
+        foreach ([[$lora, 'lora-reports.index'], [$online, 'reports.index']] as [$report, $route]) {
+            $source = $extract($this->get(route($route))->assertOk()->getContent(), $report->id);
+            $live = $extract($monitoring, $report->id);
+            foreach ([$source, $live] as $review) {
+                $this->assertStringContainsString('lora-review-detail', $review->getAttribute('class'));
+                $this->assertStringNotContainsString('incident-card', $review->getAttribute('class'));
+                $headings = [];
+                foreach ($review->getElementsByTagName('section') as $section) {
+                    $headings[] = trim($section->getElementsByTagName('h3')->item(0)->textContent);
+                }
+                $this->assertSame(['Emergency description', 'Description analysis and severity review'], array_slice($headings, 0, 2));
+                $this->assertSame('Admin response', end($headings));
+                if ($report->transmission_type === 'lora') {
+                    $this->assertContains('Verify report authenticity', $headings);
+                    $this->assertNotContains('Verification Selfie', $headings);
+                } else {
+                    $this->assertContains('Evidence', $headings);
+                    $this->assertContains('Verification Selfie', $headings);
+                    $this->assertContains('Map location', $headings);
+                    $this->assertNotContains('Verify report authenticity', $headings);
+                }
+                // Each entry point keeps its redirect destination, with identical review content.
+                foreach (iterator_to_array($review->getElementsByTagName('input')) as $input) {
+                    if ($input->getAttribute('name') === 'return_to') $input->parentNode->removeChild($input);
+                }
+            }
+            $this->assertSame($source->C14N(), $live->C14N());
+        }
     }
 
     public function test_node_status_search_and_page_size_filters_are_preserved_in_pagination(): void

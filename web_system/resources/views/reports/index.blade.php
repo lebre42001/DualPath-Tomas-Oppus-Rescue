@@ -535,7 +535,7 @@
                                 'google_maps_url' => $mapSearchUrl($report),
                             ]] : [];
                         @endphp
-                        <details class="incident-feed-row {{ $report->status === 'received' ? 'process-pending' : 'process-active' }}" id="incident-report-{{ $report->id }}" data-report-modal-row data-report-title="{{ e($report->report_code.' - '.$report->incident_type) }}">
+                        <details class="incident-feed-row {{ $report->status === 'received' ? 'process-pending' : 'process-active' }}" id="incident-report-{{ $report->id }}" data-report-modal-row data-report-id="{{ $report->id }}" data-report-title="{{ e($report->report_code.' - '.$report->incident_type) }}">
                             <summary class="incident-feed-row-summary" role="button" tabindex="0" aria-label="Open full details for {{ $report->report_code }}">
                                 <div class="incident-feed-row-type">
                                     <strong>{{ $report->incident_type }}</strong>

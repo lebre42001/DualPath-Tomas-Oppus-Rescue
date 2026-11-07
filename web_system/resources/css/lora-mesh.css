@@ -129,6 +129,8 @@ body.admin-portal .lora-review-metadata { display: grid; grid-template-columns: 
 body.admin-portal .lora-review-metadata > div { min-width: 0; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 body.admin-portal .lora-review-metadata dt { color: var(--muted); font-size: .78rem; font-weight: 700; }
 body.admin-portal .lora-review-metadata dd { margin: 4px 0 0; overflow-wrap: anywhere; }
+body.admin-portal .online-review-detail .detail-card { min-width: 0; overflow-wrap: anywhere; }
+body.admin-portal .online-review-detail .preview-thumb { max-height: 320px; object-fit: contain; }
 @media (max-width: 1050px) {
     body.admin-portal .lora-report-columns { display: none; }
     body.admin-portal .lora-report-row-button { grid-template-columns: repeat(2,minmax(0,1fr)); }

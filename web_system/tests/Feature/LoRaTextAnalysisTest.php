@@ -73,7 +73,7 @@ class LoRaTextAnalysisTest extends TestCase
         $admin = $this->admin();
         $url = route('lora-reports.index');
         $this->actingAs($admin)->get($url)->assertOk()
-            ->assertSee('Severity assessment')->assertSee('data-lora-description-analysis', false)
+            ->assertSee('Description analysis and severity review')->assertSee('data-lora-description-analysis', false)
             ->assertSee('AI suggestion:')->assertSee('91.0%')
             ->assertSee(route('reports.severity-review', $report), false);
         $this->from($url)->post(route('reports.severity-review', $report), [

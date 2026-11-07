@@ -11,10 +11,4 @@
 .admin-log-table th, .admin-log-table td { padding: 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line, #dce4ec); overflow-wrap: anywhere; max-width: 300px; }
 .admin-log-table th { background: var(--surface-alt, #edf4fa); }
 .admin-log-table small, .admin-duty-list small { display: block; color: var(--muted, #526579); margin-top: 6px; line-height: 1.4; }
-.admin-unified-review .preview-grid, .admin-unified-review .dual-grid { align-items: start; }
-.admin-unified-review .detail-card, .admin-unified-review .preview-card { min-width: 0; overflow-wrap: anywhere; }
-body.admin-portal .report-detail-modal-body .admin-unified-review .incident-meta > .btn { width: auto; flex: 0 0 auto; }
-body.admin-portal .report-detail-modal-body .admin-unified-review .responder-feed-actions-grid > .detail-card { height: auto; }
-.admin-review-lora-details, .admin-review-history { margin-block: 14px; }
-.admin-review-lora-details .lora-review-metadata { grid-template-columns: minmax(0, 1fr); }
 @media (max-width: 700px) { .admin-log-filters { grid-template-columns: 1fr; } }
