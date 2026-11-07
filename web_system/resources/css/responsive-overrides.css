@@ -728,19 +728,54 @@ body.civilian-report-page #report-form .form-step-card {
 
 body.civilian-report-page .civilian-report-type {
     position: relative;
-    font-size: .8rem;
-    padding-bottom: 6px;
-    border-bottom: 1px solid var(--line);
+    min-width: 0;
+    margin-bottom: 8px;
 }
 
 body.civilian-report-page .civilian-report-type summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 44px;
-    gap: 8px;
+    min-height: 80px;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 2px solid #b21d24;
+    border-radius: 16px;
+    background: #fff4f4;
+    color: #851920;
+    box-shadow: 0 3px 10px #a51c2420;
     cursor: pointer;
     list-style: none;
+}
+
+body.civilian-report-page .civilian-report-type summary:hover,
+body.civilian-report-page .civilian-report-type[open] summary {
+    background: #ffe9ea;
+    border-color: #8f151d;
+}
+
+body.civilian-report-page .civilian-report-type summary:focus-visible,
+body.civilian-report-page .civilian-incident-option:focus-within {
+    outline: 3px solid #23699c;
+    outline-offset: 3px;
+}
+
+body.civilian-report-page .civilian-incident-summary-copy {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+    text-align: left;
+}
+
+body.civilian-report-page .civilian-incident-summary-copy > span {
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+body.civilian-report-page .civilian-incident-summary-copy small {
+    font-size: .78rem;
+    font-weight: 500;
+    line-height: 1.4;
 }
 
 body.civilian-report-page .civilian-report-type summary::-webkit-details-marker {
@@ -748,22 +783,36 @@ body.civilian-report-page .civilian-report-type summary::-webkit-details-marker 
 }
 
 body.civilian-report-page .civilian-report-type summary strong {
-    margin-left: auto;
-    font-size: .85rem;
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    color: inherit;
 }
 
-body.civilian-report-page .civilian-report-type summary::after {
-    content: "⌄";
-    font-size: 1.2rem;
+body.civilian-report-page .civilian-incident-chevron {
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    padding: 9px;
+    border-radius: 12px;
+    color: #fff;
+    background: #a71c24;
+    transition: transform .15s ease;
+}
+
+body.civilian-report-page .civilian-report-type[open] .civilian-incident-chevron {
+    transform: rotate(180deg);
 }
 
 body.civilian-report-page .civilian-incident-options {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 6px);
     left: 0;
     right: 0;
     z-index: 50;
-    padding: 8px;
+    display: grid;
+    gap: 6px;
+    padding: 10px;
     border: 1px solid var(--line-strong);
     border-radius: 12px;
     background: var(--surface);
@@ -774,26 +823,57 @@ body.civilian-report-page .civilian-incident-option {
     display: flex;
     align-items: center;
     gap: 8px;
-    min-height: 44px;
-    padding: 6px;
-    font-size: .8rem;
+    min-height: 48px;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    font-size: .875rem;
+    line-height: 1.4;
     cursor: pointer;
+}
+
+body.civilian-report-page .civilian-incident-option.is-selected {
+    color: var(--ink);
+    border-color: #b21d24;
+    background: var(--surface-alt);
+    font-weight: 700;
 }
 
 body.civilian-report-page .civilian-incident-option input {
     flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
     accent-color: var(--red);
 }
 
 body.civilian-report-page .civilian-incident-option small {
     margin-left: auto;
-    font-size: .68rem;
+    font-size: .75rem;
     color: var(--muted);
 }
 
 body.civilian-report-page .civilian-incident-option.is-locked {
-    opacity: .6;
+    color: var(--muted);
+    background: var(--surface-alt);
     cursor: not-allowed;
+}
+
+html[data-theme="dark"] body.civilian-report-page .civilian-report-type summary,
+html.dark body.civilian-report-page .civilian-report-type summary {
+    color: #ffe0e3;
+    background: #391e29;
+    border-color: #ef8a92;
+}
+
+html[data-theme="dark"] body.civilian-report-page .civilian-report-type summary:hover,
+html[data-theme="dark"] body.civilian-report-page .civilian-report-type[open] summary,
+html.dark body.civilian-report-page .civilian-report-type summary:hover,
+html.dark body.civilian-report-page .civilian-report-type[open] summary {
+    background: #4a2532;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.civilian-report-page .civilian-incident-chevron { transition: none; }
 }
 
 body.civilian-report-page .civilian-incident-options p {

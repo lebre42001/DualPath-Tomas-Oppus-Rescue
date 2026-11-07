@@ -4,6 +4,15 @@
 // These release labels are separate from the app's runtime build fingerprint.
 return [
     [
+        'id' => '2026.11.07.11',
+        'date' => '2026-11-07',
+        'title' => 'Clearer incident type selector',
+        'changes' => [
+            'Type of incident now appears as a bordered selection control with a larger Road Accident label, a visible dropdown arrow and a tap hint.',
+            'The selected option and unavailable incident types are clearer on phones and desktop in light and dark mode. Keyboard users return to the selector after choosing.',
+        ],
+    ],
+    [
         'id' => '2026.11.07.10',
         'date' => '2026-11-07',
         'title' => 'Device permissions and automatic report GPS',

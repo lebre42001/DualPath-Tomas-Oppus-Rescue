@@ -26,7 +26,10 @@ onDomReady( () => {
     const isCivilian = form?.dataset.reportRole === 'civilian';
     root.querySelector('[data-incident-selected]')?.addEventListener('click', () => {
         const picker = root.querySelector('[data-incident-picker]');
-        if (picker instanceof HTMLDetailsElement) picker.open = false;
+        if (picker instanceof HTMLDetailsElement) {
+            picker.open = false;
+            picker.querySelector('summary')?.focus({ preventScroll: true });
+        }
     });
     const geoButton = root.querySelector('[data-geo-fill-button]');
     const latitudeInput = root.querySelector('[data-geo-latitude]');

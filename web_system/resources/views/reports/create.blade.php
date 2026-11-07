@@ -76,9 +76,16 @@
                 <div class="civilian-report-mobile-flow">
                     <section class="form-step-card civilian-capture-panel">
                         <details class="civilian-report-type" data-incident-picker>
-                            <summary><span>Type of incident</span><strong>Road Accident</strong></summary>
+                            <summary>
+                                <span class="civilian-incident-summary-copy">
+                                    <span>Type of incident</span>
+                                    <strong>Road Accident</strong>
+                                    <small>Tap to view incident types</small>
+                                </span>
+                                <svg class="civilian-incident-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </summary>
                             <div class="civilian-incident-options" role="group" aria-label="Type of incident">
-                                <label class="civilian-incident-option">
+                                <label class="civilian-incident-option is-selected">
                                     <input type="radio" name="incident_type" value="Road Accident" checked data-incident-selected>
                                     <span>Road Accident</span><small>Selected</small>
                                 </label>

@@ -5,6 +5,16 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Civilian incident type selector clarity (2026-11-07)
+
+The civilian Report incident selector has a bordered, tinted control, a larger
+current value, tap guidance and a chevron that rotates when expanded. The native
+details/radio behavior is retained, with a visible keyboard focus outline and
+focus returning to the summary after selecting Road Accident. Selected and
+unavailable options are visually distinct in light/dark mobile and desktop views.
+Available report types and validation are unchanged. Deploy the normal Blade,
+JS/CSS and release config build and clear caches; no migration is required.
+
 ## Civilian device permission setup and automatic GPS (2026-11-07)
 
 Home links to Device permissions, where civilians can explicitly allow camera
