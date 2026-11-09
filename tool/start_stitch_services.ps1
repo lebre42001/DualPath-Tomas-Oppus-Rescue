@@ -91,6 +91,9 @@ function Get-ListeningProcessId {
     [Parameter(Mandatory = $true)][int]$Port
   )
 
+  # Background services such as Laravel's scheduler have no listening socket.
+  if ($Port -le 0) { return $null }
+
   $connection = Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue |
     Select-Object -First 1
 
@@ -186,7 +189,7 @@ function Start-ManagedProcess {
     $existingPid = (Get-Content $pidFile -Raw).Trim()
     if ($existingPid) {
       $existingProcess = Get-Process -Id ([int]$existingPid) -ErrorAction SilentlyContinue
-      if ($existingProcess) {
+      if ($existingProcess -and $Port -gt 0) {
         return [pscustomobject]@{
           Name = $Name
           Status = 'already_running'
@@ -277,6 +280,30 @@ function Set-EnvDefault {
   }
 }
 
+function Resolve-TextTestModelPath {
+  param(
+    [Parameter(Mandatory = $true)][string]$ModelDirectory
+  )
+
+  if ([System.IO.Path]::IsPathRooted($ModelDirectory)) {
+    throw 'test_model_directory must be a relative path inside this repository ai_service directory.'
+  }
+  $aiRoot = [System.IO.Path]::GetFullPath((Join-Path $root 'ai_service'))
+  $candidate = [System.IO.Path]::GetFullPath((Join-Path $aiRoot $ModelDirectory))
+  $boundary = $aiRoot.TrimEnd([char]92, [char]47) + [System.IO.Path]::DirectorySeparatorChar
+  if (-not $candidate.StartsWith($boundary, [System.StringComparison]::OrdinalIgnoreCase)) {
+    throw 'test_model_directory must stay inside this repository ai_service directory.'
+  }
+  if (-not (Test-Path -LiteralPath $candidate -PathType Container)) {
+    throw 'Configured local AI Lab checkpoint directory does not exist. Prepare the selected release before starting services.'
+  }
+  if (-not (Test-Path -LiteralPath (Join-Path $candidate 'metadata.json') -PathType Leaf)) {
+    throw 'Configured local AI Lab checkpoint has no metadata.json.'
+  }
+  # serve_text_test.py also resolves directory links before enforcing this scope.
+  return $candidate
+}
+
 $php = Resolve-PhpPath
 $python = Resolve-PythonPath
 $livenessPython = Join-Path $root 'ai_service\.venv-liveness\Scripts\python.exe'
@@ -286,10 +313,18 @@ if (Test-Path -LiteralPath $livenessPython) {
   if ($faceKey.Length -ge 40) { Set-EnvDefault -Name 'FACE_LIVENESS_KEY' -Value $faceKey }
 }
 $activeTextPath = Join-Path $root 'ai_service\active_text_config.json'
+$activeText = $null
+$textTestModelPath = $null
+$textRuntimePython = Join-Path $root 'ai_service\.venv-text\Scripts\python.exe'
+$learningPython = Join-Path $root 'ai_service\.venv-text\Scripts\python.exe'
+Set-EnvDefault -Name 'AI_LEARNING_PYTHON' -Value $learningPython
+Set-EnvDefault -Name 'AI_LEARNING_PROJECT_DIRECTORY' -Value (Join-Path $root 'ai_service')
 if (Test-Path -LiteralPath $activeTextPath) {
   $activeText = Get-Content -LiteralPath $activeTextPath -Raw | ConvertFrom-Json
+  if ($activeText.model_directory) {
+    Set-EnvDefault -Name 'AI_LEARNING_BASE_MODEL' -Value (Join-Path (Join-Path $root 'ai_service') $activeText.model_directory)
+  }
   if ($activeText.mode -eq 'MODEL_ADVISORY') {
-    $textRuntimePython = Join-Path $root 'ai_service\.venv-text\Scripts\python.exe'
     if (-not (Test-Path -LiteralPath $textRuntimePython)) {
       throw 'Text advisory runtime missing. Create ai_service/.venv-text and install requirements-advisory.txt.'
     }
@@ -301,7 +336,19 @@ if (Test-Path -LiteralPath $activeTextPath) {
     Set-EnvDefault -Name 'AI_TEXT_RULES_ENABLED' -Value $(if ($activeText.text_rules_enabled) { 'true' } else { 'false' })
     Set-EnvDefault -Name 'AI_TEXT_MODEL_DIR' -Value (Join-Path (Join-Path $root 'ai_service') $activeText.model_directory)
     Set-EnvDefault -Name 'AI_TEXT_SERVICE_URL' -Value 'http://127.0.0.1:8100'
-    Set-EnvDefault -Name 'AI_TEXT_TEST_SERVICE_URL' -Value 'http://127.0.0.1:8100'
+    if ([string]::IsNullOrWhiteSpace([string]$activeText.test_model_directory)) {
+      Set-EnvDefault -Name 'AI_TEXT_TEST_SERVICE_URL' -Value 'http://127.0.0.1:8100'
+    }
+  }
+  if (-not [string]::IsNullOrWhiteSpace([string]$activeText.test_model_directory)) {
+    $textTestModelPath = Resolve-TextTestModelPath -ModelDirectory ([string]$activeText.test_model_directory)
+    if (-not (Test-Path -LiteralPath $textRuntimePython -PathType Leaf)) {
+      throw 'Configured AI Lab runtime missing. Create ai_service/.venv-text and install requirements-advisory.txt.'
+    }
+    Set-Item -Path 'Env:AI_TEXT_TEST_MODEL_DIR' -Value $textTestModelPath
+    Set-EnvDefault -Name 'AI_TEXT_TEST_DEVICE' -Value 'cpu'
+    Set-EnvDefault -Name 'AI_TEXT_TEST_RULES_ENABLED' -Value 'true'
+    Set-EnvDefault -Name 'AI_TEXT_TEST_SERVICE_URL' -Value 'http://127.0.0.1:8101'
   }
 }
 $lanIp = Get-LanIpAddress
@@ -311,6 +358,7 @@ $mysqlServer = Join-Path $mysqlRoot 'bin\mysqld.exe'
 
 
 $textAiPython = Join-Path $root 'ai_service\.venv-xlmrt-fulltrain\Scripts\python.exe'
+if ($textTestModelPath) { $textAiPython = $textRuntimePython }
 
 $services = @(
   @{
@@ -329,6 +377,16 @@ $services = @(
     Port = 8000
     WorkingDirectory = Join-Path $root 'web_system'
     CommandFragments = @('artisan serve', '--host=0.0.0.0', '--port=8000')
+    ProcessName = 'php.exe'
+  },
+  @{
+    Name = 'laravel-scheduler'
+    FilePath = $php
+    # Start-Process joins ArgumentList: quote the absolute path for workspaces with spaces.
+    Arguments = @(('"' + (Join-Path $root 'web_system\artisan') + '"'), 'schedule:work')
+    Port = 0
+    WorkingDirectory = Join-Path $root 'web_system'
+    CommandFragments = @((Join-Path $root 'web_system\artisan'), 'schedule:work')
     ProcessName = 'php.exe'
   },
   @{
@@ -351,14 +409,14 @@ $services = @(
   }
 )
 
-if ((Test-Path -LiteralPath $textAiPython) -and $activeText.mode -ne 'MODEL_ADVISORY') {
+if ($textTestModelPath -or ((Test-Path -LiteralPath $textAiPython) -and $activeText.mode -ne 'MODEL_ADVISORY')) {
   $services += @{
     Name = 'ai-text-test'
     FilePath = $textAiPython
-    Arguments = @('serve_text_test.py')
+    Arguments = @(('"' + (Join-Path $root 'ai_service\serve_text_test.py') + '"'))
     Port = 8101
     WorkingDirectory = Join-Path $root 'ai_service'
-    CommandFragments = @('serve_text_test.py')
+    CommandFragments = @((Join-Path $root 'ai_service\serve_text_test.py'))
     ProcessName = 'python.exe'
   }
 }
@@ -396,6 +454,9 @@ if (-not $SkipHealthChecks) {
   } else {
     $null
   }
+  $textLabStatus = if ($textTestModelPath) {
+    Wait-ForHttp -Uri 'http://127.0.0.1:8101/ready/text' -TimeoutSeconds 30
+  } else { $null }
   $mysqlReady = Wait-ForTcpPort -TargetHost '127.0.0.1' -Port 3306
   $faceReady = if (Test-Path -LiteralPath $livenessPython) { Wait-ForHttp -Uri 'http://127.0.0.1:8102/ready/liveness' -TimeoutSeconds 30 } else { $null }
   $reverbReady = Wait-ForTcpPort -TargetHost '127.0.0.1' -Port 8080
@@ -408,6 +469,9 @@ if (-not $SkipHealthChecks) {
   Write-Host ("Web     : {0}" -f ($(if ($webStatus) { "HTTP $webStatus" } else { 'Not reachable yet' })))
   Write-Host ("AI      : {0}" -f ($(if ($aiStatus) { "HTTP $aiStatus" } else { 'Not reachable yet' })))
   Write-Host ("Text AI : {0}" -f ($(if ($textAiStatus) { "HTTP $textAiStatus" } elseif (-not (Test-Path -LiteralPath $textAiPython)) { 'Optional environment not installed' } else { 'Not reachable yet' })))
+  if ($textTestModelPath) {
+    Write-Host ("AI Lab  : {0}" -f ($(if ($textLabStatus -eq 200) { 'Ready on port 8101 (isolated experimental checkpoint)' } else { 'Not ready on port 8101' })))
+  }
   Write-Host ("Reverb  : {0}" -f ($(if ($reverbReady) { 'Port 8080 ready' } else { 'Port 8080 not reachable yet' })))
 }
 
@@ -419,6 +483,7 @@ Write-Host ("LAN Web UI : http://{0}:8000" -f $lanIp)
 Write-Host 'AI Health  : http://127.0.0.1:8100/health'
 Write-Host 'Text AI Lab: http://127.0.0.1:8000/admin/text-ai-test (admin login required)'
 Write-Host ("Text API   : {0}" -f $(if ($activeText.mode -eq 'MODEL_ADVISORY') { 'http://127.0.0.1:8100/ready/text' } else { 'http://127.0.0.1:8101/health/text' }))
+if ($textTestModelPath) { Write-Host 'Lab API    : http://127.0.0.1:8101/ready/text (isolated experimental checkpoint)' }
 Write-Host 'Reverb     : http://127.0.0.1:8080'
 Write-Host ''
 Write-Host "Logs are stored in: $runtimeDir"

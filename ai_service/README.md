@@ -1,5 +1,78 @@
 # AI Severity Service
 
+## Current local status — 2026-11-09
+
+The isolated admin AI Lab on **`127.0.0.1:8101`** now loads
+`releases/triage-multiincident-tfidf-20261109-v1`. This experimental TF-IDF release
+supports `road_accident`, `fire_incident`, `flood_landslide`,
+`medical_emergency`, `security_incident`, and `other`, using identical
+category-plus-description features in training and inference. Its opt-in cue
+profile is `multiincident_common_v1`, version `multiincident-cues-20261109-v4`.
+The selected fit uses 1,068 training, 308 validation and 144 family-separated
+test descriptions in English, Tagalog, Cebuano/Bisaya and mixed language.
+Context augmentation was tried; the selected fit uses unaugmented training data.
+
+**The 80% target failed.** Actual final results (`final_diagnostic_v2`) are:
+
+| Diagnostic set | Raw accuracy | Full-policy accuracy | Critical recall | Serious/Critical cases assigned a lower category |
+| --- | ---: | ---: | ---: | ---: |
+| Family-separated test, 144 examples | 73.6111% | 72.9167% | 69.2308% | 5 |
+| Separate `fresh_v2`, 384 examples | 83.3333% | 68.4896% | 50.0000% | 10 |
+
+Raw classifier accuracy does not establish the accuracy of the complete routed
+policy. Both sets contain synthetic draft labels, have no human approval, and
+are now exposed diagnostic evidence. Metadata retains human-review and
+deployment-approval flags as false. The Lab release is not approved for normal
+reporting or dispatch. No further training is part of this wrap-up. See
+[the complete evaluation](artifacts/reports/multiincident_common_20261109/EVALUATION.md)
+and [the isolated Lab setup](LOCAL_TEXT_AI_LAB.md).
+
+The ordinary service on **port 8100** retains the road-only TF-IDF v2 model and
+legacy `text-cues-20261109-v2` policy. Laravel reporting remains
+**`MANUAL_ONLY`**; the Lab does not create reports, change operational severity,
+unlock incident categories, or replace the live model. No online deployment or
+independently validated real-report accuracy is claimed.
+
+## Feedback learning and incident categories — 2026-11-09
+
+Requests now include the selected `incident_type` with the description. The
+contract covers `road_accident`, `fire_incident`, `flood_landslide`,
+`medical_emergency`, `security_incident`, and `other`. A registry entry does not
+unlock the reporting UI, firmware or backend incident restrictions.
+
+The ordinary-service TF-IDF v2 weights remain unchanged and **road-only**. A legacy
+checkpoint returns Needs review without scores for another category. Future
+candidates train and serve identical category-plus-description features;
+supported categories come from the training split, not the dropdown.
+Health/readiness expose the model's actual supported scope.
+
+Admin description reviews now produce private, durable feedback snapshots.
+**Approve for AI training** and an explicit language make a reviewed example
+eligible. Ordinary corrections do not imply training approval. Superseded,
+withdrawn and edited descriptions are excluded from current exports. Obvious
+contact details and demo text are screened out; this does not replace the
+reviewer's inspection for personal information and text-only label support.
+
+`php artisan ai-learning:run` exports the approved pool privately and, when
+configured, runs CPU-only candidate conversion/training. Local startup manages
+the Laravel scheduler; Dokploy has an optional separate, network-isolated
+`learning` worker. Candidate batches default to 50 new approved examples.
+Insufficient coverage produces a waiting/blocked state, not fabricated results.
+No feedback command activates a model or changes a live selector.
+
+The configurable gate requires at least 80% accuracy and macro-F1 overall and
+in category/language slices, explicit Critical recall and lower-category checks,
+and no supported-category baseline regression. Defaults of 95% Critical recall
+and five test examples per category/language are provisional engineering settings,
+not clinical thresholds or proof of adequate sample size. A fresh independently
+reviewed, AI-blinded holdout with digest-bound provenance is required. Passing
+creates a candidate for manual release review; deployment approval stays false.
+
+The ordinary-service phrase policy is `text-cues-20261109-v2`; the separate Lab
+uses the profile/version recorded above. Historical metrics below
+remain historical. No independent 80% accuracy across all six types is claimed.
+See [the automatic feedback workflow](TEXT_AI_WORKFLOW.md#automatic-feedback-candidates).
+
 ## Independent live face/blink gate — 2026-10-27
 
 `/liveness/verify` checks a live camera sequence for one face and the requested one or two open/closed/open eye transitions. It is a separate CPU task with a pinned Apache-2.0 model under `assets/liveness/`; the active severity config/checkpoint is not involved. Requests must carry an HMAC of the exact body using `FACE_LIVENESS_KEY`. The final selfie SHA-256 is returned to Laravel, which binds a short-lived, single-use proof to the account and purpose. The service processes capture frames transiently and does not store or train on them. `/ready/liveness` verifies SDK/model readiness.
@@ -8,11 +81,11 @@ Local setup: `python -m venv .venv-liveness`, then `.venv-liveness/Scripts/pytho
 
 This is basic face/blink gesture checking, not identity matching or certified anti-spoofing. A video replay, virtual camera, or generated face can pass it. The model is not used to make medical or severity decisions. Camera/lighting validation on physical phones is still required. See `DOKPLOY_DEPLOYMENT.md` for the gate, proof, deployment, and privacy behavior.
 
-## Active experimental text pilot — 2026-10-16
+## Retained road-only experimental text pilot — 2026-10-16
 
-**Description phrase support:** [the trilingual cue policy](TEXT_CUE_POLICY.md) adds explicit English/Tagalog/Bisaya condition phrases, including reported `patay` and `fifty-fifty`, while retaining the trained classifier. Rule suggestions have no fabricated confidence; actual classifier scores are displayed separately. New reports are analyzed automatically. Admin review keeps the original suggestion and all four scores visible. The combined policy's diagnostic results differ from the original raw classifier benchmark below.
+**Description phrase support:** [the trilingual cue policy](TEXT_CUE_POLICY.md) adds explicit English/Tagalog/Bisaya condition phrases, including reported `patay` and `fifty-fifty`, while retaining the trained classifier. Rule suggestions have no fabricated confidence; actual classifier scores are displayed separately. When advisory reporting is explicitly enabled, new reports can be analyzed automatically; current local Laravel reporting is manual-only. Admin review keeps the original suggestion and all four scores visible. The combined policy's diagnostic results differ from the original raw classifier benchmark below.
 
-`active_text_config.json` selects **DualPath Trilingual TF-IDF Logistic Regression**, version `dualpath-tfidf-20261016-v2`. The Laragon startup helper and Dokploy Compose profile enable this explicitly experimental, CPU-only suggestion model. Every operational severity still requires admin confirmation. Model files live in `releases/triage-text-tfidf-20261016-v2`; optional transformer/PyTorch inference remains supported separately.
+The ordinary model selector in `active_text_config.json` retains **DualPath Trilingual TF-IDF Logistic Regression**, version `dualpath-tfidf-20261016-v2`. Model files live in `releases/triage-text-tfidf-20261016-v2`; optional transformer/PyTorch inference remains supported separately. The isolated Lab uses its own test selector. Service availability does not enable Laravel reporting inference; current local reporting remains `MANUAL_ONLY`. Every operational severity requires admin assessment.
 
 **Requested retraining with the counted word pack:** [v2 evidence](artifacts/reports/text_retrain_20261016_v2/EVALUATION.md) records a fresh fit of the full canonical corpus on the unchanged group split. The 764 selected descriptions already occur in that corpus: 537 are training rows, 118 validation and 109 test. No duplicates were added and no validation/test text was fitted. The fit reproduced the same numeric weights and diagnostic results; it does not add information or improve accuracy. Both local and Dokploy selectors use v2; v1 remains available for rollback.
 
@@ -28,7 +101,7 @@ The FastAPI service defaults to `AI_OPERATION_MODE=MANUAL_ONLY`. In this mode, t
 
 This folder contains the operational text-classifier service, the independent face/blink gate, and archived image-model experiments. The runtime has no image-severity prediction endpoint and does not load severity image checkpoints.
 
-**Current application workflow:** new web/API severity suggestions use the emergency description only. Photos remain supporting evidence for responders. Laravel no longer calls image severity/relevance prediction, and stale image jobs cannot update reports. Dokploy and the local active text profile use the experimental pilot above; manual-only deployments continue accepting reports for human review. Existing model artifacts and historical assessments are preserved.
+**Current application workflow:** when advisory inference is enabled, new web/API severity suggestions use the emergency description and selected category. Photos remain supporting evidence for responders. Laravel no longer calls image severity/relevance prediction, and stale image jobs cannot update reports. Current local manual-only reporting accepts reports for human assessment. The separate Lab can test fictional descriptions without updating reports. Existing model artifacts and historical assessments are preserved.
 
 ## Description-only multilingual text AI
 

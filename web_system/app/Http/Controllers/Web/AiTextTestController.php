@@ -3,22 +3,26 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Services\AiLearningStatus;
+use App\Support\IncidentCategory;
 use App\Support\ReportedFatalityKeyword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class AiTextTestController extends Controller
 {
-    public function index(): View
+    public function index(AiLearningStatus $learningStatus): View
     {
-        return view('admin.ai-text-test', ['reportedFatalityKeyword' => false]);
+        return view('admin.ai-text-test', ['reportedFatalityKeyword' => false, 'learningStatus' => $learningStatus->summary()]);
     }
 
-    public function predict(Request $request): View
+    public function predict(Request $request, AiLearningStatus $learningStatus): View
     {
         $validated = $request->validate([
             'description' => ['required', 'string', 'min:8', 'max:2000'],
+            'incident_type' => ['nullable', Rule::in(array_keys(IncidentCategory::LABELS))],
         ]);
 
         $result = null;
@@ -30,6 +34,7 @@ class AiTextTestController extends Controller
                 ->timeout(max(1, (int) config('services.ai_text.test_timeout', 20)))
                 ->post(rtrim((string) config('services.ai_text.test_url', 'http://127.0.0.1:8101'), '/').'/predict/text', [
                     'description' => trim($validated['description']),
+                    'incident_type' => $validated['incident_type'] ?? 'road_accident',
                 ]);
 
             $payload = $response->json();
@@ -57,9 +62,11 @@ class AiTextTestController extends Controller
 
         return view('admin.ai-text-test', [
             'description' => trim($validated['description']),
+            'incidentType' => $validated['incident_type'] ?? 'road_accident',
             'reportedFatalityKeyword' => ReportedFatalityKeyword::matches($validated['description']),
             'result' => $result,
             'error' => $error,
+            'learningStatus' => $learningStatus->summary(),
         ]);
     }
 
@@ -82,6 +89,7 @@ class AiTextTestController extends Controller
                 || ! $this->isUsablePrediction($payload['model_assessment']))) {
                 return false;
             }
+
             return ($payload['confidence'] ?? null) === null && ($payload['probabilities'] ?? null) === null
                 && $payload['deployment_status'] === 'experimental' && $payload['responder_review_required']
                 && is_array($payload['matched_cues'] ?? null) && count($payload['matched_cues']) > 0

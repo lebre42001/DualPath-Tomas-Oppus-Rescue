@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\IncidentReport;
+use App\Support\IncidentCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 
@@ -35,7 +36,12 @@ class TextAiStatusController extends Controller
                         'text_rules_enabled' => $response->json('text_rules_enabled') === true,
                         'text_rules_version' => $response->json('text_rules_enabled') === true
                             ? $response->json('text_rules_version') : null,
-                        'deployment_status' => $response->json('deployment_status')];
+                        'deployment_status' => $response->json('deployment_status'),
+                        'input_format' => $response->json('input_format', 'description_v1'),
+                        'supported_incident_types' => array_values(array_intersect(
+                            array_keys(IncidentCategory::LABELS),
+                            (array) $response->json('supported_incident_types', ['road_accident'])
+                        ))];
                 }
             } catch (\Throwable) {
                 // Only publish readiness, never service URLs, reports or remote errors.

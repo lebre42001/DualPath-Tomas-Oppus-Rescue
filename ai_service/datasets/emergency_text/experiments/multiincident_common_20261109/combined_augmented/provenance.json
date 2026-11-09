@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "human_reviewed": false,
+  "approved_for_deployment": false,
+  "base_source_sha256": "c74fa340b669b245935e07d7c9a62663d6712518289c2b6c05e763a149850a94",
+  "additional_source_sha256": "c751e194b5b30aa95858315eb6efefe91e29e5bb1e714d97bcdfebbafb3b35ef",
+  "omitted_previously_exposed_base_test_count": 208,
+  "omitted_base_test_fitted": false,
+  "split_counts": {
+    "train": 4140,
+    "validation": 308,
+    "test": 144
+  },
+  "limitations": [
+    "Related clinical concepts can overlap across authored corpora despite distinct scenario IDs.",
+    "Synthetic translations and context variants are correlated; counts are not independent patient observations."
+  ]
+}

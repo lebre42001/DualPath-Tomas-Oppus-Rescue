@@ -12,9 +12,11 @@ mkdir -p \
     storage/framework/cache/data \
     storage/framework/sessions \
     storage/framework/views \
+    storage/app/private/ai-learning/candidate-state \
     bootstrap/cache
 
 chown -R www-data:www-data storage bootstrap/cache
+chmod 700 storage/app/private/ai-learning storage/app/private/ai-learning/candidate-state
 
 if [ "${DB_CONNECTION:-}" = "sqlite" ]; then
     SQLITE_PATH="${DB_DATABASE:-/var/www/html/database/database.sqlite}"
@@ -37,5 +39,11 @@ php artisan config:cache
 
 php-fpm -D
 php artisan reverb:start --host=127.0.0.1 --port=8080 &
+
+# Dokploy enables private feedback exports; the free Render demo leaves this off.
+# Candidate training is a separate Python worker, not part of the PHP image.
+if [ "${RUN_SCHEDULER:-false}" = "true" ]; then
+    su-exec www-data:www-data php artisan schedule:work &
+fi
 
 exec nginx -g 'daemon off;'

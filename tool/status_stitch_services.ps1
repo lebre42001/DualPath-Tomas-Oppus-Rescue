@@ -2,13 +2,18 @@ param()
 
 $ErrorActionPreference = 'Stop'
 
+$root = Split-Path -Parent $PSScriptRoot
 $runtimeDir = Join-Path $PSScriptRoot 'runtime'
 $textHealthUri = 'http://127.0.0.1:8101/health/text'
+$textLabHealthUri = $null
 $activeTextPath = Join-Path (Split-Path -Parent $PSScriptRoot) 'ai_service\active_text_config.json'
 if (Test-Path -LiteralPath $activeTextPath) {
   $activeText = Get-Content -LiteralPath $activeTextPath -Raw | ConvertFrom-Json
   if ($activeText.mode -eq 'MODEL_ADVISORY') {
     $textHealthUri = 'http://127.0.0.1:8100/ready/text'
+  }
+  if (-not [string]::IsNullOrWhiteSpace([string]$activeText.test_model_directory)) {
+    $textLabHealthUri = 'http://127.0.0.1:8101/ready/text'
   }
 }
 New-Item -ItemType Directory -Force -Path $runtimeDir | Out-Null
@@ -51,6 +56,12 @@ $serviceDefinitions = @(
     ProcessName = 'php.exe'
   },
   @{
+    Name = 'laravel-scheduler'
+    Port = 0
+    CommandFragments = @((Join-Path $root 'web_system\artisan'), 'schedule:work')
+    ProcessName = 'php.exe'
+  },
+  @{
     Name = 'reverb'
     Port = 8080
     CommandFragments = @('reverb:start', '--host=0.0.0.0', '--port=8080')
@@ -80,6 +91,8 @@ function Get-ListeningProcessId {
   param(
     [Parameter(Mandatory = $true)][int]$Port
   )
+
+  if ($Port -le 0) { return $null }
 
   $connection = Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue |
     Select-Object -First 1
@@ -183,6 +196,8 @@ function Get-ManagedServiceState {
   }
 
   $process = Get-Process -Id ([int]$pidValue) -ErrorAction SilentlyContinue
+  # A portless service must match its command line; a recycled PID is not proof.
+  if ($Port -le 0) { $process = $null }
 
   return [pscustomobject]@{
     Name = $Name
@@ -243,6 +258,9 @@ Write-Host ("MySQL   : {0}" -f (Get-TcpStatus -TargetHost '127.0.0.1' -Port 3306
 Write-Host ("Web     : {0}" -f (Get-HttpStatus -Uri 'http://127.0.0.1:8000'))
 Write-Host ("AI      : {0}" -f (Get-HttpStatus -Uri 'http://127.0.0.1:8100/health'))
 Write-Host ("Text AI : {0}" -f (Get-HttpStatus -Uri $textHealthUri))
+if ($textLabHealthUri) {
+  Write-Host ("AI Lab  : {0} (isolated port 8101)" -f (Get-HttpStatus -Uri $textLabHealthUri))
+}
 Write-Host ("Live face: {0}" -f (Get-HttpStatus -Uri 'http://127.0.0.1:8102/ready/liveness'))
 Write-Host ("Reverb  : {0}" -f (Get-TcpStatus -TargetHost '127.0.0.1' -Port 8080))
 Write-Host ''
@@ -251,5 +269,6 @@ Write-Host '----'
 Write-Host 'Web UI     : http://127.0.0.1:8000'
 Write-Host ("LAN Web UI : http://{0}:8000" -f (Get-LanIpAddress))
 Write-Host 'Text AI Lab: http://127.0.0.1:8000/admin/text-ai-test (admin login required)'
+if ($textLabHealthUri) { Write-Host 'Lab API    : http://127.0.0.1:8101/ready/text' }
 Write-Host ''
 Write-Host "Runtime files: $runtimeDir"

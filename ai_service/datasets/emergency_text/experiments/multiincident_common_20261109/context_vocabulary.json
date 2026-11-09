@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "provenance": "Developer-authored neutral report contexts; no observed patient or hazard facts; no human approval.",
+  "variants_per_training_row": 4,
+  "contexts": {
+    "road_accident": {
+      "en": ["For the motorcycle report", "For the tricycle report", "About the van report", "About the pedestrian report"],
+      "tl": ["Sa ulat tungkol sa motorsiklo", "Sa ulat tungkol sa traysikel", "Tungkol sa ulat sa van", "Tungkol sa ulat sa taong naglalakad"],
+      "ceb": ["Sa report bahin sa motor", "Sa report bahin sa traysikol", "Bahin sa report sa van", "Bahin sa report sa naglakaw nga tawo"],
+      "mixed": ["Sa motorcycle report", "Sa tricycle report", "About sa van report", "About sa pedestrian report"]
+    },
+    "fire_incident": {
+      "en": ["About the smoke report at a house", "About the stove or LPG report", "For the electrical wiring report", "For the house fire report"],
+      "tl": ["Tungkol sa ulat ng usok sa bahay", "Tungkol sa ulat sa kalan o LPG", "Sa ulat tungkol sa kawad ng kuryente", "Sa ulat tungkol sa sunog sa bahay"],
+      "ceb": ["Bahin sa report sa aso sa balay", "Bahin sa report sa kalan o LPG", "Sa report bahin sa kable sa kuryente", "Sa report bahin sa sunog sa balay"],
+      "mixed": ["About sa smoke report sa house", "About sa stove or LPG report", "Sa electrical wiring report", "Sa house fire report"]
+    },
+    "flood_landslide": {
+      "en": ["About the report near the river", "For the report about a drain", "About the landslide report", "For the water report near the road"],
+      "tl": ["Tungkol sa ulat malapit sa ilog", "Sa ulat tungkol sa kanal", "Tungkol sa ulat sa pagguho ng lupa", "Sa ulat tungkol sa tubig malapit sa daan"],
+      "ceb": ["Bahin sa report duol sa suba", "Sa report bahin sa kanal", "Bahin sa report sa pagdahili sa yuta", "Sa report bahin sa tubig duol sa dalan"],
+      "mixed": ["About sa report near the river", "Sa report about the drain", "About sa landslide report", "Sa water report near the road"]
+    },
+    "medical_emergency": {
+      "en": ["In the medical report from home", "In the report from the clinic", "For the medical report from work", "For the medical report from school"],
+      "tl": ["Sa ulat medikal mula sa bahay", "Sa ulat mula sa klinika", "Sa ulat medikal mula sa trabaho", "Sa ulat medikal mula sa paaralan"],
+      "ceb": ["Sa medikal nga report gikan sa balay", "Sa report gikan sa klinika", "Sa medikal nga report gikan sa trabaho", "Sa medikal nga report gikan sa eskwelahan"],
+      "mixed": ["Sa medical report from home", "Sa report from the clinic", "Sa medical report from work", "Sa medical report from school"]
+    },
+    "security_incident": {
+      "en": ["For the report about a fight", "About the theft report", "For the disturbance report", "In the guard's report"],
+      "tl": ["Sa ulat tungkol sa away", "Tungkol sa ulat sa pagnanakaw", "Sa ulat tungkol sa kaguluhan", "Sa ulat ng guwardiya"],
+      "ceb": ["Sa report bahin sa away", "Bahin sa report sa pagpangawat", "Sa report bahin sa kagubot", "Sa report sa guwardiya"],
+      "mixed": ["Sa report about a fight", "About sa theft report", "Sa disturbance report", "Sa guard report"]
+    },
+    "other": {
+      "en": ["For the work tool report", "For the tree report", "About the fall report", "About the boat report"],
+      "tl": ["Sa ulat tungkol sa gamit sa trabaho", "Sa ulat tungkol sa puno", "Tungkol sa ulat sa pagkahulog", "Tungkol sa ulat sa bangka"],
+      "ceb": ["Sa report bahin sa gamit sa trabaho", "Sa report bahin sa kahoy", "Bahin sa report sa pagkahulog", "Bahin sa report sa bangka"],
+      "mixed": ["Sa work tool report", "Sa tree report", "About sa fall report", "About sa boat report"]
+    }
+  }
+}

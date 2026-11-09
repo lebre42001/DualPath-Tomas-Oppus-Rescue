@@ -1,0 +1,4018 @@
+{
+  "split": "validation",
+  "model_version": "text-20261108T193040120112Z",
+  "labels": [
+    "minor",
+    "serious",
+    "critical",
+    "needs_review"
+  ],
+  "dataset_fingerprint": "e26fb99fc5905e41e0b7964dc1428096c6cc9265a4b96f20f2c27904fcbfe8da",
+  "all_data_reviewed": false,
+  "rows": [
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_CRITICAL_04_CEB",
+      "group_id": "fire_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "ceb",
+      "incident_type": "fire_incident",
+      "label": "critical",
+      "probabilities": [
+        0.07839973491502966,
+        0.15308689526427338,
+        0.6740417996480016,
+        0.09447157017269552
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_CRITICAL_04_EN",
+      "group_id": "fire_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "en",
+      "incident_type": "fire_incident",
+      "label": "critical",
+      "probabilities": [
+        0.0734010844150113,
+        0.3573782091636667,
+        0.43158071389193503,
+        0.13763999252938705
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_CRITICAL_04_MIXED",
+      "group_id": "fire_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "mixed",
+      "incident_type": "fire_incident",
+      "label": "critical",
+      "probabilities": [
+        0.04217143449430511,
+        0.17394177978692427,
+        0.6962107885920293,
+        0.0876759971267413
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_CRITICAL_04_TL",
+      "group_id": "fire_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "tl",
+      "incident_type": "fire_incident",
+      "label": "critical",
+      "probabilities": [
+        0.06908244928460236,
+        0.3788275879019005,
+        0.41959160726366895,
+        0.13249835554982822
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_MINOR_06_CEB",
+      "group_id": "fire_incident__additional_minor_cold_ash_no_live_fire",
+      "language": "ceb",
+      "incident_type": "fire_incident",
+      "label": "minor",
+      "probabilities": [
+        0.8245477149976831,
+        0.049527104956963455,
+        0.04969483224255249,
+        0.07623034780280118
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_MINOR_06_EN",
+      "group_id": "fire_incident__additional_minor_cold_ash_no_live_fire",
+      "language": "en",
+      "incident_type": "fire_incident",
+      "label": "minor",
+      "probabilities": [
+        0.6871445573569873,
+        0.11040033668646251,
+        0.10101988992214461,
+        0.1014352160344055
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_MINOR_06_MIXED",
+      "group_id": "fire_incident__additional_minor_cold_ash_no_live_fire",
+      "language": "mixed",
+      "incident_type": "fire_incident",
+      "label": "minor",
+      "probabilities": [
+        0.7174921387567976,
+        0.1562948288983205,
+        0.07451563213059559,
+        0.051697400214286184
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_MINOR_06_TL",
+      "group_id": "fire_incident__additional_minor_cold_ash_no_live_fire",
+      "language": "tl",
+      "incident_type": "fire_incident",
+      "label": "minor",
+      "probabilities": [
+        0.7834407283400939,
+        0.05965871906535001,
+        0.07995519879152972,
+        0.07694535380302638
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_NEEDS_REVIEW_01_CEB",
+      "group_id": "fire_incident__additional_review_sparse_smoke_source_unknown",
+      "language": "ceb",
+      "incident_type": "fire_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.05534843605735466,
+        0.04520196278288549,
+        0.02495919104375405,
+        0.8744904101160058
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_NEEDS_REVIEW_01_EN",
+      "group_id": "fire_incident__additional_review_sparse_smoke_source_unknown",
+      "language": "en",
+      "incident_type": "fire_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.05556766322895168,
+        0.14560214982932107,
+        0.06511304950505625,
+        0.733717137436671
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_NEEDS_REVIEW_01_MIXED",
+      "group_id": "fire_incident__additional_review_sparse_smoke_source_unknown",
+      "language": "mixed",
+      "incident_type": "fire_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.017203226401545643,
+        0.048797968414936915,
+        0.019114574118891746,
+        0.9148842310646257
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_NEEDS_REVIEW_01_TL",
+      "group_id": "fire_incident__additional_review_sparse_smoke_source_unknown",
+      "language": "tl",
+      "incident_type": "fire_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.05528139619866278,
+        0.12390709270126753,
+        0.07715748137260778,
+        0.7436540297274618
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_SERIOUS_02_CEB",
+      "group_id": "fire_incident__additional_serious_spreading_vegetation_fire_evacuated",
+      "language": "ceb",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "probabilities": [
+        0.6470341953616102,
+        0.10489236140960959,
+        0.12022360139403256,
+        0.12784984183474765
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_SERIOUS_02_EN",
+      "group_id": "fire_incident__additional_serious_spreading_vegetation_fire_evacuated",
+      "language": "en",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "probabilities": [
+        0.3701571730783145,
+        0.3235636305963919,
+        0.14509461833909773,
+        0.16118457798619587
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_SERIOUS_02_MIXED",
+      "group_id": "fire_incident__additional_serious_spreading_vegetation_fire_evacuated",
+      "language": "mixed",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "probabilities": [
+        0.3269416781300707,
+        0.3542506977833115,
+        0.14975068730713084,
+        0.16905693677948705
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_SERIOUS_02_TL",
+      "group_id": "fire_incident__additional_serious_spreading_vegetation_fire_evacuated",
+      "language": "tl",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "probabilities": [
+        0.6397036195872358,
+        0.1449779578875781,
+        0.11786649927717148,
+        0.09745192324801456
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_SERIOUS_03_CEB",
+      "group_id": "fire_incident__additional_serious_sparking_wire_isolated_area",
+      "language": "ceb",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "probabilities": [
+        0.08547158510618515,
+        0.7708434719880033,
+        0.06601556246424456,
+        0.07766938044156708
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_SERIOUS_03_EN",
+      "group_id": "fire_incident__additional_serious_sparking_wire_isolated_area",
+      "language": "en",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "probabilities": [
+        0.17526049168198915,
+        0.6651248067574824,
+        0.08718688938770026,
+        0.07242781217282823
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_SERIOUS_03_MIXED",
+      "group_id": "fire_incident__additional_serious_sparking_wire_isolated_area",
+      "language": "mixed",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "probabilities": [
+        0.08665102486045723,
+        0.7384244112432689,
+        0.0733960677326314,
+        0.10152849616364262
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_SERIOUS_03_TL",
+      "group_id": "fire_incident__additional_serious_sparking_wire_isolated_area",
+      "language": "tl",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "probabilities": [
+        0.10806657993365698,
+        0.7157564781141985,
+        0.05961377913615841,
+        0.11656316281598596
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_01_CEB",
+      "group_id": "flood_landslide__additional_critical_person_currently_drowning",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.09491225209750881,
+        0.2671024633383384,
+        0.45086321478593105,
+        0.18712206977822166
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_01_EN",
+      "group_id": "flood_landslide__additional_critical_person_currently_drowning",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.052627576257267786,
+        0.17415057284997118,
+        0.5821694639410345,
+        0.19105238695172655
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_01_MIXED",
+      "group_id": "flood_landslide__additional_critical_person_currently_drowning",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.06600269347930021,
+        0.14872468021138285,
+        0.6714848842419683,
+        0.11378774206734871
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_01_TL",
+      "group_id": "flood_landslide__additional_critical_person_currently_drowning",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.1592459997642412,
+        0.2904782565219647,
+        0.35147634593613925,
+        0.19879939777765485
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_04_CEB",
+      "group_id": "flood_landslide__additional_critical_uncontrolled_massive_bleeding",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.1433766646137415,
+        0.23903802244357292,
+        0.4957245647403973,
+        0.12186074820228832
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_04_EN",
+      "group_id": "flood_landslide__additional_critical_uncontrolled_massive_bleeding",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.08449194160473908,
+        0.27954060521901414,
+        0.5601517902637176,
+        0.07581566291252918
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_04_MIXED",
+      "group_id": "flood_landslide__additional_critical_uncontrolled_massive_bleeding",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.09001058129644118,
+        0.30347585154809076,
+        0.5545598299819241,
+        0.051953737173543985
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_04_TL",
+      "group_id": "flood_landslide__additional_critical_uncontrolled_massive_bleeding",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.1459111170742754,
+        0.3093213779153537,
+        0.38821641205083934,
+        0.15655109295953154
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_MINOR_01_CEB",
+      "group_id": "flood_landslide__additional_minor_rainwater_cleared",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.8903082273092143,
+        0.04708037228395432,
+        0.024369792165605086,
+        0.03824160824122625
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_MINOR_01_EN",
+      "group_id": "flood_landslide__additional_minor_rainwater_cleared",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.749395665420075,
+        0.11375186469275969,
+        0.06667168920274039,
+        0.07018078068442475
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_MINOR_01_MIXED",
+      "group_id": "flood_landslide__additional_minor_rainwater_cleared",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.6089182193651227,
+        0.1714421018523529,
+        0.06869171181469687,
+        0.15094796696782758
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_MINOR_01_TL",
+      "group_id": "flood_landslide__additional_minor_rainwater_cleared",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.7757702272115287,
+        0.09478960451872716,
+        0.050098276898706405,
+        0.07934189137103767
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_MINOR_04_CEB",
+      "group_id": "flood_landslide__additional_minor_rainwater_cleared",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.5312318421330636,
+        0.41506901377493677,
+        0.012474933281187308,
+        0.04122421081081227
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_MINOR_04_EN",
+      "group_id": "flood_landslide__additional_minor_rainwater_cleared",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.5571541247259109,
+        0.36285812448522864,
+        0.029862508423872915,
+        0.050125242364987554
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_MINOR_04_MIXED",
+      "group_id": "flood_landslide__additional_minor_rainwater_cleared",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.5866478152935651,
+        0.31115803497876277,
+        0.030878211781526107,
+        0.07131593794614607
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_MINOR_04_TL",
+      "group_id": "flood_landslide__additional_minor_rainwater_cleared",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.592927418276607,
+        0.3605086749844861,
+        0.01214427420241871,
+        0.03441963253648821
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_NEEDS_REVIEW_05_CEB",
+      "group_id": "flood_landslide__additional_review_hypothetical_preparedness_question",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.09635707211295817,
+        0.05075600915944488,
+        0.05366511368200713,
+        0.7992218050455898
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_NEEDS_REVIEW_05_EN",
+      "group_id": "flood_landslide__additional_review_hypothetical_preparedness_question",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.12434347192570058,
+        0.11417743090763625,
+        0.09269522937936205,
+        0.668783867787301
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_NEEDS_REVIEW_05_MIXED",
+      "group_id": "flood_landslide__additional_review_hypothetical_preparedness_question",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.06742922819279516,
+        0.06861150517352729,
+        0.11963886625449516,
+        0.7443204003791823
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_NEEDS_REVIEW_05_TL",
+      "group_id": "flood_landslide__additional_review_hypothetical_preparedness_question",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.11308091359328418,
+        0.06579274469437286,
+        0.051141001426294554,
+        0.7699853402860485
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_SERIOUS_03_CEB",
+      "group_id": "flood_landslide__additional_serious_overflow_threatening_property_evacuated",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.37625954536488965,
+        0.30652320705332337,
+        0.17057293740113644,
+        0.1466443101806505
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_SERIOUS_03_EN",
+      "group_id": "flood_landslide__additional_serious_overflow_threatening_property_evacuated",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.38250952467264915,
+        0.2587955969416705,
+        0.21942867729201238,
+        0.1392662010936679
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_SERIOUS_03_MIXED",
+      "group_id": "flood_landslide__additional_serious_overflow_threatening_property_evacuated",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.21178706056038604,
+        0.36821381625283606,
+        0.2139999382819694,
+        0.20599918490480854
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_SERIOUS_03_TL",
+      "group_id": "flood_landslide__additional_serious_overflow_threatening_property_evacuated",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.33266879281865686,
+        0.41481444791330063,
+        0.10449150860332125,
+        0.14802525066472125
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_CRITICAL_03_CEB",
+      "group_id": "medical_emergency__additional_critical_ongoing_seizure_without_recovery",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.0658688939409367,
+        0.13525418554628876,
+        0.6861420949136142,
+        0.11273482559916036
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_CRITICAL_03_EN",
+      "group_id": "medical_emergency__additional_critical_ongoing_seizure_without_recovery",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.09884509238140377,
+        0.24667547105933815,
+        0.551027624175588,
+        0.10345181238366999
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_CRITICAL_03_MIXED",
+      "group_id": "medical_emergency__additional_critical_ongoing_seizure_without_recovery",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.08356994773588634,
+        0.3080044414599014,
+        0.4882909410662807,
+        0.12013466973793162
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_CRITICAL_03_TL",
+      "group_id": "medical_emergency__additional_critical_ongoing_seizure_without_recovery",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.07305240246353845,
+        0.09006463324285051,
+        0.6993536882173099,
+        0.13752927607630122
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_MINOR_06_CEB",
+      "group_id": "medical_emergency__additional_minor_resolved_heat_discomfort",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.5632508615160063,
+        0.2715016920768405,
+        0.02670016100916214,
+        0.13854728539799108
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_MINOR_06_EN",
+      "group_id": "medical_emergency__additional_minor_resolved_heat_discomfort",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.3922566169011172,
+        0.47768273424632796,
+        0.06727871683475743,
+        0.06278193201779741
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_MINOR_06_MIXED",
+      "group_id": "medical_emergency__additional_minor_resolved_heat_discomfort",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.589741046055343,
+        0.22677742650555324,
+        0.024465983058841533,
+        0.15901554438026208
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_MINOR_06_TL",
+      "group_id": "medical_emergency__additional_minor_resolved_heat_discomfort",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.4745031055909025,
+        0.27218537643216045,
+        0.07046900599668621,
+        0.1828425119802509
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_NEEDS_REVIEW_02_CEB",
+      "group_id": "medical_emergency__additional_review_contradictory_same_person_responsiveness",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.05443475842507314,
+        0.5220646756637278,
+        0.08540857522165878,
+        0.3380919906895403
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_NEEDS_REVIEW_02_EN",
+      "group_id": "medical_emergency__additional_review_contradictory_same_person_responsiveness",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.07907907257101077,
+        0.4459253343269382,
+        0.08913686823466563,
+        0.3858587248673854
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_NEEDS_REVIEW_02_MIXED",
+      "group_id": "medical_emergency__additional_review_contradictory_same_person_responsiveness",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.07358536276526163,
+        0.3714778674437343,
+        0.07831571979258954,
+        0.4766210499984147
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_NEEDS_REVIEW_02_TL",
+      "group_id": "medical_emergency__additional_review_contradictory_same_person_responsiveness",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.0815275843659906,
+        0.3240913065015756,
+        0.06554551492079405,
+        0.5288355942116397
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_SERIOUS_01_CEB",
+      "group_id": "medical_emergency__additional_serious_controlled_limb_wound",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.19135109787208487,
+        0.6811379786202837,
+        0.06649127900213907,
+        0.06101964450549241
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_SERIOUS_01_EN",
+      "group_id": "medical_emergency__additional_serious_controlled_limb_wound",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.06784002210419542,
+        0.894730986649991,
+        0.023797497505863328,
+        0.013631493739950148
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_SERIOUS_01_MIXED",
+      "group_id": "medical_emergency__additional_serious_controlled_limb_wound",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.032090601863299234,
+        0.9414505211789603,
+        0.019090233609819852,
+        0.007368643347920767
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_SERIOUS_01_TL",
+      "group_id": "medical_emergency__additional_serious_controlled_limb_wound",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.10131487521725181,
+        0.7844554526649429,
+        0.07592745798982804,
+        0.03830221412797731
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_CRITICAL_05_CEB",
+      "group_id": "other__additional_critical_uncontrolled_massive_bleeding",
+      "language": "ceb",
+      "incident_type": "other",
+      "label": "critical",
+      "probabilities": [
+        0.41320442535198115,
+        0.2048433637605369,
+        0.26021847256167746,
+        0.12173373832580424
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_CRITICAL_05_EN",
+      "group_id": "other__additional_critical_uncontrolled_massive_bleeding",
+      "language": "en",
+      "incident_type": "other",
+      "label": "critical",
+      "probabilities": [
+        0.06946292567380069,
+        0.5027612467963205,
+        0.31548985675366276,
+        0.11228597077621622
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_CRITICAL_05_MIXED",
+      "group_id": "other__additional_critical_uncontrolled_massive_bleeding",
+      "language": "mixed",
+      "incident_type": "other",
+      "label": "critical",
+      "probabilities": [
+        0.07951069961230164,
+        0.4792909089254851,
+        0.34082625491905044,
+        0.10037213654316281
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_CRITICAL_05_TL",
+      "group_id": "other__additional_critical_uncontrolled_massive_bleeding",
+      "language": "tl",
+      "incident_type": "other",
+      "label": "critical",
+      "probabilities": [
+        0.15500630084574768,
+        0.29664480284083505,
+        0.3133386418452416,
+        0.2350102544681757
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_MINOR_05_CEB",
+      "group_id": "other__additional_minor_contained_animal_no_injury",
+      "language": "ceb",
+      "incident_type": "other",
+      "label": "minor",
+      "probabilities": [
+        0.6620428265482313,
+        0.13994389100197058,
+        0.11534569801006854,
+        0.08266758443972953
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_MINOR_05_EN",
+      "group_id": "other__additional_minor_contained_animal_no_injury",
+      "language": "en",
+      "incident_type": "other",
+      "label": "minor",
+      "probabilities": [
+        0.5750512935348977,
+        0.19565968987724147,
+        0.14556317367993463,
+        0.08372584290792613
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_MINOR_05_MIXED",
+      "group_id": "other__additional_minor_contained_animal_no_injury",
+      "language": "mixed",
+      "incident_type": "other",
+      "label": "minor",
+      "probabilities": [
+        0.6594846700566558,
+        0.1625441039199198,
+        0.11357937493851561,
+        0.06439185108490883
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_MINOR_05_TL",
+      "group_id": "other__additional_minor_contained_animal_no_injury",
+      "language": "tl",
+      "incident_type": "other",
+      "label": "minor",
+      "probabilities": [
+        0.6635644073067145,
+        0.1599146144826336,
+        0.09437322001500208,
+        0.08214775819564976
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_NEEDS_REVIEW_05_CEB",
+      "group_id": "other__additional_review_hypothetical_preparedness_question",
+      "language": "ceb",
+      "incident_type": "other",
+      "label": "needs_review",
+      "probabilities": [
+        0.15157981767581397,
+        0.18486243730296467,
+        0.1860746043252376,
+        0.47748314069598363
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_NEEDS_REVIEW_05_EN",
+      "group_id": "other__additional_review_hypothetical_preparedness_question",
+      "language": "en",
+      "incident_type": "other",
+      "label": "needs_review",
+      "probabilities": [
+        0.08551567542783893,
+        0.14358374762314136,
+        0.13644764344646504,
+        0.6344529335025546
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_NEEDS_REVIEW_05_MIXED",
+      "group_id": "other__additional_review_hypothetical_preparedness_question",
+      "language": "mixed",
+      "incident_type": "other",
+      "label": "needs_review",
+      "probabilities": [
+        0.1078354127011335,
+        0.20800905107203713,
+        0.148268405437705,
+        0.5358871307891244
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_NEEDS_REVIEW_05_TL",
+      "group_id": "other__additional_review_hypothetical_preparedness_question",
+      "language": "tl",
+      "incident_type": "other",
+      "label": "needs_review",
+      "probabilities": [
+        0.23528745029955792,
+        0.1548256748058354,
+        0.10929176139732547,
+        0.5005951134972811
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_NEEDS_REVIEW_06_CEB",
+      "group_id": "other__additional_review_unclear_human_animal_subject",
+      "language": "ceb",
+      "incident_type": "other",
+      "label": "needs_review",
+      "probabilities": [
+        0.03280301534787915,
+        0.1352348435243297,
+        0.10633906640182342,
+        0.7256230747259678
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_NEEDS_REVIEW_06_EN",
+      "group_id": "other__additional_review_unclear_human_animal_subject",
+      "language": "en",
+      "incident_type": "other",
+      "label": "needs_review",
+      "probabilities": [
+        0.07537571366920436,
+        0.11596756849134367,
+        0.32450778131393837,
+        0.4841489365255136
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_NEEDS_REVIEW_06_MIXED",
+      "group_id": "other__additional_review_unclear_human_animal_subject",
+      "language": "mixed",
+      "incident_type": "other",
+      "label": "needs_review",
+      "probabilities": [
+        0.04508250355953294,
+        0.09636902650809358,
+        0.22790054144308897,
+        0.6306479284892845
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_NEEDS_REVIEW_06_TL",
+      "group_id": "other__additional_review_unclear_human_animal_subject",
+      "language": "tl",
+      "incident_type": "other",
+      "label": "needs_review",
+      "probabilities": [
+        0.0655898541933615,
+        0.05578220443179804,
+        0.05647066492800477,
+        0.8221572764468357
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_SERIOUS_02_CEB",
+      "group_id": "other__additional_serious_uncovered_drain_public_hazard",
+      "language": "ceb",
+      "incident_type": "other",
+      "label": "serious",
+      "probabilities": [
+        0.36401196081315557,
+        0.36789850859031303,
+        0.10709878490890039,
+        0.16099074568763105
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_SERIOUS_02_EN",
+      "group_id": "other__additional_serious_uncovered_drain_public_hazard",
+      "language": "en",
+      "incident_type": "other",
+      "label": "serious",
+      "probabilities": [
+        0.20658873373389977,
+        0.5295755084874639,
+        0.18352370872086915,
+        0.08031204905776711
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_SERIOUS_02_MIXED",
+      "group_id": "other__additional_serious_uncovered_drain_public_hazard",
+      "language": "mixed",
+      "incident_type": "other",
+      "label": "serious",
+      "probabilities": [
+        0.3296908513678133,
+        0.40746266990116115,
+        0.14342594112850676,
+        0.11942053760251876
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_SERIOUS_02_TL",
+      "group_id": "other__additional_serious_uncovered_drain_public_hazard",
+      "language": "tl",
+      "incident_type": "other",
+      "label": "serious",
+      "probabilities": [
+        0.4753683289523479,
+        0.2962363908839878,
+        0.09802152951917234,
+        0.1303737506444922
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_SERIOUS_05_CEB",
+      "group_id": "other__additional_serious_controlled_limb_wound",
+      "language": "ceb",
+      "incident_type": "other",
+      "label": "serious",
+      "probabilities": [
+        0.04468233961510264,
+        0.8962167777331947,
+        0.039312156666382776,
+        0.019788725985320027
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_SERIOUS_05_EN",
+      "group_id": "other__additional_serious_controlled_limb_wound",
+      "language": "en",
+      "incident_type": "other",
+      "label": "serious",
+      "probabilities": [
+        0.019923789133868303,
+        0.9322741933567136,
+        0.033610027131603847,
+        0.014191990377814356
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_SERIOUS_05_MIXED",
+      "group_id": "other__additional_serious_controlled_limb_wound",
+      "language": "mixed",
+      "incident_type": "other",
+      "label": "serious",
+      "probabilities": [
+        0.00872470469427429,
+        0.9533487500029512,
+        0.027080801857639596,
+        0.010845743445134944
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_SERIOUS_05_TL",
+      "group_id": "other__additional_serious_controlled_limb_wound",
+      "language": "tl",
+      "incident_type": "other",
+      "label": "serious",
+      "probabilities": [
+        0.03367728073559768,
+        0.9080510878048361,
+        0.039545360383673456,
+        0.018726271075892614
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_03_CEB",
+      "group_id": "road_accident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.187232049421816,
+        0.3046720603146693,
+        0.3890080585494675,
+        0.11908783171404722
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_03_EN",
+      "group_id": "road_accident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.09108679349719384,
+        0.3030212643807985,
+        0.5395766049702159,
+        0.06631533715179183
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_03_MIXED",
+      "group_id": "road_accident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0373263955981398,
+        0.2585851613545527,
+        0.643759135522317,
+        0.06032930752499063
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_03_TL",
+      "group_id": "road_accident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.09265596769131935,
+        0.4882280018135857,
+        0.3071648991003957,
+        0.11195113139469932
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_06_CEB",
+      "group_id": "road_accident__additional_critical_ongoing_seizure_without_recovery",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.14156673755327068,
+        0.10911583330921847,
+        0.5471605112445332,
+        0.2021569178929775
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_06_EN",
+      "group_id": "road_accident__additional_critical_ongoing_seizure_without_recovery",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.04118779074232096,
+        0.06155118879582435,
+        0.8486015948085646,
+        0.048659425653290324
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_06_MIXED",
+      "group_id": "road_accident__additional_critical_ongoing_seizure_without_recovery",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.05822960182776371,
+        0.08272772841766259,
+        0.8006334752980092,
+        0.05840919445656443
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_06_TL",
+      "group_id": "road_accident__additional_critical_ongoing_seizure_without_recovery",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.07153214691911498,
+        0.14750967738697626,
+        0.6675366790053101,
+        0.11342149668859862
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_01_CEB",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.49295883896775056,
+        0.2918905209451349,
+        0.07485267752641059,
+        0.140297962560704
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_01_EN",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.4274133766691891,
+        0.388890301136288,
+        0.09675459419249684,
+        0.08694172800202601
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_01_MIXED",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.5868079199489363,
+        0.24002328036315318,
+        0.08801905311374876,
+        0.0851497465741617
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_01_TL",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.6292689475043199,
+        0.23956290292091864,
+        0.05705388613259005,
+        0.07411426344217131
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_02_CEB",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.568821596117098,
+        0.21626248323587044,
+        0.12221870397372993,
+        0.09269721667330152
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_02_EN",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.6374716793093201,
+        0.24782620682325388,
+        0.07234796447625835,
+        0.04235414939116772
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_02_MIXED",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.5185591759464045,
+        0.263871536679284,
+        0.11922991800457493,
+        0.09833936936973639
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_02_TL",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.5897413194134035,
+        0.22923488845513323,
+        0.10905452790031707,
+        0.07196926423114623
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_05_CEB",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.7375287202365816,
+        0.07624050296517083,
+        0.08415205109393968,
+        0.10207872570430808
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_05_EN",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.4844883193853475,
+        0.14495172013935503,
+        0.25318660691969647,
+        0.11737335355560095
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_05_MIXED",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.795129522488884,
+        0.06145740664058947,
+        0.058639899294046845,
+        0.08477317157647966
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_05_TL",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.6311448860278391,
+        0.07754615945151762,
+        0.11003941540702167,
+        0.18126953911362156
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_NEEDS_REVIEW_02_CEB",
+      "group_id": "road_accident__additional_review_contradictory_same_person_responsiveness",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.04038401447447921,
+        0.1610219589598613,
+        0.12110374242072973,
+        0.6774902841449297
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_NEEDS_REVIEW_02_EN",
+      "group_id": "road_accident__additional_review_contradictory_same_person_responsiveness",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.14016390396027317,
+        0.25880950435820466,
+        0.08240703727293906,
+        0.5186195544085832
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_NEEDS_REVIEW_02_MIXED",
+      "group_id": "road_accident__additional_review_contradictory_same_person_responsiveness",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.039718454663939765,
+        0.18405211442629088,
+        0.031670454620780525,
+        0.7445589762889888
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_NEEDS_REVIEW_02_TL",
+      "group_id": "road_accident__additional_review_contradictory_same_person_responsiveness",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.09307086880775352,
+        0.24042700706758882,
+        0.1815920704859366,
+        0.48491005363872103
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_SERIOUS_01_CEB",
+      "group_id": "road_accident__additional_serious_controlled_limb_wound",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.054295584830424765,
+        0.8874848463341108,
+        0.0411271352859232,
+        0.017092433549541316
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_SERIOUS_01_EN",
+      "group_id": "road_accident__additional_serious_controlled_limb_wound",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.04289673538985725,
+        0.9201196349818394,
+        0.017861432454426035,
+        0.01912219717387727
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_SERIOUS_01_MIXED",
+      "group_id": "road_accident__additional_serious_controlled_limb_wound",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.02340288376766766,
+        0.9567255587927708,
+        0.014448408691177942,
+        0.005423148748383621
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_SERIOUS_01_TL",
+      "group_id": "road_accident__additional_serious_controlled_limb_wound",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.06829311067895483,
+        0.865382007145525,
+        0.05009325995906122,
+        0.01623162221645893
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_02_CEB",
+      "group_id": "security_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.15022360965942164,
+        0.20324775594576752,
+        0.445033157747647,
+        0.2014954766471639
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_02_EN",
+      "group_id": "security_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.10054229554681465,
+        0.24151506578451817,
+        0.5511504394618811,
+        0.10679219920678613
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_02_MIXED",
+      "group_id": "security_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.09198678177262619,
+        0.17771961323506674,
+        0.6084346092059512,
+        0.12185899578635588
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_02_TL",
+      "group_id": "security_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.043822503816903335,
+        0.21552043441462876,
+        0.4625413214750171,
+        0.27811574029345076
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_05_CEB",
+      "group_id": "security_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.1294451793374142,
+        0.21701675224951192,
+        0.5391037624472405,
+        0.11443430596583343
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_05_EN",
+      "group_id": "security_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.103184402932178,
+        0.1804317008204177,
+        0.5842776604914306,
+        0.13210623575597372
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_05_MIXED",
+      "group_id": "security_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.08904001578740706,
+        0.1800644907484953,
+        0.6203390756078738,
+        0.11055641785622383
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_05_TL",
+      "group_id": "security_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.10826918173838226,
+        0.3488555818519743,
+        0.41715026184470244,
+        0.12572497456494103
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_MINOR_04_CEB",
+      "group_id": "security_incident__additional_minor_resolved_noise_no_danger",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "probabilities": [
+        0.45439150110092563,
+        0.15058238328767753,
+        0.14958733241822691,
+        0.24543878319316995
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_MINOR_04_EN",
+      "group_id": "security_incident__additional_minor_resolved_noise_no_danger",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "probabilities": [
+        0.6380021537546804,
+        0.12753940479914458,
+        0.14018401964717106,
+        0.09427442179900389
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_MINOR_04_MIXED",
+      "group_id": "security_incident__additional_minor_resolved_noise_no_danger",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "probabilities": [
+        0.7456483954677614,
+        0.1028131356286115,
+        0.06493809596882635,
+        0.08660037293480066
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_MINOR_04_TL",
+      "group_id": "security_incident__additional_minor_resolved_noise_no_danger",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "probabilities": [
+        0.6521242242274836,
+        0.11972719191838654,
+        0.07294989349323862,
+        0.15519869036089112
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_NEEDS_REVIEW_03_CEB",
+      "group_id": "security_incident__additional_review_rumored_assault_unverified",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.05481400661072845,
+        0.14046370734347285,
+        0.16963868357114356,
+        0.6350836024746552
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_NEEDS_REVIEW_03_EN",
+      "group_id": "security_incident__additional_review_rumored_assault_unverified",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.03930280754163187,
+        0.055417933229895494,
+        0.06574431875652498,
+        0.8395349404719475
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_NEEDS_REVIEW_03_MIXED",
+      "group_id": "security_incident__additional_review_rumored_assault_unverified",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.06728150992325348,
+        0.06233714136617581,
+        0.09179493613526792,
+        0.7785864125753027
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_NEEDS_REVIEW_03_TL",
+      "group_id": "security_incident__additional_review_rumored_assault_unverified",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.06543174340197193,
+        0.13221907270644173,
+        0.12269272304653273,
+        0.6796564608450536
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_SERIOUS_03_CEB",
+      "group_id": "security_incident__additional_serious_active_forced_entry_empty_property",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.45392116175737013,
+        0.39434140411045837,
+        0.049970133529623414,
+        0.10176730060254806
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_SERIOUS_03_EN",
+      "group_id": "security_incident__additional_serious_active_forced_entry_empty_property",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.4388143990459844,
+        0.24851943669421547,
+        0.08021357469143514,
+        0.23245258956836504
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_SERIOUS_03_MIXED",
+      "group_id": "security_incident__additional_serious_active_forced_entry_empty_property",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.5604638382937013,
+        0.18591557325892744,
+        0.06128860180714126,
+        0.19233198664022993
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_SERIOUS_03_TL",
+      "group_id": "security_incident__additional_serious_active_forced_entry_empty_property",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.3909876356263872,
+        0.23051217849410038,
+        0.080922520192177,
+        0.29757766568733535
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_CRITICAL_02_CEB",
+      "group_id": "fire_incident__critical_absent_normal_breathing",
+      "language": "ceb",
+      "incident_type": "fire_incident",
+      "label": "critical",
+      "probabilities": [
+        0.06185286643825748,
+        0.5344667271604843,
+        0.2970080737800332,
+        0.10667233262122515
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_CRITICAL_02_EN",
+      "group_id": "fire_incident__critical_absent_normal_breathing",
+      "language": "en",
+      "incident_type": "fire_incident",
+      "label": "critical",
+      "probabilities": [
+        0.08930338280317981,
+        0.47839285280597293,
+        0.21256046508640472,
+        0.2197432993044425
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_CRITICAL_02_MIXED",
+      "group_id": "fire_incident__critical_absent_normal_breathing",
+      "language": "mixed",
+      "incident_type": "fire_incident",
+      "label": "critical",
+      "probabilities": [
+        0.05851218308402918,
+        0.6868016393716279,
+        0.12891211340784167,
+        0.12577406413650138
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_CRITICAL_02_TL",
+      "group_id": "fire_incident__critical_absent_normal_breathing",
+      "language": "tl",
+      "incident_type": "fire_incident",
+      "label": "critical",
+      "probabilities": [
+        0.09263657667937716,
+        0.43436591983292394,
+        0.2923537341088488,
+        0.18064376937885016
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_CRITICAL_03_CEB",
+      "group_id": "fire_incident__critical_uncontrolled_external_bleeding",
+      "language": "ceb",
+      "incident_type": "fire_incident",
+      "label": "critical",
+      "probabilities": [
+        0.0996437881409823,
+        0.16896004152109328,
+        0.6234623074449983,
+        0.10793386289292621
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_CRITICAL_03_EN",
+      "group_id": "fire_incident__critical_uncontrolled_external_bleeding",
+      "language": "en",
+      "incident_type": "fire_incident",
+      "label": "critical",
+      "probabilities": [
+        0.13045332211651506,
+        0.14955010426640422,
+        0.5845854983039083,
+        0.13541107531317234
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_CRITICAL_03_MIXED",
+      "group_id": "fire_incident__critical_uncontrolled_external_bleeding",
+      "language": "mixed",
+      "incident_type": "fire_incident",
+      "label": "critical",
+      "probabilities": [
+        0.07016459879691517,
+        0.2590735226924457,
+        0.5884173538150178,
+        0.08234452469562131
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_CRITICAL_03_TL",
+      "group_id": "fire_incident__critical_uncontrolled_external_bleeding",
+      "language": "tl",
+      "incident_type": "fire_incident",
+      "label": "critical",
+      "probabilities": [
+        0.07434890509674057,
+        0.28154103515809215,
+        0.4867708943416986,
+        0.15733916540346862
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_MINOR_03_CEB",
+      "group_id": "fire_incident__minor_loose_panel",
+      "language": "ceb",
+      "incident_type": "fire_incident",
+      "label": "minor",
+      "probabilities": [
+        0.34478146676691623,
+        0.3884198512410533,
+        0.12471048401823291,
+        0.14208819797379743
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_MINOR_03_EN",
+      "group_id": "fire_incident__minor_loose_panel",
+      "language": "en",
+      "incident_type": "fire_incident",
+      "label": "minor",
+      "probabilities": [
+        0.3586528575212969,
+        0.41109816845430214,
+        0.08913715630511643,
+        0.14111181771928458
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_MINOR_03_MIXED",
+      "group_id": "fire_incident__minor_loose_panel",
+      "language": "mixed",
+      "incident_type": "fire_incident",
+      "label": "minor",
+      "probabilities": [
+        0.8505739275693859,
+        0.09715180770547605,
+        0.02091582039298926,
+        0.03135844433214878
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_MINOR_03_TL",
+      "group_id": "fire_incident__minor_loose_panel",
+      "language": "tl",
+      "incident_type": "fire_incident",
+      "label": "minor",
+      "probabilities": [
+        0.3776098858918061,
+        0.39784353458935,
+        0.0811055202231745,
+        0.1434410592956694
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_NEEDS_REVIEW_05_CEB",
+      "group_id": "fire_incident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "ceb",
+      "incident_type": "fire_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.25231130372465294,
+        0.15627476579795752,
+        0.16380275267226752,
+        0.42761117780512203
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_NEEDS_REVIEW_05_EN",
+      "group_id": "fire_incident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "en",
+      "incident_type": "fire_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.2924761559014456,
+        0.1752715393089319,
+        0.10130904276315193,
+        0.4309432620264705
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_NEEDS_REVIEW_05_MIXED",
+      "group_id": "fire_incident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "mixed",
+      "incident_type": "fire_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.16923974471163813,
+        0.2542883528080989,
+        0.10221308918995127,
+        0.47425881329031166
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_NEEDS_REVIEW_05_TL",
+      "group_id": "fire_incident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "tl",
+      "incident_type": "fire_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.42754461133742994,
+        0.15296158885068642,
+        0.08811111871529807,
+        0.3313826810965855
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_NEEDS_REVIEW_11_CEB",
+      "group_id": "fire_incident__needs_review_translation_or_quotation",
+      "language": "ceb",
+      "incident_type": "fire_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.06035816834834753,
+        0.040784282029630095,
+        0.08062757440280961,
+        0.8182299752192127
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_NEEDS_REVIEW_11_EN",
+      "group_id": "fire_incident__needs_review_translation_or_quotation",
+      "language": "en",
+      "incident_type": "fire_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.06865673859089674,
+        0.20605900265318247,
+        0.23671044770586655,
+        0.48857381105005415
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_NEEDS_REVIEW_11_MIXED",
+      "group_id": "fire_incident__needs_review_translation_or_quotation",
+      "language": "mixed",
+      "incident_type": "fire_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.041695019261861685,
+        0.18759117737745307,
+        0.1936163714696697,
+        0.5770974318910155
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_NEEDS_REVIEW_11_TL",
+      "group_id": "fire_incident__needs_review_translation_or_quotation",
+      "language": "tl",
+      "incident_type": "fire_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.03414238532465779,
+        0.03752168324112081,
+        0.15722758303785714,
+        0.7711083483963642
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_SERIOUS_01_CEB",
+      "group_id": "fire_incident__serious_skin_abrasion",
+      "language": "ceb",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "probabilities": [
+        0.07210841927491674,
+        0.796937729659168,
+        0.0871809532548854,
+        0.04377289781102983
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_SERIOUS_01_EN",
+      "group_id": "fire_incident__serious_skin_abrasion",
+      "language": "en",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "probabilities": [
+        0.015488428910453421,
+        0.9540936001222032,
+        0.016281401493071442,
+        0.014136569474271936
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_SERIOUS_01_MIXED",
+      "group_id": "fire_incident__serious_skin_abrasion",
+      "language": "mixed",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "probabilities": [
+        0.011032090126836352,
+        0.9632802737973325,
+        0.01564425854092198,
+        0.010043377534909342
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_SERIOUS_01_TL",
+      "group_id": "fire_incident__serious_skin_abrasion",
+      "language": "tl",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "probabilities": [
+        0.051640009900927444,
+        0.7318649923944451,
+        0.15816571511254726,
+        0.058329282592080145
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_SERIOUS_12_CEB",
+      "group_id": "fire_incident__serious_back_pain_after_strain",
+      "language": "ceb",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "probabilities": [
+        0.0435831248947048,
+        0.8711785193734067,
+        0.06413480891476903,
+        0.021103546817119442
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_SERIOUS_12_EN",
+      "group_id": "fire_incident__serious_back_pain_after_strain",
+      "language": "en",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "probabilities": [
+        0.05163172298526721,
+        0.8652287036232778,
+        0.06127059576927939,
+        0.021868977622175687
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_SERIOUS_12_MIXED",
+      "group_id": "fire_incident__serious_back_pain_after_strain",
+      "language": "mixed",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "probabilities": [
+        0.030379646095954404,
+        0.9227440117200437,
+        0.03142267281360565,
+        0.015453669370396241
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FIRE_INCIDENT_SERIOUS_12_TL",
+      "group_id": "fire_incident__serious_back_pain_after_strain",
+      "language": "tl",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "probabilities": [
+        0.04580366716618721,
+        0.8853686050797338,
+        0.04277923877272431,
+        0.026048488981354603
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_CRITICAL_02_CEB",
+      "group_id": "flood_landslide__critical_absent_normal_breathing",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.06659924104325761,
+        0.563868485900834,
+        0.2574944600321872,
+        0.11203781302372116
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_CRITICAL_02_EN",
+      "group_id": "flood_landslide__critical_absent_normal_breathing",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.09888158774568322,
+        0.4722404479905338,
+        0.20285812998120795,
+        0.22601983428257494
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_CRITICAL_02_MIXED",
+      "group_id": "flood_landslide__critical_absent_normal_breathing",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.06871534678381748,
+        0.6715273883086472,
+        0.12540942314053036,
+        0.13434784176700487
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_CRITICAL_02_TL",
+      "group_id": "flood_landslide__critical_absent_normal_breathing",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.10375578535811145,
+        0.4451012132024892,
+        0.26284970918945355,
+        0.1882932922499459
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_CRITICAL_03_CEB",
+      "group_id": "flood_landslide__critical_uncontrolled_external_bleeding",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.10976883813519837,
+        0.20127271837516686,
+        0.5687690800613845,
+        0.12018936342825032
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_CRITICAL_03_EN",
+      "group_id": "flood_landslide__critical_uncontrolled_external_bleeding",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.14423749445664738,
+        0.1608805460873443,
+        0.5459624502097388,
+        0.1489195092462695
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_CRITICAL_03_MIXED",
+      "group_id": "flood_landslide__critical_uncontrolled_external_bleeding",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.08158892798042959,
+        0.28131767897483334,
+        0.5439614092351668,
+        0.09313198380957032
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_CRITICAL_03_TL",
+      "group_id": "flood_landslide__critical_uncontrolled_external_bleeding",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.08487524742834127,
+        0.3032828426530435,
+        0.4444587929401662,
+        0.16738311697844907
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_MINOR_03_CEB",
+      "group_id": "flood_landslide__minor_loose_panel",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.3213739777075078,
+        0.4157770825659554,
+        0.11690586050421113,
+        0.14594307922232572
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_MINOR_03_EN",
+      "group_id": "flood_landslide__minor_loose_panel",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.36461183598837416,
+        0.4023648283549308,
+        0.08692723995946977,
+        0.1460960956972253
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_MINOR_03_MIXED",
+      "group_id": "flood_landslide__minor_loose_panel",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.8326560322139474,
+        0.10793869304197166,
+        0.02302353040028436,
+        0.03638174434379678
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_MINOR_03_TL",
+      "group_id": "flood_landslide__minor_loose_panel",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.38075277062829005,
+        0.39631963303241396,
+        0.07646972857655039,
+        0.14645786776274564
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_NEEDS_REVIEW_05_CEB",
+      "group_id": "flood_landslide__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.24531023427574056,
+        0.18506121158006836,
+        0.153721555153889,
+        0.4159069989903022
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_NEEDS_REVIEW_05_EN",
+      "group_id": "flood_landslide__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.2961247984976492,
+        0.1837771476802668,
+        0.10049554654441929,
+        0.4196025072776646
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_NEEDS_REVIEW_05_MIXED",
+      "group_id": "flood_landslide__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.17649954948480565,
+        0.2692492868196704,
+        0.10103986782823195,
+        0.4532112958672919
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_NEEDS_REVIEW_05_TL",
+      "group_id": "flood_landslide__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.43023337905954756,
+        0.16327534848497688,
+        0.08281122373208295,
+        0.32368004872339257
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_NEEDS_REVIEW_11_CEB",
+      "group_id": "flood_landslide__needs_review_translation_or_quotation",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.06563057236168605,
+        0.05007007552565766,
+        0.07954774045568809,
+        0.8047516116569682
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_NEEDS_REVIEW_11_EN",
+      "group_id": "flood_landslide__needs_review_translation_or_quotation",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.07544211971699086,
+        0.2124574122012652,
+        0.22737702115562805,
+        0.48472344692611585
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_NEEDS_REVIEW_11_MIXED",
+      "group_id": "flood_landslide__needs_review_translation_or_quotation",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.04908542903426447,
+        0.20215784840842765,
+        0.18607950846291302,
+        0.5626772140943949
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_NEEDS_REVIEW_11_TL",
+      "group_id": "flood_landslide__needs_review_translation_or_quotation",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.039713411475898235,
+        0.04344035047538341,
+        0.1484197175049749,
+        0.7684265205437435
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_SERIOUS_01_CEB",
+      "group_id": "flood_landslide__serious_skin_abrasion",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.07264775453199901,
+        0.8003844332447408,
+        0.07983864344355682,
+        0.04712916877970331
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_SERIOUS_01_EN",
+      "group_id": "flood_landslide__serious_skin_abrasion",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.019329014212234635,
+        0.9450900791122838,
+        0.018238162909314834,
+        0.01734274376616673
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_SERIOUS_01_MIXED",
+      "group_id": "flood_landslide__serious_skin_abrasion",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.015330023639284644,
+        0.9525509358686575,
+        0.018582354112598752,
+        0.013536686379459116
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_SERIOUS_01_TL",
+      "group_id": "flood_landslide__serious_skin_abrasion",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.05985695602039055,
+        0.7308215106979759,
+        0.14479261616955375,
+        0.06452891711207977
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_SERIOUS_12_CEB",
+      "group_id": "flood_landslide__serious_back_pain_after_strain",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.04412073589806458,
+        0.872773565857188,
+        0.06019319720441609,
+        0.02291250104033118
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_SERIOUS_12_EN",
+      "group_id": "flood_landslide__serious_back_pain_after_strain",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.059046471337901925,
+        0.8521598365927769,
+        0.06316931842520752,
+        0.02562437364411358
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_SERIOUS_12_MIXED",
+      "group_id": "flood_landslide__serious_back_pain_after_strain",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.03676738191562224,
+        0.910591768315018,
+        0.033803977368352084,
+        0.01883687240100779
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_SERIOUS_12_TL",
+      "group_id": "flood_landslide__serious_back_pain_after_strain",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.05164284922712292,
+        0.8775364958083833,
+        0.04185594708907923,
+        0.02896470787541457
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_CRITICAL_02_CEB",
+      "group_id": "medical_emergency__critical_absent_normal_breathing",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.15019830356633515,
+        0.41190038791451794,
+        0.2914518512806272,
+        0.14644945723851957
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_CRITICAL_02_EN",
+      "group_id": "medical_emergency__critical_absent_normal_breathing",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.20238765513886076,
+        0.32619486547650156,
+        0.22488299769145426,
+        0.24653448169318357
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_CRITICAL_02_MIXED",
+      "group_id": "medical_emergency__critical_absent_normal_breathing",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.15527459570526686,
+        0.539413770924126,
+        0.15077506337193095,
+        0.15453656999867613
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_CRITICAL_02_TL",
+      "group_id": "medical_emergency__critical_absent_normal_breathing",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.1732933014591558,
+        0.33144331056956766,
+        0.29154650246978614,
+        0.20371688550149042
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_CRITICAL_03_CEB",
+      "group_id": "medical_emergency__critical_uncontrolled_external_bleeding",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.18904962486116272,
+        0.13755210929662504,
+        0.5434246337739892,
+        0.129973632068223
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_CRITICAL_03_EN",
+      "group_id": "medical_emergency__critical_uncontrolled_external_bleeding",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.23143836530070935,
+        0.10225396246040638,
+        0.5290576168441281,
+        0.13725005539475615
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_CRITICAL_03_MIXED",
+      "group_id": "medical_emergency__critical_uncontrolled_external_bleeding",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.13450149037453116,
+        0.20354712752991702,
+        0.5736570588543123,
+        0.08829432324123958
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_CRITICAL_03_TL",
+      "group_id": "medical_emergency__critical_uncontrolled_external_bleeding",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.13420254840222595,
+        0.23072422511372317,
+        0.4644812124371507,
+        0.1705920140469001
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_06_CEB",
+      "group_id": "medical_emergency__minor_medical_warm_feeling_resolved",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.8376353954338216,
+        0.1021601778845188,
+        0.019476359243728255,
+        0.04072806743793136
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_06_EN",
+      "group_id": "medical_emergency__minor_medical_warm_feeling_resolved",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.7936006753713111,
+        0.1349252033903964,
+        0.032030272362176704,
+        0.039443848876115704
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_06_MIXED",
+      "group_id": "medical_emergency__minor_medical_warm_feeling_resolved",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.8128853209152493,
+        0.13526815481444912,
+        0.025143004469690113,
+        0.02670351980061146
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_06_TL",
+      "group_id": "medical_emergency__minor_medical_warm_feeling_resolved",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.843212320286496,
+        0.1004925736854698,
+        0.021650666588847185,
+        0.03464443943918706
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_07_CEB",
+      "group_id": "medical_emergency__minor_medical_muscle_tiredness_resolved",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.7862027270329869,
+        0.15170536371872045,
+        0.021982182239111143,
+        0.040109727009181556
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_07_EN",
+      "group_id": "medical_emergency__minor_medical_muscle_tiredness_resolved",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.8377631285768176,
+        0.106788921326535,
+        0.026528274037160574,
+        0.028919676059486955
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_07_MIXED",
+      "group_id": "medical_emergency__minor_medical_muscle_tiredness_resolved",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.8501524440682489,
+        0.11144305029449425,
+        0.02050424091401542,
+        0.01790026472324133
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_07_TL",
+      "group_id": "medical_emergency__minor_medical_muscle_tiredness_resolved",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.755073118454731,
+        0.16537549435986715,
+        0.04493522576809528,
+        0.03461616141730657
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_08_CEB",
+      "group_id": "medical_emergency__minor_medical_brief_watery_eyes_resolved",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.6932714964576411,
+        0.26225608285110086,
+        0.014800498698035531,
+        0.029671921993222515
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_08_EN",
+      "group_id": "medical_emergency__minor_medical_brief_watery_eyes_resolved",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.6670195315458645,
+        0.27720654192209726,
+        0.012529726769034322,
+        0.04324419976300385
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_08_MIXED",
+      "group_id": "medical_emergency__minor_medical_brief_watery_eyes_resolved",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.7065778513685514,
+        0.2548852651935617,
+        0.011852836767950233,
+        0.02668404666993662
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_08_TL",
+      "group_id": "medical_emergency__minor_medical_brief_watery_eyes_resolved",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.5832059644952067,
+        0.36608754349530365,
+        0.022625273229904482,
+        0.028081218779585186
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_NEEDS_REVIEW_05_CEB",
+      "group_id": "medical_emergency__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.39034147591395335,
+        0.10072967394251436,
+        0.1246745587401093,
+        0.38425429140342304
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_NEEDS_REVIEW_05_EN",
+      "group_id": "medical_emergency__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.43182435415948217,
+        0.10798395808440067,
+        0.08716859734357722,
+        0.37302309041254
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_NEEDS_REVIEW_05_MIXED",
+      "group_id": "medical_emergency__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.28649984002509565,
+        0.17780854754319528,
+        0.09692476039358024,
+        0.43876685203812893
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_NEEDS_REVIEW_05_TL",
+      "group_id": "medical_emergency__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.5527979035102253,
+        0.09729801262743863,
+        0.0737541538374351,
+        0.276149930024901
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_NEEDS_REVIEW_11_CEB",
+      "group_id": "medical_emergency__needs_review_translation_or_quotation",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.10327015549612381,
+        0.03417996870998283,
+        0.07478672558583321,
+        0.7877631502080601
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_NEEDS_REVIEW_11_EN",
+      "group_id": "medical_emergency__needs_review_translation_or_quotation",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.1278675752859864,
+        0.15228032777913114,
+        0.23300180613156818,
+        0.48685029080331427
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_NEEDS_REVIEW_11_MIXED",
+      "group_id": "medical_emergency__needs_review_translation_or_quotation",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.08875471745704915,
+        0.14442831733755243,
+        0.1966487586689951,
+        0.5701682065364033
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_NEEDS_REVIEW_11_TL",
+      "group_id": "medical_emergency__needs_review_translation_or_quotation",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.061607860347230974,
+        0.033538534195078074,
+        0.15829202949933066,
+        0.7465615759583603
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_SERIOUS_01_CEB",
+      "group_id": "medical_emergency__serious_skin_abrasion",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.17660132721167632,
+        0.655138293355096,
+        0.100826135827002,
+        0.0674342436062257
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_SERIOUS_01_EN",
+      "group_id": "medical_emergency__serious_skin_abrasion",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.05027811311687154,
+        0.8999051155762153,
+        0.02574968089467452,
+        0.02406709041223853
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_SERIOUS_01_MIXED",
+      "group_id": "medical_emergency__serious_skin_abrasion",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.04114825787630371,
+        0.9135350565237801,
+        0.026880260423200318,
+        0.018436425176715853
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_SERIOUS_01_TL",
+      "group_id": "medical_emergency__serious_skin_abrasion",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.11853713095112263,
+        0.6119202096761758,
+        0.18722116873967026,
+        0.08232149063303126
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_SERIOUS_12_CEB",
+      "group_id": "medical_emergency__serious_back_pain_after_strain",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.10199756785618148,
+        0.7874443687375534,
+        0.0775397366022587,
+        0.033018326804006605
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_SERIOUS_12_EN",
+      "group_id": "medical_emergency__serious_back_pain_after_strain",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.13729136914261109,
+        0.7488038335922851,
+        0.08229716421241072,
+        0.03160763305269299
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_SERIOUS_12_MIXED",
+      "group_id": "medical_emergency__serious_back_pain_after_strain",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.08715559524062781,
+        0.8432708195598844,
+        0.04604500253452792,
+        0.02352858266495999
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_SERIOUS_12_TL",
+      "group_id": "medical_emergency__serious_back_pain_after_strain",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.10342309816063387,
+        0.7991606776104058,
+        0.058755219754103145,
+        0.03866100447485717
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_CRITICAL_02_CEB",
+      "group_id": "other__critical_absent_normal_breathing",
+      "language": "ceb",
+      "incident_type": "other",
+      "label": "critical",
+      "probabilities": [
+        0.06603726779344571,
+        0.5700099266218585,
+        0.25940772153480823,
+        0.1045450840498875
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_CRITICAL_02_EN",
+      "group_id": "other__critical_absent_normal_breathing",
+      "language": "en",
+      "incident_type": "other",
+      "label": "critical",
+      "probabilities": [
+        0.11521791475350167,
+        0.41929848608855025,
+        0.22451188096104022,
+        0.240971718196908
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_CRITICAL_02_MIXED",
+      "group_id": "other__critical_absent_normal_breathing",
+      "language": "mixed",
+      "incident_type": "other",
+      "label": "critical",
+      "probabilities": [
+        0.061963787797674356,
+        0.6761556121661597,
+        0.13344908904317435,
+        0.12843151099299166
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_CRITICAL_02_TL",
+      "group_id": "other__critical_absent_normal_breathing",
+      "language": "tl",
+      "incident_type": "other",
+      "label": "critical",
+      "probabilities": [
+        0.09394440928231733,
+        0.4435332554341276,
+        0.27998269172167606,
+        0.18253964356187907
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_CRITICAL_03_CEB",
+      "group_id": "other__critical_uncontrolled_external_bleeding",
+      "language": "ceb",
+      "incident_type": "other",
+      "label": "critical",
+      "probabilities": [
+        0.11189659044065857,
+        0.19867237201321555,
+        0.575492883654962,
+        0.11393815389116373
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_CRITICAL_03_EN",
+      "group_id": "other__critical_uncontrolled_external_bleeding",
+      "language": "en",
+      "incident_type": "other",
+      "label": "critical",
+      "probabilities": [
+        0.155431761554856,
+        0.1395845258258826,
+        0.5584608765438407,
+        0.14652283607542071
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_CRITICAL_03_MIXED",
+      "group_id": "other__critical_uncontrolled_external_bleeding",
+      "language": "mixed",
+      "incident_type": "other",
+      "label": "critical",
+      "probabilities": [
+        0.07241727907915034,
+        0.25818213750342084,
+        0.585491254840533,
+        0.08390932857689591
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_CRITICAL_03_TL",
+      "group_id": "other__critical_uncontrolled_external_bleeding",
+      "language": "tl",
+      "incident_type": "other",
+      "label": "critical",
+      "probabilities": [
+        0.07766625907778268,
+        0.3004492485149805,
+        0.46286678761839795,
+        0.15901770478883892
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_MINOR_03_CEB",
+      "group_id": "other__minor_loose_panel",
+      "language": "ceb",
+      "incident_type": "other",
+      "label": "minor",
+      "probabilities": [
+        0.3421891888433056,
+        0.4111254365184959,
+        0.11280305859273257,
+        0.13388231604546585
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_MINOR_03_EN",
+      "group_id": "other__minor_loose_panel",
+      "language": "en",
+      "incident_type": "other",
+      "label": "minor",
+      "probabilities": [
+        0.404062192607719,
+        0.35374755472917857,
+        0.09258622476534739,
+        0.14960402789775507
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_MINOR_03_MIXED",
+      "group_id": "other__minor_loose_panel",
+      "language": "mixed",
+      "incident_type": "other",
+      "label": "minor",
+      "probabilities": [
+        0.8446705160596432,
+        0.10016410914744488,
+        0.022348900099994257,
+        0.03281647469291764
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_MINOR_03_TL",
+      "group_id": "other__minor_loose_panel",
+      "language": "tl",
+      "incident_type": "other",
+      "label": "minor",
+      "probabilities": [
+        0.36005299552930653,
+        0.41276438077518374,
+        0.08138573580039846,
+        0.14579688789511136
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_NEEDS_REVIEW_05_CEB",
+      "group_id": "other__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "ceb",
+      "incident_type": "other",
+      "label": "needs_review",
+      "probabilities": [
+        0.2580716393761949,
+        0.17528151209491916,
+        0.15558375232152938,
+        0.41106309620735665
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_NEEDS_REVIEW_05_EN",
+      "group_id": "other__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "en",
+      "incident_type": "other",
+      "label": "needs_review",
+      "probabilities": [
+        0.3172072097474612,
+        0.1557550880133516,
+        0.10350750990399948,
+        0.4235301923351876
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_NEEDS_REVIEW_05_MIXED",
+      "group_id": "other__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "mixed",
+      "incident_type": "other",
+      "label": "needs_review",
+      "probabilities": [
+        0.1743598245847946,
+        0.2534144793933104,
+        0.1091402253243978,
+        0.4630854706974972
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_NEEDS_REVIEW_05_TL",
+      "group_id": "other__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "tl",
+      "incident_type": "other",
+      "label": "needs_review",
+      "probabilities": [
+        0.40719271115020944,
+        0.17758345069644454,
+        0.09522963007302632,
+        0.31999420808031975
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_NEEDS_REVIEW_11_CEB",
+      "group_id": "other__needs_review_translation_or_quotation",
+      "language": "ceb",
+      "incident_type": "other",
+      "label": "needs_review",
+      "probabilities": [
+        0.06664929961626094,
+        0.04972577624132715,
+        0.08108421654427424,
+        0.8025407075981377
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_NEEDS_REVIEW_11_EN",
+      "group_id": "other__needs_review_translation_or_quotation",
+      "language": "en",
+      "incident_type": "other",
+      "label": "needs_review",
+      "probabilities": [
+        0.08329898732144249,
+        0.19039708771537678,
+        0.2371585723381584,
+        0.4891453526250224
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_NEEDS_REVIEW_11_MIXED",
+      "group_id": "other__needs_review_translation_or_quotation",
+      "language": "mixed",
+      "incident_type": "other",
+      "label": "needs_review",
+      "probabilities": [
+        0.04405872526157553,
+        0.19055617453375967,
+        0.19725772344988385,
+        0.568127376754781
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_NEEDS_REVIEW_11_TL",
+      "group_id": "other__needs_review_translation_or_quotation",
+      "language": "tl",
+      "incident_type": "other",
+      "label": "needs_review",
+      "probabilities": [
+        0.03713396664209979,
+        0.0441871392146445,
+        0.159924766148452,
+        0.7587541279948037
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_SERIOUS_01_CEB",
+      "group_id": "other__serious_skin_abrasion",
+      "language": "ceb",
+      "incident_type": "other",
+      "label": "serious",
+      "probabilities": [
+        0.07604626236766374,
+        0.7973997181700868,
+        0.08201343626091157,
+        0.044540583201338
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_SERIOUS_01_EN",
+      "group_id": "other__serious_skin_abrasion",
+      "language": "en",
+      "incident_type": "other",
+      "label": "serious",
+      "probabilities": [
+        0.025795219371079186,
+        0.9302452836800076,
+        0.02285143386865321,
+        0.02110806308025993
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_SERIOUS_01_MIXED",
+      "group_id": "other__serious_skin_abrasion",
+      "language": "mixed",
+      "incident_type": "other",
+      "label": "serious",
+      "probabilities": [
+        0.012448288240452347,
+        0.9587939176763672,
+        0.017537836582984058,
+        0.011219957500196278
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_SERIOUS_01_TL",
+      "group_id": "other__serious_skin_abrasion",
+      "language": "tl",
+      "incident_type": "other",
+      "label": "serious",
+      "probabilities": [
+        0.05570553772115198,
+        0.7247247378367998,
+        0.15585337330897703,
+        0.06371635113307135
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_SERIOUS_12_CEB",
+      "group_id": "other__serious_back_pain_after_strain",
+      "language": "ceb",
+      "incident_type": "other",
+      "label": "serious",
+      "probabilities": [
+        0.048088282360565705,
+        0.8682501046316985,
+        0.061624446123507176,
+        0.022037166884228538
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_SERIOUS_12_EN",
+      "group_id": "other__serious_back_pain_after_strain",
+      "language": "en",
+      "incident_type": "other",
+      "label": "serious",
+      "probabilities": [
+        0.07301326172369889,
+        0.8214874962050515,
+        0.07582489449009167,
+        0.029674347581157876
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_SERIOUS_12_MIXED",
+      "group_id": "other__serious_back_pain_after_strain",
+      "language": "mixed",
+      "incident_type": "other",
+      "label": "serious",
+      "probabilities": [
+        0.03293673638874059,
+        0.9161492861002856,
+        0.03420601453928459,
+        0.016707962971689194
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_OTHER_SERIOUS_12_TL",
+      "group_id": "other__serious_back_pain_after_strain",
+      "language": "tl",
+      "incident_type": "other",
+      "label": "serious",
+      "probabilities": [
+        0.04711139293067626,
+        0.8812414496683711,
+        0.043497789024481356,
+        0.028149368376471338
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_CRITICAL_02_CEB",
+      "group_id": "road_accident__critical_absent_normal_breathing",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0733324504278478,
+        0.5675527314227943,
+        0.25399794181593055,
+        0.10511687633342731
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_CRITICAL_02_EN",
+      "group_id": "road_accident__critical_absent_normal_breathing",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.09174090244767223,
+        0.4825683624711958,
+        0.22204954133348406,
+        0.20364119374764791
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_CRITICAL_02_MIXED",
+      "group_id": "road_accident__critical_absent_normal_breathing",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.06449799598416034,
+        0.6830585151908731,
+        0.1260840074579942,
+        0.12635948136697228
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_CRITICAL_02_TL",
+      "group_id": "road_accident__critical_absent_normal_breathing",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.10869892865328086,
+        0.4089023170437595,
+        0.2790815237887525,
+        0.20331723051420705
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_CRITICAL_03_CEB",
+      "group_id": "road_accident__critical_uncontrolled_external_bleeding",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.11947760368455657,
+        0.18552151943257067,
+        0.5829441733156422,
+        0.11205670356723053
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_CRITICAL_03_EN",
+      "group_id": "road_accident__critical_uncontrolled_external_bleeding",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.13232943102143602,
+        0.15310786122921016,
+        0.585824007019334,
+        0.1287387007300197
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_CRITICAL_03_MIXED",
+      "group_id": "road_accident__critical_uncontrolled_external_bleeding",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.07446619731773421,
+        0.27072755589004927,
+        0.5697575137703748,
+        0.08504873302184165
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_CRITICAL_03_TL",
+      "group_id": "road_accident__critical_uncontrolled_external_bleeding",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0881313272977953,
+        0.2737060460057228,
+        0.4627025860120055,
+        0.17546004068447651
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_MINOR_03_CEB",
+      "group_id": "road_accident__minor_loose_panel",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.375714949447251,
+        0.38969743582815564,
+        0.10294336563080668,
+        0.13164424909378666
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_MINOR_03_EN",
+      "group_id": "road_accident__minor_loose_panel",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.36164232505198624,
+        0.41447635567545515,
+        0.09110646633261943,
+        0.1327748529399392
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_MINOR_03_MIXED",
+      "group_id": "road_accident__minor_loose_panel",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.8416594939559217,
+        0.10318213706362767,
+        0.02165751615061459,
+        0.033500852829835955
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_MINOR_03_TL",
+      "group_id": "road_accident__minor_loose_panel",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.39425085073885474,
+        0.3671652032308801,
+        0.08016497237518462,
+        0.15841897365508034
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_NEEDS_REVIEW_05_CEB",
+      "group_id": "road_accident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.28614525578858035,
+        0.16314890630340184,
+        0.1404082919342318,
+        0.41029754597378615
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_NEEDS_REVIEW_05_EN",
+      "group_id": "road_accident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.30077096467375214,
+        0.18260535662254887,
+        0.10627895933275312,
+        0.4103447193709459
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_NEEDS_REVIEW_05_MIXED",
+      "group_id": "road_accident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.1722537785862202,
+        0.2563844252329139,
+        0.10073481969845738,
+        0.4706269764824086
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_NEEDS_REVIEW_05_TL",
+      "group_id": "road_accident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.4311862351428483,
+        0.14733957225901503,
+        0.08672391675970859,
+        0.33475027583842804
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_NEEDS_REVIEW_11_CEB",
+      "group_id": "road_accident__needs_review_translation_or_quotation",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.06970897463230379,
+        0.043799418650203537,
+        0.07380349715645229,
+        0.8126881095610403
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_NEEDS_REVIEW_11_EN",
+      "group_id": "road_accident__needs_review_translation_or_quotation",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.07309082423812954,
+        0.21918837041490438,
+        0.24665749213554944,
+        0.46106331321141675
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_NEEDS_REVIEW_11_MIXED",
+      "group_id": "road_accident__needs_review_translation_or_quotation",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0468816305506707,
+        0.2016016963086682,
+        0.19407908746896219,
+        0.5574375856716989
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_NEEDS_REVIEW_11_TL",
+      "group_id": "road_accident__needs_review_translation_or_quotation",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.04043888216484524,
+        0.039200886344842346,
+        0.15359448887972826,
+        0.7667657426105843
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_SERIOUS_01_CEB",
+      "group_id": "road_accident__serious_skin_abrasion",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.08107170886196405,
+        0.8036871698336701,
+        0.07359508016826408,
+        0.04164604113610194
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_SERIOUS_01_EN",
+      "group_id": "road_accident__serious_skin_abrasion",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0166745113695431,
+        0.9520391246345473,
+        0.017526458066742245,
+        0.013759905929167328
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_SERIOUS_01_MIXED",
+      "group_id": "road_accident__serious_skin_abrasion",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.013057004654680019,
+        0.9583254760544895,
+        0.017082407182055417,
+        0.011535112108775067
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_SERIOUS_01_TL",
+      "group_id": "road_accident__serious_skin_abrasion",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.06695788563630656,
+        0.6945312752303613,
+        0.16541436540797153,
+        0.07309647372536061
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_SERIOUS_12_CEB",
+      "group_id": "road_accident__serious_back_pain_after_strain",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.047833130398403596,
+        0.8753820970766294,
+        0.056232061024195076,
+        0.0205527115007718
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_SERIOUS_12_EN",
+      "group_id": "road_accident__serious_back_pain_after_strain",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.05362405373222628,
+        0.8621106305438173,
+        0.06327322791729385,
+        0.020992087806662736
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_SERIOUS_12_MIXED",
+      "group_id": "road_accident__serious_back_pain_after_strain",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.033134859845787484,
+        0.9177352786257372,
+        0.03239374298011781,
+        0.01673611854835761
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_SERIOUS_12_TL",
+      "group_id": "road_accident__serious_back_pain_after_strain",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.05736764260802433,
+        0.8620158427194518,
+        0.04749966485257931,
+        0.03311684981994465
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_CRITICAL_02_CEB",
+      "group_id": "security_incident__critical_absent_normal_breathing",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.06930038279004685,
+        0.5574778357983559,
+        0.2487105840189821,
+        0.12451119739261518
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_CRITICAL_02_EN",
+      "group_id": "security_incident__critical_absent_normal_breathing",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.11063421716655784,
+        0.41961735780015297,
+        0.22190124016462864,
+        0.24784718486866059
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_CRITICAL_02_MIXED",
+      "group_id": "security_incident__critical_absent_normal_breathing",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.08019269404802681,
+        0.6582511560817857,
+        0.12824331464901917,
+        0.13331283522116827
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_CRITICAL_02_TL",
+      "group_id": "security_incident__critical_absent_normal_breathing",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.12893843356575774,
+        0.4485320660185373,
+        0.27169980265329413,
+        0.15082969776241087
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_CRITICAL_03_CEB",
+      "group_id": "security_incident__critical_uncontrolled_external_bleeding",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.11159234395975084,
+        0.19513362996732259,
+        0.5640180477988063,
+        0.1292559782741203
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_CRITICAL_03_EN",
+      "group_id": "security_incident__critical_uncontrolled_external_bleeding",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.15293359272233395,
+        0.1408108576945467,
+        0.5549913604688562,
+        0.15126418911426312
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_CRITICAL_03_MIXED",
+      "group_id": "security_incident__critical_uncontrolled_external_bleeding",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.08847486688372184,
+        0.2681451540593004,
+        0.5554066617515889,
+        0.08797331730538885
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_CRITICAL_03_TL",
+      "group_id": "security_incident__critical_uncontrolled_external_bleeding",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.09826164513746488,
+        0.3043210663086732,
+        0.45854207581244194,
+        0.1388752127414199
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_MINOR_03_CEB",
+      "group_id": "security_incident__minor_loose_panel",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "probabilities": [
+        0.3275382225501302,
+        0.41420369953712005,
+        0.10947588688641174,
+        0.1487821910263379
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_MINOR_03_EN",
+      "group_id": "security_incident__minor_loose_panel",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "probabilities": [
+        0.3961058777777179,
+        0.3598441075925778,
+        0.09143256711022608,
+        0.15261744751947814
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_MINOR_03_MIXED",
+      "group_id": "security_incident__minor_loose_panel",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "probabilities": [
+        0.8556705052250317,
+        0.09258410539876356,
+        0.020149396268706297,
+        0.031595993107498416
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_MINOR_03_TL",
+      "group_id": "security_incident__minor_loose_panel",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "probabilities": [
+        0.4346783701352127,
+        0.3801840162719693,
+        0.0721300333213583,
+        0.11300758027145966
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_NEEDS_REVIEW_05_CEB",
+      "group_id": "security_incident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.24924973361784372,
+        0.17284630071657184,
+        0.14080830530524255,
+        0.43709566036034203
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_NEEDS_REVIEW_05_EN",
+      "group_id": "security_incident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.3071910988256888,
+        0.1575647192944335,
+        0.1027041369961021,
+        0.4325400448837755
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_NEEDS_REVIEW_05_MIXED",
+      "group_id": "security_incident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.19819540712389297,
+        0.2506864380343596,
+        0.10071088058444486,
+        0.4504072742573026
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_NEEDS_REVIEW_05_TL",
+      "group_id": "security_incident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.49630918894145915,
+        0.16237419853419957,
+        0.08211671556789166,
+        0.2591998969564497
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_NEEDS_REVIEW_11_CEB",
+      "group_id": "security_incident__needs_review_translation_or_quotation",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.06541969683514312,
+        0.0489763899262692,
+        0.07650883771651765,
+        0.80909507552207
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_NEEDS_REVIEW_11_EN",
+      "group_id": "security_incident__needs_review_translation_or_quotation",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.08119092206997344,
+        0.19336815349558845,
+        0.23377143469785314,
+        0.491669489736585
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_NEEDS_REVIEW_11_MIXED",
+      "group_id": "security_incident__needs_review_translation_or_quotation",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.05621868693769151,
+        0.19907928117963186,
+        0.1906146982531452,
+        0.5540873336295314
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_NEEDS_REVIEW_11_TL",
+      "group_id": "security_incident__needs_review_translation_or_quotation",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.052550217056396814,
+        0.048669129993985434,
+        0.175514222290114,
+        0.7232664306595037
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_SERIOUS_01_CEB",
+      "group_id": "security_incident__serious_skin_abrasion",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.07741511819040485,
+        0.7929145496346542,
+        0.07783803403473086,
+        0.05183229814021003
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_SERIOUS_01_EN",
+      "group_id": "security_incident__serious_skin_abrasion",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.025014056205605643,
+        0.9308283135086178,
+        0.022521363298620187,
+        0.021636266987156243
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_SERIOUS_01_MIXED",
+      "group_id": "security_incident__serious_skin_abrasion",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.018137922942193626,
+        0.9489370558496029,
+        0.01934151194822749,
+        0.013583509259976017
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_SERIOUS_01_TL",
+      "group_id": "security_incident__serious_skin_abrasion",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.07625306911518864,
+        0.7222291479207346,
+        0.15066801791428103,
+        0.050849765049795846
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_SERIOUS_12_CEB",
+      "group_id": "security_incident__serious_back_pain_after_strain",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.048182592056212246,
+        0.8652500062260318,
+        0.05982112985382608,
+        0.026746271863930002
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_SERIOUS_12_EN",
+      "group_id": "security_incident__serious_back_pain_after_strain",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.07038073294587889,
+        0.8252531433374005,
+        0.0741567519901835,
+        0.030209371726537135
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_SERIOUS_12_MIXED",
+      "group_id": "security_incident__serious_back_pain_after_strain",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.04235291615132866,
+        0.9010007888865998,
+        0.036179707142679464,
+        0.0204665878193921
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_SERIOUS_12_TL",
+      "group_id": "security_incident__serious_back_pain_after_strain",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.06339108092229127,
+        0.8671701414177297,
+        0.043669807354326434,
+        0.02576897030565261
+      ]
+    }
+  ]
+}

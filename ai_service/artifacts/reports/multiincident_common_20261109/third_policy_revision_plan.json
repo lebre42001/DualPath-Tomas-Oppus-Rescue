@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "reason": "Validation-only correction of heavy-flow, drowning, resolved-scene, subject-clarification and ongoing-intervention wording gaps.",
+  "weights_changed": false,
+  "reuse_fits": ["trials_v4_plain", "trials_v4_augmented"],
+  "validation_rows": 308,
+  "new_source_test_rows": 144,
+  "regularization_c": [1, 4, 16, 64],
+  "review_thresholds": [0.5, 0.6, 0.65, 0.7],
+  "selection": "Validation only: prefer zero urgent lower assignments and Critical recall >=0.95; then fewer lower assignments, higher Critical recall, full-policy macro-F1, raw macro-F1.",
+  "fresh_challenge_sha256": "dccbfcb71f596fa8d07c99e666b3f61686c42cd9993677360562b1d04fd64b01",
+  "fresh_challenge_seen": false,
+  "previous_diagnostics_are_exposed_regression_evidence": true,
+  "human_reviewed": false,
+  "approved_for_deployment": false
+}

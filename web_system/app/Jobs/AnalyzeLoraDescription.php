@@ -24,12 +24,13 @@ class AnalyzeLoraDescription
 
         $description = (string) $report->description;
         // Exactly the description-only path used for civilian online reports.
-        $analysis = $client->analyzeForReport($description);
-        $updated = DB::transaction(function () use ($description, $analysis): ?IncidentReport {
+        $incidentType = $report->incident_type;
+        $analysis = $client->analyzeForReport($description, null, $incidentType);
+        $updated = DB::transaction(function () use ($description, $incidentType, $analysis): ?IncidentReport {
             $report = IncidentReport::query()->lockForUpdate()->find($this->reportId);
             // A slow analysis must never replace an admin decision, a manual
             // re-analysis, or an edited/deleted report.
-            if (! $this->awaitingAnalysis($report) || (string) $report->description !== $description) {
+            if (! $this->awaitingAnalysis($report) || (string) $report->description !== $description || $report->incident_type !== $incidentType) {
                 return null;
             }
 

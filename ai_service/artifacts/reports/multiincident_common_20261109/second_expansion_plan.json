@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "training_variants": ["combined_plain", "combined_augmented"],
+  "variation_reason": "Compare ordinary scenario weights with repeated context augmentation; correlated variants must not automatically dominate new incident mechanisms.",
+  "validation_rows": 308,
+  "new_source_test_rows": 144,
+  "previous_exposed_test_208_fitted": false,
+  "regularization_c": [1, 4, 16, 64],
+  "review_thresholds": [0.5, 0.6, 0.65, 0.7],
+  "rule_profile": "multiincident_common_v1",
+  "rule_version": "multiincident-cues-20261109-v3",
+  "selection": "Validation only: prefer zero urgent lower assignments and Critical recall >=0.95; then fewer lower assignments, higher Critical recall, full-policy macro-F1, raw macro-F1.",
+  "fresh_challenge_sha256": "dccbfcb71f596fa8d07c99e666b3f61686c42cd9993677360562b1d04fd64b01",
+  "fresh_challenge_seen": false,
+  "human_reviewed": false,
+  "approved_for_deployment": false
+}

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\IncidentReport;
 use App\Models\User;
 use App\Services\AiTextSeverityClient;
+use App\Services\FaceLivenessProof;
 use App\Services\IncidentReportFilterQuery;
 use App\Services\RouteNavigationClient;
 use App\Support\AiSeverityMapper;
@@ -50,7 +51,7 @@ class IncidentReportController extends Controller
         match ($sort) {
             'oldest' => $reportsQuery->oldest(),
             'severity' => $reportsQuery
-                ->orderByRaw("CASE (".$filterQuery->severityExpression($reportsQuery).") WHEN 'Critical' THEN 1 WHEN 'Serious' THEN 2 WHEN 'Minor' THEN 3 WHEN 'Needs review' THEN 4 ELSE 5 END")
+                ->orderByRaw('CASE ('.$filterQuery->severityExpression($reportsQuery).") WHEN 'Critical' THEN 1 WHEN 'Serious' THEN 2 WHEN 'Minor' THEN 3 WHEN 'Needs review' THEN 4 ELSE 5 END")
                 ->latest(),
             'status' => $reportsQuery
                 ->orderByRaw("case status when 'received' then 1 when 'acknowledged' then 2 when 'dispatched' then 3 when 'responding' then 4 when 'resolved' then 5 when 'rejected' then 6 else 7 end")
@@ -247,21 +248,19 @@ class IncidentReportController extends Controller
 
         $description = trim((string) ($validated['description'] ?? ''));
         if ($isCivilian) {
-            app(\App\Services\FaceLivenessProof::class)->assertValid($request->user(), 'report', $validated['liveness_proof'] ?? null, $request->file('selfie_capture') ?: $request->file('selfie'));
+            app(FaceLivenessProof::class)->assertValid($request->user(), 'report', $validated['liveness_proof'] ?? null, $request->file('selfie_capture') ?: $request->file('selfie'));
         }
         $descriptionForStorage = $description !== '' ? $description : 'No short description provided.';
 
         $preferredSeverity = $isCivilian ? null : ($validated['severity'] ?? null);
-        // Descriptions are the only AI severity input. Disabled or unavailable
+        $incidentType = $isCivilian ? 'Road Accident' : ($validated['incident_type'] ?? 'General Emergency');
+        // The description and selected incident category are the AI inputs. Disabled or unavailable
         // text inference leaves the report unassessed for responder review.
-        $analysis = app(AiTextSeverityClient::class)->analyzeForReport($descriptionForStorage, $preferredSeverity);
+        $analysis = app(AiTextSeverityClient::class)->analyzeForReport($descriptionForStorage, $preferredSeverity, $incidentType);
         $severity = $analysis['severity'];
         $transmissionType = $isCivilian
             ? 'online'
             : $this->normalizeTransmissionType($validated['transmission_type'] ?? 'online');
-        $incidentType = $isCivilian
-            ? 'Road Accident'
-            : ($validated['incident_type'] ?? 'General Emergency');
         $channel = $transmissionType === 'lora' ? 'LoRa Mesh' : 'Internet';
         $evidencePath = null;
         $evidenceOriginalName = null;
@@ -307,7 +306,7 @@ class IncidentReportController extends Controller
 
         if ($selfieUpload) {
             if ($isCivilian) {
-                app(\App\Services\FaceLivenessProof::class)->consume($request->user(), 'report', $validated['liveness_proof'] ?? null, $selfieUpload);
+                app(FaceLivenessProof::class)->consume($request->user(), 'report', $validated['liveness_proof'] ?? null, $selfieUpload);
             }
             $selfiePath = $selfieUpload->store('incident-selfies');
         }

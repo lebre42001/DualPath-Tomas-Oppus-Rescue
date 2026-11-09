@@ -225,7 +225,7 @@ class TextSeverityIntegrationTest extends TestCase
         Storage::assertExists($report->evidence_path);
         Http::assertSentCount(1);
         Http::assertSent(fn ($request) => $request->url() === 'http://text-ai.test/predict/text'
-            && $request->data() === ['description' => $description]);
+            && $request->data() === ['description' => $description, 'incident_type' => 'road_accident']);
 
         // A stale image job remains ineligible even after the feature is disabled.
         config(['services.ai_text.enabled' => false]);
@@ -275,7 +275,7 @@ class TextSeverityIntegrationTest extends TestCase
         $this->assertSame($model['probabilities'], $report->ai_probabilities);
         $this->assertTrue($report->ai_review_required);
         Http::assertSentCount(1);
-        Http::assertSent(fn ($request) => $request->data() === ['description' => $description]);
+        Http::assertSent(fn ($request) => $request->data() === ['description' => $description, 'incident_type' => 'road_accident']);
     }
 
     public function test_unavailable_text_service_still_accepts_report_without_fabricated_scores(): void
@@ -285,7 +285,7 @@ class TextSeverityIntegrationTest extends TestCase
 
         $this->postJson('/api/v1/reports', $this->reportInput('May naaksidente, kailangan ng tulong.'))
             ->assertCreated()
-            ->assertJsonPath('data.severity', 'Serious')
+            ->assertJsonPath('data.severity', null)
             ->assertJsonPath('data.severity_display', 'Needs review')
             ->assertJsonPath('data.severity_is_provisional', true)
             ->assertJsonPath('data.ai_status', 'needs_review')
@@ -313,7 +313,7 @@ class TextSeverityIntegrationTest extends TestCase
         $result = app(AiTextSeverityClient::class)->analyze('Naay aksidente.');
 
         $this->assertSame('text_review', $result['source']);
-        $this->assertSame('Serious', $result['severity']);
+        $this->assertNull($result['severity']);
         $this->assertNull($result['confidence']);
         $this->assertSame($prediction['probabilities'], $result['probabilities']);
     }
@@ -422,7 +422,7 @@ class TextSeverityIntegrationTest extends TestCase
         ])->assertSessionHasNoErrors()->assertRedirect();
 
         $report = IncidentReport::query()->sole();
-        $this->assertSame('Serious', $report->severity);
+        $this->assertNull($report->severity);
         $this->assertSame('text_review', $report->ai_source);
         $this->assertSame('Needs review', $report->severity_display);
         $this->assertSame('Model score unavailable', $report->ai_score_display);
@@ -486,7 +486,7 @@ class TextSeverityIntegrationTest extends TestCase
         $this->assertNotSame($reports[0]->evidence_path, $reports[1]->evidence_path);
         Http::assertSentCount(2);
         Http::assertNotSent(fn ($request) => $request->url() !== 'http://text-ai.test/predict/text'
-            || $request->data() !== ['description' => $description]);
+            || $request->data() !== ['description' => $description, 'incident_type' => 'road_accident']);
     }
 
     public function test_report_view_uses_review_label_and_does_not_claim_zero_confidence(): void

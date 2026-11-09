@@ -155,6 +155,12 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
         });
     });
 
+    Route::middleware('admin')->group(function (): void {
+        Route::get('/profile/admin-logs', [\App\Http\Controllers\Web\AdminSystemLogController::class, 'myLogs'])->name('profile.admin-logs');
+        Route::get('/profile/admin-logs/print', [\App\Http\Controllers\Web\AdminSystemLogController::class, 'printMyLogs'])->name('profile.admin-logs.print');
+        Route::post('/profile/admin-logs/duty', [\App\Http\Controllers\Web\AdminSystemLogController::class, 'duty'])->name('profile.admin-logs.duty');
+    });
+
     Route::get('/profile/photo', [ProfileController::class, 'photo'])->name('profile.photo');
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');

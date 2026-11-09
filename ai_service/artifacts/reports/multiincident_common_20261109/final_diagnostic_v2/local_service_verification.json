@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-09",
+  "deployment_performed": false,
+  "ai_tests": {
+    "run": 215,
+    "passed": 214,
+    "skipped": 1
+  },
+  "checks": [
+    {
+      "url": "http://127.0.0.1:8100/ready/text",
+      "status": 200,
+      "model_version": "dualpath-tfidf-20261016-v2",
+      "supported_incident_types": [
+        "road_accident"
+      ],
+      "text_rule_profile": "road_text_cues_v2",
+      "text_rules_version": "text-cues-20261109-v2"
+    },
+    {
+      "url": "http://127.0.0.1:8101/ready/text",
+      "status": 200,
+      "model_version": "multiincident-tfidf-20261109-v1",
+      "supported_incident_types": [
+        "fire_incident",
+        "flood_landslide",
+        "medical_emergency",
+        "other",
+        "road_accident",
+        "security_incident"
+      ],
+      "text_rule_profile": "multiincident_common_v1",
+      "text_rules_version": "multiincident-cues-20261109-v4"
+    },
+    {
+      "url": "http://127.0.0.1:8100/predict/text",
+      "unsupported_category_abstained_without_scores": true
+    },
+    {
+      "url": "http://127.0.0.1:8000/",
+      "status": 200,
+      "final_url": "http://127.0.0.1:8000/"
+    },
+    {
+      "url": "http://127.0.0.1:8000/login",
+      "status": 200,
+      "final_url": "http://127.0.0.1:8000/login"
+    },
+    {
+      "url": "http://127.0.0.1:8000/register",
+      "status": 200,
+      "final_url": "http://127.0.0.1:8000/register"
+    },
+    {
+      "url": "http://127.0.0.1:8000/admin/text-ai-test",
+      "status": 200,
+      "final_url": "http://127.0.0.1:8000/admin/login"
+    }
+  ]
+}

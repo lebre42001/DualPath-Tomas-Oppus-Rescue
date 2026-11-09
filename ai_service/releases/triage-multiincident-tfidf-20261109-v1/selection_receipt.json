@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "selection_partition": "validation",
+  "purpose": "Experimental AI Lab, not a validated release",
+  "ranking": "Fewest Critical lower assignments, highest complete-policy accuracy, macro-F1, fewer Serious lower assignments",
+  "variant": "plain",
+  "regularization_c": 16,
+  "review_threshold": 0.5,
+  "validation_accuracy": 0.8506493506493507,
+  "validation_critical_recall": 0.9166666666666666,
+  "critical_lower_assignments": 0,
+  "serious_lower_assignments": 1,
+  "test_seen": false,
+  "fresh_challenge_seen": false,
+  "approved_for_deployment": false,
+  "human_reviewed": false
+}

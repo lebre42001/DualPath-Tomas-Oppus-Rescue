@@ -402,6 +402,7 @@ def prepare(args: argparse.Namespace) -> dict:
             "train_text.py": AI_ROOT / "train_text.py",
             "src/ai_service/__init__.py": AI_ROOT / "src" / "ai_service" / "__init__.py",
             "src/ai_service/text_training.py": AI_ROOT / "src" / "ai_service" / "text_training.py",
+            "src/ai_service/incident_types.py": AI_ROOT / "src" / "ai_service" / "incident_types.py",
             "data/reports.csv": data_path,
             "data/provenance.json": data_path.parent / "provenance.json",
         }

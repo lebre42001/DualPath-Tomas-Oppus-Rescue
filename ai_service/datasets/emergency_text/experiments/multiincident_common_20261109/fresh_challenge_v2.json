@@ -1,0 +1,1578 @@
+{
+  "schema_version": "fresh_challenge_v2",
+  "created_date": "2026-11-09",
+  "status": "frozen_draft",
+  "authorship": "Separate AI-authored provisional diagnostic; not human-independent or clinically validated.",
+  "rubric_version": "proposed_multiincident_expanded_v2",
+  "evaluation_use": "Frozen whole-pack diagnostic only; not training or threshold-selection data.",
+  "review_status": "draft",
+  "reviewer": "",
+  "languages": [
+    "en",
+    "tl",
+    "ceb",
+    "mixed"
+  ],
+  "scenarios": [
+    {
+      "id": "fcv2_road_accident_minor_01",
+      "family_id": "fcv2_road_motorcycle_corner",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "descriptions": {
+        "en": "Two motorcycles brushed mirrors at the corner. Both riders say they are unhurt, and they have moved the bikes completely off the road.",
+        "tl": "Nagkiskisan ang salamin ng dalawang motorsiklo sa kanto. Parehong walang sugat ang mga sakay, at nailipat na nila ang mga motor sa gilid.",
+        "ceb": "Nagsangit ang mga samin sa duha ka motorsiklo sa eskina. Walay nasamdan sa mga sakay, ug gipadaplin na nila ang mga motor.",
+        "mixed": "Nagbanggaan ang mirrors ng dalawang motor sa corner. Both riders are unhurt, at nasa ligtas na gilid na ang mga motor."
+      },
+      "rationale": "Explicitly uninjured riders, limited damage, and a cleared roadway support the proposed lower-urgency boundary.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_road_accident_minor_02",
+      "family_id": "fcv2_road_market_cars",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "descriptions": {
+        "en": "A car tapped another car near the market. Only the bumpers are scratched; everyone is unhurt and both cars are parked safely outside traffic.",
+        "tl": "Nabangga nang bahagya ng kotse ang isa pang kotse malapit sa palengke. Gasgas lang ang bumper, walang nasaktan, at ligtas nang nakaparada ang dalawa.",
+        "ceb": "Nabangga gamay sa usa ka awto ang laing awto duol sa merkado. Garas ra ang bumper, walay nasamdan, ug luwas nang nakaparada ang duha.",
+        "mixed": "May car na tumama sa parked car near the market. Bumper scratches lang, everyone is unhurt, at nailayo na pareho sa traffic."
+      },
+      "rationale": "Only bumper scratches are reported; everyone is explicitly uninjured and the hazard is removed.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_road_accident_minor_03",
+      "family_id": "fcv2_road_tricycle_ditch",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "descriptions": {
+        "en": "The tricycle slipped into a shallow roadside ditch. Everyone climbed out without injury; it has been pulled out and the road is clear again.",
+        "tl": "Dumulas ang traysikel sa mababaw na kanal. Lahat ay nakalabas nang walang sugat; nahila na ang sasakyan at wala nang harang sa daan.",
+        "ceb": "Nadulas ang traysikol ngadto sa mabaw nga kanal. Nakagawas ang tanan nga walay samad; nabira na kini ug hawan na pag-usab ang dalan.",
+        "mixed": "Nadulas ang tricycle sa mababaw na ditch. Walay nasamdan sa mga sakay, nahila na ang unit, at clear na ulit ang road."
+      },
+      "rationale": "The vehicle has been recovered and everyone explicitly reports no injury or remaining road hazard.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_road_accident_minor_04",
+      "family_id": "fcv2_road_bicycle_gate",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "descriptions": {
+        "en": "A cyclist fell while stopping at the gate, then stood up without pain or wounds. The bicycle is aside and nobody else was hit.",
+        "tl": "Natumba ang nagbibisikleta habang humihinto sa tarangkahan, pero nakatayo siyang walang sakit o sugat. Naitabi na ang bisikleta at walang ibang tinamaan.",
+        "ceb": "Natumba ang siklista samtang mohunong sa ganghaan, apan mitindog nga walay sakit o samad. Gipadaplin na ang bisikleta ug walay laing naigo.",
+        "mixed": "Natumba ang cyclist sa gate pero nakatayo agad, no pain or wounds. Naitabi na ang bike at walang ibang tao na tinamaan."
+      },
+      "rationale": "A low-impact bicycle fall is explicitly injury-free, with the gate area cleared.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_road_accident_serious_01",
+      "family_id": "fcv2_road_motorcycle_corner",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "descriptions": {
+        "en": "A motorcycle rider fell at the corner and cannot stand because his ankle is swollen. He answers clearly and is breathing normally beside the road.",
+        "tl": "Natumba ang nagmomotor sa kanto at hindi makatayo dahil namamaga ang bukongbukong. Malinaw siyang sumasagot at maayos ang paghinga habang nasa gilid ng daan.",
+        "ceb": "Natumba ang nagmotorsiklo sa eskina ug dili makatindog kay nanghubag ang buolbuol. Klaro siyang motubag ug normal ang pagginhawa didto sa daplin.",
+        "mixed": "The rider fell sa corner at hindi makatayo dahil namamaga ang ankle. Gising siya, clear ang sagot, at normal ang paghinga sa roadside."
+      },
+      "rationale": "A painful leg injury prevents standing, while alertness and normal breathing are explicit.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_road_accident_serious_02",
+      "family_id": "fcv2_road_market_cars",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "descriptions": {
+        "en": "Two cars collided beside the market. One passenger has a painful bent arm but remains awake, answers questions, and is not bleeding heavily.",
+        "tl": "Nagbanggaan ang dalawang kotse sa tabi ng palengke. Baluktot at masakit ang braso ng isang pasahero, pero gising, sumasagot, at walang malakas na pagdurugo.",
+        "ceb": "Nagbangga ang duha ka awto tupad sa merkado. Baliko ug sakit ang bukton sa usa ka pasahero, apan mata, motubag, ug walay kusog nga pagdugo.",
+        "mixed": "Two cars collided sa market. Masakit at baluktot ang arm ng passenger, pero gising siya, sumasagot nang maayos, at hindi malakas ang bleeding."
+      },
+      "rationale": "A passenger has a painful arm injury without an explicit grave sign.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_road_accident_serious_03",
+      "family_id": "fcv2_road_tricycle_ditch",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "descriptions": {
+        "en": "After the tricycle entered the ditch, a passenger has a cut knee and bad shoulder pain. She stays awake, and the bleeding is slow.",
+        "tl": "Pagkahulog ng traysikel sa kanal, may sugat sa tuhod at matinding sakit sa balikat ang pasahero. Gising siya at kaunti lang ang pagdurugo.",
+        "ceb": "Pagkahulog sa traysikol sa kanal, nasamdan ang tuhod ug sakit kaayo ang abaga sa pasahero. Mata siya ug hinay ra ang pagdugo.",
+        "mixed": "Nahulog ang tricycle sa kanal. May cut sa tuhod at masakit na shoulder ang passenger, pero awake siya at hindi malakas ang bleeding."
+      },
+      "rationale": "A cut and persistent pain warrant assistance; there is no stated immediate grave sign.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_road_accident_serious_04",
+      "family_id": "fcv2_road_bicycle_gate",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "descriptions": {
+        "en": "A cyclist hit the gate and is sitting with a deep shin cut. He cannot walk from pain, but answers normally and breathes without difficulty.",
+        "tl": "Bumangga ang siklista sa tarangkahan at nakaupo ngayon na may malalim na sugat sa binti. Hindi makalakad sa sakit, pero sumasagot at maayos huminga.",
+        "ceb": "Nabangga ang siklista sa ganghaan ug naglingkod karon nga naay lawom nga samad sa bitiis. Dili kalakaw sa kasakit, apan motubag ug normal ang pagginhawa.",
+        "mixed": "The cyclist hit the gate, may malalim na cut sa shin at hindi makalakad. Responsive siya at wala namang hirap sa paghinga ngayon."
+      },
+      "rationale": "An injured cyclist cannot walk; normal breathing and responsiveness are preserved.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_road_accident_critical_01",
+      "family_id": "fcv2_road_motorcycle_corner",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "descriptions": {
+        "en": "Two riders fell at the corner. The woman is awake and talking, but the man beside her does not respond when called or gently touched.",
+        "tl": "Natumba ang dalawang sakay sa kanto. Gising at nagsasalita ang babae, pero hindi tumutugon ang lalaking katabi niya kapag tinatawag o marahang hinahawakan.",
+        "ceb": "Natumba ang duha ka sakay sa eskina. Mata ug nagsulti ang babaye, apan dili motubag ang lalaki tupad niya kon tawgon o hinayng hikapon.",
+        "mixed": "Two riders fell sa corner. Gising ang babae at nakakausap, pero ang lalaking katabi niya ay walang response sa tawag o gentle touch."
+      },
+      "rationale": "One rider is currently unresponsive; another person's alertness does not negate that evidence.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_road_accident_critical_02",
+      "family_id": "fcv2_road_market_cars",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "descriptions": {
+        "en": "A passenger cannot get out of the crashed car by the market. Flames are entering her seat area while she calls from inside.",
+        "tl": "Hindi makalabas ang pasahero sa nabanggang kotse sa palengke. Umaabot na ang apoy sa inuupuan niya habang tumatawag siya mula sa loob.",
+        "ceb": "Dili makagawas ang pasahero sa nabanggang awto sa merkado. Misulod na ang kalayo sa iyang lingkoranan samtang nanawag siya gikan sa sulod.",
+        "mixed": "Trapped ang passenger sa crashed car near the market. Umaabot na ang flames sa seat niya habang tumatawag siya mula sa loob ngayon."
+      },
+      "rationale": "A trapped occupant faces fire reaching the occupied cabin, an explicit immediate human threat.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_road_accident_critical_03",
+      "family_id": "fcv2_road_tricycle_ditch",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "descriptions": {
+        "en": "A tricycle passenger has a torn leg wound after the ditch crash. Blood keeps pouring through the cloth even while someone presses firmly on it.",
+        "tl": "May punit na sugat sa binti ang pasahero matapos mahulog ang traysikel. Tuloy ang pagbuhos ng dugo sa tela kahit may mariing dumidiin dito.",
+        "ceb": "Naay gisi nga samad sa bitiis ang pasahero human nahulog ang traysikol. Padayon ang pagbubo sa dugo sa panapton bisan gipislit kini pag-ayo.",
+        "mixed": "The tricycle passenger has a torn leg wound. Tuloy ang buhos ng dugo through the cloth kahit may taong madiing nagpepress sa sugat ngayon."
+      },
+      "rationale": "Ongoing large blood loss despite pressure explicitly supports immediate grave danger.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_road_accident_critical_04",
+      "family_id": "fcv2_road_bicycle_gate",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "descriptions": {
+        "en": "The cyclist at the gate is gasping and cannot finish a sentence. A bystander who fainted earlier is already awake, but the cyclist is worsening.",
+        "tl": "Hingal na hingal ang siklista sa tarangkahan at hindi makabuo ng pangungusap. Gising na ang kaninang nahimatay na usisero, pero lalong nahihirapan ang siklista.",
+        "ceb": "Naghangos ang siklista sa ganghaan ug dili makahuman og sulti. Mata na ang tawo nga nakuyapan ganiha, apan nagkagrabe ang pagginhawa sa siklista.",
+        "mixed": "The cyclist sa gate is gasping, hindi makatapos ng sentence. Gising na ang bystander na nahimatay kanina, pero lalong hirap huminga ang cyclist."
+      },
+      "rationale": "The cyclist currently cannot breathe adequately; the recovered bystander's condition belongs to a different person.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_road_accident_needs_review_01",
+      "family_id": "fcv2_road_motorcycle_corner",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "There was a motorcycle crash at the corner, someone told me. I am not there and do not know when or whether anyone needs help.",
+        "tl": "May nagsabing may banggaan ng motor sa kanto. Wala ako roon at hindi ko alam kung kailan iyon o kung may nangangailangan pa ng tulong.",
+        "ceb": "Naay nagsulti nga nagbangga ang mga motor sa eskina. Wala ko didto ug wala ko kabalo kanus-a kini o kon naay nanginahanglan og tabang.",
+        "mixed": "May nagsabi na may motorcycle crash sa corner. Wala ako roon, so hindi ko alam kung kailan o kung may kailangan pang tulong ngayon."
+      },
+      "rationale": "The message gives neither current victim condition nor a confirmed ongoing hazard.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_road_accident_needs_review_02",
+      "family_id": "fcv2_road_market_cars",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "The message says everyone in the cars is unhurt, then says someone there will not wake up. It does not explain who or what happened.",
+        "tl": "Sabi sa mensahe, walang nasaktan sa mga kotse, pero may hindi raw magising doon. Hindi malinaw kung sino iyon o ano ang nangyari.",
+        "ceb": "Giingon sa mensahe nga walay nasamdan sa mga awto, dayon naay dili kuno momata didto. Dili klaro kinsa kini o unsay nahitabo.",
+        "mixed": "The text says everyone sa cars is unhurt, tapos may hindi raw magising doon. Walang malinaw na subject o paliwanag kung ano ang nangyari."
+      },
+      "rationale": "The injury statements conflict without clear subject binding or resolution.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_road_accident_needs_review_03",
+      "family_id": "fcv2_road_tricycle_ditch",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "Our tricycle fell into that ditch last month. I am sharing the old story because somebody asked about the road; no current condition is included.",
+        "tl": "Nahulog ang traysikel namin sa kanal noong nakaraang buwan. Ikinukuwento ko lang dahil may nagtanong tungkol sa daan; walang kasalukuyang kalagayang nakasaad dito.",
+        "ceb": "Nahulog ang among traysikol sa kanal niadtong miaging bulan. Gisugilon ra nako kay naay nangutana bahin sa dalan; walay kahimtang karon nga gihisgotan.",
+        "mixed": "Our tricycle fell sa ditch last month. Old story lang ito dahil may nagtanong sa road, at wala akong kasalukuyang update tungkol sa lugar."
+      },
+      "rationale": "A past event is described without current needs or scene status.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_road_accident_needs_review_04",
+      "family_id": "fcv2_road_bicycle_gate",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "For the training exercise, the card says a cyclist lies unconscious near the gate. I am reading the card, not reporting a person here.",
+        "tl": "Para sa pagsasanay, nakasulat sa card na may walang malay na siklista sa tarangkahan. Binabasa ko lang ito, hindi ako nagrereport ng tao rito.",
+        "ceb": "Para sa ensayo, gisulat sa kard nga naay siklista nga walay panimuot duol sa ganghaan. Nagbasa ra ko sa kard, walay gitaho nga tawo dinhi.",
+        "mixed": "Training exercise ito: sabi sa card may unconscious cyclist near the gate. Binabasa ko lang ang scenario, wala akong nirereport na pasyente rito."
+      },
+      "rationale": "Quoted scenario text is not evidence of a current patient.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_fire_incident_minor_01",
+      "family_id": "fcv2_fire_kitchen_pan",
+      "incident_type": "fire_incident",
+      "label": "minor",
+      "descriptions": {
+        "en": "A pan caught fire in the kitchen, but it is completely out now. Nobody was burned or breathed smoke, and the stove is switched off.",
+        "tl": "Nagliyab ang kawali sa kusina, pero patay na ang apoy ngayon. Walang napaso o nakalanghap ng usok, at nakapatay na ang kalan.",
+        "ceb": "Misiga ang kalaha sa kusina, apan napalong na gyud ang kalayo. Walay napaso o nakasinghot og aso, ug gipalong na ang kalan.",
+        "mixed": "The pan caught fire sa kitchen pero completely out na. Walang napaso o nakalanghap ng smoke, at nakaoff na rin ang stove ngayon."
+      },
+      "rationale": "The small cooking fire is fully extinguished and everyone is explicitly uninjured.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_fire_incident_minor_02",
+      "family_id": "fcv2_fire_house_wiring",
+      "incident_type": "fire_incident",
+      "label": "minor",
+      "descriptions": {
+        "en": "A socket briefly sparked, and the electrician has disconnected and checked it. There is no heat or smoke left, and everyone confirms they are unhurt.",
+        "tl": "Saglit na kumislap ang saksakan at nadiskonekta at nasuri na ito ng elektrisyan. Wala nang init o usok, at lahat ay walang pinsala.",
+        "ceb": "Mikalit og siga ang saksakanan ug gitangtang na sa elektrisyan ang koneksyon ug gisusi. Wala nay kainit o aso, ug walay nasamdan.",
+        "mixed": "Nag spark ang socket pero disconnected at checked na ng electrician. Wala nang heat o smoke, at everyone confirms na walang nasaktan sa bahay."
+      },
+      "rationale": "A resolved wiring flare has no remaining heat or smoke and no reported injury.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_fire_incident_minor_03",
+      "family_id": "fcv2_fire_grass_lot",
+      "incident_type": "fire_incident",
+      "label": "minor",
+      "descriptions": {
+        "en": "The small grass fire in the empty lot is fully out. The area has been checked, nothing is smoking, and nobody was hurt.",
+        "tl": "Patay na ang maliit na sunog sa damuhan ng bakanteng lote. Nasuri na ang lugar, wala nang umuusok, at walang taong nasaktan doon.",
+        "ceb": "Napalong na ang gamayng sunog sa sagbot sa bakanteng lote. Nasusi na ang lugar, wala nay nag-aso, ug walay tawo nga nasamdan didto.",
+        "mixed": "The grass fire sa vacant lot is fully out. Na check na ang area, wala nang smoke, at wala namang taong nasaktan doon."
+      },
+      "rationale": "The grass fire is out, the lot has been checked, and no person was injured.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_fire_incident_minor_04",
+      "family_id": "fcv2_fire_gas_stove",
+      "incident_type": "fire_incident",
+      "label": "minor",
+      "descriptions": {
+        "en": "The stove flared briefly, then was shut off and repaired. The technician confirms no leak remains; nobody is injured and there is no gas smell.",
+        "tl": "Saglit na nagliyab ang kalan, saka pinatay at inayos ito. Kinumpirma ng tekniko na wala nang tagas; walang nasaktan at wala nang amoy gas.",
+        "ceb": "Mikalit og kusog ang siga sa kalan, dayon gipalong ug giayo. Giingon sa teknisyan nga wala nay tagas; walay nasamdan o baho sa gas.",
+        "mixed": "The stove flared pero shut off at repaired na. Confirmed ng technician na wala nang leak, walang nasaktan, at wala na ring gas smell."
+      },
+      "rationale": "The stove flare and leak have been resolved, with explicit absence of injury and remaining gas smell.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_fire_incident_serious_01",
+      "family_id": "fcv2_fire_kitchen_pan",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "descriptions": {
+        "en": "The kitchen curtains are burning and flames are spreading to the cupboard. Everyone has left the house without injury, but the fire is still growing.",
+        "tl": "Nasusunog ang kurtina sa kusina at kumakalat ang apoy sa kabinet. Nakalabas nang walang sugat ang lahat, pero patuloy na lumalaki ang sunog.",
+        "ceb": "Nasunog ang kurtina sa kusina ug mikaylap ang kalayo sa aparador. Nakagawas ang tanan nga walay samad, apan nagkadako gihapon ang sunog.",
+        "mixed": "Burning ang kitchen curtains at kumakalat sa cupboard ang flames. Nakalabas na everyone without injury, pero lumalaki pa rin ang sunog sa loob ngayon."
+      },
+      "rationale": "An active spreading kitchen fire requires urgent response even though occupants are uninjured and outside.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_fire_incident_serious_02",
+      "family_id": "fcv2_fire_house_wiring",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "descriptions": {
+        "en": "There are flames around the wall wiring and smoke filling the empty hallway. All residents are outside and unhurt, but the burning has not stopped.",
+        "tl": "May apoy sa kable ng dingding at napupuno ng usok ang bakanteng pasilyo. Nasa labas at walang pinsala ang mga residente, pero tuloy ang sunog.",
+        "ceb": "Naay kalayo sa kable sa bungbong ug napuno sa aso ang hawang nga pasilyo. Naa sa gawas ug walay samad ang tanan, apan nagdilaab gihapon.",
+        "mixed": "May flames sa wall wiring and smoke sa empty hallway. Nasa labas na lahat at walang nasaktan, pero tuloy pa rin ang burning ngayon."
+      },
+      "rationale": "Ongoing flames and smoke remain an uncontained hazard after evacuation.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_fire_incident_serious_03",
+      "family_id": "fcv2_fire_grass_lot",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "descriptions": {
+        "en": "The grass fire is spreading toward the row of sheds. People have moved away and nobody is injured, but the flames keep advancing.",
+        "tl": "Kumakalat ang sunog sa damuhan papunta sa hilera ng mga kubol. Nakaalis na ang mga tao at walang nasaktan, pero patuloy ang paglapit ng apoy.",
+        "ceb": "Mikaylap ang sunog sa sagbot padulong sa laray sa mga payag. Nakapalayo na ang mga tawo ug walay nasamdan, apan nagpadayon ang kalayo.",
+        "mixed": "The grass fire is moving toward the sheds. Nakapalayo na ang mga tao at walang injury, pero hindi pa kontrolado at lumalapit pa ang flames."
+      },
+      "rationale": "An uncontrolled grass fire is approaching buildings; no person is currently reported trapped or injured.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_fire_incident_serious_04",
+      "family_id": "fcv2_fire_gas_stove",
+      "incident_type": "fire_incident",
+      "label": "serious",
+      "descriptions": {
+        "en": "Gas is hissing from the kitchen cylinder even after the stove was turned off. Everyone is outside without symptoms, but the smell continues getting stronger.",
+        "tl": "Sumisingaw ang gas sa tangke sa kusina kahit pinatay na ang kalan. Nasa labas ang lahat at walang nararamdaman, pero patuloy na lumalakas ang amoy.",
+        "ceb": "Nagsitsit ang gas gikan sa tangke sa kusina bisan gipalong na ang kalan. Naa sa gawas ang tanan nga walay gibati, apan nagkakusog ang baho.",
+        "mixed": "Gas keeps hissing sa kitchen cylinder kahit off na ang stove. Everyone is outside without symptoms, pero lumalakas pa rin ang amoy sa loob."
+      },
+      "rationale": "A persistent gas leak is an ongoing uncontained hazard despite evacuation and absence of symptoms.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_fire_incident_critical_01",
+      "family_id": "fcv2_fire_kitchen_pan",
+      "incident_type": "fire_incident",
+      "label": "critical",
+      "descriptions": {
+        "en": "A woman is calling from the kitchen window and cannot get out. Flames cover the doorway, and she says the smoke is making breathing difficult.",
+        "tl": "Tumatawag ang babae mula sa bintana ng kusina at hindi makalabas. Balot ng apoy ang pinto, at hirap na raw siyang huminga dahil sa usok.",
+        "ceb": "Nanawag ang babaye sa bintana sa kusina ug dili makagawas. Gilibotan sa kalayo ang pultahan, ug naglisod na siya og ginhawa tungod sa aso.",
+        "mixed": "May babae sa kitchen window na hindi makalabas. Flames cover the doorway, at sinasabi niyang hirap na siyang huminga dahil sa smoke ngayon."
+      },
+      "rationale": "A person is trapped with flames at the only exit, creating a direct present threat.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_fire_incident_critical_02",
+      "family_id": "fcv2_fire_house_wiring",
+      "incident_type": "fire_incident",
+      "label": "critical",
+      "descriptions": {
+        "en": "The man outside the smoky house is awake again, but the woman brought out with him still does not respond to voices or touch.",
+        "tl": "Gising na ulit ang lalaking inilabas sa mausok na bahay, pero hindi pa rin tumutugon sa tawag o hawak ang babaeng kasabay niyang inilabas.",
+        "ceb": "Mata na usab ang lalaking gipagawas sa balay nga puno sa aso, apan ang babayeng kauban niya dili gihapon motubag sa tingog o hikap.",
+        "mixed": "Gising na ulit ang man from the smoky house, pero ang woman na inilabas kasama niya still has no response sa tawag o touch."
+      },
+      "rationale": "A person exposed to the fire is currently unresponsive, even though another occupant has recovered.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_fire_incident_critical_03",
+      "family_id": "fcv2_fire_grass_lot",
+      "incident_type": "fire_incident",
+      "label": "critical",
+      "descriptions": {
+        "en": "Two people are trapped between the burning grass and a locked fence. Flames are reaching their clothes, and they cannot find a way out.",
+        "tl": "Naiipit ang dalawang tao sa pagitan ng nasusunog na damuhan at nakakandadong bakod. Umaabot na sa damit nila ang apoy at wala silang malabasan.",
+        "ceb": "Naipit ang duha ka tawo tali sa nagdilaab nga sagbot ug nakandadong koral. Naabot na sa ilang sinina ang kalayo ug dili sila makagawas.",
+        "mixed": "Two people are trapped between the burning grass and locked fence. Umaabot na sa clothes nila ang flames, at hindi sila makahanap ng labasan."
+      },
+      "rationale": "Fire has surrounded people and is reaching them, an explicit imminent human threat.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_fire_incident_critical_04",
+      "family_id": "fcv2_fire_gas_stove",
+      "incident_type": "fire_incident",
+      "label": "critical",
+      "descriptions": {
+        "en": "After the stove burst into flames, a man crawled outside. He is now gasping, cannot speak more than one word, and his breathing is worsening.",
+        "tl": "Matapos magliyab ang kalan, gumapang palabas ang lalaki. Ngayon ay habol ang hininga, isang salita lang ang masabi, at lalo pang nahihirapang huminga.",
+        "ceb": "Human miliyab ang kalan, mikamang pagawas ang lalaki. Karon naghangos siya, usa ra ka pulong ang masulti, ug nagkagrabe ang iyang pagginhawa.",
+        "mixed": "After the stove flared, gumapang palabas ang man. Gasping siya ngayon, one word lang ang masabi, at lalo pang lumalala ang breathing niya."
+      },
+      "rationale": "The burned person's present major breathing difficulty establishes immediate grave danger.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_fire_incident_needs_review_01",
+      "family_id": "fcv2_fire_kitchen_pan",
+      "incident_type": "fire_incident",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "Someone forwarded the words kitchen on fire, but the message has no time or location. I cannot confirm whether it is happening now.",
+        "tl": "May nagpasa ng mensaheng sunog ang kusina, pero walang oras o lugar na nakalagay. Hindi ko makumpirma kung nangyayari pa ito sa ngayon.",
+        "ceb": "Naay nagpasa sa mensaheng nasunog ang kusina, apan walay oras o lugar. Dili nako makumpirma kon nagakahitabo pa kini karon o dugay na.",
+        "mixed": "May forwarded text na kitchen on fire, pero walang time o location. Hindi ko ma confirm kung current report ito o lumang message lang."
+      },
+      "rationale": "A forwarded message does not establish whether a current fire or person at risk exists.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_fire_incident_needs_review_02",
+      "family_id": "fcv2_fire_house_wiring",
+      "incident_type": "fire_incident",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "I heard that smoke came from the house wiring, but I cannot see the house. I do not know whether it stopped or anyone was inside.",
+        "tl": "Narinig kong umusok ang kable sa bahay, pero hindi ko nakikita ang bahay. Hindi ko alam kung tumigil na o kung may tao sa loob.",
+        "ceb": "Nakadungog ko nga nag-aso ang kable sa balay, apan dili nako makita ang balay. Wala ko kabalo kon mihunong na o naay tawo sa sulod.",
+        "mixed": "May nagsabing may smoke sa house wiring, pero hindi ko makita ang bahay. Unknown kung huminto na o kung may tao pa sa loob."
+      },
+      "rationale": "The source, timing, and current hazard remain unconfirmed.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_fire_incident_needs_review_03",
+      "family_id": "fcv2_fire_grass_lot",
+      "incident_type": "fire_incident",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "The grass burned yesterday afternoon, according to an old post. There is no update about whether anything remains burning or anyone still needs assistance.",
+        "tl": "Nasunog daw ang damuhan kahapon ng hapon ayon sa lumang post. Walang bagong balita kung may nasusunog pa o may nangangailangan pa ng tulong.",
+        "ceb": "Nasunog kuno ang sagbot kagahapon sa hapon sumala sa daang post. Walay bag-ong balita kon naay nagdilaab pa o nanginahanglan pa og tabang.",
+        "mixed": "Old post ito about grass burning yesterday afternoon. Walang update kung may flames pa ngayon o kung may taong nangangailangan pa ng assistance doon."
+      },
+      "rationale": "Only yesterday's fire is discussed, without current scene or assistance information.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_fire_incident_needs_review_04",
+      "family_id": "fcv2_fire_gas_stove",
+      "incident_type": "fire_incident",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "If a gas stove caught fire and someone could not breathe, which number should we call? This is a question for our planned household drill.",
+        "tl": "Kung magliyab ang kalan at may hindi makahinga, anong numero ang tatawagan? Tanong lang ito para sa balak naming pagsasanay sa bahay sa susunod na linggo.",
+        "ceb": "Kon mosiga ang kalan ug naay dili kaginhawa, unsang numero ang tawagan? Pangutana ra kini para sa among giplanong ensayo sa balay sa sunod semana.",
+        "mixed": "If the gas stove catches fire and someone cannot breathe, anong number ang tatawagan? Question lang ito para sa household drill na pinaplano namin."
+      },
+      "rationale": "A hypothetical question is not a report of an existing leak or casualty.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_flood_landslide_minor_01",
+      "family_id": "fcv2_flood_river_street",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "descriptions": {
+        "en": "The river water briefly covered the street but has fully receded. Everyone is unhurt, the debris is cleared, and the pavement is passable again.",
+        "tl": "Saglit na umapaw ang ilog sa kalsada pero humupa na nang tuluyan. Walang nasaktan, nalinis na ang kalat, at madaanan na ulit ang daan.",
+        "ceb": "Mibaha kadiyot ang tubig sa suba ngadto sa kalsada apan mihubas na gyud. Walay nasamdan, nahawan na ang mga sagbot, ug maagian na ang dalan.",
+        "mixed": "River water covered the street earlier pero fully receded na. Walang nasaktan, cleared na ang debris, at safe nang madaanan ang pavement ulit ngayon."
+      },
+      "rationale": "The water has receded and the street is cleared, with explicit absence of injury.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_flood_landslide_minor_02",
+      "family_id": "fcv2_flood_hillside_road",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "descriptions": {
+        "en": "A small patch of soil slid onto the roadside. The crew removed it and checked the slope; nothing is moving now and nobody was injured.",
+        "tl": "May kaunting lupang gumuho sa gilid ng daan. Inalis na ito at sinuri ang dalisdis; wala nang gumagalaw na lupa at walang nasaktan.",
+        "ceb": "Naay gamayng yuta nga midahili sa daplin sa dalan. Gikuha na kini ug gisusi ang bakilid; wala nay naglihok nga yuta ug walay nasamdan.",
+        "mixed": "Small soil slide lang sa roadside, removed na by the crew. Checked na ang slope, wala nang movement, at wala ring taong nasaktan doon."
+      },
+      "rationale": "A small soil fall is cleared and checked without remaining movement or injuries.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_flood_landslide_minor_03",
+      "family_id": "fcv2_flood_drain_homes",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "descriptions": {
+        "en": "The blocked drain overflowed into our empty yard. It is cleared now, the water has drained away, and nobody was injured or stranded.",
+        "tl": "Umapaw ang baradong kanal sa bakanteng bakuran namin. Malinis na ito ngayon, nawala na ang tubig, at walang taong nasaktan o naipit doon.",
+        "ceb": "Miawas ang baradong kanal sa among bakanteng nataran. Nahawan na kini karon, nahubas na ang tubig, ug walay tawo nga nasamdan o naipit.",
+        "mixed": "The blocked drain overflowed sa empty yard namin. Cleared na ang kanal, drained na ang water, at walang nasaktan o stranded na tao doon."
+      },
+      "rationale": "A blocked-drain overflow has ended; the area is clear and everyone is uninjured.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_flood_landslide_minor_04",
+      "family_id": "fcv2_flood_creek_crossing",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "descriptions": {
+        "en": "Water crossed the footbridge earlier, but it has gone down completely. The bridge was checked and reopened; everyone is unhurt and nobody is stranded.",
+        "tl": "Umabot ang tubig sa tulay kanina pero bumaba na nang tuluyan. Nasuri at binuksan na ang tulay; walang nasaktan at walang taong naiwan doon.",
+        "ceb": "Miabot ang tubig sa taytayan ganiha apan mihubas na gyud. Nasusi ug giablihan na ang taytayan; walay nasamdan ug walay tawo nga naipit didto.",
+        "mixed": "Water crossed the footbridge kanina pero fully down na. Checked at reopened na ang bridge, everyone is unhurt, at wala nang taong stranded doon."
+      },
+      "rationale": "The crossing is checked and clear after the water recedes, with no injuries or stranded people.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_flood_landslide_serious_01",
+      "family_id": "fcv2_flood_river_street",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "descriptions": {
+        "en": "The river is overflowing into houses and the street water keeps rising. Everyone has evacuated without injury, but the flow has not slowed.",
+        "tl": "Umaapaw ang ilog papasok sa mga bahay at patuloy ang pagtaas ng tubig sa kalye. Nakalikas nang walang sugat ang lahat, pero malakas pa rin ang agos.",
+        "ceb": "Miawas ang suba ngadto sa mga balay ug padayon ang pagsaka sa tubig sa kalsada. Nakabalhin ang tanan nga walay samad, apan kusog gihapon ang sulog.",
+        "mixed": "The river is entering houses and rising pa ang street water. Everyone evacuated without injury, pero hindi pa humihina ang agos sa lugar ngayon."
+      },
+      "rationale": "Rising floodwater continues entering homes despite a complete injury-free evacuation.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_flood_landslide_serious_02",
+      "family_id": "fcv2_flood_hillside_road",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "descriptions": {
+        "en": "Soil keeps sliding from the hillside onto the road. People are already away and nobody is hurt, but fresh rocks continue falling across both lanes.",
+        "tl": "Patuloy ang pagguho ng lupa mula sa burol papunta sa daan. Nakalayo na ang mga tao at walang nasaktan, pero may mga batong bumabagsak pa.",
+        "ceb": "Padayon ang pagdahili sa yuta gikan sa bakilid ngadto sa dalan. Nakapalayo na ang mga tawo ug walay nasamdan, apan naay mga bato nga nangahulog pa.",
+        "mixed": "The hillside keeps sliding onto the road. Nakapalayo na ang mga tao at walang injury, pero fresh rocks are still falling across both lanes ngayon."
+      },
+      "rationale": "An active slope failure remains an urgent uncontained hazard after people leave.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_flood_landslide_serious_03",
+      "family_id": "fcv2_flood_drain_homes",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "descriptions": {
+        "en": "Floodwater from the overflowing drain is entering several houses. Residents are safe outside without injury, but the water is still rising through the doorways.",
+        "tl": "Pumapasok sa mga bahay ang baha mula sa umaapaw na kanal. Ligtas sa labas at walang sugat ang mga residente, pero patuloy na tumataas ang tubig.",
+        "ceb": "Misulod sa mga balay ang baha gikan sa nag-awas nga kanal. Luwas sa gawas ug walay samad ang mga residente, apan padayon ang pagsaka sa tubig.",
+        "mixed": "Floodwater from the drain is entering houses. Safe outside ang residents at walang injury, pero tumataas pa rin ang water through the doors ngayon."
+      },
+      "rationale": "Persistent flooding threatens homes even though residents are currently safe and uninjured.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_flood_landslide_serious_04",
+      "family_id": "fcv2_flood_creek_crossing",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "descriptions": {
+        "en": "Strong creek water is washing away part of the crossing. Everyone is on dry ground and unhurt, but the banks are still breaking apart.",
+        "tl": "Malakas na tubig sa sapa ang gumigiba sa tawiran. Nasa tuyong lupa at walang pinsala ang lahat, pero patuloy pang gumuho ang mga pampang.",
+        "ceb": "Ang kusog nga tubig sa sapa nagguba sa tabokanan. Naa sa uga nga yuta ug walay samad ang tanan, apan padayon ang pagkaguba sa mga tampi.",
+        "mixed": "Strong creek water is washing away the crossing. Nasa dry ground na ang everyone at unhurt, pero patuloy pang gumuho ang banks sa gilid."
+      },
+      "rationale": "Strong water continues damaging a closed crossing; no person is currently in immediate danger.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_flood_landslide_critical_01",
+      "family_id": "fcv2_flood_river_street",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "descriptions": {
+        "en": "A man is being carried down the flooded street and cannot hold the fence. His head keeps going under the water while he struggles.",
+        "tl": "Tinatangay ang lalaki sa binahang kalsada at hindi makakapit sa bakod. Paulit-ulit na lumulubog ang ulo niya habang nagpupumiglas sa malakas na agos.",
+        "ceb": "Gianod ang lalaki sa nabahaang kalsada ug dili makakupot sa koral. Sige og kalubog ang iyang ulo samtang nanlimbasog batok sa kusog nga sulog.",
+        "mixed": "A man is being swept down the flooded street. Hindi siya makakapit sa fence, at paulit-ulit na lumulubog ang head niya habang struggling ngayon."
+      },
+      "rationale": "A person is being swept away and repeatedly submerged, a direct current life threat.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_flood_landslide_critical_02",
+      "family_id": "fcv2_flood_hillside_road",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "descriptions": {
+        "en": "The landslide trapped a woman under soil beside the road. Her chest is pinned, she is gasping, and she can barely answer us now.",
+        "tl": "Nabaon sa lupa ang babae sa tabi ng daan matapos ang pagguho. Naiipit ang dibdib niya, habol ang hininga, at halos hindi na makasagot ngayon.",
+        "ceb": "Natabonan og yuta ang babaye sa daplin sa dalan human sa pagdahili. Naipit ang dughan, naghangos siya, ug halos dili na makatubag karon.",
+        "mixed": "The landslide trapped a woman beside the road. Pinned ang chest niya under soil, gasping siya, at halos hindi na makasagot sa amin ngayon."
+      },
+      "rationale": "A trapped person has explicit major breathing compromise under fresh debris.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_flood_landslide_critical_03",
+      "family_id": "fcv2_flood_drain_homes",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "descriptions": {
+        "en": "Two children were pulled from the flooded yard. One is awake and coughing, but the other is limp and does not respond to calling or touch.",
+        "tl": "Dalawang bata ang naiahon sa binahang bakuran. Gising at umuubo ang isa, pero malambot ang katawan ng isa at hindi tumutugon sa tawag o hawak.",
+        "ceb": "Duha ka bata ang nakuha gikan sa nabahaang nataran. Mata ug nag-ubo ang usa, apan luya kaayo ang lawas sa usa ug dili motubag sa tingog o hikap.",
+        "mixed": "Two children were pulled from the flooded yard. Gising at coughing ang isa, pero limp ang isa at walang response sa tawag o touch ngayon."
+      },
+      "rationale": "One child's continuing unresponsiveness is not canceled by another child's recovery.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_flood_landslide_critical_04",
+      "family_id": "fcv2_flood_creek_crossing",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "descriptions": {
+        "en": "A person is pinned under the broken crossing and cannot move. The creek water is already at his mouth and continues rising around his face.",
+        "tl": "Naiipit ang tao sa ilalim ng sirang tawiran at hindi makagalaw. Abot na ng tubig ang bibig niya at patuloy itong tumataas sa mukha niya.",
+        "ceb": "Naipit ang tawo ilalom sa naguba nga tabokanan ug dili kalihok. Naabot na sa tubig ang iyang baba ug padayon kining misaka palibot sa iyang nawong.",
+        "mixed": "Pinned ang tao under the broken crossing at hindi makagalaw. Water is already at his mouth, at patuloy pang tumataas sa paligid ng face niya."
+      },
+      "rationale": "A trapped person's face is about to be submerged by rising water, an explicit imminent life threat.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_flood_landslide_needs_review_01",
+      "family_id": "fcv2_flood_river_street",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "A photo shows water on the river street, but I do not know when it was taken or whether anyone is there now.",
+        "tl": "May larawan ng tubig sa kalsada sa tabi ng ilog, pero hindi ko alam kung kailan kinunan o kung may tao roon ngayon.",
+        "ceb": "Naay litrato sa tubig sa kalsada tupad sa suba, apan wala ko kabalo kanus-a kini gikuha o kon naay tawo didto karon.",
+        "mixed": "May photo ng water sa river street, pero unknown kung kailan taken. Hindi ko alam ang current depth o kung may tao pa roon."
+      },
+      "rationale": "The observer cannot establish flood depth, current exposure, or conditions from the old image.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_flood_landslide_needs_review_02",
+      "family_id": "fcv2_flood_hillside_road",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "Someone says the hillside might have moved, but I have no view of it. I cannot confirm falling soil, blocked roads, or anyone affected.",
+        "tl": "May nagsabing baka gumalaw ang lupa sa burol, pero hindi ko ito nakikita. Hindi ko makumpirma kung may guho, harang sa daan, o taong apektado.",
+        "ceb": "Naay nagsulti nga basin milihok ang bakilid, apan dili nako kini makita. Dili nako makumpirma kon naay pagdahili, nasirhang dalan, o tawo nga naapektuhan.",
+        "mixed": "May sabi na baka gumalaw ang hillside, pero wala akong view. Hindi confirmed kung may soil falling, blocked road, o tao na affected ngayon."
+      },
+      "rationale": "A vague secondhand possibility does not establish an active slide or affected person.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_flood_landslide_needs_review_03",
+      "family_id": "fcv2_flood_drain_homes",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "Our yard flooded during last year's storm. I am describing that event for a meeting and have no information about the yard today.",
+        "tl": "Binaha ang bakuran namin noong bagyo noong nakaraang taon. Ikinukuwento ko iyon para sa pulong at wala akong impormasyon tungkol sa bakuran ngayong araw.",
+        "ceb": "Nabaha ang among nataran sa bagyo niadtong miaging tuig. Gisaysay nako kadto para sa tigom ug wala koy impormasyon bahin sa nataran karong adlawa.",
+        "mixed": "Our yard flooded last year during the storm. Kinukuwento ko lang iyon for a meeting, at wala akong update tungkol sa yard ngayong araw."
+      },
+      "rationale": "The report is historical and lacks current needs or conditions.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_flood_landslide_needs_review_04",
+      "family_id": "fcv2_flood_creek_crossing",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "One message says the crossing is dry; another says people are trapped there. Both lack a time, and nobody has confirmed the current situation.",
+        "tl": "Sabi ng isang mensahe, tuyo ang tawiran; sabi ng isa, may mga taong naipit doon. Parehong walang oras at walang nagkumpirma ng kasalukuyang kalagayan.",
+        "ceb": "Giingon sa usa ka mensahe nga uga ang tabokanan; sa lain, naay mga tawo nga naipit didto. Walay oras ang duha ug walay kumpirmasyon karon.",
+        "mixed": "One text says dry na ang crossing; another says may trapped people doon. Walang time pareho, at nobody has confirmed the current situation ngayon."
+      },
+      "rationale": "Conflicting descriptions are unresolved and the present crossing status is unknown.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_medical_emergency_minor_01",
+      "family_id": "fcv2_medical_hand_cut",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "descriptions": {
+        "en": "I got a tiny paper cut on my finger. It is cleaned and no longer bleeding, and I have no pain or trouble moving it.",
+        "tl": "Nagkaroon ako ng maliit na hiwa ng papel sa daliri. Nalinis na at wala nang dugo, wala akong sakit at naigagalaw ko ito nang maayos.",
+        "ceb": "Naay gamayng samad sa papel sa akong tudlo. Nahinloan na ug wala nay dugo, wala koy kasakit ug normal ra nako kini malihok.",
+        "mixed": "Tiny paper cut lang sa finger ko. Cleaned na at stopped na ang bleeding, walang pain, at normal ko pa ring naigagalaw ang daliri."
+      },
+      "rationale": "A tiny superficial cut has stopped bleeding and has no ongoing symptoms or danger.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_medical_emergency_minor_02",
+      "family_id": "fcv2_medical_cold_home",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "descriptions": {
+        "en": "I have a slight runny nose but feel well and can do my usual activities. There is no fever, pain, or difficulty breathing.",
+        "tl": "Kaunti lang ang sipon ko pero maayos ang pakiramdam at nagagawa ko ang karaniwang gawain. Wala akong lagnat, sakit, o hirap sa paghinga.",
+        "ceb": "Gamay ra akong sip-on apan maayo akong paminaw ug mahimo ang naandang buluhaton. Wala koy hilanat, kasakit, o kalisod sa pagginhawa karon dinhi sa balay.",
+        "mixed": "Slight runny nose lang pero I feel well at kaya ang usual activities. Walang fever, pain, o hirap sa breathing ngayon dito sa bahay."
+      },
+      "rationale": "The complaint is explicitly limited to a comfortable mild runny nose without fever or breathing difficulty.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_medical_emergency_minor_03",
+      "family_id": "fcv2_medical_dizzy_home",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "descriptions": {
+        "en": "I felt slightly dizzy for a moment after standing up, but it completely passed after sitting. I did not faint and feel normal now.",
+        "tl": "Bahagya akong nahilo nang tumayo pero tuluyang nawala matapos umupo. Hindi ako nawalan ng malay at normal na ulit ang pakiramdam ko ngayon.",
+        "ceb": "Nalipong ko gamay pagkabarog apan nawala ra gyud pagkalingkod. Wala ko nakuyapan ug normal na pag-usab ang akong paminaw karon dinhi sa balay.",
+        "mixed": "Slightly dizzy ako after standing pero completely passed na after sitting. Hindi ako nawalan ng malay at normal na ulit ang pakiramdam ko ngayon."
+      },
+      "rationale": "A brief low-impact complaint has completely resolved, with no fainting or remaining symptoms.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_medical_emergency_minor_04",
+      "family_id": "fcv2_medical_meal_room",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "descriptions": {
+        "en": "I had hiccups after eating, but they stopped completely. I can eat, speak, and breathe normally and have no pain or other complaints.",
+        "tl": "Sinok ako pagkatapos kumain pero tuluyan na itong huminto. Nakakakain, nakakapagsalita, at nakakahinga ako nang maayos at wala akong sakit o ibang nararamdaman ngayon.",
+        "ceb": "Gising-ok ko human mokaon apan mihunong na gyud. Makakaon, makasulti, ug makaginhawa ko og normal ug wala koy kasakit o laing gibati karon dinhi.",
+        "mixed": "Nag hiccups ako after eating pero stopped completely na. Normal ang eating, speaking, at breathing ko, at wala na akong pain o ibang complaint."
+      },
+      "rationale": "Brief hiccups have ended and no ongoing symptoms or impairment are reported.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_medical_emergency_serious_01",
+      "family_id": "fcv2_medical_hand_cut",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "descriptions": {
+        "en": "A worker has a deep cut across his palm and cannot close his hand from pain. He is awake, breathing normally, and bleeding slowly.",
+        "tl": "May malalim na hiwa sa palad ang manggagawa at hindi maisara ang kamay sa sakit. Gising siya, maayos huminga, at kaunti lang ang pagdurugo.",
+        "ceb": "Naay lawom nga samad sa palad ang trabahante ug dili makakumo sa kasakit. Mata siya, normal ang pagginhawa, ug hinay ra ang pagdugo.",
+        "mixed": "Deep cut sa palm ng worker at hindi niya maisara ang hand dahil sa pain. Awake siya, normal breathing, at hindi malakas ang bleeding."
+      },
+      "rationale": "A deep painful wound is a meaningful injury, without uncontrolled bleeding or impaired consciousness.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_medical_emergency_serious_02",
+      "family_id": "fcv2_medical_cold_home",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "descriptions": {
+        "en": "A child has fever and has vomited repeatedly today, unable to keep drinks down. The child is awake, answers questions, and is breathing normally.",
+        "tl": "May lagnat ang bata at paulit-ulit na sumusuka ngayong araw, pati iniinom ay isinusuka. Gising siya, sumasagot sa tanong, at maayos naman ang paghinga.",
+        "ceb": "Gihilantan ang bata ug balikbalik nga nagsuka karong adlawa, dili makapabilin ang giinom. Mata siya, motubag sa pangutana, ug normal ang iyang pagginhawa.",
+        "mixed": "The child has fever at paulit-ulit na vomiting today, pati drinks sinusuka. Gising siya, nakakasagot sa questions, at normal naman ang breathing niya ngayon."
+      },
+      "rationale": "Persistent fever and vomiting impair drinking, without an explicit immediate grave sign.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_medical_emergency_serious_03",
+      "family_id": "fcv2_medical_dizzy_home",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "descriptions": {
+        "en": "My brother is still very dizzy and cannot stand without support. He has not lost consciousness, speaks clearly, and does not have trouble breathing.",
+        "tl": "Hilo pa rin ang kapatid ko at hindi makatayo nang walang alalay. Hindi siya nawalan ng malay, malinaw magsalita, at wala siyang hirap sa paghinga.",
+        "ceb": "Lipong gihapon akong igsoon ug dili makatindog kon walay alalay. Wala siya nawad-an og panimuot, klaro mosulti, ug wala siyay kalisod sa pagginhawa.",
+        "mixed": "Very dizzy pa rin ang brother ko at kailangan ng support para tumayo. Hindi siya unconscious, clear ang speech, at wala namang breathing difficulty ngayon."
+      },
+      "rationale": "Persistent dizziness and inability to stand establish a meaningful assistance need despite normal responsiveness and breathing.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_medical_emergency_serious_04",
+      "family_id": "fcv2_medical_meal_room",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "descriptions": {
+        "en": "Since eating lunch, a woman has vomited several times and has strong stomach pain. She is fully awake, talking clearly, and breathing without difficulty.",
+        "tl": "Mula nang kumain ng tanghalian, ilang beses nang sumuka ang babae at masakit ang tiyan. Gising na gising siya, malinaw magsalita, at maayos huminga.",
+        "ceb": "Sukad pagkaon sa paniudto, balikbalik nagsuka ang babaye ug sakit kaayo ang tiyan. Mata siya, klaro mosulti, ug walay kalisod sa iyang pagginhawa.",
+        "mixed": "After lunch, paulit-ulit ang vomiting ng woman at masakit ang stomach niya. Fully awake siya, clear magsalita, at wala siyang hirap sa breathing ngayon."
+      },
+      "rationale": "Repeated vomiting and abdominal pain require assistance; alertness and breathing remain normal.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_medical_emergency_critical_01",
+      "family_id": "fcv2_medical_hand_cut",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "descriptions": {
+        "en": "The cut on his wrist keeps pouring blood despite firm pressure with a towel. The towel is soaked through and fresh blood keeps running out.",
+        "tl": "Patuloy na bumubuhos ang dugo sa hiwa sa pulso kahit mariing dinidiinan ng tuwalya. Basang-basa na ito at tuloy pa rin ang paglabas ng dugo.",
+        "ceb": "Padayon ang pagbubo sa dugo sa samad sa pulso bisan gipislit pag-ayo og tualya. Nabasa na kini sa dugo ug padayon gihapon ang pag-agas.",
+        "mixed": "The wrist cut keeps pouring blood kahit firm ang pressure with a towel. Soaked through na ang towel at tuloy pa rin ang dugo ngayon."
+      },
+      "rationale": "Blood is continuing to pour from the wound despite firm pressure, indicating uncontrolled blood loss.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_medical_emergency_critical_02",
+      "family_id": "fcv2_medical_cold_home",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "descriptions": {
+        "en": "The child with fever will not wake up now and does not react when called or touched. The breathing is weak and barely visible.",
+        "tl": "Hindi na magising ngayon ang batang may lagnat at hindi tumutugon sa tawag o hawak. Mahina ang paghinga at halos hindi makita ang galaw ng dibdib.",
+        "ceb": "Dili na momata karon ang batang gihilantan ug dili motubag sa tingog o hikap. Huyang ang pagginhawa ug halos dili makita ang lihok sa dughan.",
+        "mixed": "The child with fever will not wake up now, no response sa tawag o touch. Mahina ang breathing at halos walang visible chest movement ngayon."
+      },
+      "rationale": "The child is currently unresponsive and breathing weakly; this states current signs rather than a diagnosis.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_medical_emergency_critical_03",
+      "family_id": "fcv2_medical_dizzy_home",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "descriptions": {
+        "en": "My dizziness is gone, but my brother collapsed beside me and is still unresponsive. He does not react when I call or touch him.",
+        "tl": "Nawala na ang hilo ko, pero bumagsak ang kapatid ko sa tabi ko at hindi pa rin tumutugon. Walang reaksyon sa tawag o hawak ko.",
+        "ceb": "Nawala na akong kalipong, apan natumba akong igsoon tupad nako ug wala gihapoy panimuot. Dili siya motubag kon tawgon o hikapon nako karon dinhi.",
+        "mixed": "My dizziness is gone, pero nag collapse ang brother ko beside me at unresponsive pa rin siya. Walang reaction sa pagtawag o paghawak ko ngayon."
+      },
+      "rationale": "The brother remains unresponsive; another person's recovered dizziness does not change his current state.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_medical_emergency_critical_04",
+      "family_id": "fcv2_medical_meal_room",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "descriptions": {
+        "en": "A man suddenly grabbed his throat while eating. He cannot speak or draw breath now, and his lips are turning bluish as he struggles.",
+        "tl": "Biglang humawak sa lalamunan ang lalaki habang kumakain. Hindi na siya makapagsalita o makahinga ngayon, at nagkukulay asul na ang labi niya habang nagpupumiglas.",
+        "ceb": "Mikalit og kupot sa tutunlan ang lalaki samtang nagkaon. Dili na siya makasulti o kaginhawa karon, ug nagkaasul ang iyang mga ngabil samtang nanlimbasog.",
+        "mixed": "The man grabbed his throat habang eating. Hindi siya makapagsalita o makahinga ngayon, at his lips are turning bluish habang nagpupumiglas siya sa harap namin."
+      },
+      "rationale": "The person's current inability to breathe or speak is explicit major breathing compromise.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_medical_emergency_needs_review_01",
+      "family_id": "fcv2_medical_hand_cut",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "The message only says there is blood on someone's hand. I do not know whose hand, how much blood, or whether it is happening now.",
+        "tl": "Ang mensahe ay may dugo raw sa kamay ng isang tao. Hindi ko alam kung kanino, gaano karami, o kung nangyayari pa ito ngayon.",
+        "ceb": "Ang mensahe nag-ingon ra nga naay dugo sa kamot sa usa ka tawo. Wala ko kabalo kang kinsa, unsa kadaghan, o kon karon ba kini.",
+        "mixed": "The message says may blood sa hand ng someone. Hindi ko alam whose hand, gaano karami ang blood, o kung current ba ito ngayon."
+      },
+      "rationale": "A hand wound is mentioned without enough condition, bleeding, or timing information.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_medical_emergency_needs_review_02",
+      "family_id": "fcv2_medical_cold_home",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "A child had fever and vomiting last week, according to this saved message. There is no information about how the child is feeling today.",
+        "tl": "May lagnat at pagsusuka ang bata noong nakaraang linggo ayon sa naka-save na mensahe. Walang impormasyon tungkol sa kasalukuyang pakiramdam ng bata ngayong araw.",
+        "ceb": "Gihilantan ug nagsuka ang bata niadtong miaging semana sumala sa gitipig nga mensahe. Walay impormasyon kon unsa ang paminaw sa bata karong adlawa.",
+        "mixed": "Saved message ito: may fever at vomiting ang child last week. Walang update kung ano ang condition niya ngayon o kung kailangan pa ng help."
+      },
+      "rationale": "The account only concerns an earlier illness and omits present condition.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_medical_emergency_needs_review_03",
+      "family_id": "fcv2_medical_dizzy_home",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "They say he is fully awake but also say he has not responded at all. I cannot tell whether they mean different people or different times.",
+        "tl": "Sabi nila ay gising na gising siya pero sinasabi ring hindi siya tumutugon. Hindi malinaw kung magkaibang tao o magkaibang oras ang tinutukoy ng mga nagsasalita.",
+        "ceb": "Giingon nila nga mata kaayo siya apan giingon usab nga wala gyud motubag. Dili klaro kon lain nga tawo o lain nga oras ang ilang gipasabot.",
+        "mixed": "They say fully awake siya pero also no response at all. Hindi malinaw kung different people ang tinutukoy o magkaibang oras sa parehong pangyayari iyon."
+      },
+      "rationale": "The consciousness statements conflict without clear timing or subject resolution.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_medical_emergency_needs_review_04",
+      "family_id": "fcv2_medical_meal_room",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "Our practice sheet says someone cannot breathe after eating. I am asking how to describe that example; there is no person having that problem here.",
+        "tl": "Sabi sa papel para sa pagsasanay, may hindi makahinga pagkatapos kumain. Tinatanong ko kung paano ilalarawan ang halimbawa; walang taong ganito ang kalagayan dito.",
+        "ceb": "Sa papel sa ensayo, naay dili kaginhawa human mokaon. Nangutana ko unsaon paghulagway sa pananglitan; walay tawo nga nag-antos niining problemaha dinhi karon sa among lugar.",
+        "mixed": "The practice sheet says someone cannot breathe after eating. Example lang ang tinatanong ko, wala namang taong may ganitong problema dito sa amin ngayon."
+      },
+      "rationale": "The message quotes a practice case and does not report a current patient.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_security_incident_minor_01",
+      "family_id": "fcv2_security_neighbors_gate",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "descriptions": {
+        "en": "The neighbors argued loudly at the gate, but both have left calmly. There was no physical contact, weapon, or injury, and no threats continue.",
+        "tl": "Nagtalo nang malakas ang magkapitbahay sa tarangkahan, pero mahinahon nang umalis ang dalawa. Walang pisikalan, armas, o pinsala, at wala nang nagpapatuloy na banta.",
+        "ceb": "Kusog nga naglalis ang mga silingan sa ganghaan, apan kalmado nang nanglakaw ang duha. Walay paghikap, armas, o samad, ug wala nay padayong hulga.",
+        "mixed": "The neighbors argued loudly sa gate pero both left calmly na. Walang physical contact, weapon, o injury, at wala na ring threat sa lugar ngayon."
+      },
+      "rationale": "A verbal dispute has ended with explicit absence of contact, weapons, injury, and remaining threats.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_security_incident_minor_02",
+      "family_id": "fcv2_security_corner_shop",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "descriptions": {
+        "en": "A small purse was taken from the shop counter, then returned intact. The person has left, nobody was hurt, and there is no remaining threat.",
+        "tl": "Kinuha ang maliit na pitaka sa tindahan pero naibalik nang kumpleto. Nakaalis na ang kumuha, walang nasaktan, at wala nang banta sa mga tao roon.",
+        "ceb": "Gikuha ang gamayng pitaka sa tindahan apan giuli nga kompleto. Nakalakaw na ang nagkuha, walay nasamdan, ug wala nay hulga sa mga tawo didto.",
+        "mixed": "May small purse na kinuha sa shop counter pero returned intact na. Umalis na ang kumuha, nobody was hurt, at wala nang threat doon."
+      },
+      "rationale": "The small property incident is resolved and no person was injured or remains threatened.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_security_incident_minor_03",
+      "family_id": "fcv2_security_street_shouting",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "descriptions": {
+        "en": "A man shouted outside the houses, then walked away peacefully. Nobody was touched or threatened, everyone is unhurt, and the street is quiet again.",
+        "tl": "Sumigaw ang lalaki sa labas ng mga bahay at mahinahong umalis. Walang hinawakan o binantaan, walang nasaktan, at tahimik na ulit ang kalsada ngayon.",
+        "ceb": "Nagsinggit ang lalaki sa gawas sa mga balay ug milakaw nga malinawon. Walay gihikap o gihulga, walay nasamdan, ug hilom na pag-usab ang kalsada.",
+        "mixed": "A man shouted outside the houses then left peacefully. Walang hinawakan o binantaan, everyone is unhurt, at quiet na ulit ang street sa amin ngayon."
+      },
+      "rationale": "The disturbance has ended without assault, injuries, or continuing danger.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_security_incident_minor_04",
+      "family_id": "fcv2_security_house_argument",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "descriptions": {
+        "en": "The adults had a loud argument at home but have settled it and separated calmly. Both confirm no injury, physical contact, weapon, or continuing threat.",
+        "tl": "Malakas ang pagtatalo ng matatanda sa bahay pero naayos na at mahinahong naghiwalay. Parehong walang pinsala, walang pisikalan, walang armas, at wala nang banta.",
+        "ceb": "Kusog ang lalis sa mga hamtong sa balay apan nahusay na ug kalmado silang nagbulag. Walay nasamdan, walay pisikal nga paghilabot, armas, o padayong hulga.",
+        "mixed": "The adults argued sa house pero settled na at calmly separated. Both confirm walang injury, physical contact, weapon, o continuing threat sa kanilang dalawa ngayon."
+      },
+      "rationale": "The household disagreement was verbal only and is explicitly resolved without injury or threats.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_security_incident_serious_01",
+      "family_id": "fcv2_security_neighbors_gate",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "descriptions": {
+        "en": "Two men are still punching each other beside the gate. One has a swollen cheek; both are standing and talking, and no weapon is visible.",
+        "tl": "Patuloy na nagsusuntukan ang dalawang lalaki sa tarangkahan. Namamaga ang pisngi ng isa; parehong nakatayo at nagsasalita, at walang nakikitang armas sa kanilang dalawa.",
+        "ceb": "Nagsinumbagay gihapon ang duha ka lalaki sa ganghaan. Nanghubag ang aping sa usa; nagtindog ug nagsulti ang duha, ug walay makita nga armas nila.",
+        "mixed": "Two men are still punching each other sa gate. Swollen ang cheek ng isa, both standing and talking, at wala namang visible weapon sa dalawa."
+      },
+      "rationale": "An ongoing fistfight is an active violent hazard, with injuries but no explicit immediate grave sign.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_security_incident_serious_02",
+      "family_id": "fcv2_security_corner_shop",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "descriptions": {
+        "en": "A man is smashing the shop door and forcing his way inside. The staff got out unhurt, but he is still breaking things and refusing to leave.",
+        "tl": "Binabasag ng lalaki ang pinto ng tindahan at pilit pumapasok. Nakalabas nang walang sugat ang tauhan, pero tuloy ang paninira at ayaw niyang umalis.",
+        "ceb": "Giguba sa lalaki ang pultahan sa tindahan ug pugos mosulod. Nakagawas ang mga trabahante nga walay samad, apan padayon iyang pagpangguba ug dili molakaw.",
+        "mixed": "A man is smashing the shop door at pilit pumapasok. Staff are outside unhurt, pero tuloy ang breaking things at ayaw pa rin niyang umalis."
+      },
+      "rationale": "An intruder is actively forcing entry; evacuation and no injuries do not resolve the ongoing hazard.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_security_incident_serious_03",
+      "family_id": "fcv2_security_street_shouting",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "descriptions": {
+        "en": "A man is kicking the house gate and threatening to attack the occupants. They are locked safely inside and unhurt, but he has not stopped.",
+        "tl": "Sinisipa ng lalaki ang tarangkahan at nagbabantang sasaktan ang mga nakatira. Ligtas silang nakakandado sa loob at walang sugat, pero hindi siya tumitigil ngayon.",
+        "ceb": "Gisipa sa lalaki ang ganghaan ug gihulga nga atakehon ang mga nagpuyo. Luwas silang nakakandado sa sulod ug walay samad, apan wala siya mihunong.",
+        "mixed": "The man keeps kicking the gate and threatening the occupants. Safe inside sila with locked doors, walang injury, pero hindi tumitigil ang man sa labas."
+      },
+      "rationale": "Persistent threats with active gate damage remain an urgent security hazard, though occupants are currently sheltered and uninjured.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_security_incident_serious_04",
+      "family_id": "fcv2_security_house_argument",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "descriptions": {
+        "en": "A woman is being slapped and pushed by her partner inside the house. She has bruises but is awake and speaking; the assault is continuing.",
+        "tl": "Sinasampal at itinutulak ng kapareha ang babae sa loob ng bahay. May mga pasa siya pero gising at nakakapagsalita; nagpapatuloy pa rin ang pananakit ngayon.",
+        "ceb": "Gisagpa ug gitukmod sa iyang kapikas ang babaye sulod sa balay. Naay mga bun-og apan mata ug makasulti siya; padayon gihapon ang pagpangulata karon.",
+        "mixed": "The woman is being slapped and pushed by her partner inside. May bruises pero awake and speaking siya, at tuloy pa rin ang assault ngayon."
+      },
+      "rationale": "Ongoing physical assault has caused bruising; no immediate grave sign is stated.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_security_incident_critical_01",
+      "family_id": "fcv2_security_neighbors_gate",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "descriptions": {
+        "en": "The argument has turned violent at the gate. One man is holding a knife against the other man's neck and will not let him move.",
+        "tl": "Naging marahas ang pagtatalo sa tarangkahan. Idinidiin ng isang lalaki ang kutsilyo sa leeg ng isa at hindi niya ito hinahayaang makagalaw o makaalis doon.",
+        "ceb": "Nahimong bangis ang lalis sa ganghaan. Gidutdot sa usa ka lalaki ang kutsilyo sa liog sa laing lalaki ug dili niya kini palihokon o palakwon.",
+        "mixed": "The argument at the gate turned violent. May knife na nakadikit sa neck ng isang man, at ayaw siyang pakawalan ng may hawak ngayon."
+      },
+      "rationale": "An attacker is holding a blade against a person's neck, an explicit immediate human threat.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_security_incident_critical_02",
+      "family_id": "fcv2_security_corner_shop",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "descriptions": {
+        "en": "After the attack in the shop, the guard is bleeding heavily from his leg. Blood keeps pouring despite pressure and is pooling on the floor.",
+        "tl": "Matapos ang pag-atake sa tindahan, malakas ang pagdurugo sa binti ng guwardiya. Tuloy ang buhos kahit dinidiinan at naiipon na ang dugo sa sahig.",
+        "ceb": "Human sa pag-atake sa tindahan, kusog ang pagdugo sa bitiis sa guwardiya. Nagbubo gihapon bisan gipislit ug nagtigom na ang dugo sa salog.",
+        "mixed": "After the shop attack, heavy ang bleeding sa leg ng guard. Blood keeps pouring kahit may pressure, at naiipon na sa floor ang dugo ngayon."
+      },
+      "rationale": "A person's current uncontrolled blood loss after an attack explicitly supports immediate grave danger.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_security_incident_critical_03",
+      "family_id": "fcv2_security_street_shouting",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "descriptions": {
+        "en": "The man outside is pointing a gun directly at a neighbor standing nearby. The neighbor cannot move away, and the gun remains aimed at him.",
+        "tl": "Nakatutok ang baril ng lalaki sa kapitbahay na nakatayo malapit sa kanya. Hindi makalayo ang kapitbahay at patuloy na nakatutok sa kanya ang baril ngayon.",
+        "ceb": "Gitutokan sa lalaki ang silingan nga nagtindog duol niya og pusil. Dili makapalayo ang silingan ug padayon nga gitutok kaniya ang pusil karon didto sa gawas.",
+        "mixed": "The man outside has a gun pointed directly at the neighbor nearby. Hindi makalayo ang neighbor at nakatutok pa rin sa kanya ang gun ngayon."
+      },
+      "rationale": "A firearm is currently aimed directly at a nearby person, an explicit imminent life threat.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_security_incident_critical_04",
+      "family_id": "fcv2_security_house_argument",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "descriptions": {
+        "en": "A man is squeezing his partner's neck inside the house. She cannot breathe or speak, and her body is becoming limp while he continues holding her.",
+        "tl": "Pinipisil ng lalaki ang leeg ng kapareha sa bahay. Hindi siya makahinga o makapagsalita, at lumalambot na ang katawan habang hindi pa siya binibitawan.",
+        "ceb": "Gipuga sa lalaki ang liog sa iyang kapikas sa balay. Dili siya kaginhawa o makasulti, ug nagkahuyang ang lawas samtang wala pa siya buhii.",
+        "mixed": "The man is squeezing his partner's neck inside the house. Hindi siya makahinga o makapagsalita, at limp na ang body habang hawak pa rin siya."
+      },
+      "rationale": "The ongoing neck compression has caused explicit inability to breathe or speak.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_security_incident_needs_review_01",
+      "family_id": "fcv2_security_neighbors_gate",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "Someone sent me the sentence I will hurt him at the gate. I do not know who said it, when, or whether anyone is there.",
+        "tl": "May nagpadala sa akin ng pangungusap na sasaktan ko siya sa tarangkahan. Hindi ko alam kung sino ang nagsabi, kailan, o kung may tao roon.",
+        "ceb": "Naay nagpadala nako sa pulong nga pasakitan ko siya sa ganghaan. Wala ko kabalo kinsay nagsulti, kanus-a, o kon naay tawo didto karon sa lugar.",
+        "mixed": "May nag send ng sentence na I will hurt him at the gate. Unknown ang speaker, time, at kung may tao pa roon ngayon."
+      },
+      "rationale": "A threat is quoted without confirmed timing, speaker, or present target exposure.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_security_incident_needs_review_02",
+      "family_id": "fcv2_security_corner_shop",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "There is a rumor about a robbery at the shop, but I have no direct information. The timing and everyone's condition are unknown.",
+        "tl": "May usap-usapan tungkol sa nakawan sa tindahan, pero wala akong direktang impormasyon. Hindi alam kung kailan iyon o ano ang kalagayan ng mga tao.",
+        "ceb": "Naay hungihong bahin sa tulis sa tindahan, apan wala koy direktang impormasyon. Wala mahibaloi kanus-a kini o unsay kahimtang sa mga tawo didto karon.",
+        "mixed": "May rumor about a robbery sa shop, pero wala akong direct information. Hindi confirmed ang time o ang condition ng kahit sinong tao doon ngayon."
+      },
+      "rationale": "A rumor does not establish whether a current robbery, injury, or hazard exists.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_security_incident_needs_review_03",
+      "family_id": "fcv2_security_street_shouting",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "One witness says the shouting man has a gun; another says it was a phone. I cannot see him or confirm whether either account is current.",
+        "tl": "Sabi ng isang saksi, may baril ang sumisigaw na lalaki; sabi ng isa, telepono lang iyon. Hindi ko siya nakikita o makumpirma kung kailan ito.",
+        "ceb": "Giingon sa usa ka saksi nga naay pusil ang nagsinggit nga lalaki; sa lain, telepono ra. Dili nako siya makita o makumpirma ang oras niini.",
+        "mixed": "One witness says gun ang hawak ng shouting man, another says phone. Wala akong view at hindi confirmed kung current ang alinman sa mga report."
+      },
+      "rationale": "The weapon report contradicts another account and cannot be linked to a person or time.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_security_incident_needs_review_04",
+      "family_id": "fcv2_security_house_argument",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "For tomorrow's safety discussion, imagine a partner choking someone at home. I am asking about that example; I am not describing an incident occurring here.",
+        "tl": "Para sa talakayan bukas, isipin ang kaparehang nananakal sa bahay. Tungkol sa halimbawang iyon ang tanong ko; hindi ito pangyayaring nagaganap dito ngayon sa amin.",
+        "ceb": "Para sa panaghisgot ugma, hunahunaa ang kapikas nga nagtuok sa balay. Mahitungod nianang pananglitan akong pangutana; dili kini panghitabo nga nagakahitabo dinhi karon sa amo.",
+        "mixed": "For tomorrow's safety discussion, imagine a partner choking someone at home. Example lang ang tanong ko, wala akong nirereport na incident na nangyayari rito ngayon."
+      },
+      "rationale": "A hypothetical scenario is not a report of present violence.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_other_minor_01",
+      "family_id": "fcv2_other_fallen_cable",
+      "incident_type": "other",
+      "label": "minor",
+      "descriptions": {
+        "en": "The fallen cable has been disconnected and removed by the utility crew. They confirm the path is clear and safe, and nobody was hurt.",
+        "tl": "Nadiskonekta at naalis na ng mga tauhan ng kuryente ang nahulog na kable. Kinumpirma nilang ligtas at maluwag na ang daan at walang nasaktan.",
+        "ceb": "Gitangtang na sa mga trabahante sa kuryente ang koneksyon ug ang nahulog nga kable. Gikumpirma nilang hawan ug luwas na ang agianan, ug walay nasamdan.",
+        "mixed": "The fallen cable is disconnected and removed na by the utility crew. Confirmed clear at safe na ang path, at wala namang taong nasaktan doon."
+      },
+      "rationale": "The utility has confirmed the fallen cable is disconnected and removed; nobody was injured.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_other_minor_02",
+      "family_id": "fcv2_other_market_canopy",
+      "incident_type": "other",
+      "label": "minor",
+      "descriptions": {
+        "en": "A loose canopy panel was lowered and secured at the market. The frame has been checked, nothing else is loose, and nobody was injured.",
+        "tl": "Ibinaba at ikinabit nang maayos ang maluwag na panel sa palengke. Nasuri na ang balangkas, wala nang maluwag na bahagi, at walang taong nasaktan.",
+        "ceb": "Gipaubos ug gisiguro ang luag nga panel sa atop sa merkado. Nasusi na ang balangkas, wala nay laing luag nga bahin, ug walay nasamdan.",
+        "mixed": "The loose canopy panel sa market was lowered and secured. Checked na ang frame, wala nang loose parts, at walang taong nasaktan sa lugar doon."
+      },
+      "rationale": "The loose panel is secured and inspected, with no injuries or remaining falling-debris hazard.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_other_minor_03",
+      "family_id": "fcv2_other_shore_rescue",
+      "incident_type": "other",
+      "label": "minor",
+      "descriptions": {
+        "en": "The swimmers who asked for help are all safely ashore now. Nobody is injured or having breathing trouble, and nobody remains in the water.",
+        "tl": "Nasa ligtas na dalampasigan na ang lahat ng lumangoy na humingi ng tulong. Walang nasaktan o nahihirapang huminga, at wala nang natitira sa tubig.",
+        "ceb": "Naa na sa luwas nga baybayon ang tanang manlalangoy nga nangayo og tabang. Walay nasamdan o naglisod og ginhawa, ug wala nay tawo sa tubig.",
+        "mixed": "All swimmers who asked for help are safely ashore na. Walang injury o breathing trouble, at wala nang taong naiwan sa water sa lugar ngayon."
+      },
+      "rationale": "The assistance request has resolved, with all swimmers safely ashore and explicitly uninjured.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_other_minor_04",
+      "family_id": "fcv2_other_workshop_spill",
+      "incident_type": "other",
+      "label": "minor",
+      "descriptions": {
+        "en": "Only ordinary hand soap spilled in the workshop, and it has been cleaned completely. Nobody slipped, nobody has symptoms, and the floor is dry.",
+        "tl": "Karaniwang sabon lang sa kamay ang natapon sa pagawaan at nalinis na nang lubusan. Walang nadulas o nakaramdam ng sintomas, at tuyo na ang sahig.",
+        "ceb": "Ordinaryong sabon sa kamot ra ang nayabo sa pandayan ug nahinloan na gyud. Walay nadulas o naay gibati nga sintomas, ug uga na ang salog.",
+        "mixed": "Ordinary hand soap lang ang spill sa workshop, cleaned completely na. Walang nadulas, walang symptoms ang kahit sino, at tuyo na ang floor sa loob."
+      },
+      "rationale": "The confirmed nondangerous soap spill is cleaned and has caused no symptoms or injuries.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_other_serious_01",
+      "family_id": "fcv2_other_fallen_cable",
+      "incident_type": "other",
+      "label": "serious",
+      "descriptions": {
+        "en": "A fallen power cable is sparking across the empty road. People are staying behind a barrier and nobody is injured, but the cable remains energized.",
+        "tl": "Kumikislap ang nahulog na kable ng kuryente sa bakanteng daan. Nasa likod ng harang ang mga tao at walang sugat, pero may kuryente pa ito.",
+        "ceb": "Nagsiga-siga ang nahulog nga kable sa kuryente tabok sa hawang nga dalan. Luyo sa harang ang mga tawo, walay samad, apan wala pa mapalong ang kuryente.",
+        "mixed": "The fallen power cable is sparking across the empty road. Behind the barrier ang people at unhurt, pero energized pa rin ang cable sa daan ngayon."
+      },
+      "rationale": "A sparking fallen power cable is an ongoing uncontained hazard despite an empty cordoned road.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_other_serious_02",
+      "family_id": "fcv2_other_market_canopy",
+      "incident_type": "other",
+      "label": "serious",
+      "descriptions": {
+        "en": "Part of the market canopy has collapsed and more pieces keep falling. Everyone is outside the barrier without injury, but the frame is still shifting.",
+        "tl": "Bumagsak ang bahagi ng bubong sa palengke at may mga pirasong nahuhulog pa. Nasa labas ng harang ang lahat nang walang sugat, pero gumagalaw pa ang balangkas.",
+        "ceb": "Nahugno ang bahin sa atop sa merkado ug naay mga pirasong nangahulog pa. Naa sa gawas sa harang ang tanan nga walay samad, apan naglihok pa ang balangkas.",
+        "mixed": "Part of the market canopy collapsed at may falling pieces pa. Everyone is outside the barrier unhurt, pero shifting pa rin ang frame sa ibabaw ngayon."
+      },
+      "rationale": "The canopy continues shedding material; evacuation does not resolve the ongoing structural hazard.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_other_serious_03",
+      "family_id": "fcv2_other_shore_rescue",
+      "incident_type": "other",
+      "label": "serious",
+      "descriptions": {
+        "en": "A fisherman is stranded on a broad rock after water cut off the shore path. He is uninjured, standing securely, and breathing normally but cannot return.",
+        "tl": "Naiwan ang mangingisda sa malapad na bato matapos matabunan ng tubig ang daan pabalik. Wala siyang sugat, matatag ang tayo, at maayos huminga pero hindi makabalik.",
+        "ceb": "Naipit ang mangingisda sa lapad nga bato human natabonan sa tubig ang agianan pauli. Walay samad, lig-on ang tindog, ug normal ang pagginhawa apan dili makabalik.",
+        "mixed": "The fisherman is stranded on a broad rock, cut off ang shore path. Unhurt siya, stable ang footing at normal breathing, pero hindi makabalik mag-isa ngayon."
+      },
+      "rationale": "A stranded person requires rescue; stable footing and normal breathing are stated without an immediate grave sign.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_other_serious_04",
+      "family_id": "fcv2_other_workshop_spill",
+      "incident_type": "other",
+      "label": "serious",
+      "descriptions": {
+        "en": "A chemical drum is leaking and releasing strong fumes in the workshop. Everyone has evacuated without symptoms, but the liquid and fumes are still spreading.",
+        "tl": "Tumatagas ang kemikal sa drum at malakas ang singaw sa pagawaan. Nakalabas ang lahat nang walang sintomas, pero patuloy na kumakalat ang likido at singaw.",
+        "ceb": "Nagtulo ang kemikal sa drum ug kusog ang alisngaw sa pandayan. Nakagawas ang tanan nga walay sintomas, apan padayon ang pagkaylap sa likido ug alisngaw.",
+        "mixed": "The chemical drum is leaking with strong fumes sa workshop. Everyone evacuated without symptoms, pero spreading pa rin ang liquid at fumes sa loob ngayon."
+      },
+      "rationale": "A chemical leak with persistent vapor is an active hazard after an injury-free evacuation.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_other_critical_01",
+      "family_id": "fcv2_other_fallen_cable",
+      "incident_type": "other",
+      "label": "critical",
+      "descriptions": {
+        "en": "A man is still gripping the fallen sparking cable and cannot let go. He is gasping, and people nearby cannot get a response from him.",
+        "tl": "Nakakapit pa rin ang lalaki sa nahulog na kumikislap na kable at hindi makabitaw. Habol ang hininga niya at hindi siya tumutugon sa mga tao.",
+        "ceb": "Nagkupot gihapon ang lalaki sa nahulog nga nagsiga-siga nga kable ug dili makabuhi. Naghangos siya ug dili motubag sa mga tawo nga nagtawag kaniya.",
+        "mixed": "The man is still gripping the fallen sparking cable, hindi makabitaw. Gasping siya at walang response sa mga taong tumatawag sa kanya sa malapit ngayon."
+      },
+      "rationale": "A person is in current contact with an energized cable and has major breathing difficulty.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_other_critical_02",
+      "family_id": "fcv2_other_market_canopy",
+      "incident_type": "other",
+      "label": "critical",
+      "descriptions": {
+        "en": "A fallen canopy beam is pressing on a vendor's chest. She is trapped beneath it, gasping for air, and can no longer finish a sentence.",
+        "tl": "Dumidiin sa dibdib ng tindera ang bumagsak na biga ng bubong. Naiipit siya sa ilalim, habol ang hininga, at hindi na makatapos ng pangungusap.",
+        "ceb": "Nagpislit sa dughan sa tindera ang nahulog nga biga sa atop. Naipit siya sa ilalom, naghangos, ug dili na makahuman og usa ka sulti.",
+        "mixed": "The fallen canopy beam is pressing on the vendor's chest. Trapped siya underneath, gasping for air, at hindi na makabuo ng buong sentence ngayon sa amin."
+      },
+      "rationale": "A trapped person's chest compression is causing explicit major breathing compromise.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_other_critical_03",
+      "family_id": "fcv2_other_shore_rescue",
+      "incident_type": "other",
+      "label": "critical",
+      "descriptions": {
+        "en": "One rescued swimmer is awake and speaking, but the other remains limp on the shore and does not respond when called or touched.",
+        "tl": "Gising at nagsasalita ang isang nailigtas na manlalangoy, pero malambot pa rin ang katawan ng isa sa dalampasigan at hindi tumutugon sa tawag o hawak.",
+        "ceb": "Mata ug nagsulti ang usa ka naluwas nga manlalangoy, apan ang usa luya gihapon sa baybayon ug dili motubag kon tawgon o hikapon karon dinhi.",
+        "mixed": "One rescued swimmer is awake and speaking na. Pero ang other swimmer ay limp pa rin sa shore at walang response sa tawag o touch ngayon."
+      },
+      "rationale": "One swimmer remains unresponsive after rescue; another swimmer's recovery does not negate this.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_other_critical_04",
+      "family_id": "fcv2_other_workshop_spill",
+      "incident_type": "other",
+      "label": "critical",
+      "descriptions": {
+        "en": "A worker collapsed beside the leaking drum and is not responding to shouts. He is still inside the workshop where the strong fumes are spreading.",
+        "tl": "Bumagsak ang manggagawa sa tabi ng tumatagas na drum at hindi tumutugon sa sigaw. Nasa loob pa siya ng pagawaan habang kumakalat ang matapang na singaw.",
+        "ceb": "Natumba ang trabahante tupad sa nagtulo nga drum ug dili motubag sa singgit. Naa pa siya sulod sa pandayan samtang nagkaylap ang kusog nga alisngaw.",
+        "mixed": "The worker collapsed beside the leaking drum, no response sa shouts. Nasa loob pa siya ng workshop habang kumakalat ang strong fumes sa paligid ngayon."
+      },
+      "rationale": "A worker is currently unresponsive inside an area with continuing hazardous fumes.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_other_needs_review_01",
+      "family_id": "fcv2_other_fallen_cable",
+      "incident_type": "other",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "I see a dark line across the road from far away. It might be rope or a cable; I cannot tell whether anyone is near it.",
+        "tl": "May maitim na linyang nakaharang sa daan na tanaw ko mula sa malayo. Baka lubid o kable, at hindi ko makita kung may malapit na tao.",
+        "ceb": "Naay itom nga linya sa dalan nga akong nakita gikan sa layo. Basin pisi o kable kini; dili nako makita kon naay tawo sa duol.",
+        "mixed": "May dark line across the road na kita ko from far away. Baka rope o cable, at hindi ko makita kung may tao sa malapit."
+      },
+      "rationale": "The object and electrical hazard are unconfirmed and current exposure is unknown.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_other_needs_review_02",
+      "family_id": "fcv2_other_market_canopy",
+      "incident_type": "other",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "This picture shows a broken market canopy, but it has no date. I do not know whether repairs were finished or anyone needs help now.",
+        "tl": "May sirang bubong sa palengke sa larawang ito pero walang petsa. Hindi ko alam kung natapos na ang pagkukumpuni o may nangangailangan pa ng tulong ngayon.",
+        "ceb": "Nakita sa litrato ang gubang atop sa merkado apan walay petsa. Wala ko kabalo kon nahuman na ang pag-ayo o naay nanginahanglan pa og tabang karon.",
+        "mixed": "This picture shows a broken market canopy pero walang date. Hindi ko alam kung repaired na ito o kung may nangangailangan pa ng help ngayon doon."
+      },
+      "rationale": "An undated picture cannot establish present danger, injuries, or rescue needs.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_other_needs_review_03",
+      "family_id": "fcv2_other_shore_rescue",
+      "incident_type": "other",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "There is something floating far from the shore, but I cannot tell whether it is a person or a sack. I have no other details.",
+        "tl": "May lumulutang na bagay malayo sa dalampasigan, pero hindi ko malaman kung tao o sako iyon. Wala pa akong ibang detalye tungkol dito sa ngayon.",
+        "ceb": "Naay naglutaw nga butang layo sa baybayon, apan dili ko makaila kon tawo o sako kini. Wala pa koy laing detalye bahin niini karon.",
+        "mixed": "May floating object far from the shore, pero hindi ko ma identify kung person o sack. Wala pa akong other details tungkol dito sa ngayon."
+      },
+      "rationale": "A distant uncertain object does not establish a person or current condition.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "id": "fcv2_other_needs_review_04",
+      "family_id": "fcv2_other_workshop_spill",
+      "incident_type": "other",
+      "label": "needs_review",
+      "descriptions": {
+        "en": "For our workshop drill, suppose a leaking drum releases fumes and someone collapses. I am discussing the exercise, and no such incident is happening here.",
+        "tl": "Para sa pagsasanay sa pagawaan, ipagpalagay na may tumatagas na drum at may bumagsak na tao. Tungkol ito sa ensayo, walang ganitong pangyayari rito ngayon.",
+        "ceb": "Para sa ensayo sa pandayan, pananglitan naay nagtulo nga drum ug natumba nga tawo. Naghisgot ra ko sa ensayo, walay ingon ani nga panghitabo dinhi karon.",
+        "mixed": "For the workshop drill, suppose may leaking drum at someone collapses from fumes. Exercise lang ang discussion namin, walang ganitong incident dito sa lugar ngayon."
+      },
+      "rationale": "The account is a hypothetical safety-training question with no current exposed person.",
+      "review_status": "draft",
+      "reviewer": "",
+      "notes": ""
+    }
+  ],
+  "human_reviewed": false,
+  "clinically_validated": false,
+  "target_labels_provisional": true,
+  "frozen_date": "2026-11-09",
+  "freeze_policy": "Content frozen before access to any model outputs for this diagnostic. Corrections require a new version; do not overwrite this file after evaluation.",
+  "authorship_inputs": [
+    "src/ai_service/incident_types.py: category and input schema only",
+    "datasets/emergency_text/annotation_guide.md: existing road-only annotation and review principles",
+    "Task-provided proposed multiincident urgency rubric"
+  ],
+  "rubric": {
+    "minor": "Explicitly no injury and resolved hazard, or a confirmed low-impact nondangerous medical complaint.",
+    "serious": "Meaningful injury without an explicit immediate grave sign, or an ongoing uncontained hazard requiring urgent response even if people are currently uninjured or evacuated.",
+    "critical": "Explicit current unresponsiveness, major breathing compromise, uncontrolled blood loss, or a direct imminent human life threat.",
+    "needs_review": "Insufficient, uncertain, historical, contradictory, quoted or hypothetical account, or unclear subject; supported urgency cannot be assigned from the description."
+  },
+  "scope_note": "The existing annotation guide is road-only. These six-category provisional targets apply the task-provided expanded rubric, pending designated responder and fluent-speaker review.",
+  "counts": {
+    "scenarios": 96,
+    "descriptions": 384,
+    "languages": 4,
+    "scene_families": 24,
+    "scenarios_per_category_label_cell": 4
+  }
+}

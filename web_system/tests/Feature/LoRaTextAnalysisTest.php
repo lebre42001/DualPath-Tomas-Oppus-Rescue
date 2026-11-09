@@ -8,6 +8,7 @@ use App\Models\IncidentReport;
 use App\Models\User;
 use App\Services\AiTextSeverityClient;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Client\Factory;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Http;
@@ -62,7 +63,7 @@ class LoRaTextAnalysisTest extends TestCase
         $this->assertNull($report->operational_severity);
         $this->assertNotNull($report->ai_processed_at);
         Http::assertSent(fn ($request) => $request->url() === 'http://text-ai.test/predict/text'
-            && $request->data() === ['description' => $this->payload()['description']]);
+            && $request->data() === ['description' => $this->payload()['description'], 'incident_type' => 'road_accident']);
         Event::assertDispatched(IncidentFeedUpdated::class, fn ($event) => $event->action === 'ai_suggestion');
         $analysisLog = collect($report->coordination_log)->firstWhere('trigger', 'lora_description_received');
         $this->assertSame('System', $analysisLog['actor_role']);
@@ -121,7 +122,7 @@ class LoRaTextAnalysisTest extends TestCase
         $this->assertNull($report->ai_model_name);
         $this->actingAs($this->admin())->get(route('lora-reports.index'))
             ->assertOk()->assertSee('Analyze description with AI')->assertSee('Save admin assessment');
-        Http::swap(new \Illuminate\Http\Client\Factory);
+        Http::swap(new Factory);
         Http::preventStrayRequests();
         Http::fake(['text-ai.test/predict/text' => Http::response($this->prediction())]);
         $this->postJson(route('reports.ai-suggestion', $report))->assertOk()
@@ -183,6 +184,7 @@ class LoRaTextAnalysisTest extends TestCase
                 'ai_review_required' => false, 'response_notes' => 'Admin response already saved.',
                 'lora_ack_queued_at' => now(),
             ]);
+
             return Http::response($this->prediction());
         });
         $this->ingest()->assertCreated();
@@ -225,7 +227,7 @@ class LoRaTextAnalysisTest extends TestCase
         $this->assertSame('Near school', $report->lora_incident_landmark);
         $this->assertSame('hmac-sha256-v2', $report->lora_radio_auth);
         $this->assertNull($report->lora_ack_queued_at);
-        Http::assertSent(fn ($request) => $request->data() === ['description' => $description]);
+        Http::assertSent(fn ($request) => $request->data() === ['description' => $description, 'incident_type' => 'road_accident']);
     }
 
     private function ingest(array $overrides = [])

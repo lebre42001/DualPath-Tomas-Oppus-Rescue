@@ -3,8 +3,9 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-from .text_inference import TextModelUnavailable, enabled, get_predictor, predict_text, text_status
-from .text_cues import RULE_VERSION
+from .text_inference import (TextModelUnavailable, category_capabilities, get_predictor,
+                             predict_text, text_rule_capabilities, text_status)
+from .incident_types import normalize_incident_type
 from .operation_mode import ai_enabled, operation_mode
 
 router = APIRouter(tags=["text severity"])
@@ -13,6 +14,12 @@ router = APIRouter(tags=["text severity"])
 class TextPredictionRequest(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
     description: str = Field(min_length=1, max_length=1000)
+    incident_type: str = Field(default="road_accident", min_length=1, max_length=64)
+
+    @field_validator("incident_type")
+    @classmethod
+    def valid_incident_type(cls, value: str) -> str:
+        return normalize_incident_type(value)
 
     @field_validator("description")
     @classmethod
@@ -36,8 +43,8 @@ def ready_text() -> dict:
         return {"status": "ready", "deployment_status": predictor.metadata["deployment_status"],
                 "model_version": predictor.metadata["version"],
                 "model_name": predictor.metadata.get("display_name", predictor.metadata.get("base_model")),
-                "text_rules_enabled": enabled("AI_TEXT_RULES_ENABLED"),
-                "text_rules_version": RULE_VERSION if enabled("AI_TEXT_RULES_ENABLED") else None}
+                **category_capabilities(predictor.metadata),
+                **text_rule_capabilities(predictor.metadata)}
     except TextModelUnavailable as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
 
@@ -47,7 +54,9 @@ def classify_text(request: TextPredictionRequest) -> dict:
     if not ai_enabled():
         raise HTTPException(status_code=503, detail={"status": "disabled", "operation_mode": operation_mode()})
     try:
-        return predict_text(request.description)
+        if "incident_type" not in request.model_fields_set:
+            return predict_text(request.description)
+        return predict_text(request.description, request.incident_type)
     except TextModelUnavailable as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     except Exception as exc:

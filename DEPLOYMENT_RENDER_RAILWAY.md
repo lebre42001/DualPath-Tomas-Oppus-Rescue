@@ -1,5 +1,18 @@
 # Online Deployment Plan
 
+## Personal admin logs from Profile (2026-11-09)
+
+The local Laravel update adds `/profile/admin-logs` and its personal print/duty
+routes. History and printing always use the signed-in admin's ID; the existing
+System Log remains the shared officer history. Deploy the controller, activity
+middleware, guest-redirect configuration, routes, Profile/log Blade views and rebuilt assets together and clear
+Laravel caches. No additional migration or environment setting is required on the
+existing installation. See `DOKPLOY_DEPLOYMENT.md` for the active
+`https://dualpath.bsit4bdevs.tech` deployment path and two-account verification.
+This change has not been pushed or deployed. The free Render demo is separate and
+retains its AI-disabled, local ephemeral storage/free Postgres assumptions; it is
+not production-safe.
+
 ## Civilian System Log and floating Updates (2026-11-07)
 
 This release adds the `civilian_activities` table through the new additive migration.
@@ -421,6 +434,87 @@ If you later want to use Vercel, the cleaner split would be:
 - Vercel for a separate frontend
 - Render or Railway for Laravel API + Reverb + AI
 - external DB + object storage
+
+## Reviewed AI feedback and candidate learning (2026-11-09)
+
+Apply `2026_11_09_000001_create_ai_training_feedback_table.php` with the normal
+migrations. Dedicated description reviews now retain a private text/category/model
+snapshot and an explicit admin training approval. Routine severity changes alone
+are not training permission. The admin must check the anonymous, text-only label
+and select its language. Existing reports are not bulk imported into training.
+
+`php artisan ai-learning:run` exports only current approved examples to
+`storage/app/private/ai-learning/feedback.jsonl`; its manifest identifies a candidate
+pool, not an independent test set. Later corrections, withdrawn approval, edited
+description/category, or report deletion remove the old example from the next
+snapshot. Keep this directory private, backed up appropriately, and outside Git.
+
+Laravel schedules that command hourly. Laragon's start/status/stop helpers now
+manage a portless `laravel-scheduler` (`schedule:work`). Local candidate training
+requires `AI_LEARNING_ENABLED=true`, a valid `AI_LEARNING_PYTHON`,
+`AI_LEARNING_PROJECT_DIRECTORY`, and `AI_LEARNING_BASE_MODEL`. The start helper
+supplies local path defaults from `active_text_config.json` but does not enable
+training or change the active release. A separately reviewed holdout path belongs
+in `AI_LEARNING_HOLDOUT`; never use the incoming feedback pool as its own test set.
+
+The PHP web image has no Python runtime. Leave `AI_LEARNING_ENABLED=false` there.
+`RUN_SCHEDULER=true` starts its export scheduler after migrations; it defaults to
+`false` and stays off for the free Render demo, where AI remains disabled and
+storage is ephemeral. Do not enable candidate training on the free web container.
+For persistent Dokploy hosting, the separate optional `learning` Compose profile
+uses a private shared volume and a CPU-limited Python worker. See
+`DOKPLOY_DEPLOYMENT.md`; this profile is not deployed by this code update.
+
+Candidate training starts only after enough newly approved examples (default 50).
+The 80% target is a measured evaluation gate, alongside category/language coverage
+and Critical recall; missing independent holdout data cannot pass. No scheduler,
+environment switch, or candidate worker automatically promotes a model. Retain
+the current release until its replacement has a separately reviewed evaluation
+and release decision. Category preparation does not unlock civilian or LoRa
+incident buttons and does not establish that the present road model supports the
+other categories. Rebuild and verify both the version endpoint and a real public
+application route before describing any online deployment as successful.
+
+Verification on 2026-11-09: localhost `/`, `/login`, `/register`, and
+`/system/version` returned 200, and the private text service `/ready/text`
+returned 200 with the unchanged road-only v2 release and November cue policy.
+The existing local Laravel reporting setting remains `MANUAL_ONLY`; the ordinary
+text service stays on port 8100. The subsequent common-vocabulary experiment
+configures the separate AI Lab on port 8101, as described below. Local candidate learning is configured and
+the scheduler is running. Its first real export contained zero eligible examples,
+so the worker reported `waiting_for_reviewed_examples` without fitting a model.
+
+The public Render `/`, `/login`, and `/system/version` returned 200 during this
+check after an initial version-request timeout. Its version fingerprint
+`6d2336e9391ddf72` differs from localhost `0491606a50f9c143`. These fingerprints
+are not Git commits; the endpoint cannot establish deployed branch/commit parity.
+The local checkout was `main` at `5add4b9d` with this update still uncommitted.
+The feedback/category update has not been deployed online. Dokploy configuration
+and shell syntax were checked, but Docker was unavailable for a container run.
+
+### Common-vocabulary experiment: isolated local Lab
+
+The six-category `triage-multiincident-tfidf-20261109-v1` release is selected only
+by `test_model_directory` in `ai_service/active_text_config.json`. The Laragon
+helper starts it on CPU at `127.0.0.1:8101`; local Laravel's
+`AI_TEXT_TEST_SERVICE_URL` points there. The ordinary `model_directory`, port 8100
+road-only v2 checkpoint, manual reporting mode, and civilian/LoRa category locks
+are unchanged. Do not change the deployed `TEXT_AI_MODEL_DIR` to this candidate.
+
+The requested 80% complete-system target failed. The frozen 144-case synthetic
+family test scored 72.92% complete-policy accuracy (73.61% raw classifier); the
+separately authored 384-case diagnostic scored 68.49% (83.33% raw). Critical recall
+was 69.23% and 50.00%, with five and ten urgent lower assignments respectively.
+All labels are AI-authored drafts and deployment approval remains false. See
+[the full evaluation](ai_service/artifacts/reports/multiincident_common_20261109/EVALUATION.md).
+
+No deployment of this experiment was performed. The prepared online path keeps
+the current live selector; the free Render profile continues with AI disabled,
+local ephemeral file storage and free Postgres, and is not production-safe. A
+future supervised Lab deployment needs a separately configured private service
+and test URL; a validated live replacement still needs a reviewed independent
+evaluation and release decision. Successful local readiness is not proof of
+online branch/commit parity.
 
 ## First future improvement after production
 

@@ -5,6 +5,47 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Personal admin logs from Profile (2026-11-09)
+
+Admin Profile now links to **My Admin Logs** at `/profile/admin-logs`, with a
+personal print preview at `/profile/admin-logs/print`. Both queries enforce the
+authenticated admin's ID on the server. An officer query parameter cannot select
+another officer's history. The shared `/admin/system-log` still contains all
+officers' recorded activity. Personal and shared views use the same saved rows;
+this feature does not duplicate historical entries or invent missing activity.
+
+Personal history includes recorded sign-ins/sign-outs, duty declarations, report
+decisions, navigation and account/settings actions. It offers search, inclusive
+Philippine dates, activity/source filters, pagination and Print / Save as PDF
+across matching pages. Today is the default; All dates retrieves older activity.
+The existing 2,000-entry print limit applies to the current officer's matches.
+Personal Start duty / End duty controls update only the signed-in officer and
+return to their personal history. Visible-page polling does not add log rows.
+
+Deploy the updated controller, activity middleware, guest-redirect configuration,
+routes, Profile/shared-log
+Blade views and rebuilt Vite assets together, then run `php artisan optimize:clear`.
+No new migration or environment variable is required on an installation that
+already has `admin_activities` and `admin_duty_shifts`. Keep the existing migrations
+in the normal deployment startup for fresh installations. This is a local update;
+it has not yet been pushed or deployed to `https://dualpath.bsit4bdevs.tech`.
+After deploying the same reviewed commit through the existing `main` pipeline,
+verify entry routes, deployed version/build metadata, an authorized Profile and
+personal filtered print view, and isolation between two different officer accounts.
+Unauthenticated personal-log requests must lead to the admin login portal; civilian
+and ordinary responder accounts must not receive personal admin history.
+
+Local verification: 428 PHPUnit tests / 5,092 assertions passed using the Laragon
+PHP 8.3 binary directly with the ZIP extension enabled; 27 admin JavaScript tests
+and the Vite build passed. A pre-existing dashboard fixture was corrected to retain
+its explicit timestamps, rather than depending on setup finishing in one second.
+Local caches were cleared, public entry routes returned 200, and personal history
+and print correctly redirected guests to `/admin/login`. The browser visual check
+was stopped by the user and was not completed. On this check, the hosted login
+and version endpoints returned 200, but hosted `/profile/admin-logs` returned 404.
+Hosted fingerprint `4c96486e54b23e15` differs from local `a17baabbcad0af93`; these
+are file fingerprints, not Git commits, and do not establish branch/commit parity.
+
 ## Admin alarm, shared review and System Log (2026-11-07)
 
 Admin Report alarm retains each officer's Sound on/Mute preference across full
@@ -1314,6 +1355,76 @@ Deploy the normal web build and clear Laravel caches. No migration, firmware,
 severity-model change, or APK rebuild is required. Validate with the Laravel
 suite and Vite build; check multi-page selections, date boundaries, print
 preview, deleted history, and short-screen modal scrolling.
+
+## Reviewed feedback learning worker (2026-11-09)
+
+The subsequent six-category common-vocabulary checkpoint is an **isolated local
+AI Lab experiment**, not this deployment's live model. Its local test service
+uses port 8101 and `test_model_directory`; the normal `text-ai` service and
+`TEXT_AI_MODEL_DIR` stay on the road-only v2 release. Do not promote the Lab
+checkpoint through an environment-variable change. Its final complete-policy
+synthetic results were 72.92% on 144 family-test descriptions and 68.49% on a
+separate 384-description diagnostic, so the requested 80% target failed.
+All data remain unreviewed drafts and deployment approval is false. See
+[the evaluation](ai_service/artifacts/reports/multiincident_common_20261109/EVALUATION.md)
+and [local Lab setup](ai_service/LOCAL_TEXT_AI_LAB.md). These changes were not
+deployed to Dokploy or Render.
+
+The normal web startup applies the new `ai_training_feedback` migration and starts
+`schedule:work` with `RUN_SCHEDULER=true`. Its hourly export contains only explicit
+description-only training approvals with admin-reviewed language. The PHP image
+keeps `AI_LEARNING_ENABLED=false`: it writes private feedback but does not launch
+Python training. Never add the app signing key or LoRa ingest token to a training
+worker.
+
+The optional `learning` profile is independent of the `text-ai` inference service.
+It installs the text baseline requirements without the face runtime, publishes no
+ports, has no network, and is limited to one CPU and 768 MB. Web startup creates
+and owns the learning directories as Alpine `www-data` before becoming healthy;
+the scheduler runs through `su-exec` as that user and the learning worker uses
+the matching UID/GID `82:82`. Directories remain private (`0700`) and feedback
+exports remain `0600`; do not fix access errors by making the pool public. It reads
+`/learning/private/ai-learning/feedback.jsonl` from the existing `app-storage` named
+volume and writes candidate state below the same private directory. The current
+release is loaded as an input from the worker image; candidates never replace it.
+Keep this volume private and retain its backups under the same access controls as
+the app's private storage. Do not mount it into public web paths or expose it as a
+download route.
+
+After reviewing the server's available resources, opt in using the Compose profile
+in Dokploy or the equivalent local command:
+
+```sh
+docker compose --env-file .env -f compose.dokploy.yaml --profile learning up -d --build
+```
+
+The default thresholds are 50 newly approved examples, accuracy 0.80, Critical
+recall 0.95, and at least five independently reviewed cases per evaluated cell.
+`AI_LEARNING_MIN_NEW`, `AI_LEARNING_TARGET_ACCURACY`,
+`AI_LEARNING_CRITICAL_RECALL`, and `AI_LEARNING_MIN_CELL` configure the worker.
+`AI_LEARNING_BASE_MODEL_DIR` defaults to the packaged active road release; changing
+this input does not activate a new inference model.
+
+No independent holdout is bundled with real feedback. Without one, candidate
+evaluation cannot pass its release gate. To supply a separately reviewed holdout,
+create an untracked Compose override that adds a read-only directory bind mount,
+for example `/private/review:/review:ro`, to the `learning` service. That directory
+must contain both `holdout.csv` and its sibling `holdout.csv.manifest.json`. The
+manifest must bind the exact CSV SHA-256 and record `schema_version: 1`,
+`independent_review: true`, `ai_blinded: true`, and an accountable reviewer. Grant
+UID/GID `82:82` read/traverse access to that private directory and its files.
+Copy the service's existing command list and append `--holdout`,
+`/review/holdout.csv`. Keep every existing candidate/watch flag in that override.
+Store no raw names,
+contacts, signing keys, or production reports in the tracked repository.
+
+The worker checks hourly (`--watch --interval 3600`) and reconciles the full export
+snapshot, so withdrawn/superseded approvals disappear from the current pool. Its
+state and evaluation report must be inspected before a separate model-release
+decision. No automatic activation occurs, and 80% has not been claimed from the
+empty/new feedback queue. Existing category locks and the active release remain
+unchanged. This update prepares the deployment path; enabling the profile or
+verifying a deployment remains a separate operation.
 
 ## Local Compose check
 

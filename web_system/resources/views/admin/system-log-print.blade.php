@@ -1,15 +1,15 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AksyRes - Admin System Log</title>@vite('resources/js/civilian-report-print.js')</head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AksyRes - {{ $personalLogs ? 'My Admin Logs' : 'Admin System Log' }}</title>@vite('resources/js/civilian-report-print.js')</head>
 <body class="admin-system-log-print" data-auto-print="{{ $autoPrint ? 'true' : 'false' }}">
-    <form method="GET" action="{{ route('admin.system-log.print') }}" class="print-toolbar print-options" data-report-print-options>
+    <form method="GET" action="{{ route($logPrintRoute) }}" class="print-toolbar print-options" data-report-print-options>
         @foreach ($filters as $name => $value)
             @if (! in_array($name, ['page', 'print']))<input type="hidden" name="{{ $name }}" value="{{ $value }}">@endif
         @endforeach
-        <div><strong>Admin System Log</strong><p>{{ $entries->count() }} matching entries across all pages. Use your browser's Save as PDF destination to save a PDF copy.</p></div>
+        <div><strong>{{ $personalLogs ? 'My Admin Logs' : 'Admin System Log' }}</strong><p>{{ $entries->count() }} matching entries across all pages. Use your browser's Save as PDF destination to save a PDF copy.</p></div>
         <div class="print-options-actions"><button type="submit">Refresh preview</button><button type="submit" name="print" value="1" @disabled($entries->isEmpty())>Print / Save as PDF</button></div>
     </form>
     <main>
-        <header class="print-header"><p class="brand">AksyRes</p><h1>Admin System Log</h1><p class="print-meta">Generated {{ $printedAt }} · Philippines time (Asia/Manila)</p><p>Dates: {{ $filters['from'] ?? 'Any start' }} to {{ $filters['to'] ?? 'Any end' }} (inclusive)</p>
+        <header class="print-header"><p class="brand">AksyRes</p><h1>{{ $personalLogs ? 'My Admin Logs' : 'Admin System Log' }}</h1>@if ($personalLogs)<p>Officer: {{ $officer->name }} · #{{ $officer->id }}</p>@endif<p class="print-meta">Generated {{ $printedAt }} · Philippines time (Asia/Manila)</p><p>Dates: {{ filled($filters['from'] ?? null) ? $filters['from'] : 'Any start' }} to {{ filled($filters['to'] ?? null) ? $filters['to'] : 'Any end' }} (inclusive)</p>
             @foreach (['q' => 'Search', 'officer' => 'Officer ID', 'category' => 'Activity', 'source' => 'Source'] as $key => $label)
                 @if (filled($filters[$key] ?? null))<p class="print-meta">{{ $label }}: {{ $filters[$key] }}</p>@endif
             @endforeach

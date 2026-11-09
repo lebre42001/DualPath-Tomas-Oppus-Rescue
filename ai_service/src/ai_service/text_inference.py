@@ -10,9 +10,13 @@ from pathlib import Path
 from threading import RLock
 
 from .operation_mode import ai_enabled, operation_mode
+from .incident_types import (CATEGORY_INPUT_FORMAT, INCIDENT_TYPES, metadata_contract,
+                             model_input, normalize_incident_type)
 
 TEXT_LABELS = ("minor", "serious", "critical", "needs_review")
 SERVICE_ROOT = Path(__file__).resolve().parents[2]
+LEGACY_RULE_PROFILE = "road_text_cues_v2"
+MULTIINCIDENT_RULE_PROFILE = "multiincident_common_v1"
 
 
 class TextModelUnavailable(RuntimeError):
@@ -31,6 +35,49 @@ def configured_directory() -> Path | None:
     return directory if directory.is_absolute() else SERVICE_ROOT / directory
 
 
+def text_rule_contract(metadata: dict) -> tuple[str, list[str]]:
+    """Only an explicit, trained category scope can opt into expanded rules.
+
+    Missing profile metadata preserves the historical road-only policy. Declared
+    profile scopes are canonical capabilities, never aliases or inferred labels.
+    """
+    input_format, supported = metadata_contract(metadata)
+    if "text_rule_profile" not in metadata:
+        if "text_rule_incident_types" in metadata:
+            raise ValueError("Text rule scope requires an explicit profile.")
+        return LEGACY_RULE_PROFILE, ["road_accident"] if "road_accident" in supported else []
+    profile = metadata["text_rule_profile"]
+    if not isinstance(profile, str) or profile not in {LEGACY_RULE_PROFILE, MULTIINCIDENT_RULE_PROFILE}:
+        raise ValueError("Unsupported text rule profile.")
+    if profile == LEGACY_RULE_PROFILE:
+        scope = ["road_accident"] if "road_accident" in supported else []
+        if metadata.get("text_rule_incident_types", scope) != scope:
+            raise ValueError("Legacy text rules are restricted to trained road accidents.")
+        return profile, scope
+    scope = metadata.get("text_rule_incident_types")
+    if (input_format != CATEGORY_INPUT_FORMAT or not isinstance(scope, list) or not scope
+            or any(not isinstance(category, str) or category not in INCIDENT_TYPES for category in scope)
+            or len(scope) != len(set(scope)) or not set(scope) <= set(supported)):
+        raise ValueError("Multi-incident text rules require a nonempty canonical scope within trained category-aware capabilities.")
+    return profile, list(scope)
+
+
+def text_rule_capabilities(metadata: dict, *, rules_enabled: bool | None = None) -> dict:
+    """Report the actual configured profile and enabled category scope."""
+    profile, scope = text_rule_contract(metadata)
+    active = enabled("AI_TEXT_RULES_ENABLED") if rules_enabled is None else rules_enabled
+    version = None
+    if active:
+        if profile == MULTIINCIDENT_RULE_PROFILE:
+            from .multiincident_cues import RULE_VERSION
+        else:
+            from .text_cues import RULE_VERSION
+        version = RULE_VERSION
+    return {"text_rules_enabled": active, "text_rule_profile": profile,
+            "text_rule_incident_types": scope, "text_rules_scope": scope if active else [],
+            "text_rules_version": version}
+
+
 def read_metadata(directory: Path, allow_experimental: bool = False) -> dict:
     try:
         metadata = json.loads((directory / "metadata.json").read_text(encoding="utf-8"))
@@ -38,6 +85,13 @@ def read_metadata(directory: Path, allow_experimental: bool = False) -> dict:
         raise TextModelUnavailable("Text model metadata is missing or invalid.") from exc
     if not isinstance(metadata, dict) or metadata.get("schema_version") != 1:
         raise TextModelUnavailable("Unsupported text model metadata format.")
+    try:
+        input_format, supported_types = metadata_contract(metadata)
+        text_rule_contract(metadata)
+    except ValueError as exc:
+        raise TextModelUnavailable(str(exc)) from exc
+    metadata["input_format"] = input_format
+    metadata["supported_incident_types"] = supported_types
     if metadata.get("labels") != list(TEXT_LABELS):
         raise TextModelUnavailable("Text model label mapping does not match the service.")
     if metadata.get("model_type") not in {"transformers", "tfidf_logistic"}:
@@ -67,6 +121,25 @@ def read_metadata(directory: Path, allow_experimental: bool = False) -> dict:
         raise TextModelUnavailable("Text checkpoint is experimental; reviewed data and release validation are required.")
     metadata["deployment_status"] = "validated" if approved else "experimental"
     return metadata
+
+
+def category_review_payload(metadata: dict, incident_type: str) -> dict:
+    """Abstain before either classifier or road-only rules process a new domain."""
+    return {
+        "severity": None, "predicted_label": "needs_review", "status": "needs_review",
+        "confidence": None, "confidence_calibrated": False, "probabilities": {},
+        "responder_review_required": True, "incident_type": incident_type,
+        "reason": "unsupported_incident_type", "assessment_method": "category_scope_gate",
+        "model_name": metadata.get("display_name", metadata.get("base_model", "multilingual_text_classifier")),
+        "model_version": metadata["version"], "deployment_status": metadata["deployment_status"],
+        "summary": "This model has not been trained for the selected incident category. Responder review is required.",
+    }
+
+
+def category_capabilities(metadata: dict) -> dict:
+    input_format, supported_types = metadata_contract(metadata)
+    return {"input_format": input_format, "supported_incident_types": supported_types,
+            "category_support_status": "trained_scope_only_requires_separate_category_evaluation"}
 
 
 def prediction_payload(probabilities: dict[str, float], metadata: dict, *, truncated: bool = False) -> dict:
@@ -133,8 +206,12 @@ class TextSeverityPredictor:
         except Exception as exc:
             raise TextModelUnavailable("Text checkpoint could not load. Check its local files and optional dependencies.") from exc
 
-    def predict(self, description: str) -> dict:
-        tokens = self.tokenizer(description, return_tensors="pt", truncation=False)
+    def predict(self, description: str, incident_type: str = "road_accident") -> dict:
+        incident_type = normalize_incident_type(incident_type)
+        if incident_type not in self.metadata["supported_incident_types"]:
+            return category_review_payload(self.metadata, incident_type)
+        text = model_input(description, incident_type, self.metadata["input_format"])
+        tokens = self.tokenizer(text, return_tensors="pt", truncation=False)
         if tokens["input_ids"].shape[1] > self.metadata["max_length"]:
             return prediction_payload({k: 0.25 for k in TEXT_LABELS}, self.metadata, truncated=True)
         tokens = {key: value.to(self.device) for key, value in tokens.items()}
@@ -183,8 +260,14 @@ class TfidfSeverityPredictor:
         except Exception as exc:
             raise TextModelUnavailable("Text classifier could not load. Check its artifact and inference dependencies.") from exc
 
-    def predict(self, description: str) -> dict:
-        features = self.vectorizer.transform([description])
+    def predict(self, description: str, incident_type: str = "road_accident") -> dict:
+        incident_type = normalize_incident_type(incident_type)
+        if incident_type not in self.metadata["supported_incident_types"]:
+            return category_review_payload(self.metadata, incident_type)
+        text = model_input(description, incident_type, self.metadata["input_format"])
+        if self.vectorizer.transform([description]).nnz == 0:
+            return prediction_payload({label: 0.25 for label in TEXT_LABELS}, self.metadata)
+        features = self.vectorizer.transform([text])
         if features.nnz == 0:
             return prediction_payload({label: 0.25 for label in TEXT_LABELS}, self.metadata)
         logits = self.np.asarray(features @ self.coefficients.T + self.intercept)[0]
@@ -224,6 +307,8 @@ def text_status() -> dict:
     return {"enabled": True, "status": "configured", "model_loaded": loaded,
             "operation_mode": operation_mode(),
             "deployment_status": metadata["deployment_status"], "model_version": metadata["version"],
+            **category_capabilities(metadata),
+            **text_rule_capabilities(metadata),
             "message": "Configuration checked; use /ready/text to verify checkpoint loading."}
 
 
@@ -250,23 +335,60 @@ def get_predictor() -> TextSeverityPredictor | TfidfSeverityPredictor:
         return _PREDICTOR
 
 
-def predict_text(description: str) -> dict:
+def predict_text(description: str, incident_type: str = "road_accident") -> dict:
+    incident_type = normalize_incident_type(incident_type)
     with _LOCK:
         predictor = get_predictor()
-        model_result = predictor.predict(description)
-        if enabled("AI_TEXT_RULES_ENABLED"):
-            from .text_cues import analyze_cues
-            result = analyze_cues(description)
-            return combine_assessments(model_result, result)
+        _, supported_types = metadata_contract(predictor.metadata)
+        if incident_type not in supported_types:
+            return category_review_payload(predictor.metadata, incident_type)
+        # Preserve the call contract for existing road-only prediction adapters.
+        if predictor.metadata.get("input_format", "description_v1") == "description_v1":
+            model_result = predictor.predict(description)
+        else:
+            model_result = predictor.predict(description, incident_type)
+        model_result = {**model_result, "incident_type": incident_type}
+        return apply_text_rule_profile(description, incident_type, model_result, predictor.metadata,
+                                       rules_enabled=enabled("AI_TEXT_RULES_ENABLED"))
+
+
+def apply_text_rule_profile(description: str, incident_type: str, model_result: dict,
+                            metadata: dict, *, rules_enabled: bool) -> dict:
+    """Shared serving/evaluation dispatch; never broaden the checkpoint scope."""
+    category = normalize_incident_type(incident_type)
+    _, supported = metadata_contract(metadata)
+    if category not in supported:
+        return category_review_payload(metadata, category)
+    profile, scope = text_rule_contract(metadata)
+    if not rules_enabled or category not in scope:
         return model_result
+    if profile == MULTIINCIDENT_RULE_PROFILE:
+        from .multiincident_cues import analyze_multiincident_cues
+        rules = analyze_multiincident_cues(description, category)
+    else:
+        from .text_cues import analyze_cues
+        rules = analyze_cues(description)
+    return {**combine_assessments(model_result, rules), "incident_type": category}
 
 
 def combine_assessments(model_result: dict, rule_result: dict | None) -> dict:
     if rule_result is None:
         return model_result
-    use_rules = rule_result["rule_priority"] == "override" or model_result.get("severity") is None
-    # General injury words must not downgrade an uncertain Critical model signal.
-    if (rule_result["rule_priority"] == "fallback" and model_result.get("predicted_label") == "critical"
-            and rule_result["severity"] in {"minor", "serious"}):
-        use_rules = False
+    if (model_result.get("reason") == "unsupported_incident_type"
+            or model_result.get("assessment_method") == "category_scope_gate"
+            or (model_result.get("confidence") is None and model_result.get("probabilities") == {})):
+        return model_result
+    # Preserve the advisory fallback for a present injury/damage cue only when
+    # the classifier abstains without a Critical leading signal. Context blocks
+    # (uncertainty, history, negation or contradiction) arrive as Needs-review
+    # overrides from analyze_cues and cannot be filled by this fallback.
+    fallback = (rule_result["rule_priority"] == "fallback"
+                and rule_result.get("severity") in {"minor", "serious"}
+                and model_result.get("severity") is None
+                and model_result.get("predicted_label") != "critical")
+    minimum = (rule_result["rule_priority"] == "minimum"
+               and rule_result.get("severity") == "serious"
+               and model_result.get("severity") not in {"serious", "critical"}
+               and model_result.get("predicted_label") != "critical")
+    use_rules = rule_result["rule_priority"] == "override" or fallback or minimum
     return {**rule_result, "model_assessment": model_result} if use_rules else model_result

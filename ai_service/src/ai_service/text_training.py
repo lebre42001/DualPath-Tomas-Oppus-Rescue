@@ -1,4 +1,4 @@
-"""Offline, review-gated road-accident text experiments; never activates a model.
+"""Offline, review-gated incident text experiments; never activates a model.
 
 Core validation/splitting/metrics use the standard library. ML dependencies are
 imported only by the command that needs them. Draft results are diagnostic only.
@@ -18,9 +18,13 @@ import random
 import time
 import unicodedata
 
+from .incident_types import (CATEGORY_INPUT_FORMAT, INCIDENT_TYPES, LEGACY_INPUT_FORMAT,
+                             metadata_contract, model_description, model_input, normalize_incident_type)
+
 LABELS = ("minor", "serious", "critical", "needs_review")
 LANGUAGES = ("en", "tl", "ceb", "mixed")
 COLUMNS = ("case_id", "group_id", "language", "text", "label", "review_status", "reviewer", "notes")
+CATEGORY_COLUMNS = (*COLUMNS, "incident_type")
 BASE_MODEL = "google-bert/bert-base-multilingual-cased"
 DEFAULT_DATA = Path(__file__).resolve().parents[2] / "datasets/emergency_text/working/reports.csv"
 
@@ -34,7 +38,11 @@ def digest(value: str) -> str:
 
 
 def dataset_fingerprint(rows: list[dict]) -> str:
-    canonical = [{key: row[key] for key in COLUMNS} for row in sorted(rows, key=lambda r: r["case_id"])]
+    # Preserve saved road-only fingerprints and manifests from the eight-column schema.
+    multi_category = any(normalize_incident_type(row.get("incident_type")) != "road_accident" for row in rows)
+    canonical = [{**{key: row[key] for key in COLUMNS},
+                  **({"incident_type": normalize_incident_type(row.get("incident_type"))} if multi_category else {})}
+                 for row in sorted(rows, key=lambda r: r["case_id"])]
     return digest(json.dumps(canonical, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
 
 
@@ -42,16 +50,25 @@ def load_dataset(path: str | Path) -> list[dict]:
     """Reject invalid approval, ambiguous groups, and exact-text group leakage."""
     with Path(path).open(encoding="utf-8-sig", newline="") as handle:
         reader = csv.DictReader(handle)
-        if reader.fieldnames is None or set(reader.fieldnames) != set(COLUMNS) or len(reader.fieldnames) != len(COLUMNS):
-            raise ValueError(f"CSV must contain exactly these columns: {', '.join(COLUMNS)}")
+        if (reader.fieldnames is None or len(reader.fieldnames) != len(set(reader.fieldnames))
+                or set(reader.fieldnames) not in (set(COLUMNS), set(CATEGORY_COLUMNS))):
+            raise ValueError(f"CSV must contain exactly these columns: {', '.join(COLUMNS)}, with optional incident_type")
         rows = []
         ids: set[str] = set()
         texts: dict[str, str] = {}
         groups: dict[str, str] = {}
+        group_categories: dict[str, str] = {}
         for line, raw in enumerate(reader, 2):
             if None in raw or any(value is None for value in raw.values()):
                 raise ValueError(f"Row {line}: malformed CSV column count")
             row = {key: value.strip() for key, value in raw.items()}
+            if "incident_type" in row:
+                if not row["incident_type"]:
+                    raise ValueError(f"Row {line}: incident_type is required when its column is present")
+                try:
+                    row["incident_type"] = normalize_incident_type(row["incident_type"])
+                except ValueError as exc:
+                    raise ValueError(f"Row {line}: unsupported incident_type") from exc
             for key in ("case_id", "group_id", "text"):
                 if not row[key]:
                     raise ValueError(f"Row {line}: {key} is required")
@@ -73,6 +90,10 @@ def load_dataset(path: str | Path) -> list[dict]:
                 if row["group_id"] in groups and groups[row["group_id"]] != row["label"]:
                     raise ValueError(f"Row {line}: translations/paraphrases in one group must share the reviewed label")
                 groups[row["group_id"]] = row["label"]
+                category = normalize_incident_type(row.get("incident_type"))
+                if row["group_id"] in group_categories and group_categories[row["group_id"]] != category:
+                    raise ValueError(f"Row {line}: translations/paraphrases in one group must share the incident_type")
+                group_categories[row["group_id"]] = category
             rows.append(row)
     if not rows:
         raise ValueError("Dataset contains no examples")
@@ -91,6 +112,8 @@ def dataset_summary(rows: list[dict]) -> dict:
         "rows": len(rows), "groups": len({row["group_id"] for row in rows}),
         "by_label": dict(Counter(row["label"] for row in rows)),
         "by_language": dict(Counter(row["language"] for row in rows)),
+        **({"by_incident_type": dict(Counter(normalize_incident_type(row.get("incident_type")) for row in rows))}
+           if any("incident_type" in row for row in rows) else {}),
         "by_review_status": dict(Counter(row["review_status"] for row in rows)),
         "eligible_approved_rows": sum(row["review_status"] == "approved" for row in rows),
         "dataset_fingerprint": dataset_fingerprint(rows),
@@ -100,7 +123,7 @@ def dataset_summary(rows: list[dict]) -> dict:
 def split_groups(rows: list[dict], seed: int = 42, validation_fraction: float = 0.15, test_fraction: float = 0.15) -> dict[str, list[dict]]:
     """Stratify at group level; related translations must be grouped by annotators.
 
-    Uses per-label group quotas. Language balance is reported, not guaranteed.
+    Uses category/label group quotas. Language balance is reported, not guaranteed.
     """
     if not (0 < validation_fraction < 0.5 and 0 < test_fraction < 0.5 and validation_fraction + test_fraction < 1):
         raise ValueError("Validation and test fractions must be positive, below 0.5, and sum to below 1")
@@ -109,16 +132,23 @@ def split_groups(rows: list[dict], seed: int = 42, validation_fraction: float = 
         grouped[row["group_id"]].append(row)
     rng = random.Random(seed)
     result: dict[str, list[dict]] = {"train": [], "validation": [], "test": []}
+    categories = sorted({normalize_incident_type(row.get("incident_type")) for row in rows})
     for label in LABELS:
-        group_ids = sorted(group for group, items in grouped.items() if items[0]["label"] == label)
-        if len(group_ids) < 3:
-            raise ValueError(f"Label '{label}' needs at least 3 independent groups for train/validation/test; found {len(group_ids)}")
-        rng.shuffle(group_ids)
-        n_val = max(1, int(len(group_ids) * validation_fraction))
-        n_test = max(1, int(len(group_ids) * test_fraction))
-        assignments = {"validation": group_ids[:n_val], "test": group_ids[n_val:n_val + n_test], "train": group_ids[n_val + n_test:]}
-        for split, assigned in assignments.items():
-            result[split].extend(row for group in assigned for row in grouped[group])
+        if not any(row["label"] == label for row in rows):
+            raise ValueError(f"Label '{label}' needs at least 3 independent groups for train/validation/test; found 0")
+        for category in categories:
+            group_ids = sorted(group for group, items in grouped.items() if items[0]["label"] == label
+                               and normalize_incident_type(items[0].get("incident_type")) == category)
+            if not group_ids:
+                continue
+            if len(group_ids) < 3:
+                raise ValueError(f"Category '{category}', label '{label}' needs at least 3 independent groups for train/validation/test; found {len(group_ids)}")
+            rng.shuffle(group_ids)
+            n_val = max(1, int(len(group_ids) * validation_fraction))
+            n_test = max(1, int(len(group_ids) * test_fraction))
+            assignments = {"validation": group_ids[:n_val], "test": group_ids[n_val:n_val + n_test], "train": group_ids[n_val + n_test:]}
+            for split, assigned in assignments.items():
+                result[split].extend(row for group in assigned for row in grouped[group])
     for items in result.values():
         items.sort(key=lambda row: row["case_id"])
     return result
@@ -141,7 +171,8 @@ def _classification_metrics(actual: list[str], predicted: list[str]) -> dict:
             "confusion_matrix": {"labels": list(LABELS), "rows_actual_columns_predicted": confusion}}
 
 
-def prediction_metrics(rows: list[dict], probabilities: list[list[float] | None], review_threshold: float = 0.65) -> dict:
+def prediction_metrics(rows: list[dict], probabilities: list[list[float] | None], review_threshold: float = 0.65,
+                       *, _include_categories: bool = True) -> dict:
     if not 0 < review_threshold <= 1 or not math.isfinite(review_threshold):
         raise ValueError("review_threshold must be finite, above 0 and at most 1")
     if len(rows) != len(probabilities) or not rows:
@@ -181,10 +212,21 @@ def prediction_metrics(rows: list[dict], probabilities: list[list[float] | None]
             "coverage": sum(routed[i] != "needs_review" for i in selected) / len(selected) if selected else None,
             "unscored_review_count": sum(predicted[i] is None for i in selected)})
         per_language[language] = language_metrics
+    category_metrics = {}
+    if _include_categories:
+        for category in INCIDENT_TYPES:
+            selected = [i for i, row in enumerate(rows) if normalize_incident_type(row.get("incident_type")) == category]
+            category_metrics[category] = prediction_metrics(
+                [rows[i] for i in selected], [probabilities[i] for i in selected], review_threshold,
+                _include_categories=False,
+            ) if selected else {"count": 0, "raw_classifier": _classification_metrics([], []),
+                                "review_routed": _classification_metrics([], []), "coverage": None,
+                                "abstention_rate": None, "high_risk_undertriage_rate": None}
     return {"dataset_fingerprint": dataset_fingerprint(rows), "count": len(rows),
             "raw_classifier": _classification_metrics([actual[i] for i in scored], [predicted[i] for i in scored]), "review_routed": _classification_metrics(actual, routed),
             "per_language": per_language, "unscored_review_count": len(rows) - len(scored),
-            "unscored_review_policy": "Transformer inputs beyond max_length receive no prediction and require review",
+            **({"per_incident_type": category_metrics} if _include_categories else {}),
+            "unscored_review_policy": "Unsupported categories and transformer inputs beyond max_length receive no prediction and require review",
             "coverage": len(accepted) / len(rows), "abstention_rate": 1 - len(accepted) / len(rows),
             "accepted_accuracy": sum(actual[i] == routed[i] for i in accepted) / len(accepted) if accepted else None,
             "high_risk_support": len(urgent), "high_risk_undertriage_count": undertriage,
@@ -323,7 +365,8 @@ def trainable_parameter_group_fingerprints(model) -> dict:
     }
 
 
-def _metadata(rows: list[dict], args: argparse.Namespace, model_type: str) -> dict:
+def _metadata(rows: list[dict], args: argparse.Namespace, model_type: str,
+              training_rows: list[dict] | None = None) -> dict:
     fit_all = bool(getattr(args, "fit_all", False))
     versions = {}
     for name in ("torch", "transformers", "scikit-learn"):
@@ -331,9 +374,13 @@ def _metadata(rows: list[dict], args: argparse.Namespace, model_type: str) -> di
             versions[name] = package_metadata.version(name)
         except package_metadata.PackageNotFoundError:
             pass
+    trained_categories = sorted({normalize_incident_type(row.get("incident_type")) for row in (rows if training_rows is None else training_rows)})
     return {"schema_version": 1, "version": datetime.now(timezone.utc).strftime("text-%Y%m%dT%H%M%S%fZ"),
             "model_type": model_type, "base_model": args.base_model if model_type == "transformers" else "tfidf-char-wb-logistic-regression",
-            "labels": list(LABELS), "languages": list(LANGUAGES), "scope": "road_vehicle_accidents", "domain": "road_vehicle_accidents",
+            "labels": list(LABELS), "languages": list(LANGUAGES), "scope": "selected_incident_categories", "domain": "selected_incident_categories",
+            "input_format": CATEGORY_INPUT_FORMAT, "supported_incident_types": trained_categories,
+            "observed_incident_types": sorted({normalize_incident_type(row.get("incident_type")) for row in rows}),
+            "category_support_status": "trained_scope_only_requires_separate_category_evaluation",
             "observed_languages": sorted({row["language"] for row in rows}), "language_support_status": "requires_separate_language_evaluation",
             "max_length": getattr(args, "max_length", 128), "review_threshold": args.review_threshold,
             "review_threshold_status": "provisional", "confidence_calibrated": False,
@@ -349,10 +396,26 @@ def _metadata(rows: list[dict], args: argparse.Namespace, model_type: str) -> di
             "limitations": ["No deployment approval is granted by training or metrics", "Confidence and review threshold are not calibrated", "Group IDs require human identification of translations and paraphrases", "Language balance is reported, not guaranteed", "Small or synthetic datasets do not establish clinical or operational safety"]}
 
 
+def _row_input(row: dict, metadata: dict) -> str:
+    return model_input(row["text"], row.get("incident_type"), metadata.get("input_format", LEGACY_INPUT_FORMAT))
+
+
+def _scoped_probabilities(rows: list[dict], metadata: dict, predictor) -> list[list[float] | None]:
+    """Match serving: unsupported categories abstain and never reach the model."""
+    _, supported_types = metadata_contract(metadata)
+    selected = [i for i, row in enumerate(rows) if normalize_incident_type(row.get("incident_type")) in supported_types]
+    probabilities = [None] * len(rows)
+    if selected:
+        scores = predictor([_row_input(rows[i], metadata) for i in selected])
+        for index, score in zip(selected, scores, strict=True):
+            probabilities[index] = score
+    return probabilities
+
+
 def _save_reports(output: Path, splits: dict, metadata: dict, predictor) -> dict:
     _write_json(output / "split_manifest.json", _manifest(splits))
     for split in (("validation", "test") if metadata.get("test_evaluated_during_training", False) else ("validation",)):
-        probabilities = predictor([row["text"] for row in splits[split]])
+        probabilities = _scoped_probabilities(splits[split], metadata, predictor)
         metrics = prediction_metrics(splits[split], probabilities, metadata["review_threshold"])
         metrics.update({"split": split, "all_data_reviewed": metadata["all_data_reviewed"], "model_version": metadata["version"]})
         _write_json(output / f"{split}_metrics.json", metrics)
@@ -361,13 +424,14 @@ def _save_reports(output: Path, splits: dict, metadata: dict, predictor) -> dict
             "dataset_fingerprint": dataset_fingerprint(splits[split]),
             "all_data_reviewed": metadata["all_data_reviewed"],
             "rows": [{"case_id": row["case_id"], "group_id": row["group_id"],
-                      "language": row["language"], "label": row["label"], "probabilities": probability}
+                      "language": row["language"], "incident_type": normalize_incident_type(row.get("incident_type")),
+                      "label": row["label"], "probabilities": probability}
                      for row, probability in zip(splits[split], probabilities, strict=True)]})
     _write_json(output / "metadata.json", metadata)
     return {"output": str(output.resolve()), "version": metadata["version"], "all_data_reviewed": metadata["all_data_reviewed"], "approved_for_deployment": False}
 
 
-def _baseline_predictor(payload: dict):
+def _baseline_predictor(payload: dict, input_format: str = LEGACY_INPUT_FORMAT):
     """Restore only plain numbers and strings, never pickle/code from artifacts."""
     import numpy as np
     from sklearn.feature_extraction.text import TfidfVectorizer
@@ -379,9 +443,14 @@ def _baseline_predictor(payload: dict):
     intercept = np.asarray(payload["intercept"], dtype=float)
 
     def predict(texts: list[str]) -> list[list[float]]:
+        if not texts:
+            return []
+        evidence = vectorizer.transform([model_description(text, input_format) for text in texts])
         scores = vectorizer.transform(texts) @ coefficients.T + intercept
         scores = np.exp(scores - scores.max(axis=1, keepdims=True))
-        return (scores / scores.sum(axis=1, keepdims=True)).tolist()
+        probabilities = scores / scores.sum(axis=1, keepdims=True)
+        probabilities[evidence.getnnz(axis=1) == 0] = .25
+        return probabilities.tolist()
     return predict
 
 
@@ -393,7 +462,7 @@ def run_baseline(args: argparse.Namespace) -> dict:
 
     output = _prepare_output(args.output)
     vectorizer = TfidfVectorizer(analyzer="char_wb", ngram_range=(3, 5), sublinear_tf=True, max_features=20000)
-    features = vectorizer.fit_transform([row["text"] for row in splits["train"]])
+    features = vectorizer.fit_transform([model_input(row["text"], row.get("incident_type")) for row in splits["train"]])
     regularization_c = getattr(args, "regularization_c", 1.0)
     if not math.isfinite(regularization_c) or regularization_c <= 0:
         raise ValueError("Regularization C must be finite and positive")
@@ -402,10 +471,10 @@ def run_baseline(args: argparse.Namespace) -> dict:
     payload = {"schema_version": 1, "labels": list(LABELS), "vocabulary": {key: int(value) for key, value in vectorizer.vocabulary_.items()},
                "idf": vectorizer.idf_.tolist(), "coefficients": classifier.coef_.tolist(), "intercept": classifier.intercept_.tolist()}
     _write_json(output / "baseline.json", payload)
-    metadata = _metadata(rows, args, "tfidf_logistic")
+    metadata = _metadata(rows, args, "tfidf_logistic", splits["train"])
     metadata.update({"regularization_c": regularization_c, "analyzer": "char_wb", "ngram_range": [3, 5],
                      "artifact_sha256": hashlib.sha256((output / "baseline.json").read_bytes()).hexdigest()})
-    return _save_reports(output, splits, metadata, _baseline_predictor(payload))
+    return _save_reports(output, splits, metadata, _baseline_predictor(payload, metadata["input_format"]))
 
 
 def _transformer_predictor(model, tokenizer, device, max_length: int, batch_size: int):
@@ -494,7 +563,7 @@ def run_train(args: argparse.Namespace) -> dict:
     class_weights = torch.tensor([len(splits["train"]) / (len(LABELS) * counts[label]) for label in LABELS], device=device)
     weight_values = class_weights.detach().cpu().tolist()
     scaler = torch.amp.GradScaler("cuda", enabled=device.type == "cuda")
-    metadata = _metadata(rows, args, "transformers")
+    metadata = _metadata(rows, args, "transformers", splits["train"])
     metadata.update({"backbone_frozen": not args.unfreeze_backbone, "learning_rate": learning_rate, "epochs": args.epochs, "batch_size": args.batch_size, "gradient_accumulation": args.gradient_accumulation, "device": str(device), "base_model_revision": getattr(model.config, "_commit_hash", None), "requested_revision": args.revision, "optimizer": optimizer_name, "weight_decay": 0.01 if optimizer_name == "adamw" else 0.0, "gradient_checkpointing": bool(getattr(args, "gradient_checkpointing", False)), "precision": "cuda_fp16_autocast" if device.type == "cuda" else "fp32", "scheduler": "linear_warmup_decay", "warmup_ratio": warmup_ratio, "warmup_steps": warmup_steps, "planned_optimizer_steps": total_optimizer_steps})
     metadata["total_parameters"] = sum(parameter.numel() for parameter in model.parameters())
     metadata["trainable_parameters"] = sum(parameter.numel() for parameter in model.parameters() if parameter.requires_grad)
@@ -502,7 +571,7 @@ def run_train(args: argparse.Namespace) -> dict:
                      "class_weights": dict(zip(LABELS, weight_values)), "selection_metric": metric,
                      "early_stopping_patience": patience})
     # Long descriptions need separate review: their tail is not seen by the model.
-    metadata["truncated_rows_by_split"] = {name: sum(len(tokenizer.encode(row["text"], truncation=False)) > args.max_length for row in items) for name, items in splits.items()}
+    metadata["truncated_rows_by_split"] = {name: sum(len(tokenizer.encode(_row_input(row, metadata), truncation=False)) > args.max_length for row in items) for name, items in splits.items()}
     if metadata["all_data_reviewed"] and metadata["truncated_rows_by_split"]["train"]:
         raise ValueError("Reviewed training data exceeds max_length. Increase --max-length within model limits or have complete shorter examples reviewed; do not silently discard severity evidence.")
     if not fit_all and metadata["truncated_rows_by_split"]["validation"] == len(splits["validation"]):
@@ -531,7 +600,7 @@ def run_train(args: argparse.Namespace) -> dict:
         epoch_successful_start = successful_optimizer_steps
         epoch_skipped_start = skipped_optimizer_steps
         for index, batch in enumerate(batches):
-            encoded = tokenizer([row["text"] for row in batch], padding=True, truncation=True, max_length=args.max_length, return_tensors="pt")
+            encoded = tokenizer([_row_input(row, metadata) for row in batch], padding=True, truncation=True, max_length=args.max_length, return_tensors="pt")
             targets = torch.tensor([LABELS.index(row["label"]) for row in batch], device=device)
             window_start = index // args.gradient_accumulation * args.gradient_accumulation
             window_size = min(args.gradient_accumulation, len(batches) - window_start)
@@ -570,7 +639,7 @@ def run_train(args: argparse.Namespace) -> dict:
                 optimizer.zero_grad(set_to_none=True)
             if (index + 1) % 50 == 0 or index + 1 == len(batches):
                 print(json.dumps({"event": "training_progress", "epoch": epoch + 1, "batch": index + 1, "batches": len(batches), "weighted_objective_numerator": weighted_objective_numerator, "attempted_optimizer_steps": attempted_optimizer_steps, "successful_optimizer_steps": successful_optimizer_steps, "skipped_optimizer_steps": skipped_optimizer_steps, "learning_rate": optimizer.param_groups[0]["lr"], "elapsed_seconds": round(time.perf_counter() - started, 2)}), flush=True)
-        validation = None if fit_all else prediction_metrics(splits["validation"], predictor([row["text"] for row in splits["validation"]]), args.review_threshold)
+        validation = None if fit_all else prediction_metrics(splits["validation"], _scoped_probabilities(splits["validation"], metadata, predictor), args.review_threshold)
         score = (epoch + 1,) if fit_all else selection_key(validation, metric)
         training_weight_total = sum(weight_values[LABELS.index(row["label"])] for row in ordered)
         history.append({"epoch": epoch + 1, "weighted_training_objective": weighted_objective_numerator / training_weight_total,
@@ -677,7 +746,8 @@ def run_evaluate(args: argparse.Namespace) -> dict:
         raise ValueError("Model metadata schema or label order is incompatible")
     rows = evaluation_rows(select_rows(load_dataset(args.data), args.allow_draft), metadata, manifest, args.split)
     if metadata["model_type"] == "tfidf_logistic":
-        predictor = _baseline_predictor(json.loads((model_path / "baseline.json").read_text(encoding="utf-8")))
+        predictor = _baseline_predictor(json.loads((model_path / "baseline.json").read_text(encoding="utf-8")),
+                                        metadata.get("input_format", LEGACY_INPUT_FORMAT))
     elif metadata["model_type"] == "transformers":
         import torch
         from transformers import AutoModelForSequenceClassification, AutoTokenizer
@@ -687,7 +757,7 @@ def run_evaluate(args: argparse.Namespace) -> dict:
         predictor = _transformer_predictor(model, tokenizer, device, metadata["max_length"], args.batch_size)
     else:
         raise ValueError("Unsupported model_type")
-    probabilities = predictor([row["text"] for row in rows])
+    probabilities = _scoped_probabilities(rows, metadata, predictor)
     metrics = prediction_metrics(rows, probabilities, metadata["review_threshold"])
     metrics.update({"split": args.split, "model_version": metadata["version"], "all_data_reviewed": all(row["review_status"] == "approved" for row in rows)})
     output = _prepare_output(args.output)
@@ -697,14 +767,14 @@ def run_evaluate(args: argparse.Namespace) -> dict:
         "dataset_fingerprint": dataset_fingerprint(rows),
         "all_data_reviewed": all(row["review_status"] == "approved" for row in rows),
         "rows": [{"case_id": row["case_id"], "group_id": row["group_id"],
-                  "language": row["language"], "label": row["label"],
+                  "language": row["language"], "incident_type": normalize_incident_type(row.get("incident_type")), "label": row["label"],
                   "probabilities": probability}
                  for row, probability in zip(rows, probabilities, strict=True)]})
     return {"output": str(output.resolve()), "count": len(rows), "approved_for_deployment": False}
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Review-gated multilingual road-accident text experiments. No command activates a live model.")
+    parser = argparse.ArgumentParser(description="Review-gated multilingual incident text experiments. No command activates a live model.")
     subparsers = parser.add_subparsers(dest="command", required=True)
     validate = subparsers.add_parser("validate", help="Check CSV schema, review status and grouping; no ML dependencies/download")
     validate.add_argument("--data", default=str(DEFAULT_DATA))

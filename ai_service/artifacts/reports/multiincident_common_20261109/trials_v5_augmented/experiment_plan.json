@@ -1,0 +1,25 @@
+{
+  "regularization_c": [
+    1,
+    4,
+    16,
+    64
+  ],
+  "review_thresholds": [
+    0.5,
+    0.6,
+    0.65,
+    0.7
+  ],
+  "text_rule_profile": "multiincident_common_v1",
+  "selection": "Validation only: prefer zero urgent lower assignments and Critical recall >=.95; then fewer urgent lower assignments, higher Critical recall, policy macro-F1, raw macro-F1.",
+  "test_used_for_selection": false,
+  "human_reviewed": false,
+  "policy_source_sha256": {
+    "src/ai_service/text_cues.py": "d9071d463b3215603d5bf429fec3d308cbf336ef707ec417641d95a9ad87b7ca",
+    "src/ai_service/multiincident_cues.py": "dbea4db88d51bcaa1666785c0ac15988ac892e8db1587049c36816455512b346",
+    "src/ai_service/text_inference.py": "6e7b1a42f81ed069a13035b5a173ee115560abf4ade4e2660050574ebb71c478",
+    "evaluate_text_cues.py": "9524a1d0dbc78e3dc0f1cec816132ba6643de53d9cb2b249372b9f3f971249c9"
+  },
+  "reuse_unchanged_fitted_weights": true
+}

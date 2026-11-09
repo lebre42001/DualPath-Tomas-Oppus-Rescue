@@ -7,7 +7,8 @@ from fastapi import FastAPI, HTTPException
 from .operation_mode import ai_enabled, operation_mode
 from .text_api import router as text_router
 from .liveness_api import router as liveness_router
-from .text_inference import TextModelUnavailable, get_predictor, text_status
+from .text_inference import (TextModelUnavailable, category_capabilities, get_predictor,
+                             text_rule_capabilities, text_status)
 
 app = FastAPI(title="Stitch Text Severity Service", version="0.4.0")
 app.include_router(text_router)
@@ -36,6 +37,8 @@ def ready() -> dict[str, object]:
         "status": "ready",
         "deployment_status": predictor.metadata["deployment_status"],
         "model_version": predictor.metadata["version"],
+        **category_capabilities(predictor.metadata),
+        **text_rule_capabilities(predictor.metadata),
     }
 
 

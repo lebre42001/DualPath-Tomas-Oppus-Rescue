@@ -22,7 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [\App\Http\Middleware\RecordAdminActivity::class]);
 
         $middleware->redirectGuestsTo(static fn (Request $request): string =>
-            route($request->is('admin', 'admin/*') ? 'admin.login' : 'login')
+            route($request->is('admin', 'admin/*', 'profile/admin-logs', 'profile/admin-logs/*') ? 'admin.login' : 'login')
         );
 
         $middleware->alias([

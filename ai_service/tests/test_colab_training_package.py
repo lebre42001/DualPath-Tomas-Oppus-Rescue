@@ -51,6 +51,7 @@ class ColabPackageTests(unittest.TestCase):
                 self.assertIn("package_manifest.json", names)
                 self.assertIn("data/frozen_split_manifest.json", names)
                 self.assertIn("src/ai_service/text_training.py", names)
+                self.assertIn("src/ai_service/incident_types.py", names)
                 self.assertNotIn("active_config.txt", names)
                 self.assertFalse(any(".env" in name or "checkpoint" in name for name in names))
                 manifest = json.loads(archive.read("package_manifest.json"))
@@ -80,8 +81,18 @@ class ColabPackageTests(unittest.TestCase):
             self.assertIn('"--split", "test"', code)
             self.assertIn('"approved_for_deployment": False', code)
             self.assertIn('"active_model_changed": False', code)
-            self.assertIn('language: value["macro_f1"]', code)
-            self.assertIn('if value["count"] and value["macro_f1"] is not None', code)
+            # Evaluate the generated raw metric function without executing notebook I/O.
+            functions = [node for node in ast.parse(code).body
+                         if isinstance(node, ast.FunctionDef) and node.name == "raw_macro_f1"]
+            self.assertEqual(len(functions), 1)
+            labels = ["minor", "serious", "critical", "needs_review"]
+            namespace = {"labels": labels}
+            exec(compile(ast.Module(body=functions, type_ignores=[]), "<notebook-metric>", "exec"), namespace)
+            self.assertIsNone(namespace["raw_macro_f1"]([]))
+            # Correct argmax below the review threshold must still count in the RAW metric.
+            examples = [{"label": label, "probabilities": [.4 if label == guess else .2 for guess in labels]}
+                        for label in labels]
+            self.assertEqual(namespace["raw_macro_f1"](examples), 1.0)
             self.assertNotIn('value["raw_classifier"]["macro_f1"]', code)
             self.assertNotIn("active_config.txt", code)
             self.assertTrue(all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code"))

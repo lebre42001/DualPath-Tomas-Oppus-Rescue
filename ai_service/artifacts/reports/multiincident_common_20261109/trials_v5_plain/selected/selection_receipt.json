@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "selected_from": "c4",
+  "regularization_c": 4,
+  "review_threshold": 0.65,
+  "selection_partition": "validation",
+  "test_used_for_selection": false,
+  "artifact_sha256": "e1683ebc9c94a7109dddff2e765f32d1d813b33d41a65a5b03cb8a4097aa8f41",
+  "human_reviewed": false,
+  "approved_for_deployment": false
+}

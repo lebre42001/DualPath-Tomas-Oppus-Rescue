@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Events\IncidentFeedUpdated;
 use App\Models\IncidentReport;
 use App\Models\User;
+use App\Services\AiTextSeverityClient;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Http;
@@ -61,7 +62,7 @@ class TextAiDeploymentTest extends TestCase
         $this->assertNull($report->operational_severity);
         $this->assertSame('pending', $report->status);
         $this->assertSame('Original message.', $report->response_notes);
-        Http::assertSent(fn ($request) => $request->data() === ['description' => $report->description]);
+        Http::assertSent(fn ($request) => $request->data() === ['description' => $report->description, 'incident_type' => 'road_accident']);
         $this->post(route('reports.severity-review', $report), ['severity_review_label' => 'critical',
             'severity_review_notes' => 'The description reports immediate danger.'])->assertRedirect();
         $report->refresh();
@@ -128,6 +129,7 @@ class TextAiDeploymentTest extends TestCase
         $report = $this->report();
         Http::fake(function () use ($report) {
             $report->update(['ai_source' => 'human_responder', 'severity' => 'Serious']);
+
             return Http::response($this->prediction());
         });
         $this->actingAs($admin)->post(route('reports.ai-suggestion', $report))->assertStatus(409);
@@ -182,7 +184,7 @@ class TextAiDeploymentTest extends TestCase
         $payload = $this->prediction();
         $payload['assessment_method'] = 'text_rules';
         $payload['matched_cues'] = ['unresponsive'];
-        $client = app(\App\Services\AiTextSeverityClient::class);
+        $client = app(AiTextSeverityClient::class);
         Http::fake(['text-ai.test/predict/text' => Http::response($payload)]);
         $this->assertSame('text_review', $client->analyze('A person is unresponsive.')['source']);
         $payload['confidence'] = null;
@@ -226,7 +228,9 @@ class TextAiDeploymentTest extends TestCase
             'Needs review' => ['minor' => 0.20, 'serious' => 0.16, 'critical' => 0.10, 'needs_review' => 0.54],
         ];
         $payload = [];
-        Http::fake(function () use (&$payload) { return Http::response($payload); });
+        Http::fake(function () use (&$payload) {
+            return Http::response($payload);
+        });
         foreach ($cases as $label => $probabilities) {
             $report = $this->report();
             $payload = [...$this->prediction(), 'severity' => null, 'predicted_label' => array_search(max($probabilities), $probabilities),

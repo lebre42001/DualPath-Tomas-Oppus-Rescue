@@ -2,6 +2,7 @@ param()
 
 $ErrorActionPreference = 'Stop'
 
+$root = Split-Path -Parent $PSScriptRoot
 $runtimeDir = Join-Path $PSScriptRoot 'runtime'
 New-Item -ItemType Directory -Force -Path $runtimeDir | Out-Null
 $mysqlAdmin = 'C:\laragon\bin\mysql\mysql-8.4.3-winx64\bin\mysqladmin.exe'
@@ -17,6 +18,12 @@ $serviceDefinitions = @(
     Name = 'laravel-serve'
     Port = 8000
     CommandFragments = @('artisan serve', '--host=0.0.0.0', '--port=8000')
+    ProcessName = 'php.exe'
+  },
+  @{
+    Name = 'laravel-scheduler'
+    Port = 0
+    CommandFragments = @((Join-Path $root 'web_system\artisan'), 'schedule:work')
     ProcessName = 'php.exe'
   },
   @{
@@ -49,6 +56,8 @@ function Get-ListeningProcessId {
   param(
     [Parameter(Mandatory = $true)][int]$Port
   )
+
+  if ($Port -le 0) { return $null }
 
   $connection = Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue |
     Select-Object -First 1

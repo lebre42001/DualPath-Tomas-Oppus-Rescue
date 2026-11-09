@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "version": "text-20261108T184726346839Z",
+  "model_type": "tfidf_logistic",
+  "base_model": "tfidf-char-wb-logistic-regression",
+  "labels": [
+    "minor",
+    "serious",
+    "critical",
+    "needs_review"
+  ],
+  "languages": [
+    "en",
+    "tl",
+    "ceb",
+    "mixed"
+  ],
+  "scope": "selected_incident_categories",
+  "domain": "selected_incident_categories",
+  "input_format": "incident_type_description_v1",
+  "supported_incident_types": [
+    "fire_incident",
+    "flood_landslide",
+    "medical_emergency",
+    "other",
+    "road_accident",
+    "security_incident"
+  ],
+  "observed_incident_types": [
+    "fire_incident",
+    "flood_landslide",
+    "medical_emergency",
+    "other",
+    "road_accident",
+    "security_incident"
+  ],
+  "category_support_status": "trained_scope_only_requires_separate_category_evaluation",
+  "observed_languages": [
+    "ceb",
+    "en",
+    "mixed",
+    "tl"
+  ],
+  "language_support_status": "requires_separate_language_evaluation",
+  "max_length": 128,
+  "review_threshold": 0.65,
+  "review_threshold_status": "provisional",
+  "confidence_calibrated": false,
+  "approved_for_deployment": false,
+  "deployment_status": "experimental",
+  "all_data_reviewed": false,
+  "allow_draft": true,
+  "dataset_fingerprint": "2014fdf82878de9ea7762f80bb587a2a2da51c72e506ace2c97030b60e1b104d",
+  "dataset_summary": {
+    "rows": 1152,
+    "groups": 288,
+    "by_label": {
+      "minor": 288,
+      "serious": 288,
+      "critical": 288,
+      "needs_review": 288
+    },
+    "by_language": {
+      "en": 288,
+      "tl": 288,
+      "ceb": 288,
+      "mixed": 288
+    },
+    "by_incident_type": {
+      "road_accident": 192,
+      "fire_incident": 192,
+      "flood_landslide": 192,
+      "medical_emergency": 192,
+      "security_incident": 192,
+      "other": 192
+    },
+    "by_review_status": {
+      "draft": 1152
+    },
+    "eligible_approved_rows": 0,
+    "dataset_fingerprint": "2014fdf82878de9ea7762f80bb587a2a2da51c72e506ace2c97030b60e1b104d"
+  },
+  "seed": 20261109,
+  "validation_fraction": 0.15,
+  "test_fraction": 0.15,
+  "test_evaluated_during_training": false,
+  "fit_all_data": false,
+  "split_source": "frozen_manifest",
+  "software_versions": {
+    "torch": "2.13.0",
+    "scikit-learn": "1.9.1"
+  },
+  "limitations": [
+    "No deployment approval is granted by training or metrics",
+    "Confidence and review threshold are not calibrated",
+    "Group IDs require human identification of translations and paraphrases",
+    "Language balance is reported, not guaranteed",
+    "Small or synthetic datasets do not establish clinical or operational safety"
+  ],
+  "regularization_c": 1.0,
+  "analyzer": "char_wb",
+  "ngram_range": [
+    3,
+    5
+  ],
+  "artifact_sha256": "2f77d102eb729c64a86cec81e7a25f0d6f1b52d724e147e6905fb395de24af8d"
+}

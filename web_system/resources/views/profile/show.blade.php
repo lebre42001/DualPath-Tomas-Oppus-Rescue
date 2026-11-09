@@ -90,6 +90,16 @@
             </article>
 
             <div class="admin-profile-side">
+                @if ($user?->is_admin)
+                    <article class="panel admin-profile-activity">
+                        <h2 class="panel-title">My Admin Logs</h2>
+                        <p>View your sign-ins, duty shifts, report decisions and account activity. Search by date or activity and print your history.</p>
+                        <div class="action-row">
+                            <a href="{{ route('profile.admin-logs') }}" class="action-btn primary">View My Admin Logs</a>
+                        </div>
+                    </article>
+                @endif
+
                 <article class="panel admin-profile-contact">
                     <h2 class="panel-title">Contact details</h2>
                     <dl class="admin-profile-contact-list">

@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\IncidentReport;
 use App\Services\AiTextSeverityClient;
 use App\Support\IncidentFeedBroadcaster;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,10 +20,12 @@ class IncidentTextSuggestionController extends Controller
         $humanSources = ['human_responder', 'text_human_override', 'manual_override'];
         abort_if(in_array($incidentReport->ai_source, $humanSources, true), 422, 'An admin has already assessed this report.');
         $description = (string) $incidentReport->description;
-        $analysis = $client->analyze($description);
+        $incidentType = $incidentReport->incident_type;
+        $analysis = $client->analyze($description, $incidentType);
         $modelAbstained = $analysis['source'] === 'text_review' && $analysis['model_name'] !== null;
         if (! in_array($analysis['source'], ['text_model', 'text_model_experimental', 'text_rule_advisory'], true) && ! $modelAbstained) {
             $message = 'Text analysis is unavailable. The existing assessment was preserved; please retry or review it manually.';
+
             return $request->expectsJson() ? response()->json(['message' => $message], 422)
                 : back()->with('status', $message)->with('ai_review_report_id', $incidentReport->id);
         }
@@ -34,9 +36,9 @@ class IncidentTextSuggestionController extends Controller
             }
         }
 
-        $report = DB::transaction(function () use ($incidentReport, $description, $analysis, $request, $humanSources): IncidentReport {
+        $report = DB::transaction(function () use ($incidentReport, $description, $incidentType, $analysis, $request, $humanSources): IncidentReport {
             $report = IncidentReport::query()->lockForUpdate()->findOrFail($incidentReport->id);
-            abort_if((string) $report->description !== $description || in_array($report->ai_source, $humanSources, true),
+            abort_if((string) $report->description !== $description || $report->incident_type !== $incidentType || in_array($report->ai_source, $humanSources, true),
                 409, 'The report changed during analysis. Refresh and review its current assessment.');
             $log = $report->coordination_log ?? [];
             $log[] = [

@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\IncidentReport;
-use App\Support\IncidentFeedBroadcaster;
+use App\Services\AiTrainingFeedbackRecorder;
 use App\Support\CivilianSeverityAssessment;
+use App\Support\IncidentFeedBroadcaster;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,10 @@ class IncidentSeverityReviewController extends Controller
             'severity_review_label' => ['required', Rule::in(['minor', 'serious', 'critical', 'needs_review'])],
             'severity_review_notes' => ['required', 'string', 'max:1000'],
             'severity_public_note' => ['nullable', 'string', 'max:500'],
+            'approve_ai_training' => ['sometimes', 'boolean'],
+            'training_language' => [Rule::requiredIf($request->boolean('approve_ai_training')), 'nullable', Rule::in(['en', 'tl', 'ceb', 'mixed'])],
+            'training_description_sha256' => [Rule::requiredIf($request->boolean('approve_ai_training')), 'nullable', 'string', 'size:64'],
+            'training_incident_type' => [Rule::requiredIf($request->boolean('approve_ai_training')), 'nullable', 'string', 'max:80'],
         ], [
             'severity_review_label.required' => 'Choose a severity or Needs review after reading the description.',
             'severity_review_notes.required' => 'Explain what in the description supports your review, or what information is missing.',
@@ -28,6 +33,11 @@ class IncidentSeverityReviewController extends Controller
 
         $report = DB::transaction(function () use ($request, $incidentReport, $validated): IncidentReport {
             $report = IncidentReport::query()->lockForUpdate()->findOrFail($incidentReport->id);
+            if ($request->boolean('approve_ai_training')) {
+                abort_if(! hash_equals(hash('sha256', (string) $report->description), $validated['training_description_sha256'])
+                    || (string) $report->incident_type !== $validated['training_incident_type'],
+                    409, 'The description or category changed. Refresh and review the current report before approving training.');
+            }
             $label = $validated['severity_review_label'];
             $needsReview = $label === 'needs_review';
             $severity = $needsReview ? null : ucfirst($label);
@@ -63,6 +73,11 @@ class IncidentSeverityReviewController extends Controller
                     ? 'Legacy AI suggestion; audit only; not used for responder severity.' : null,
                 'occurred_at' => now()->toIso8601String(),
             ];
+
+            app(AiTrainingFeedbackRecorder::class)->record(
+                $report, $request->user(), $log[array_key_last($log)],
+                $request->boolean('approve_ai_training'), $validated['training_language'] ?? null,
+            );
 
             $report->update([
                 'severity' => $severity,

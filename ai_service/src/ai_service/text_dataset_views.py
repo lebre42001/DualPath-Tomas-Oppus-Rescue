@@ -75,9 +75,9 @@ def _existing_manifest(output: Path) -> dict | None:
     return manifest
 
 
-def _csv_bytes(rows: list[dict]) -> bytes:
+def _csv_bytes(rows: list[dict], columns=COLUMNS) -> bytes:
     buffer = io.StringIO(newline="")
-    writer = csv.DictWriter(buffer, fieldnames=COLUMNS)
+    writer = csv.DictWriter(buffer, fieldnames=columns)
     writer.writeheader()
     writer.writerows(rows)
     # BOM helps Windows Excel open Tagalog/Cebuano Unicode correctly.
@@ -87,15 +87,17 @@ def _csv_bytes(rows: list[dict]) -> bytes:
 def _build_files(source: Path, source_bytes: bytes, rows: list[dict], output: Path) -> tuple[dict, dict]:
     # The trainer normalizes surrounding whitespace for validation. Export the
     # original fields so Unicode, whitespace, commas, and multiline text survive.
-    raw = list(csv.DictReader(io.StringIO(source_bytes.decode("utf-8-sig"), newline="")))
+    reader = csv.DictReader(io.StringIO(source_bytes.decode("utf-8-sig"), newline=""))
+    raw = list(reader)
+    columns = reader.fieldnames
     files, summaries = {}, {}
     for label in LABELS:
         selected = [row for row in raw if row["label"].strip() == label]
         selected.sort(key=lambda row: (LANGUAGES.index(row["language"].strip()), row["case_id"].strip()))
-        files[f"{label}/examples.csv"] = _csv_bytes(selected)
+        files[f"{label}/examples.csv"] = _csv_bytes(selected, columns)
         for language in LANGUAGES:
             subset = [row for row in selected if row["language"].strip() == language]
-            files[f"{label}/{LANGUAGE_FOLDERS[language]}/examples.csv"] = _csv_bytes(subset)
+            files[f"{label}/{LANGUAGE_FOLDERS[language]}/examples.csv"] = _csv_bytes(subset, columns)
         summaries[label] = dataset_summary([row for row in rows if row["label"] == label])
     summary = dataset_summary(rows)
     master_link = Path(os.path.relpath(source, output)).as_posix()
@@ -117,7 +119,9 @@ def _build_files(source: Path, source_bytes: bytes, rows: list[dict], output: Pa
     lines.extend([
         "", "Each severity folder keeps its combined `examples.csv` and separate language browsing folders:",
         "`english/` (`en`), `tagalog/` (`tl`), `bisaya/` (`ceb`), and `mixed/` (`mixed`).",
-        "Every `examples.csv` retains all eight original master columns, including language, group, review status, reviewer, and notes.",
+        ("Every `examples.csv` retains the original master columns, including incident_type, language, group, review status, reviewer, and notes."
+         if "incident_type" in columns else
+         "Every `examples.csv` retains all eight original master columns, including language, group, review status, reviewer, and notes."),
         "Combined files are sorted by language, then case ID; language files are sorted by case ID.",
         "These are overlapping views of the same examples, not additional training rows. Do not concatenate combined and language copies.",
         "Empty language/severity combinations have a header-only CSV. Folder names do not translate or relabel text.",

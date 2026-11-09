@@ -11,6 +11,7 @@ use App\Support\IncidentFeedBroadcaster;
 use App\Support\IncidentReportIngestor;
 use App\Support\LoraNodeRegistry;
 use App\Support\ReportedFatalityKeyword;
+use Carbon\CarbonImmutable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -62,7 +63,7 @@ class LoRaAlertIngestController extends Controller
                     }
                 }],
             ])->validate();
-            $validated['created_at'] = \Carbon\CarbonImmutable::createFromTimestampUTC((int) $validated['created_at'])->toIso8601String();
+            $validated['created_at'] = CarbonImmutable::createFromTimestampUTC((int) $validated['created_at'])->toIso8601String();
         }
 
         $senderId = strtoupper(trim((string) $validated['sender_id']));
@@ -100,7 +101,7 @@ class LoRaAlertIngestController extends Controller
         // Initialize without a remote request, then analyze after the gateway
         // response has been sent (its HTTP timeout is shorter than the AI's).
         $textClient = app(AiTextSeverityClient::class);
-        $analysis = $textClient->analyzeForReport('');
+        $analysis = $textClient->analyzeForReport('', null, $validated['incident_type'] ?? null);
         $analyzeDescription = ! IncidentReport::manualOnlyMode() && $textClient->enabled()
             && filled($validated['description'] ?? null);
         if ($analyzeDescription) {
@@ -279,8 +280,7 @@ class LoRaAlertIngestController extends Controller
         string $nodeName,
         string $locationLabel,
         string $gatewayId
-    ): string
-    {
+    ): string {
         if ($latitude !== null && $longitude !== null) {
             return $nodeName.' ('.$senderId.') at '.$locationLabel.' | registered coordinates '.$latitude.', '.$longitude.' | gateway '.$gatewayId;
         }

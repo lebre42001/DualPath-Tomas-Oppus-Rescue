@@ -1,0 +1,12 @@
+{
+  "regularization_c": [
+    1,
+    4,
+    16,
+    64
+  ],
+  "review_threshold": 0.65,
+  "selection": "Fewest validation full-policy urgent lower assignments; highest validation full-policy macro-F1; raw macro-F1.",
+  "test_used_for_selection": false,
+  "human_reviewed": false
+}

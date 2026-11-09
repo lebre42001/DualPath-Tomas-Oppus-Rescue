@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -116,7 +116,7 @@ class IncidentReport extends Model
             return 'Awaiting responder';
         }
 
-        if ($this->severity === null && in_array($this->ai_source, ['manual_only', 'text_review'], true)) {
+        if ($this->severity === null && $this->ai_source === 'manual_only') {
             return 'Awaiting responder';
         }
 
@@ -237,7 +237,7 @@ class IncidentReport extends Model
 
     public function getOperationalSeverityAttribute(): ?string
     {
-        return $this->isOperationalSeveritySuppressed() || $this->isAwaitingTextSeverityConfirmation() ? null : $this->severity;
+        return $this->ai_source === 'text_review' || $this->isOperationalSeveritySuppressed() || $this->isAwaitingTextSeverityConfirmation() ? null : $this->severity;
     }
 
     /** One category for report cards, search and exports; not dispatch authorization. */
@@ -254,6 +254,7 @@ class IncidentReport extends Model
         }
         if (in_array($this->ai_source, ['text_review', 'text_model', 'text_model_experimental', 'text_rule_advisory'], true)) {
             $top = $this->ai_top_category;
+
             return $top ? ($top['tied'] ? 'Needs review' : $top['label']) : 'Unassessed';
         }
 

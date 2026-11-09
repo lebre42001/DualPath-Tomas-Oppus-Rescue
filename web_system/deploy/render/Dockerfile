@@ -17,6 +17,7 @@ RUN apk add --no-cache \
     oniguruma-dev \
     postgresql-dev \
     shadow \
+    su-exec \
     sqlite-dev \
     zip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \

@@ -54,6 +54,13 @@ services:
       AI_TEXT_TEST_SERVICE_URL: http://text-ai:8100
       FACE_LIVENESS_SERVICE_URL: http://text-ai:8100
       AI_TEXT_ALLOW_EXPERIMENTAL: "true"
+      # PHP image exports feedback; isolated Python worker trains candidates only.
+      RUN_SCHEDULER: "true"
+      AI_LEARNING_ENABLED: "false"
+      AI_LEARNING_MIN_NEW: ${AI_LEARNING_MIN_NEW:-50}
+      AI_LEARNING_TARGET_ACCURACY: ${AI_LEARNING_TARGET_ACCURACY:-0.8}
+      AI_LEARNING_CRITICAL_RECALL: ${AI_LEARNING_CRITICAL_RECALL:-0.95}
+      AI_LEARNING_MIN_CELL: ${AI_LEARNING_MIN_CELL:-5}
       LORA_INGEST_TOKEN: ${LORA_INGEST_TOKEN:?Set a unique LORA_INGEST_TOKEN in Dokploy}
       ROUTING_SERVICE_ENABLED: ${ROUTING_SERVICE_ENABLED:-true}
       ROUTING_SERVICE_URL: ${ROUTING_SERVICE_URL:-https://router.project-osrm.org}
@@ -104,6 +111,54 @@ services:
       timeout: 20s
       retries: 3
       start_period: 120s
+
+  # Opt in with --profile learning; never shares inference ports or signing secrets.
+  learning:
+    profiles: ["learning"]
+    # Alpine PHP www-data is UID/GID 82; share private files without widening access.
+    user: "82:82"
+    build:
+      context: ./ai_service
+      dockerfile: deploy/render/Dockerfile
+      args:
+        INSTALL_TEXT_BASELINE: "true"
+        INSTALL_FACE_LIVENESS: "false"
+    restart: unless-stopped
+    depends_on:
+      web:
+        condition: service_healthy
+    network_mode: none
+    environment:
+      HOME: /tmp
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    command:
+      - python
+      - -m
+      - src.ai_service.feedback_learning
+      - --feedback
+      - /learning/private/ai-learning/feedback.jsonl
+      - --state-dir
+      - /learning/private/ai-learning/candidate-state
+      - --base-model
+      - ${AI_LEARNING_BASE_MODEL_DIR:-/app/releases/triage-text-tfidf-20261016-v2}
+      - --min-new
+      - "${AI_LEARNING_MIN_NEW:-50}"
+      - --target-accuracy
+      - "${AI_LEARNING_TARGET_ACCURACY:-0.8}"
+      - --critical-recall
+      - "${AI_LEARNING_CRITICAL_RECALL:-0.95}"
+      - --min-cell
+      - "${AI_LEARNING_MIN_CELL:-5}"
+      - --train
+      - --watch
+      - --interval
+      - "3600"
+    volumes:
+      - app-storage:/learning
+    mem_limit: 768m
+    cpus: 1.0
 
   db:
     image: mariadb:11.4

@@ -78,6 +78,8 @@
     <form method="POST" action="{{ route('reports.severity-review', $report) }}" class="stack">
         @csrf
         <input type="hidden" name="severity_review_report_id" value="{{ $report->id }}">
+        <input type="hidden" name="training_description_sha256" value="{{ hash('sha256', (string) $report->description) }}">
+        <input type="hidden" name="training_incident_type" value="{{ $report->incident_type }}">
         <div class="field">
             <label>
                 Reviewed severity
@@ -103,10 +105,31 @@
             </label>
             <p>Shown with the reviewed severity. Leave blank to use the standard assessment explanation. Do not include internal case notes.</p>
         </div>
+        <div class="field">
+            <label>
+                <input type="checkbox" name="approve_ai_training" value="1" @checked($isSubmittedReview && old('approve_ai_training'))>
+                Approve for AI training (optional)
+            </label>
+            <p>I am qualified to review this label, it is supported by the description alone, and I checked that the text contains no names, contact details, exact addresses, or other personal information. This is not a demo or test report. Approval prepares a learning example; it does not change the active model.</p>
+            <p>Saving a later review without this approval removes the earlier example from the current training export.</p>
+            <label>
+                Description language (required only when approving training)
+                <select name="training_language">
+                    <option value="">Choose the language</option>
+                    @foreach (['en' => 'English', 'tl' => 'Tagalog', 'ceb' => 'Bisaya / Cebuano', 'mixed' => 'Mixed language'] as $value => $label)
+                        <option value="{{ $value }}" @selected($isSubmittedReview && old('training_language') === $value)>{{ $label }}</option>
+                    @endforeach
+                </select>
+            </label>
+        </div>
         @if ($isSubmittedReview)
             @error('severity_review_label')<p role="alert">{{ $message }}</p>@enderror
             @error('severity_review_notes')<p role="alert">{{ $message }}</p>@enderror
             @error('severity_public_note')<p role="alert">{{ $message }}</p>@enderror
+            @error('approve_ai_training')<p role="alert">{{ $message }}</p>@enderror
+            @error('training_language')<p role="alert">{{ $message }}</p>@enderror
+            @error('training_description_sha256')<p role="alert">{{ $message }}</p>@enderror
+            @error('training_incident_type')<p role="alert">{{ $message }}</p>@enderror
         @endif
         <button type="submit" class="btn btn-primary">{{ $reviewAiSuggestion ? 'Confirm severity' : 'Save admin assessment' }}</button>
     </form>

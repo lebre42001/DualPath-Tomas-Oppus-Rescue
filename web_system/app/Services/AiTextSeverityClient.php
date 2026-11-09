@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\IncidentCategory;
 use App\Support\ReportedFatalityKeyword;
 use Illuminate\Support\Facades\Http;
 
@@ -19,9 +20,9 @@ class AiTextSeverityClient
         return (bool) config('services.ai_text.enabled', false);
     }
 
-    public function analyzeForReport(string $description, ?string $preferredSeverity = null): array
+    public function analyzeForReport(string $description, ?string $preferredSeverity = null, ?string $incidentType = null): array
     {
-        $analysis = $this->analyze($description);
+        $analysis = $this->analyze($description, $incidentType);
         $analysis['reported_fatality_flag'] = ReportedFatalityKeyword::matches($description);
         $humanSeverity = match (strtolower(trim($preferredSeverity ?? ''))) {
             'minor', 'low', 'medium' => 'Minor',
@@ -59,13 +60,14 @@ class AiTextSeverityClient
         return $analysis;
     }
 
-    public function analyze(string $description): array
+    public function analyze(string $description, ?string $incidentType = null): array
     {
         if (strtoupper((string) config('services.ai_text.mode', 'MANUAL_ONLY')) === 'MANUAL_ONLY') {
             return $this->manualOnly();
         }
 
-        if (! $this->enabled() || trim($description) === '') {
+        $category = IncidentCategory::normalize($incidentType);
+        if (! $this->enabled() || trim($description) === '' || $category === null) {
             return $this->needsReview();
         }
 
@@ -75,6 +77,7 @@ class AiTextSeverityClient
                 ->timeout(max(1, (int) config('services.ai_text.timeout', 10)))
                 ->post(rtrim((string) config('services.ai_text.url', 'http://127.0.0.1:8100'), '/').'/predict/text', [
                     'description' => $description,
+                    'incident_type' => $category,
                 ]);
 
             if (! $response->successful()) {
@@ -104,10 +107,11 @@ class AiTextSeverityClient
             if ($payload['status'] === 'needs_review') {
                 $review = $this->needsReview($payload['model_name'], $payload['model_version']);
                 $review['probabilities'] = $modelScores;
-                if ($rules) {
+                if ($rules || ($payload['assessment_method'] ?? null) === 'category_scope_gate') {
                     $review['summary'] = $ruleSummary;
                     $review['severity'] = null;
                 }
+
                 return $review;
             }
 
@@ -136,9 +140,9 @@ class AiTextSeverityClient
     public function needsReview(?string $modelName = null, ?string $modelVersion = null): array
     {
         return [
-            'severity' => 'Serious',
+            'severity' => null,
             'confidence' => null,
-            'summary' => 'Severity is unassessed; responder review required. The description-only AI did not provide a usable assessment. Serious is a provisional queue category, not an AI severity finding.',
+            'summary' => 'Severity is unassessed; responder review required. The text AI did not provide a usable assessment.',
             'source' => 'text_review',
             'status' => 'needs_review',
             'model_name' => $modelName,
@@ -178,7 +182,7 @@ class AiTextSeverityClient
 
         $labels = ['minor', 'serious', 'critical', 'needs_review'];
         $method = $payload['assessment_method'] ?? 'trained_model';
-        if (! in_array($method, ['trained_model', 'text_rules'], true)) {
+        if (! in_array($method, ['trained_model', 'text_rules', 'category_scope_gate'], true)) {
             return false;
         }
 
@@ -195,6 +199,14 @@ class AiTextSeverityClient
 
         if ($payload['confidence'] !== null && ! $this->score($payload['confidence'])) {
             return false;
+        }
+
+        if ($method === 'category_scope_gate') {
+            return $payload['severity'] === null && $payload['predicted_label'] === 'needs_review'
+                && $payload['status'] === 'needs_review' && $payload['responder_review_required'] === true
+                && $payload['confidence'] === null && $payload['probabilities'] === []
+                && ($payload['reason'] ?? null) === 'unsupported_incident_type'
+                && IncidentCategory::normalize($payload['incident_type'] ?? 'unknown') !== null;
         }
 
         if ($payload['probabilities'] !== null && ! ($payload['status'] === 'needs_review' && $payload['probabilities'] === [])) {
@@ -232,6 +244,7 @@ class AiTextSeverityClient
                     return false;
                 }
             }
+
             return $payload['status'] === 'needs_review'
                 ? $payload['severity'] === null && $payload['predicted_label'] === 'needs_review'
                 : $payload['severity'] !== null && $payload['severity'] === $payload['predicted_label'];

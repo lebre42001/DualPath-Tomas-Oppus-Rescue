@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-09",
+  "url": "http://127.0.0.1:8101/predict/text",
+  "model_version": "multiincident-tfidf-20261109-v1",
+  "purpose": "Runtime parity on 12 already-scored fictional diagnostic cases; not a new accuracy test.",
+  "checks": [
+    {
+      "case_id": "MIC_FCV2_ROAD_ACCIDENT_CRITICAL_01_EN",
+      "routed_label": "needs_review",
+      "runtime_matches_evaluation": true
+    },
+    {
+      "case_id": "MIC_FCV2_ROAD_ACCIDENT_NEEDS_REVIEW_01_EN",
+      "routed_label": "needs_review",
+      "runtime_matches_evaluation": true
+    },
+    {
+      "case_id": "MIC_FCV2_FIRE_INCIDENT_CRITICAL_01_EN",
+      "routed_label": "needs_review",
+      "runtime_matches_evaluation": true
+    },
+    {
+      "case_id": "MIC_FCV2_FIRE_INCIDENT_NEEDS_REVIEW_01_EN",
+      "routed_label": "needs_review",
+      "runtime_matches_evaluation": true
+    },
+    {
+      "case_id": "MIC_FCV2_FLOOD_LANDSLIDE_CRITICAL_01_EN",
+      "routed_label": "critical",
+      "runtime_matches_evaluation": true
+    },
+    {
+      "case_id": "MIC_FCV2_FLOOD_LANDSLIDE_NEEDS_REVIEW_01_EN",
+      "routed_label": "needs_review",
+      "runtime_matches_evaluation": true
+    },
+    {
+      "case_id": "MIC_FCV2_MEDICAL_EMERGENCY_CRITICAL_01_EN",
+      "routed_label": "needs_review",
+      "runtime_matches_evaluation": true
+    },
+    {
+      "case_id": "MIC_FCV2_MEDICAL_EMERGENCY_NEEDS_REVIEW_01_EN",
+      "routed_label": "needs_review",
+      "runtime_matches_evaluation": true
+    },
+    {
+      "case_id": "MIC_FCV2_SECURITY_INCIDENT_CRITICAL_01_EN",
+      "routed_label": "critical",
+      "runtime_matches_evaluation": true
+    },
+    {
+      "case_id": "MIC_FCV2_SECURITY_INCIDENT_NEEDS_REVIEW_01_EN",
+      "routed_label": "needs_review",
+      "runtime_matches_evaluation": true
+    },
+    {
+      "case_id": "MIC_FCV2_OTHER_CRITICAL_01_EN",
+      "routed_label": "critical",
+      "runtime_matches_evaluation": true
+    },
+    {
+      "case_id": "MIC_FCV2_OTHER_NEEDS_REVIEW_01_EN",
+      "routed_label": "needs_review",
+      "runtime_matches_evaluation": true
+    }
+  ]
+}

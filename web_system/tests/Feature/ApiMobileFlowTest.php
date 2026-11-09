@@ -373,7 +373,7 @@ class ApiMobileFlowTest extends TestCase
         $this->assertNull($user->api_token);
     }
 
-    public function test_mobile_client_sends_only_description_to_ai_and_retains_photo_evidence(): void
+    public function test_mobile_client_sends_description_and_category_to_ai_and_retains_photo_evidence(): void
     {
         Storage::fake();
         Http::fake([
@@ -454,7 +454,7 @@ class ApiMobileFlowTest extends TestCase
         Http::assertSentCount(1);
         Http::assertSent(fn ($request) => $request->url() === 'http://text-ai.test/predict/text'
             && $request->method() === 'POST'
-            && $request->data() === ['description' => $description]
+            && $request->data() === ['description' => $description, 'incident_type' => 'road_accident']
             && $request->hasHeader('Content-Type', 'application/json'));
     }
 
@@ -521,7 +521,8 @@ class ApiMobileFlowTest extends TestCase
             ->assertJsonMissingPath('data.ai_confidence');
 
         $report = IncidentReport::query()->sole();
-        $this->assertSame('Serious', $report->severity);
+        $this->assertNull($report->severity);
+        $this->assertNull($report->operational_severity);
         $this->assertSame('Needs review', $report->severity_display);
         $this->assertSame('text_review', $report->ai_source);
         $this->assertSame('needs_review', $report->ai_status);
@@ -632,7 +633,8 @@ class ApiMobileFlowTest extends TestCase
         $report = IncidentReport::query()->latest('id')->firstOrFail();
 
         $this->assertDatabaseCount('incident_reports', 1);
-        $this->assertSame('Serious', $report->severity);
+        $this->assertNull($report->severity);
+        $this->assertNull($report->operational_severity);
         $this->assertSame('Needs review', $report->severity_display);
         $this->assertSame('text_review', $report->ai_source);
         $this->assertSame('needs_review', $report->ai_status);
@@ -700,7 +702,8 @@ class ApiMobileFlowTest extends TestCase
 
         $report = IncidentReport::query()->latest('id')->firstOrFail();
 
-        $this->assertSame('Serious', $report->severity);
+        $this->assertNull($report->severity);
+        $this->assertNull($report->operational_severity);
         $this->assertSame('Needs review', $report->severity_display);
         $this->assertSame('text_review', $report->ai_source);
         $this->assertSame('needs_review', $report->ai_status);
@@ -714,7 +717,7 @@ class ApiMobileFlowTest extends TestCase
         Storage::assertExists($report->reporter_selfie_path);
         Http::assertSentCount(1);
         Http::assertSent(fn ($request) => $request->url() === 'http://text-ai.test/predict/text'
-            && $request->data() === ['description' => 'Vehicle crash with bleeding and multiple injuries.']);
+            && $request->data() === ['description' => 'Vehicle crash with bleeding and multiple injuries.', 'incident_type' => 'road_accident']);
     }
 
     public function test_responder_api_severity_is_preserved_when_description_model_disagrees(): void
@@ -753,7 +756,7 @@ class ApiMobileFlowTest extends TestCase
         $this->assertStringContainsString('suggests Critical', $report->ai_summary);
         Http::assertSentCount(1);
         Http::assertSent(fn ($request) => $request->url() === 'http://text-ai.test/predict/text'
-            && $request->data() === ['description' => $description]);
+            && $request->data() === ['description' => $description, 'incident_type' => 'road_accident']);
     }
 
     public function test_mobile_civilian_cannot_open_another_civilian_report_detail(): void

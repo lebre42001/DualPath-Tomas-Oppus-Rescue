@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "model_metadata_sha256": "eeabbb10d1e5ef8a711449c99b703d95b6bb768d635442a40ba174e6121d9ffd",
+  "artifact_sha256": "d0d81fb53d75c66ca4bbe3eeeb5769323ded4e0628bd21d35e87ac722aa504ac",
+  "policy_source_sha256": {
+    "src/ai_service/text_cues.py": "d9071d463b3215603d5bf429fec3d308cbf336ef707ec417641d95a9ad87b7ca",
+    "src/ai_service/multiincident_cues.py": "dbea4db88d51bcaa1666785c0ac15988ac892e8db1587049c36816455512b346",
+    "src/ai_service/text_inference.py": "6e7b1a42f81ed069a13035b5a173ee115560abf4ade4e2660050574ebb71c478",
+    "evaluate_text_cues.py": "9524a1d0dbc78e3dc0f1cec816132ba6643de53d9cb2b249372b9f3f971249c9"
+  },
+  "challenge_sha256": "dccbfcb71f596fa8d07c99e666b3f61686c42cd9993677360562b1d04fd64b01",
+  "review_threshold": 0.5,
+  "model_version": "multiincident-tfidf-20261109-v1",
+  "text_rules": {
+    "text_rules_enabled": true,
+    "text_rule_profile": "multiincident_common_v1",
+    "text_rule_incident_types": [
+      "road_accident",
+      "fire_incident",
+      "flood_landslide",
+      "medical_emergency",
+      "security_incident",
+      "other"
+    ],
+    "text_rules_scope": [
+      "road_accident",
+      "fire_incident",
+      "flood_landslide",
+      "medical_emergency",
+      "security_incident",
+      "other"
+    ],
+    "text_rules_version": "multiincident-cues-20261109-v4"
+  },
+  "selection_partition": "validation",
+  "independent_real_report_validation": false,
+  "approved_for_deployment": false
+}

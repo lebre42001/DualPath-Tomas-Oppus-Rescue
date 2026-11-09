@@ -388,7 +388,8 @@ class AuthAndReportFlowTest extends TestCase
 
         $latestReports = collect(['INC-CIV-DASH-NEW-1', 'INC-CIV-DASH-NEW-2', 'INC-CIV-DASH-NEW-3'])
             ->map(function (string $code, int $index) use ($civilian): IncidentReport {
-                return IncidentReport::query()->create([
+                // These fixture timestamps are intentionally outside the model's fillable fields.
+                return IncidentReport::query()->forceCreate([
                     'report_code' => $code,
                     'reported_by' => $civilian->id,
                     'reporter_name' => $civilian->name,
@@ -406,7 +407,7 @@ class AuthAndReportFlowTest extends TestCase
                 ]);
             });
 
-        $olderReport = IncidentReport::query()->create([
+        $olderReport = IncidentReport::query()->forceCreate([
             'report_code' => 'INC-CIV-DASH-OLD',
             'reported_by' => $civilian->id,
             'reporter_name' => $civilian->name,
@@ -1077,7 +1078,8 @@ class AuthAndReportFlowTest extends TestCase
 
         $response->assertRedirect(route('reports.success', $report));
         $this->assertDatabaseCount('incident_reports', 1);
-        $this->assertSame('Serious', $report->severity);
+        $this->assertNull($report->severity);
+        $this->assertNull($report->operational_severity);
         $this->assertSame('text_review', $report->ai_source);
         $this->assertSame('needs_review', $report->ai_status);
         $this->assertSame('Needs review', $report->severity_display);
@@ -2174,8 +2176,7 @@ class AuthAndReportFlowTest extends TestCase
             ])->assertOk()->assertJsonPath('saved', true)->assertJsonPath('connectivity_mode', 'auto_select');
 
             $this->actingAs($civilian->fresh())->get(route('settings.index'))->assertOk()
-                ->assertViewHas('settings', fn (array $settings): bool =>
-                    $settings['critical_alerts'] === $enabled
+                ->assertViewHas('settings', fn (array $settings): bool => $settings['critical_alerts'] === $enabled
                     && $settings['push_notifications'] === $enabled
                     && $settings['sms_backup'] === $enabled
                 );
