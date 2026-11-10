@@ -36,6 +36,7 @@
                     <p><strong>Delay (RTT):</strong> a measured trip to the website and back, including LoRa relays. Samples expire after 120 seconds. It is not upload speed or one-way delivery time.</p>
                     <p><strong>Battery:</strong> measured voltage only. A missing reading may need sensor/divider wiring or enabled firmware; no battery percentage is inferred. Signal shows the last received RSSI; SNR and sample times are in each node's details.</p>
                     <p>Updates run every 5 seconds and pause while this tab is hidden.</p>
+                    @if (auth()->user()?->is_admin)<p><strong>Restart:</strong> expand a node for its Restart button. Updated firmware and a recent connection are required. Queued is not confirmation that the node restarted; wait for its signed reboot confirmation.</p>@endif
                 </div>
             </details>
         </div>
@@ -48,6 +49,19 @@
             ])
         </div>
     </section>
+    @if (auth()->user()?->is_admin)
+        <div class="lora-restart-modal" data-node-restart-modal hidden>
+            <section class="lora-restart-dialog" role="dialog" aria-modal="true" aria-labelledby="lora-restart-title" aria-describedby="lora-restart-message" tabindex="-1">
+                <h2 id="lora-restart-title" data-node-restart-title>Restart node?</h2>
+                <p id="lora-restart-message" data-node-restart-message></p>
+                <p class="lora-restart-feedback" data-node-restart-feedback role="status" aria-live="polite"></p>
+                <div class="button-row">
+                    <button type="button" class="btn btn-secondary" data-node-restart-cancel>Cancel</button>
+                    <button type="button" class="btn btn-primary" data-node-restart-confirm>Restart node</button>
+                </div>
+            </section>
+        </div>
+    @endif
 
     <script>
         (() => {
@@ -72,7 +86,7 @@
             };
 
             const refreshNodes = async () => {
-                if (refreshing || document.hidden || !list) return;
+                if (refreshing || document.hidden || !list || document.querySelector('[data-node-restart-modal]')?.hidden === false) return;
                 refreshing = true;
                 refreshButton.disabled = true;
                 list.setAttribute('aria-busy', 'true');
@@ -83,12 +97,14 @@
                     });
                     if (!response.ok || response.redirected) throw new Error('Monitor request failed');
                     const markup = await response.text();
+                    if (document.querySelector('[data-node-restart-modal]')?.hidden === false) return;
                     const expanded = new Set(Array.from(list.querySelectorAll('[data-lora-node-card][open]'), node => node.dataset.nodeId));
                     const focusedNode = document.activeElement?.closest('[data-lora-node-card]')?.dataset.nodeId;
+                    const focusRestart = document.activeElement?.matches('[data-node-restart]');
                     list.innerHTML = markup;
                     list.querySelectorAll('[data-lora-node-card]').forEach((node) => {
                         node.open = expanded.has(node.dataset.nodeId);
-                        if (node.dataset.nodeId === focusedNode) node.querySelector('summary')?.focus({ preventScroll: true });
+                        if (node.dataset.nodeId === focusedNode) (focusRestart ? node.querySelector('[data-node-restart]:not(:disabled)') || node.querySelector('summary') : node.querySelector('summary'))?.focus({ preventScroll: true });
                     });
                     lastChecked.textContent = new Date().toLocaleTimeString();
                     refreshState.textContent = 'Live · refreshes every 5 sec';
@@ -106,6 +122,7 @@
 
             search?.addEventListener('input', applySearch);
             refreshButton?.addEventListener('click', refreshNodes);
+            document.addEventListener('stitch:node-restart-updated', refreshNodes);
             document.addEventListener('visibilitychange', () => {
                 if (!document.hidden) refreshNodes();
             });

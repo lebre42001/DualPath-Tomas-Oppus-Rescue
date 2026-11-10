@@ -39,7 +39,13 @@ int httpStatus=200,sosCalls=0,localCalls=0,ackCalls=0,confirmCalls=0,radioCalls=
 String pendingPacket,pendingId,pendingToken;
 std::vector<uint32_t> confirmTimes;
 struct Dummy { void processNextRequest(){} void handleClient(){} void println(const String&){} } dnsServer,localServer,Serial;
-struct Radio { bool busy=false; bool finalAckPending(){return busy;} } meshRadio;
+struct Radio { bool busyFlag=false; bool busy(){return busyFlag;} bool finalAckPending(){return busyFlag;} } meshRadio;
+struct Restart {bool armed=false;bool guardStarted(){return false;}bool executionFresh(uint32_t){return false;}bool cancel(Preferences&){return false;}bool restartDue(uint32_t){return false;}String dueReceipt(uint32_t){return "";}} gatewayRestart;
+bool restartCommandFresh(int){return false;}
+struct Esp {void restart(){assert(false);}} ESP;
+String restartReceipts[11];bool apiRequestBusy=false;
+bool rememberRestartReceipt(const String&){return false;}
+void pollRemoteRestartIfNeeded(){}void postRemoteRestartReceiptsIfNeeded(){}
 void delay(uint32_t ms){fakeClock+=ms;}
 void connectRouter(){} void serviceGatewayRadio(){++radioCalls;} void markLoRaActivity(){}
 String getField(const String& value,int n){return LocalResponses::field(value,n);}
@@ -71,7 +77,7 @@ void reset(){
   nextApiTask=0;apiRequestSequence=0;lastApiStatusCode=0;httpStatus=200;ackConfirmAttempted=false;
   radioAckToConfirm="";radioAckConfirmToken="";radioAckQueuedPacket="";radioAckQueuedToken="";lastRadioAckNotified="";
   pendingPacket="";pendingId="";pendingToken="";latestMsgId="";pendingLocalMsgId="";
-  remoteBusy=false;localBusy=false;earlyFailure=false;meshRadio.busy=false;lastAckPollMs=0;
+  remoteBusy=false;localBusy=false;earlyFailure=false;meshRadio.busyFlag=false;lastAckPollMs=0;
   sosCalls=localCalls=ackCalls=confirmCalls=radioCalls=0;confirmTimes.clear();
 }
 String report(int n){return "SOS|NODE_1-"+String(n)+"|NODE_1|1794000000|R|Collision|NA|0|12|NODE_1|Bridge|signed";}

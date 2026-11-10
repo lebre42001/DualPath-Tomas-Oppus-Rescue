@@ -51,6 +51,7 @@
                         <strong>{{ $node['sender_id'] }}</strong>
                         @if ($customName)<small>{{ $node['node_name'] }}</small>
                         @elseif ($node['is_gateway'])<small>Gateway</small>@endif
+                        @if (auth()->user()?->is_admin && !empty($node['restart_command']))<small class="lora-node-restart-state">{{ $node['restart_command']['label'] }}</small>@endif
                     </span>
                     <span class="lora-node-status"><span class="tag {{ $tagClass }}" title="{{ $node['status_detail'] ?? '' }}">{{ $status }}</span></span>
                     <span class="lora-node-reading" title="{{ $node['last_seen']?->timezone(config('app.timezone'))->format('M j, Y g:i:s A') }}">
@@ -80,6 +81,18 @@
                 </summary>
 
                 <div class="lora-node-expanded">
+                    @if (auth()->user()?->is_admin)
+                        <div class="lora-node-restart-actions">
+                            <div>
+                                <strong>Restart this node</strong>
+                                <p>{{ ($node['restart_disabled_reason'] ?? null) ?: 'Briefly disconnect this node, then reconnect and retry its saved pending reports.' }}</p>
+                                @if (!empty($node['restart_command']))
+                                    <p class="lora-node-restart-history"><strong>{{ $node['restart_command']['label'] }}</strong> · {{ $node['restart_command']['detail'] }}</p>
+                                @endif
+                            </div>
+                            <button type="button" class="btn btn-secondary" data-node-restart data-node-id="{{ $node['sender_id'] }}" data-restart-url="{{ route('admin.node-restarts.store', ['nodeId' => $node['sender_id']]) }}" @disabled(!($node['restart_available'] ?? false)) aria-label="Restart {{ $node['sender_id'] }}">Restart</button>
+                        </div>
+                    @endif
                     <dl class="lora-node-details">
                         <div><dt>Connection status</dt><dd>{{ $node['status_detail'] ?? $status }}</dd></div>
                         <div><dt>Location</dt><dd>{{ $node['location_label'] }}</dd></div>

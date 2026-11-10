@@ -94,6 +94,8 @@ Route::middleware(['auth', 'account.active'])->group(function (): void {
         Route::get('/report-audit', [AdminDashboardController::class, 'history'])->name('report-audit');
         Route::get('/report-audit/print', [AdminDashboardController::class, 'printHistory'])->name('report-audit.print');
         Route::get('/node-locations', [LoraNodeLocationController::class, 'index'])->name('node-locations.index');
+        Route::get('/node-restarts', [\App\Http\Controllers\Web\LoraNodeRestartController::class, 'index'])->name('node-restarts.index');
+        Route::post('/node-restarts/{nodeId}', [\App\Http\Controllers\Web\LoraNodeRestartController::class, 'store'])->middleware('throttle:20,1')->name('node-restarts.store');
         Route::get('/node-locations/points', [LoraNodeLocationController::class, 'points'])->name('node-locations.points');
         Route::put('/node-locations/{nodeId}', [LoraNodeLocationController::class, 'update'])->name('node-locations.update');
         Route::get('/text-ai-test', [AiTextTestController::class, 'index'])->name('text-ai-test');

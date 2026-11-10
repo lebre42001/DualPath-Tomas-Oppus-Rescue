@@ -5,6 +5,30 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Targeted LoRa node restart (2026-11-10)
+
+LoRa Mesh now offers Restart inside each expanded node for administrators.
+The server queues a five-minute command, preserves one active request per node,
+and applies a two-minute request cooldown. A fresh authenticated heartbeat from
+both gateway and target must advertise `signed-restart-v1`; old firmware leaves
+the button disabled with upload guidance. The UI distinguishes queued, sent,
+accepted/restarting, signed post-boot confirmation, expiry, and failure.
+
+Gateway commands use the existing private ingest token. Radio control commits
+and receipts use target-specific HMAC, a fresh challenge, expected boot IDs,
+and durable replay protection. Restarting retains stored pending reports and
+their message IDs. It briefly interrupts the target's local portal/relay route;
+NODE_1 restart interrupts the server bridge. A powered-off or fully unresponsive
+device cannot receive a remote command. See [the operator and firmware guide](Arduino/REMOTE_RESTART.md).
+
+Deploy web with the normal Vite build and migrations, including
+`2026_11_10_120000_create_lora_node_restart_commands`, then clear Laravel caches.
+Keep the existing gateway token, private mesh keys, database, and uploaded files.
+The new command table and `lora_node_states.restart_protocol` column are required.
+The automatic web deployment cannot flash boards: upload GatewayNode1 and all
+matching field/relay sketches separately while preserving their Preferences/NVS.
+No AI worker, severity model, or APK rebuild is needed for this update.
+
 ## Civilian report face check and delivery results (2026-11-10)
 
 Civilian report submission now captures a single steady, visible face from the

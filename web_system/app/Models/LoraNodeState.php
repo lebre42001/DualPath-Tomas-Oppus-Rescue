@@ -26,6 +26,7 @@ class LoraNodeState extends Model
         'guard_boot',
         'radio_auth',
         'guard_reported_at',
+        'restart_protocol',
     ];
 
     protected function casts(): array

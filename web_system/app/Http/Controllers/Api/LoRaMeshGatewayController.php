@@ -78,6 +78,7 @@ class LoRaMeshGatewayController extends Controller
             'radio_rejections' => ['nullable', 'integer', 'between:0,4294967295'],
             'guard_boot' => ['nullable', 'string', 'max:16', 'regex:/^[a-f0-9]+$/'],
             'radio_auth' => ['nullable', 'in:hmac-sha256-v2'],
+            'restart_protocol' => ['nullable', 'in:signed-restart-v1'],
             'received_age_ms' => ['nullable', 'integer', 'between:0,30000'],
         ]);
 
@@ -120,6 +121,7 @@ class LoRaMeshGatewayController extends Controller
                 'guard_boot' => $validated['guard_boot'] ?? null,
                 'radio_auth' => $validated['radio_auth'] ?? null,
                 'guard_reported_at' => isset($validated['radio_auth']) ? now() : null,
+                'restart_protocol' => $validated['restart_protocol'] ?? null,
             ]
         );
 

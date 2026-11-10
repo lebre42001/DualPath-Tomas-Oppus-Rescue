@@ -1,5 +1,10 @@
 # Arduino LoRa Hardware Integration
 
+**Remote node restart:** [REMOTE_RESTART.md](REMOTE_RESTART.md) explains the
+admin LoRa Mesh Restart action, capability checks, signed targeted commands,
+post-boot confirmation, retained pending reports, and the required physical
+firmware uploads for NODE_1 through NODE_10.
+
 **Current report protection:** see [MESH_SECURITY.md](MESH_SECURITY.md) for
 confirmation, required accident landmark, sender/admin anti-spam indicators,
 separate report verification, private key provisioning and protocol-v2 upload

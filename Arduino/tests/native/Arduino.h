@@ -26,6 +26,7 @@ public:
   int compareTo(const String& other) const { return value.compare(other.value); }
   char operator[](size_t i) const { return value[i]; }
   int indexOf(char c, size_t start=0) const { auto p=value.find(c,start); return p==std::string::npos ? -1 : (int)p; }
+  int indexOf(const String& s, size_t start=0) const { auto p=value.find(s.value,start); return p==std::string::npos ? -1 : (int)p; }
   bool startsWith(const String& s) const { return value.rfind(s.value,0)==0; }
   String substring(size_t start, size_t end=std::string::npos) const { return value.substr(start,end==std::string::npos?end:end-start); }
   void trim() { auto first=value.find_first_not_of(" \r\n\t"),last=value.find_last_not_of(" \r\n\t"); value=first==std::string::npos?"":value.substr(first,last-first+1); }

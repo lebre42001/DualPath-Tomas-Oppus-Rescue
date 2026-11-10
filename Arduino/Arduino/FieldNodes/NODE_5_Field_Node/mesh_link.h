@@ -7,8 +7,8 @@ inline String field(const String& data, int wanted) {
   int end=data.indexOf('|',start);return data.substring(start,end<0?data.length():end);
 }
 inline bool due(uint32_t now,uint32_t at){return int32_t(now-at)>=0;}
-inline uint8_t priority(const String& type){return type=="SOS"||type=="ACK"?3:type=="HELLO"||type=="HELLO_ACK"||type=="GW"?2:1;}
-inline uint32_t lifetime(const String& type){return type=="HB"?3000:type=="GW"||type=="HELLO"||type=="HELLO_ACK"?2500:type=="NET"?10000:45000;}
+inline uint8_t priority(const String& type){return type=="SOS"||type=="ACK"?3:type=="HELLO"||type=="HELLO_ACK"||type=="GW"||type.startsWith("RST")||type=="RACCEPT"||type=="RBOOT"||type=="RDONE"?2:1;}
+inline uint32_t lifetime(const String& type){return type=="RSTCOMMIT"?5000:type.startsWith("RST")?10000:type=="HB"?3000:type=="GW"||type=="HELLO"||type=="HELLO_ACK"?2500:type=="NET"?10000:45000;}
 inline String key(const String& packet){
   String type=field(packet,0),result=type+":"+field(packet,1);
   if(type=="NET")return "NET";

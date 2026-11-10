@@ -50,6 +50,7 @@
 #include "local_responses.h"
 #include "report_responses.h"
 #include "ack_recovery.h"
+#include "remote_restart.h"
 
 // =====================================================
 // CHANGE ONLY THIS FOR EACH FIELD NODE
@@ -115,6 +116,7 @@ WebServer localServer(80);
 DNSServer dnsServer;
 const byte LOCAL_DNS_PORT = 53;
 Preferences prefs;
+RemoteRestart::Target remoteRestart;
 ReportOutbox localOutbox;
 LocalResponses localResponses(NODE_NUMBER);
 uint8_t recoveryNextSlot = 0;
@@ -475,6 +477,7 @@ bool sendLoRaPacket(String payload) {
 
 void onRadioTransmitted(const String& packet) {
   markLoRaActivity();
+  remoteRestart.transmitted(packet,millis());
   if (packet.startsWith("SOS|") && getField(packet,1)==pendingMsgId &&
       getField(packet,2)==NODE_ID && serverReceiptMsgId!=pendingMsgId && latestStatus!="SENT - WAITING FOR SERVER") {
     latestStatus="SENT - WAITING FOR SERVER";prefs.putString("latest_status",latestStatus);
@@ -634,6 +637,7 @@ void sendHeartbeatIfNeeded() {
   packet += reportGuardHeartbeat();
   // Distance is mutable routing metadata, after the existing guard fields.
   packet += "|" + String(serverRouteAvailable() ? gatewayHopCount : 0);
+  packet += "|SR1";
   sendLoRaPacket(packet);
 }
 
@@ -674,6 +678,7 @@ void handleHeartbeat(String packet) {
   forwarded += "|" + getField(packet, 8) + "|" + getField(packet, 9) + "|" + getField(packet, 10);
   if (getField(packet, 13).length()) forwarded += "|" + getField(packet, 11) + "|" + getField(packet, 12) + "|" + getField(packet, 13);
   if (distance.length()) forwarded += "|" + String(gatewayHopCount);
+  if (getField(packet,15)=="SR1") forwarded += "|SR1";
 
   sendLoRaPacket(forwarded);
 }
@@ -980,6 +985,20 @@ void requestMissingAcknowledgmentIfNeeded() {
 // RECEIVE / DISPATCH LORA PACKETS
 // =====================================================
 
+void handleRemoteRestart(const String& packet) {
+  const String target=getField(packet,2);
+  if(target==NODE_ID) {
+    const String response=remoteRestart.receive(prefs,packet,millis());
+    if(response.length())sendLoRaPacket(response);
+    return;
+  }
+  // Relays do not possess other origins' private keys; the endpoint verifies
+  // target HMAC in addition to the authenticated, replay-protected radio frame.
+  if(!RemoteRestart::shape(packet)||recentlySeen("RESTART:"+RemoteRestart::body(packet)))return;
+  const String forwarded=RemoteRestart::relay(packet,NODE_ID);
+  if(forwarded.length())sendLoRaPacket(forwarded);
+}
+
 void handleIncomingLoRa() {
   if (meshRadio.busy()) return;
   int packetSize = LoRa.parsePacket();
@@ -1028,6 +1047,8 @@ void handleIncomingLoRa() {
     handleAck(packet);
   } else if (type == "ACKREQ") {
     handleAcknowledgmentRequest(packet);
+  } else if (RemoteRestart::known(type)) {
+    handleRemoteRestart(packet);
   } else if (type == "PING" || type == "PONG") {
     handleTimingPacket(packet);
   }
@@ -1307,6 +1328,7 @@ void setup() {
     Serial.println("ERROR: Mesh keys do not match node identity or security storage failed.");
     while (true) delay(1000);
   }
+  remoteRestart.begin(prefs,meshField(reportGuardHeartbeat(),3));
   updateLedIndicators();  // Restore pending-report indication after reboot.
 
   randomSeed(esp_random());
@@ -1403,6 +1425,13 @@ void loop() {
   meshRadio.tick(millis());
 
   updateLedIndicators();
+
+  if(remoteRestart.cancelExpired(prefs,millis()))meshRadio.cancel("RACCEPT:"+remoteRestart.id);
+  const String restartReceipt=remoteRestart.dueReceipt(millis());
+  if(restartReceipt.length())sendLoRaPacket(restartReceipt);
+  // NVS already contains every accepted local report and restart command ID.
+  // No preferences/outbox/security counter is erased by this operation.
+  if(remoteRestart.restartDue(millis())&&!meshRadio.busy())ESP.restart();
 
   delay(2);
 }

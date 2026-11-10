@@ -34,6 +34,7 @@
 #include "gateway_runtime.h"
 #include "local_responses.h"
 #include "ack_recovery.h"
+#include "remote_restart.h"
 
 #if __has_include("arduino_secrets.h")
 #include "arduino_secrets.h"
@@ -78,6 +79,7 @@ WiFiClientSecure secureClient;
 WebServer localServer(80);
 DNSServer dnsServer;
 Preferences prefs;
+RemoteRestart::Target gatewayRestart;
 ReportOutbox localOutbox;
 LocalResponses localResponses;
 String lastLocalAttemptId = "";
@@ -554,6 +556,8 @@ void onRadioTransmitted(const String& packet) {
   }
 }
 
+#include "gateway_restart.h"
+
 void confirmTransmittedAcknowledgmentIfNeeded() {
   if(!radioAckToConfirm.length())return;
   if(ackConfirmAttempted && millis()-lastAckConfirmAttemptMs<ACK_CONFIRM_RETRY_MS)return;
@@ -593,6 +597,7 @@ String gatewayHeartbeatBody() {
   }
   body += "\"hop\":0,\"ttl\":0,\"packet_type\":\"HB\"";
   body += ",\"blocked_submissions\":" + String(reportBlocked) + ",\"radio_rejections\":" + String(meshInvalidFrames) + ",\"guard_boot\":\"" + meshField(reportGuardHeartbeat(), 3) + "\",\"radio_auth\":\"hmac-sha256-v2\"";
+  body += ",\"restart_protocol\":\"signed-restart-v1\"";
   body += "}";
   return body;
 }
@@ -1017,6 +1022,7 @@ String heartbeatBodyForPacket(const String& packet, int rssi, float snr) {
   body += "\"blocked_submissions\":" + String(getField(packet, 11).toInt()) + ",";
   body += "\"radio_rejections\":" + String(getField(packet, 12).toInt()) + ",";
   body += "\"guard_boot\":\"" + jsonEscape(getField(packet, 13)) + "\",";
+  if(getField(packet,15)=="SR1")body += "\"restart_protocol\":\"signed-restart-v1\",";
   body += "\"radio_auth\":\"hmac-sha256-v2\",";
   body += "\"packet_type\":\"HB\"";
   body += "}";
@@ -1208,6 +1214,8 @@ void handleIncomingLoRa() {
     queueGatewayPacket(packet, rssi, snr);
   } else if (packet.startsWith("ACKREQ|")) {
     queueGatewayPacket(packet, rssi, snr);
+  } else if (RemoteRestart::known(getField(packet,0))) {
+    handleGatewayRestartPacket(packet);
   }
 }
 
@@ -1266,6 +1274,10 @@ void setup() {
     while (true) delay(1000);
   }
   restoreGatewayInbox();
+  gatewayRestart.begin(prefs,meshField(reportGuardHeartbeat(),3));
+  restoreRestartReceipts();
+  if(gatewayRestart.id.length()&&!gatewayRestart.complete&&gatewayRestart.beforeBoot!=gatewayRestart.currentBoot)
+    rememberRestartReceipt(gatewayRestart.receipt());
   latestMsgId = prefs.getString("latest_msg", "");
   latestCreatedAt = prefs.getString("latest_created", "");
   latestReportStatus = prefs.getString("latest_status", "NONE");
@@ -1337,9 +1349,9 @@ void loop() {
     // Keep route health/overdue heartbeats, then rotate the remaining work.
     // A continuously replenished SOS inbox or failed confirmation cannot starve
     // NODE_1's own reports, responder ACK polling, or other gateway work.
-    for (uint8_t scanned=0; scanned<9 && apiRequestSequence==before; ++scanned) {
+    for (uint8_t scanned=0; scanned<11 && apiRequestSequence==before; ++scanned) {
       const uint8_t task=nextApiTask;
-      nextApiTask=(nextApiTask+1)%9;
+      nextApiTask=(nextApiTask+1)%11;
       switch(task) {
         case 0: confirmTransmittedAcknowledgmentIfNeeded(); break;
         case 1: forwardQueuedSosIfNeeded(); break;
@@ -1350,8 +1362,14 @@ void loop() {
         case 6: if(!batchHeartbeatsSupported)forwardQueuedHeartbeatIfNeeded(); break;
         case 7: forwardQueuedProbeIfNeeded(); break;
         case 8: forwardAcknowledgmentRequestIfNeeded(); break;
+        case 9: postRemoteRestartReceiptsIfNeeded(); break;
+        case 10: pollRemoteRestartIfNeeded(); break;
       }
     }
   }
+  if(gatewayRestart.armed&&(!restartCommandFresh(1)||!gatewayRestart.executionFresh(millis())))gatewayRestart.cancel(prefs);
+  const String restartReceipt=gatewayRestart.dueReceipt(millis());
+  if(restartReceipt.length()&&(!gatewayRestart.armed||!gatewayRestart.guardStarted()))rememberRestartReceipt(restartReceipt);
+  if(gatewayRestart.restartDue(millis())&&restartCommandFresh(1)&&!apiRequestBusy&&!meshRadio.busy())ESP.restart();
   delay(2);
 }

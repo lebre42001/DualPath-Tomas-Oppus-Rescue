@@ -24,3 +24,4 @@ import './report-index';
 import './report-ai-analysis';
 import './profile-page';
 import './settings-page';
+import './lora-node-restarts';

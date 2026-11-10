@@ -4,11 +4,13 @@ namespace App\Support;
 
 use App\Models\IncidentReport;
 use App\Models\LoraNodeState;
+use App\Services\LoraNodeRestartService;
 use Illuminate\Support\Collection;
 
 class LoraMeshNodeDirectory
 {
     public const NODE_TIMEOUT_SECONDS = 30;
+
     public const NODE_UNAVAILABLE_SECONDS = 120;
 
     /** @return Collection<int, array<string, mixed>> */
@@ -40,6 +42,8 @@ class LoraMeshNodeDirectory
             ->whereIn('node_id', $meshNodeIds)
             ->get()
             ->keyBy('node_id');
+        $restartService = app(LoraNodeRestartService::class);
+        $restartCommands = $restartService->latestByNode();
 
         $now = now();
         $reachableSince = $now->copy()->subSeconds(self::NODE_TIMEOUT_SECONDS);
@@ -63,11 +67,13 @@ class LoraMeshNodeDirectory
         }
 
         return $meshNodeIds
-            ->map(function (string $senderId) use ($registry, $latestReports, $states, $reachableSince, $unavailableSince, $discoveries): array {
+            ->map(function (string $senderId) use ($registry, $latestReports, $states, $reachableSince, $unavailableSince, $discoveries, $restartService, $restartCommands): array {
                 /** @var IncidentReport|null $report */
                 $report = $latestReports->get($senderId);
                 $state = $states->get($senderId);
                 $node = $registry[$senderId] ?? [];
+                $restartCommand = $restartCommands->get($senderId);
+                $restartDisabledReason = $restartService->disabledReason($state, $states->get('NODE_1'), $restartCommand);
                 $lastSeen = $state?->last_seen_at ?? $report?->created_at;
                 $recentlyHeard = $lastSeen?->greaterThanOrEqualTo($reachableSince) ?? false;
                 $hasEverBeenSeen = $lastSeen !== null;
@@ -114,6 +120,9 @@ class LoraMeshNodeDirectory
                     'guard_boot' => $state?->guard_boot,
                     'radio_auth' => $state?->radio_auth,
                     'guard_reported_at' => $state?->guard_reported_at,
+                    'restart_command' => $restartCommand === null ? null : $restartService->summary($restartCommand),
+                    'restart_available' => $restartDisabledReason === null,
+                    'restart_disabled_reason' => $restartDisabledReason,
                     'round_trip_ms' => $state?->round_trip_ms,
                     'round_trip_measured_at' => $state?->round_trip_measured_at,
                     'round_trip_fresh' => $state?->round_trip_measured_at?->greaterThanOrEqualTo(now()->subSeconds(120)) ?? false,
@@ -135,8 +144,7 @@ class LoraMeshNodeDirectory
     /** @return Collection<int, array<string, mixed>> */
     public function mapPoints(): Collection
     {
-        return $this->all()->filter(fn (array $node): bool =>
-            $node['latitude'] !== null && $node['longitude'] !== null
+        return $this->all()->filter(fn (array $node): bool => $node['latitude'] !== null && $node['longitude'] !== null
             && abs($node['latitude']) <= 90 && abs($node['longitude']) <= 180
         )->map(fn (array $node): array => [
             'id' => 'node-'.$node['sender_id'],

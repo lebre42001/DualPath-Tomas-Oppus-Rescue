@@ -22,6 +22,8 @@ Route::prefix('v1')->group(function (): void {
         Route::post('/heartbeats', [LoRaMeshGatewayController::class, 'heartbeats']);
         Route::post('/probe', [LoRaMeshGatewayController::class, 'probe']);
         Route::get('/network-summary', [LoRaMeshGatewayController::class, 'networkSummary']);
+        Route::get('/commands/pending', [\App\Http\Controllers\Api\LoRaNodeRestartController::class, 'pending']);
+        Route::post('/commands/{commandId}/result', [\App\Http\Controllers\Api\LoRaNodeRestartController::class, 'result']);
         Route::get('/acks/pending', [LoRaMeshGatewayController::class, 'pendingAcknowledgment']);
         Route::post('/acks/{msgId}/delivered', [LoRaMeshGatewayController::class, 'acknowledgmentDelivered']);
     });
