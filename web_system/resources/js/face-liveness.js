@@ -1,15 +1,18 @@
-// Capture from the live stream; the server independently verifies face/blink frames.
+// Capture from the camera; account checks require blinks, report checks require a face.
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const proofInput = (form) => form.querySelector('[data-liveness-proof]');
 export const clearLiveness = (form) => {
     if (proofInput(form)) proofInput(form).value = '';
     delete form.dataset.livenessExpiresAt;
+    delete form.dataset.livenessSubmissionId;
 };
 export const hasLiveness = (form) => Boolean(proofInput(form)?.value.length === 64
-    && Number(form.dataset.livenessExpiresAt || 0) > Date.now());
+    && Number(form.dataset.livenessExpiresAt || 0) > Date.now()
+    && (!form.dataset.livenessSubmissionId || form.dataset.livenessSubmissionId === form.elements.namedItem('submission_id')?.value));
 export const applyLiveness = (form, result) => {
     proofInput(form).value = result.proof;
     form.dataset.livenessExpiresAt = String(Date.now() + result.expiresIn * 1000);
+    if (result.submissionId) form.dataset.livenessSubmissionId = result.submissionId;
     const proof = result.proof;
     setTimeout(() => {
         if (proofInput(form).value !== proof) return;
@@ -44,8 +47,11 @@ async function request(url, body, signal) {
     }
 }
 export async function captureLiveness({ video, form, purpose, onStatus, signal }) {
-    const challenge = await request(form.dataset.livenessChallengeUrl, { purpose }, signal);
-    if (![1,2].includes(challenge.blink_count) || ![6000,8000].includes(challenge.duration_ms)) throw new Error('Start a new live check.');
+    const report = purpose === 'report';
+    const submissionId = report ? form.elements.namedItem('submission_id')?.value : undefined;
+    const challenge = await request(form.dataset.livenessChallengeUrl, report ? { purpose, submission_id: submissionId } : { purpose }, signal);
+    if (report ? challenge.verification_mode !== 'face' || challenge.blink_count !== 0 || challenge.duration_ms !== 0
+        : ![1,2].includes(challenge.blink_count) || ![6000,8000].includes(challenge.duration_ms)) throw new Error('Start a new face check.');
     const canvas = document.createElement('canvas');
     const sourceWidth = video.videoWidth, sourceHeight = video.videoHeight;
     const scale = Math.min(1, 480 / Math.max(video.videoWidth, video.videoHeight));
@@ -57,7 +63,13 @@ export async function captureLiveness({ video, form, purpose, onStatus, signal }
     let frames = [], lastSecond = -1;
     const started = performance.now();
     try {
-        while (performance.now() - started < challenge.duration_ms) {
+        if (report) {
+            if (signal?.aborted || document.hidden || video.readyState < 2 || !video.srcObject?.active) throw new Error('Keep the camera and this page open, then retry.');
+            onStatus('Face detected. Checking your photo…');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            frames.push({ ms: 0, jpeg: canvas.toDataURL('image/jpeg', .65).split(',')[1] });
+        }
+        while (!report && performance.now() - started < challenge.duration_ms) {
             if (signal?.aborted || document.hidden || video.readyState < 2 || !video.srcObject?.active) throw new Error('Keep the live camera and this page open, then retry.');
             if (video.videoWidth !== sourceWidth || video.videoHeight !== sourceHeight) throw new Error('Camera orientation changed. Hold your phone steady and try the blink check again.');
             const ms = Math.round(performance.now() - started);
@@ -71,10 +83,10 @@ export async function captureLiveness({ video, form, purpose, onStatus, signal }
             if (frames.length > 90) throw new Error('Live capture interrupted. Please retry.');
             await wait(100);
         }
-        onStatus('Checking your face and blink sequence…');
+        onStatus(report ? 'Confirming your face…' : 'Checking your face and blink sequence…');
         const result = await request(form.dataset.livenessVerifyUrl, { challenge_id: challenge.challenge_id, frames }, signal);
-        if (typeof result.proof !== 'string' || result.proof.length !== 64 || result.expires_in !== 120) throw new Error('The live check could not be verified. Please retry.');
+        if (typeof result.proof !== 'string' || result.proof.length !== 64 || result.expires_in !== (report ? 86400 : 120)) throw new Error('The face check could not be verified. Please retry.');
         const bytes = Uint8Array.from(atob(frames[frames.length-1].jpeg), (c) => c.charCodeAt(0));
-        return { file: new File([bytes], `live-selfie-${Date.now()}.jpg`, { type: 'image/jpeg' }), proof: result.proof, expiresIn: result.expires_in };
+        return { file: new File([bytes], `live-selfie-${Date.now()}.jpg`, { type: 'image/jpeg' }), proof: result.proof, expiresIn: result.expires_in, ...(report ? { submissionId } : {}) };
     } finally { frames = []; }
 }

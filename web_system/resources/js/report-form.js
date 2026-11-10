@@ -578,7 +578,7 @@ onDomReady( () => {
     };
 
     const showSelfieCameraHelp = () => {
-        const message = 'A live blink check requires camera access. Open this page in an updated Chrome or Safari browser and allow camera permission, then retry.';
+        const message = 'Face detection requires camera access. Open this page in an updated Chrome or Safari browser and allow camera permission, then retry.';
         setSelfieCameraStatus(message);
         if (submitStatus) submitStatus.textContent = message;
     };
@@ -624,7 +624,7 @@ onDomReady( () => {
             }
 
             selfieFaceGuide = watchFaceGuide({
-                video: selfieCameraPreview, frame: selfieGuideFrame,
+                video: selfieCameraPreview, frame: selfieGuideFrame, report: true,
                 onChange: (result) => {
                     selfieCameraCaptureButton.disabled = livenessBusy || !result.ready;
                     if (!livenessBusy) setSelfieCameraStatus(result.message);
@@ -674,7 +674,7 @@ onDomReady( () => {
             applyLiveness(form, result);
             updateSelfiePreview(getActiveSelfieFile());
             stopSelfieCamera();
-            showVerifiedFace(selfieGuideFrame);
+            showVerifiedFace(selfieGuideFrame, 'Face check passed');
             hideSelfieCameraModal();
             submitAfterSelfieVerification();
         } catch (error) {
@@ -682,7 +682,7 @@ onDomReady( () => {
         } finally {
             livenessBusy = false;
             selfieCameraCaptureButton.disabled = !selfieCameraStream?.active || !selfieFaceGuide?.ready;
-            selfieCameraCaptureButton.textContent = 'Check Face & Blink';
+            selfieCameraCaptureButton.textContent = 'Check Face';
             if (selfieCameraRetryButton) { selfieCameraRetryButton.disabled = false; if (!selfieCameraStream?.active) selfieCameraRetryButton.hidden = false; }
             if (selfieCameraFallbackButton) selfieCameraFallbackButton.disabled = false;
         }
@@ -692,14 +692,14 @@ onDomReady( () => {
         pendingSubmitAfterSelfie = true;
         clearLiveness(form);
         showSelfieCameraModal();
-        if (submitStatus) submitStatus.textContent = 'Complete the live face and blink check before sending.';
+        if (submitStatus) submitStatus.textContent = 'Look at the camera. Your face is captured automatically when ready; no blink needed.';
         if (!await startFrontSelfieCamera()) showSelfieCameraHelp();
     };
 
     const submitAfterSelfieVerification = () => {
         pendingSubmitAfterSelfie = false;
         if (submitStatus) {
-            submitStatus.textContent = 'Face and blink check passed. Checking location before sending...';
+            submitStatus.textContent = 'Face check passed. Checking location before sending...';
         }
 
         if (typeof form.requestSubmit === 'function') {
@@ -825,7 +825,7 @@ onDomReady( () => {
             selfiePreviewName.textContent = file.name;
         }
 
-        setBadgeState(selfieBadge, hasRequiredSelfie() ? 'green' : 'amber', hasRequiredSelfie() ? 'Live checked' : 'Blink check required');
+        setBadgeState(selfieBadge, hasRequiredSelfie() ? 'green' : 'amber', hasRequiredSelfie() ? 'Face checked' : 'Face check required');
         updateCivilianReadiness();
     };
 
@@ -1021,7 +1021,8 @@ onDomReady( () => {
     document.addEventListener('visibilitychange', () => {
         if (!isCivilian || !document.hidden) return;
         livenessController?.abort();
-        clearLiveness(form);
+        // A completed check stays with this draft while replacing its scene photo.
+        // In-progress camera capture is cancelled when this page is hidden.
         pendingSubmitAfterSelfie = false;
         stopSelfieCamera();
         hideSelfieCameraModal();
@@ -1030,12 +1031,13 @@ onDomReady( () => {
 
     form.addEventListener('liveness:expired', () => {
         updateCivilianReadiness();
-        if (submitStatus) submitStatus.textContent = 'The live check expired. Tap Send Report for a new blink check.';
+        if (submitStatus) submitStatus.textContent = 'The face check expired. Tap Send Report for a new face check.';
     });
     form.addEventListener('stitch:report-draft-restored', () => {
         clearLiveness(form);
         updateCivilianReadiness();
     });
+    form.addEventListener('stitch:report-delivery-failed', () => updateCivilianReadiness());
     window.addEventListener('pagehide', () => {
         livenessController?.abort();
         clearLiveness(form);

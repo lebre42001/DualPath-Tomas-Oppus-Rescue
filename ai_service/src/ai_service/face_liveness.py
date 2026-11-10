@@ -1,4 +1,4 @@
-"""Basic face/blink checks, independent of the severity model and its active config."""
+"""Report face presence and account blink checks, separate from severity inference."""
 from __future__ import annotations
 
 import base64
@@ -15,7 +15,7 @@ _work = BoundedSemaphore(1)
 
 MESSAGES = {
     'no_face': 'Keep one face clearly visible in good lighting, then try again.',
-    'multiple_faces': 'Only one person should be visible during the blink check.',
+    'multiple_faces': 'Only one person should be visible during the face check.',
     'blink_missing': 'Blink slowly as requested, then keep your eyes open until the check finishes.',
     'face_moved': 'Keep your face inside the guide and hold the camera steady.',
     'invalid_capture': 'The live capture was interrupted. Keep this page open and try again.',
@@ -73,6 +73,24 @@ def check_sequence(observations: list[dict], required_blinks: int) -> dict:
     return {'accepted': True, 'blink_count': blinks, 'selfie_sha256': observations[-1]['hash']}
 
 
+def check_face_presence(observations: list[dict]) -> dict:
+    """A report requires one clear face; it makes no blink/anti-spoof claim."""
+    if not 1 <= len(observations) <= 10:
+        return verdict('invalid_capture')
+    times = [o['ms'] for o in observations]
+    if any(t < 0 or t > 11000 for t in times) or any(b < a for a, b in zip(times, times[1:])):
+        return verdict('invalid_capture')
+    if any(o['faces'] > 1 for o in observations):
+        return verdict('multiple_faces')
+    if any(o['faces'] != 1 for o in observations):
+        return verdict('no_face')
+    for observation in observations:
+        x, y, width, height = observation['box']
+        if width < .16 or height < .20 or max(width, height) > .98 or abs(x-.5) > .30 or abs(y-.5) > .30:
+            return verdict('face_moved')
+    return {'accepted': True, 'blink_count': 0, 'selfie_sha256': observations[-1]['hash']}
+
+
 def get_landmarker():
     global _model
     with _model_lock:
@@ -91,7 +109,7 @@ def get_landmarker():
     return _model
 
 
-def analyze_frames(frames: list[dict], required_blinks: int) -> dict:
+def analyze_frames(frames: list[dict], required_blinks: int, purpose: str = 'account') -> dict:
     if not _work.acquire(blocking=False):
         raise BlockingIOError('Face check busy')
     try:
@@ -123,6 +141,6 @@ def analyze_frames(frames: list[dict], required_blinks: int) -> dict:
                 observation.update(left=scores.get('eyeBlinkLeft', 0), right=scores.get('eyeBlinkRight', 0),
                                    box=((max(xs)+min(xs))/2, (max(ys)+min(ys))/2, max(xs)-min(xs), max(ys)-min(ys)))
             observations.append(observation)
-        return check_sequence(observations, required_blinks)
+        return check_face_presence(observations) if purpose == 'report' else check_sequence(observations, required_blinks)
     finally:
         _work.release()

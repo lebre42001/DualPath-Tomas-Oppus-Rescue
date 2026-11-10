@@ -23,15 +23,15 @@ function fitCameraPreview(video, frame) {
     frame.dataset.cameraFitted = 'true';
 }
 
-export function showVerifiedFace(frame) {
+export function showVerifiedFace(frame, message = 'Blink check passed') {
     if (!frame) return;
     frame.dataset.faceState = 'verified';
     frame.querySelector('.live-face-outline')?.setAttribute('hidden', '');
     const label = frame.querySelector('[data-face-guide-label]');
-    if (label) { label.hidden = false; label.textContent = 'Blink check passed'; }
+    if (label) { label.hidden = false; label.textContent = message; }
 }
 
-export function watchFaceGuide({ video, frame, onChange, onAutoCapture }) {
+export function watchFaceGuide({ video, frame, onChange, onAutoCapture, report = false }) {
     let stopped = false, failed = false, detector = null, timer = null, stableSince = null;
     let anchor = null, lastVideoTime = -1, lastSample = 0, ready = false, attempted = false, lastState = '';
     const canvas = document.createElement('canvas'), context = canvas.getContext('2d');
@@ -107,7 +107,9 @@ export function watchFaceGuide({ video, frame, onChange, onAutoCapture }) {
                     const stable = now-stableSince;
                     if (stable < 650) emit('aligning', 'Face detected. Hold still for a moment.');
                     else {
-                        emit('ready', attempted ? 'Face ready. Tap Check Face & Blink to retry.' : 'Face ready. Capture starts automatically. Blink when asked.', true);
+                        emit('ready', report
+                            ? (attempted ? 'Face ready. Tap Check Face to retry.' : 'Face ready. Capturing automatically; no blink needed.')
+                            : (attempted ? 'Face ready. Tap Check Face & Blink to retry.' : 'Face ready. Capture starts automatically. Blink when asked.'), true);
                         if (stable >= 1800 && !attempted && onAutoCapture() !== false) attempted = true;
                     }
                 }

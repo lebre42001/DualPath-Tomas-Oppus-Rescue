@@ -3,6 +3,8 @@ import { createCivilianDraftStore, isSubmissionId } from './civilian-draft-store
 import { checkReportReceipt, uploadReport, receivedReportUrl } from './report-delivery.js';
 import { watchCivilianDraftRecovery } from './civilian-draft-recovery.js';
 import { DRAFT_STATES as messages } from './civilian-report-list.js';
+import { initializeReportDeliveryFeedback } from './report-delivery-feedback.js';
+import { hasLiveness, clearLiveness } from './face-liveness.js';
 
 export function initializeCivilianDrafts({ document = globalThis.document, window = globalThis.window, navigator = globalThis.navigator } = {}) {
     const element = (tag, text, className = '') => {
@@ -20,7 +22,8 @@ export function initializeCivilianDrafts({ document = globalThis.document, windo
     const saveButton = form?.querySelector('[data-civilian-draft-save]');
     const feedback = form?.querySelector('[data-civilian-draft-feedback]');
     const submitButton = form?.querySelector('[data-report-submit]');
-    let records = [], saving = Promise.resolve(), controller = null, busy = false, restoring = false, received = false, recovery;
+    const deliveryFeedback = form ? initializeReportDeliveryFeedback({ document }) : null;
+    let records = [], saving = Promise.resolve(), controller = null, busy = false, restoring = false, received = false, feedbackPending = false, recovery;
     let renderVersion = 0, refreshTimer, lastSnapshot = null, lastTimestamp = 0;
     const notice = (text) => {
         if (feedback) feedback.textContent = text;
@@ -101,23 +104,35 @@ export function initializeCivilianDrafts({ document = globalThis.document, windo
     };
     const savedNotice = (record, lead = 'Draft saved on this device.') => {
         if (!record) { notice('Enter a description, location, or scene photo before saving a draft.'); return; }
-        notice(lead + (record.storageMode === 'text-only' && record.evidenceName ? ' Photo storage is unavailable; reattach the scene photo when continuing.' : '') + ' A fresh GPS lock and live selfie check are required before sending.');
+        notice(lead + (record.storageMode === 'text-only' && record.evidenceName ? ' Photo storage is unavailable; reattach the scene photo when continuing.' : '')
+            + (form && record.submissionId === currentId() && hasLiveness(form)
+                ? ' Your face check is kept for this report. You can edit the details and send again.'
+                : ' A fresh GPS lock and face check are required when reopening this draft.'));
     };
     const confirmReceipt = async (data, id) => {
         const url = receivedReportUrl(data);
         if (!url) return false;
         received = true;
+        feedbackPending = true;
         recovery?.cancel();
+        if (form) {
+            form.dataset.reportReceived = 'true';
+            clearLiveness(form);
+            form.setAttribute('aria-busy', 'false');
+            for (const input of form.querySelectorAll('input, textarea, select, button')) input.disabled = true;
+            if (submitButton) submitButton.textContent = 'Report received';
+        }
         // A received report is authoritative even if local cleanup fails. The
         // same submission ID lets Continue reconcile a leftover draft later.
         try { await store.remove(id); } catch { /* Do not hide a confirmed server receipt. */ }
         notice('The server received this report. Opening its confirmation.');
+        if (deliveryFeedback) await deliveryFeedback.successful(typeof data.report_code === 'string' ? data.report_code : '');
         window.location.assign(url);
         return true;
     };
 
     async function continueDraft(record) {
-        if (busy) return;
+        if (busy || received || feedbackPending) return;
         if (record.attempted && navigator.onLine) {
             notice('Checking whether the server already received this report…');
             try { if (await confirmReceipt(await checkReportReceipt(receiptUrl(record.submissionId)), record.submissionId)) return; }
@@ -152,7 +167,7 @@ export function initializeCivilianDrafts({ document = globalThis.document, windo
             }
             for (const name of ['evidence', 'selfie', 'selfie_capture']) fileInput(name)?.dispatchEvent(new Event('change', { bubbles: true }));
             form.dispatchEvent(new Event('stitch:report-draft-restored'));
-            notice('Draft restored. Review your details, lock GPS, and complete a new live selfie check.' + (!restoredPhoto && record.evidenceName ? ' Reattach the scene photo before sending.' : ''));
+            notice('Draft restored. Review your details, lock GPS, and complete a face check.' + (!restoredPhoto && record.evidenceName ? ' Reattach the scene photo before sending.' : ''));
             form.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } finally { restoring = false; }
     }
@@ -176,7 +191,7 @@ export function initializeCivilianDrafts({ document = globalThis.document, windo
             for (const button of list?.querySelectorAll('button') ?? []) button.disabled = sending;
         };
         const send = async () => {
-            if (busy) return;
+            if (busy || received || feedbackPending) return;
             recovery?.cancel();
             const body = new FormData(form), id = currentId();
             toggleSending(true); controller = new AbortController();
@@ -196,6 +211,7 @@ export function initializeCivilianDrafts({ document = globalThis.document, windo
                 slowTimer = setTimeout(() => notice(saved ? 'Sending is taking longer than usual. Your draft is saved. You can stop sending and continue later; receipt is not confirmed yet.' : 'Sending is taking longer than usual. Local draft storage is unavailable; keep this page open.'), 15000);
                 attempted = true;
                 const data = await uploadReport(form.action, body, { signal: controller.signal });
+                clearTimeout(slowTimer);
                 if (!await confirmReceipt(data, id)) throw new Error('The server did not return a valid receipt.');
             } catch (error) {
                 clearTimeout(slowTimer);
@@ -204,28 +220,54 @@ export function initializeCivilianDrafts({ document = globalThis.document, windo
                 const lead = saved ? `${error.message} Draft saved on this device.` : 'Receipt is unconfirmed and local saving failed. Keep this page open and check your connection and device storage.';
                 savedNotice(saved, lead);
                 if (!saved) storageError();
+                if (error.fields?.includes('liveness_proof')) clearLiveness(form);
+                feedbackPending = true;
+                toggleSending(false);
+                form.dispatchEvent(new Event('stitch:report-delivery-failed'));
+                if (deliveryFeedback) {
+                    await deliveryFeedback.failed(`${error.message} ${hasLiveness(form)
+                        ? 'Your face check is kept for this report. Tap Retry to review or change your description, photo, or location, then send again.'
+                        : 'Tap Retry to review the details and send again.'}`);
+                    if (!received) {
+                        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        form.elements.namedItem('description')?.focus({ preventScroll: true });
+                    }
+                }
+                feedbackPending = false;
             } finally {
-                clearTimeout(slowTimer); controller = null; toggleSending(false);
-                // Neither an old location nor a consumed/expired liveness
-                // proof is valid authorization for a resumed transmission.
-                form.dispatchEvent(new Event('stitch:report-draft-restored'));
+                clearTimeout(slowTimer); controller = null;
+                // Retrying this same submission keeps its completed face check.
+                // The report form rechecks current GPS on every actual send.
+                if (!received) {
+                    toggleSending(false);
+                    form.dispatchEvent(new Event('stitch:report-delivery-failed'));
+                }
             }
         };
         recovery = watchCivilianDraftRecovery({
-            form, window, document, paused: () => restoring || busy || received,
+            form, window, document, paused: () => restoring || busy || received || feedbackPending,
             checkpoint: () => { const record = snapshot(); if (record) store.checkpoint(record); },
             persist: () => save(), saved: savedNotice, failed: storageError,
         });
         saveButton?.addEventListener('click', () => {
+            if (feedbackPending || received) return;
             if (busy) { controller?.abort('interrupted'); return; }
             recovery.cancel(); void save(navigator.onLine ? 'editing' : 'offline').then((record) => savedNotice(record)).catch(storageError);
         });
         // Capture offline attempts before GPS/selfie validation can open a
         // network-dependent modal. Partial drafts never need those checks.
         form.addEventListener('submit', (event) => {
-            if (busy || !navigator.onLine) {
+            if (busy || received || feedbackPending || !navigator.onLine) {
                 event.preventDefault(); event.stopImmediatePropagation();
-                if (!busy) void save('offline').then((record) => savedNotice(record, 'You are offline. Draft saved on this device.')).catch(storageError);
+                if (!busy && !received && !feedbackPending) {
+                    feedbackPending = true;
+                    void (async () => {
+                        try { savedNotice(await save('offline'), 'You are offline. Draft saved on this device.'); }
+                        catch { storageError(); }
+                        try { await deliveryFeedback?.failed('Your report could not be sent because this device is offline. Tap Retry to edit your report or reconnect and send again.'); }
+                        finally { feedbackPending = false; }
+                    })();
+                }
             }
         }, true);
         form.addEventListener('submit', (event) => {

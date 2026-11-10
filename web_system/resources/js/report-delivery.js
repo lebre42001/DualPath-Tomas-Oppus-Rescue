@@ -1,5 +1,5 @@
 export class ReportDeliveryError extends Error {
-    constructor(reason, message) { super(message); this.name = 'ReportDeliveryError'; this.reason = reason; }
+    constructor(reason, message, fields = []) { super(message); this.name = 'ReportDeliveryError'; this.reason = reason; this.fields = fields; }
 }
 
 export function receivedReportUrl(data, origin = globalThis.location?.origin) {
@@ -28,7 +28,7 @@ async function requestJson(url, options, { fetchImpl = globalThis.fetch, signal,
         try { data = await response.json(); }
         catch (error) { if (controller.signal.aborted) throw error; throw new ReportDeliveryError('server', 'The server response could not be confirmed. Your draft is kept.'); }
         if (!response.ok) {
-            if (response.status === 422) throw new ReportDeliveryError('validation', Object.values(data.errors ?? {}).flat()[0] || 'Review the report details and verification before sending again.');
+            if (response.status === 422) throw new ReportDeliveryError('validation', Object.values(data.errors ?? {}).flat()[0] || 'Review the report details before sending again.', Object.keys(data.errors ?? {}));
             throw new ReportDeliveryError('server', 'The server could not confirm receipt. Your draft is kept for another attempt.');
         }
         return data;

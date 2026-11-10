@@ -3,7 +3,7 @@ import sys
 import unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from src.ai_service.face_liveness import check_sequence
+from src.ai_service.face_liveness import check_face_presence, check_sequence
 
 class FaceLivenessSequenceTest(unittest.TestCase):
     def observations(self):
@@ -38,5 +38,24 @@ class FaceLivenessSequenceTest(unittest.TestCase):
         self.assertEqual(check_sequence(obs,1)['code'],'invalid_capture')
         obs=self.observations();self.blink(obs,10);obs[25]['box']=(.9,.5,.3,.5)
         self.assertEqual(check_sequence(obs,1)['code'],'face_moved')
+
+    def test_report_face_presence_accepts_one_clear_face_without_blink(self):
+        observation=self.observations()[0]
+        result=check_face_presence([observation])
+        self.assertTrue(result['accepted'])
+        self.assertEqual(result['blink_count'],0)
+        self.assertEqual(result['selfie_sha256'],observation['hash'])
+        # The same eyes-open measurements still cannot pass account liveness.
+        self.assertEqual(check_sequence(self.observations(),1)['code'],'blink_missing')
+
+    def test_report_face_presence_rejects_missing_multiple_small_or_offscreen_faces(self):
+        for fields, expected in [({'faces':0},'no_face'),({'faces':2},'multiple_faces'),
+                                 ({'box':(.5,.5,.05,.1)},'face_moved'),
+                                 ({'box':(.9,.5,.3,.5)},'face_moved')]:
+            with self.subTest(fields=fields):
+                observation={**self.observations()[0],**fields}
+                self.assertEqual(check_face_presence([observation])['code'],expected)
+        self.assertEqual(check_face_presence([])['code'],'invalid_capture')
+        self.assertEqual(check_face_presence(self.observations())['code'],'invalid_capture')
 
 if __name__=='__main__':unittest.main()

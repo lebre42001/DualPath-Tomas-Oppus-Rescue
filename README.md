@@ -2,6 +2,12 @@
 
 This workspace now contains the mobile app, web system, database references, AI training service, plus the original UI references.
 
+Civilian report sending uses a face-presence camera check without a blink.
+Account verification retains its face/blink check. Failed sends keep the face
+check for the same report in the open form, with an editable Retry flow;
+Successful appears only after server receipt. See the
+[current web/worker deployment notes](DOKPLOY_DEPLOYMENT.md#civilian-report-face-check-and-delivery-results-2026-11-10).
+
 ## Stack
 
 - Mobile experience: Progressive Web App on top of Laravel

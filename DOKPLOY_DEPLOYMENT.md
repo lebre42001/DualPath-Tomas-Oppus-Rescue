@@ -5,6 +5,38 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Civilian report face check and delivery results (2026-11-10)
+
+Civilian report submission now captures a single steady, visible face from the
+camera and checks face presence on the private worker. The report check requires
+no blink. Initial account verification still uses the existing face/blink
+challenge. A report face check does not establish identity, liveness, or incident
+truth; the account gate and administrative assessment remain separate.
+
+Report challenges bind the signed worker result to the authenticated user,
+submission UUID, and exact selfie hash. A completed report check is valid for
+24 hours and can be reused only for that same pending submission. A failed send
+keeps the check and selfie in the active form while the civilian edits their
+description, scene photo, or location. Reopening a saved draft or closing/reloading
+the page requires a new check; private face images and proof tokens are not saved
+in browser draft storage. Each actual send still refreshes required GPS.
+
+The Successful dialog appears only after an authenticated server receipt; OK
+opens the existing report confirmation. Failed offers Retry, which returns to
+the editable form. An interrupted connection means receipt is unconfirmed. The
+same submission ID is reconciled before retry, so a lost response cannot create
+a second report. Report proof consumption and incident persistence are atomic;
+failed database/media writes leave the proof usable for another attempt.
+
+Deploy web and the private face worker together, run the normal migrations
+(including `2026_11_10_000001_bind_report_face_checks_to_submissions`), rebuild
+Vite assets, clear Laravel caches, and restart the face worker. Its readiness
+must advertise `report_face_check: face_presence_v1` and
+`account_check: face_blink_challenge_v1`. Keep the existing private signing key,
+database, model, and uploaded files. No severity-model change, Arduino upload,
+or native APK rebuild is required. Previous per-report blink instructions below
+describe the older workflow and are superseded by this section for report checks.
+
 ## Personal admin logs from Profile (2026-11-09)
 
 Admin Profile now links to **My Admin Logs** at `/profile/admin-logs`, with a

@@ -186,7 +186,7 @@ class IncidentReportController extends Controller
 
         $validator = Validator::make($request->all(), [
             'description' => ['required', 'string', 'max:1000'],
-            'submission_id' => ['nullable', 'uuid'],
+            'submission_id' => [$isCivilian ? 'required' : 'nullable', 'uuid'],
             'liveness_proof' => [$isCivilian ? 'required' : 'nullable', 'string', 'size:64'],
             'location_text' => ['required', 'string', 'max:180'],
             'latitude' => [Rule::requiredIf($isCivilian), 'nullable', 'numeric', 'between:-90,90'],
@@ -211,7 +211,7 @@ class IncidentReportController extends Controller
             ],
         ], [
             'location_text.required' => 'Enter the barangay, road, or nearby landmark so rescuers can find the incident. GPS is also required.',
-            'liveness_proof.required' => 'Complete the live face and blink check before sending.',
+            'liveness_proof.required' => 'Complete the face check before sending.',
             'latitude.required' => 'Enable device location, allow browser location access, and lock GPS before sending the emergency report.',
             'longitude.required' => 'Enable device location, allow browser location access, and lock GPS before sending the emergency report.',
             'description.required' => 'Describe the emergency before sending. The AI severity review uses this text as its main basis.',
@@ -248,7 +248,7 @@ class IncidentReportController extends Controller
 
         $description = trim((string) ($validated['description'] ?? ''));
         if ($isCivilian) {
-            app(FaceLivenessProof::class)->assertValid($request->user(), 'report', $validated['liveness_proof'] ?? null, $request->file('selfie_capture') ?: $request->file('selfie'));
+            app(FaceLivenessProof::class)->assertValid($request->user(), 'report', $validated['liveness_proof'] ?? null, $request->file('selfie_capture') ?: $request->file('selfie'), $validated['submission_id'] ?? null);
         }
         $descriptionForStorage = $description !== '' ? $description : 'No short description provided.';
 
@@ -304,55 +304,66 @@ class IncidentReportController extends Controller
             }
         }
 
-        if ($selfieUpload) {
-            if ($isCivilian) {
-                app(FaceLivenessProof::class)->consume($request->user(), 'report', $validated['liveness_proof'] ?? null, $selfieUpload);
+        try {
+            if ($selfieUpload) {
+                $selfiePath = $selfieUpload->store('incident-selfies');
+                if (! $selfiePath) {
+                    throw new \RuntimeException('The verification photo could not be stored.');
+                }
             }
-            $selfiePath = $selfieUpload->store('incident-selfies');
-        }
+            if ($evidenceUpload) {
+                $evidencePath = $evidenceUpload->store('incident-evidence');
+                if (! $evidencePath) {
+                    throw new \RuntimeException('The scene photo could not be stored.');
+                }
+            }
 
-        if ($evidenceUpload) {
-            $evidencePath = $evidenceUpload->store('incident-evidence');
+            $attributes = [
+                'report_code' => 'INC-'.now()->format('YmdHis').'-'.Str::upper(Str::random(4)),
+                'reported_by' => Auth::id(),
+                'reporter_name' => Auth::user()?->name ?? 'Web Operator',
+                'reporter_contact' => Auth::user()?->responderProfile?->phone,
+                'incident_type' => $incidentType,
+                'severity' => $severity,
+                'status' => 'received',
+                'channel' => $channel,
+                'transmission_type' => $transmissionType,
+                'location_text' => $validated['location_text'],
+                'latitude' => $validated['latitude'] ?? null,
+                'longitude' => $validated['longitude'] ?? null,
+                'description' => $descriptionForStorage,
+                'reported_fatality_flag' => (bool) ($analysis['reported_fatality_flag'] ?? false),
+                'ai_summary' => $analysis['summary'],
+                'ai_confidence' => $analysis['confidence'],
+                'ai_source' => $analysis['source'],
+                'ai_status' => $analysis['status'],
+                'ai_model_name' => $analysis['model_name'],
+                'ai_model_version' => $analysis['model_version'],
+                'ai_review_required' => $analysis['review_required'],
+                'ai_probabilities' => $analysis['probabilities'],
+                'ai_processed_at' => $analysis['source'] === 'manual_only' ? null : now(),
+                'ai_error_message' => null,
+                'photo_relevance_label' => $analysis['photo_relevance_label'] ?? null,
+                'photo_relevance_confidence' => $analysis['photo_relevance_confidence'] ?? null,
+                'photo_relevance_probabilities' => $analysis['photo_relevance_probabilities'] ?? null,
+                'photo_relevance_overridden' => $analysis['photo_relevance_overridden'] ?? false,
+                'evidence_type' => $evidenceType,
+                'evidence_path' => $evidencePath,
+                'evidence_original_name' => $evidenceOriginalName,
+                'reporter_selfie_path' => $selfiePath,
+                'reporter_selfie_original_name' => $selfieOriginalName,
+                'reporter_selfie_captured_at' => $selfiePath ? now() : null,
+                'transmitted_at' => now(),
+                'status_updated_at' => now(),
+            ];
+            $persist = fn (): array => $ingestor->persist($ingestKey, $attributes);
+            $result = $isCivilian
+                ? app(FaceLivenessProof::class)->storeReport($request->user(), $validated['liveness_proof'], $selfieUpload, $validated['submission_id'], $persist)
+                : $persist();
+        } catch (\Throwable $exception) {
+            Storage::delete(array_filter([$evidencePath, $selfiePath]));
+            throw $exception;
         }
-
-        $result = $ingestor->persist($ingestKey, [
-            'report_code' => 'INC-'.now()->format('YmdHis').'-'.Str::upper(Str::random(4)),
-            'reported_by' => Auth::id(),
-            'reporter_name' => Auth::user()?->name ?? 'Web Operator',
-            'reporter_contact' => Auth::user()?->responderProfile?->phone,
-            'incident_type' => $incidentType,
-            'severity' => $severity,
-            'status' => 'received',
-            'channel' => $channel,
-            'transmission_type' => $transmissionType,
-            'location_text' => $validated['location_text'],
-            'latitude' => $validated['latitude'] ?? null,
-            'longitude' => $validated['longitude'] ?? null,
-            'description' => $descriptionForStorage,
-            'reported_fatality_flag' => (bool) ($analysis['reported_fatality_flag'] ?? false),
-            'ai_summary' => $analysis['summary'],
-            'ai_confidence' => $analysis['confidence'],
-            'ai_source' => $analysis['source'],
-            'ai_status' => $analysis['status'],
-            'ai_model_name' => $analysis['model_name'],
-            'ai_model_version' => $analysis['model_version'],
-            'ai_review_required' => $analysis['review_required'],
-            'ai_probabilities' => $analysis['probabilities'],
-            'ai_processed_at' => $analysis['source'] === 'manual_only' ? null : now(),
-            'ai_error_message' => null,
-            'photo_relevance_label' => $analysis['photo_relevance_label'] ?? null,
-            'photo_relevance_confidence' => $analysis['photo_relevance_confidence'] ?? null,
-            'photo_relevance_probabilities' => $analysis['photo_relevance_probabilities'] ?? null,
-            'photo_relevance_overridden' => $analysis['photo_relevance_overridden'] ?? false,
-            'evidence_type' => $evidenceType,
-            'evidence_path' => $evidencePath,
-            'evidence_original_name' => $evidenceOriginalName,
-            'reporter_selfie_path' => $selfiePath,
-            'reporter_selfie_original_name' => $selfieOriginalName,
-            'reporter_selfie_captured_at' => $selfiePath ? now() : null,
-            'transmitted_at' => now(),
-            'status_updated_at' => now(),
-        ]);
         $report = $result['report'];
 
         if (! $result['created']) {

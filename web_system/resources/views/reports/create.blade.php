@@ -169,7 +169,7 @@
                                 <div class="selfie-camera-copy">
                                     <span class="tag blue">Live face check</span>
                                     <h3 id="selfieVerificationTitle">Front-camera selfie verification</h3>
-                                    <p data-selfie-camera-status>Show one face and blink slowly when asked. A live check is required before sending.</p>
+                                    <p data-selfie-camera-status>Look at the camera. When one face is detected and steady, capture starts automatically. No blink needed.</p>
                                 </div>
                                 <div class="selfie-camera-frame" data-face-guide>
                                     <video data-selfie-camera-preview autoplay muted playsinline></video>
@@ -178,7 +178,7 @@
                                     <span class="live-face-label" data-face-guide-label hidden aria-hidden="true"></span>
                                 </div>
                                 <div class="button-row selfie-camera-actions">
-                                    <button type="button" class="btn btn-primary" data-selfie-camera-capture>Check Face &amp; Blink</button>
+                                    <button type="button" class="btn btn-primary" data-selfie-camera-capture>Check Face</button>
                                     <button type="button" class="btn btn-secondary" data-selfie-camera-retry hidden>Retry Front Camera</button>
                                     <button type="button" class="btn btn-secondary" data-selfie-camera-fallback>Camera help</button>
                                     <button type="button" class="btn btn-danger" data-selfie-camera-cancel>Cancel</button>
@@ -335,4 +335,7 @@
             @endif
         </form>
     </section>
+    @if ($isCivilian)
+        @include('partials.report-delivery-result')
+    @endif
 @endsection
