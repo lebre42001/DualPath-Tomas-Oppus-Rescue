@@ -7,6 +7,8 @@
 class MeshSX127xPort {
 public:
   void begin(int ss){ss_=ss;}
+  uint8_t readRegister(uint8_t address){return read(address);}
+  void writeRegister(uint8_t address,uint8_t value){write(address,value);}
   uint8_t flags(){return read(0x12);}
   bool receiving(){
     // RX_DONE belongs to the receive handler, even if the modem looks idle.
@@ -45,6 +47,6 @@ private:
     return ((symbols*4+49)*symbolUs/4+999)/1000;
   }
   int ss_=5;
-  uint8_t read(uint8_t address){SPI.beginTransaction(SPISettings(8000000,MSBFIRST,SPI_MODE0));digitalWrite(ss_,LOW);SPI.transfer(address&0x7f);uint8_t value=SPI.transfer(0);digitalWrite(ss_,HIGH);SPI.endTransaction();return value;}
-  void write(uint8_t address,uint8_t value){SPI.beginTransaction(SPISettings(8000000,MSBFIRST,SPI_MODE0));digitalWrite(ss_,LOW);SPI.transfer(address|0x80);SPI.transfer(value);digitalWrite(ss_,HIGH);SPI.endTransaction();}
+  uint8_t read(uint8_t address){SPI.beginTransaction(SPISettings(AksyResRadio::spiFrequency,MSBFIRST,SPI_MODE0));digitalWrite(ss_,LOW);SPI.transfer(address&0x7f);uint8_t value=SPI.transfer(0);digitalWrite(ss_,HIGH);SPI.endTransaction();return value;}
+  void write(uint8_t address,uint8_t value){SPI.beginTransaction(SPISettings(AksyResRadio::spiFrequency,MSBFIRST,SPI_MODE0));digitalWrite(ss_,LOW);SPI.transfer(address|0x80);SPI.transfer(value);digitalWrite(ss_,HIGH);SPI.endTransaction();}
 };

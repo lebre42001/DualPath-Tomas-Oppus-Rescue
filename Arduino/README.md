@@ -15,6 +15,27 @@ The active mesh uses `GatewayNode1/GatewayNode1.ino` for NODE_1 and the configur
 
 ## Active Mesh Flow
 
+### Radio startup crash fix (2026-11-11)
+
+The NODE_10 crash with ELF SHA256 prefix `5041ac70c` was decoded against its
+matching local ELF: `LoRaClass::setLdoFlag()` -> `setSpreadingFactor()` ->
+`AksyResRadio::configure()`. LoRa 0.8.0 divides by a value derived from SPI
+register readings; an invalid reading can produce an integer divide-by-zero.
+This identifies the crash location, not the physical cause of the bad reading.
+
+All active sketches now write the fixed SF7/SF9 modem registers without that
+division, verify the chip/mode/profile twice, and stop radio startup safely if
+verification fails. `[RADIO STARTUP]` prints raw version/mode/config values.
+Both library and direct-register SPI use 1 MHz instead of 8 MHz to give jumper
+wiring more margin. Frequency, bandwidth, TX power and deployed packet framing
+remain the same. This does not repair an unpowered or damaged radio.
+
+Run `powershell.exe -NoProfile -ExecutionPolicy Bypass -File
+.\Arduino\test_radio_startup.ps1` for both profile and register fault tests.
+Upload the matching updated sketch to each physical board to apply this fix;
+no website deployment can install it on an ESP32. Hardware reception, report
+delivery and admin acknowledgment still require a real mesh test.
+
 ### Whole-mesh fast discovery and radio scheduling
 
 See [CONNECTION_STABILITY.md](CONNECTION_STABILITY.md) for the matching gateway

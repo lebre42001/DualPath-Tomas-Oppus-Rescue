@@ -1316,16 +1316,21 @@ void setup() {
 
   SPI.begin(LORA_SCK, LORA_MISO, LORA_MOSI, LORA_SS);
   LoRa.setPins(LORA_SS, LORA_RST, LORA_DIO0);
-  if (!LoRa.begin(LORA_FREQUENCY)) {
-    Serial.println("LoRa init failed. Check wiring and radio settings.");
+  LoRa.setSPIFrequency(AksyResRadio::spiFrequency);
+  meshRadioPort.begin(LORA_SS);
+  const bool chipFound = LoRa.begin(LORA_FREQUENCY);
+  const bool profileReady = chipFound && AksyResRadio::configure(LoRa, meshRadioPort);
+  Serial.println("[RADIO STARTUP] " + AksyResRadio::startupRegisters(meshRadioPort));
+  if (!profileReady) {
+    if (chipFound) LoRa.sleep();
+    Serial.println(chipFound ? "ERROR: LoRa register verification failed; radio disabled, saved reports retained." :
+      "ERROR: LoRa chip not detected. Check 3.3 V, common GND and NSS/SCK/MISO/MOSI/RESET wiring.");
     while (true) {
       updateLedIndicators();
       delay(2);
     }
   }
 
-  AksyResRadio::configure(LoRa);
-  meshRadioPort.begin(LORA_SS);
   meshRadio.begin(esp_random());
   gatewayBeaconBoot=String(esp_random(),HEX);
   LoRa.receive();

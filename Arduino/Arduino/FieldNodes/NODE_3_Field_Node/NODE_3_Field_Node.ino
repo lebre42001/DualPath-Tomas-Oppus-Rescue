@@ -1379,9 +1379,16 @@ void setup() {
 
   SPI.begin(LORA_SCK, LORA_MISO, LORA_MOSI, LORA_SS);
   LoRa.setPins(LORA_SS, LORA_RST, LORA_DIO0);
+  LoRa.setSPIFrequency(AksyResRadio::spiFrequency);
+  meshRadioPort.begin(LORA_SS);
 
-  if (!LoRa.begin(LORA_FREQUENCY)) {
-    Serial.println("ERROR: LoRa initialization failed. Check 3.3 V power and NSS/SCK/MISO/MOSI/REST/DIO0 wiring.");
+  const bool chipFound = LoRa.begin(LORA_FREQUENCY);
+  const bool profileReady = chipFound && AksyResRadio::configure(LoRa, meshRadioPort);
+  Serial.println("[RADIO STARTUP] " + AksyResRadio::startupRegisters(meshRadioPort));
+  if (!profileReady) {
+    if (chipFound) LoRa.sleep();
+    Serial.println(chipFound ? "ERROR: LoRa register verification failed; radio disabled, saved reports retained." :
+      "ERROR: LoRa chip not detected. Check 3.3 V, common GND and NSS=5 SCK=18 MISO=19 MOSI=23 RESET=27 DIO0=26.");
     while (true) {
       dnsServer.processNextRequest();
       localServer.handleClient();
@@ -1390,8 +1397,6 @@ void setup() {
     }
   }
 
-  AksyResRadio::configure(LoRa);
-  meshRadioPort.begin(LORA_SS);
   meshRadio.begin(esp_random());
   peerDiscovery.begin(millis(),NODE_NUMBER,esp_random());
   LoRa.receive();
