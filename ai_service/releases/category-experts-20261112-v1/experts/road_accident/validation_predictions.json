@@ -1,0 +1,3329 @@
+{
+  "split": "validation",
+  "model_version": "category-experts-20261112-v1/road_accident",
+  "labels": [
+    "minor",
+    "serious",
+    "critical",
+    "needs_review"
+  ],
+  "dataset_fingerprint": "814bb866b8fb633029a63c84ac4700b34de62b61b19ce73a9dde29aa092732ce",
+  "all_data_reviewed": false,
+  "rows": [
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_03_CEB",
+      "group_id": "road_accident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.01216010209613809,
+        0.3257686685368733,
+        0.655293779583791,
+        0.006777449783197715
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_03_EN",
+      "group_id": "road_accident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.00206119217216178,
+        0.08059850505116571,
+        0.9064178978484706,
+        0.010922404928201866
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_03_MIXED",
+      "group_id": "road_accident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0017017128177404665,
+        0.04071784784622653,
+        0.9566779975908296,
+        0.0009024417452033175
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_03_TL",
+      "group_id": "road_accident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.004960201281560207,
+        0.3450447338263049,
+        0.6442666876433943,
+        0.005728377248740478
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_06_CEB",
+      "group_id": "road_accident__additional_critical_ongoing_seizure_without_recovery",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.005992626117501577,
+        0.03940647683553379,
+        0.9510206905253136,
+        0.003580206521651223
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_06_EN",
+      "group_id": "road_accident__additional_critical_ongoing_seizure_without_recovery",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0024663719776013785,
+        0.021613068322394905,
+        0.9737828293263631,
+        0.002137730373640725
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_06_MIXED",
+      "group_id": "road_accident__additional_critical_ongoing_seizure_without_recovery",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.00706611307469353,
+        0.03920524675654964,
+        0.9512132295734492,
+        0.0025154105953077797
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_06_TL",
+      "group_id": "road_accident__additional_critical_ongoing_seizure_without_recovery",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.006453450768695575,
+        0.01286406548512128,
+        0.9763318585038947,
+        0.004350625242288328
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_01_CEB",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9971765194728269,
+        0.00031658609546206636,
+        0.0004901932351892985,
+        0.002016701196521803
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_01_EN",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9723097686056522,
+        0.017040442781641733,
+        0.006278761534429647,
+        0.00437102707827652
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_01_MIXED",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9957530598666098,
+        0.0023880926096108415,
+        0.0011773857245789498,
+        0.0006814617992004588
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_01_TL",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9991810581229275,
+        0.00022219799735438825,
+        0.00015548400965375957,
+        0.00044125987006459264
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_02_CEB",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9896909402546028,
+        0.0024890898734757794,
+        0.004591604765885378,
+        0.0032283651060361325
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_02_EN",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9985347339584539,
+        0.00035617064011796417,
+        0.0005905609448780626,
+        0.0005185344565501416
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_02_MIXED",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9920957125797567,
+        0.004337570621751692,
+        0.002228782114746815,
+        0.0013379346837447202
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_02_TL",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9925839551269945,
+        0.004753021012360109,
+        0.0008149366941711432,
+        0.001848087166474299
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_05_CEB",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9843376901669887,
+        0.0025143940479413845,
+        0.0045538694131246745,
+        0.008594046371945135
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_05_EN",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9393506704157043,
+        0.030920183186332394,
+        0.017114253189123553,
+        0.012614893208839725
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_05_MIXED",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9942563428492843,
+        0.0008064635308094631,
+        0.0007456963559503723,
+        0.004191497263956038
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_MINOR_05_TL",
+      "group_id": "road_accident__additional_minor_cosmetic_vehicle_contact",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9682065290499997,
+        0.0034690027934638165,
+        0.0073540965625597775,
+        0.020970371593976786
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_NEEDS_REVIEW_02_CEB",
+      "group_id": "road_accident__additional_review_contradictory_same_person_responsiveness",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.011994785324628585,
+        0.01714385769364407,
+        0.24121110823012382,
+        0.7296502487516034
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_NEEDS_REVIEW_02_EN",
+      "group_id": "road_accident__additional_review_contradictory_same_person_responsiveness",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.07039620578385083,
+        0.3167811231601761,
+        0.23023796762337526,
+        0.3825847034325977
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_NEEDS_REVIEW_02_MIXED",
+      "group_id": "road_accident__additional_review_contradictory_same_person_responsiveness",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.011008299116983282,
+        0.13409063940346833,
+        0.0750263570425784,
+        0.77987470443697
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_NEEDS_REVIEW_02_TL",
+      "group_id": "road_accident__additional_review_contradictory_same_person_responsiveness",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.007011594222681885,
+        0.09006653391663592,
+        0.07937624667764831,
+        0.8235456251830339
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_SERIOUS_01_CEB",
+      "group_id": "road_accident__additional_serious_controlled_limb_wound",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.05891237604789588,
+        0.9260841858215701,
+        0.013951740464565411,
+        0.0010516976659684714
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_SERIOUS_01_EN",
+      "group_id": "road_accident__additional_serious_controlled_limb_wound",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.010032609099130592,
+        0.9799292124080399,
+        0.009678169308414128,
+        0.00036000918441534584
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_SERIOUS_01_MIXED",
+      "group_id": "road_accident__additional_serious_controlled_limb_wound",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0003443588228515327,
+        0.9910429837407436,
+        0.008600102869343021,
+        1.2554567061840539e-05
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_SERIOUS_01_TL",
+      "group_id": "road_accident__additional_serious_controlled_limb_wound",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.07246585077396916,
+        0.9165997037590577,
+        0.0076550727040226,
+        0.003279372762950385
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_CRITICAL_02_CEB",
+      "group_id": "road_accident__critical_absent_normal_breathing",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.009945852836316108,
+        0.4718729562476965,
+        0.45641010043920127,
+        0.061771090476786236
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_CRITICAL_02_EN",
+      "group_id": "road_accident__critical_absent_normal_breathing",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.002362125686616365,
+        0.16244882285918796,
+        0.7691066836230608,
+        0.06608236783113487
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_CRITICAL_02_MIXED",
+      "group_id": "road_accident__critical_absent_normal_breathing",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.015233206253659544,
+        0.10421443888082564,
+        0.6612015156476091,
+        0.2193508392179058
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_CRITICAL_02_TL",
+      "group_id": "road_accident__critical_absent_normal_breathing",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.025624918281425425,
+        0.040299210142601606,
+        0.9015214319402121,
+        0.03255443963576081
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_CRITICAL_03_CEB",
+      "group_id": "road_accident__critical_uncontrolled_external_bleeding",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.003763791624135788,
+        0.03288102419288175,
+        0.9602678046365919,
+        0.003087379546390725
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_CRITICAL_03_EN",
+      "group_id": "road_accident__critical_uncontrolled_external_bleeding",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.006624571510212961,
+        0.0174326045460895,
+        0.9316011794510021,
+        0.04434164449269547
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_CRITICAL_03_MIXED",
+      "group_id": "road_accident__critical_uncontrolled_external_bleeding",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0019328898646380202,
+        0.003651022744002419,
+        0.980840387107488,
+        0.013575700283871613
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_CRITICAL_03_TL",
+      "group_id": "road_accident__critical_uncontrolled_external_bleeding",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.004451429390735157,
+        0.02093798231513628,
+        0.9688559359421108,
+        0.005754652352017915
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_MINOR_03_CEB",
+      "group_id": "road_accident__minor_loose_panel",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.71702836381891,
+        0.08608155316028139,
+        0.03529925500968291,
+        0.16159082801112576
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_MINOR_03_EN",
+      "group_id": "road_accident__minor_loose_panel",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.8207374032113551,
+        0.07756367962913521,
+        0.02026159674147096,
+        0.08143732041803871
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_MINOR_03_MIXED",
+      "group_id": "road_accident__minor_loose_panel",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9726695628777755,
+        0.013335919692183874,
+        0.001739377775479123,
+        0.012255139654561521
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_MINOR_03_TL",
+      "group_id": "road_accident__minor_loose_panel",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9016302003729472,
+        0.020045462239916014,
+        0.020596683598387552,
+        0.057727653788749375
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_NEEDS_REVIEW_05_CEB",
+      "group_id": "road_accident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.12979315661118523,
+        0.06352078297754858,
+        0.4773173784624166,
+        0.32936868194884955
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_NEEDS_REVIEW_05_EN",
+      "group_id": "road_accident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.025211838557465553,
+        0.009761174381026277,
+        0.11450559846221803,
+        0.85052138859929
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_NEEDS_REVIEW_05_MIXED",
+      "group_id": "road_accident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.035494484164288936,
+        0.15695871625600769,
+        0.13249555086715215,
+        0.6750512487125514
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_NEEDS_REVIEW_05_TL",
+      "group_id": "road_accident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.16492977237973622,
+        0.0583505476922333,
+        0.1784084605820318,
+        0.5983112193459987
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_NEEDS_REVIEW_11_CEB",
+      "group_id": "road_accident__needs_review_translation_or_quotation",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.04943358285540829,
+        0.014038155000003813,
+        0.04386019951244715,
+        0.8926680626321407
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_NEEDS_REVIEW_11_EN",
+      "group_id": "road_accident__needs_review_translation_or_quotation",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.006075299179282013,
+        0.02587962417476004,
+        0.049015108896347886,
+        0.9190299677496101
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_NEEDS_REVIEW_11_MIXED",
+      "group_id": "road_accident__needs_review_translation_or_quotation",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.007368708827742441,
+        0.019744597362497885,
+        0.12927205726798624,
+        0.8436146365417734
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_NEEDS_REVIEW_11_TL",
+      "group_id": "road_accident__needs_review_translation_or_quotation",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.011903322412775561,
+        0.04380733074398177,
+        0.478865026765766,
+        0.46542432007747675
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_SERIOUS_01_CEB",
+      "group_id": "road_accident__serious_skin_abrasion",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.563819393513714,
+        0.3759799764399792,
+        0.04205465306951901,
+        0.018145976976787808
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_SERIOUS_01_EN",
+      "group_id": "road_accident__serious_skin_abrasion",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.016508768234573333,
+        0.9728737835089715,
+        0.009785073827477666,
+        0.0008323744289774138
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_SERIOUS_01_MIXED",
+      "group_id": "road_accident__serious_skin_abrasion",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.06888115556046447,
+        0.9132370936479681,
+        0.017335176860022162,
+        0.0005465739315453467
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_SERIOUS_01_TL",
+      "group_id": "road_accident__serious_skin_abrasion",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.31820437599950413,
+        0.6130772566951405,
+        0.04765585049749693,
+        0.021062516807858395
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_SERIOUS_12_CEB",
+      "group_id": "road_accident__serious_back_pain_after_strain",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.00030144134093679215,
+        0.9992759839549552,
+        0.00033792941256626115,
+        8.464529154167627e-05
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_SERIOUS_12_EN",
+      "group_id": "road_accident__serious_back_pain_after_strain",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0014400592748549377,
+        0.9937314170231031,
+        0.002089215914455566,
+        0.0027393077875863363
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_SERIOUS_12_MIXED",
+      "group_id": "road_accident__serious_back_pain_after_strain",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0006059513687316214,
+        0.9964074059063738,
+        0.001507660279203888,
+        0.0014789824456907254
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_ROAD_ACCIDENT_SERIOUS_12_TL",
+      "group_id": "road_accident__serious_back_pain_after_strain",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.00034368916400469117,
+        0.9987825738598507,
+        0.00012829262205388451,
+        0.0007454443540906891
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-CEB002",
+      "group_id": "ROADBASE_initial80:shared_minor_cycle_02",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.8880621917377891,
+        0.10802042404771965,
+        0.00018762504496532212,
+        0.0037297591695258808
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-CEB009",
+      "group_id": "ROADBASE_initial80:shared_serious_pedestrian_02",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.01839020660770815,
+        0.9150160082494456,
+        0.06527580805037544,
+        0.0013179770924706049
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-CEB010",
+      "group_id": "ROADBASE_initial80:ceb_serious_05",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.003336000753673263,
+        0.8889629288597809,
+        0.05470674301705854,
+        0.05299432736948714
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-CEB012",
+      "group_id": "ROADBASE_initial80:shared_critical_fire_02",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0012102568874609778,
+        0.005299176910449479,
+        0.9916589661732975,
+        0.0018316000287920185
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-CEB016",
+      "group_id": "ROADBASE_initial80:shared_review_01",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0032774863700156657,
+        0.0006295531421837241,
+        0.0003235636424172612,
+        0.9957693968453833
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-EN003",
+      "group_id": "ROADBASE_initial80:shared_minor_cycle_02",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.1432374645472126,
+        0.8549510959945856,
+        0.0008686487290551455,
+        0.0009427907291465486
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-EN012",
+      "group_id": "ROADBASE_initial80:shared_critical_fire_02",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.005204801893139093,
+        0.01564065535566054,
+        0.9332082066331863,
+        0.04594633611801403
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-EN015",
+      "group_id": "ROADBASE_initial80:en_critical_05",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.03674292659650015,
+        0.00309820705898638,
+        0.9498957805781241,
+        0.010263085766389362
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-EN016",
+      "group_id": "ROADBASE_initial80:shared_review_01",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.006138861468682868,
+        0.0014842820812604068,
+        0.0010310704190447883,
+        0.991345786031012
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-MIX002",
+      "group_id": "ROADBASE_initial80:mixed_minor_02",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.997997808612171,
+        0.0019503106981023782,
+        1.2197539725354164e-05,
+        3.968315000135585e-05
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-MIX008",
+      "group_id": "ROADBASE_initial80:mixed_serious_03",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0004556931035751936,
+        0.9873738108200532,
+        0.011025260235089976,
+        0.0011452358412816022
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-MIX009",
+      "group_id": "ROADBASE_initial80:shared_serious_pedestrian_02",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.04379183547679339,
+        0.8155044052730186,
+        0.13471063810288095,
+        0.005993121147307205
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-MIX010",
+      "group_id": "ROADBASE_initial80:mixed_serious_05",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.005109806704911833,
+        0.9712370477813504,
+        0.0012333846249200447,
+        0.022419760888817565
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-MIX012",
+      "group_id": "ROADBASE_initial80:shared_critical_fire_02",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0009580703838084931,
+        0.0034110437103740637,
+        0.9909149258083931,
+        0.00471596009742443
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-MIX016",
+      "group_id": "ROADBASE_initial80:shared_review_01",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0004827100863015159,
+        0.0008861409026088304,
+        0.00043232146688409074,
+        0.9981988275442056
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-TL003",
+      "group_id": "ROADBASE_initial80:tl_minor_03",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9990370841772467,
+        0.0001982338650045651,
+        0.0005205756356929803,
+        0.00024410632205577293
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-TL005",
+      "group_id": "ROADBASE_initial80:tl_minor_05",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9712353232714672,
+        0.007660670300091269,
+        0.010355279955145139,
+        0.010748726473296262
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-TL010",
+      "group_id": "ROADBASE_initial80:tl_serious_05",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.06312372781360083,
+        0.8174610751724114,
+        0.08644103208510587,
+        0.03297416492888188
+      ]
+    },
+    {
+      "case_id": "ROADBASE_INITIAL80-TL016",
+      "group_id": "ROADBASE_initial80:shared_review_01",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        2.9496015580862176e-05,
+        4.581383138735699e-05,
+        0.00015511674635994646,
+        0.9997695734066718
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-CRITICAL-005",
+      "group_id": "ROADBASE_responder850:SPLIT-a766fbec9444c944",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.00014324762788517394,
+        0.01882619203413942,
+        0.980599053249621,
+        0.0004315070883543668
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-CRITICAL-021",
+      "group_id": "ROADBASE_responder850:SPLIT-f1d8393c248f1f1e",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.004282004296265183,
+        0.02878346452921193,
+        0.960696324806215,
+        0.006238206368307935
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-CRITICAL-037",
+      "group_id": "ROADBASE_responder850:SPLIT-5b999467941ffa6b",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        4.261333538992307e-05,
+        3.690781684296257e-05,
+        0.9997071558309332,
+        0.00021332301683400743
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-CRITICAL-044",
+      "group_id": "ROADBASE_responder850:SPLIT-ed13599721d5c8ad",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        3.5940717580228587e-05,
+        0.0019179019345193032,
+        0.997840060409166,
+        0.00020609693873448336
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-CRITICAL-053",
+      "group_id": "ROADBASE_responder850:SPLIT-0522e51594396321",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.006992484085449494,
+        0.00475150834600861,
+        0.9824696130781994,
+        0.005786394490342689
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-CRITICAL-058",
+      "group_id": "ROADBASE_responder850:SPLIT-08a0911fc95f8374",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.01398820353758817,
+        0.004989415455988191,
+        0.960504574586386,
+        0.020517806420037563
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-MINOR-005",
+      "group_id": "ROADBASE_responder850:SPLIT-2d74b2ae0dc7f463",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9984912346423326,
+        0.00033928787590947523,
+        0.0010196876800203669,
+        0.0001497898017376118
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-MINOR-015",
+      "group_id": "ROADBASE_responder850:SPLIT-b00b56d35351acdc",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.8739788640602066,
+        0.07106651792982994,
+        0.012242021196816314,
+        0.04271259681314697
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-MINOR-017",
+      "group_id": "ROADBASE_responder850:SPLIT-eb8fc39faef2355e",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9859488859274956,
+        0.012269842883366024,
+        0.000754808063582523,
+        0.001026463125555857
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-MINOR-030",
+      "group_id": "ROADBASE_responder850:SPLIT-641e06b58c1464f1",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9540537244052819,
+        0.019839467260142313,
+        0.024662877298635526,
+        0.0014439310359400399
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-MINOR-041",
+      "group_id": "ROADBASE_responder850:SPLIT-515c30401a7e3fe1",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9949155139803266,
+        0.004064889441309377,
+        0.00047207741517287107,
+        0.000547519163191157
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-MINOR-044",
+      "group_id": "ROADBASE_responder850:SPLIT-b20e242e4452c85c",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9950316393110599,
+        0.004723145833848179,
+        0.00021126130429282113,
+        3.395355079907828e-05
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-MINOR-048",
+      "group_id": "ROADBASE_responder850:SPLIT-641e06b58c1464f1",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.993059920080378,
+        0.0014556946652244827,
+        0.004137593042266317,
+        0.0013467922121312042
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-MINOR-054",
+      "group_id": "ROADBASE_responder850:SPLIT-a48c309eec7e4d7b",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9992794443368035,
+        3.158413127764008e-05,
+        0.0004888521325319337,
+        0.00020011939938696766
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-NEEDS_REVIEW-002",
+      "group_id": "ROADBASE_responder850:SPLIT-0c35bfef47ccd521",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.02693215618854057,
+        0.00956203983574516,
+        0.0033479933208301824,
+        0.9601578106548841
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-NEEDS_REVIEW-003",
+      "group_id": "ROADBASE_responder850:SPLIT-56d144c9f5b01ce0",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.336150835534057,
+        0.019576270309969678,
+        0.004097580073193718,
+        0.6401753140827796
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-NEEDS_REVIEW-004",
+      "group_id": "ROADBASE_responder850:SPLIT-9c0217fd975c7403",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.009993053218883137,
+        0.0009889650397274623,
+        0.00016229215004552613,
+        0.9888556895913438
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-NEEDS_REVIEW-011",
+      "group_id": "ROADBASE_responder850:SPLIT-11055e5974ab4825",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0023834293428330634,
+        0.0020188724384486586,
+        0.005186821343038459,
+        0.99041087687568
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-NEEDS_REVIEW-014",
+      "group_id": "ROADBASE_responder850:SPLIT-94b5da53347e32f8",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.038107950000070986,
+        0.046072146014722044,
+        0.05832884941377417,
+        0.8574910545714328
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-NEEDS_REVIEW-016",
+      "group_id": "ROADBASE_responder850:SPLIT-30059b69086c7a98",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.002674097036978577,
+        0.00125648977220748,
+        0.0054274559803837216,
+        0.9906419572104304
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-NEEDS_REVIEW-018",
+      "group_id": "ROADBASE_responder850:SPLIT-8c954aaf2c732fff",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.005118842038442179,
+        0.004996758522520756,
+        0.015123149008390707,
+        0.9747612504306464
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-NEEDS_REVIEW-019",
+      "group_id": "ROADBASE_responder850:SPLIT-9ac5488af5ca4c82",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.06541440233262852,
+        0.020958002877961287,
+        0.0233904485504744,
+        0.8902371462389359
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-NEEDS_REVIEW-024",
+      "group_id": "ROADBASE_responder850:SPLIT-2eca610d6f5f9047",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0006718886547615118,
+        0.00024577673319379595,
+        0.00010391386803821839,
+        0.9989784207440064
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-NEEDS_REVIEW-025",
+      "group_id": "ROADBASE_responder850:SPLIT-fb66118d4142c050",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0008164723407360351,
+        0.013849471420724966,
+        0.004771524966097653,
+        0.9805625312724413
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-NEEDS_REVIEW-032",
+      "group_id": "ROADBASE_responder850:SPLIT-88035ca2a7b329e7",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0009791460582158512,
+        0.024005966105339428,
+        0.0021450965600860097,
+        0.9728697912763588
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-NEEDS_REVIEW-033",
+      "group_id": "ROADBASE_responder850:SPLIT-615fae763dbdacf9",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.029811637366745327,
+        0.03445303843850026,
+        0.43433119949991267,
+        0.5014041246948417
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-NEEDS_REVIEW-046",
+      "group_id": "ROADBASE_responder850:SPLIT-5c78debe6e50082d",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0007139857904062298,
+        0.011024895557765086,
+        0.00039129892859933815,
+        0.9878698197232294
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-NEEDS_REVIEW-049",
+      "group_id": "ROADBASE_responder850:SPLIT-aab7978d367e73e3",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        8.548509817421513e-05,
+        0.00020943714976722757,
+        3.8595798167453584e-05,
+        0.9996664819538912
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-SERIOUS-005",
+      "group_id": "ROADBASE_responder850:SPLIT-829b10b2f207b088",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.013525200329862532,
+        0.7959044810792213,
+        0.1836230278144896,
+        0.006947290776426589
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-SERIOUS-006",
+      "group_id": "ROADBASE_responder850:SPLIT-51e2a47ede2d2710",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.03641771631680532,
+        0.9365257013117465,
+        0.004543952268056179,
+        0.02251263010339182
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-SERIOUS-007",
+      "group_id": "ROADBASE_responder850:SPLIT-485587c6c165f7d3",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0021490359697914135,
+        0.9935990454923643,
+        0.0027905402422922464,
+        0.0014613782955519793
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-SERIOUS-009",
+      "group_id": "ROADBASE_responder850:SPLIT-4dc11b15e00934c0",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0010127722429870607,
+        0.9938853140806754,
+        0.003739417040912678,
+        0.001362496635424789
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-SERIOUS-010",
+      "group_id": "ROADBASE_responder850:SPLIT-03b4b709f9c79233",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.03179158791870981,
+        0.9185349779198296,
+        0.004963396570621371,
+        0.044710037590839184
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-SERIOUS-012",
+      "group_id": "ROADBASE_responder850:SPLIT-14d6f7a25136b80f",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.022548657895634348,
+        0.9531580516772986,
+        0.020291023622297254,
+        0.004002266804769641
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-SERIOUS-016",
+      "group_id": "ROADBASE_responder850:SPLIT-e162fbedc2c81dd3",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0046409703972372825,
+        0.992892565277146,
+        0.0011349893518498592,
+        0.0013314749737669534
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-SERIOUS-024",
+      "group_id": "ROADBASE_responder850:SPLIT-485587c6c165f7d3",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0004108250010012785,
+        0.9974789516826346,
+        0.0012306608721804272,
+        0.0008795624441836406
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-SERIOUS-033",
+      "group_id": "ROADBASE_responder850:SPLIT-485587c6c165f7d3",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0004626800741239456,
+        0.9913461846515544,
+        0.007649585802951775,
+        0.0005415494713700556
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-SERIOUS-040",
+      "group_id": "ROADBASE_responder850:SPLIT-e4f47025081c6d93",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.24702105032410226,
+        0.7121627890955875,
+        0.031276977304465825,
+        0.009539183275844378
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-SERIOUS-046",
+      "group_id": "ROADBASE_responder850:SPLIT-53829f302828c70e",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.04069516463508943,
+        0.8944096839942526,
+        0.053935751509070984,
+        0.010959399861587189
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-SERIOUS-048",
+      "group_id": "ROADBASE_responder850:SPLIT-2502820b26a36f55",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.07196952428830723,
+        0.9239638173383224,
+        0.0024777634971537943,
+        0.0015888948762164694
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-CEB-SERIOUS-049",
+      "group_id": "ROADBASE_responder850:SPLIT-7970b8d7b3203d53",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0053158915922399555,
+        0.9934326431431163,
+        0.001029893233482047,
+        0.000221572031161701
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-023",
+      "group_id": "ROADBASE_responder850:SPLIT-fc01cd1990de89b5",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0023986204939380066,
+        0.08297814481150356,
+        0.8420740331555245,
+        0.07254920153903394
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-038",
+      "group_id": "ROADBASE_responder850:SPLIT-63c36a3858c63189",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.001905190619789099,
+        0.9211075812873288,
+        0.07378954058355354,
+        0.0031976875093284274
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-048",
+      "group_id": "ROADBASE_responder850:SPLIT-057d45c06095fabf",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.026055623635335017,
+        0.02556468848619886,
+        0.03286128508461927,
+        0.9155184027938469
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-052",
+      "group_id": "ROADBASE_responder850:SPLIT-b3b7c714a4693bf7",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0014119273919154629,
+        0.00036921514941475514,
+        0.010329336113845433,
+        0.9878895213448244
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-069",
+      "group_id": "ROADBASE_responder850:SPLIT-4031c77140644483",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9023550606368559,
+        0.031454823551149015,
+        0.003827223179699663,
+        0.06236289263229552
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-071",
+      "group_id": "ROADBASE_responder850:SPLIT-1b970f8172bc8cf2",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.001686128556677758,
+        0.002433872154313531,
+        0.9942195628129609,
+        0.0016604364760477003
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-072",
+      "group_id": "ROADBASE_responder850:SPLIT-e31b9b53a2051b97",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0003668883755232499,
+        0.0020088190989781198,
+        0.9432732519013064,
+        0.05435104062419209
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-075",
+      "group_id": "ROADBASE_responder850:SPLIT-bb94ee5d39e990a2",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.009571707911560375,
+        0.010513687106573955,
+        0.9322598526352835,
+        0.04765475234658226
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-083",
+      "group_id": "ROADBASE_responder850:SPLIT-6cd86a224502583d",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.00024941613251456223,
+        0.9931066109522909,
+        0.006548421410078624,
+        9.555150511578863e-05
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-086",
+      "group_id": "ROADBASE_responder850:SPLIT-cc4b9e463eb130c3",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.03897180880151411,
+        0.8979442507480899,
+        0.041415916655066096,
+        0.021668023795329734
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-089",
+      "group_id": "ROADBASE_responder850:SPLIT-5814e65d114f958b",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9956618978893055,
+        0.0005974232654193639,
+        0.0003020561529452163,
+        0.0034386226923298555
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-102",
+      "group_id": "ROADBASE_responder850:SPLIT-70da2d0f7f4508ca",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.025372579086849083,
+        0.8030895408451802,
+        0.13433279603482604,
+        0.037205084033144764
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-113",
+      "group_id": "ROADBASE_responder850:SPLIT-94c671bf606b1f4c",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.6162126069431673,
+        0.33747035438448186,
+        0.04060642244857568,
+        0.005710616223775275
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-116",
+      "group_id": "ROADBASE_responder850:SPLIT-1a4149d99f4bee7b",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0376958018266494,
+        0.01852502529148864,
+        0.3524858531887117,
+        0.5912933196931502
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-121",
+      "group_id": "ROADBASE_responder850:SPLIT-24ef6cb0b978315c",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.8886685076337848,
+        0.0036945283087642766,
+        0.005452064583902711,
+        0.1021848994735483
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-132",
+      "group_id": "ROADBASE_responder850:SPLIT-416f7b95ef18f227",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.012259029637677384,
+        0.02408079965779716,
+        0.013786834803688227,
+        0.9498733359008372
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-135",
+      "group_id": "ROADBASE_responder850:SPLIT-47c8fde9123b6790",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0019967978006441983,
+        0.09699617774686597,
+        0.8386188631004262,
+        0.06238816135206366
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-147",
+      "group_id": "ROADBASE_responder850:SPLIT-0f36d37b9f874b61",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.03172223437194159,
+        0.05885432393340839,
+        0.871458535665406,
+        0.0379649060292441
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-153",
+      "group_id": "ROADBASE_responder850:SPLIT-491356adfc1aa514",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9795522625131106,
+        0.005722069667589197,
+        0.009446009709282019,
+        0.005279658110018193
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-158",
+      "group_id": "ROADBASE_responder850:SPLIT-101802824a5df96b",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0004901544352972502,
+        0.997948564628822,
+        0.0007276694553548565,
+        0.0008336114805260074
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-160",
+      "group_id": "ROADBASE_responder850:SPLIT-7375a628b575f73b",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.006668067889893094,
+        0.02980988675508622,
+        0.7467197498667738,
+        0.21680229548824703
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-163",
+      "group_id": "ROADBASE_responder850:SPLIT-af333328bff90612",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.024213659570723096,
+        0.019389787299559112,
+        0.852189870416439,
+        0.10420668271327885
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-171",
+      "group_id": "ROADBASE_responder850:SPLIT-e4118b9a45d1976a",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0021327289669147167,
+        0.004189731256530077,
+        0.9905564686055943,
+        0.0031210711709609784
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-175",
+      "group_id": "ROADBASE_responder850:SPLIT-9ac224f6d53b36c6",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.012132215334347624,
+        0.02364481131654008,
+        0.7962193400418567,
+        0.16800363330725554
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-177",
+      "group_id": "ROADBASE_responder850:SPLIT-7e99c201a7dbee70",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9873705748432865,
+        0.0031484157990177707,
+        0.008757380648391452,
+        0.0007236287093042856
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-185",
+      "group_id": "ROADBASE_responder850:SPLIT-2aa3b721446ef5f9",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.26124196815112183,
+        0.45240026289829044,
+        0.23560467080843853,
+        0.050753098142149164
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-215",
+      "group_id": "ROADBASE_responder850:SPLIT-fb2571fa752d2fbb",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.01301222662633842,
+        0.0460830322068969,
+        0.7320748317447047,
+        0.20882990942205992
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-219",
+      "group_id": "ROADBASE_responder850:SPLIT-020b8bed5e63009f",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.05658632483656178,
+        0.030861933340753663,
+        0.8794893924810813,
+        0.03306234934160321
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-233",
+      "group_id": "ROADBASE_responder850:SPLIT-805a210dfeaafea3",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9764836710774483,
+        0.014884521071754005,
+        0.005986071745089658,
+        0.002645736105708131
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-236",
+      "group_id": "ROADBASE_responder850:SPLIT-bfa22b2a26c5d9c8",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0047656113181408525,
+        0.016949774028377974,
+        0.16566256904356655,
+        0.8126220456099146
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-EN-245",
+      "group_id": "ROADBASE_responder850:SPLIT-5ed2b736163b8821",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.8296831823704335,
+        0.1487162357665159,
+        0.013893976692790844,
+        0.007706605170259841
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-CRITICAL-001",
+      "group_id": "ROADBASE_responder850:SPLIT-a7a038b25140cf74",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.00032977232722047715,
+        0.00039648818873950137,
+        0.9983909486968635,
+        0.0008827907871764888
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-CRITICAL-005",
+      "group_id": "ROADBASE_responder850:SPLIT-9d080f3ec6589ac1",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0025707010243097347,
+        0.00788862155452169,
+        0.9892778998876305,
+        0.00026277753353816976
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-CRITICAL-012",
+      "group_id": "ROADBASE_responder850:SPLIT-a3e6cb18a65d4985",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0005514428083299031,
+        0.001449825921711293,
+        0.9967149918301671,
+        0.0012837394397917463
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-CRITICAL-014",
+      "group_id": "ROADBASE_responder850:SPLIT-97abed280dfb2891",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0003978697271734009,
+        0.004975786458999207,
+        0.9943637861225127,
+        0.0002625576913145527
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-CRITICAL-016",
+      "group_id": "ROADBASE_responder850:SPLIT-1034d334e38eda54",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0002715276533331889,
+        0.0027358936407046487,
+        0.918830413057877,
+        0.07816216564808502
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-CRITICAL-019",
+      "group_id": "ROADBASE_responder850:SPLIT-9215bab7656546c1",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.00010838555633466563,
+        0.00502327449944709,
+        0.9940108492431533,
+        0.0008574907010650063
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-CRITICAL-024",
+      "group_id": "ROADBASE_responder850:SPLIT-806802d8974567b6",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.00010430228407761563,
+        0.10103382148755731,
+        0.898732539932934,
+        0.0001293362954310751
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-CRITICAL-027",
+      "group_id": "ROADBASE_responder850:SPLIT-22b6e46ded0b85aa",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0016762551728218993,
+        0.00307614571737602,
+        0.9939295444672602,
+        0.0013180546425419586
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-MINOR-018",
+      "group_id": "ROADBASE_responder850:SPLIT-a04b45bde73470e9",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9916298325964685,
+        0.006056641922642466,
+        0.0015667564891233042,
+        0.0007467689917657546
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-MINOR-025",
+      "group_id": "ROADBASE_responder850:SPLIT-2d4b70bdd3f558d9",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9831647021189232,
+        0.011060393086110364,
+        0.005268333379361041,
+        0.000506571415605416
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-MINOR-028",
+      "group_id": "ROADBASE_responder850:SPLIT-e31413c8889aae7a",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.8602051301996642,
+        0.13792677379277607,
+        0.0008859694414701999,
+        0.0009821265660896559
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-NEEDS_REVIEW-005",
+      "group_id": "ROADBASE_responder850:SPLIT-96a45bbbe98130a0",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.01717638953642604,
+        0.006247824255780176,
+        0.007431781890686929,
+        0.9691440043171069
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-NEEDS_REVIEW-009",
+      "group_id": "ROADBASE_responder850:SPLIT-ca58507145465765",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.004469180323990312,
+        0.005004472674244241,
+        0.0008538806124876675,
+        0.9896724663892779
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-NEEDS_REVIEW-011",
+      "group_id": "ROADBASE_responder850:SPLIT-1d7ef888839a469e",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0029170581055798766,
+        0.0043594065659925685,
+        0.07369884407012768,
+        0.9190246912582999
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-NEEDS_REVIEW-013",
+      "group_id": "ROADBASE_responder850:SPLIT-4522e96d580d83b4",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0032545451209294043,
+        0.0029403739993204238,
+        0.0035264540090089234,
+        0.9902786268707413
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-NEEDS_REVIEW-027",
+      "group_id": "ROADBASE_responder850:SPLIT-3f3f94f69b01839b",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        5.795103609770832e-05,
+        0.0005136436489879205,
+        2.1617713970988477e-05,
+        0.9994067876009433
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-NEEDS_REVIEW-030",
+      "group_id": "ROADBASE_responder850:SPLIT-5e43ca59f364ed51",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        4.837815459252658e-05,
+        0.0009256935116456272,
+        0.00012056455338444125,
+        0.9989053637803774
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-SERIOUS-013",
+      "group_id": "ROADBASE_responder850:SPLIT-3a0d3518d92b0c76",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        9.618707478347217e-05,
+        0.9998414317202392,
+        5.634562010672998e-05,
+        6.035584870457698e-06
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-SERIOUS-020",
+      "group_id": "ROADBASE_responder850:SPLIT-5d5ed76f770c02e6",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        4.885021178005024e-05,
+        0.9993235281855495,
+        9.609045023805906e-05,
+        0.0005315311524323001
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-SERIOUS-025",
+      "group_id": "ROADBASE_responder850:SPLIT-91b8c07b3d09c2ad",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.004448161181140072,
+        0.9911580586996029,
+        0.00238457700714883,
+        0.002009203112108387
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-MX-SERIOUS-028",
+      "group_id": "ROADBASE_responder850:SPLIT-f6cc666a9482ae7f",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0009309839295332966,
+        0.9951274130937927,
+        0.0034956698515050517,
+        0.0004459331251690993
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-003",
+      "group_id": "ROADBASE_responder850:SPLIT-166434858376f5fa",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9994914304454391,
+        2.9460264226970587e-05,
+        8.23301242486934e-05,
+        0.0003967791660851162
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-010",
+      "group_id": "ROADBASE_responder850:SPLIT-d29e78c44228aba5",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9889856974650666,
+        0.0070901667540608304,
+        0.0015254620506785545,
+        0.0023986737301939175
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-012",
+      "group_id": "ROADBASE_responder850:SPLIT-425c4ee898a93a73",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9700167148966153,
+        0.008468485049587162,
+        0.0006844733088950085,
+        0.020830326744902632
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-020",
+      "group_id": "ROADBASE_responder850:SPLIT-e6717a92c85d7ea8",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9989274794877617,
+        0.00020909214722443622,
+        0.000682871809281323,
+        0.00018055655573224973
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-032",
+      "group_id": "ROADBASE_responder850:SPLIT-2f840f212252a233",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.999363235166845,
+        0.00010618542320455392,
+        0.00035279826090474196,
+        0.00017778114904560638
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-036",
+      "group_id": "ROADBASE_responder850:SPLIT-692592ede27626fb",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.8926541990215939,
+        0.011498142757102165,
+        0.003581453875382915,
+        0.09226620434592095
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-037",
+      "group_id": "ROADBASE_responder850:SPLIT-051249dca146b620",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9993880526145122,
+        0.00017938278219501477,
+        0.0003856797159762262,
+        4.688488731677052e-05
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-040",
+      "group_id": "ROADBASE_responder850:SPLIT-d29e78c44228aba5",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.983807746279765,
+        0.01271403706083449,
+        0.0033218344769226377,
+        0.00015638218247770826
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-047",
+      "group_id": "ROADBASE_responder850:SPLIT-d29e78c44228aba5",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9754783098798953,
+        0.021086394533394913,
+        0.0022684871977296612,
+        0.0011668083889800234
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-049",
+      "group_id": "ROADBASE_responder850:SPLIT-fbba3794b5f389f2",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9910447829853309,
+        0.00671704242370674,
+        0.001317372875006785,
+        0.0009208017159554708
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-054",
+      "group_id": "ROADBASE_responder850:SPLIT-051249dca146b620",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9984925831644585,
+        0.0008780342853692584,
+        0.0005375136980462062,
+        9.186885212606412e-05
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-056",
+      "group_id": "ROADBASE_responder850:SPLIT-d29e78c44228aba5",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9676793849789934,
+        0.027935531840560336,
+        0.0033881501364227276,
+        0.000996933044023698
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-057",
+      "group_id": "ROADBASE_responder850:SPLIT-d9d381e8452c90ad",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9961199306046356,
+        0.002885345460970487,
+        0.0008969638455455042,
+        9.776008884849058e-05
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-060",
+      "group_id": "ROADBASE_responder850:SPLIT-08730d3cf8b38d93",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9988432966723564,
+        0.000461388413098916,
+        0.00025315030452578724,
+        0.00044216461001883036
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-063",
+      "group_id": "ROADBASE_responder850:SPLIT-39b30576ceb0a735",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.002573651045039056,
+        0.986257921282491,
+        0.0008672501452656853,
+        0.010301177527204235
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-087",
+      "group_id": "ROADBASE_responder850:SPLIT-14b2c2a2efde9433",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0034560522029609417,
+        0.8869512838902875,
+        0.10085111825414216,
+        0.008741545652609407
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-089",
+      "group_id": "ROADBASE_responder850:SPLIT-91d3afb89176884e",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.029611116386478398,
+        0.8766799643289352,
+        0.061695800363498005,
+        0.032013118921088456
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-118",
+      "group_id": "ROADBASE_responder850:SPLIT-cbb272b37975f031",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.00474742103835166,
+        0.9908430060810778,
+        0.0038961754340237904,
+        0.0005133974465468788
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-119",
+      "group_id": "ROADBASE_responder850:SPLIT-44fd9f9b127cc11a",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.012923049448665876,
+        0.7191718590644817,
+        0.2556104663966974,
+        0.01229462509015511
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-134",
+      "group_id": "ROADBASE_responder850:SPLIT-eb70bd4a74d0f163",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0013353181589927858,
+        0.008901758323221135,
+        0.9872478209450744,
+        0.0025151025727118237
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-147",
+      "group_id": "ROADBASE_responder850:SPLIT-5cf8850e9781ad6b",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.004479131590583971,
+        0.006265807243567443,
+        0.9239826621780346,
+        0.0652723989878141
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-150",
+      "group_id": "ROADBASE_responder850:SPLIT-ef90993b35facfdc",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.00275378012833563,
+        0.0021738846306082016,
+        0.9696496005052354,
+        0.0254227347358207
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-155",
+      "group_id": "ROADBASE_responder850:SPLIT-fdf6233c272b830d",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0004470004964744168,
+        0.005221320805880154,
+        0.991605175403996,
+        0.002726503293649526
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-160",
+      "group_id": "ROADBASE_responder850:SPLIT-3b4cfe6b1e6955c4",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.009406728681098354,
+        0.009720441125369473,
+        0.9657695222727604,
+        0.015103307920771912
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-165",
+      "group_id": "ROADBASE_responder850:SPLIT-cc05fb97ad9f6b36",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0006963175972844996,
+        0.0029469638605560938,
+        0.9949257908793466,
+        0.0014309276628127856
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-187",
+      "group_id": "ROADBASE_responder850:SPLIT-3fb3c2ce7aff7eeb",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0010540365130159708,
+        0.0008874702924071743,
+        0.0017749984694451723,
+        0.9962834947251316
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-189",
+      "group_id": "ROADBASE_responder850:SPLIT-9f7c0dbae4a29581",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        4.8870346789087255e-06,
+        2.8344281275857987e-05,
+        4.833781632181937e-06,
+        0.999961934902413
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-191",
+      "group_id": "ROADBASE_responder850:SPLIT-32ccf390347faeca",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0054978158788282,
+        0.002886088325128983,
+        3.661704511228217e-05,
+        0.9915794787509307
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-207",
+      "group_id": "ROADBASE_responder850:SPLIT-bfc9271b4e5e6f53",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0019127479297641138,
+        0.0010769420755133096,
+        0.004397645673623487,
+        0.992612664321099
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-208",
+      "group_id": "ROADBASE_responder850:SPLIT-040e79e6da06fc37",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.03479969380685459,
+        0.00700500744238804,
+        0.0025969966333865037,
+        0.955598302117371
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-209",
+      "group_id": "ROADBASE_responder850:SPLIT-78322e7b853f09d6",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0003470263862121428,
+        0.0018948774924688353,
+        0.0031570523008318916,
+        0.9946010438204871
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-212",
+      "group_id": "ROADBASE_responder850:SPLIT-76cea1c9ea40530a",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        4.86090024941918e-05,
+        0.00010422435171514885,
+        0.002045592834856507,
+        0.9978015738109342
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-227",
+      "group_id": "ROADBASE_responder850:SPLIT-b4b056c5c145dd02",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.00017951256855847756,
+        0.0003602215968662627,
+        0.04036008481200614,
+        0.9591001810225692
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-235",
+      "group_id": "ROADBASE_responder850:SPLIT-e012064e36142668",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0003260909327696973,
+        0.0016189438286122353,
+        0.012481764060431784,
+        0.9855732011781864
+      ]
+    },
+    {
+      "case_id": "ROADBASE_RESPONDER850-TL-237",
+      "group_id": "ROADBASE_responder850:SPLIT-b9357ffa32e184c2",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0006714026069046062,
+        0.0034077663303001145,
+        0.018060832676930694,
+        0.9778599983858646
+      ]
+    },
+    {
+      "case_id": "ROADBASE_SOUTHERN_LEYTE36-SLB-DRAFT-002",
+      "group_id": "ROADBASE_southern_leyte36:SLB-FAM-002",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.8938160793012014,
+        0.046221777170560974,
+        0.043604572882068246,
+        0.016357570646169536
+      ]
+    },
+    {
+      "case_id": "ROADBASE_SOUTHERN_LEYTE36-SLB-DRAFT-006",
+      "group_id": "ROADBASE_southern_leyte36:SLB-FAM-006",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9324265327532572,
+        0.06428949143462122,
+        0.000991116289684312,
+        0.002292859522437213
+      ]
+    },
+    {
+      "case_id": "ROADBASE_SOUTHERN_LEYTE36-SLB-DRAFT-013",
+      "group_id": "ROADBASE_southern_leyte36:SLB-FAM-013",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0003994549660336554,
+        0.010668576388260626,
+        0.988713525329646,
+        0.0002184433160597744
+      ]
+    },
+    {
+      "case_id": "ROADBASE_SOUTHERN_LEYTE36-SLB-DRAFT-015",
+      "group_id": "ROADBASE_southern_leyte36:SLB-FAM-015",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.015747339897891937,
+        0.301164083691056,
+        0.6779042172109827,
+        0.005184359200069348
+      ]
+    },
+    {
+      "case_id": "ROADBASE_SOUTHERN_LEYTE36-SLB-DRAFT-024",
+      "group_id": "ROADBASE_southern_leyte36:SLB-FAM-024",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.019423444853155877,
+        0.7979212320079578,
+        0.07798936570596299,
+        0.10466595743292316
+      ]
+    },
+    {
+      "case_id": "ROADBASE_SOUTHERN_LEYTE36-SLB-DRAFT-032",
+      "group_id": "ROADBASE_southern_leyte36:SLB-FAM-032",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0010516080221014,
+        0.0004738224243105053,
+        0.0002016356293114828,
+        0.9982729339242766
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_A_MINOR_06_CEB",
+      "group_id": "ROADBASE_working400:synthetic_a_minor_06",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9961855984242031,
+        0.0006516799944414015,
+        0.0013849123943222518,
+        0.0017778091870331194
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_A_MINOR_06_EN",
+      "group_id": "ROADBASE_working400:synthetic_a_minor_06",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9766535386116788,
+        0.008552851023061425,
+        0.005202438633938188,
+        0.009591171731321626
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_A_MINOR_06_MIXED",
+      "group_id": "ROADBASE_working400:synthetic_a_minor_06",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9917456405847596,
+        0.00469737341454081,
+        0.000636401958588095,
+        0.0029205840421115715
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_A_MINOR_06_TL",
+      "group_id": "ROADBASE_working400:synthetic_a_minor_06",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.99526237902044,
+        0.0016918309050385379,
+        0.001131250132078756,
+        0.0019145399424425932
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_A_NEEDS_REVIEW_05_CEB",
+      "group_id": "ROADBASE_working400:synthetic_a_needs_review_05",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.017040697288246975,
+        0.011554406315468514,
+        0.013687812316271081,
+        0.9577170840800133
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_A_NEEDS_REVIEW_05_EN",
+      "group_id": "ROADBASE_working400:synthetic_a_needs_review_05",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0023203373663188845,
+        0.0026377242548413214,
+        0.005140287828702069,
+        0.9899016505501377
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_A_NEEDS_REVIEW_05_MIXED",
+      "group_id": "ROADBASE_working400:synthetic_a_needs_review_05",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.002736490826582306,
+        0.001315969136087704,
+        0.00048142264305019085,
+        0.9954661173942797
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_A_NEEDS_REVIEW_05_TL",
+      "group_id": "ROADBASE_working400:synthetic_a_needs_review_05",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "needs_review",
+      "probabilities": [
+        0.0043665961495787395,
+        0.0022466684164147914,
+        0.009704053865179309,
+        0.9836826815688272
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_A_SERIOUS_06_CEB",
+      "group_id": "ROADBASE_working400:synthetic_a_serious_06",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.3291365331557222,
+        0.6169763077168358,
+        0.04787595620937146,
+        0.006011202918070569
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_A_SERIOUS_06_EN",
+      "group_id": "ROADBASE_working400:synthetic_a_serious_06",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.15841121777882514,
+        0.7557964421696701,
+        0.06462606103030032,
+        0.021166279021204312
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_A_SERIOUS_06_MIXED",
+      "group_id": "ROADBASE_working400:synthetic_a_serious_06",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.07869601551030984,
+        0.9056662521941061,
+        0.010541830902514683,
+        0.005095901393069296
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_A_SERIOUS_06_TL",
+      "group_id": "ROADBASE_working400:synthetic_a_serious_06",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.21469287539472315,
+        0.7404957056352256,
+        0.044094163432722745,
+        0.0007172555373284807
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_A_SERIOUS_10_CEB",
+      "group_id": "ROADBASE_working400:synthetic_a_serious_10",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.00965516863505357,
+        0.9886952254852808,
+        0.0013431450740167326,
+        0.0003064608056488235
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_A_SERIOUS_10_EN",
+      "group_id": "ROADBASE_working400:synthetic_a_serious_10",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.002335226206510296,
+        0.9964305591005671,
+        0.0009013014206313739,
+        0.0003329132722911488
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_A_SERIOUS_10_MIXED",
+      "group_id": "ROADBASE_working400:synthetic_a_serious_10",
+      "language": "mixed",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.00048364561861991614,
+        0.9992596639949504,
+        0.00018496290803953372,
+        7.172747838997032e-05
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_A_SERIOUS_10_TL",
+      "group_id": "ROADBASE_working400:synthetic_a_serious_10",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.013434336141277918,
+        0.9857661087608515,
+        0.000645306672062847,
+        0.00015424842580775085
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_ROAD_B_CRITICAL_01_CEB",
+      "group_id": "ROADBASE_working400:synthetic_road_b_critical_01",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.004648556986980495,
+        0.01240978141851324,
+        0.20152225547074032,
+        0.781419406123766
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_ROAD_B_CRITICAL_01_EN",
+      "group_id": "ROADBASE_working400:synthetic_road_b_critical_01",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.0011799315023627171,
+        0.003554432152067644,
+        0.3764830882923164,
+        0.6187825480532533
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_ROAD_B_CRITICAL_01_TL",
+      "group_id": "ROADBASE_working400:synthetic_road_b_critical_01",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "critical",
+      "probabilities": [
+        0.00011730164764003486,
+        0.0003779069059621129,
+        0.20614751378441043,
+        0.7933572776619875
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_ROAD_B_MINOR_02_CEB",
+      "group_id": "ROADBASE_working400:synthetic_road_b_minor_02",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9865438247079279,
+        0.0006035940083685692,
+        0.004257158286887541,
+        0.008595422996816161
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_ROAD_B_MINOR_02_EN",
+      "group_id": "ROADBASE_working400:synthetic_road_b_minor_02",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9810973731644964,
+        0.0026342209587534313,
+        0.0039320417414691776,
+        0.012336364135280947
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_ROAD_B_MINOR_02_TL",
+      "group_id": "ROADBASE_working400:synthetic_road_b_minor_02",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "minor",
+      "probabilities": [
+        0.9663213864491028,
+        0.004657967066229994,
+        0.007108437473062002,
+        0.02191220901160502
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_ROAD_B_SERIOUS_01_CEB",
+      "group_id": "ROADBASE_working400:synthetic_road_b_serious_01",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0012105432765848764,
+        0.9976676335868337,
+        0.0003682164827647233,
+        0.0007536066538168594
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_ROAD_B_SERIOUS_01_EN",
+      "group_id": "ROADBASE_working400:synthetic_road_b_serious_01",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0005405468402453835,
+        0.9927061368532153,
+        0.005893990574141046,
+        0.0008593257323982628
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_ROAD_B_SERIOUS_01_TL",
+      "group_id": "ROADBASE_working400:synthetic_road_b_serious_01",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0013145184249759594,
+        0.9973785029807863,
+        0.00025034119304234004,
+        0.0010566374011953877
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_ROAD_B_SERIOUS_02_CEB",
+      "group_id": "ROADBASE_working400:synthetic_road_b_serious_02",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.004446013637755301,
+        0.7360697163254966,
+        0.2557798945321523,
+        0.0037043755045957235
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_ROAD_B_SERIOUS_02_EN",
+      "group_id": "ROADBASE_working400:synthetic_road_b_serious_02",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.021734204025476173,
+        0.8145831662523091,
+        0.1576633556398777,
+        0.006019274082337228
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_ROAD_B_SERIOUS_02_TL",
+      "group_id": "ROADBASE_working400:synthetic_road_b_serious_02",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.010029483687135382,
+        0.853252631660566,
+        0.11659053767593021,
+        0.020127346976368393
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_01_CEB",
+      "group_id": "ROADBASE_working400:synthetic_family_belted_parking_contact_limb_pain",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.002434348758018242,
+        0.9842991465650613,
+        0.012614010164195291,
+        0.000652494512725188
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_01_EN",
+      "group_id": "ROADBASE_working400:synthetic_family_belted_parking_contact_limb_pain",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0029033142181764996,
+        0.9961066536960149,
+        0.000903410004079153,
+        8.662208172956008e-05
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_01_TL",
+      "group_id": "ROADBASE_working400:synthetic_family_belted_parking_contact_limb_pain",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.001126191992276495,
+        0.9974547474025717,
+        0.0010999777375331923,
+        0.0003190828676187625
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_02_CEB",
+      "group_id": "ROADBASE_working400:synthetic_family_interior_fitting_finger_cut",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.020767677851940752,
+        0.9566907308206818,
+        0.02165623097504889,
+        0.0008853603523287297
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_02_EN",
+      "group_id": "ROADBASE_working400:synthetic_family_interior_fitting_finger_cut",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0012299681356014076,
+        0.9954327547107622,
+        0.0032192270170322557,
+        0.00011805013660407282
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_02_TL",
+      "group_id": "ROADBASE_working400:synthetic_family_interior_fitting_finger_cut",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.01194826226552772,
+        0.9245270499437072,
+        0.06268133843408855,
+        0.0008433493566767749
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_03_CEB",
+      "group_id": "ROADBASE_working400:synthetic_family_belted_parking_contact_limb_pain",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0034403251462249815,
+        0.970553093104535,
+        0.025762766330910153,
+        0.00024381541833006084
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_03_EN",
+      "group_id": "ROADBASE_working400:synthetic_family_belted_parking_contact_limb_pain",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0006526926077271852,
+        0.9977225836603132,
+        0.001598162192134132,
+        2.6561539825539045e-05
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_03_TL",
+      "group_id": "ROADBASE_working400:synthetic_family_belted_parking_contact_limb_pain",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0014979478682932321,
+        0.9917778785424146,
+        0.006624660438055673,
+        9.951315123629803e-05
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_05_CEB",
+      "group_id": "ROADBASE_working400:synthetic_seriousc_05",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.009086306256879442,
+        0.966682486160323,
+        0.020585870597909114,
+        0.003645336984888312
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_05_EN",
+      "group_id": "ROADBASE_working400:synthetic_seriousc_05",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.008624351379252259,
+        0.9522460381026858,
+        0.037726633389881636,
+        0.001402977128180209
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_05_TL",
+      "group_id": "ROADBASE_working400:synthetic_seriousc_05",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0007285771487541443,
+        0.9984315788103855,
+        0.000678480720319901,
+        0.00016136332054034801
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_06_CEB",
+      "group_id": "ROADBASE_working400:synthetic_seriousc_06",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.003219813524595044,
+        0.9349956782935294,
+        0.060970382170226614,
+        0.0008141260116489883
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_06_EN",
+      "group_id": "ROADBASE_working400:synthetic_seriousc_06",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.028868802858091774,
+        0.9283913070687153,
+        0.042073391141328804,
+        0.0006664989318641802
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_06_TL",
+      "group_id": "ROADBASE_working400:synthetic_seriousc_06",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.009217173732682311,
+        0.8551720942751903,
+        0.13376822365937358,
+        0.0018425083327539835
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_08_CEB",
+      "group_id": "ROADBASE_working400:synthetic_family_interior_fitting_finger_cut",
+      "language": "ceb",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.001809788445623974,
+        0.9935198279103657,
+        0.0038368262370831324,
+        0.0008335574069270149
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_08_EN",
+      "group_id": "ROADBASE_working400:synthetic_family_interior_fitting_finger_cut",
+      "language": "en",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.0029992346802362314,
+        0.9920867658399798,
+        0.004533747047206247,
+        0.0003802524325776166
+      ]
+    },
+    {
+      "case_id": "ROADBASE_WORKING400-SYN_SERIOUSC_08_TL",
+      "group_id": "ROADBASE_working400:synthetic_family_interior_fitting_finger_cut",
+      "language": "tl",
+      "incident_type": "road_accident",
+      "label": "serious",
+      "probabilities": [
+        0.007376495800339393,
+        0.9910255975344313,
+        0.0009982008071967167,
+        0.0005997058580325392
+      ]
+    }
+  ]
+}

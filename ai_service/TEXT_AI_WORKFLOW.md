@@ -1,5 +1,18 @@
 # Multilingual incident-description classifier
 
+## Selected category chooses an isolated model — 2026-11-12
+
+Current ordinary inference uses `category-experts-20261112-v1`: six independently
+trained TF-IDF classifiers routed by the reporter's selected incident type.
+Each classifier fits only its category's vocabulary and labels. The new
+training corpus has 11,035 training rows, 507 validation rows and 364 known test
+rows; 192 authored descriptions and context variants expand earlier data. See
+[the evidence and limitations](releases/category-experts-20261112-v1/README.md).
+The known synthetic full-policy test is 74.45%, not independently validated
+real-report accuracy. User-authorized activation remains experimental and
+admin-supervised. Feedback training remains candidate-only; it never silently
+replaces the active category router. Earlier dated sections retain history.
+
 ## Current local setup — 2026-11-12
 
 Local reporting now explicitly enables the existing road-only v2 advisory on

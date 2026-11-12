@@ -30,6 +30,11 @@ RUN if [ "$INSTALL_TEXT_BASELINE" = "true" ]; then \
     python -c "import hashlib,json; from pathlib import Path; models=[(p.parent,json.loads(p.read_text())) for p in Path('releases').glob('*/metadata.json')]; models=[(p,m) for p,m in models if m.get('model_type')=='tfidf_logistic']; assert models, 'No text artifact packaged'; assert all(hashlib.sha256((p/'baseline.json').read_bytes()).hexdigest()==m['artifact_sha256'] for p,m in models), 'Text artifact fingerprint mismatch'"; \
     fi
 
+# An advisory image must contain every checksum-bound category expert.
+RUN if [ "$INSTALL_TEXT_BASELINE" = "true" ]; then \
+    python -c "import json; from pathlib import Path; from src.ai_service.text_inference import load_predictor; [load_predictor(p.parent, allow_experimental=True) for p in Path('releases').glob('*/metadata.json') if json.loads(p.read_text()).get('model_type')=='tfidf_category_router']; print('Category expert manifests and artifacts verified')"; \
+    fi
+
 EXPOSE 10000
 
 CMD ["python", "serve_api.py"]

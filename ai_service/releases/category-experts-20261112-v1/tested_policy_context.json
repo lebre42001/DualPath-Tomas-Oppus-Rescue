@@ -1,0 +1,13 @@
+{
+  "metadata_sha256": "ca1b26056ad86eb93f2671d82ae97d4887871815f91b72d5ffdcf13ace21cb10",
+  "artifact_sha256": "a05b0db9bcfaa5294525af9691e30c6d6e655bb4475cadb01ef06d9783deb087",
+  "policy_source_lf_sha256": {
+    "src/ai_service/text_inference.py": "dbb4b73808bd5a892cf187448f4be82bde3b3c6c375d0f5d98a1316c7cdf46a2",
+    "src/ai_service/multiincident_cues.py": "dbea4db88d51bcaa1666785c0ac15988ac892e8db1587049c36816455512b346",
+    "src/ai_service/text_cues.py": "804b292696812147b831e6d94385748d55293db93f4e960e0ecdcea8448ac19e",
+    "src/ai_service/incident_types.py": "b8be72d37cac575b905314c0adc625de8e0e7cfcf92d9522fc6e72bb0a234950",
+    "evaluate_text_cues.py": "bfb51c4e6296f3d3ebf8f0f3a336f9bab8206f98c8a439620101662e0551a834"
+  },
+  "independent_validation": false,
+  "approved_for_deployment": false
+}

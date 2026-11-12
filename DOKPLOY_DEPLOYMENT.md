@@ -1,5 +1,43 @@
 # Dokploy Docker deployment
 
+## Category-specific multi-incident advisory — 2026-11-12
+
+The owner's explicit activation request replaces the ordinary road-only
+selector with `/app/releases/category-experts-20261112-v1` in
+`compose.dokploy.yaml`. Each selected category routes to one of six separately
+fitted classifiers; each uses only its own category's training examples. The
+PWA/API preserves category selection instead of forcing Road Accident. Saved
+drafts preserve that selection too. LoRa board firmware remains road-only.
+
+Local ordinary and Lab selectors use the same release. The corpus has 11,906
+rows, including 192 new authored descriptions plus correlated context variants.
+Known synthetic test accuracy is 74.45%, Critical recall 74.76%, with weak
+category slices documented in the
+[release report](ai_service/releases/category-experts-20261112-v1/README.md).
+This is an experimental advisory explicitly requested by the owner; no
+independent validation or clinical approval has been granted. Admin assessment
+is still mandatory for operational severity and no automatic dispatch was added.
+
+Rebuild the existing web and `text-ai` services from the same source revision.
+The existing baseline-dependency build flag remains required; Docker now checks
+the router manifest and every child artifact. Keep `AI_TEXT_MODE=MODEL_ADVISORY`,
+`AI_TEXT_ENABLED=true`, and experimental opt-in. The private AI service must
+use the new model directory above. No database migration or account reset is
+required. Training data and private feedback are excluded from the image.
+
+After the usual push-to-main deployment, verify public `/`, `/login`,
+`/register`, and `/system/ai-status` at `https://dualpath.bsit4bdevs.tech`.
+The status must show `model_version=category-experts-20261112-v1`,
+`category_routing=isolated_category_models`, six categories and
+`admin_confirmation_required=true`. Confirm the host's deployed commit where
+available; the existing `/system/version` fingerprint is not a Git SHA. Do not
+claim an online rebuild from a successful push alone.
+
+Rollback: restore `AI_TEXT_MODEL_DIR` to the retained road v2 directory and
+recreate `text-ai`, or set web `AI_TEXT_MODE=MANUAL_ONLY` and
+`AI_TEXT_ENABLED=false` and refresh its configuration. Other categories then
+require human assessment. Historical road-only/Lab notes below remain for audit.
+
 This repository is prepared for Dokploy's **Docker Compose** deployment mode.
 The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx

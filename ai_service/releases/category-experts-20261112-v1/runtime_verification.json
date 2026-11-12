@@ -1,0 +1,106 @@
+{
+  "model_version": "category-experts-20261112-v1",
+  "synthetic_test_rows_reproduced": 364,
+  "normalized_exact_cross_split_duplicates": 0,
+  "group_cross_split_overlaps": 0,
+  "runtime_cases": [
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_CRITICAL_01_CEB",
+      "incident_type": "road_accident",
+      "category_expert": "road_accident",
+      "severity": null,
+      "runtime_policy_equal": true
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_ROAD_ACCIDENT_NEEDS_REVIEW_01_CEB",
+      "incident_type": "road_accident",
+      "category_expert": "road_accident",
+      "severity": null,
+      "runtime_policy_equal": true
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_CRITICAL_02_CEB",
+      "incident_type": "fire_incident",
+      "category_expert": "fire_incident",
+      "severity": "critical",
+      "runtime_policy_equal": true
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FIRE_INCIDENT_NEEDS_REVIEW_06_CEB",
+      "incident_type": "fire_incident",
+      "category_expert": "fire_incident",
+      "severity": null,
+      "runtime_policy_equal": true
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_02_CEB",
+      "incident_type": "flood_landslide",
+      "category_expert": "flood_landslide",
+      "severity": null,
+      "runtime_policy_equal": true
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_NEEDS_REVIEW_03_CEB",
+      "incident_type": "flood_landslide",
+      "category_expert": "flood_landslide",
+      "severity": null,
+      "runtime_policy_equal": true
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_CRITICAL_06_CEB",
+      "incident_type": "medical_emergency",
+      "category_expert": "medical_emergency",
+      "severity": "critical",
+      "runtime_policy_equal": true
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_NEEDS_REVIEW_03_CEB",
+      "incident_type": "medical_emergency",
+      "category_expert": "medical_emergency",
+      "severity": null,
+      "runtime_policy_equal": true
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_03_CEB",
+      "incident_type": "security_incident",
+      "category_expert": "security_incident",
+      "severity": null,
+      "runtime_policy_equal": true
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_NEEDS_REVIEW_04_CEB",
+      "incident_type": "security_incident",
+      "category_expert": "security_incident",
+      "severity": null,
+      "runtime_policy_equal": true
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_CRITICAL_01_CEB",
+      "incident_type": "other",
+      "category_expert": "other",
+      "severity": null,
+      "runtime_policy_equal": true
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_OTHER_NEEDS_REVIEW_01_CEB",
+      "incident_type": "other",
+      "category_expert": "other",
+      "severity": null,
+      "runtime_policy_equal": true
+    }
+  ],
+  "independent_validation": false,
+  "approved_for_deployment": false,
+  "laravel_real_service_categories_verified": 6,
+  "human_review_required_for_all_laravel_checks": true,
+  "isolated_browser": {
+    "enabled_category_selections": 6,
+    "fire_draft_restoration": "passed",
+    "viewport_widths": [
+      320,
+      390,
+      1024
+    ],
+    "operational_reports_created": 0
+  }
+}

@@ -12,7 +12,7 @@ export const philippineDate = value => {
 export function draftReportPage(records, filters = {}, requested = 1) {
     const words = (filters.search ?? '').trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
     const matches = records.filter(record => {
-        const text = [record.submissionId, record.fields?.description, record.fields?.location_text, record.evidenceName].join(' ').toLocaleLowerCase();
+        const text = [record.submissionId, record.fields?.incident_type, record.fields?.description, record.fields?.location_text, record.evidenceName].join(' ').toLocaleLowerCase();
         const date = philippineDate(record.updatedAt);
         return words.every(word => text.includes(word)) && (!filters.status || record.state === filters.status)
             && (!filters.from || date >= filters.from) && (!filters.to || (date && date <= filters.to));
@@ -24,7 +24,7 @@ export function draftReportPage(records, filters = {}, requested = 1) {
     const page = Math.max(1, Math.min(lastPage, Number(requested) || 1)), start = (page - 1) * 10;
     return {
         reports: matches.slice(start, start + 10).map(record => ({
-            id: record.submissionId, code: `Draft ${record.submissionId.slice(0, 8)}`, type: 'Road Accident',
+            id: record.submissionId, code: `Draft ${record.submissionId.slice(0, 8)}`, type: record.fields?.incident_type || 'Road Accident',
             location: record.fields?.location_text || 'Location not entered',
             status: record.state, statusLabel: DRAFT_STATES[record.state] ?? DRAFT_STATES.editing,
             submittedAt: record.updatedAt, updatedAt: record.updatedAt,

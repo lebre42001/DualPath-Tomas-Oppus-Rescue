@@ -113,7 +113,7 @@ class PolicyEvaluationTests(unittest.TestCase):
                 writer.writeheader()
                 writer.writerows(rows)
             output = root / "result"
-            with patch("evaluate_text_cues.TfidfSeverityPredictor", return_value=predictor), patch("sys.stdout", new_callable=io.StringIO):
+            with patch("evaluate_text_cues.load_predictor", return_value=predictor), patch("sys.stdout", new_callable=io.StringIO):
                 main(["--data", str(source), "--model", str(root / "missing-artifact"), "--output", str(output), "--external", "--allow-draft", "--allow-experimental"])
             metrics = json.loads((output / "metrics.json").read_text(encoding="utf-8"))
             self.assertEqual(metrics["accuracy"], 1)
@@ -133,11 +133,11 @@ class PolicyEvaluationTests(unittest.TestCase):
                 writer.writeheader()
                 writer.writerows(rows)
             manifest.write_text(json.dumps({"test": {"case_ids": [rows[1]["case_id"]]}}), encoding="utf-8")
-            with patch("evaluate_text_cues.TfidfSeverityPredictor", return_value=predictor), patch("sys.stdout", new_callable=io.StringIO):
+            with patch("evaluate_text_cues.load_predictor", return_value=predictor), patch("sys.stdout", new_callable=io.StringIO):
                 main(["--data", str(source), "--manifest", str(manifest), "--model", str(root), "--output", str(output), "--allow-draft", "--allow-experimental"])
             self.assertEqual(json.loads((output / "metrics.json").read_text())["count"], 1)
             predictor.metadata["dataset_fingerprint"] = "changed"
-            with patch("evaluate_text_cues.TfidfSeverityPredictor", return_value=predictor), self.assertRaisesRegex(ValueError, "unchanged source"):
+            with patch("evaluate_text_cues.load_predictor", return_value=predictor), self.assertRaisesRegex(ValueError, "unchanged source"):
                 main(["--data", str(source), "--manifest", str(manifest), "--model", str(root), "--output", str(root / "other"), "--allow-draft"])
 
     def test_external_cli_rejects_known_training_overlap_when_manifest_available(self):
@@ -154,7 +154,7 @@ class PolicyEvaluationTests(unittest.TestCase):
                 "train": {"group_hashes": [digest(rows[0]["group_id"])],
                           "text_hashes": [digest(normalized_text(rows[0]["text"]))]},
                 "validation": {"group_hashes": [], "text_hashes": []}}), encoding="utf-8")
-            with patch("evaluate_text_cues.TfidfSeverityPredictor", return_value=predictor), self.assertRaisesRegex(ValueError, "overlaps training/validation"):
+            with patch("evaluate_text_cues.load_predictor", return_value=predictor), self.assertRaisesRegex(ValueError, "overlaps training/validation"):
                 main(["--data", str(source), "--model", str(root), "--output", str(root / "result"), "--external", "--allow-draft"])
             predictor.predict.assert_not_called()
 

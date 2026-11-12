@@ -1,5 +1,29 @@
 # AI Severity Service
 
+## Active category-specific advisory — 2026-11-12
+
+The owner explicitly requested multi-incident activation. Ordinary localhost
+8100 and the admin Lab now select `releases/category-experts-20261112-v1`.
+Six separate TF-IDF / Logistic Regression models each train only on their own
+incident category. Reporter selection chooses the matching model; the form,
+stored report, API and recovered draft retain that category. The former forced
+Road Accident behavior is removed for online civilian reports. LoRa firmware
+restrictions are unchanged.
+
+The corpus has 11,906 rows (11,035 training / 507 validation / 364 known test),
+including 192 newly authored descriptions and 8,828 correlated context variants.
+Full-policy test accuracy is 74.45%, with 74.76% Critical recall. This is an
+explicit experimental advisory activation, not a validated release, improved
+real-report accuracy, or automatic dispatch. Every operational severity still
+requires admin assessment. See the
+[complete release evidence](releases/category-experts-20261112-v1/README.md).
+
+Dokploy Compose is prepared for the same active release at
+`https://dualpath.bsit4bdevs.tech`. A successful push alone does not prove a
+completed online rebuild; verify the public AI status and app routes. The
+separate legacy Render demo remains AI-disabled. Earlier dated sections below
+describe the preceding configuration and retained experiments.
+
 ## Local activation and vocabulary update — 2026-11-12
 
 Local Laravel reporting is now explicitly opted into `MODEL_ADVISORY`, with

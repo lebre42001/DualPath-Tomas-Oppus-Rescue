@@ -1,5 +1,15 @@
 # AksyRes
 
+The active local text AI now routes six incident categories to separate models
+trained only on their matching category. The reporter's selected type is
+preserved throughout the PWA/API/draft flow. The 11,906-row corpus and limited
+74.45% synthetic-test result are documented in the
+[category-model report](ai_service/releases/category-experts-20261112-v1/README.md).
+Admin assessment remains mandatory. The online target is
+`https://dualpath.bsit4bdevs.tech`, using Dokploy Compose; verify the new model
+version after deployment. The Render profile is a separate AI-disabled legacy
+demo. The previous road-only notes below describe earlier setup.
+
 Local text AI was enabled on 2026-11-12 as an admin-confirmed road-accident
 advisory. The separate multi-incident AI Lab has additional training vocabulary;
 its checkpoint remains experimental. The free Render demo remains AI-disabled.

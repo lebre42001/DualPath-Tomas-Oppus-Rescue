@@ -13,7 +13,7 @@ from pathlib import Path
 
 from src.ai_service.incident_types import (INCIDENT_TYPES, LEGACY_INPUT_FORMAT,
                                           metadata_contract, normalize_incident_type)
-from src.ai_service.text_inference import (TfidfSeverityPredictor, apply_text_rule_profile,
+from src.ai_service.text_inference import (TfidfSeverityPredictor, load_predictor, apply_text_rule_profile,
                                          category_review_payload, text_rule_capabilities)
 from src.ai_service.text_training import (COLUMNS, LABELS, LANGUAGES, _classification_metrics,
                                          dataset_fingerprint, evaluation_rows,
@@ -151,7 +151,7 @@ def main(argv: list[str] | None = None):
     if not args.external and not args.manifest:
         parser.error("--manifest is required unless --external explicitly selects a separate diagnostic CSV")
     model_path = Path(args.model)
-    predictor = TfidfSeverityPredictor(model_path, allow_experimental=args.allow_experimental)
+    predictor = load_predictor(model_path, allow_experimental=args.allow_experimental)
     all_rows = select_rows(load_dataset(args.data), args.allow_draft)
     overlap_check = False
     if args.external:

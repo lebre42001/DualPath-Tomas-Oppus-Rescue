@@ -56,7 +56,7 @@ export function createCivilianDraftStore(owner, options = {}) {
         // No CSRF token, GPS fix, liveness proof or verification selfie is retained.
         return {
             id: `${owner}:${value.submissionId}`, owner, submissionId: value.submissionId,
-            fields: { description: String(value.fields?.description ?? ''), location_text: String(value.fields?.location_text ?? '') },
+            fields: { incident_type: String(value.fields?.incident_type ?? 'Road Accident'), description: String(value.fields?.description ?? ''), location_text: String(value.fields?.location_text ?? '') },
             createdAt: value.createdAt, updatedAt: value.updatedAt, state: value.state ?? 'editing',
             attempted: Boolean(value.attempted), evidenceFile: value.evidenceFile ?? null,
             evidenceName: value.evidenceFile?.name ?? value.evidenceName ?? null,

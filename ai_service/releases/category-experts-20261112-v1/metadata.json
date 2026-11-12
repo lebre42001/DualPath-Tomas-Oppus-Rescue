@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "version": "category-experts-20261112-v1",
+  "model_type": "tfidf_category_router",
+  "base_model": "six-isolated-tfidf-logistic-regression-classifiers",
+  "labels": [
+    "minor",
+    "serious",
+    "critical",
+    "needs_review"
+  ],
+  "languages": [
+    "en",
+    "tl",
+    "ceb",
+    "mixed"
+  ],
+  "scope": "selected_incident_categories",
+  "domain": "selected_incident_categories",
+  "input_format": "incident_type_description_v1",
+  "supported_incident_types": [
+    "fire_incident",
+    "flood_landslide",
+    "medical_emergency",
+    "other",
+    "road_accident",
+    "security_incident"
+  ],
+  "observed_incident_types": [
+    "fire_incident",
+    "flood_landslide",
+    "medical_emergency",
+    "other",
+    "road_accident",
+    "security_incident"
+  ],
+  "category_support_status": "trained_scope_only_requires_separate_category_evaluation",
+  "observed_languages": [
+    "ceb",
+    "en",
+    "mixed",
+    "tl"
+  ],
+  "language_support_status": "requires_separate_language_evaluation",
+  "max_length": 128,
+  "review_threshold": 0.5,
+  "review_threshold_status": "provisional",
+  "confidence_calibrated": false,
+  "approved_for_deployment": false,
+  "deployment_status": "experimental",
+  "all_data_reviewed": false,
+  "allow_draft": true,
+  "dataset_fingerprint": "456775af316dfabcb6c6cce124e2b5905cd74b1fabedb52afd94b3cad3a71e4b",
+  "dataset_summary": {
+    "rows": 11906,
+    "groups": 1436,
+    "by_label": {
+      "critical": 2952,
+      "minor": 3010,
+      "needs_review": 2949,
+      "serious": 2995
+    },
+    "by_language": {
+      "ceb": 3276,
+      "en": 3166,
+      "mixed": 2332,
+      "tl": 3132
+    },
+    "by_incident_type": {
+      "fire_incident": 1132,
+      "flood_landslide": 1116,
+      "medical_emergency": 1172,
+      "other": 1116,
+      "road_accident": 6238,
+      "security_incident": 1132
+    },
+    "by_review_status": {
+      "draft": 11906
+    },
+    "eligible_approved_rows": 0,
+    "dataset_fingerprint": "456775af316dfabcb6c6cce124e2b5905cd74b1fabedb52afd94b3cad3a71e4b"
+  },
+  "seed": 20261112,
+  "validation_fraction": 0.15,
+  "test_fraction": 0.15,
+  "test_evaluated_during_training": false,
+  "fit_all_data": false,
+  "split_source": "frozen_manifest",
+  "software_versions": {
+    "torch": "2.13.0",
+    "scikit-learn": "1.9.1"
+  },
+  "limitations": [
+    "No deployment approval is granted by training or metrics",
+    "Confidence and review threshold are not calibrated",
+    "Group IDs require human identification of translations and paraphrases",
+    "Language balance is reported, not guaranteed",
+    "Small or synthetic datasets do not establish clinical or operational safety"
+  ],
+  "display_name": "AksyRes Incident-Specific Text AI (Experimental)",
+  "artifact_sha256": "a05b0db9bcfaa5294525af9691e30c6d6e655bb4475cadb01ef06d9783deb087",
+  "text_rule_profile": "multiincident_common_v1",
+  "text_rule_incident_types": [
+    "road_accident",
+    "fire_incident",
+    "flood_landslide",
+    "medical_emergency",
+    "security_incident",
+    "other"
+  ],
+  "category_model_counts": {
+    "road_accident": {
+      "train": 5735,
+      "validation": 255,
+      "test": 248
+    },
+    "fire_incident": {
+      "train": 1060,
+      "validation": 48,
+      "test": 24
+    },
+    "flood_landslide": {
+      "train": 1040,
+      "validation": 52,
+      "test": 24
+    },
+    "medical_emergency": {
+      "train": 1100,
+      "validation": 52,
+      "test": 20
+    },
+    "security_incident": {
+      "train": 1060,
+      "validation": 48,
+      "test": 24
+    },
+    "other": {
+      "train": 1040,
+      "validation": 52,
+      "test": 24
+    }
+  },
+  "human_reviewed": false,
+  "independent_validation": false,
+  "pilot_only": true,
+  "admin_confirmation_required": true,
+  "experimental_release_reason": "Owner explicitly requested category-isolated multi-incident advisory activation; no validated real-report accuracy or clinical approval."
+}

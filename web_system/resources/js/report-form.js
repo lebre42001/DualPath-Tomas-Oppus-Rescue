@@ -24,13 +24,27 @@ onDomReady( () => {
 
     const form = root.querySelector('[data-report-draft-form]');
     const isCivilian = form?.dataset.reportRole === 'civilian';
-    root.querySelector('[data-incident-selected]')?.addEventListener('click', () => {
-        const picker = root.querySelector('[data-incident-picker]');
-        if (picker instanceof HTMLDetailsElement) {
+    const picker = root.querySelector('[data-incident-picker]');
+    const updateIncidentPicker = (close = false) => {
+        const selected = picker?.querySelector('input[name="incident_type"]:checked');
+        if (!selected) return;
+        const summary = picker.querySelector('[data-incident-summary]');
+        if (summary) summary.textContent = selected.value;
+        picker.querySelectorAll('[data-incident-option]').forEach(input => {
+            const option = input.closest('label');
+            option?.classList.toggle('is-selected', input.checked);
+            const status = option?.querySelector('[data-incident-option-status]');
+            if (status) status.textContent = input.checked ? 'Selected' : 'Choose';
+        });
+        if (close) {
             picker.open = false;
             picker.querySelector('summary')?.focus({ preventScroll: true });
         }
-    });
+    };
+    picker?.addEventListener('change', event => updateIncidentPicker(event.isTrusted));
+    picker?.querySelectorAll('[data-incident-option]').forEach(input => input.addEventListener('click', () => updateIncidentPicker(true)));
+    form?.addEventListener('stitch:report-draft-restored', () => updateIncidentPicker());
+    updateIncidentPicker();
     const geoButton = root.querySelector('[data-geo-fill-button]');
     const latitudeInput = root.querySelector('[data-geo-latitude]');
     const longitudeInput = root.querySelector('[data-geo-longitude]');

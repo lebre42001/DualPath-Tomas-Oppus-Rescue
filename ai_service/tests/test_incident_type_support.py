@@ -150,8 +150,8 @@ class DatasetCategoryTests(unittest.TestCase):
 class RuntimeCategoryTests(unittest.TestCase):
     def setUp(self):
         root = Path(__file__).resolve().parents[1]
-        config = json.loads((root / "active_text_config.json").read_text(encoding="utf-8"))
-        self.directory = root / config["model_directory"]
+        # These tests explicitly cover legacy road-only artifacts.
+        self.directory = root / 'releases/triage-text-tfidf-20261016-v2'
 
     def test_legacy_runtime_abstains_for_every_untrained_category(self):
         predictor = TfidfSeverityPredictor(self.directory, allow_experimental=True)

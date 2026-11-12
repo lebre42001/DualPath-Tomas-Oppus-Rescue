@@ -3,6 +3,9 @@
 @php
     $isCivilian = auth()->user()?->isCivilian() ?? false;
     $evidenceUploadError = $errors->first('evidence');
+    $incidentLabels = \App\Support\IncidentCategory::LABELS;
+    $oldIncidentType = old('incident_type', 'Road Accident');
+    $selectedIncidentKey = is_string($oldIncidentType) ? (\App\Support\IncidentCategory::normalize($oldIncidentType) ?? 'road_accident') : 'road_accident';
 @endphp
 
 @section('title', $isCivilian ? 'Send Emergency Report' : 'Create Report')
@@ -60,7 +63,7 @@
             <input type="hidden" name="submission_id" value="{{ old('submission_id', $submissionId) }}">
 
             @if ($isCivilian)
-                <p class="legal-small">Your location, scene photo, verification selfie, and description are shared with authorized reviewers. Only the description is used for severity AI. <a href="{{ route('legal.privacy') }}">Privacy Policy</a>.</p>
+                <p class="legal-small">Your location, scene photo, verification selfie, and description are shared with authorized reviewers. Your selected incident type and description are used for severity AI. <a href="{{ route('legal.privacy') }}">Privacy Policy</a>.</p>
                 <details class="civilian-compact-details civilian-device-access">
                     <summary>Device access: camera, photos &amp; location</summary>
                     <div class="civilian-device-access-body">
@@ -79,23 +82,19 @@
                             <summary>
                                 <span class="civilian-incident-summary-copy">
                                     <span>Type of incident</span>
-                                    <strong>Road Accident</strong>
+                                    <strong data-incident-summary>{{ $incidentLabels[$selectedIncidentKey] }}</strong>
                                     <small>Tap to view incident types</small>
                                 </span>
                                 <svg class="civilian-incident-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </summary>
                             <div class="civilian-incident-options" role="group" aria-label="Type of incident">
-                                <label class="civilian-incident-option is-selected">
-                                    <input type="radio" name="incident_type" value="Road Accident" checked data-incident-selected>
-                                    <span>Road Accident</span><small>Selected</small>
-                                </label>
-                                @foreach (['Fire Incident', 'Flood / Landslide', 'Medical Emergency'] as $incidentType)
-                                    <label class="civilian-incident-option is-locked">
-                                        <input type="radio" name="incident_type" value="{{ $incidentType }}" disabled>
-                                        <span>{{ $incidentType }}</span><small>Locked</small>
+                                @foreach ($incidentLabels as $incidentKey => $incidentType)
+                                    <label class="civilian-incident-option {{ $selectedIncidentKey === $incidentKey ? 'is-selected' : '' }}">
+                                        <input type="radio" name="incident_type" value="{{ $incidentType }}" @checked($selectedIncidentKey === $incidentKey) data-incident-option required>
+                                        <span>{{ $incidentType }}</span><small data-incident-option-status>{{ $selectedIncidentKey === $incidentKey ? 'Selected' : 'Choose' }}</small>
                                     </label>
                                 @endforeach
-                                <p>Other incident types are coming soon.</p>
+                                <p>Choose the type that best matches this emergency.</p>
                             </div>
                         </details>
                         <span class="form-step-label">1. Scene photo &amp; location</span>
@@ -146,8 +145,8 @@
                             <summary>Photo preview &amp; reporting help</summary>
                             <div class="civilian-report-help">
                                 <p>Use a real scene photo. GPS, a barangay/road/landmark, and a short description are required.</p>
-                                <p>A responder reviews your report. Any available AI suggestion uses only your description; photos remain evidence.</p>
-                                <p>Road Accident is available for this version. Fire Incident, Flood / Landslide, and Medical Emergency: Coming soon.</p>
+                                <p>A responder reviews your report. Any available AI suggestion uses your selected incident type and description; photos remain evidence.</p>
+                                <p>Choose Road Accident, Fire Incident, Flood / Landslide, Medical Emergency, Security Incident, or Other.</p>
                                 <p>If device access is blocked, open in Android Chrome or iPhone Safari and allow camera and location.</p>
                             </div>
                             <div class="preview-grid">
@@ -227,7 +226,11 @@
                             <div class="form-grid">
                                 <div class="field">
                                     <label for="incident_type">Incident type</label>
-                                    <input id="incident_type" class="input" type="text" name="incident_type" value="{{ old('incident_type', 'General Emergency') }}" placeholder="Vehicular Accident, Landslide, Fire, Injury" required>
+                                    <select id="incident_type" name="incident_type" required>
+                                        @foreach ($incidentLabels as $incidentKey => $incidentType)
+                                            <option value="{{ $incidentType }}" @selected($selectedIncidentKey === $incidentKey)>{{ $incidentType }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="field">
                                     <label for="transmission_type">Transmission</label>

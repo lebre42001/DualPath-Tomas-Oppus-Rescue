@@ -14,6 +14,7 @@ use App\Support\CivilianSeverityAssessment;
 use App\Support\EvidencePhotoPreScreen;
 use App\Support\IncidentFeedBroadcaster;
 use App\Support\IncidentReportIngestor;
+use App\Support\IncidentCategory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -191,7 +192,12 @@ class IncidentReportController extends Controller
             'location_text' => ['required', 'string', 'max:180'],
             'latitude' => [Rule::requiredIf($isCivilian), 'nullable', 'numeric', 'between:-90,90'],
             'longitude' => [Rule::requiredIf($isCivilian), 'nullable', 'numeric', 'between:-180,180'],
-            'incident_type' => ['nullable', 'string', 'max:80'],
+            'incident_type' => ['bail', $isCivilian ? 'required' : 'nullable', 'string', 'max:80',
+                function ($attribute, $value, $fail) use ($isCivilian): void {
+                    if ($isCivilian && IncidentCategory::normalize($value) === null) {
+                        $fail('Choose a supported incident type.');
+                    }
+                }],
             'severity' => ['nullable', 'string', 'max:20'],
             'transmission_type' => ['nullable', 'in:auto,online,lora'],
             'evidence' => ['nullable', 'file', 'max:20480', 'mimes:jpg,jpeg,png,webp,mp4,mov,avi,3gp'],
@@ -253,7 +259,7 @@ class IncidentReportController extends Controller
         $descriptionForStorage = $description !== '' ? $description : 'No short description provided.';
 
         $preferredSeverity = $isCivilian ? null : ($validated['severity'] ?? null);
-        $incidentType = $isCivilian ? 'Road Accident' : ($validated['incident_type'] ?? 'General Emergency');
+        $incidentType = $isCivilian ? IncidentCategory::label($validated['incident_type']) : ($validated['incident_type'] ?? 'General Emergency');
         // The description and selected incident category are the AI inputs. Disabled or unavailable
         // text inference leaves the report unassessed for responder review.
         $analysis = app(AiTextSeverityClient::class)->analyzeForReport($descriptionForStorage, $preferredSeverity, $incidentType);

@@ -1,0 +1,638 @@
+{
+  "split": "validation",
+  "model_version": "category-experts-20261112-v1/security_incident",
+  "labels": [
+    "minor",
+    "serious",
+    "critical",
+    "needs_review"
+  ],
+  "dataset_fingerprint": "14280504c372ecff196d4b9788f5b2302ee796169f68104e1e8b353e3c464987",
+  "all_data_reviewed": false,
+  "rows": [
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_02_CEB",
+      "group_id": "security_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.05408131418595667,
+        0.055990587404242724,
+        0.8173723903470818,
+        0.07255570806271884
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_02_EN",
+      "group_id": "security_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.03650099279228525,
+        0.11741879347887424,
+        0.8072049600375493,
+        0.038875253691291294
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_02_MIXED",
+      "group_id": "security_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.032200293106443394,
+        0.08008679715206288,
+        0.8412357536385039,
+        0.04647715610298996
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_02_TL",
+      "group_id": "security_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.009636605237137986,
+        0.06738538133129976,
+        0.797919064702624,
+        0.12505894872893833
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_05_CEB",
+      "group_id": "security_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.041473643343911265,
+        0.09998838855080602,
+        0.7921817432875043,
+        0.06635622481777838
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_05_EN",
+      "group_id": "security_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.026090658371651344,
+        0.0547095542949061,
+        0.8629938373602153,
+        0.05620594997322723
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_05_MIXED",
+      "group_id": "security_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.022042082258625532,
+        0.06330388848668239,
+        0.8683670788323749,
+        0.0462869504223172
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_CRITICAL_05_TL",
+      "group_id": "security_incident__additional_critical_uncontrolled_massive_bleeding",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.054945843357531325,
+        0.1996385695780306,
+        0.6702784630551605,
+        0.07513712400927755
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_MINOR_04_CEB",
+      "group_id": "security_incident__additional_minor_resolved_noise_no_danger",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "probabilities": [
+        0.6545634700017811,
+        0.08042379800437212,
+        0.08583660262571176,
+        0.17917612936813523
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_MINOR_04_EN",
+      "group_id": "security_incident__additional_minor_resolved_noise_no_danger",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "probabilities": [
+        0.8042997035324606,
+        0.06793170319061224,
+        0.07791143553700329,
+        0.049857157739923906
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_MINOR_04_MIXED",
+      "group_id": "security_incident__additional_minor_resolved_noise_no_danger",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "probabilities": [
+        0.9043252379022851,
+        0.02869636140954944,
+        0.016164895672140245,
+        0.050813505016025114
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_MINOR_04_TL",
+      "group_id": "security_incident__additional_minor_resolved_noise_no_danger",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "probabilities": [
+        0.8370845422769573,
+        0.049777702143403414,
+        0.03063816057802206,
+        0.08249959500161709
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_NEEDS_REVIEW_03_CEB",
+      "group_id": "security_incident__additional_review_rumored_assault_unverified",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.04568273386616842,
+        0.16648609204148443,
+        0.18193576626147892,
+        0.6058954078308681
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_NEEDS_REVIEW_03_EN",
+      "group_id": "security_incident__additional_review_rumored_assault_unverified",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.01840362518808564,
+        0.027929701455835322,
+        0.013954432776503222,
+        0.9397122405795757
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_NEEDS_REVIEW_03_MIXED",
+      "group_id": "security_incident__additional_review_rumored_assault_unverified",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.03653585552554339,
+        0.018099510761584708,
+        0.028117959263719648,
+        0.9172466744491523
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_NEEDS_REVIEW_03_TL",
+      "group_id": "security_incident__additional_review_rumored_assault_unverified",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.04197064912086591,
+        0.1771059362707087,
+        0.10795267615018225,
+        0.6729707384582431
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_SERIOUS_03_CEB",
+      "group_id": "security_incident__additional_serious_active_forced_entry_empty_property",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.9000234105173668,
+        0.04549001364092396,
+        0.031031914275446767,
+        0.0234546615662624
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_SERIOUS_03_EN",
+      "group_id": "security_incident__additional_serious_active_forced_entry_empty_property",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.6628128423603502,
+        0.07110120035685868,
+        0.09091465070924351,
+        0.1751713065735477
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_SERIOUS_03_MIXED",
+      "group_id": "security_incident__additional_serious_active_forced_entry_empty_property",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.7261676610475056,
+        0.0578989780883402,
+        0.06612599123859228,
+        0.14980736962556204
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_SECURITY_INCIDENT_SERIOUS_03_TL",
+      "group_id": "security_incident__additional_serious_active_forced_entry_empty_property",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.6556027174085088,
+        0.047138609055217655,
+        0.07642502981698102,
+        0.2208336437192924
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_CRITICAL_02_CEB",
+      "group_id": "security_incident__critical_absent_normal_breathing",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.015728148815524253,
+        0.6374039676182951,
+        0.1916523862565803,
+        0.15521549730960044
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_CRITICAL_02_EN",
+      "group_id": "security_incident__critical_absent_normal_breathing",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.01634063537979712,
+        0.6319344941645457,
+        0.13907797081471004,
+        0.21264689964094707
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_CRITICAL_02_MIXED",
+      "group_id": "security_incident__critical_absent_normal_breathing",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.023586069544079442,
+        0.6751062953940401,
+        0.09977285469609096,
+        0.2015347803657895
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_CRITICAL_02_TL",
+      "group_id": "security_incident__critical_absent_normal_breathing",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.06649931837064851,
+        0.44142297684392784,
+        0.27247942825126564,
+        0.21959827653415798
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_CRITICAL_03_CEB",
+      "group_id": "security_incident__critical_uncontrolled_external_bleeding",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.027223300886118316,
+        0.05490309768862319,
+        0.8745586111337809,
+        0.04331499029147749
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_CRITICAL_03_EN",
+      "group_id": "security_incident__critical_uncontrolled_external_bleeding",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.059552273495339654,
+        0.04674654812978801,
+        0.842692916615519,
+        0.051008261759353184
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_CRITICAL_03_MIXED",
+      "group_id": "security_incident__critical_uncontrolled_external_bleeding",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.03361466493664916,
+        0.07734312931469668,
+        0.86538104059668,
+        0.023661165151974237
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_CRITICAL_03_TL",
+      "group_id": "security_incident__critical_uncontrolled_external_bleeding",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "critical",
+      "probabilities": [
+        0.02988809198977425,
+        0.10614246323373376,
+        0.7895675525306995,
+        0.07440189224579259
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_MINOR_03_CEB",
+      "group_id": "security_incident__minor_loose_panel",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "probabilities": [
+        0.508485846105815,
+        0.20734765547407485,
+        0.1533803224637366,
+        0.13078617595637357
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_MINOR_03_EN",
+      "group_id": "security_incident__minor_loose_panel",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "probabilities": [
+        0.6509389073770342,
+        0.17031700951905177,
+        0.07212094423532471,
+        0.10662313886858925
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_MINOR_03_MIXED",
+      "group_id": "security_incident__minor_loose_panel",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "probabilities": [
+        0.9419189695305771,
+        0.03312314183165693,
+        0.011384693366891494,
+        0.013573195270874465
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_MINOR_03_TL",
+      "group_id": "security_incident__minor_loose_panel",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "minor",
+      "probabilities": [
+        0.7574553731367428,
+        0.07874181106876658,
+        0.08243342832506613,
+        0.08136938746942461
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_NEEDS_REVIEW_05_CEB",
+      "group_id": "security_incident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.18804023618284546,
+        0.07487217946408098,
+        0.2395567991230884,
+        0.4975307852299853
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_NEEDS_REVIEW_05_EN",
+      "group_id": "security_incident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.22929061139566875,
+        0.13114530814576694,
+        0.06969646201729131,
+        0.5698676184412731
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_NEEDS_REVIEW_05_MIXED",
+      "group_id": "security_incident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.09823762976950294,
+        0.17539839436816498,
+        0.070546432334965,
+        0.6558175435273671
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_NEEDS_REVIEW_05_TL",
+      "group_id": "security_incident__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.18135910384812415,
+        0.23452649816795723,
+        0.07246752370957325,
+        0.5116468742743453
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_NEEDS_REVIEW_11_CEB",
+      "group_id": "security_incident__needs_review_translation_or_quotation",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.057840317332304554,
+        0.0165301941454467,
+        0.15302794506143416,
+        0.7726015434608147
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_NEEDS_REVIEW_11_EN",
+      "group_id": "security_incident__needs_review_translation_or_quotation",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.03145128665205547,
+        0.11631877953591557,
+        0.22262300243292182,
+        0.6296069313791072
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_NEEDS_REVIEW_11_MIXED",
+      "group_id": "security_incident__needs_review_translation_or_quotation",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.01977262877262106,
+        0.05463420769534329,
+        0.2101957624501727,
+        0.715397401081863
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_NEEDS_REVIEW_11_TL",
+      "group_id": "security_incident__needs_review_translation_or_quotation",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "needs_review",
+      "probabilities": [
+        0.02972872500584144,
+        0.032813333961345205,
+        0.21769090829197169,
+        0.7197670327408416
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_SERIOUS_01_CEB",
+      "group_id": "security_incident__serious_skin_abrasion",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.015485735244756039,
+        0.886525393571832,
+        0.07285830044744263,
+        0.02513057073596937
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_SERIOUS_01_EN",
+      "group_id": "security_incident__serious_skin_abrasion",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.0016981644199810049,
+        0.9891710749690535,
+        0.005194500310884595,
+        0.003936260300080842
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_SERIOUS_01_MIXED",
+      "group_id": "security_incident__serious_skin_abrasion",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.0021355201806897723,
+        0.9861398502143355,
+        0.00837508940438912,
+        0.0033495402005856325
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_SERIOUS_01_TL",
+      "group_id": "security_incident__serious_skin_abrasion",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.008205708032547467,
+        0.9028449233133106,
+        0.0674997962169006,
+        0.02144957243724136
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_SERIOUS_12_CEB",
+      "group_id": "security_incident__serious_back_pain_after_strain",
+      "language": "ceb",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.008848978347286136,
+        0.9185961886926572,
+        0.05287423536906868,
+        0.019680597590987888
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_SERIOUS_12_EN",
+      "group_id": "security_incident__serious_back_pain_after_strain",
+      "language": "en",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.0036627737777448037,
+        0.9678330307901771,
+        0.02100767019710255,
+        0.00749652523497543
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_SERIOUS_12_MIXED",
+      "group_id": "security_incident__serious_back_pain_after_strain",
+      "language": "mixed",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.0017263193731513198,
+        0.9867054914156644,
+        0.007116182712042602,
+        0.004452006499141581
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_SECURITY_INCIDENT_SERIOUS_12_TL",
+      "group_id": "security_incident__serious_back_pain_after_strain",
+      "language": "tl",
+      "incident_type": "security_incident",
+      "label": "serious",
+      "probabilities": [
+        0.013982589274152727,
+        0.9459378004934796,
+        0.0264529823233414,
+        0.013626627909026204
+      ]
+    }
+  ]
+}

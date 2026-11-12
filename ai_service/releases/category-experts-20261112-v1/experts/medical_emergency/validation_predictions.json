@@ -1,0 +1,690 @@
+{
+  "split": "validation",
+  "model_version": "category-experts-20261112-v1/medical_emergency",
+  "labels": [
+    "minor",
+    "serious",
+    "critical",
+    "needs_review"
+  ],
+  "dataset_fingerprint": "9477394976174388d718cb8cabb3676ca3e01f28e4e6df136319a5bc7261c989",
+  "all_data_reviewed": false,
+  "rows": [
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_CRITICAL_03_CEB",
+      "group_id": "medical_emergency__additional_critical_ongoing_seizure_without_recovery",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.012286656222646323,
+        0.14086466711603163,
+        0.8162660039964261,
+        0.030582672664895793
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_CRITICAL_03_EN",
+      "group_id": "medical_emergency__additional_critical_ongoing_seizure_without_recovery",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.039141255616054554,
+        0.22346239194282394,
+        0.6645665645585208,
+        0.07282978788260056
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_CRITICAL_03_MIXED",
+      "group_id": "medical_emergency__additional_critical_ongoing_seizure_without_recovery",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.01992441752089868,
+        0.39009805081547694,
+        0.5540155937832872,
+        0.035961937880337067
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_CRITICAL_03_TL",
+      "group_id": "medical_emergency__additional_critical_ongoing_seizure_without_recovery",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.010217261579170248,
+        0.03844263752682809,
+        0.9166018498126589,
+        0.0347382510813429
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_MINOR_06_CEB",
+      "group_id": "medical_emergency__additional_minor_resolved_heat_discomfort",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.6904935884139534,
+        0.09372863575033136,
+        0.01905310439668682,
+        0.19672467143902855
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_MINOR_06_EN",
+      "group_id": "medical_emergency__additional_minor_resolved_heat_discomfort",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.5489395140075728,
+        0.3318775505986073,
+        0.05776162168187028,
+        0.06142131371194966
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_MINOR_06_MIXED",
+      "group_id": "medical_emergency__additional_minor_resolved_heat_discomfort",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.6834704741598353,
+        0.09590866401857978,
+        0.014671589262292324,
+        0.20594927255929252
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_MINOR_06_TL",
+      "group_id": "medical_emergency__additional_minor_resolved_heat_discomfort",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.6246835670782779,
+        0.07820768347804813,
+        0.06928819904332628,
+        0.22782055040034765
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_NEEDS_REVIEW_02_CEB",
+      "group_id": "medical_emergency__additional_review_contradictory_same_person_responsiveness",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.013092132588621,
+        0.5046289724478624,
+        0.07587133696928874,
+        0.4064075579942277
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_NEEDS_REVIEW_02_EN",
+      "group_id": "medical_emergency__additional_review_contradictory_same_person_responsiveness",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.022142695115292443,
+        0.5651093201343528,
+        0.054924167575015476,
+        0.3578238171753394
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_NEEDS_REVIEW_02_MIXED",
+      "group_id": "medical_emergency__additional_review_contradictory_same_person_responsiveness",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.028442469197831798,
+        0.35030923510451834,
+        0.054612567637274095,
+        0.5666357280603759
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_NEEDS_REVIEW_02_TL",
+      "group_id": "medical_emergency__additional_review_contradictory_same_person_responsiveness",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.031427079262584215,
+        0.43397909993459133,
+        0.056172898030344406,
+        0.4784209227724802
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_SERIOUS_01_CEB",
+      "group_id": "medical_emergency__additional_serious_controlled_limb_wound",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.017776751357671504,
+        0.9717597334907246,
+        0.004807855377850481,
+        0.005655659773753363
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_SERIOUS_01_EN",
+      "group_id": "medical_emergency__additional_serious_controlled_limb_wound",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.11814435771394566,
+        0.863910724562973,
+        0.01531578450669843,
+        0.002629133216382912
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_SERIOUS_01_MIXED",
+      "group_id": "medical_emergency__additional_serious_controlled_limb_wound",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.0826862428822995,
+        0.9060420687275295,
+        0.009425587454160583,
+        0.0018461009360104107
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_MEDICAL_EMERGENCY_SERIOUS_01_TL",
+      "group_id": "medical_emergency__additional_serious_controlled_limb_wound",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.022384121808367817,
+        0.9638733022346669,
+        0.011301672943946116,
+        0.0024409030130191542
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_CRITICAL_02_CEB",
+      "group_id": "medical_emergency__critical_absent_normal_breathing",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.030628340312723167,
+        0.6199367826789991,
+        0.2940595290206497,
+        0.05537534798762809
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_CRITICAL_02_EN",
+      "group_id": "medical_emergency__critical_absent_normal_breathing",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.059425180004457366,
+        0.3325703637227233,
+        0.365981367893108,
+        0.24202308837971137
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_CRITICAL_02_MIXED",
+      "group_id": "medical_emergency__critical_absent_normal_breathing",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.03416039337068739,
+        0.8000957530661328,
+        0.10590670624075925,
+        0.059837147322420764
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_CRITICAL_02_TL",
+      "group_id": "medical_emergency__critical_absent_normal_breathing",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.050847399698907794,
+        0.1953004290488254,
+        0.573258438118763,
+        0.1805937331335039
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_CRITICAL_03_CEB",
+      "group_id": "medical_emergency__critical_uncontrolled_external_bleeding",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.016191429582313965,
+        0.22939672030456584,
+        0.7014401254003918,
+        0.05297172471272843
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_CRITICAL_03_EN",
+      "group_id": "medical_emergency__critical_uncontrolled_external_bleeding",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.023243770938042353,
+        0.07487692136037509,
+        0.8256282055363319,
+        0.07625110216525077
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_CRITICAL_03_MIXED",
+      "group_id": "medical_emergency__critical_uncontrolled_external_bleeding",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.01765307695540451,
+        0.1661481452840129,
+        0.786787445783348,
+        0.02941133197723448
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_CRITICAL_03_TL",
+      "group_id": "medical_emergency__critical_uncontrolled_external_bleeding",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "critical",
+      "probabilities": [
+        0.019611635536672733,
+        0.24467599121267222,
+        0.6609343436309334,
+        0.07477802961972162
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_06_CEB",
+      "group_id": "medical_emergency__minor_medical_warm_feeling_resolved",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.9926070269549978,
+        0.003942291217680543,
+        0.0009440266782911638,
+        0.002506655149030253
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_06_EN",
+      "group_id": "medical_emergency__minor_medical_warm_feeling_resolved",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.9862917385449351,
+        0.0074778591020902814,
+        0.0032559711866040884,
+        0.0029744311663705077
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_06_MIXED",
+      "group_id": "medical_emergency__minor_medical_warm_feeling_resolved",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.9898788712630339,
+        0.005643890241082952,
+        0.002340030687661114,
+        0.002137207808222069
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_06_TL",
+      "group_id": "medical_emergency__minor_medical_warm_feeling_resolved",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.9917587796194454,
+        0.005093164922221593,
+        0.0010378916174341843,
+        0.002110163840898582
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_07_CEB",
+      "group_id": "medical_emergency__minor_medical_muscle_tiredness_resolved",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.9922135694014816,
+        0.0056276084573878395,
+        0.0009675696967280678,
+        0.0011912524444027011
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_07_EN",
+      "group_id": "medical_emergency__minor_medical_muscle_tiredness_resolved",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.9892947963978328,
+        0.006420368739908206,
+        0.0022578809799683216,
+        0.00202695388229088
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_07_MIXED",
+      "group_id": "medical_emergency__minor_medical_muscle_tiredness_resolved",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.9930601143060152,
+        0.004914558600732106,
+        0.0010815413567454091,
+        0.0009437857365074123
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_07_TL",
+      "group_id": "medical_emergency__minor_medical_muscle_tiredness_resolved",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.978968176483969,
+        0.014953550304436862,
+        0.004098064837620843,
+        0.001980208373973224
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_08_CEB",
+      "group_id": "medical_emergency__minor_medical_brief_watery_eyes_resolved",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.9270508040396793,
+        0.06864769091765403,
+        0.0014533894570628347,
+        0.0028481155856038276
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_08_EN",
+      "group_id": "medical_emergency__minor_medical_brief_watery_eyes_resolved",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.6678946744512344,
+        0.30673079275668474,
+        0.004272607801463626,
+        0.021101924990617284
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_08_MIXED",
+      "group_id": "medical_emergency__minor_medical_brief_watery_eyes_resolved",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.7227976342237221,
+        0.2611932179586957,
+        0.003919857547513659,
+        0.012089290270068446
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_MINOR_08_TL",
+      "group_id": "medical_emergency__minor_medical_brief_watery_eyes_resolved",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "minor",
+      "probabilities": [
+        0.8747436993639877,
+        0.11985890973500525,
+        0.0022948095551386756,
+        0.0031025813458685405
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_NEEDS_REVIEW_05_CEB",
+      "group_id": "medical_emergency__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.10226099501641774,
+        0.20607106439720593,
+        0.11337203174394149,
+        0.5782959088424349
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_NEEDS_REVIEW_05_EN",
+      "group_id": "medical_emergency__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.04284173464950691,
+        0.09903828061623944,
+        0.07011160134776695,
+        0.7880083833864867
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_NEEDS_REVIEW_05_MIXED",
+      "group_id": "medical_emergency__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.04002962757822707,
+        0.239957585349283,
+        0.03988328306343858,
+        0.6801295040090514
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_NEEDS_REVIEW_05_TL",
+      "group_id": "medical_emergency__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.33865822207992496,
+        0.09278746315297277,
+        0.08324476695609076,
+        0.4853095478110115
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_NEEDS_REVIEW_11_CEB",
+      "group_id": "medical_emergency__needs_review_translation_or_quotation",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.010081286180746446,
+        0.00864260216327613,
+        0.04174182506476755,
+        0.9395342865912099
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_NEEDS_REVIEW_11_EN",
+      "group_id": "medical_emergency__needs_review_translation_or_quotation",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.017873487848270288,
+        0.174373872527902,
+        0.22558825164971574,
+        0.582164387974112
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_NEEDS_REVIEW_11_MIXED",
+      "group_id": "medical_emergency__needs_review_translation_or_quotation",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.022231421188312745,
+        0.14102441099795496,
+        0.22709348775847193,
+        0.6096506800552605
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_NEEDS_REVIEW_11_TL",
+      "group_id": "medical_emergency__needs_review_translation_or_quotation",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "needs_review",
+      "probabilities": [
+        0.01334171612541432,
+        0.01671748691560434,
+        0.1685742382803402,
+        0.8013665586786411
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_SERIOUS_01_CEB",
+      "group_id": "medical_emergency__serious_skin_abrasion",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.005252084138286505,
+        0.9755298731053612,
+        0.011518211579294562,
+        0.007699831177057507
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_SERIOUS_01_EN",
+      "group_id": "medical_emergency__serious_skin_abrasion",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.007193197271982019,
+        0.9866972418677498,
+        0.003208582447429036,
+        0.0029009784128391962
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_SERIOUS_01_MIXED",
+      "group_id": "medical_emergency__serious_skin_abrasion",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.0012634598844535475,
+        0.9965557634259673,
+        0.0013364258281308645,
+        0.0008443508614483264
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_SERIOUS_01_TL",
+      "group_id": "medical_emergency__serious_skin_abrasion",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.018447659926498966,
+        0.9159315491204331,
+        0.05323862413231531,
+        0.012382166820752676
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_SERIOUS_12_CEB",
+      "group_id": "medical_emergency__serious_back_pain_after_strain",
+      "language": "ceb",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.07323399709383467,
+        0.883191798837081,
+        0.02797356202531095,
+        0.015600642043773176
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_SERIOUS_12_EN",
+      "group_id": "medical_emergency__serious_back_pain_after_strain",
+      "language": "en",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.2811857061184362,
+        0.5861096161106556,
+        0.09742005549585775,
+        0.035284622275050435
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_SERIOUS_12_MIXED",
+      "group_id": "medical_emergency__serious_back_pain_after_strain",
+      "language": "mixed",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.08437943670790438,
+        0.881600864485381,
+        0.017777332954343094,
+        0.016242365852371644
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_MEDICAL_EMERGENCY_SERIOUS_12_TL",
+      "group_id": "medical_emergency__serious_back_pain_after_strain",
+      "language": "tl",
+      "incident_type": "medical_emergency",
+      "label": "serious",
+      "probabilities": [
+        0.05324977835736047,
+        0.9198592932071215,
+        0.017062959624226548,
+        0.009827968811291346
+      ]
+    }
+  ]
+}

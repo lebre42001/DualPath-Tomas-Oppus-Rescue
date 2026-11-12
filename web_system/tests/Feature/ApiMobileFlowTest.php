@@ -94,7 +94,7 @@ class ApiMobileFlowTest extends TestCase
 
         $report = IncidentReport::query()->latest('id')->firstOrFail();
 
-        $this->assertSame('Road Accident', $report->incident_type);
+        $this->assertSame('Flood / Landslide', $report->incident_type);
         $this->assertSame('online', $report->transmission_type);
 
         $this->withHeader('Authorization', 'Bearer '.$token)

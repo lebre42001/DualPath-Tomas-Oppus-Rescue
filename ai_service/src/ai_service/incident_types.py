@@ -17,6 +17,10 @@ INPUT_FORMATS = (LEGACY_INPUT_FORMAT, CATEGORY_INPUT_FORMAT)
 
 _ALIASES = {
     "road": "road_accident", "vehicle_accident": "road_accident",
+    "vehicular_accident": "road_accident", "road_incident": "road_accident",
+    "vehicular_collision": "road_accident", "vehicle_collision": "road_accident",
+    "motorcycle_collision": "road_accident", "motorcycle_accident": "road_accident", "road_crash": "road_accident",
+    "road_emergency": "road_accident",
     "road_vehicle_accident": "road_accident",
     "fire": "fire_incident",
     "flood": "flood_landslide", "landslide": "flood_landslide",

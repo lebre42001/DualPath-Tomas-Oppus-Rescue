@@ -12,6 +12,7 @@ use App\Support\CivilianSeverityAssessment;
 use App\Support\EvidencePhotoPreScreen;
 use App\Support\IncidentFeedBroadcaster;
 use App\Support\IncidentReportIngestor;
+use App\Support\IncidentCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -61,7 +62,12 @@ class IncidentReportApiController extends Controller
         $validator = Validator::make($request->all(), [
             'submission_id' => [$isCivilian ? 'required' : 'nullable', 'string', 'max:100', ...($isCivilian ? ['uuid'] : [])],
             'liveness_proof' => [$isCivilian ? 'required' : 'nullable', 'string', 'size:64'],
-            'incident_type' => ['required', 'string', 'max:80'],
+            'incident_type' => ['bail', 'required', 'string', 'max:80',
+                function ($attribute, $value, $fail) use ($isCivilian): void {
+                    if ($isCivilian && IncidentCategory::normalize($value) === null) {
+                        $fail('Choose a supported incident type.');
+                    }
+                }],
             'severity' => ['nullable', 'string', 'max:20'],
             'location_text' => ['required', 'string', 'max:180'],
             'latitude' => [Rule::requiredIf($isCivilian), 'nullable', 'numeric', 'between:-90,90'],
@@ -116,7 +122,7 @@ class IncidentReportApiController extends Controller
         $descriptionForStorage = $description !== '' ? $description : 'No short description provided.';
 
         $preferredSeverity = $isCivilian ? null : ($validated['severity'] ?? null);
-        $incidentType = $isCivilian ? 'Road Accident' : $validated['incident_type'];
+        $incidentType = $isCivilian ? IncidentCategory::label($validated['incident_type']) : $validated['incident_type'];
         // The description and selected incident category are the AI inputs. Disabled or unavailable
         // text inference leaves the report unassessed for responder review.
         $analysis = app(AiTextSeverityClient::class)->analyzeForReport($descriptionForStorage, $preferredSeverity, $incidentType);

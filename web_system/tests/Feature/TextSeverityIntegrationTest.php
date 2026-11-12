@@ -18,6 +18,69 @@ use Tests\TestCase;
 
 class TextSeverityIntegrationTest extends TestCase
 {
+    public static function selectedIncidentTypes(): array
+    {
+        return array_map(fn ($key, $label) => [$key, $label], array_keys(\App\Support\IncidentCategory::LABELS), array_values(\App\Support\IncidentCategory::LABELS));
+    }
+
+    #[DataProvider('selectedIncidentTypes')]
+    public function test_civilian_web_selection_reaches_matching_ai_category_and_remains_advisory(string $category, string $label): void
+    {
+        config(['services.ai_text.allow_experimental' => true]);
+        Http::fake(['text-ai.test/predict/text' => Http::response([
+            ...$this->prediction(), 'deployment_status' => 'experimental', 'model_version' => 'category-router-fixture',
+        ])]);
+        $civilian = User::factory()->create(['role' => 'civilian', 'account_verified_at' => now()]);
+        $input = array_replace($this->reportInput('Fictional category-specific report description.'), [
+            'incident_type' => $label, 'severity' => 'Minor',
+        ]) + ['evidence' => UploadedFile::fake()->image('scene.jpg', 640, 480),
+              ...$this->verifiedSelfie(UploadedFile::fake()->image('selfie.jpg', 640, 480), $civilian)];
+        $this->actingAs($civilian)->post(route('reports.store'), $input)->assertSessionHasNoErrors()->assertRedirect();
+        $report = IncidentReport::query()->sole();
+        $this->assertSame($label, $report->incident_type);
+        $this->assertSame('text_model_experimental', $report->ai_source);
+        $this->assertSame('Critical', $report->ai_suggested_severity);
+        $this->assertNull($report->operational_severity);
+        $this->assertTrue($report->ai_review_required);
+        Http::assertSent(fn ($request) => $request['incident_type'] === $category);
+    }
+
+    #[DataProvider('selectedIncidentTypes')]
+    public function test_civilian_api_preserves_selected_category(string $category, string $label): void
+    {
+        Http::fake(['text-ai.test/predict/text' => Http::response($this->prediction())]);
+        $civilian = User::factory()->create(['role' => 'civilian', 'account_verified_at' => now(),
+                                            'api_token' => hash('sha256', 'category-flow-fixture')]);
+        $input = array_replace($this->reportInput('Fictional API category-specific report.'), ['incident_type' => $label])
+            + ['evidence' => UploadedFile::fake()->image('scene.jpg', 640, 480),
+               ...$this->verifiedSelfie(UploadedFile::fake()->image('selfie.jpg', 640, 480), $civilian)];
+        $this->withHeaders(['Authorization' => 'Bearer category-flow-fixture', 'Accept' => 'application/json'])
+            ->post('/api/v1/reports', $input)->assertCreated();
+        $report = IncidentReport::query()->sole();
+        $this->assertSame($label, $report->incident_type);
+        $this->assertNull($report->operational_severity);
+        Http::assertSent(fn ($request) => $request['incident_type'] === $category);
+    }
+
+    public function test_unknown_civilian_category_is_rejected_before_ai_inference(): void
+    {
+        $civilian = User::factory()->create(['role' => 'civilian', 'account_verified_at' => now()]);
+        $this->actingAs($civilian)->post(route('reports.store'), [
+            ...$this->reportInput('Fictional report'), 'incident_type' => 'unrecognized-category',
+        ])->assertSessionHasErrors('incident_type');
+        Http::assertNothingSent();
+        $this->assertDatabaseCount('incident_reports', 0);
+    }
+
+    public function test_malformed_category_is_a_validation_error_and_can_render_the_form_again(): void
+    {
+        $civilian = User::factory()->create(['role' => 'civilian', 'account_verified_at' => now()]);
+        $this->actingAs($civilian)->from(route('reports.create'))->post(route('reports.store'), [
+            ...$this->reportInput('Fictional report'), 'incident_type' => ['fire_incident'],
+        ])->assertSessionHasErrors('incident_type');
+        $this->get(route('reports.create'))->assertOk();
+        Http::assertNothingSent();
+    }
     use RefreshDatabase;
 
     protected function setUp(): void

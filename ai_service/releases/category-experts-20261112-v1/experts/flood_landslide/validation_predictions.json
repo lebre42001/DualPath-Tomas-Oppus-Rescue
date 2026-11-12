@@ -1,0 +1,690 @@
+{
+  "split": "validation",
+  "model_version": "category-experts-20261112-v1/flood_landslide",
+  "labels": [
+    "minor",
+    "serious",
+    "critical",
+    "needs_review"
+  ],
+  "dataset_fingerprint": "bae76d5217f0dd290ffa005b13d4ffe29b8d3d8da7e6dbb177ad1c02218847aa",
+  "all_data_reviewed": false,
+  "rows": [
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_01_CEB",
+      "group_id": "flood_landslide__additional_critical_person_currently_drowning",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.04799553406471764,
+        0.04326194836680267,
+        0.7883093940111556,
+        0.12043312355732406
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_01_EN",
+      "group_id": "flood_landslide__additional_critical_person_currently_drowning",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.023650913631327916,
+        0.05093959839786965,
+        0.8036958570193121,
+        0.12171363095149033
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_01_MIXED",
+      "group_id": "flood_landslide__additional_critical_person_currently_drowning",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.01758434735595729,
+        0.028739380687241644,
+        0.8889959815640612,
+        0.06468029039273993
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_01_TL",
+      "group_id": "flood_landslide__additional_critical_person_currently_drowning",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.07967966113038362,
+        0.06063985694700991,
+        0.7980821388256132,
+        0.06159834309699325
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_04_CEB",
+      "group_id": "flood_landslide__additional_critical_uncontrolled_massive_bleeding",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.06895403809522695,
+        0.3381485588830335,
+        0.5432642511466587,
+        0.04963315187508084
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_04_EN",
+      "group_id": "flood_landslide__additional_critical_uncontrolled_massive_bleeding",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.057865349016943575,
+        0.42022984658740076,
+        0.47181047121660535,
+        0.05009433317905024
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_04_MIXED",
+      "group_id": "flood_landslide__additional_critical_uncontrolled_massive_bleeding",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.048366052379592524,
+        0.3354175926117114,
+        0.5790866869619052,
+        0.03712966804679088
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_CRITICAL_04_TL",
+      "group_id": "flood_landslide__additional_critical_uncontrolled_massive_bleeding",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.08824390268060395,
+        0.4843530871893998,
+        0.33989389271267995,
+        0.08750911741731637
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_MINOR_01_CEB",
+      "group_id": "flood_landslide__additional_minor_rainwater_cleared",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.9794569300634988,
+        0.01217359371996652,
+        0.0026021164872534175,
+        0.005767359729281271
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_MINOR_01_EN",
+      "group_id": "flood_landslide__additional_minor_rainwater_cleared",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.9072824826748198,
+        0.05718982266511027,
+        0.018768171129059576,
+        0.016759523531010324
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_MINOR_01_MIXED",
+      "group_id": "flood_landslide__additional_minor_rainwater_cleared",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.7468867969114206,
+        0.12711705370990983,
+        0.05309521340023,
+        0.07290093597843962
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_MINOR_01_TL",
+      "group_id": "flood_landslide__additional_minor_rainwater_cleared",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.9456063301784912,
+        0.03269560179535776,
+        0.007329715997468577,
+        0.014368352028682438
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_MINOR_04_CEB",
+      "group_id": "flood_landslide__additional_minor_rainwater_cleared",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.5293641348699988,
+        0.4339487698695092,
+        0.007336782054723266,
+        0.029350313205768825
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_MINOR_04_EN",
+      "group_id": "flood_landslide__additional_minor_rainwater_cleared",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.35476864688543047,
+        0.5729265004576027,
+        0.023187210711181967,
+        0.04911764194578477
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_MINOR_04_MIXED",
+      "group_id": "flood_landslide__additional_minor_rainwater_cleared",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.4532575184720586,
+        0.42571030779981023,
+        0.026704771196975455,
+        0.0943274025311558
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_MINOR_04_TL",
+      "group_id": "flood_landslide__additional_minor_rainwater_cleared",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.38058263893126726,
+        0.5499603997478323,
+        0.014027463275061195,
+        0.05542949804583941
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_NEEDS_REVIEW_05_CEB",
+      "group_id": "flood_landslide__additional_review_hypothetical_preparedness_question",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.1753914637890019,
+        0.06636218762502732,
+        0.07688790966434729,
+        0.6813584389216235
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_NEEDS_REVIEW_05_EN",
+      "group_id": "flood_landslide__additional_review_hypothetical_preparedness_question",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.10672509489048677,
+        0.10168198712493125,
+        0.08422830147925722,
+        0.7073646165053248
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_NEEDS_REVIEW_05_MIXED",
+      "group_id": "flood_landslide__additional_review_hypothetical_preparedness_question",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.03430563433611508,
+        0.04047502600996254,
+        0.12061686699430824,
+        0.8046024726596143
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_NEEDS_REVIEW_05_TL",
+      "group_id": "flood_landslide__additional_review_hypothetical_preparedness_question",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.09651036837725388,
+        0.07416432948956042,
+        0.03248671821317234,
+        0.7968385839200134
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_SERIOUS_03_CEB",
+      "group_id": "flood_landslide__additional_serious_overflow_threatening_property_evacuated",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.14233833994192652,
+        0.44411946815238,
+        0.3460654423926103,
+        0.06747674951308318
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_SERIOUS_03_EN",
+      "group_id": "flood_landslide__additional_serious_overflow_threatening_property_evacuated",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.3934636337386968,
+        0.10629971023320528,
+        0.40076250065222724,
+        0.09947415537587062
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_SERIOUS_03_MIXED",
+      "group_id": "flood_landslide__additional_serious_overflow_threatening_property_evacuated",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.05005235317232752,
+        0.16969173308225183,
+        0.5954535753000664,
+        0.18480233844535426
+      ]
+    },
+    {
+      "case_id": "MIC_ADDITIONAL_FLOOD_LANDSLIDE_SERIOUS_03_TL",
+      "group_id": "flood_landslide__additional_serious_overflow_threatening_property_evacuated",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.1753708223556415,
+        0.5650605143893717,
+        0.16025068564309017,
+        0.09931797761189667
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_CRITICAL_02_CEB",
+      "group_id": "flood_landslide__critical_absent_normal_breathing",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.0171824764119987,
+        0.44685892343433303,
+        0.45673118589381023,
+        0.07922741425985802
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_CRITICAL_02_EN",
+      "group_id": "flood_landslide__critical_absent_normal_breathing",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.03504362868320316,
+        0.5125511158835326,
+        0.3045190515974546,
+        0.14788620383580953
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_CRITICAL_02_MIXED",
+      "group_id": "flood_landslide__critical_absent_normal_breathing",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.010001639292052,
+        0.6349916400280217,
+        0.2682585710639743,
+        0.08674814961595201
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_CRITICAL_02_TL",
+      "group_id": "flood_landslide__critical_absent_normal_breathing",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.02566384291999719,
+        0.29384596110712213,
+        0.5742058629463876,
+        0.10628433302649314
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_CRITICAL_03_CEB",
+      "group_id": "flood_landslide__critical_uncontrolled_external_bleeding",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.06708513535468659,
+        0.12769649191706015,
+        0.7282281100010557,
+        0.07699026272719747
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_CRITICAL_03_EN",
+      "group_id": "flood_landslide__critical_uncontrolled_external_bleeding",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.07427806733589858,
+        0.15142269808302736,
+        0.6246750008771403,
+        0.14962423370393366
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_CRITICAL_03_MIXED",
+      "group_id": "flood_landslide__critical_uncontrolled_external_bleeding",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.04004724619631203,
+        0.39918382591711044,
+        0.4975088921009918,
+        0.06326003578558577
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_CRITICAL_03_TL",
+      "group_id": "flood_landslide__critical_uncontrolled_external_bleeding",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "critical",
+      "probabilities": [
+        0.03656566453833925,
+        0.2768921788428918,
+        0.5832538946658292,
+        0.1032882619529398
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_MINOR_03_CEB",
+      "group_id": "flood_landslide__minor_loose_panel",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.28023015654058864,
+        0.479615376008417,
+        0.12636395738572215,
+        0.11379051006527227
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_MINOR_03_EN",
+      "group_id": "flood_landslide__minor_loose_panel",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.4195454814901193,
+        0.30095488153932853,
+        0.072967597204919,
+        0.2065320397656331
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_MINOR_03_MIXED",
+      "group_id": "flood_landslide__minor_loose_panel",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.8788505799017597,
+        0.08852064663331255,
+        0.01222463920674864,
+        0.020404134258179107
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_MINOR_03_TL",
+      "group_id": "flood_landslide__minor_loose_panel",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "minor",
+      "probabilities": [
+        0.31811452022536185,
+        0.48947876812644103,
+        0.05972378208451283,
+        0.13268292956368422
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_NEEDS_REVIEW_05_CEB",
+      "group_id": "flood_landslide__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.14785434986061427,
+        0.08247446641785583,
+        0.15865894607529007,
+        0.6110122376462398
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_NEEDS_REVIEW_05_EN",
+      "group_id": "flood_landslide__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.29967832504697867,
+        0.11543281925057013,
+        0.12254352653521547,
+        0.4623453291672357
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_NEEDS_REVIEW_05_MIXED",
+      "group_id": "flood_landslide__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.12137659812219823,
+        0.1290969173360626,
+        0.18553016806617767,
+        0.5639963164755615
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_NEEDS_REVIEW_05_TL",
+      "group_id": "flood_landslide__needs_review_recovered_awareness_incomplete_assessment",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.22787453489269355,
+        0.14594662621833493,
+        0.13666463071681595,
+        0.4895142081721555
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_NEEDS_REVIEW_11_CEB",
+      "group_id": "flood_landslide__needs_review_translation_or_quotation",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.03876182886823904,
+        0.02202855489279626,
+        0.07040408386613317,
+        0.8688055323728314
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_NEEDS_REVIEW_11_EN",
+      "group_id": "flood_landslide__needs_review_translation_or_quotation",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.03384282142291403,
+        0.1758282950465998,
+        0.24232470246116142,
+        0.5480041810693247
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_NEEDS_REVIEW_11_MIXED",
+      "group_id": "flood_landslide__needs_review_translation_or_quotation",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.020258290935448876,
+        0.11290675705738856,
+        0.1877247366056312,
+        0.6791102154015314
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_NEEDS_REVIEW_11_TL",
+      "group_id": "flood_landslide__needs_review_translation_or_quotation",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "needs_review",
+      "probabilities": [
+        0.015430053329017753,
+        0.022768015911082577,
+        0.1170914398727585,
+        0.8447104908871412
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_SERIOUS_01_CEB",
+      "group_id": "flood_landslide__serious_skin_abrasion",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.025112343269899938,
+        0.8739008763953943,
+        0.07308748685998573,
+        0.027899293474720203
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_SERIOUS_01_EN",
+      "group_id": "flood_landslide__serious_skin_abrasion",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.0017388444419465766,
+        0.9891354704333135,
+        0.006331060862763466,
+        0.00279462426197635
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_SERIOUS_01_MIXED",
+      "group_id": "flood_landslide__serious_skin_abrasion",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.0017859009466049166,
+        0.9844972330265022,
+        0.010281167760663927,
+        0.003435698266229199
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_SERIOUS_01_TL",
+      "group_id": "flood_landslide__serious_skin_abrasion",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.01589874515736087,
+        0.8121540339321626,
+        0.14698232340640077,
+        0.024964897504075677
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_SERIOUS_12_CEB",
+      "group_id": "flood_landslide__serious_back_pain_after_strain",
+      "language": "ceb",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.008030786797686783,
+        0.9199477200809291,
+        0.06183240565434816,
+        0.010189087467036034
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_SERIOUS_12_EN",
+      "group_id": "flood_landslide__serious_back_pain_after_strain",
+      "language": "en",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.012040384515394255,
+        0.9161985414719994,
+        0.052604973325938956,
+        0.019156100686667583
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_SERIOUS_12_MIXED",
+      "group_id": "flood_landslide__serious_back_pain_after_strain",
+      "language": "mixed",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.005793752319302386,
+        0.9481182003396931,
+        0.02971583797216542,
+        0.016372209368838982
+      ]
+    },
+    {
+      "case_id": "MIC_MULTIINCIDENT_20261109_FLOOD_LANDSLIDE_SERIOUS_12_TL",
+      "group_id": "flood_landslide__serious_back_pain_after_strain",
+      "language": "tl",
+      "incident_type": "flood_landslide",
+      "label": "serious",
+      "probabilities": [
+        0.012467075888801775,
+        0.9375499589267621,
+        0.029222416362734857,
+        0.02076054882170141
+      ]
+    }
+  ]
+}

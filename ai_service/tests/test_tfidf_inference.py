@@ -12,8 +12,8 @@ from src.ai_service.text_training import _baseline_predictor
 class TfidfInferenceTests(unittest.TestCase):
     def setUp(self):
         root = Path(__file__).resolve().parents[1]
-        config = json.loads((root / 'active_text_config.json').read_text(encoding='utf-8'))
-        self.directory = root / config['model_directory']
+        # Test the retained numeric legacy fixture independently of the active router.
+        self.directory = root / 'releases/triage-text-tfidf-20261016-v2'
         self.predictor = TfidfSeverityPredictor(self.directory, allow_experimental=True)
 
     def test_saved_runtime_matches_training_for_all_three_languages(self):

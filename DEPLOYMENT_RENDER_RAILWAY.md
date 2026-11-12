@@ -1,5 +1,11 @@
 # Online Deployment Plan
 
+The current user-confirmed online target is `https://dualpath.bsit4bdevs.tech`
+on Dokploy Compose. The newer owner-authorized category-specific advisory
+activation is documented in [DOKPLOY_DEPLOYMENT.md](DOKPLOY_DEPLOYMENT.md).
+`render.yaml` remains the separate AI-disabled legacy demo; its settings do not
+control the current Dokploy domain.
+
 ## Personal admin logs from Profile (2026-11-09)
 
 The local Laravel update adds `/profile/admin-logs` and its personal print/duty

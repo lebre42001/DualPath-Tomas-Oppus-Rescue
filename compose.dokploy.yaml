@@ -97,7 +97,7 @@ services:
       AI_OPERATION_MODE: AI_ENABLED
       AI_TEXT_ENABLED: "true"
       AI_TEXT_ALLOW_EXPERIMENTAL: "true"
-      AI_TEXT_MODEL_DIR: /app/releases/triage-text-tfidf-20261016-v2
+      AI_TEXT_MODEL_DIR: /app/releases/category-experts-20261112-v1
       AI_TEXT_RULES_ENABLED: ${AI_TEXT_RULES_ENABLED:-true}
       AI_SERVICE_PORT: "8100"
       FACE_LIVENESS_KEY: ${APP_KEY:?Set APP_KEY in Dokploy}
@@ -142,7 +142,7 @@ services:
       - --state-dir
       - /learning/private/ai-learning/candidate-state
       - --base-model
-      - ${AI_LEARNING_BASE_MODEL_DIR:-/app/releases/triage-text-tfidf-20261016-v2}
+      - ${AI_LEARNING_BASE_MODEL_DIR:-/app/releases/category-experts-20261112-v1}
       - --min-new
       - "${AI_LEARNING_MIN_NEW:-50}"
       - --target-accuracy

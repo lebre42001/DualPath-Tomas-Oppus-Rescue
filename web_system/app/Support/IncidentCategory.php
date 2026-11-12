@@ -2,7 +2,7 @@
 
 namespace App\Support;
 
-/** Shared AI vocabulary; this does not unlock reporting categories. */
+/** Shared reporting labels and AI category vocabulary. */
 final class IncidentCategory
 {
     public const LABELS = [
@@ -23,7 +23,8 @@ final class IncidentCategory
         $key = trim(preg_replace('/[\s_\/\-]+/u', '_', mb_strtolower(trim($value))), '_');
 
         return match ($key) {
-            'road_accident', 'road', 'vehicle_accident' => 'road_accident',
+            'road_accident', 'road', 'vehicle_accident', 'vehicular_accident', 'road_incident',
+            'vehicular_collision', 'vehicle_collision', 'motorcycle_collision', 'motorcycle_accident', 'road_crash', 'road_emergency' => 'road_accident',
             'fire_incident', 'fire' => 'fire_incident',
             'flood_landslide', 'flood', 'landslide' => 'flood_landslide',
             'medical_emergency', 'medical' => 'medical_emergency',
@@ -31,5 +32,12 @@ final class IncidentCategory
             'other' => 'other',
             default => null,
         };
+    }
+
+    public static function label(?string $value): ?string
+    {
+        $key = self::normalize($value);
+
+        return $key === null ? null : self::LABELS[$key];
     }
 }

@@ -1,11 +1,11 @@
 {
   "mode": "MODEL_ADVISORY",
-  "model_directory": "releases/triage-text-tfidf-20261016-v2",
+  "model_directory": "releases/category-experts-20261112-v1",
   "allow_experimental": true,
   "text_rules_enabled": true,
-  "text_rules_version": "text-cues-20261109-v2",
+  "text_rules_version": "multiincident-cues-20261109-v4",
   "admin_confirmation_required": true,
-  "evaluation_report": "artifacts/reports/text_retrain_20261016_v2/EVALUATION.md",
-  "test_model_directory": "releases/triage-multiincident-tfidf-20261112-vocabulary-v1",
-  "test_evaluation_report": "releases/triage-multiincident-tfidf-20261112-vocabulary-v1/README.md"
+  "evaluation_report": "releases/category-experts-20261112-v1/README.md",
+  "test_model_directory": "releases/category-experts-20261112-v1",
+  "test_evaluation_report": "releases/category-experts-20261112-v1/README.md"
 }

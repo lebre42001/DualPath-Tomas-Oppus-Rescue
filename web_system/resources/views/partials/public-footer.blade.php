@@ -7,7 +7,7 @@
                     <h2>How to report</h2>
                     <ol>
                         <li>Register or log in to your civilian account. Complete account verification if prompted.</li>
-                        <li>For a Road Accident, add a scene photo, lock GPS, and enter a short description plus the barangay, road, or nearby landmark.</li>
+                        <li>Choose the incident type, add a scene photo, lock GPS, and enter a short description plus the barangay, road, or nearby landmark.</li>
                         <li>Capture the verification selfie when sending. Wait for confirmation and keep your reference code.</li>
                         <li>Open My Reports to follow the response status.</li>
                     </ol>
@@ -24,7 +24,7 @@
                 <div class="public-information-copy">
                     <h2>About AksyRes</h2>
                     <p>{{ $systemName }}</p>
-                    <p>The Civilian Sender app lets you submit an online emergency report, receive a reference code, and follow updates from authorized responders. Road Accident reporting is available; other incident types remain locked.</p>
+                    <p>The Civilian Sender app lets you report road accidents, fires, floods or landslides, medical emergencies, security incidents, and other emergencies. Receive a reference code and follow updates from authorized responders.</p>
                     <p>Responders review the emergency description, evidence, and location. Any available AI severity suggestion supports responder review.</p>
                 </div>
             </details>

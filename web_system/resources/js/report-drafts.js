@@ -418,8 +418,10 @@ onDomReady( () => {
 
             if (element && 'value' in element) {
                 element.value = value ?? '';
-                element.dispatchEvent(new Event('input', { bubbles: true }));
-                element.dispatchEvent(new Event('change', { bubbles: true }));
+                const target = typeof element.dispatchEvent === 'function'
+                    ? element : Array.from(element).find(input => input.checked);
+                target?.dispatchEvent(new Event('input', { bubbles: true }));
+                target?.dispatchEvent(new Event('change', { bubbles: true }));
             }
         });
 

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "models": {
+    "road_accident": {
+      "directory": "experts/road_accident",
+      "metadata_sha256": "01a4b8482a6ccd339de6616f5b7aae0eefe1883ebfc0baea954e183c9ca657f6",
+      "artifact_sha256": "9453b7591cdd47d165f092351d635b395d9f6b7689026840d4b4d37d103b257c"
+    },
+    "fire_incident": {
+      "directory": "experts/fire_incident",
+      "metadata_sha256": "717fe54c6ee7f9cbaeb769b298a7ce7a7cc5d653a1f9fc6488f9ba12fa3d3613",
+      "artifact_sha256": "400b9a93b0b6df4e22f9a725b080814acf32889fd856aa3bca4320bd6715cae3"
+    },
+    "flood_landslide": {
+      "directory": "experts/flood_landslide",
+      "metadata_sha256": "18e906424d8e2e25a19fbad44c503874bcdbc488896de625be1d1b02bfbc8c59",
+      "artifact_sha256": "79478dafcdbd2482437bb3dd78d63f948d6e0deaff6f9f7957b2f042edbf20b9"
+    },
+    "medical_emergency": {
+      "directory": "experts/medical_emergency",
+      "metadata_sha256": "2cc44dff3290575f3b6d7d1117a41dab5a88a7555d7821b019d4a8b89234400f",
+      "artifact_sha256": "c98c68af246d422d7a67e6a5a434b1c9a7f869354ae3425da398a9b41f08dbcc"
+    },
+    "security_incident": {
+      "directory": "experts/security_incident",
+      "metadata_sha256": "2d993591404bde28cf0e41fbc1f1eaf3a1a874c6e65d8c0b55bc4474097cc0fa",
+      "artifact_sha256": "13f6d8c66f84f2cfb36319e8ddafe82f0ea506a550fb95f249fe556354675594"
+    },
+    "other": {
+      "directory": "experts/other",
+      "metadata_sha256": "19962c00b0d3e1c2468552aaad35d7b730ddf886b378ce19d4453490fda7e06a",
+      "artifact_sha256": "84987323827447a48bd7ef6d744663661d755628b08e00cf31f38d2fecd246ba"
+    }
+  }
+}

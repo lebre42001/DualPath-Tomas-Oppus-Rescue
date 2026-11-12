@@ -1,5 +1,24 @@
 # Isolated local text AI Lab
 
+## Current category routing — 2026-11-12
+
+The owner's newer instruction activates `releases/category-experts-20261112-v1`
+on ordinary port 8100 as well as Lab port 8101. Each of the six supported
+categories has its own classifier fitted exclusively on its category's rows.
+The civilian web/API form now preserves the selected category; drafts retain
+it after reopening. Admin confirmation remains required and LoRa firmware is
+unchanged. `/system/ai-status` must report this model version,
+`category_routing=isolated_category_models`, and all six supported categories.
+The [release report](releases/category-experts-20261112-v1/README.md) documents
+11,906 total rows and the limited synthetic test result of 74.45%.
+
+Keep local `.env` in `MODEL_ADVISORY` with `AI_TEXT_ENABLED=true` and
+`AI_TEXT_ALLOW_EXPERIMENTAL=true`. Restart this checkout's AI processes after
+changing selectors; the helper reuses existing listeners. Clear Laravel caches
+and rebuild assets after the reporter-form change. The preceding road-only
+setup below is historical; its rollback instructions and separate-port
+isolation still apply.
+
 The admin text AI Lab uses a separate experimental checkpoint on
 **`127.0.0.1:8101`**. The ordinary service on **8100** retains the road-only TF-IDF
 v2 model. Lab requests do not create incident reports, update operational

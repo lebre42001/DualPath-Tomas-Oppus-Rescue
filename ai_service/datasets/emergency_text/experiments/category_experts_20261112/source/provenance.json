@@ -1,0 +1,22 @@
+{
+  "synthetic": true,
+  "human_reviewed": false,
+  "approved_for_deployment": false,
+  "new_authored_scenarios": 48,
+  "new_authored_descriptions": 192,
+  "source_split_counts": {
+    "train": 2207,
+    "validation": 507,
+    "test": 364
+  },
+  "source_files_sha256": {
+    "datasets\\emergency_text\\experiments\\multiincident_common_20261109\\combined_plain\\reports.csv": "861581fda2ef772de73b70ecce7410b6da73d7faa78cc8630833f8bca183341d",
+    "datasets\\emergency_text\\experiments\\multiincident_common_20261109\\combined_plain\\split_manifest.json": "a3ff52ed58fc3270b6727155ffd6b62475e10bf348a1da1813df9577030e4934",
+    "datasets\\emergency_text\\experiments\\full_pool_20261011\\reports.csv": "5899ebdb2c5970007f8e11975b439589f8102eaa20270c3bd5e46a7e1f1c8ba5",
+    "artifacts\\reports\\text_tfidf_20261016\\split_manifest.json": "6eabd45d27ca923423fc842f0d9f07432f63574f79381cb659e77ddd56cfdbdb",
+    "datasets\\emergency_text\\experiments\\category_experts_20261112\\new_scenarios.json": "3028f3e2c3a69068a98e2932ebded07fbb46e749b20868b227dc7c881f35d259"
+  },
+  "partition_policy": "Preserve both old source partitions; new scenarios/variants only enter train. Original files and labels are unchanged.",
+  "review_policy": "Historical road approval fields are not independent validation; derived copies are explicitly drafts.",
+  "limitations": "Scene and language variants are correlated; not independent clinical observations or real-report validation."
+}

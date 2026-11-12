@@ -1,0 +1,16 @@
+{
+  "model_strategy": "six classifiers; each vectorizer and logistic regression fitted only on its own incident type",
+  "regularization_c": 16,
+  "review_thresholds": {
+    "road_accident": 0.65,
+    "fire_incident": 0.5,
+    "flood_landslide": 0.5,
+    "medical_emergency": 0.5,
+    "security_incident": 0.5,
+    "other": 0.5
+  },
+  "seed": 20261112,
+  "test_for_selection": false,
+  "human_reviewed": false,
+  "activation": "separate explicit user-authorized experimental advisory selector; no autonomous dispatch"
+}

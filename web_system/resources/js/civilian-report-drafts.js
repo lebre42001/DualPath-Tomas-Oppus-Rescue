@@ -57,7 +57,7 @@ export function initializeCivilianDrafts({ document = globalThis.document, windo
             const card = element('article', '', 'civilian-draft-card');
             card.dataset.draftId = record.submissionId;
             card.append(element('span', messages[record.state] ?? messages.editing, 'tag amber'));
-            card.append(element('p', record.fields.description || 'Road Accident report'));
+            card.append(element('p', record.fields.description || `${record.fields.incident_type || 'Road Accident'} report`));
             card.append(element('p', record.fields.location_text || 'Location details not entered yet.', 'section-copy'));
             card.append(element('p', `Saved ${new Date(record.updatedAt).toLocaleString()}`, 'section-copy'));
             const hasPhoto = record.evidenceFile instanceof Blob;
@@ -79,6 +79,7 @@ export function initializeCivilianDrafts({ document = globalThis.document, windo
     const snapshot = (state, attempted) => {
         if (received || !form || !isSubmissionId(currentId())) return null;
         const fields = {
+            incident_type: form.elements.namedItem('incident_type')?.value ?? 'Road Accident',
             description: form.elements.namedItem('description')?.value ?? '',
             location_text: form.elements.namedItem('location_text')?.value ?? '',
         };
@@ -152,7 +153,10 @@ export function initializeCivilianDrafts({ document = globalThis.document, windo
             lastSnapshot = record;
             for (const [name, value] of Object.entries(record.fields)) {
                 const input = form.elements.namedItem(name); if (!input) continue;
-                input.value = value; input.dispatchEvent(new Event('input', { bubbles: true }));
+                input.value = value;
+                const target = typeof input.dispatchEvent === 'function' ? input : Array.from(input).find(option => option.checked);
+                target?.dispatchEvent(new Event('input', { bubbles: true }));
+                target?.dispatchEvent(new Event('change', { bubbles: true }));
             }
             for (const name of ['evidence', 'evidence_photo_capture', 'selfie', 'selfie_capture']) {
                 const input = fileInput(name); if (input) input.value = '';

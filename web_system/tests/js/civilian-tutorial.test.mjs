@@ -10,9 +10,9 @@ test('the incident selector is a dedicated safe preview before photo, with six o
     const previews = CIVILIAN_TUTORIAL_STEPS.filter(step => step.demo);
     assert.deepEqual(previews.map(step => step.demo), ['incident', 'photo', 'gps', 'description', 'selfie', 'receipt']);
     assert.deepEqual(previews.map(step => Number(step.title.split('.')[0])), [1, 2, 3, 4, 5, 6]);
-    assert.match(previews[0].copy, /Tap the bordered Type of incident selector/);
-    assert.match(previews[0].copy, /Road Accident is available and selected/);
-    assert.match(previews[0].copy, /locked and coming soon/);
+    assert.match(previews[0].copy, /Tap Type of incident/);
+    assert.match(previews[0].copy, /Road Accident, Fire, Flood \/ Landslide/);
+    assert.match(previews[0].copy, /model for your selected category/);
     assert.match(previews[0].copy, /does not change a real report/);
     assert.equal(previews[0].selector, undefined);
     assert.equal(previews[0].nav, undefined);

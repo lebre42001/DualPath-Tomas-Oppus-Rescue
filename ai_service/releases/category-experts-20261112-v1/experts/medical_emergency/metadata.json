@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "version": "category-experts-20261112-v1/medical_emergency",
+  "model_type": "tfidf_logistic",
+  "base_model": "tfidf-char-wb-logistic-regression",
+  "labels": [
+    "minor",
+    "serious",
+    "critical",
+    "needs_review"
+  ],
+  "languages": [
+    "en",
+    "tl",
+    "ceb",
+    "mixed"
+  ],
+  "scope": "selected_incident_categories",
+  "domain": "selected_incident_categories",
+  "input_format": "incident_type_description_v1",
+  "supported_incident_types": [
+    "medical_emergency"
+  ],
+  "observed_incident_types": [
+    "medical_emergency"
+  ],
+  "category_support_status": "trained_scope_only_requires_separate_category_evaluation",
+  "observed_languages": [
+    "ceb",
+    "en",
+    "mixed",
+    "tl"
+  ],
+  "language_support_status": "requires_separate_language_evaluation",
+  "max_length": 128,
+  "review_threshold": 0.5,
+  "review_threshold_status": "provisional",
+  "confidence_calibrated": false,
+  "approved_for_deployment": false,
+  "deployment_status": "experimental",
+  "all_data_reviewed": false,
+  "allow_draft": true,
+  "dataset_fingerprint": "e0ea8e54561b6d368b001b2dc5104d4956108a1c1bd6c6406a2ed978c2afed46",
+  "dataset_summary": {
+    "rows": 1172,
+    "groups": 71,
+    "by_label": {
+      "critical": 296,
+      "minor": 300,
+      "needs_review": 280,
+      "serious": 296
+    },
+    "by_language": {
+      "ceb": 293,
+      "en": 293,
+      "mixed": 293,
+      "tl": 293
+    },
+    "by_incident_type": {
+      "medical_emergency": 1172
+    },
+    "by_review_status": {
+      "draft": 1172
+    },
+    "eligible_approved_rows": 0,
+    "dataset_fingerprint": "e0ea8e54561b6d368b001b2dc5104d4956108a1c1bd6c6406a2ed978c2afed46"
+  },
+  "seed": 20261112,
+  "validation_fraction": 0.15,
+  "test_fraction": 0.15,
+  "test_evaluated_during_training": false,
+  "fit_all_data": false,
+  "split_source": "frozen_manifest",
+  "software_versions": {
+    "torch": "2.13.0",
+    "scikit-learn": "1.9.1"
+  },
+  "limitations": [
+    "No deployment approval is granted by training or metrics",
+    "Confidence and review threshold are not calibrated",
+    "Group IDs require human identification of translations and paraphrases",
+    "Language balance is reported, not guaranteed",
+    "Small or synthetic datasets do not establish clinical or operational safety"
+  ],
+  "regularization_c": 16.0,
+  "analyzer": "char_wb",
+  "ngram_range": [
+    3,
+    5
+  ],
+  "artifact_sha256": "c98c68af246d422d7a67e6a5a434b1c9a7f869354ae3425da398a9b41f08dbcc",
+  "training_run_version": "text-20261112T134657256656Z",
+  "display_name": "AksyRes Medical Emergency Text AI (Experimental)",
+  "text_rule_profile": "multiincident_common_v1",
+  "text_rule_incident_types": [
+    "medical_emergency"
+  ],
+  "human_reviewed": false,
+  "independent_validation": false,
+  "pilot_only": true,
+  "training_incident_type": "medical_emergency",
+  "training_category_isolation": true
+}

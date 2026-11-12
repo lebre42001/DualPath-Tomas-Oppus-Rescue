@@ -38,6 +38,8 @@ class TextAiStatusController extends Controller
                             ? $response->json('text_rules_version') : null,
                         'deployment_status' => $response->json('deployment_status'),
                         'input_format' => $response->json('input_format', 'description_v1'),
+                        'category_routing' => in_array($response->json('category_routing'), ['single_model', 'isolated_category_models'], true)
+                            ? $response->json('category_routing') : 'single_model',
                         'supported_incident_types' => array_values(array_intersect(
                             array_keys(IncidentCategory::LABELS),
                             (array) $response->json('supported_incident_types', ['road_accident'])

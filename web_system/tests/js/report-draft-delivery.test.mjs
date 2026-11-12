@@ -5,7 +5,7 @@ import { checkReportReceipt, uploadReport, receivedReportUrl } from '../../resou
 import { watchCivilianDraftRecovery } from '../../resources/js/civilian-draft-recovery.js';
 
 const id = 'f06f156c-d08c-4d3b-939a-670b1cef6ad9';
-const draft = { submissionId: id, fields: { description: 'Vehicle collision', location_text: 'Bridge', latitude: 10, liveness_proof: 'do not persist' },
+const draft = { submissionId: id, fields: { incident_type: 'Flood / Landslide', description: 'Vehicle collision', location_text: 'Bridge', latitude: 10, liveness_proof: 'do not persist' },
     createdAt: '2026-11-06T01:00:00Z', updatedAt: '2026-11-06T01:00:00Z', state: 'connection', attempted: true,
     evidenceFile: new File(['scene'], 'scene.jpg', { type: 'image/jpeg' }), selfieFile: new File(['private'], 'selfie.jpg'), csrf: 'private' };
 const storage = () => { const data = new Map(); return { getItem: (key) => data.get(key) ?? null, setItem: (key, value) => data.set(key, value) }; };
@@ -18,7 +18,8 @@ test('fallback keeps the submission ID, text and interruption state after reload
     const restored = await createCivilianDraftStore(1, { indexedDB: null, storage: local }).get(id);
     assert.equal(restored.submissionId, id); assert.equal(restored.attempted, true);
     assert.equal(restored.fields.description, draft.fields.description); assert.equal(restored.evidenceName, 'scene.jpg');
-    assert.deepEqual(Object.keys(restored.fields).sort(), ['description', 'location_text']);
+    assert.equal(restored.fields.incident_type, 'Flood / Landslide');
+    assert.deepEqual(Object.keys(restored.fields).sort(), ['description', 'incident_type', 'location_text']);
     assert.equal(restored.selfieFile, undefined); assert.equal(restored.csrf, undefined);
 });
 test('one account cannot list or delete another account’s drafts on a shared device', async () => {

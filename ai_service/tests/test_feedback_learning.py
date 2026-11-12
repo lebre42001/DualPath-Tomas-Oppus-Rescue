@@ -450,7 +450,8 @@ class FeedbackLearningTests(unittest.TestCase):
                     "text_rule_incident_types": ["fire_incident"]}, predict=Mock(return_value=model))
         baseline = SimpleNamespace(metadata={}, predict=Mock(side_effect=AssertionError("legacy road only")))
         row = self.holdout_row(incident_type="fire_incident", label="critical")
-        with patch("src.ai_service.text_inference.TfidfSeverityPredictor", side_effect=[candidate, baseline]), \
+        with patch("src.ai_service.text_inference.TfidfSeverityPredictor", return_value=candidate), \
+                patch("src.ai_service.text_inference.load_predictor", return_value=baseline), \
                 patch("src.ai_service.multiincident_cues.analyze_multiincident_cues", return_value={
                     "severity": "critical", "predicted_label": "critical", "rule_priority": "override"}):
             result = learning.evaluate_candidate(self.root / "candidate", self.root / "base", [row])

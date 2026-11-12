@@ -94,9 +94,9 @@ def read_metadata(directory: Path, allow_experimental: bool = False) -> dict:
     metadata["supported_incident_types"] = supported_types
     if metadata.get("labels") != list(TEXT_LABELS):
         raise TextModelUnavailable("Text model label mapping does not match the service.")
-    if metadata.get("model_type") not in {"transformers", "tfidf_logistic"}:
+    if metadata.get("model_type") not in {"transformers", "tfidf_logistic", "tfidf_category_router"}:
         raise TextModelUnavailable("Unsupported text model type.")
-    if metadata["model_type"] == "tfidf_logistic" and (
+    if metadata["model_type"] in {"tfidf_logistic", "tfidf_category_router"} and (
         not isinstance(metadata.get("artifact_sha256"), str) or len(metadata["artifact_sha256"]) != 64
     ):
         raise TextModelUnavailable("Text model artifact fingerprint is missing.")
@@ -139,6 +139,7 @@ def category_review_payload(metadata: dict, incident_type: str) -> dict:
 def category_capabilities(metadata: dict) -> dict:
     input_format, supported_types = metadata_contract(metadata)
     return {"input_format": input_format, "supported_incident_types": supported_types,
+            "category_routing": "isolated_category_models" if metadata.get("model_type") == "tfidf_category_router" else "single_model",
             "category_support_status": "trained_scope_only_requires_separate_category_evaluation"}
 
 
@@ -226,6 +227,8 @@ class TfidfSeverityPredictor:
 
     def __init__(self, directory: Path, *, allow_experimental: bool = False):
         self.metadata = read_metadata(directory, allow_experimental)
+        if self.metadata['model_type'] != 'tfidf_logistic':
+            raise TextModelUnavailable('Use the category router loader for category-specific model releases.')
         try:
             import numpy as np
             from sklearn.feature_extraction.text import TfidfVectorizer
@@ -276,8 +279,91 @@ class TfidfSeverityPredictor:
         return prediction_payload(dict(zip(TEXT_LABELS, scores.tolist(), strict=True)), self.metadata)
 
 
+class CategoryTfidfSeverityPredictor:
+    """Select one classifier fitted exclusively on the requested category.
+
+    A checksum-bound manifest and child metadata prevent a missing/mispackaged
+    expert from silently falling back to a different incident category.
+    """
+
+    def __init__(self, directory: Path, *, allow_experimental: bool = False):
+        self.metadata = read_metadata(directory, allow_experimental)
+        self.directory = directory.resolve()
+        self.experts = {}
+        self.bindings = {}
+        try:
+            if (self.metadata['model_type'] != 'tfidf_category_router'
+                    or self.metadata['input_format'] != CATEGORY_INPUT_FORMAT):
+                raise ValueError('Expected category router metadata')
+            path = self.directory / 'category_models.json'
+            if path.stat().st_size > 100_000:
+                raise ValueError('Oversized category manifest')
+            content = path.read_bytes()
+            if hashlib.sha256(content).hexdigest() != self.metadata['artifact_sha256']:
+                raise ValueError('Category manifest checksum mismatch')
+            def unique_object(pairs):
+                result = {}
+                for key, value in pairs:
+                    if key in result:
+                        raise ValueError('Duplicate category manifest field')
+                    result[key] = value
+                return result
+            manifest = json.loads(content, object_pairs_hook=unique_object)
+            if (manifest.get('schema_version') != 1 or not isinstance(manifest.get('models'), dict)
+                    or set(manifest['models']) != set(self.metadata['supported_incident_types'])):
+                raise ValueError('Category manifest does not match declared categories')
+            for category, binding in manifest['models'].items():
+                relative = Path(binding['directory'])
+                if relative.is_absolute() or '..' in relative.parts:
+                    raise ValueError('Category model path must remain inside this release')
+                child = (self.directory / relative).resolve()
+                child.relative_to(self.directory)
+                metadata_path = child / 'metadata.json'
+                if hashlib.sha256(metadata_path.read_bytes()).hexdigest() != binding['metadata_sha256']:
+                    raise ValueError('Category metadata checksum mismatch')
+                expert = TfidfSeverityPredictor(child, allow_experimental=allow_experimental)
+                if (expert.metadata['model_type'] != 'tfidf_logistic'
+                        or expert.metadata['supported_incident_types'] != [category]
+                        or expert.metadata['input_format'] != CATEGORY_INPUT_FORMAT
+                        or expert.metadata['artifact_sha256'] != binding['artifact_sha256']):
+                    raise ValueError('Category expert was not trained exclusively for its manifest category')
+                self.experts[category] = expert
+                self.bindings[category] = (metadata_path, binding['metadata_sha256'])
+            if (self.metadata['deployment_status'] == 'validated'
+                    and any(expert.metadata['deployment_status'] != 'validated' for expert in self.experts.values())):
+                raise ValueError('A validated router requires every category expert to be validated')
+        except Exception as exc:
+            raise TextModelUnavailable('Category text models could not load. Check the complete release and category checksums.') from exc
+
+    def predict(self, description: str, incident_type: str = 'road_accident') -> dict:
+        category = normalize_incident_type(incident_type)
+        if category not in self.experts:
+            return category_review_payload(self.metadata, category)
+        metadata_path, expected = self.bindings[category]
+        try:
+            if hashlib.sha256(metadata_path.read_bytes()).hexdigest() != expected:
+                raise ValueError('Selected category metadata changed after loading')
+        except (OSError, ValueError) as exc:
+            raise TextModelUnavailable('Selected category text model needs verification.') from exc
+        expert = self.experts[category]
+        result = expert.predict(description, category)
+        return {**result, 'model_name': self.metadata['display_name'],
+                'model_version': self.metadata['version'],
+                'deployment_status': self.metadata['deployment_status'],
+                'responder_review_required': True,
+                'category_expert': category, 'category_model_version': expert.metadata['version']}
+
+
+def load_predictor(directory: Path, *, allow_experimental: bool = False):
+    metadata = read_metadata(directory, allow_experimental)
+    predictor_type = {'tfidf_logistic': TfidfSeverityPredictor,
+                      'tfidf_category_router': CategoryTfidfSeverityPredictor,
+                      'transformers': TextSeverityPredictor}[metadata['model_type']]
+    return predictor_type(directory, allow_experimental=allow_experimental)
+
+
 _LOCK = RLock()
-_PREDICTOR: TextSeverityPredictor | TfidfSeverityPredictor | None = None
+_PREDICTOR: TextSeverityPredictor | TfidfSeverityPredictor | CategoryTfidfSeverityPredictor | None = None
 _CACHE_KEY: tuple | None = None
 
 
@@ -312,7 +398,7 @@ def text_status() -> dict:
             "message": "Configuration checked; use /ready/text to verify checkpoint loading."}
 
 
-def get_predictor() -> TextSeverityPredictor | TfidfSeverityPredictor:
+def get_predictor() -> TextSeverityPredictor | TfidfSeverityPredictor | CategoryTfidfSeverityPredictor:
     global _PREDICTOR, _CACHE_KEY
     if not ai_enabled():
         raise TextModelUnavailable("AI inference is disabled by service operation mode.")
@@ -329,8 +415,7 @@ def get_predictor() -> TextSeverityPredictor | TfidfSeverityPredictor:
         if current_key != _CACHE_KEY:
             _PREDICTOR = None
             _CACHE_KEY = None
-            predictor_type = TfidfSeverityPredictor if metadata["model_type"] == "tfidf_logistic" else TextSeverityPredictor
-            _PREDICTOR = predictor_type(directory, allow_experimental=allow)
+            _PREDICTOR = load_predictor(directory, allow_experimental=allow)
             _CACHE_KEY = current_key
         return _PREDICTOR
 

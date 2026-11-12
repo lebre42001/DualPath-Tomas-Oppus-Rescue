@@ -311,9 +311,9 @@ def decision_metrics(rows: list[dict], predictions: list[str]) -> dict:
 
 
 def evaluate_candidate(model: Path, base: Path, rows: list[dict]) -> dict:
-    from .text_inference import TfidfSeverityPredictor, text_rule_capabilities
+    from .text_inference import TfidfSeverityPredictor, load_predictor, text_rule_capabilities
     candidate = TfidfSeverityPredictor(model, allow_experimental=True)
-    previous = TfidfSeverityPredictor(base, allow_experimental=True)
+    previous = load_predictor(base, allow_experimental=True)
     predicted = [policy_predict(candidate, row) for row in rows]
     old = [policy_predict(previous, row) for row in rows]
     def slice_metrics(indices):
@@ -433,9 +433,11 @@ def independent_holdout(path: Path, training: list[dict], base: Path, used: list
 
 
 def artifact_identity(path: Path) -> dict:
+    metadata = json.loads((path / 'metadata.json').read_text(encoding='utf-8'))
+    artifact = 'category_models.json' if metadata.get('model_type') == 'tfidf_category_router' else 'baseline.json'
     return {"directory": str(path.resolve()),
             "metadata_sha256": hashlib.sha256((path / "metadata.json").read_bytes()).hexdigest(),
-            "artifact_sha256": hashlib.sha256((path / "baseline.json").read_bytes()).hexdigest(),
+            "artifact_sha256": hashlib.sha256((path / artifact).read_bytes()).hexdigest(),
             "split_manifest_sha256": hashlib.sha256((path / "split_manifest.json").read_bytes()).hexdigest()}
 
 

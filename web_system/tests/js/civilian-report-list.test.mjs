@@ -2,6 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { draftReportPage, philippineDate, reportPageNumbers } from '../../resources/js/civilian-report-list.js';
 
+test('drafts keep and search the selected incident category', () => {
+    const records = [{ submissionId: 'fire-draft', fields: { incident_type: 'Fire Incident', description: 'Smoke near the workshop' }, state: 'editing', updatedAt: '2026-11-12T01:00:00Z' }];
+    const result = draftReportPage(records, { search: 'Fire Incident' });
+    assert.equal(result.pagination.total, 1);
+    assert.equal(result.reports[0].type, 'Fire Incident');
+});
+
 test('draft search, state and inclusive Philippine dates filter before pagination with stable sorting', () => {
     const records = Array.from({ length: 23 }, (_, i) => ({ submissionId: String(i).padStart(8, '0'), fields: { description: 'Road collision 50%', location_text: 'Market_2' }, state: 'offline', updatedAt: '2026-11-06T16:00:00Z' }));
     records.push({ submissionId: 'outside', fields: {}, state: 'editing', updatedAt: '2026-11-06T15:59:59Z' });
