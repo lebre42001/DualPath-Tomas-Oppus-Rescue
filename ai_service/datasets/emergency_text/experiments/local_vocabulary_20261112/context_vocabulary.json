@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "provenance": "AI-authored fictional local reporting contexts, 2026-11-12. Unreviewed drafts; no new patient facts, independent incidents, or human approval.",
+  "variants_per_training_row": 4,
+  "contexts": {
+    "road_accident": {
+      "en": ["About the report near the multicab stop", "Regarding the incident along the barangay road by the tricycle terminal", "For the report received near the barangay hall", "For the report from the coastal waiting shed"],
+      "tl": ["Tungkol sa ulat malapit sa hintayan ng multicab", "Kaugnay ng pangyayari sa barangay road sa tabi ng paradahan ng tricycle", "Para sa ulat malapit sa barangay hall", "Para sa ulat mula sa hintayan sa baybayin"],
+      "ceb": ["Kabahin sa report duol sa hulatanan sa multicab", "Mahitungod sa hitabo sa barangay road tapad sa hulatanan sa habal-habal", "Para sa report duol sa barangay hall", "Para sa report gikan sa hulatanan daplin sa baybayon"],
+      "mixed": ["About sa report duol sa multicab stop", "Regarding sa hitabo sa barangay road dapit sa tricycle terminal", "Para sa report near the barangay hall", "Para sa report from the coastal waiting shed"]
+    },
+    "fire_incident": {
+      "en": ["About the report near the market loading area", "Regarding the incident beside the covered court storage room", "For the report received near the barangay hall", "For the report from the coastal waiting shed"],
+      "tl": ["Tungkol sa ulat malapit sa kargahan ng palengke", "Kaugnay ng pangyayari sa tabi ng imbakan sa covered court", "Para sa ulat malapit sa barangay hall", "Para sa ulat mula sa hintayan sa baybayin"],
+      "ceb": ["Kabahin sa report duol sa kargahanan sa merkado", "Mahitungod sa hitabo tapad sa tipiganan sa covered court", "Para sa report duol sa barangay hall", "Para sa report gikan sa hulatanan daplin sa baybayon"],
+      "mixed": ["About sa report duol sa market loading area", "Regarding sa hitabo tapad sa storage room sa covered court", "Para sa report near the barangay hall", "Para sa report from the coastal waiting shed"]
+    },
+    "flood_landslide": {
+      "en": ["About the report near the footbridge entrance", "Regarding the incident along the path beside the irrigation canal", "For the report received near the barangay hall", "For the report from the coastal waiting shed"],
+      "tl": ["Tungkol sa ulat malapit sa pasukan ng footbridge", "Kaugnay ng pangyayari sa daan sa tabi ng kanal ng irigasyon", "Para sa ulat malapit sa barangay hall", "Para sa ulat mula sa hintayan sa baybayin"],
+      "ceb": ["Kabahin sa report duol sa agianan pasulod sa footbridge", "Mahitungod sa hitabo sa dalan tapad sa kanal sa irigasyon", "Para sa report duol sa barangay hall", "Para sa report gikan sa hulatanan daplin sa baybayon"],
+      "mixed": ["About sa report duol sa footbridge entrance", "Regarding sa hitabo sa path tapad sa irrigation canal", "Para sa report near the barangay hall", "Para sa report from the coastal waiting shed"]
+    },
+    "medical_emergency": {
+      "en": ["About the report near the health center waiting area", "Regarding the incident beside the benches at the covered court", "For the report received near the barangay hall", "For the report from the coastal waiting shed"],
+      "tl": ["Tungkol sa ulat malapit sa hintayan ng health center", "Kaugnay ng pangyayari sa tabi ng mga upuan sa covered court", "Para sa ulat malapit sa barangay hall", "Para sa ulat mula sa hintayan sa baybayin"],
+      "ceb": ["Kabahin sa report duol sa hulatanan sa health center", "Mahitungod sa hitabo tapad sa mga lingkoranan sa covered court", "Para sa report duol sa barangay hall", "Para sa report gikan sa hulatanan daplin sa baybayon"],
+      "mixed": ["About sa report duol sa health center waiting area", "Regarding sa hitabo tapad sa benches sa covered court", "Para sa report near the barangay hall", "Para sa report from the coastal waiting shed"]
+    },
+    "security_incident": {
+      "en": ["About the report near the barangay hall side gate", "Regarding the incident beside the public market entrance", "For the report received near the barangay hall", "For the report from the coastal waiting shed"],
+      "tl": ["Tungkol sa ulat malapit sa gilid na gate ng barangay hall", "Kaugnay ng pangyayari sa tabi ng pasukan ng pampublikong palengke", "Para sa ulat malapit sa barangay hall", "Para sa ulat mula sa hintayan sa baybayin"],
+      "ceb": ["Kabahin sa report duol sa kilid nga ganghaan sa barangay hall", "Mahitungod sa hitabo tapad sa entrada sa merkado", "Para sa report duol sa barangay hall", "Para sa report gikan sa hulatanan daplin sa baybayon"],
+      "mixed": ["About sa report duol sa side gate sa barangay hall", "Regarding sa hitabo tapad sa public market entrance", "Para sa report near the barangay hall", "Para sa report from the coastal waiting shed"]
+    },
+    "other": {
+      "en": ["About the report near the waiting shed beside the coastal path", "Regarding the incident along the walkway behind the barangay hall", "For the report received near the barangay hall", "For the report from the coastal waiting shed"],
+      "tl": ["Tungkol sa ulat malapit sa waiting shed sa tabi ng daang baybayin", "Kaugnay ng pangyayari sa lakaran sa likod ng barangay hall", "Para sa ulat malapit sa barangay hall", "Para sa ulat mula sa hintayan sa baybayin"],
+      "ceb": ["Kabahin sa report duol sa waiting shed tapad sa agianan daplin sa baybayon", "Mahitungod sa hitabo sa agianan luyo sa barangay hall", "Para sa report duol sa barangay hall", "Para sa report gikan sa hulatanan daplin sa baybayon"],
+      "mixed": ["About sa report duol sa waiting shed beside sa coastal path", "Regarding sa hitabo sa walkway luyo sa barangay hall", "Para sa report near the barangay hall", "Para sa report from the coastal waiting shed"]
+    }
+  }
+}

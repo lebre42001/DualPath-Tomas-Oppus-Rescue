@@ -6,6 +6,6 @@
   "text_rules_version": "text-cues-20261109-v2",
   "admin_confirmation_required": true,
   "evaluation_report": "artifacts/reports/text_retrain_20261016_v2/EVALUATION.md",
-  "test_model_directory": "releases/triage-multiincident-tfidf-20261109-v1",
-  "test_evaluation_report": "artifacts/reports/multiincident_common_20261109/EVALUATION.md"
+  "test_model_directory": "releases/triage-multiincident-tfidf-20261112-vocabulary-v1",
+  "test_evaluation_report": "releases/triage-multiincident-tfidf-20261112-vocabulary-v1/README.md"
 }

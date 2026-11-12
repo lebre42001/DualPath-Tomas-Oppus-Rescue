@@ -1,5 +1,27 @@
 # AI Severity Service
 
+## Local activation and vocabulary update — 2026-11-12
+
+Local Laravel reporting is now explicitly opted into `MODEL_ADVISORY`, with
+`AI_TEXT_ENABLED=true` and `AI_TEXT_ALLOW_EXPERIMENTAL=true` in its untracked
+`.env`. Port 8100 still uses road-only `dualpath-tfidf-20261016-v2` with the
+existing rules. Suggestions require admin assessment before becoming
+operational severity; service failures or unsupported categories require human
+review. Existing reports are not automatically reprocessed. Safe checked-in
+defaults and the AI-disabled free Render profile are unchanged.
+
+The separate six-category admin Lab now selects
+`releases/triage-multiincident-tfidf-20261112-vocabulary-v1`. A fixed CPU fit adds
+4,272 correlated training variants in four languages, preserving complete
+source descriptions and frozen evaluation rows. Validation policy accuracy is
+86.04% (prior 85.06%); the known synthetic test remains 72.92%, with 69.23%
+Critical recall. This is an experimental Lab update, not an approved reporting
+replacement or an 80% field-accuracy result. See the
+[new candidate evidence](releases/triage-multiincident-tfidf-20261112-vocabulary-v1/README.md)
+and [local/deployment instructions](LOCAL_TEXT_AI_LAB.md).
+
+The dated sections below preserve the preceding experiment's history.
+
 ## Current local status — 2026-11-09
 
 The isolated admin AI Lab on **`127.0.0.1:8101`** now loads

@@ -1,9 +1,9 @@
 """Append correlated context variants to TRAIN ONLY; preserve frozen holdouts.
 
-Only a source training row's formal first clause is replaced. The condition
-body after the first comma-space, labels, group IDs, category and language
-remain unchanged. This is explicit synthetic draft augmentation, never a
-human approval or new independent observation.
+By default only the formal first clause is replaced. --prepend-context instead
+keeps the complete description, including history and negation. Labels, group
+IDs, category and language remain unchanged. This is synthetic draft
+augmentation, never human approval or a new independent observation.
 """
 from __future__ import annotations
 
@@ -67,7 +67,7 @@ def vocabulary(rows: list[dict]) -> dict:
     return {'scope': 'augmented training partition only; not a medical dictionary', 'languages': result}
 
 
-def augment(prepared: Path, output: Path, vocabulary_path: Path) -> dict:
+def augment(prepared: Path, output: Path, vocabulary_path: Path, *, prepend_context: bool = False) -> dict:
     if output.exists():
         raise ValueError('Augmented output must be a new directory; frozen data is never overwritten')
     if output.resolve() == prepared.resolve():
@@ -85,9 +85,14 @@ def augment(prepared: Path, output: Path, vocabulary_path: Path) -> dict:
         raise ValueError('This synthetic experiment accepts only unreviewed draft rows with blank reviewers')
     added, source_for_variant = [], {}
     for original in splits['train']:
-        _formal_context, separator, condition_body = original['text'].partition(', ')
-        if not separator or not condition_body:
-            raise ValueError('Training row is missing its formal first clause and intact condition body')
+        if prepend_context:
+            # Supplementary descriptions have no replaceable formal clause.
+            # Keep their complete original meaning, including negation/history.
+            condition_body = original['text']
+        else:
+            _formal_context, separator, condition_body = original['text'].partition(', ')
+            if not separator or not condition_body:
+                raise ValueError('Training row is missing its formal first clause and intact condition body')
         for index, context in enumerate(contexts[original['incident_type']][original['language']], 1):
             candidate = dict(original)
             candidate['case_id'] = original['case_id'] + f'_CTX{index:02d}'
@@ -131,6 +136,7 @@ def augment(prepared: Path, output: Path, vocabulary_path: Path) -> dict:
         'context_vocabulary_sha256': sha256(vocabulary_path.read_bytes()),
         'augmented_csv_sha256': sha256(combined_csv), 'counts': result,
         'augmentation_policy': 'Append four context variants to each train row only; unchanged condition body, label, language, category and group. Preserve every source CSV byte as prefix and retain frozen validation/test manifest entries.',
+        'context_mode': 'prepend_to_complete_description' if prepend_context else 'replace_formal_clause',
         'new_independent_scenarios': 0, 'new_independent_semantic_families': 0,
         'source_case_for_variant': source_for_variant,
         'source_provenance': prior_provenance,
@@ -163,8 +169,10 @@ def main() -> None:
     parser.add_argument('--prepared', type=Path, default=EXPERIMENT / 'prepared')
     parser.add_argument('--output', type=Path, default=EXPERIMENT / 'prepared_augmented')
     parser.add_argument('--vocabulary', type=Path, default=EXPERIMENT / 'context_vocabulary.json')
+    parser.add_argument('--prepend-context', action='store_true',
+                        help='Preserve the complete source description instead of replacing a formal first clause')
     args = parser.parse_args()
-    print(json.dumps(augment(args.prepared, args.output, args.vocabulary), allow_nan=False))
+    print(json.dumps(augment(args.prepared, args.output, args.vocabulary, prepend_context=args.prepend_context), allow_nan=False))
 
 
 if __name__ == '__main__':

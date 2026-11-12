@@ -1,0 +1,51 @@
+{
+  "counts": {
+    "source_rows": 1520,
+    "source_train_rows": 1068,
+    "added_correlated_train_rows": 4272,
+    "augmented_train_rows": 5340,
+    "validation_rows_unchanged": 308,
+    "test_rows_unchanged": 144,
+    "total_rows": 5792
+  },
+  "independent_validation": false,
+  "human_reviewed": false,
+  "approved_for_deployment": false,
+  "new_independent_scenarios": 0,
+  "regularization_c": 16,
+  "review_threshold": 0.5,
+  "evaluation_use": "Exposed frozen synthetic regression evidence; no model tuning on test.",
+  "model_directory": "releases\\triage-multiincident-tfidf-20261112-vocabulary-v1",
+  "policy_source_sha256": {
+    "src/ai_service/text_inference.py": "6e7b1a42f81ed069a13035b5a173ee115560abf4ade4e2660050574ebb71c478",
+    "src/ai_service/multiincident_cues.py": "dbea4db88d51bcaa1666785c0ac15988ac892e8db1587049c36816455512b346",
+    "src/ai_service/text_cues.py": "d9071d463b3215603d5bf429fec3d308cbf336ef707ec417641d95a9ad87b7ca",
+    "evaluate_text_cues.py": "9524a1d0dbc78e3dc0f1cec816132ba6643de53d9cb2b249372b9f3f971249c9"
+  },
+  "baseline_validation": {
+    "count": 308,
+    "accuracy": 0.8506493506493507,
+    "macro_f1": 0.8511535316018167,
+    "critical_recall": 0.9166666666666666,
+    "critical_lower_assignment_count": 0,
+    "high_risk_underclassification_count": 1,
+    "coverage": 0.6623376623376623
+  },
+  "candidate_validation": {
+    "count": 308,
+    "accuracy": 0.8603896103896104,
+    "macro_f1": 0.8586347582511265,
+    "critical_recall": 0.9285714285714286,
+    "critical_lower_assignment_count": 0,
+    "high_risk_underclassification_count": 1,
+    "coverage": 0.7012987012987013
+  },
+  "validation_non_regression": true,
+  "lab_selection_partition": "validation",
+  "policy_source_lf_sha256": {
+    "src/ai_service/text_inference.py": "6e7b1a42f81ed069a13035b5a173ee115560abf4ade4e2660050574ebb71c478",
+    "src/ai_service/multiincident_cues.py": "dbea4db88d51bcaa1666785c0ac15988ac892e8db1587049c36816455512b346",
+    "src/ai_service/text_cues.py": "804b292696812147b831e6d94385748d55293db93f4e960e0ecdcea8448ac19e",
+    "evaluate_text_cues.py": "9524a1d0dbc78e3dc0f1cec816132ba6643de53d9cb2b249372b9f3f971249c9"
+  }
+}

@@ -2,8 +2,50 @@
 
 The admin text AI Lab uses a separate experimental checkpoint on
 **`127.0.0.1:8101`**. The ordinary service on **8100** retains the road-only TF-IDF
-v2 model; Laravel reporting remains **`MANUAL_ONLY`**. Lab requests do not create
-incident reports, update operational severity records, or unlock reporting categories.
+v2 model. Lab requests do not create incident reports, update operational
+severity records, or unlock reporting categories.
+
+## Current configuration — 2026-11-12
+
+Local Laravel `.env` now explicitly opts into `AI_TEXT_MODE=MODEL_ADVISORY`,
+`AI_TEXT_ENABLED=true`, `AI_TEXT_ALLOW_EXPERIMENTAL=true`, and
+`AI_TEXT_SERVICE_URL=http://127.0.0.1:8100`. These local settings are not committed.
+Suggestions require admin confirmation; failures still accept reports for human
+assessment. Previously saved reports are unchanged until explicitly reanalyzed.
+The ordinary model still supports road accidents only; other categories return
+scoreless Needs review. Existing reporting-category restrictions are unchanged.
+
+`active_text_config.json` now selects
+`releases/triage-multiincident-tfidf-20261112-vocabulary-v1` for the Lab only.
+This adds 4,272 train-only correlated vocabulary variants; validation improves
+slightly, while the known synthetic test remains 72.92%. See the
+[candidate report](releases/triage-multiincident-tfidf-20261112-vocabulary-v1/README.md).
+The candidate is still experimental and has no operational deployment approval.
+
+After changing a local mode, clear Laravel configuration with
+`php artisan optimize:clear` from `web_system`, then restart this checkout's
+affected web/AI processes. Restart the Lab process when its selector changes;
+the startup helper reuses already-running listeners. Verify
+`/system/ai-status` on 8000 and `/ready/text` on both 8100 and 8101: the first
+must show road v2 and the second the vocabulary candidate.
+
+To disable ordinary local analysis, set `AI_TEXT_MODE=MANUAL_ONLY` and
+`AI_TEXT_ENABLED=false` in `web_system/.env`, clear caches and restart web
+processes. When restarting through the helper, also set these two environment
+variables in that same shell before launching it: the helper's advisory
+defaults otherwise take precedence over Laravel `.env`. It reuses existing
+listeners, so stop the affected web process before restarting:
+
+```powershell
+$env:AI_TEXT_MODE = 'MANUAL_ONLY'
+$env:AI_TEXT_ENABLED = 'false'
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tool\start_stitch_services.ps1
+```
+
+Run that helper command from the repository root. To restore the old Lab, revert only `test_model_directory` and
+`test_evaluation_report` to the 2026-11-09 release/report and restart 8101.
+
+The sections below describe the previous 2026-11-09 Lab state and results.
 
 ## Configured experiment — 2026-11-09
 

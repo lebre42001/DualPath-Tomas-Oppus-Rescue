@@ -1,3 +1,6 @@
 # Model fingerprints must match the bytes shipped to Linux and Windows.
 ai_service/releases/**/baseline.json text eol=lf
 ai_service/datasets/emergency_text/experiments/counted_2000words_20261016/*.csv text eol=lf
+# Preserve the exact frozen evidence bytes, including captured Windows CSVs.
+ai_service/datasets/emergency_text/experiments/local_vocabulary_20261112/** -text whitespace=cr-at-eol
+ai_service/releases/triage-multiincident-tfidf-20261112-vocabulary-v1/** -text whitespace=cr-at-eol

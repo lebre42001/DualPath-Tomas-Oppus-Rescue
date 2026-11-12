@@ -1,5 +1,10 @@
 # AksyRes
 
+Local text AI was enabled on 2026-11-12 as an admin-confirmed road-accident
+advisory. The separate multi-incident AI Lab has additional training vocabulary;
+its checkpoint remains experimental. The free Render demo remains AI-disabled.
+See the [current setup and evidence](ai_service/LOCAL_TEXT_AI_LAB.md).
+
 This workspace now contains the mobile app, web system, database references, AI training service, plus the original UI references.
 
 Civilian report sending uses a face-presence camera check without a blink.

@@ -1,0 +1,18 @@
+{
+  "metadata_sha256": "f07479b0e35bb9635bfee40eafcda9bee764089dc9bd7537edfb53edbf3a98df",
+  "artifact_sha256": "19ed06f59244fd2280e5d58be70bb8b91aeac88c8c84e8d3eb6a973fc307c0bd",
+  "policy_source_sha256": {
+    "src/ai_service/text_inference.py": "6e7b1a42f81ed069a13035b5a173ee115560abf4ade4e2660050574ebb71c478",
+    "src/ai_service/multiincident_cues.py": "dbea4db88d51bcaa1666785c0ac15988ac892e8db1587049c36816455512b346",
+    "src/ai_service/text_cues.py": "d9071d463b3215603d5bf429fec3d308cbf336ef707ec417641d95a9ad87b7ca",
+    "evaluate_text_cues.py": "9524a1d0dbc78e3dc0f1cec816132ba6643de53d9cb2b249372b9f3f971249c9"
+  },
+  "independent_validation": false,
+  "approved_for_deployment": false,
+  "policy_source_lf_sha256": {
+    "src/ai_service/text_inference.py": "6e7b1a42f81ed069a13035b5a173ee115560abf4ade4e2660050574ebb71c478",
+    "src/ai_service/multiincident_cues.py": "dbea4db88d51bcaa1666785c0ac15988ac892e8db1587049c36816455512b346",
+    "src/ai_service/text_cues.py": "804b292696812147b831e6d94385748d55293db93f4e960e0ecdcea8448ac19e",
+    "evaluate_text_cues.py": "9524a1d0dbc78e3dc0f1cec816132ba6643de53d9cb2b249372b9f3f971249c9"
+  }
+}

@@ -1,5 +1,18 @@
 # Multilingual incident-description classifier
 
+## Current local setup — 2026-11-12
+
+Local reporting now explicitly enables the existing road-only v2 advisory on
+8100. Every operational severity still requires admin assessment. The separate
+six-category Lab on 8101 selects
+`releases/triage-multiincident-tfidf-20261112-vocabulary-v1`, trained with 4,272
+additional correlated wording variants. Its unchanged known synthetic test is
+72.92%; this is not a validated operational replacement. No automatic learning
+or incident-category unlocking was added. See the
+[candidate report](releases/triage-multiincident-tfidf-20261112-vocabulary-v1/README.md)
+and [current local instructions](LOCAL_TEXT_AI_LAB.md). The following dated
+2026-11-09 sections retain the prior experiment's historical state.
+
 ## Current experimental Lab result — 2026-11-09
 
 The isolated admin Lab on `127.0.0.1:8101` uses

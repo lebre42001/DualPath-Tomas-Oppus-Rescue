@@ -523,3 +523,36 @@ After the first stable deployment, the next upgrade should be:
 1. move AI dispatch to `QUEUE_CONNECTION=database`
 2. add a Render worker for queued AI jobs
 3. optionally replace self-hosted Reverb with a managed realtime provider if you want simpler operations
+## Local advisory activation — 2026-11-12
+
+Local `web_system/.env` now explicitly enables the existing road-only v2 model
+on 8100 with `AI_TEXT_MODE=MODEL_ADVISORY`, `AI_TEXT_ENABLED=true`, and
+`AI_TEXT_ALLOW_EXPERIMENTAL=true`. Admin assessment remains required. The new
+multi-incident vocabulary checkpoint is selected only for the local admin Lab
+on 8101; it has no operational deployment approval. See
+[the evidence](ai_service/releases/triage-multiincident-tfidf-20261112-vocabulary-v1/README.md).
+
+This is a local configuration change, not a public deployment. The checked-in
+`render.yaml` continues to disable AI on both services. Its current database is
+SQLite (`DB_CONNECTION=sqlite`) with local ephemeral storage; older references
+to a free Postgres service describe a preceding plan. The free demo is not
+production-safe and has not been declared healthy by this update.
+
+The prepared online path for matching **road-only supervised advisory** remains
+`compose.dokploy.yaml`, whose private text service already packages the v2
+release and CPU dependencies. Synchronize the intended reviewed source commit,
+retain `AI_OPERATION_MODE=AI_ENABLED`, `AI_TEXT_ENABLED=true`,
+`AI_TEXT_ALLOW_EXPERIMENTAL=true`, and
+`AI_TEXT_MODEL_DIR=/app/releases/triage-text-tfidf-20261016-v2` on the AI service.
+The web service needs `AI_TEXT_MODE=MODEL_ADVISORY`, `AI_TEXT_ENABLED=true`,
+`AI_TEXT_ALLOW_EXPERIMENTAL=true`, and `AI_TEXT_SERVICE_URL=http://text-ai:8100`.
+Rebuild both services and clear/rebuild Laravel configuration. Do not point
+ordinary reporting at the experimental multi-incident Lab candidate.
+
+For rollback, set web `AI_TEXT_MODE=MANUAL_ONLY` and `AI_TEXT_ENABLED=false`,
+refresh Laravel configuration and recreate the web service. Before describing
+any online deployment as successful, compare the deployed branch/commit with
+the intended source, verify public `/`, `/login`, `/register`, and
+`/system/ai-status`, and exercise an authorized isolated report/admin-review
+flow. Readiness alone does not prove localhost/public parity. No online
+credentials were used and no public rollout was performed here.
