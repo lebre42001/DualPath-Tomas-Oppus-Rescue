@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\IncidentReport;
 use App\Services\AiTrainingFeedbackRecorder;
 use App\Services\IncidentReportAuditRecorder;
+use App\Support\IncidentReportIngestor;
 use Illuminate\Support\Facades\Auth;
 
 class IncidentReportObserver
@@ -32,6 +33,7 @@ class IncidentReportObserver
 
     public function deleting(IncidentReport $report): void
     {
+        app(IncidentReportIngestor::class)->rememberLoraDeletion($report);
         app(AiTrainingFeedbackRecorder::class)->supersede($report);
         if ($actor = Auth::user()) {
             if ($actor->is_admin) {

@@ -3,6 +3,7 @@
     $ingest = collect($report->coordination_log ?? [])->firstWhere('event', 'lora_alert_ingested') ?? [];
     $formatTime = static fn ($value) => $value?->timezone('Asia/Manila')->format('M d, Y h:i:s A') ?? 'Not available';
     $verificationLabels = ['unverified' => 'Unverified', 'confirmed' => 'Confirmed', 'needs_clarification' => 'Needs clarification', 'false_report' => 'False report'];
+    $loraDeleteReturnTo = request()->routeIs('monitoring*') ? 'monitoring' : 'lora-reports';
 @endphp
 <div class="incident-feed-expanded dashboard-modal-source lora-review-detail">
     <div class="lora-review-heading">
@@ -83,6 +84,14 @@
                 <button type="button" class="btn btn-secondary" data-report-row-close>Close</button>
             </div>
         </form>
+        @if (auth()->user()?->is_admin)
+            <form method="POST" action="{{ route('reports.destroy', $report) }}" data-lora-report-delete onsubmit="return confirm('Delete this LoRa report permanently? This cannot be undone. Admin audit history will remain.');">
+                @csrf
+                @method('DELETE')
+                <input type="hidden" name="return_to" value="{{ $loraDeleteReturnTo }}">
+                <button type="submit" class="btn btn-danger" aria-label="Delete LoRa report {{ $report->report_code }}">Delete report</button>
+            </form>
+        @endif
     </section>
     @if (count($report->coordination_log ?? []))
         <details class="detail-card"><summary>Report history</summary>

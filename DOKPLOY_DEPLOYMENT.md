@@ -5,6 +5,26 @@ The Compose stack builds the Laravel PWA from `web_system/`, runs MariaDB, and
 keeps the app's uploaded evidence and database in named Docker volumes. Nginx
 serves Laravel and proxies Reverb WebSockets through the same HTTPS domain.
 
+## Admin deletion of LoRa reports (2026-11-12)
+
+The LoRa report review includes an administrator-only **Delete report** action
+with confirmation, using the existing authenticated, CSRF-protected delete route.
+It removes the selected report and attachments while retaining admin audit
+history. Deletion is separate from Cancel report and authenticity verification;
+it does not generate an admin radio response or mark a report as false.
+
+Run the normal web deployment and migrations, including
+`2026_11_12_000001_create_lora_report_receipts_table`, before serving this code.
+The new table stores only a hashed radio identity and optional deletion time.
+Keep it with database backups: it prevents a later retry of a deleted LoRa
+message from recreating the report, alarm, or AI job. New message IDs still work.
+It does not recover identities of reports deleted before this update.
+
+The gateway receives a normal HTTP transport receipt for a deleted duplicate;
+this is not a reviewed radio acknowledgment. Previously queued radio traffic
+already downloaded to hardware cannot be recalled by deleting its server row.
+No Arduino firmware upload, AI model change, or APK rebuild is required.
+
 ## Targeted LoRa node restart (2026-11-10)
 
 LoRa Mesh now offers Restart inside each expanded node for administrators.

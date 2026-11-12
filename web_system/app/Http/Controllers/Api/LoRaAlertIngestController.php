@@ -80,15 +80,49 @@ class LoRaAlertIngestController extends Controller
 
         $ingestKey = $ingestor->loraKey($senderId, $sequence);
 
+        $result = $ingestor->withLoraReceipt($ingestKey, function (bool $deleted) use ($ingestor, $validated, $node, $senderId, $sequence, $reporterName, $gatewayId, $ingestKey): array {
+            if ($deleted) {
+                $this->recordNodeSeen($senderId, $gatewayId, $validated, 'SOS');
+
+                // A transport receipt is not an admin review or radio response.
+                // Do not resurrect the deleted incident, alarm, or AI job.
+                return ['response' => response()->json([
+                    'message' => 'LoRa alert was previously deleted by an administrator.',
+                    'duplicate' => true,
+                    'deleted' => true,
+                    'data' => null,
+                ])];
+            }
+
+            return $this->ingestAlert($ingestor, $validated, $node, $senderId, $sequence, $reporterName, $gatewayId, $ingestKey);
+        });
+
+        // Keep external effects outside the identity transaction: a failed
+        // commit or deadlock retry must never emit a new-report alarm/job.
+        // A deletion immediately after commit also must not broadcast a ghost.
+        $report = isset($result['created_report_id']) ? IncidentReport::query()->find($result['created_report_id']) : null;
+        if ($report) {
+            IncidentFeedBroadcaster::dispatch($report, 'created');
+            if ($result['analyze_description']) {
+                AnalyzeLoraDescription::dispatchAfterResponse($report->id);
+            }
+        }
+
+        return $result['response'];
+    }
+
+    /** @return array{response: JsonResponse, created_report_id?: int, analyze_description?: bool} */
+    private function ingestAlert(IncidentReportIngestor $ingestor, array $validated, array $node, string $senderId, string $sequence, string $reporterName, string $gatewayId, string $ingestKey): array
+    {
         if ($existing = $ingestor->existing($ingestKey)) {
             $this->retryReviewAcknowledgment($existing);
             $this->recordNodeSeen($senderId, $gatewayId, $validated, 'SOS');
 
-            return response()->json([
+            return ['response' => response()->json([
                 'message' => 'LoRa alert already exists.',
                 'duplicate' => true,
                 'data' => $this->reportPayload($existing),
-            ]);
+            ])];
         }
 
         $latitude = $this->coordinateOrNull($node['latitude'] ?? null);
@@ -174,26 +208,24 @@ class LoRaAlertIngestController extends Controller
             $this->retryReviewAcknowledgment($report);
             $this->recordNodeSeen($senderId, $gatewayId, $validated, 'SOS');
 
-            return response()->json([
+            return ['response' => response()->json([
                 'message' => 'LoRa alert already exists.',
                 'duplicate' => true,
                 'data' => $this->reportPayload($report),
-            ]);
+            ])];
         }
 
         $this->recordNodeSeen($senderId, $gatewayId, $validated, 'SOS');
 
-        IncidentFeedBroadcaster::dispatch($report, 'created');
-
-        if ($analyzeDescription) {
-            AnalyzeLoraDescription::dispatchAfterResponse($report->id);
-        }
-
-        return response()->json([
-            'message' => 'LoRa alert ingested successfully.',
-            'duplicate' => false,
-            'data' => $this->reportPayload($report),
-        ], 201);
+        return [
+            'response' => response()->json([
+                'message' => 'LoRa alert ingested successfully.',
+                'duplicate' => false,
+                'data' => $this->reportPayload($report),
+            ], 201),
+            'created_report_id' => $report->id,
+            'analyze_description' => $analyzeDescription,
+        ];
     }
 
     private function retryReviewAcknowledgment(IncidentReport $report): void

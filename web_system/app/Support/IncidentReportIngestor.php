@@ -4,6 +4,8 @@ namespace App\Support;
 
 use App\Models\IncidentReport;
 use App\Models\User;
+use Closure;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class IncidentReportIngestor
@@ -22,6 +24,41 @@ class IncidentReportIngestor
     public function loraKey(string $senderId, string $sequence): string
     {
         return $this->key('lora', $senderId, $sequence);
+    }
+
+    /** Serialize a radio identity so deletion and a late retry cannot race. */
+    public function withLoraReceipt(string $ingestKey, Closure $operation): mixed
+    {
+        return DB::transaction(function () use ($ingestKey, $operation): mixed {
+            DB::table('lora_report_receipts')->insertOrIgnore([
+                'ingest_key' => $ingestKey,
+                'deleted_at' => null,
+            ]);
+            $receipt = DB::table('lora_report_receipts')->where('ingest_key', $ingestKey)
+                ->lockForUpdate()->first();
+
+            return $operation($receipt->deleted_at !== null);
+        }, 3);
+    }
+
+    /** Called inside the report deletion transaction, preserving no report PII. */
+    public function rememberLoraDeletion(IncidentReport $report): void
+    {
+        if (strtolower(trim((string) $report->transmission_type)) !== 'lora') {
+            return;
+        }
+
+        $ingestKey = filled($report->lora_sender_id) && filled($report->lora_sequence)
+            ? $this->loraKey($report->lora_sender_id, $report->lora_sequence)
+            : $report->ingest_key;
+        if (! is_string($ingestKey) || preg_match('/^lora:[a-f0-9]{64}$/D', $ingestKey) !== 1) {
+            return;
+        }
+
+        $this->withLoraReceipt($ingestKey, function () use ($ingestKey): void {
+            DB::table('lora_report_receipts')->where('ingest_key', $ingestKey)
+                ->whereNull('deleted_at')->update(['deleted_at' => now()]);
+        });
     }
 
     public function existing(?string $ingestKey): ?IncidentReport
