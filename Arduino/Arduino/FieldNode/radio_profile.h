@@ -19,7 +19,7 @@ constexpr int codingDenominator = AKSYRES_RADIO_PROFILE == 1 ? 6 : 5;
 // Keep library and direct-register transactions at the same conservative speed.
 constexpr uint32_t spiFrequency = 1000000;
 constexpr const char* profile = AKSYRES_RADIO_PROFILE == 1 ? "SF9 PAIR TEST ONLY" : "SF7 mesh baseline";
-constexpr const char* revision = "mesh-safe-startup-20261111";
+constexpr const char* revision = "mesh-cad-standby-20261113";
 
 template<class Radio, class Registers> bool configure(Radio& radio, Registers& registers) {
   // LoRa 0.8.0 setSpreadingFactor/setSignalBandwidth call setLdoFlag(),

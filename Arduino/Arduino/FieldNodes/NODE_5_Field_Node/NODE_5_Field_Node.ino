@@ -1431,6 +1431,22 @@ void loop() {
 
   updateLedIndicators();
 
+  // Numeric radio diagnostics only: usable over USB without joining the AP or
+  // printing emergency descriptions, signatures, keys or saved reports.
+  static unsigned long lastRadioDiagnosticsMs = 0;
+  if (millis() - lastRadioDiagnosticsMs >= 15000) {
+    lastRadioDiagnosticsMs = millis();
+    String diagnostics = "{\"node_id\":\"" + NODE_ID + "\",";
+    diagnostics += meshRadio.statusFields();
+    diagnostics += meshRadioPort.statusFields();
+    diagnostics += "\"radio_valid_packets\":" + String(AksyResRadio::validPackets);
+    diagnostics += ",\"radio_rejections\":" + String(meshInvalidFrames);
+    diagnostics += ",\"op_mode\":" + String(meshRadioPort.readRegister(0x01));
+    diagnostics += ",\"irq_flags\":" + String(meshRadioPort.flags());
+    diagnostics += ",\"modem_status\":" + String(meshRadioPort.readRegister(0x18)) + "}";
+    Serial.println("[RADIO STATE] " + diagnostics);
+  }
+
   if(remoteRestart.cancelExpired(prefs,millis()))meshRadio.cancel("RACCEPT:"+remoteRestart.id);
   const String restartReceipt=remoteRestart.dueReceipt(millis());
   if(restartReceipt.length())sendLoRaPacket(restartReceipt);

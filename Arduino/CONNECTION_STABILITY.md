@@ -1,5 +1,13 @@
 # Whole-mesh connection and reconnection update
 
+**2026-11-13 CAD correction:** the driver enters standby before requesting CAD.
+On the observed NODE_6, direct RX-to-CAD requests stayed in mode 7 until timeout;
+after this correction, TX_DONE progressed, CAD timeouts stayed zero, and the
+unchanged older gateway/online server received its heartbeats. See the current
+evidence and migration scope in [README.md](README.md#cad-transmission-fix-2026-11-13).
+The revision is `mesh-cad-standby-20261113`; physical uploads are required on the
+missing field nodes. This does not require replacing a working older gateway.
+
 This firmware applies to **NODE_1 and every field node NODE_2–NODE_10**. It
 improves scheduling and recovery; no measured increase in RF range or guaranteed
 all-pairs direct connection is claimed. Nodes still use reachable relays when
@@ -61,6 +69,10 @@ fix. [RANGE_TEST.md](RANGE_TEST.md) covers the proposed 400 m link and antenna c
 
 ## Apply the update
 
+For missing fields joining a working older authenticated gateway, follow the
+field-only CAD migration above. The steps below apply to adopting the complete
+coordinated feature update across the mesh.
+
 1. Deploy the matching Laravel ACK revision-token change first. It needs no new
    database migration or credentials and still accepts older firmware callbacks.
 2. Finish/acknowledge any real pending reports before a maintenance upload. Keep
@@ -71,7 +83,7 @@ fix. [RANGE_TEST.md](RANGE_TEST.md) covers the proposed 400 m link and antenna c
    to each physical NODE_2–NODE_10. **Arduino upload needed on every board.**
    Updating the website/repository cannot flash the ESP32 devices.
 4. Use the default matching SF7 profile for the live mesh. Serial Monitor at
-   115200 and the local dashboard should show `mesh-rx-recovery-20261105`. Do not
+   115200 and the local dashboard should show `mesh-cad-standby-20261113`. Do not
    mix the optional SF9 test profile into the live SF7 mesh.
 5. Start NODE_1 with a working server connection, then bring up the fields and
    observe green peer evidence, yellow gateway-route indication and fresh website

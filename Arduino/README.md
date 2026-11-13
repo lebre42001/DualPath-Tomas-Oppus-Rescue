@@ -15,6 +15,28 @@ The active mesh uses `GatewayNode1/GatewayNode1.ino` for NODE_1 and the configur
 
 ## Active Mesh Flow
 
+### CAD transmission fix (2026-11-13)
+
+The live NODE_6 could authenticate incoming NODE_1/NODE_4 traffic but completed
+zero transmissions. Its CAD timeout count kept increasing and the radio stayed
+in mode `0x87` without CAD_DONE. The driver now explicitly enters standby before
+starting CAD, following the [Semtech CAD flow, Fig. 11](https://cdn.sparkfun.com/assets/7/7/3/2/2/SX1276_Datasheet.pdf).
+It still preserves RX_DONE, waits for a clear CAD result, and confirms sends only
+after TX_DONE. The safe 1 MHz startup and authenticated v2 framing are retained.
+
+With this fix uploaded to NODE_6, a real USB/radio observation recorded completed
+transmissions increasing from 15 to 21 with zero CAD timeouts, TX failures or
+queue expiry. The unchanged older gateway received NODE_6 HELLO/heartbeats, and
+the online server's authenticated network summary included NODE_6. This verifies
+that link and heartbeat ingestion; it is not an emergency-report/ACK or range test.
+
+The shared fix is generated into all active sketches. NODE_7 through NODE_10 need
+their own matching physical upload; a website deployment cannot update them.
+The already working older NODE_1 through NODE_5 need not be reflashed merely for
+this migration. Field serial output now includes numeric `[RADIO STATE]` counters
+every 15 seconds, without adding emergency descriptions or keys to that line.
+The revision is `mesh-cad-standby-20261113`.
+
 ### Radio startup crash fix (2026-11-11)
 
 The NODE_10 crash with ELF SHA256 prefix `5041ac70c` was decoded against its

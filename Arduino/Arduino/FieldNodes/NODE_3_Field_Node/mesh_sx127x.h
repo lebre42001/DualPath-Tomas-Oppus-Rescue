@@ -26,7 +26,15 @@ public:
     LoRa.idle();write(0x12,0xb0);LoRa.receive();
     rxGuardActive_=false;++rxRecoveries_;return false;
   }
-  void startCad(){write(0x12,0x05);write(0x01,(read(0x01)&0xf8)|0x07);}
+  void startCad(){
+    // Semtech Rev7 Fig11 starts CAD from standby. A direct RX_SINGLE/CONT ->
+    // CAD request left the observed Ra-02 stuck in mode 7 without CAD_DONE.
+    // Keep the LoRa/LF bits and preserve RX_DONE for the receive handler.
+    const uint8_t mode=read(0x01)&0xf8;
+    write(0x01,mode|0x01);
+    write(0x12,0x05);
+    write(0x01,mode|0x07);
+  }
   void endCad(){write(0x12,0x05);LoRa.receive();}
   bool transmit(const String& packet){write(0x12,0x08);return meshWriteFrame(packet,true);}
   void endTx(){write(0x12,0x08);LoRa.idle();LoRa.receive();}

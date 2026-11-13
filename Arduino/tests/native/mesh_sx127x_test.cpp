@@ -36,10 +36,20 @@ int main(){
   assert(SPI.registers[0x12]==0x48); // CAD flags cleared; RX_DONE/TX_DONE preserved.
   SPI.registers[0x12]|=0x05;assert(port.flags()==0x4d);port.endCad();
   assert(SPI.registers[0x12]==0x48);
+  // CAD starts from standby (Semtech Rev7 Fig11), including when parsePacket
+  // left the radio in RX_SINGLE. Model hardware refusing a direct RX->CAD jump.
+  SPI.requireStandbyForCad=true;
+  for(uint8_t receiveMode:{uint8_t(0x85),uint8_t(0x86)}){
+    SPI.registers[0x01]=receiveMode;SPI.registers[0x12]=0x4d;
+    port.startCad();assert(SPI.registers[0x01]==0x87);
+    assert(SPI.invalidCadTransitions==0&&SPI.registers[0x12]==0x48);
+    port.endCad();
+  }
+  SPI.requireStandbyForCad=false;
   const int before=LoRa.receiveCalls;assert(port.transmit("HELLO|NODE_2"));
   assert(LoRa.lastAsync);assert(LoRa.receiveCalls==before);assert(SPI.registers[0x12]==0x40);
   assert(meshTxCounter>0);auto frame=LoRa.tx;LoRa.inject(frame);assert(meshReadFrame(frame.size())=="HELLO|NODE_2");
   SPI.registers[0x12]|=0x08;port.endTx();assert(LoRa.receiveCalls==before+1&&SPI.registers[0x12]==0x40);
   const uint32_t timeout=port.txTimeout("HELLO|NODE_2");assert(timeout>500&&timeout<2000);
-  std::cout<<"PASS: SX127x sync-only queue progress, bounded stuck-RX recovery/rollover, RX_DONE preservation, CAD masks, authenticated async frames and return to receive.\n";
+  std::cout<<"PASS: SX127x standby-before-CAD from both RX modes, sync-only queue progress, bounded stuck-RX recovery/rollover, RX_DONE preservation, CAD masks, authenticated async frames and return to receive.\n";
 }
