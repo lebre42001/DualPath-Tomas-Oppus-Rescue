@@ -4,6 +4,18 @@ const char REPORT_GUARD_SCRIPT[] PROGMEM = R"guard(
 (()=>{
   const byId=id=>document.getElementById(id), button=byId('sendButton')||byId('send');
   const message=byId('message'), type=byId('type');
+  const bytes=value=>new TextEncoder().encode(value).length;
+  const inputStyle='width:100%;box-sizing:border-box;padding:12px;border:1px solid #ccd6cf;border-radius:10px;font-size:16px;margin-top:8px';
+  const nameLabel=document.createElement('label');nameLabel.textContent='Name (required)';
+  nameLabel.style.cssText='display:block;margin:12px 0';
+  const reporter=document.createElement('input');reporter.id='reporterName';reporter.name='reporter_name';
+  reporter.type='text';reporter.autocomplete='name';reporter.maxLength=24;reporter.required=true;
+  reporter.placeholder='Your name';reporter.style.cssText=inputStyle;
+  nameLabel.append(reporter);type.before(nameLabel);
+  const encodedMessage=(name,description)=>'@N1:'+bytes(name)+':'+name+description;
+  byId('remaining').parentElement.innerHTML='<span id="remaining">70</span> radio bytes remaining for description. Name shares this limit (up to 24 bytes).';
+  const updateBudget=()=>{byId('remaining').textContent=Math.max(0,70-bytes(encodedMessage(reporter.value.trim(),message.value.trim())))};
+  reporter.addEventListener('input',updateBudget);message.addEventListener('input',updateBudget);updateBudget();
   for(const option of type.options)option.disabled=option.value!=='ROAD_ACCIDENT';
   type.value='ROAD_ACCIDENT';
   const field=document.createElement('label');
@@ -11,7 +23,7 @@ const char REPORT_GUARD_SCRIPT[] PROGMEM = R"guard(
   field.style.display='block';field.style.marginTop='12px';
   const landmark=document.createElement('input');landmark.id='landmark';landmark.maxLength=32;
   landmark.placeholder='E.g. Bogo bridge, near school';landmark.required=true;
-  landmark.style.cssText='width:100%;box-sizing:border-box;padding:12px;border:1px solid #ccd6cf;border-radius:10px;font-size:16px;margin-top:8px';
+  landmark.style.cssText=inputStyle;
   field.append(landmark);message.before(field);
   const indicator=document.createElement('p');indicator.id='reportGuard';indicator.className='small';
   indicator.setAttribute('role','status');indicator.setAttribute('aria-live','polite');button.after(indicator);
@@ -21,14 +33,15 @@ const char REPORT_GUARD_SCRIPT[] PROGMEM = R"guard(
   indicator.after(radioDetails);
   const modal=document.createElement('div');modal.className='modal';modal.id='confirmReport';
   modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');modal.setAttribute('aria-labelledby','confirmReportTitle');
-  modal.innerHTML='<div class="modal-box box" style="max-height:85vh;overflow:auto"><h2 id="confirmReportTitle">Confirm emergency</h2><p>Road Accident</p><b>Actual location</b><p id="confirmLocation"></p><b>Description</b><p id="confirmDescription"></p><p class="small">Send accurate details. Your report will be reviewed by the emergency team.</p><button id="confirmSend">Confirm and send</button><button id="confirmBack" style="background:#eef3ef;color:#14251a">Go back</button></div>';
+  modal.innerHTML='<div class="modal-box box" style="max-height:85vh;overflow:auto"><h2 id="confirmReportTitle">Confirm emergency</h2><p>Road Accident</p><b>Name</b><p id="confirmName"></p><b>Actual location</b><p id="confirmLocation"></p><b>Description</b><p id="confirmDescription"></p><p class="small">Send accurate details. The name is supplied by the reporter; the emergency team still needs to verify the report.</p><button id="confirmSend">Confirm and send</button><button id="confirmBack" style="background:#eef3ef;color:#14251a">Go back</button></div>';
   document.body.append(modal);
   let busy=false,lastStatus={},retryUntil=0,reviewedPayload=null;
-  const bytes=value=>new TextEncoder().encode(value).length;
   const valid=()=>{
+    if(!reporter.value.trim()||bytes(reporter.value.trim())>24){alert('Enter your name, up to 24 UTF-8 bytes.');reporter.focus();return false}
     if(!landmark.value.trim()||bytes(landmark.value.trim())>32){alert('Enter a short accident location or landmark. Shorten it if it is too long.');landmark.focus();return false}
     if(!message.value.trim()||bytes(message.value.trim())>70){alert('Enter a short description. Shorten it if it is too long.');message.focus();return false}
-    if(/[|\r\n\t]/.test(landmark.value)||/[|\r\n\t]/.test(message.value)){alert('Use a single line without the | character.');return false}
+    if(/[|\x00-\x1f\x7f]/.test(reporter.value)||/[|\x00-\x1f\x7f]/.test(landmark.value)||/[|\x00-\x1f\x7f]/.test(message.value)){alert('Use a single line without the | character.');return false}
+    if(bytes(encodedMessage(reporter.value.trim(),message.value.trim()))>70){alert('Shorten the description. Your name and description share the radio message limit.');message.focus();return false}
     return true;
   };
   const close=()=>{if(busy||!modal.classList.contains('show'))return;modal.classList.remove('show');button.focus()};
@@ -56,25 +69,25 @@ const char REPORT_GUARD_SCRIPT[] PROGMEM = R"guard(
     if(busy||button.disabled||!valid())return;
     busy=true;paint();
     try{
-      reviewedPayload=new URLSearchParams({type:'ROAD_ACCIDENT',message:message.value.trim(),landmark:landmark.value.trim(),created_at:String(Math.floor(Date.now()/1000)),confirmed:'1'});
+      reviewedPayload=new URLSearchParams({type:'ROAD_ACCIDENT',reporter_name:reporter.value.trim(),message:message.value.trim(),landmark:landmark.value.trim(),created_at:String(Math.floor(Date.now()/1000)),confirmed:'1'});
       const response=await fetch('/prepare',{method:'POST',body:reviewedPayload});
       if(!response.ok)throw new Error(await response.text());
       const proof=await response.json();reviewedPayload.set('confirmation',proof.confirmation);
     }catch(error){alert(error.message||'Could not prepare this report. Reconnect to the node and try again.');return}
     finally{busy=false;paint()}
-    byId('confirmLocation').textContent=reviewedPayload.get('landmark');byId('confirmDescription').textContent=reviewedPayload.get('message');
+    byId('confirmName').textContent=reviewedPayload.get('reporter_name');byId('confirmLocation').textContent=reviewedPayload.get('landmark');byId('confirmDescription').textContent=reviewedPayload.get('message');
     modal.classList.add('show');byId('confirmSend').focus();
   };
   byId('confirmSend').onclick=async()=>{
     if(busy||!valid())return;
     // Snapshot the values actually reviewed, preventing a changed form from
     // silently replacing the confirmation contents.
-    if(byId('confirmLocation').textContent!==landmark.value.trim()||byId('confirmDescription').textContent!==message.value.trim()){close();return}
+    if(byId('confirmName').textContent!==reporter.value.trim()||byId('confirmLocation').textContent!==landmark.value.trim()||byId('confirmDescription').textContent!==message.value.trim()){close();return}
     busy=true;byId('confirmSend').disabled=true;paint();
     try{
       const response=await fetch('/send',{method:'POST',body:reviewedPayload}),text=await response.text();
       if(response.status===429)retryUntil=Date.now()+Number(response.headers.get('Retry-After')||0)*1000;
-      if(response.ok){message.value='';landmark.value='';byId('remaining').textContent='70';retryUntil=0;modal.classList.remove('show')}
+      if(response.ok){reporter.value='';message.value='';landmark.value='';updateBudget();retryUntil=0;modal.classList.remove('show')}
       else{modal.classList.remove('show');reviewedPayload=null}
       alert(text);
     }catch(error){alert('Could not reach this node. Reconnect to its Wi-Fi and check Latest Report before retrying.')}

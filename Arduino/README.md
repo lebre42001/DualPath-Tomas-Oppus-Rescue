@@ -15,6 +15,31 @@ The active mesh uses `GatewayNode1/GatewayNode1.ino` for NODE_1 and the configur
 
 ## Active Mesh Flow
 
+### Reporter name on the local dashboard (2026-11-24)
+
+The local report form now asks for **Name** and includes it in the confirmation
+preview. The server stores it in the existing `reporter_name` field and shows it
+in Admin LoRa reports. This is a self-declared name, not verified identity or
+proof of a prank. Older reports retain their node-name fallback.
+
+To keep the working older gateway and relays compatible, new reports encode
+`@N1:<UTF-8 name byte length>:<name><description>` inside the existing signed SOS
+message field. No fields, origin tags, mesh keys, radio settings, CAD handling,
+routes, receipts or ACKs change. The outbox retains the complete signed packet
+through restart/retry. The server extracts the name before description analysis.
+
+Name is required on upgraded forms and limited to 24 UTF-8 bytes. The complete
+encoded message retains its existing 70-byte limit; a 24-byte name leaves 39
+description bytes. The form shows remaining space, and the firmware still
+checks the worst full-route frame budget without truncating input. The landmark
+retains its separate 32-byte limit.
+
+Deploy the matching Laravel decoder before uploading the regenerated sketches
+to whichever field nodes need the Name input. The old gateway can forward these
+reports without being reflashed. Upload NODE_1 only if its own local dashboard
+also needs the new input. A Git push cannot update firmware already on an ESP32.
+Do not erase NVS or regenerate existing mesh keys for this addition.
+
 ### CAD transmission fix (2026-11-13)
 
 The live NODE_6 could authenticate incoming NODE_1/NODE_4 traffic but completed

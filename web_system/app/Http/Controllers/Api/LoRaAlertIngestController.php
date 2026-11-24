@@ -10,6 +10,7 @@ use App\Services\AiTextSeverityClient;
 use App\Support\IncidentFeedBroadcaster;
 use App\Support\IncidentReportIngestor;
 use App\Support\LoraNodeRegistry;
+use App\Support\LoraReporterIdentity;
 use App\Support\ReportedFatalityKeyword;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\JsonResponse;
@@ -63,6 +64,13 @@ class LoRaAlertIngestController extends Controller
                     }
                 }],
             ])->validate();
+            // Decode only authenticated v2 radio messages, after validating the
+            // unchanged wire limit. AI and fatality checks receive description
+            // text alone; the name remains self-declared, not verified identity.
+            if ($identity = LoraReporterIdentity::decode((string) $validated['description'])) {
+                $validated['reporter_name'] = $identity['name'];
+                $validated['description'] = $identity['description'];
+            }
             $validated['created_at'] = CarbonImmutable::createFromTimestampUTC((int) $validated['created_at'])->toIso8601String();
         }
 

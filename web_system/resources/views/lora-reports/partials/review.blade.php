@@ -27,7 +27,7 @@
         @include('reports.partials.severity-review-form', ['report' => $report])
     </section>
     <dl class="lora-review-metadata">
-        <div><dt>Sender</dt><dd>{{ $report->reporter_name ?: 'Unknown sender' }}</dd></div>
+        <div><dt>Reporter name</dt><dd>{{ $report->reporter_name ?: 'Unknown sender' }}</dd></div>
         <div><dt>Message ID</dt><dd>{{ $report->lora_sequence ?: 'Not available' }}</dd></div>
         <div><dt>Origin node</dt><dd>{{ $report->lora_sender_id ?: 'Unknown' }}</dd></div>
         <div><dt>Gateway</dt><dd>{{ $report->lora_gateway_id ?: 'Unknown' }}</dd></div>
@@ -46,6 +46,7 @@
     </dl>
     <section class="detail-card">
         <h3>Verify report authenticity</h3>
+        <p class="section-copy">Reporter names are self-declared, not verified identities. Older node firmware may show the node name instead.</p>
         <p class="section-copy">This records whether the report is credible. Rescue progress is managed separately below. Repeat submissions alone do not prove a false report.</p>
         @if ($report->lora_verified_at)
             <p>{{ $verificationLabels[$report->lora_verification] ?? 'Unverified' }} · {{ $formatTime($report->lora_verified_at) }}</p>

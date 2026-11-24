@@ -29,6 +29,7 @@
 #include "mesh_security.h"
 #include "mesh_sx127x.h"
 #include "report_guard.h"
+#include "report_identity.h"
 #include "report_outbox.h"
 #include "report_dashboard.h"
 #include "gateway_runtime.h"
@@ -750,25 +751,26 @@ void retryLocalReportIfNeeded(bool forceNow = false) {
 void handleLocalEmergency() {
   String message = localServer.arg("message"), landmark = localServer.arg("landmark");
   String type = localServer.arg("type"), createdAt = localServer.arg("created_at");
+  const String radioMessage = reportIdentityMessage(localServer.arg("reporter_name"), message);
   message.trim(); landmark.trim(); createdAt.trim();
   if (!meshSecurityReady || localServer.arg("confirmed") != "1" || type != "ROAD_ACCIDENT" ||
-      !message.length() || message.length() > 70 || !landmark.length() || landmark.length() > 32 ||
+      !radioMessage.length() || !landmark.length() || landmark.length() > 32 ||
       message.indexOf('|') >= 0 || landmark.indexOf('|') >= 0 || message.indexOf('\n') >= 0 ||
       landmark.indexOf('\n') >= 0 || message.indexOf('\r') >= 0 || landmark.indexOf('\r') >= 0 ||
       message.indexOf('\t') >= 0 || landmark.indexOf('\t') >= 0 || createdAt.length() != 10) {
-    localServer.send(400, "text/plain", "Confirm a Road Accident report with description and actual location/landmark. Limits: 70 and 32 UTF-8 bytes."); return;
+    localServer.send(400, "text/plain", "Confirm a Road Accident report with your name, description and actual location/landmark. Name: 24 UTF-8 bytes; name and description share 70 radio bytes; landmark: 32 bytes."); return;
   }
   for (size_t i = 0; i < createdAt.length(); ++i) if (!isDigit(createdAt[i])) {
     localServer.send(400, "text/plain", "Invalid report time."); return;
   }
-  if (!meshReportFits(message, landmark, measuredBatteryVoltage())) {
+  if (!meshReportFits(radioMessage, landmark, measuredBatteryVoltage())) {
     localServer.send(400, "text/plain", "Shorten the description or landmark so the complete report fits the radio route."); return;
   }
   const uint32_t clientAddress = (uint32_t)localServer.client().remoteIP();
   if (localOutbox.full()) {
     reportRecordBlocked(); localServer.send(503, "text/plain", "Local report storage is full. Saved reports are kept. Contact the emergency team or use another available node."); return;
   }
-  if (!reportConsumeConfirmation(clientAddress, reportConfirmationBody(message, landmark, type, createdAt), localServer.arg("confirmation"))) {
+  if (!reportConsumeConfirmation(clientAddress, reportConfirmationBody(radioMessage, landmark, type, createdAt), localServer.arg("confirmation"))) {
     localServer.send(400, "text/plain", "Confirmation expired, already used, or report details changed. Review the report again."); return;
   }
   if (prefs.getUInt("seq", 0) == UINT32_MAX) {
@@ -779,7 +781,7 @@ void handleLocalEmergency() {
     localServer.send(503, "text/plain", "Could not save the report ID. Report was not submitted."); return;
   }
   const String msgId = String(NODE_ID) + "-" + String(sequence);
-  String packet = "SOS|" + msgId + "|NODE_1|" + createdAt + "|R|" + message + "|" + measuredBatteryVoltage() + "|0|12|NODE_1|" + landmark;
+  String packet = "SOS|" + msgId + "|NODE_1|" + createdAt + "|R|" + radioMessage + "|" + measuredBatteryVoltage() + "|0|12|NODE_1|" + landmark;
   packet = meshSignOrigin(packet, false, 1);
   if (!localOutbox.add(prefs, packet)) {
     localServer.send(503, "text/plain", "Could not save this report. Existing reports were kept. Try again or contact the emergency team."); return;
@@ -854,14 +856,15 @@ void startCaptivePortal() {
   localServer.on("/", HTTP_GET, []() { String page = FPSTR(LOCAL_DASHBOARD); page.replace("</body>", String(FPSTR(REPORT_GUARD_SCRIPT)) + "</body>"); localServer.sendHeader("Cache-Control", "no-store"); localServer.send(200, "text/html", page); });
   localServer.on("/status", HTTP_GET, handleLocalStatus);
   localServer.on("/prepare", HTTP_POST, []() {
-    if (localServer.arg("message").length() > 70 || localServer.arg("landmark").length() > 32) {
-      localServer.send(400, "text/plain", "Report exceeds description or location limit."); return;
+    const String radioMessage = reportIdentityMessage(localServer.arg("reporter_name"), localServer.arg("message"));
+    if (!radioMessage.length() || localServer.arg("landmark").length() > 32) {
+      localServer.send(400, "text/plain", "Enter your name (up to 24 UTF-8 bytes) and shorten the description to fit their shared 70-byte radio limit. Landmark limit: 32 bytes."); return;
     }
-    if (!meshReportFits(localServer.arg("message"), localServer.arg("landmark"), measuredBatteryVoltage())) {
+    if (!meshReportFits(radioMessage, localServer.arg("landmark"), measuredBatteryVoltage())) {
       localServer.send(400, "text/plain", "Shorten the description or landmark so the complete report fits the radio route."); return;
     }
     const String token = reportPrepare((uint32_t)localServer.client().remoteIP(), reportConfirmationBody(
-      localServer.arg("message"), localServer.arg("landmark"), localServer.arg("type"), localServer.arg("created_at")));
+      radioMessage, localServer.arg("landmark"), localServer.arg("type"), localServer.arg("created_at")));
     localServer.sendHeader("Cache-Control", "no-store");
     if (!token.length()) { localServer.send(429, "text/plain", "Too many report confirmations. Try again shortly."); return; }
     localServer.send(200, "application/json", "{\"confirmation\":\"" + token + "\"}");
